@@ -1,0 +1,108 @@
+import 'package:thawani_pos/features/subscription/enums/billing_cycle.dart';
+import 'package:thawani_pos/features/payments/enums/subscription_payment_method.dart';
+import 'package:thawani_pos/features/subscription/enums/subscription_status.dart';
+
+class StoreSubscription {
+  final String id;
+  final String storeId;
+  final String subscriptionPlanId;
+  final SubscriptionStatus status;
+  final BillingCycle? billingCycle;
+  final DateTime currentPeriodStart;
+  final DateTime currentPeriodEnd;
+  final DateTime? trialEndsAt;
+  final SubscriptionPaymentMethod? paymentMethod;
+  final DateTime? cancelledAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
+  const StoreSubscription({
+    required this.id,
+    required this.storeId,
+    required this.subscriptionPlanId,
+    required this.status,
+    this.billingCycle,
+    required this.currentPeriodStart,
+    required this.currentPeriodEnd,
+    this.trialEndsAt,
+    this.paymentMethod,
+    this.cancelledAt,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory StoreSubscription.fromJson(Map<String, dynamic> json) {
+    return StoreSubscription(
+      id: json['id'] as String,
+      storeId: json['store_id'] as String,
+      subscriptionPlanId: json['subscription_plan_id'] as String,
+      status: SubscriptionStatus.fromValue(json['status'] as String),
+      billingCycle: BillingCycle.tryFromValue(json['billing_cycle'] as String?),
+      currentPeriodStart: DateTime.parse(json['current_period_start'] as String),
+      currentPeriodEnd: DateTime.parse(json['current_period_end'] as String),
+      trialEndsAt: json['trial_ends_at'] != null ? DateTime.parse(json['trial_ends_at'] as String) : null,
+      paymentMethod: SubscriptionPaymentMethod.tryFromValue(json['payment_method'] as String?),
+      cancelledAt: json['cancelled_at'] != null ? DateTime.parse(json['cancelled_at'] as String) : null,
+      createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
+      updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'store_id': storeId,
+      'subscription_plan_id': subscriptionPlanId,
+      'status': status.value,
+      'billing_cycle': billingCycle?.value,
+      'current_period_start': currentPeriodStart.toIso8601String(),
+      'current_period_end': currentPeriodEnd.toIso8601String(),
+      'trial_ends_at': trialEndsAt?.toIso8601String(),
+      'payment_method': paymentMethod?.value,
+      'cancelled_at': cancelledAt?.toIso8601String(),
+      'created_at': createdAt?.toIso8601String(),
+      'updated_at': updatedAt?.toIso8601String(),
+    };
+  }
+
+  StoreSubscription copyWith({
+    String? id,
+    String? storeId,
+    String? subscriptionPlanId,
+    SubscriptionStatus? status,
+    BillingCycle? billingCycle,
+    DateTime? currentPeriodStart,
+    DateTime? currentPeriodEnd,
+    DateTime? trialEndsAt,
+    SubscriptionPaymentMethod? paymentMethod,
+    DateTime? cancelledAt,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return StoreSubscription(
+      id: id ?? this.id,
+      storeId: storeId ?? this.storeId,
+      subscriptionPlanId: subscriptionPlanId ?? this.subscriptionPlanId,
+      status: status ?? this.status,
+      billingCycle: billingCycle ?? this.billingCycle,
+      currentPeriodStart: currentPeriodStart ?? this.currentPeriodStart,
+      currentPeriodEnd: currentPeriodEnd ?? this.currentPeriodEnd,
+      trialEndsAt: trialEndsAt ?? this.trialEndsAt,
+      paymentMethod: paymentMethod ?? this.paymentMethod,
+      cancelledAt: cancelledAt ?? this.cancelledAt,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is StoreSubscription && other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
+
+  @override
+  String toString() => 'StoreSubscription(id: $id, storeId: $storeId, subscriptionPlanId: $subscriptionPlanId, status: $status, billingCycle: $billingCycle, currentPeriodStart: $currentPeriodStart, ...)';
+}

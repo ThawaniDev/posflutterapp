@@ -1,0 +1,79 @@
+name: thawani_pos
+description: "Thawani POS - Point of Sale system for Oman market"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+
+  # Networking
+  dio: ^5.8.0
+  connectivity_plus: ^6.1.4
+
+  # Routing
+  go_router: ^14.8.1
+
+  # Local Storage & Auth
+  flutter_secure_storage: ^9.2.4
+  shared_preferences: ^2.5.3
+  path_provider: ^2.1.5
+
+  # UI & Theming
+  cupertino_icons: ^1.0.8
+  fl_chart: ^0.70.2
+
+  # Formatting
+  intl: ^0.20.2
+
+  # Printing
+  pdf: ^3.11.3
+  printing: ^5.14.2
+
+  # Barcode
+  barcode: ^2.2.8
+
+  # ZATCA Crypto
+  pointycastle: ^4.0.0
+
+  # Window Management (desktop)
+  window_manager: ^0.4.3
+
+  # Monitoring
+  sentry_flutter: ^8.14.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  riverpod_generator: ^2.6.3
+  build_runner: ^2.4.15
+  mockito: ^5.4.6
+  integration_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/fonts/
+    - assets/icons/
+
+  # fonts:
+  #   - family: Inter
+  #     fonts:
+  #       - asset: assets/fonts/Inter-Regular.ttf
+  #       - asset: assets/fonts/Inter-Medium.ttf
+  #         weight: 500
+  #       - asset: assets/fonts/Inter-Bold.ttf
+  #         weight: 700

@@ -1,0 +1,21 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    prefer_final_locals: true
+    avoid_print: true
+    require_trailing_commas: true
+    sort_constructors_first: true
+    prefer_single_quotes: true
+    always_use_package_imports: true
+    avoid_relative_lib_imports: true
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - lib/core/l10n/app_localizations.dart
+  errors:
+    invalid_annotation_target: ignore
