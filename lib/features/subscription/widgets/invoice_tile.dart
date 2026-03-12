@@ -1,0 +1,81 @@
+import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/features/subscription/models/invoice.dart';
+
+/// A list tile widget for displaying an invoice summary.
+class InvoiceTile extends StatelessWidget {
+  final Invoice invoice;
+
+  const InvoiceTile({super.key, required this.invoice});
+
+  @override
+  Widget build(BuildContext context) {
+    final statusName = invoice.status?.name ?? 'unknown';
+    return Card(
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        leading: CircleAvatar(
+          backgroundColor: _statusColor(statusName).withOpacity(0.15),
+          child: Icon(_statusIcon(statusName), color: _statusColor(statusName), size: 20),
+        ),
+        title: Text(invoice.invoiceNumber ?? '', style: const TextStyle(fontWeight: FontWeight.w600)),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppSpacing.verticalXs,
+            if (invoice.dueDate != null)
+              Text('Due: ${_formatDate(invoice.dueDate!)}', style: Theme.of(context).textTheme.bodySmall),
+            if (invoice.paidAt != null)
+              Text(
+                'Paid: ${_formatDate(invoice.paidAt!)}',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.green),
+              ),
+          ],
+        ),
+        trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text('${invoice.total.toStringAsFixed(2)} OMR', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+            AppSpacing.verticalXs,
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(
+                color: _statusColor(statusName).withOpacity(0.15),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Text(
+                statusName,
+                style: TextStyle(fontSize: 11, color: _statusColor(statusName), fontWeight: FontWeight.w600),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Color _statusColor(String status) {
+    return switch (status.toLowerCase()) {
+      'paid' => Colors.green,
+      'pending' => Colors.orange,
+      'overdue' => Colors.red,
+      'cancelled' || 'voided' => Colors.grey,
+      _ => Colors.blue,
+    };
+  }
+
+  IconData _statusIcon(String status) {
+    return switch (status.toLowerCase()) {
+      'paid' => Icons.check_circle,
+      'pending' => Icons.schedule,
+      'overdue' => Icons.warning,
+      'cancelled' || 'voided' => Icons.cancel,
+      _ => Icons.receipt,
+    };
+  }
+
+  String _formatDate(DateTime date) {
+    return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+  }
+}

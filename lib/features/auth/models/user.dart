@@ -7,15 +7,16 @@ class User {
   final String name;
   final String? email;
   final String? phone;
-  final String? passwordHash;
-  final String? pinHash;
   final UserRole? role;
   final String? locale;
-  final bool? isActive;
+  final bool isActive;
   final DateTime? emailVerifiedAt;
   final DateTime? lastLoginAt;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final UserStore? store;
+  final UserOrganization? organization;
+  final List<String>? permissions;
 
   const User({
     required this.id,
@@ -24,55 +25,41 @@ class User {
     required this.name,
     this.email,
     this.phone,
-    this.passwordHash,
-    this.pinHash,
     this.role,
     this.locale,
-    this.isActive,
+    this.isActive = true,
     this.emailVerifiedAt,
     this.lastLoginAt,
     this.createdAt,
     this.updatedAt,
+    this.store,
+    this.organization,
+    this.permissions,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'] as String,
-      storeId: json['store_id'] as String?,
-      organizationId: json['organization_id'] as String?,
+      storeId: json['store_id'] as String? ?? (json['store'] as Map<String, dynamic>?)?['id'] as String?,
+      organizationId: json['organization_id'] as String? ?? (json['organization'] as Map<String, dynamic>?)?['id'] as String?,
       name: json['name'] as String,
       email: json['email'] as String?,
       phone: json['phone'] as String?,
-      passwordHash: json['password_hash'] as String?,
-      pinHash: json['pin_hash'] as String?,
       role: UserRole.tryFromValue(json['role'] as String?),
       locale: json['locale'] as String?,
-      isActive: json['is_active'] as bool?,
+      isActive: json['is_active'] as bool? ?? true,
       emailVerifiedAt: json['email_verified_at'] != null ? DateTime.parse(json['email_verified_at'] as String) : null,
       lastLoginAt: json['last_login_at'] != null ? DateTime.parse(json['last_login_at'] as String) : null,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
+      store: json['store'] != null ? UserStore.fromJson(json['store'] as Map<String, dynamic>) : null,
+      organization: json['organization'] != null ? UserOrganization.fromJson(json['organization'] as Map<String, dynamic>) : null,
+      permissions: (json['permissions'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'store_id': storeId,
-      'organization_id': organizationId,
-      'name': name,
-      'email': email,
-      'phone': phone,
-      'password_hash': passwordHash,
-      'pin_hash': pinHash,
-      'role': role?.value,
-      'locale': locale,
-      'is_active': isActive,
-      'email_verified_at': emailVerifiedAt?.toIso8601String(),
-      'last_login_at': lastLoginAt?.toIso8601String(),
-      'created_at': createdAt?.toIso8601String(),
-      'updated_at': updatedAt?.toIso8601String(),
-    };
+    return {'id': id, 'name': name, 'email': email, 'phone': phone, 'role': role?.value, 'locale': locale, 'is_active': isActive};
   }
 
   User copyWith({
@@ -82,8 +69,6 @@ class User {
     String? name,
     String? email,
     String? phone,
-    String? passwordHash,
-    String? pinHash,
     UserRole? role,
     String? locale,
     bool? isActive,
@@ -91,6 +76,9 @@ class User {
     DateTime? lastLoginAt,
     DateTime? createdAt,
     DateTime? updatedAt,
+    UserStore? store,
+    UserOrganization? organization,
+    List<String>? permissions,
   }) {
     return User(
       id: id ?? this.id,
@@ -99,8 +87,6 @@ class User {
       name: name ?? this.name,
       email: email ?? this.email,
       phone: phone ?? this.phone,
-      passwordHash: passwordHash ?? this.passwordHash,
-      pinHash: pinHash ?? this.pinHash,
       role: role ?? this.role,
       locale: locale ?? this.locale,
       isActive: isActive ?? this.isActive,
@@ -108,17 +94,91 @@ class User {
       lastLoginAt: lastLoginAt ?? this.lastLoginAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      store: store ?? this.store,
+      organization: organization ?? this.organization,
+      permissions: permissions ?? this.permissions,
     );
   }
 
+  bool get isOwner => role == UserRole.owner;
+  bool get isManager => role == UserRole.branchManager || role == UserRole.chainManager;
+
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is User && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is User && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'User(id: $id, storeId: $storeId, organizationId: $organizationId, name: $name, email: $email, phone: $phone, ...)';
+  String toString() => 'User(id: $id, name: $name, email: $email, role: ${role?.value})';
+}
+
+/// Nested store info returned with auth responses.
+class UserStore {
+  final String id;
+  final String name;
+  final String? nameAr;
+  final String? slug;
+  final String? currency;
+  final String? locale;
+  final String? businessType;
+  final bool isMainBranch;
+
+  const UserStore({
+    required this.id,
+    required this.name,
+    this.nameAr,
+    this.slug,
+    this.currency,
+    this.locale,
+    this.businessType,
+    this.isMainBranch = false,
+  });
+
+  factory UserStore.fromJson(Map<String, dynamic> json) {
+    return UserStore(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      nameAr: json['name_ar'] as String?,
+      slug: json['slug'] as String?,
+      currency: json['currency'] as String?,
+      locale: json['locale'] as String?,
+      businessType: json['business_type'] as String?,
+      isMainBranch: json['is_main_branch'] as bool? ?? false,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'name_ar': nameAr,
+    'slug': slug,
+    'currency': currency,
+    'locale': locale,
+    'business_type': businessType,
+    'is_main_branch': isMainBranch,
+  };
+}
+
+/// Nested organization info returned with auth responses.
+class UserOrganization {
+  final String id;
+  final String name;
+  final String? nameAr;
+  final String? slug;
+  final String? country;
+
+  const UserOrganization({required this.id, required this.name, this.nameAr, this.slug, this.country});
+
+  factory UserOrganization.fromJson(Map<String, dynamic> json) {
+    return UserOrganization(
+      id: json['id'] as String,
+      name: json['name'] as String,
+      nameAr: json['name_ar'] as String?,
+      slug: json['slug'] as String?,
+      country: json['country'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {'id': id, 'name': name, 'name_ar': nameAr, 'slug': slug, 'country': country};
 }

@@ -1,6 +1,7 @@
 import 'package:thawani_pos/features/subscription/enums/billing_cycle.dart';
 import 'package:thawani_pos/features/payments/enums/subscription_payment_method.dart';
 import 'package:thawani_pos/features/subscription/enums/subscription_status.dart';
+import 'package:thawani_pos/features/subscription/models/subscription_plan.dart';
 
 class StoreSubscription {
   final String id;
@@ -8,11 +9,13 @@ class StoreSubscription {
   final String subscriptionPlanId;
   final SubscriptionStatus status;
   final BillingCycle? billingCycle;
-  final DateTime currentPeriodStart;
-  final DateTime currentPeriodEnd;
+  final DateTime? currentPeriodStart;
+  final DateTime? currentPeriodEnd;
   final DateTime? trialEndsAt;
   final SubscriptionPaymentMethod? paymentMethod;
   final DateTime? cancelledAt;
+  final DateTime? gracePeriodEndsAt;
+  final SubscriptionPlan? plan;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -22,11 +25,13 @@ class StoreSubscription {
     required this.subscriptionPlanId,
     required this.status,
     this.billingCycle,
-    required this.currentPeriodStart,
-    required this.currentPeriodEnd,
+    this.currentPeriodStart,
+    this.currentPeriodEnd,
     this.trialEndsAt,
     this.paymentMethod,
     this.cancelledAt,
+    this.gracePeriodEndsAt,
+    this.plan,
     this.createdAt,
     this.updatedAt,
   });
@@ -38,11 +43,13 @@ class StoreSubscription {
       subscriptionPlanId: json['subscription_plan_id'] as String,
       status: SubscriptionStatus.fromValue(json['status'] as String),
       billingCycle: BillingCycle.tryFromValue(json['billing_cycle'] as String?),
-      currentPeriodStart: DateTime.parse(json['current_period_start'] as String),
-      currentPeriodEnd: DateTime.parse(json['current_period_end'] as String),
+      currentPeriodStart: json['current_period_start'] != null ? DateTime.parse(json['current_period_start'] as String) : null,
+      currentPeriodEnd: json['current_period_end'] != null ? DateTime.parse(json['current_period_end'] as String) : null,
       trialEndsAt: json['trial_ends_at'] != null ? DateTime.parse(json['trial_ends_at'] as String) : null,
       paymentMethod: SubscriptionPaymentMethod.tryFromValue(json['payment_method'] as String?),
       cancelledAt: json['cancelled_at'] != null ? DateTime.parse(json['cancelled_at'] as String) : null,
+      gracePeriodEndsAt: json['grace_period_ends_at'] != null ? DateTime.parse(json['grace_period_ends_at'] as String) : null,
+      plan: json['plan'] != null ? SubscriptionPlan.fromJson(Map<String, dynamic>.from(json['plan'] as Map)) : null,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
@@ -55,11 +62,12 @@ class StoreSubscription {
       'subscription_plan_id': subscriptionPlanId,
       'status': status.value,
       'billing_cycle': billingCycle?.value,
-      'current_period_start': currentPeriodStart.toIso8601String(),
-      'current_period_end': currentPeriodEnd.toIso8601String(),
+      'current_period_start': currentPeriodStart?.toIso8601String(),
+      'current_period_end': currentPeriodEnd?.toIso8601String(),
       'trial_ends_at': trialEndsAt?.toIso8601String(),
       'payment_method': paymentMethod?.value,
       'cancelled_at': cancelledAt?.toIso8601String(),
+      'grace_period_ends_at': gracePeriodEndsAt?.toIso8601String(),
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
     };
@@ -76,6 +84,8 @@ class StoreSubscription {
     DateTime? trialEndsAt,
     SubscriptionPaymentMethod? paymentMethod,
     DateTime? cancelledAt,
+    DateTime? gracePeriodEndsAt,
+    SubscriptionPlan? plan,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -90,19 +100,22 @@ class StoreSubscription {
       trialEndsAt: trialEndsAt ?? this.trialEndsAt,
       paymentMethod: paymentMethod ?? this.paymentMethod,
       cancelledAt: cancelledAt ?? this.cancelledAt,
+      gracePeriodEndsAt: gracePeriodEndsAt ?? this.gracePeriodEndsAt,
+      plan: plan ?? this.plan,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is StoreSubscription && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is StoreSubscription && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
+  /// Whether the subscription is currently active (active or trial status)
+  bool get isActive => status == SubscriptionStatus.active || status == SubscriptionStatus.trial;
+
   @override
-  String toString() => 'StoreSubscription(id: $id, storeId: $storeId, subscriptionPlanId: $subscriptionPlanId, status: $status, billingCycle: $billingCycle, currentPeriodStart: $currentPeriodStart, ...)';
+  String toString() => 'StoreSubscription(id: $id, storeId: $storeId, status: $status)';
 }

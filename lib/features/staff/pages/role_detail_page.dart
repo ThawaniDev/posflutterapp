@@ -1,0 +1,377 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/features/staff/models/permission.dart';
+import 'package:thawani_pos/features/staff/providers/roles_providers.dart';
+import 'package:thawani_pos/features/staff/providers/roles_state.dart';
+
+class RoleDetailPage extends ConsumerStatefulWidget {
+  final int roleId;
+
+  const RoleDetailPage({super.key, required this.roleId});
+
+  @override
+  ConsumerState<RoleDetailPage> createState() => _RoleDetailPageState();
+}
+
+class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
+  final _formKey = GlobalKey<FormState>();
+  late TextEditingController _nameController;
+  late TextEditingController _displayNameController;
+  late TextEditingController _descriptionController;
+
+  /// Set of currently selected permission IDs
+  final Set<int> _selectedPermissionIds = {};
+  bool _isEditing = false;
+  bool _hasChanges = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController();
+    _displayNameController = TextEditingController();
+    _descriptionController = TextEditingController();
+
+    Future.microtask(() {
+      ref.read(roleDetailProvider(widget.roleId).notifier).load();
+      ref.read(permissionsCatalogProvider.notifier).load();
+    });
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _displayNameController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
+  void _populateForm() {
+    final state = ref.read(roleDetailProvider(widget.roleId));
+    if (state is RoleDetailLoaded) {
+      _nameController.text = state.role.name;
+      _displayNameController.text = state.role.displayName;
+      _descriptionController.text = state.role.description ?? '';
+      _selectedPermissionIds.clear();
+      if (state.role.permissions != null) {
+        _selectedPermissionIds.addAll(state.role.permissions!.map((p) => p.id));
+      }
+    }
+  }
+
+  Future<void> _handleSave() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    await ref
+        .read(roleDetailProvider(widget.roleId).notifier)
+        .update(
+          displayName: _displayNameController.text.trim(),
+          description: _descriptionController.text.trim().isEmpty ? null : _descriptionController.text.trim(),
+          permissionIds: _selectedPermissionIds.toList(),
+        );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final roleState = ref.watch(roleDetailProvider(widget.roleId));
+    final permState = ref.watch(permissionsCatalogProvider);
+
+    // Populate form when role loads
+    ref.listen<RoleDetailState>(roleDetailProvider(widget.roleId), (prev, next) {
+      if (next is RoleDetailLoaded && prev is! RoleDetailLoaded) {
+        _populateForm();
+      }
+      if (next is RoleDetailSaved) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Role updated successfully.')));
+        // Reload the detail to reflect new state
+        ref.read(roleDetailProvider(widget.roleId).notifier).load();
+        // Also refresh the roles list
+        ref.read(rolesProvider.notifier).load();
+        setState(() {
+          _isEditing = false;
+          _hasChanges = false;
+        });
+      }
+      if (next is RoleDetailError) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
+      }
+    });
+
+    final isPredefined = roleState is RoleDetailLoaded && roleState.role.isPredefined == true;
+    final isSaving = roleState is RoleDetailSaving;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(roleState is RoleDetailLoaded ? roleState.role.displayName : 'Role Details'),
+        actions: [
+          if (!isPredefined && !_isEditing)
+            IconButton(icon: const Icon(Icons.edit), tooltip: 'Edit role', onPressed: () => setState(() => _isEditing = true)),
+          if (_isEditing) ...[
+            TextButton(
+              onPressed: () {
+                _populateForm();
+                setState(() {
+                  _isEditing = false;
+                  _hasChanges = false;
+                });
+              },
+              child: const Text('Cancel'),
+            ),
+            const SizedBox(width: AppSpacing.xs),
+            PosButton(label: 'Save', isLoading: isSaving, onPressed: _hasChanges ? _handleSave : null, size: PosButtonSize.sm),
+            const SizedBox(width: AppSpacing.sm),
+          ],
+        ],
+      ),
+      body: _buildBody(roleState, permState),
+    );
+  }
+
+  Widget _buildBody(RoleDetailState roleState, PermissionsState permState) {
+    if (roleState is RoleDetailLoading || roleState is RoleDetailInitial) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (roleState is RoleDetailError) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.error_outline, size: 48, color: AppColors.error),
+            const SizedBox(height: AppSpacing.md),
+            Text(roleState.message),
+            const SizedBox(height: AppSpacing.lg),
+            PosButton(
+              label: 'Retry',
+              onPressed: () => ref.read(roleDetailProvider(widget.roleId).notifier).load(),
+              variant: PosButtonVariant.outline,
+            ),
+          ],
+        ),
+      );
+    }
+
+    final role = roleState is RoleDetailLoaded ? roleState.role : (roleState as RoleDetailSaved).role;
+    final isPredefined = role.isPredefined == true;
+
+    return Form(
+      key: _formKey,
+      child: ListView(
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        children: [
+          // ─── Role Info Section ──────────────────────────────
+          _SectionHeader(title: 'Role Information'),
+          const SizedBox(height: AppSpacing.sm),
+
+          if (isPredefined)
+            Container(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              margin: const EdgeInsets.only(bottom: AppSpacing.md),
+              decoration: BoxDecoration(
+                color: AppColors.info.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: AppColors.info.withValues(alpha: 0.3)),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.info_outline, color: AppColors.info, size: 20),
+                  const SizedBox(width: AppSpacing.sm),
+                  Expanded(
+                    child: Text(
+                      'This is a system-defined role. Its name cannot be changed, '
+                      'but you can customize its permissions.',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.info),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+          // Display Name
+          TextFormField(
+            controller: _displayNameController,
+            enabled: _isEditing && !isPredefined,
+            decoration: const InputDecoration(labelText: 'Display Name', hintText: 'e.g., Branch Manager'),
+            validator: (v) => (v == null || v.trim().isEmpty) ? 'Required' : null,
+            onChanged: (_) => _markChanged(),
+          ),
+          const SizedBox(height: AppSpacing.md),
+
+          // System Name (read-only)
+          TextFormField(
+            controller: _nameController,
+            enabled: false,
+            decoration: const InputDecoration(labelText: 'System Name', helperText: 'Cannot be changed after creation'),
+          ),
+          const SizedBox(height: AppSpacing.md),
+
+          // Description
+          TextFormField(
+            controller: _descriptionController,
+            enabled: _isEditing,
+            decoration: const InputDecoration(labelText: 'Description', hintText: 'What does this role do?'),
+            maxLines: 2,
+            onChanged: (_) => _markChanged(),
+          ),
+          const SizedBox(height: AppSpacing.xl),
+
+          // ─── Permissions Section ────────────────────────────
+          _SectionHeader(
+            title: 'Permissions',
+            trailing: Text(
+              '${_selectedPermissionIds.length} selected',
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+
+          if (permState is PermissionsLoading)
+            const Padding(
+              padding: EdgeInsets.all(AppSpacing.xl),
+              child: Center(child: CircularProgressIndicator()),
+            )
+          else if (permState is PermissionsLoaded)
+            ..._buildPermissionModules(permState.grouped)
+          else if (permState is PermissionsError)
+            Text('Failed to load permissions: ${permState.message}', style: TextStyle(color: AppColors.error)),
+        ],
+      ),
+    );
+  }
+
+  List<Widget> _buildPermissionModules(Map<String, List<Permission>> grouped) {
+    return grouped.entries.map((entry) {
+      final module = entry.key;
+      final permissions = entry.value;
+      final moduleSelected = permissions.where((p) => _selectedPermissionIds.contains(p.id));
+
+      return Card(
+        elevation: 0,
+        margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+          side: BorderSide(color: AppColors.borderLight),
+        ),
+        child: ExpansionTile(
+          leading: Icon(
+            _moduleIcon(module),
+            color: moduleSelected.length == permissions.length ? AppColors.primary : AppColors.textMutedLight,
+          ),
+          title: Text(_formatModule(module), style: Theme.of(context).textTheme.titleSmall),
+          subtitle: Text(
+            '${moduleSelected.length}/${permissions.length} active',
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.textMutedLight),
+          ),
+          trailing: _isEditing
+              ? Checkbox(
+                  value: moduleSelected.length == permissions.length,
+                  tristate: true,
+                  onChanged: (val) {
+                    setState(() {
+                      if (val == true) {
+                        _selectedPermissionIds.addAll(permissions.map((p) => p.id));
+                      } else {
+                        _selectedPermissionIds.removeAll(permissions.map((p) => p.id));
+                      }
+                      _hasChanges = true;
+                    });
+                  },
+                  activeColor: AppColors.primary,
+                )
+              : null,
+          children: permissions.map((perm) {
+            final isSelected = _selectedPermissionIds.contains(perm.id);
+            return CheckboxListTile(
+              value: isSelected,
+              onChanged: _isEditing
+                  ? (val) {
+                      setState(() {
+                        if (val == true) {
+                          _selectedPermissionIds.add(perm.id);
+                        } else {
+                          _selectedPermissionIds.remove(perm.id);
+                        }
+                        _hasChanges = true;
+                      });
+                    }
+                  : null,
+              activeColor: AppColors.primary,
+              title: Text(perm.displayName, style: Theme.of(context).textTheme.bodyMedium),
+              subtitle: perm.requiresPin == true
+                  ? Row(
+                      children: [
+                        Icon(Icons.pin, size: 14, color: AppColors.warning),
+                        const SizedBox(width: 4),
+                        Text(
+                          'Requires PIN override',
+                          style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.warning),
+                        ),
+                      ],
+                    )
+                  : null,
+              dense: true,
+              controlAffinity: ListTileControlAffinity.leading,
+            );
+          }).toList(),
+        ),
+      );
+    }).toList();
+  }
+
+  void _markChanged() {
+    if (!_hasChanges) setState(() => _hasChanges = true);
+  }
+
+  String _formatModule(String module) {
+    return module.split('_').map((w) => w.isNotEmpty ? '${w[0].toUpperCase()}${w.substring(1)}' : w).join(' ');
+  }
+
+  IconData _moduleIcon(String module) {
+    switch (module) {
+      case 'pos':
+        return Icons.point_of_sale;
+      case 'orders':
+        return Icons.receipt_long;
+      case 'inventory':
+        return Icons.inventory_2;
+      case 'catalog':
+        return Icons.category;
+      case 'customers':
+        return Icons.people;
+      case 'reports':
+        return Icons.bar_chart;
+      case 'staff':
+        return Icons.badge;
+      case 'settings':
+        return Icons.settings;
+      case 'accounting':
+        return Icons.account_balance;
+      case 'kitchen':
+        return Icons.restaurant;
+      case 'promotions':
+        return Icons.local_offer;
+      default:
+        return Icons.extension;
+    }
+  }
+}
+
+class _SectionHeader extends StatelessWidget {
+  final String title;
+  final Widget? trailing;
+
+  const _SectionHeader({required this.title, this.trailing});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+        const Spacer(),
+        if (trailing != null) trailing!,
+      ],
+    );
+  }
+}

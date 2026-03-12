@@ -35,4 +35,17 @@ class Routes {
 
   // Staff
   static const String staff = '/staff';
+  static const String staffRoles = '/staff/roles';
+  static const String staffRoleDetail = '/staff/roles/detail'; // + /:id
+  static const String staffRoleCreate = '/staff/roles/create';
+
+  // Onboarding & Store Setup
+  static const String onboarding = '/onboarding';
+  static const String storeSettings = '/store/settings'; // + /:storeId
+  static const String workingHours = '/store/working-hours'; // + /:storeId
+
+  // Subscription
+  static const String planSelection = '/subscription/plans';
+  static const String subscriptionStatus = '/subscription/status';
+  static const String billingHistory = '/subscription/billing';
 }

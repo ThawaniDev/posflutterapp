@@ -2,6 +2,7 @@ class Permission {
   final int id;
   final String name;
   final String displayName;
+  final String? displayNameAr;
   final String module;
   final String guardName;
   final bool? requiresPin;
@@ -12,8 +13,9 @@ class Permission {
     required this.id,
     required this.name,
     required this.displayName,
+    this.displayNameAr,
     required this.module,
-    required this.guardName,
+    this.guardName = 'staff',
     this.requiresPin,
     this.createdAt,
     this.updatedAt,
@@ -24,9 +26,10 @@ class Permission {
       id: (json['id'] as num).toInt(),
       name: json['name'] as String,
       displayName: json['display_name'] as String,
+      displayNameAr: json['display_name_ar'] as String?,
       module: json['module'] as String,
-      guardName: json['guard_name'] as String,
-      requiresPin: json['requires_pin'] as bool?,
+      guardName: json['guard_name'] as String? ?? 'staff',
+      requiresPin: json['requires_pin'] as bool? ?? false,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
@@ -37,6 +40,7 @@ class Permission {
       'id': id,
       'name': name,
       'display_name': displayName,
+      'display_name_ar': displayNameAr,
       'module': module,
       'guard_name': guardName,
       'requires_pin': requiresPin,
@@ -49,6 +53,7 @@ class Permission {
     int? id,
     String? name,
     String? displayName,
+    String? displayNameAr,
     String? module,
     String? guardName,
     bool? requiresPin,
@@ -59,6 +64,7 @@ class Permission {
       id: id ?? this.id,
       name: name ?? this.name,
       displayName: displayName ?? this.displayName,
+      displayNameAr: displayNameAr ?? this.displayNameAr,
       module: module ?? this.module,
       guardName: guardName ?? this.guardName,
       requiresPin: requiresPin ?? this.requiresPin,
@@ -68,13 +74,12 @@ class Permission {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Permission && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is Permission && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'Permission(id: $id, name: $name, displayName: $displayName, module: $module, guardName: $guardName, requiresPin: $requiresPin, ...)';
+  String toString() =>
+      'Permission(id: $id, name: $name, displayName: $displayName, module: $module, guardName: $guardName, requiresPin: $requiresPin, ...)';
 }

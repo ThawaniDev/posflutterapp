@@ -81,11 +81,32 @@ class AppSpacing {
   static const EdgeInsets paddingH12 = EdgeInsets.symmetric(horizontal: md);
   static const EdgeInsets paddingH16 = EdgeInsets.symmetric(horizontal: base);
   static const EdgeInsets paddingH24 = EdgeInsets.symmetric(horizontal: xl);
+  static const EdgeInsets paddingHMd = EdgeInsets.symmetric(horizontal: md);
 
   static const EdgeInsets paddingV4 = EdgeInsets.symmetric(vertical: xs);
   static const EdgeInsets paddingV8 = EdgeInsets.symmetric(vertical: sm);
   static const EdgeInsets paddingV12 = EdgeInsets.symmetric(vertical: md);
   static const EdgeInsets paddingV16 = EdgeInsets.symmetric(vertical: base);
+
+  // ─── Semantic SizedBox Helpers (aliases) ─────────────────
+  static const SizedBox verticalXs = SizedBox(height: xs);
+  static const SizedBox verticalSm = SizedBox(height: sm);
+  static const SizedBox verticalMd = SizedBox(height: md);
+  static const SizedBox verticalLg = SizedBox(height: lg);
+  static const SizedBox verticalXl = SizedBox(height: xl);
+
+  static const SizedBox horizontalXs = SizedBox(width: xs);
+  static const SizedBox horizontalSm = SizedBox(width: sm);
+  static const SizedBox horizontalMd = SizedBox(width: md);
+  static const SizedBox horizontalLg = SizedBox(width: lg);
+  static const SizedBox horizontalXl = SizedBox(width: xl);
+
+  // ─── Semantic EdgeInsets Presets ──────────────────────────
+  static const EdgeInsets paddingAllXs = EdgeInsets.all(xs);
+  static const EdgeInsets paddingAllSm = EdgeInsets.all(sm);
+  static const EdgeInsets paddingAllMd = EdgeInsets.all(md);
+  static const EdgeInsets paddingAllLg = EdgeInsets.all(lg);
+  static const EdgeInsets paddingAllXl = EdgeInsets.all(xl);
 }
 
 /// Border Radius Tokens
