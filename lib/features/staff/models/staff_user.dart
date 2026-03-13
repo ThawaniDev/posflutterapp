@@ -11,7 +11,7 @@ class StaffUser {
   final String? phone;
   final String? photoUrl;
   final String? nationalId;
-  final String pinHash;
+  final String? pinHash;
   final String? nfcBadgeUid;
   final bool? biometricEnabled;
   final EmploymentType employmentType;
@@ -33,7 +33,7 @@ class StaffUser {
     this.phone,
     this.photoUrl,
     this.nationalId,
-    required this.pinHash,
+    this.pinHash,
     this.nfcBadgeUid,
     this.biometricEnabled,
     required this.employmentType,
@@ -57,7 +57,7 @@ class StaffUser {
       phone: json['phone'] as String?,
       photoUrl: json['photo_url'] as String?,
       nationalId: json['national_id'] as String?,
-      pinHash: json['pin_hash'] as String,
+      pinHash: json['pin_hash'] as String?,
       nfcBadgeUid: json['nfc_badge_uid'] as String?,
       biometricEnabled: json['biometric_enabled'] as bool?,
       employmentType: EmploymentType.fromValue(json['employment_type'] as String),
@@ -144,13 +144,12 @@ class StaffUser {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is StaffUser && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is StaffUser && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'StaffUser(id: $id, storeId: $storeId, firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, ...)';
+  String toString() =>
+      'StaffUser(id: $id, storeId: $storeId, firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, ...)';
 }

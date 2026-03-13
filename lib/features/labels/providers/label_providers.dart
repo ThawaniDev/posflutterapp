@@ -1,0 +1,96 @@
+import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/features/labels/providers/label_state.dart';
+import 'package:thawani_pos/features/labels/repositories/label_repository.dart';
+
+// ─── Label Templates Provider ───────────────────────────────────
+
+final labelTemplatesProvider = StateNotifierProvider<LabelTemplatesNotifier, LabelTemplatesState>((ref) {
+  return LabelTemplatesNotifier(ref.watch(labelRepositoryProvider));
+});
+
+class LabelTemplatesNotifier extends StateNotifier<LabelTemplatesState> {
+  final LabelRepository _repo;
+
+  LabelTemplatesNotifier(this._repo) : super(const LabelTemplatesInitial());
+
+  Future<void> load({String? search, String? type}) async {
+    state = const LabelTemplatesLoading();
+    try {
+      final templates = await _repo.listTemplates();
+      state = LabelTemplatesLoaded(templates: templates);
+    } on DioException catch (e) {
+      state = LabelTemplatesError(message: _extractError(e));
+    } catch (e) {
+      state = LabelTemplatesError(message: e.toString());
+    }
+  }
+
+  Future<void> loadPresets() async {
+    try {
+      final presets = await _repo.getPresets();
+      if (state is LabelTemplatesLoaded) {
+        state = (state as LabelTemplatesLoaded).copyWith(presets: presets);
+      }
+    } on DioException catch (e) {
+      state = LabelTemplatesError(message: _extractError(e));
+    }
+  }
+
+  Future<void> deleteTemplate(String id) async {
+    try {
+      await _repo.deleteTemplate(id);
+      await load();
+    } on DioException catch (e) {
+      state = LabelTemplatesError(message: _extractError(e));
+    }
+  }
+}
+
+// ─── Label Detail Provider ──────────────────────────────────────
+
+final labelDetailProvider = StateNotifierProvider.family<LabelDetailNotifier, LabelDetailState, String?>((ref, templateId) {
+  return LabelDetailNotifier(ref.watch(labelRepositoryProvider), templateId);
+});
+
+class LabelDetailNotifier extends StateNotifier<LabelDetailState> {
+  final LabelRepository _repo;
+  final String? _templateId;
+
+  LabelDetailNotifier(this._repo, this._templateId) : super(const LabelDetailInitial());
+
+  Future<void> load() async {
+    if (_templateId == null) return;
+    state = const LabelDetailLoading();
+    try {
+      final template = await _repo.getTemplate(_templateId);
+      state = LabelDetailLoaded(template: template);
+    } on DioException catch (e) {
+      state = LabelDetailError(message: _extractError(e));
+    } catch (e) {
+      state = LabelDetailError(message: e.toString());
+    }
+  }
+
+  Future<void> save(Map<String, dynamic> data) async {
+    state = const LabelDetailSaving();
+    try {
+      final template = _templateId != null ? await _repo.updateTemplate(_templateId, data) : await _repo.createTemplate(data);
+      state = LabelDetailSaved(template: template);
+    } on DioException catch (e) {
+      state = LabelDetailError(message: _extractError(e));
+    } catch (e) {
+      state = LabelDetailError(message: e.toString());
+    }
+  }
+}
+
+// ─── Helper ─────────────────────────────────────────────────────
+
+String _extractError(DioException e) {
+  final data = e.response?.data;
+  if (data is Map<String, dynamic>) {
+    return data['message'] as String? ?? e.message ?? 'Unknown error';
+  }
+  return e.message ?? 'Unknown error';
+}

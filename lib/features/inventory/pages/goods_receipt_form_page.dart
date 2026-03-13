@@ -1,0 +1,164 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/pos_input.dart';
+import 'package:thawani_pos/features/inventory/providers/inventory_providers.dart';
+
+/// Form page to create a new goods receipt.
+class GoodsReceiptFormPage extends ConsumerStatefulWidget {
+  const GoodsReceiptFormPage({super.key});
+
+  @override
+  ConsumerState<GoodsReceiptFormPage> createState() => _GoodsReceiptFormPageState();
+}
+
+class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _refController = TextEditingController();
+  final _notesController = TextEditingController();
+  String? _supplierId;
+  bool _isSaving = false;
+
+  // Dynamic line items
+  final List<_LineItem> _items = [_LineItem()];
+
+  @override
+  void dispose() {
+    _refController.dispose();
+    _notesController.dispose();
+    for (final item in _items) {
+      item.dispose();
+    }
+    super.dispose();
+  }
+
+  void _addItem() {
+    setState(() => _items.add(_LineItem()));
+  }
+
+  void _removeItem(int index) {
+    if (_items.length > 1) {
+      setState(() {
+        _items[index].dispose();
+        _items.removeAt(index);
+      });
+    }
+  }
+
+  Future<void> _handleSave() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _isSaving = true);
+
+    final data = <String, dynamic>{
+      'reference_number': _refController.text.isNotEmpty ? _refController.text : null,
+      if (_supplierId != null) 'supplier_id': _supplierId,
+      'notes': _notesController.text.isNotEmpty ? _notesController.text : null,
+      'items': _items.map((item) => item.toJson()).toList(),
+    };
+
+    try {
+      await ref.read(goodsReceiptsProvider.notifier).createReceipt(data);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Goods receipt created as draft.')));
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+      }
+    } finally {
+      if (mounted) setState(() => _isSaving = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('New Goods Receipt')),
+      body: Form(
+        key: _formKey,
+        child: ListView(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          children: [
+            PosTextField(controller: _refController, label: 'Reference Number', hint: 'Optional reference / PO number'),
+            const SizedBox(height: AppSpacing.md),
+            PosTextField(controller: _notesController, label: 'Notes', hint: 'Optional notes', maxLines: 2),
+            const SizedBox(height: AppSpacing.lg),
+            Text('Line Items', style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: AppSpacing.sm),
+            ..._items.asMap().entries.map((entry) {
+              final index = entry.key;
+              final item = entry.value;
+              return Card(
+                margin: const EdgeInsets.only(bottom: AppSpacing.md),
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text('Item ${index + 1}', style: Theme.of(context).textTheme.titleSmall),
+                          const Spacer(),
+                          if (_items.length > 1)
+                            IconButton(icon: const Icon(Icons.delete_outline, size: 20), onPressed: () => _removeItem(index)),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      PosTextField(controller: item.productIdController, label: 'Product ID', hint: 'Enter product UUID'),
+                      const SizedBox(height: AppSpacing.sm),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PosTextField(
+                              controller: item.quantityController,
+                              label: 'Quantity',
+                              hint: '0',
+                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.md),
+                          Expanded(
+                            child: PosTextField(
+                              controller: item.unitCostController,
+                              label: 'Unit Cost',
+                              hint: '0.00',
+                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }),
+            PosButton(label: 'Add Item', icon: Icons.add, variant: PosButtonVariant.outline, onPressed: _addItem),
+            const SizedBox(height: AppSpacing.xl),
+            PosButton(label: _isSaving ? 'Saving...' : 'Create Receipt', onPressed: _isSaving ? null : _handleSave),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LineItem {
+  final productIdController = TextEditingController();
+  final quantityController = TextEditingController();
+  final unitCostController = TextEditingController();
+
+  void dispose() {
+    productIdController.dispose();
+    quantityController.dispose();
+    unitCostController.dispose();
+  }
+
+  Map<String, dynamic> toJson() => {
+    'product_id': productIdController.text,
+    'quantity': double.tryParse(quantityController.text) ?? 0,
+    'unit_cost': double.tryParse(unitCostController.text) ?? 0,
+  };
+}

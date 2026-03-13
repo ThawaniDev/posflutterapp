@@ -8,6 +8,14 @@ enum PromotionType {
   const PromotionType(this.value);
   final String value;
 
+  String get label => switch (this) {
+    percentage => 'Percentage',
+    fixedAmount => 'Fixed Amount',
+    bogo => 'Buy One Get One',
+    bundle => 'Bundle',
+    happyHour => 'Happy Hour',
+  };
+
   static PromotionType fromValue(String value) {
     return PromotionType.values.firstWhere(
       (e) => e.value == value,

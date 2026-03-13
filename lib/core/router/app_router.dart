@@ -10,9 +10,23 @@ import 'package:thawani_pos/features/catalog/pages/category_list_page.dart';
 import 'package:thawani_pos/features/catalog/pages/product_form_page.dart';
 import 'package:thawani_pos/features/catalog/pages/product_list_page.dart';
 import 'package:thawani_pos/features/catalog/pages/supplier_list_page.dart';
+import 'package:thawani_pos/features/customers/pages/customer_list_page.dart';
+import 'package:thawani_pos/features/inventory/pages/goods_receipt_form_page.dart';
+import 'package:thawani_pos/features/inventory/pages/goods_receipts_page.dart';
+import 'package:thawani_pos/features/inventory/pages/inventory_page.dart';
+import 'package:thawani_pos/features/inventory/pages/purchase_orders_page.dart';
+import 'package:thawani_pos/features/inventory/pages/recipes_page.dart';
+import 'package:thawani_pos/features/inventory/pages/stock_adjustments_page.dart';
+import 'package:thawani_pos/features/inventory/pages/stock_levels_page.dart';
+import 'package:thawani_pos/features/inventory/pages/stock_movements_page.dart';
+import 'package:thawani_pos/features/inventory/pages/stock_transfers_page.dart';
+import 'package:thawani_pos/features/labels/pages/label_list_page.dart';
 import 'package:thawani_pos/features/onboarding/pages/onboarding_wizard_page.dart';
 import 'package:thawani_pos/features/onboarding/pages/store_settings_page.dart';
 import 'package:thawani_pos/features/onboarding/pages/working_hours_page.dart';
+import 'package:thawani_pos/features/orders/pages/order_list_page.dart';
+import 'package:thawani_pos/features/payments/pages/cash_sessions_page.dart';
+import 'package:thawani_pos/features/pos_terminal/pages/pos_sessions_page.dart';
 import 'package:thawani_pos/features/staff/pages/role_create_page.dart';
 import 'package:thawani_pos/features/staff/pages/role_detail_page.dart';
 import 'package:thawani_pos/features/staff/pages/roles_list_page.dart';
@@ -82,6 +96,32 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(path: Routes.categories, name: 'categories', builder: (context, state) => const CategoryListPage()),
       GoRoute(path: Routes.suppliers, name: 'suppliers', builder: (context, state) => const SupplierListPage()),
+
+      // ─── Inventory ────────────────────────────────
+      GoRoute(path: Routes.inventory, name: 'inventory', builder: (context, state) => const InventoryPage()),
+      GoRoute(path: Routes.stockLevels, name: 'stockLevels', builder: (context, state) => const StockLevelsPage()),
+      GoRoute(path: Routes.stockMovements, name: 'stockMovements', builder: (context, state) => const StockMovementsPage()),
+      GoRoute(path: Routes.goodsReceipts, name: 'goodsReceipts', builder: (context, state) => const GoodsReceiptsPage()),
+      GoRoute(path: Routes.goodsReceiptsAdd, name: 'goodsReceiptsAdd', builder: (context, state) => const GoodsReceiptFormPage()),
+      GoRoute(path: Routes.stockAdjustments, name: 'stockAdjustments', builder: (context, state) => const StockAdjustmentsPage()),
+      GoRoute(path: Routes.stockTransfers, name: 'stockTransfers', builder: (context, state) => const StockTransfersPage()),
+      GoRoute(path: Routes.purchaseOrders, name: 'purchaseOrders', builder: (context, state) => const PurchaseOrdersPage()),
+      GoRoute(path: Routes.recipes, name: 'recipes', builder: (context, state) => const RecipesPage()),
+
+      // ─── POS Terminal ─────────────────────────────
+      GoRoute(path: Routes.posSessions, name: 'posSessions', builder: (context, state) => const PosSessionsPage()),
+
+      // ─── Orders ───────────────────────────────────
+      GoRoute(path: Routes.orders, name: 'orders', builder: (context, state) => const OrderListPage()),
+
+      // ─── Payments ─────────────────────────────────
+      GoRoute(path: Routes.cashSessions, name: 'cashSessions', builder: (context, state) => const CashSessionsPage()),
+
+      // ─── Customers ────────────────────────────────
+      GoRoute(path: Routes.customers, name: 'customers', builder: (context, state) => const CustomerListPage()),
+
+      // ─── Labels ───────────────────────────────────
+      GoRoute(path: Routes.labels, name: 'labels', builder: (context, state) => const LabelListPage()),
 
       // ─── Staff / Roles ────────────────────────────
       GoRoute(path: Routes.staffRoles, name: 'staffRoles', builder: (context, state) => const RolesListPage()),

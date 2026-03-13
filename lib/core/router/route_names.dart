@@ -11,6 +11,7 @@ class Routes {
   static const String pos = '/pos';
   static const String posCheckout = '/pos/checkout';
   static const String posShiftOpen = '/pos/shift/open';
+  static const String posSessions = '/pos/sessions';
 
   // Catalog
   static const String products = '/products';
@@ -21,13 +22,26 @@ class Routes {
 
   // Inventory
   static const String inventory = '/inventory';
-  static const String stockAdjustments = '/inventory/adjustments';
+  static const String stockLevels = '/inventory/stock-levels';
+  static const String stockMovements = '/inventory/stock-movements';
+  static const String goodsReceipts = '/inventory/goods-receipts';
+  static const String goodsReceiptsAdd = '/inventory/goods-receipts/add';
+  static const String stockAdjustments = '/inventory/stock-adjustments';
+  static const String stockTransfers = '/inventory/stock-transfers';
+  static const String purchaseOrders = '/inventory/purchase-orders';
+  static const String recipes = '/inventory/recipes';
 
   // Orders
   static const String orders = '/orders';
 
+  // Payments
+  static const String cashSessions = '/cash-sessions';
+
   // Customers
   static const String customers = '/customers';
+
+  // Labels
+  static const String labels = '/labels';
 
   // Reports
   static const String reports = '/reports';
