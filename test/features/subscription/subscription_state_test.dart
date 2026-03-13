@@ -124,7 +124,7 @@ void main() {
     });
 
     test('InvoicesLoaded with invoices', () {
-      final invoices = [Invoice(id: 'inv-1', invoiceNumber: 'INV-001', amount: 29.99, total: 34.49, currency: 'SAR')];
+      final invoices = [Invoice(id: 'inv-1', invoiceNumber: 'INV-001', amount: 29.99, total: 34.49)];
 
       final state = InvoicesLoaded(invoices: invoices);
       expect(state.invoices, hasLength(1));

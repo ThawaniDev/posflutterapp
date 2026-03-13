@@ -6,6 +6,10 @@ import 'package:thawani_pos/features/auth/pages/pin_login_page.dart';
 import 'package:thawani_pos/features/auth/pages/register_page.dart';
 import 'package:thawani_pos/features/auth/providers/auth_providers.dart';
 import 'package:thawani_pos/features/auth/providers/auth_state.dart';
+import 'package:thawani_pos/features/catalog/pages/category_list_page.dart';
+import 'package:thawani_pos/features/catalog/pages/product_form_page.dart';
+import 'package:thawani_pos/features/catalog/pages/product_list_page.dart';
+import 'package:thawani_pos/features/catalog/pages/supplier_list_page.dart';
 import 'package:thawani_pos/features/onboarding/pages/onboarding_wizard_page.dart';
 import 'package:thawani_pos/features/onboarding/pages/store_settings_page.dart';
 import 'package:thawani_pos/features/onboarding/pages/working_hours_page.dart';
@@ -64,6 +68,20 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         name: 'pos',
         builder: (context, state) => const Scaffold(body: Center(child: Text('POS Terminal — Phase 2'))),
       ),
+
+      // ─── Catalog ──────────────────────────────────
+      GoRoute(path: Routes.products, name: 'products', builder: (context, state) => const ProductListPage()),
+      GoRoute(path: Routes.productsAdd, name: 'productsAdd', builder: (context, state) => const ProductFormPage()),
+      GoRoute(
+        path: '${Routes.products}/:id',
+        name: 'productsEdit',
+        builder: (context, state) {
+          final id = state.pathParameters['id']!;
+          return ProductFormPage(productId: id);
+        },
+      ),
+      GoRoute(path: Routes.categories, name: 'categories', builder: (context, state) => const CategoryListPage()),
+      GoRoute(path: Routes.suppliers, name: 'suppliers', builder: (context, state) => const SupplierListPage()),
 
       // ─── Staff / Roles ────────────────────────────
       GoRoute(path: Routes.staffRoles, name: 'staffRoles', builder: (context, state) => const RolesListPage()),

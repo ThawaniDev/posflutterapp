@@ -105,8 +105,8 @@ final _testSubscription = StoreSubscription(
 );
 
 final _testInvoices = [
-  Invoice(id: 'inv-1', invoiceNumber: 'INV-001', amount: 29.99, tax: 4.50, total: 34.49, currency: 'SAR'),
-  Invoice(id: 'inv-2', invoiceNumber: 'INV-002', amount: 29.99, tax: 4.50, total: 34.49, currency: 'SAR'),
+  Invoice(id: 'inv-1', invoiceNumber: 'INV-001', amount: 29.99, tax: 4.50, total: 34.49),
+  Invoice(id: 'inv-2', invoiceNumber: 'INV-002', amount: 29.99, tax: 4.50, total: 34.49),
 ];
 
 void main() {

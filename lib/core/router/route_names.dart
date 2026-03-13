@@ -15,7 +15,9 @@ class Routes {
   // Catalog
   static const String products = '/products';
   static const String productsAdd = '/products/add';
+  static const String productsEdit = '/products'; // + /:id
   static const String categories = '/categories';
+  static const String suppliers = '/suppliers';
 
   // Inventory
   static const String inventory = '/inventory';

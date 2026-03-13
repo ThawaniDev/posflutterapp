@@ -25,12 +25,12 @@ void main() {
         'is_highlighted': true,
         'sort_order': 2,
         'features': [
-          {'key': 'pos', 'label': 'Point of Sale', 'enabled': true},
-          {'key': 'inventory', 'label': 'Inventory', 'enabled': true},
+          {'feature_key': 'pos', 'is_enabled': true},
+          {'feature_key': 'inventory', 'is_enabled': true},
         ],
         'limits': [
-          {'key': 'products', 'value': 500},
-          {'key': 'staff', 'value': 10},
+          {'limit_key': 'products', 'limit_value': 500, 'price_per_extra_unit': null},
+          {'limit_key': 'staff', 'limit_value': 10, 'price_per_extra_unit': null},
         ],
         'created_at': '2024-01-01T00:00:00.000Z',
         'updated_at': '2024-06-15T10:30:00.000Z',
@@ -70,12 +70,7 @@ void main() {
     });
 
     test('fromJson handles null optional fields', () {
-      final json = {
-        'id': 'plan-1',
-        'name': 'Free',
-        'monthly_price': 0.0,
-        'annual_price': 0.0,
-      };
+      final json = {'id': 'plan-1', 'name': 'Free', 'monthly_price': 0.0, 'annual_price': 0.0};
 
       final plan = SubscriptionPlan.fromJson(json);
       expect(plan.nameAr, isNull);
@@ -111,13 +106,7 @@ void main() {
     });
 
     test('annualSavings calculates correctly', () {
-      final plan = SubscriptionPlan(
-        id: 'plan-1',
-        name: 'Pro',
-        monthlyPrice: 100.0,
-        annualPrice: 1000.0,
-        isActive: true,
-      );
+      final plan = SubscriptionPlan(id: 'plan-1', name: 'Pro', monthlyPrice: 100.0, annualPrice: 1000.0, isActive: true);
 
       // Annual vs 12 months: 1200 - 1000 = 200 savings
       if (plan.annualPrice != null) {
@@ -143,12 +132,7 @@ void main() {
         'grace_period_ends_at': null,
         'created_at': '2024-01-01T00:00:00.000Z',
         'updated_at': '2024-06-15T10:30:00.000Z',
-        'plan': {
-          'id': 'plan-uuid-1',
-          'name': 'Professional',
-          'monthly_price': 29.99,
-          'annual_price': 299.99,
-        },
+        'plan': {'id': 'plan-uuid-1', 'name': 'Professional', 'monthly_price': 29.99, 'annual_price': 299.99},
       };
 
       final sub = StoreSubscription.fromJson(json);
@@ -169,12 +153,7 @@ void main() {
 
     test('fromJson parses all subscription statuses', () {
       for (final status in ['trial', 'active', 'grace', 'cancelled', 'expired']) {
-        final json = {
-          'id': 'sub-1',
-          'store_id': 'store-1',
-          'subscription_plan_id': 'plan-1',
-          'status': status,
-        };
+        final json = {'id': 'sub-1', 'store_id': 'store-1', 'subscription_plan_id': 'plan-1', 'status': status};
         final sub = StoreSubscription.fromJson(json);
         expect(sub.status, isNotNull, reason: 'Status "$status" should parse');
       }
@@ -195,12 +174,7 @@ void main() {
     });
 
     test('fromJson handles null optional dates', () {
-      final json = {
-        'id': 'sub-1',
-        'store_id': 'store-1',
-        'subscription_plan_id': 'plan-1',
-        'status': 'trial',
-      };
+      final json = {'id': 'sub-1', 'store_id': 'store-1', 'subscription_plan_id': 'plan-1', 'status': 'trial'};
 
       final sub = StoreSubscription.fromJson(json);
       expect(sub.cancelledAt, isNull);
@@ -209,12 +183,7 @@ void main() {
     });
 
     test('fromJson handles unknown status gracefully', () {
-      final json = {
-        'id': 'sub-1',
-        'store_id': 'store-1',
-        'subscription_plan_id': 'plan-1',
-        'status': 'unknown_status',
-      };
+      final json = {'id': 'sub-1', 'store_id': 'store-1', 'subscription_plan_id': 'plan-1', 'status': 'unknown_status'};
 
       // Due to fromValue (throws) vs tryFromValue (null), check behavior
       // Status uses fromValue which throws — or if it uses tryFromValue, returns null
@@ -260,20 +229,14 @@ void main() {
     test('fromJson parses full payload', () {
       final json = {
         'id': 'inv-uuid-1',
-        'store_subscription_id': 'sub-uuid-1',
-        'store_id': 'store-uuid-1',
         'invoice_number': 'INV-2024-001',
         'amount': 29.99,
         'tax': 4.50,
         'total': 34.49,
         'status': 'paid',
-        'currency': 'SAR',
-        'description': 'Monthly subscription - Professional',
         'pdf_url': 'https://example.com/invoices/inv-1.pdf',
         'due_date': '2024-02-15T00:00:00.000Z',
         'paid_at': '2024-02-10T10:00:00.000Z',
-        'billing_period_start': '2024-01-01T00:00:00.000Z',
-        'billing_period_end': '2024-02-01T00:00:00.000Z',
         'created_at': '2024-01-01T00:00:00.000Z',
         'line_items': [
           {
@@ -294,30 +257,20 @@ void main() {
       expect(invoice.amount, 29.99);
       expect(invoice.tax, 4.50);
       expect(invoice.total, 34.49);
-      expect(invoice.currency, 'SAR');
       expect(invoice.pdfUrl, isNotNull);
       expect(invoice.lineItems, isNotNull);
       expect(invoice.lineItems!.length, 1);
     });
 
     test('fromJson handles null tax', () {
-      final json = {
-        'id': 'inv-1',
-        'amount': 10.0,
-        'total': 10.0,
-      };
+      final json = {'id': 'inv-1', 'amount': 10.0, 'total': 10.0};
 
       final invoice = Invoice.fromJson(json);
       expect(invoice.tax, isNull);
     });
 
     test('fromJson casts integer amounts to double', () {
-      final json = {
-        'id': 'inv-1',
-        'amount': 100,
-        'tax': 15,
-        'total': 115,
-      };
+      final json = {'id': 'inv-1', 'amount': 100, 'tax': 15, 'total': 115};
 
       final invoice = Invoice.fromJson(json);
       expect(invoice.amount, 100.0);
@@ -326,11 +279,7 @@ void main() {
     });
 
     test('fromJson handles null line_items', () {
-      final json = {
-        'id': 'inv-1',
-        'amount': 10.0,
-        'total': 10.0,
-      };
+      final json = {'id': 'inv-1', 'amount': 10.0, 'total': 10.0};
 
       final invoice = Invoice.fromJson(json);
       expect(invoice.lineItems, isNull);
@@ -359,26 +308,14 @@ void main() {
     });
 
     test('fromJson handles optional quantity', () {
-      final json = {
-        'id': 'item-1',
-        'invoice_id': 'inv-1',
-        'description': 'Credit',
-        'unit_price': 10.0,
-        'total': 10.0,
-      };
+      final json = {'id': 'item-1', 'invoice_id': 'inv-1', 'description': 'Credit', 'unit_price': 10.0, 'total': 10.0};
 
       final item = InvoiceLineItem.fromJson(json);
       expect(item.quantity, isNull);
     });
 
     test('fromJson casts price ints to double', () {
-      final json = {
-        'id': 'item-1',
-        'invoice_id': 'inv-1',
-        'description': 'Test',
-        'unit_price': 50,
-        'total': 50,
-      };
+      final json = {'id': 'item-1', 'invoice_id': 'inv-1', 'description': 'Test', 'unit_price': 50, 'total': 50};
 
       final item = InvoiceLineItem.fromJson(json);
       expect(item.unitPrice, 50.0);
@@ -391,8 +328,7 @@ void main() {
       expect(SubscriptionStatus.fromValue('trial'), SubscriptionStatus.trial);
       expect(SubscriptionStatus.fromValue('active'), SubscriptionStatus.active);
       expect(SubscriptionStatus.fromValue('grace'), SubscriptionStatus.grace);
-      expect(
-          SubscriptionStatus.fromValue('cancelled'), SubscriptionStatus.cancelled);
+      expect(SubscriptionStatus.fromValue('cancelled'), SubscriptionStatus.cancelled);
       expect(SubscriptionStatus.fromValue('expired'), SubscriptionStatus.expired);
     });
 
@@ -423,17 +359,13 @@ void main() {
 
   group('SubscriptionPaymentMethod', () {
     test('fromValue parses all methods', () {
-      expect(SubscriptionPaymentMethod.fromValue('credit_card'),
-          SubscriptionPaymentMethod.creditCard);
-      expect(SubscriptionPaymentMethod.fromValue('mada'),
-          SubscriptionPaymentMethod.mada);
-      expect(SubscriptionPaymentMethod.fromValue('bank_transfer'),
-          SubscriptionPaymentMethod.bankTransfer);
+      expect(SubscriptionPaymentMethod.fromValue('credit_card'), SubscriptionPaymentMethod.creditCard);
+      expect(SubscriptionPaymentMethod.fromValue('mada'), SubscriptionPaymentMethod.mada);
+      expect(SubscriptionPaymentMethod.fromValue('bank_transfer'), SubscriptionPaymentMethod.bankTransfer);
     });
 
     test('fromValue throws for invalid', () {
-      expect(
-          () => SubscriptionPaymentMethod.fromValue('bitcoin'), throwsArgumentError);
+      expect(() => SubscriptionPaymentMethod.fromValue('bitcoin'), throwsArgumentError);
     });
 
     test('tryFromValue returns null for invalid', () {

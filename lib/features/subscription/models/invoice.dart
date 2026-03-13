@@ -3,13 +3,10 @@ import 'package:thawani_pos/features/subscription/models/invoice_line_item.dart'
 
 class Invoice {
   final String id;
-  final String? storeSubscriptionId;
   final String? invoiceNumber;
   final double amount;
   final double? tax;
   final double total;
-  final String? currency;
-  final String? description;
   final InvoiceStatus? status;
   final DateTime? dueDate;
   final DateTime? paidAt;
@@ -20,13 +17,10 @@ class Invoice {
 
   const Invoice({
     required this.id,
-    this.storeSubscriptionId,
     this.invoiceNumber,
     required this.amount,
     this.tax,
     required this.total,
-    this.currency,
-    this.description,
     this.status,
     this.dueDate,
     this.paidAt,
@@ -39,13 +33,10 @@ class Invoice {
   factory Invoice.fromJson(Map<String, dynamic> json) {
     return Invoice(
       id: json['id'] as String,
-      storeSubscriptionId: json['store_subscription_id'] as String?,
       invoiceNumber: json['invoice_number'] as String?,
       amount: (json['amount'] as num).toDouble(),
       tax: (json['tax'] as num?)?.toDouble(),
       total: (json['total'] as num).toDouble(),
-      currency: json['currency'] as String?,
-      description: json['description'] as String?,
       status: json['status'] != null ? InvoiceStatus.fromValue(json['status'] as String) : null,
       dueDate: json['due_date'] != null ? DateTime.parse(json['due_date'] as String) : null,
       paidAt: json['paid_at'] != null ? DateTime.parse(json['paid_at'] as String) : null,
@@ -61,13 +52,10 @@ class Invoice {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'store_subscription_id': storeSubscriptionId,
       'invoice_number': invoiceNumber,
       'amount': amount,
       'tax': tax,
       'total': total,
-      'currency': currency,
-      'description': description,
       'status': status?.value,
       'due_date': dueDate?.toIso8601String(),
       'paid_at': paidAt?.toIso8601String(),
@@ -80,13 +68,10 @@ class Invoice {
 
   Invoice copyWith({
     String? id,
-    String? storeSubscriptionId,
     String? invoiceNumber,
     double? amount,
     double? tax,
     double? total,
-    String? currency,
-    String? description,
     InvoiceStatus? status,
     DateTime? dueDate,
     DateTime? paidAt,
@@ -97,13 +82,10 @@ class Invoice {
   }) {
     return Invoice(
       id: id ?? this.id,
-      storeSubscriptionId: storeSubscriptionId ?? this.storeSubscriptionId,
       invoiceNumber: invoiceNumber ?? this.invoiceNumber,
       amount: amount ?? this.amount,
       tax: tax ?? this.tax,
       total: total ?? this.total,
-      currency: currency ?? this.currency,
-      description: description ?? this.description,
       status: status ?? this.status,
       dueDate: dueDate ?? this.dueDate,
       paidAt: paidAt ?? this.paidAt,
