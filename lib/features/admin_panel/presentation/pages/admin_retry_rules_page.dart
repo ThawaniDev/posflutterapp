@@ -1,0 +1,202 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
+import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+
+class AdminRetryRulesPage extends ConsumerStatefulWidget {
+  const AdminRetryRulesPage({super.key});
+
+  @override
+  ConsumerState<AdminRetryRulesPage> createState() => _AdminRetryRulesPageState();
+}
+
+class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
+  final _maxRetriesCtrl = TextEditingController();
+  final _intervalCtrl = TextEditingController();
+  final _graceCtrl = TextEditingController();
+  bool _loaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => ref.read(retryRulesProvider.notifier).loadRules());
+  }
+
+  @override
+  void dispose() {
+    _maxRetriesCtrl.dispose();
+    _intervalCtrl.dispose();
+    _graceCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(retryRulesProvider);
+
+    // Populate fields on first load
+    if (state is RetryRulesLoaded && !_loaded) {
+      _maxRetriesCtrl.text = '${state.maxRetries}';
+      _intervalCtrl.text = '${state.retryIntervalHours}';
+      _graceCtrl.text = '${state.gracePeriodDays}';
+      _loaded = true;
+    }
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Payment Retry Rules'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      body: switch (state) {
+        RetryRulesLoading() => const Center(child: CircularProgressIndicator()),
+        RetryRulesLoaded() => SingleChildScrollView(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Row(
+                        children: [
+                          Icon(Icons.settings, color: AppColors.primary),
+                          SizedBox(width: 8),
+                          Text('Retry Configuration', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+                      const Text(
+                        'Configure how failed payments should be retried automatically.',
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      const SizedBox(height: AppSpacing.lg),
+
+                      // Max retries
+                      TextField(
+                        controller: _maxRetriesCtrl,
+                        decoration: const InputDecoration(
+                          labelText: 'Maximum Retries',
+                          helperText: 'Number of retry attempts (1-10)',
+                          prefixIcon: Icon(Icons.replay),
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+
+                      // Retry interval
+                      TextField(
+                        controller: _intervalCtrl,
+                        decoration: const InputDecoration(
+                          labelText: 'Retry Interval (hours)',
+                          helperText: 'Time between retry attempts (1-168 hours)',
+                          prefixIcon: Icon(Icons.timer),
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+
+                      // Grace period
+                      TextField(
+                        controller: _graceCtrl,
+                        decoration: const InputDecoration(
+                          labelText: 'Grace Period (days)',
+                          helperText: 'Days after failure before suspension (1-30)',
+                          prefixIcon: Icon(Icons.hourglass_empty),
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                      ),
+                      const SizedBox(height: AppSpacing.lg),
+
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                          ),
+                          onPressed: _saveRules,
+                          child: const Text('Save Rules', style: TextStyle(fontSize: 16)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: AppSpacing.md),
+
+              // Info card
+              Card(
+                color: Colors.blue.shade50,
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(Icons.info_outline, color: Colors.blue.shade700),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'How retry rules work',
+                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue.shade700),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'When a payment fails, the system will automatically '
+                              'retry up to the configured number of times, waiting '
+                              'the specified interval between attempts. If all retries '
+                              'fail, the subscription enters a grace period before '
+                              'being suspended.',
+                              style: TextStyle(fontSize: 13, color: Colors.blue.shade900),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        RetryRulesError(message: final msg) => Center(child: Text('Error: $msg')),
+        _ => const Center(child: CircularProgressIndicator()),
+      },
+    );
+  }
+
+  void _saveRules() async {
+    final maxRetries = int.tryParse(_maxRetriesCtrl.text);
+    final interval = int.tryParse(_intervalCtrl.text);
+    final grace = int.tryParse(_graceCtrl.text);
+
+    if (maxRetries == null || interval == null || grace == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter valid numbers')));
+      return;
+    }
+
+    try {
+      await ref
+          .read(retryRulesProvider.notifier)
+          .updateRules(maxRetries: maxRetries, retryIntervalHours: interval, gracePeriodDays: grace);
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Retry rules updated successfully'), backgroundColor: Colors.green));
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to save: $e'), backgroundColor: Colors.red));
+      }
+    }
+  }
+}

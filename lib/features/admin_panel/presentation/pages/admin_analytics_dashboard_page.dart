@@ -1,0 +1,131 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
+import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+
+class AdminAnalyticsDashboardPage extends ConsumerStatefulWidget {
+  const AdminAnalyticsDashboardPage({super.key});
+
+  @override
+  ConsumerState<AdminAnalyticsDashboardPage> createState() => _AdminAnalyticsDashboardPageState();
+}
+
+class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDashboardPage> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => ref.read(analyticsDashboardProvider.notifier).load());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(analyticsDashboardProvider);
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Analytics Dashboard'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      body: switch (state) {
+        AnalyticsDashboardLoading() => const Center(child: CircularProgressIndicator()),
+        AnalyticsDashboardLoaded(kpi: final kpi, recentActivity: final activity) => RefreshIndicator(
+          onRefresh: () => ref.read(analyticsDashboardProvider.notifier).load(),
+          child: ListView(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            children: [
+              // KPI Cards
+              const Text('Key Metrics', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const SizedBox(height: AppSpacing.sm),
+              _buildKpiGrid(kpi),
+              const SizedBox(height: AppSpacing.lg),
+
+              // Recent Activity
+              const Text('Recent Activity', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const SizedBox(height: AppSpacing.sm),
+              ...activity.map(
+                (a) => Card(
+                  margin: const EdgeInsets.only(bottom: AppSpacing.xs),
+                  child: ListTile(
+                    leading: const Icon(Icons.history, color: AppColors.primary),
+                    title: Text(a['action'] as String? ?? ''),
+                    subtitle: Text(a['entity_type'] as String? ?? ''),
+                    trailing: Text(_formatDate(a['created_at']), style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        AnalyticsDashboardError(message: final msg) => Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Error: $msg'),
+              const SizedBox(height: AppSpacing.sm),
+              ElevatedButton(onPressed: () => ref.read(analyticsDashboardProvider.notifier).load(), child: const Text('Retry')),
+            ],
+          ),
+        ),
+        _ => const Center(child: Text('Loading analytics...')),
+      },
+    );
+  }
+
+  Widget _buildKpiGrid(Map<String, dynamic> kpi) {
+    final items = [
+      _KpiItem('Active Stores', '${kpi['total_active_stores'] ?? 0}', Icons.store, Colors.blue),
+      _KpiItem('MRR', '\$${(kpi['mrr'] as num? ?? 0).toStringAsFixed(2)}', Icons.attach_money, Colors.green),
+      _KpiItem('New Signups', '${kpi['new_signups_this_month'] ?? 0}', Icons.person_add, Colors.orange),
+      _KpiItem('Churn Rate', '${kpi['churn_rate'] ?? 0}%', Icons.trending_down, Colors.red),
+      _KpiItem('Total Orders', '${kpi['total_orders'] ?? 0}', Icons.shopping_cart, Colors.purple),
+      _KpiItem('Total GMV', '\$${(kpi['total_gmv'] as num? ?? 0).toStringAsFixed(2)}', Icons.payments, Colors.teal),
+      _KpiItem('ZATCA Compliance', '${kpi['zatca_compliance_rate'] ?? 100}%', Icons.verified, Colors.indigo),
+    ];
+
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 1.6,
+        crossAxisSpacing: AppSpacing.sm,
+        mainAxisSpacing: AppSpacing.sm,
+      ),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        final item = items[index];
+        return Card(
+          elevation: 2,
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.sm),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(item.icon, color: item.color, size: 24),
+                const SizedBox(height: 4),
+                Text(
+                  item.value,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: item.color),
+                ),
+                Text(item.label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  String _formatDate(dynamic date) {
+    if (date == null) return '';
+    return date.toString().substring(0, 10);
+  }
+}
+
+class _KpiItem {
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color color;
+  const _KpiItem(this.label, this.value, this.icon, this.color);
+}

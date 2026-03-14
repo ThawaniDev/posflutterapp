@@ -64,4 +64,57 @@ class Routes {
   static const String planSelection = '/subscription/plans';
   static const String subscriptionStatus = '/subscription/status';
   static const String billingHistory = '/subscription/billing';
+
+  // Admin Panel
+  static const String adminStores = '/admin/stores';
+  static const String adminStoreDetail = '/admin/stores'; // + /:id
+  static const String adminRegistrations = '/admin/registrations';
+  static const String adminNotes = '/admin/notes'; // + /:organizationId
+
+  // Admin Panel – Platform Roles (P2)
+  static const String adminRoles = '/admin/roles';
+  static const String adminRoleDetail = '/admin/roles/detail'; // + /:roleId
+  static const String adminRoleCreate = '/admin/roles/create';
+  static const String adminTeam = '/admin/team';
+  static const String adminTeamUserDetail = '/admin/team/detail'; // + /:userId
+  static const String adminTeamUserCreate = '/admin/team/create';
+  static const String adminActivityLog = '/admin/activity-log';
+  static const String adminPermissions = '/admin/permissions';
+
+  // Admin Panel – Package & Subscription (P3)
+  static const String adminPlans = '/admin/plans';
+  static const String adminPlanDetail = '/admin/plans/detail'; // + /:planId
+  static const String adminPlanCreate = '/admin/plans/create';
+  static const String adminAddOns = '/admin/add-ons';
+  static const String adminDiscounts = '/admin/discounts';
+  static const String adminDiscountDetail = '/admin/discounts/detail'; // + /:discountId
+  static const String adminSubscriptions = '/admin/subscriptions';
+  static const String adminSubscriptionDetail = '/admin/subscriptions/detail'; // + /:subId
+  static const String adminInvoices = '/admin/invoices';
+  static const String adminInvoiceDetail = '/admin/invoices/detail'; // + /:invoiceId
+  static const String adminRevenueDashboard = '/admin/revenue-dashboard';
+
+  // ─── P4: User Management ──────────────────────────────────────
+  static const String adminProviderUsers = '/admin/users/provider';
+  static const String adminProviderUserDetail = '/admin/users/provider/detail'; // + /:userId
+  static const String adminAdminUsers = '/admin/users/admins';
+  static const String adminAdminUserDetail = '/admin/users/admins/detail'; // + /:userId
+  static const String adminAdminUserCreate = '/admin/users/admins/create';
+
+  // ─── P5: Billing & Finance ──────────────────────────────────────
+  static const String adminBillingInvoices = '/admin/billing/invoices';
+  static const String adminBillingInvoiceDetail = '/admin/billing/invoices/detail'; // + /:invoiceId
+  static const String adminBillingCreateInvoice = '/admin/billing/invoices/create';
+  static const String adminBillingFailedPayments = '/admin/billing/failed-payments';
+  static const String adminBillingRetryRules = '/admin/billing/retry-rules';
+  static const String adminBillingRevenue = '/admin/billing/revenue';
+  static const String adminBillingGateways = '/admin/billing/gateways';
+  static const String adminBillingGatewayDetail = '/admin/billing/gateways/detail'; // + /:gatewayId
+  static const String adminBillingGatewayCreate = '/admin/billing/gateways/create';
+  static const String adminBillingHardwareSales = '/admin/billing/hardware-sales';
+  static const String adminBillingHardwareSaleDetail = '/admin/billing/hardware-sales/detail'; // + /:saleId
+  static const String adminBillingHardwareSaleCreate = '/admin/billing/hardware-sales/create';
+  static const String adminBillingImplementationFees = '/admin/billing/implementation-fees';
+  static const String adminBillingImplementationFeeDetail = '/admin/billing/implementation-fees/detail'; // + /:feeId
+  static const String adminBillingImplementationFeeCreate = '/admin/billing/implementation-fees/create';
 }
