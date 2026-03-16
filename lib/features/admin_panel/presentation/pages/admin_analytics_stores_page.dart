@@ -41,7 +41,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
         children: [
           if (exportState is AnalyticsExportSuccess)
             MaterialBanner(
-              content: Text('Export ready: ${(exportState as AnalyticsExportSuccess).recordCount} records'),
+              content: Text('Export ready: ${exportState.recordCount} records'),
               backgroundColor: Colors.green.shade50,
               actions: [
                 TextButton(

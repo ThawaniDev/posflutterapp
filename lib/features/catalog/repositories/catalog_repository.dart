@@ -1,36 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/auth/data/local/auth_local_storage.dart';
 import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
 import 'package:thawani_pos/features/catalog/models/category.dart';
 import 'package:thawani_pos/features/catalog/models/product.dart';
 import 'package:thawani_pos/features/catalog/models/supplier.dart';
 
 final catalogRepositoryProvider = Provider<CatalogRepository>((ref) {
-  return CatalogRepository(
-    apiService: ref.watch(catalogApiServiceProvider),
-    localStorage: ref.watch(authLocalStorageProvider),
-  );
+  return CatalogRepository(apiService: ref.watch(catalogApiServiceProvider));
 });
 
 /// Repository that orchestrates catalog API calls.
 /// Resolves the current store/org context from auth session.
 class CatalogRepository {
   final CatalogApiService _apiService;
-  final AuthLocalStorage _localStorage;
 
-  CatalogRepository({
-    required CatalogApiService apiService,
-    required AuthLocalStorage localStorage,
-  })  : _apiService = apiService,
-        _localStorage = localStorage;
-
-  Future<String> _getStoreId() async {
-    final storeId = await _localStorage.getStoreId();
-    if (storeId == null) {
-      throw Exception('No store selected. Please log in again.');
-    }
-    return storeId;
-  }
+  CatalogRepository({required CatalogApiService apiService}) : _apiService = apiService;
 
   // ─── Products ─────────────────────────────────────────────────
 
@@ -106,16 +89,8 @@ class CatalogRepository {
 
   // ─── Suppliers ────────────────────────────────────────────────
 
-  Future<PaginatedResult<Supplier>> listSuppliers({
-    int page = 1,
-    int perPage = 25,
-    String? search,
-  }) {
-    return _apiService.listSuppliers(
-      page: page,
-      perPage: perPage,
-      search: search,
-    );
+  Future<PaginatedResult<Supplier>> listSuppliers({int page = 1, int perPage = 25, String? search}) {
+    return _apiService.listSuppliers(page: page, perPage: perPage, search: search);
   }
 
   Future<Supplier> createSupplier(Map<String, dynamic> data) {

@@ -46,7 +46,7 @@ class _AdminRoleListPageState extends ConsumerState<AdminRoleListPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(msg, style: theme.textTheme.bodyLarge),
-              AppSpacing.verticalGap16,
+              AppSpacing.gapH16,
               PosButton(label: 'Retry', onPressed: () => ref.read(adminRoleListProvider.notifier).load()),
             ],
           ),
@@ -57,7 +57,7 @@ class _AdminRoleListPageState extends ConsumerState<AdminRoleListPage> {
               : ListView.separated(
                   padding: AppSpacing.paddingAll16,
                   itemCount: roles.length,
-                  separatorBuilder: (_, __) => AppSpacing.verticalGap8,
+                  separatorBuilder: (_, __) => AppSpacing.gapH8,
                   itemBuilder: (context, index) {
                     final role = roles[index];
                     final isSystem = role['is_system'] == true;

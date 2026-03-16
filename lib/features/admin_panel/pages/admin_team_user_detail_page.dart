@@ -35,7 +35,7 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(msg),
-              AppSpacing.verticalGap16,
+              AppSpacing.gapH16,
               PosButton(label: 'Retry', onPressed: () => ref.read(adminTeamUserDetailProvider.notifier).load(widget.userId)),
             ],
           ),
@@ -66,7 +66,7 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
                     backgroundColor: isActive ? AppColors.success.withValues(alpha: 0.1) : AppColors.error.withValues(alpha: 0.1),
                     child: Icon(Icons.person, size: 32, color: isActive ? AppColors.success : AppColors.error),
                   ),
-                  AppSpacing.horizontalGap16,
+                  AppSpacing.gapW16,
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +76,7 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
                           user['email'] as String? ?? '',
                           style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
                         ),
-                        AppSpacing.verticalGap4,
+                        AppSpacing.gapH4,
                         Row(
                           children: [
                             Container(
@@ -109,7 +109,7 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
               ),
             ),
           ),
-          AppSpacing.verticalGap16,
+          AppSpacing.gapH16,
 
           // ─── Details ──────────────────────────────
           Card(
@@ -119,7 +119,7 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Details', style: theme.textTheme.titleMedium),
-                  AppSpacing.verticalGap8,
+                  AppSpacing.gapH8,
                   _detailRow('Phone', user['phone'] as String? ?? 'N/A'),
                   _detailRow('Last Login', user['last_login_at'] as String? ?? 'Never'),
                   _detailRow('Last Login IP', user['last_login_ip'] as String? ?? 'N/A'),
@@ -128,11 +128,11 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
               ),
             ),
           ),
-          AppSpacing.verticalGap16,
+          AppSpacing.gapH16,
 
           // ─── Roles ────────────────────────────────
           Text('Roles (${roles.length})', style: theme.textTheme.titleMedium),
-          AppSpacing.verticalGap8,
+          AppSpacing.gapH8,
           if (roles.isEmpty)
             const Card(
               child: Padding(padding: EdgeInsets.all(16), child: Text('No roles assigned')),
@@ -149,7 +149,7 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
                 ),
               );
             }),
-          AppSpacing.verticalGap24,
+          AppSpacing.gapH24,
 
           // ─── Actions ──────────────────────────────
           Row(
@@ -183,7 +183,7 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
         children: [
           SizedBox(
             width: 120,
-            child: Text(label, style: const TextStyle(color: AppColors.textSecondary)),
+            child: Text(label, style: TextStyle(color: AppColors.textSecondary)),
           ),
           Expanded(child: Text(value)),
         ],

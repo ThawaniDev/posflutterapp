@@ -1,0 +1,53 @@
+import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/features/industry_bakery/providers/bakery_state.dart';
+import 'package:thawani_pos/features/industry_bakery/repositories/bakery_repository.dart';
+
+final bakeryProvider = StateNotifierProvider<BakeryNotifier, BakeryState>((ref) {
+  return BakeryNotifier(ref.watch(bakeryRepositoryProvider));
+});
+
+class BakeryNotifier extends StateNotifier<BakeryState> {
+  final BakeryRepository _repo;
+  BakeryNotifier(this._repo) : super(const BakeryInitial());
+
+  Future<void> load() async {
+    state = const BakeryLoading();
+    try {
+      final recipes = await _repo.listRecipes();
+      final schedules = await _repo.listProductionSchedules();
+      final cakes = await _repo.listCakeOrders();
+      state = BakeryLoaded(recipes: recipes, productionSchedules: schedules, cakeOrders: cakes);
+    } on DioException catch (e) {
+      state = BakeryError(message: _extractError(e));
+    } catch (e) {
+      state = BakeryError(message: e.toString());
+    }
+  }
+
+  Future<void> createRecipe(Map<String, dynamic> data) async {
+    try {
+      await _repo.createRecipe(data);
+      await load();
+    } on DioException catch (e) {
+      state = BakeryError(message: _extractError(e));
+    }
+  }
+
+  Future<void> updateCakeOrderStatus(String id, String status) async {
+    try {
+      await _repo.updateCakeOrderStatus(id, status);
+      await load();
+    } on DioException catch (e) {
+      state = BakeryError(message: _extractError(e));
+    }
+  }
+}
+
+String _extractError(DioException e) {
+  final data = e.response?.data;
+  if (data is Map<String, dynamic>) {
+    return data['message'] as String? ?? e.message ?? 'Unknown error';
+  }
+  return e.message ?? 'Unknown error';
+}

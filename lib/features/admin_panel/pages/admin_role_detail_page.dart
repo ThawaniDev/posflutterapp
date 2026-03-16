@@ -35,7 +35,7 @@ class _AdminRoleDetailPageState extends ConsumerState<AdminRoleDetailPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(msg, style: theme.textTheme.bodyLarge),
-              AppSpacing.verticalGap16,
+              AppSpacing.gapH16,
               PosButton(label: 'Retry', onPressed: () => ref.read(adminRoleDetailProvider.notifier).load(widget.roleId)),
             ],
           ),
@@ -73,24 +73,24 @@ class _AdminRoleDetailPageState extends ConsumerState<AdminRoleDetailPage> {
                     ],
                   ),
                   if (role['slug'] != null) ...[
-                    AppSpacing.verticalGap4,
+                    AppSpacing.gapH4,
                     Text(
                       role['slug'] as String,
                       style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textSecondary, fontFamily: 'monospace'),
                     ),
                   ],
-                  if (role['description'] != null) ...[AppSpacing.verticalGap8, Text(role['description'] as String)],
-                  AppSpacing.verticalGap8,
+                  if (role['description'] != null) ...[AppSpacing.gapH8, Text(role['description'] as String)],
+                  AppSpacing.gapH8,
                   Text('${role['users_count'] ?? 0} users assigned', style: theme.textTheme.bodySmall),
                 ],
               ),
             ),
           ),
-          AppSpacing.verticalGap16,
+          AppSpacing.gapH16,
 
           // ─── Permissions ──────────────────────────────
           Text('Permissions (${permissions.length})', style: theme.textTheme.titleMedium),
-          AppSpacing.verticalGap8,
+          AppSpacing.gapH8,
           if (permissions.isEmpty)
             const Card(
               child: Padding(padding: EdgeInsets.all(16), child: Text('No permissions assigned')),
@@ -110,7 +110,7 @@ class _AdminRoleDetailPageState extends ConsumerState<AdminRoleDetailPage> {
 
           // ─── Actions ──────────────────────────────────
           if (!isSystem) ...[
-            AppSpacing.verticalGap24,
+            AppSpacing.gapH24,
             Row(
               children: [
                 Expanded(

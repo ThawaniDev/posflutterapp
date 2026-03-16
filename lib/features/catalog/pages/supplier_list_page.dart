@@ -49,9 +49,19 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
             children: [
               PosTextField(controller: nameController, label: 'Supplier Name *', hint: 'Enter supplier name'),
               const SizedBox(height: AppSpacing.md),
-              PosTextField(controller: phoneController, label: 'Phone', hint: '+968 XXXX XXXX', keyboardType: TextInputType.phone),
+              PosTextField(
+                controller: phoneController,
+                label: 'Phone',
+                hint: '+968 XXXX XXXX',
+                keyboardType: TextInputType.phone,
+              ),
               const SizedBox(height: AppSpacing.md),
-              PosTextField(controller: emailController, label: 'Email', hint: 'supplier@example.com', keyboardType: TextInputType.emailAddress),
+              PosTextField(
+                controller: emailController,
+                label: 'Email',
+                hint: 'supplier@example.com',
+                keyboardType: TextInputType.emailAddress,
+              ),
               const SizedBox(height: AppSpacing.md),
               PosTextField(controller: addressController, label: 'Address', hint: 'Enter address', maxLines: 2),
               const SizedBox(height: AppSpacing.md),
@@ -81,7 +91,7 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
     if (result != null && mounted) {
       try {
         if (isEditing) {
-          await ref.read(suppliersProvider.notifier).updateSupplier(supplier!.id, result);
+          await ref.read(suppliersProvider.notifier).updateSupplier(supplier.id, result);
           if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Supplier updated.')));
         } else {
           await ref.read(suppliersProvider.notifier).createSupplier(result);
@@ -134,7 +144,11 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
       appBar: AppBar(
         title: const Text('Suppliers'),
         actions: [
-          IconButton(icon: const Icon(Icons.refresh), tooltip: 'Refresh', onPressed: () => ref.read(suppliersProvider.notifier).load()),
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh',
+            onPressed: () => ref.read(suppliersProvider.notifier).load(),
+          ),
         ],
       ),
       floatingActionButton: PosButton(label: 'New Supplier', icon: Icons.add, onPressed: () => _showSupplierDialog()),
@@ -172,7 +186,11 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
             const SizedBox(height: AppSpacing.md),
             Text(state.message, style: Theme.of(context).textTheme.bodyLarge, textAlign: TextAlign.center),
             const SizedBox(height: AppSpacing.lg),
-            PosButton(label: 'Retry', onPressed: () => ref.read(suppliersProvider.notifier).load(), variant: PosButtonVariant.outline),
+            PosButton(
+              label: 'Retry',
+              onPressed: () => ref.read(suppliersProvider.notifier).load(),
+              variant: PosButtonVariant.outline,
+            ),
           ],
         ),
       );
@@ -210,34 +228,50 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
                   DataColumn(label: Text('ACTIONS')),
                 ],
                 rows: state.suppliers.map((supplier) {
-                  return DataRow(cells: [
-                    DataCell(
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            width: 36,
-                            height: 36,
-                            decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
-                            child: Icon(Icons.local_shipping_outlined, size: 18, color: AppColors.info),
-                          ),
-                          const SizedBox(width: AppSpacing.sm),
-                          Text(supplier.name, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
-                        ],
+                  return DataRow(
+                    cells: [
+                      DataCell(
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: 36,
+                              height: 36,
+                              decoration: BoxDecoration(
+                                color: AppColors.info.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Icon(Icons.local_shipping_outlined, size: 18, color: AppColors.info),
+                            ),
+                            const SizedBox(width: AppSpacing.sm),
+                            Text(
+                              supplier.name,
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    DataCell(Text(supplier.phone ?? '—')),
-                    DataCell(Text(supplier.email ?? '—')),
-                    DataCell(
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(icon: const Icon(Icons.edit_outlined, size: 18), tooltip: 'Edit', onPressed: () => _showSupplierDialog(supplier: supplier)),
-                          IconButton(icon: Icon(Icons.delete_outline, size: 18, color: AppColors.error), tooltip: 'Delete', onPressed: () => _handleDelete(supplier)),
-                        ],
+                      DataCell(Text(supplier.phone ?? '—')),
+                      DataCell(Text(supplier.email ?? '—')),
+                      DataCell(
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.edit_outlined, size: 18),
+                              tooltip: 'Edit',
+                              onPressed: () => _showSupplierDialog(supplier: supplier),
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete_outline, size: 18, color: AppColors.error),
+                              tooltip: 'Delete',
+                              onPressed: () => _handleDelete(supplier),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ]);
+                    ],
+                  );
                 }).toList(),
               ),
             ),

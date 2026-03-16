@@ -33,6 +33,118 @@ import 'package:thawani_pos/features/staff/pages/roles_list_page.dart';
 import 'package:thawani_pos/features/subscription/pages/billing_history_page.dart';
 import 'package:thawani_pos/features/subscription/pages/plan_selection_page.dart';
 import 'package:thawani_pos/features/subscription/pages/subscription_status_page.dart';
+import 'package:thawani_pos/features/dashboard/pages/owner_dashboard_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_overview_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_payment_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_payment_detail_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_refund_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_cash_session_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_expense_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_gift_card_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_accounting_config_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_thawani_settlement_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_daily_sales_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_infra_overview_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_infra_failed_jobs_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_infra_backups_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_infra_health_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_provider_permissions_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_provider_role_template_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_provider_role_template_detail_page.dart';
+// P1: Provider Management
+import 'package:thawani_pos/features/admin_panel/pages/admin_store_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/pages/admin_store_detail_page.dart';
+import 'package:thawani_pos/features/admin_panel/pages/registration_queue_page.dart';
+import 'package:thawani_pos/features/admin_panel/pages/provider_notes_page.dart';
+// P2: Platform Roles
+import 'package:thawani_pos/features/admin_panel/pages/admin_role_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/pages/admin_role_detail_page.dart';
+import 'package:thawani_pos/features/admin_panel/pages/admin_permissions_page.dart';
+import 'package:thawani_pos/features/admin_panel/pages/admin_team_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/pages/admin_team_user_detail_page.dart';
+import 'package:thawani_pos/features/admin_panel/pages/admin_activity_log_page.dart';
+// P3: Package & Subscription
+import 'package:thawani_pos/features/admin_panel/pages/admin_plan_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/pages/admin_plan_detail_page.dart';
+import 'package:thawani_pos/features/admin_panel/pages/admin_discount_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/pages/admin_subscription_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/pages/admin_invoice_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/pages/admin_revenue_dashboard_page.dart' as p3;
+// P4: User Management
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_provider_user_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_provider_user_detail_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_admin_user_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_admin_user_detail_page.dart';
+// P5: Billing & Finance
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_billing_invoice_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_billing_invoice_detail_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_failed_payments_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_retry_rules_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_revenue_dashboard_page.dart' as p5;
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_gateway_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_hardware_sale_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_implementation_fee_list_page.dart';
+// P6: Analytics & Reporting
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_analytics_dashboard_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_analytics_revenue_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_analytics_stores_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_analytics_subscriptions_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_analytics_features_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_analytics_system_health_page.dart';
+// P7: Support Tickets
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_support_ticket_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_canned_response_list_page.dart';
+// P8: Feature Flags
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_feature_flag_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_feature_flag_detail_page.dart';
+// P9: Notification Templates
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_notification_template_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_notification_log_list_page.dart';
+// P10: Log Monitoring / A-B Tests
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_ab_test_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_ab_test_detail_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_ab_test_results_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_platform_event_list_page.dart';
+// P11: Content & Onboarding
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_cms_page_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_cms_page_detail_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_article_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_announcement_list_page.dart';
+// P13: Marketplace
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_marketplace_store_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_marketplace_settlement_list_page.dart';
+// P14: Deployment
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_deployment_overview_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_deployment_release_list_page.dart';
+// P15B: Security Center
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_security_overview_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_security_alerts_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_security_alert_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_activity_log_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_user_activity_page.dart';
+// Data Management & Health
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_data_management_overview_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_database_backup_list_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_health_dashboard_page.dart';
+// POS Feature #20: ZATCA Compliance
+import 'package:thawani_pos/features/zatca/pages/zatca_dashboard_page.dart';
+import 'package:thawani_pos/features/sync/pages/sync_dashboard_page.dart';
+import 'package:thawani_pos/features/hardware/pages/hardware_dashboard_page.dart';
+import 'package:thawani_pos/features/settings/pages/localization_page.dart';
+import 'package:thawani_pos/features/security/pages/security_dashboard_page.dart';
+import 'package:thawani_pos/features/backup/pages/backup_dashboard_page.dart';
+import 'package:thawani_pos/features/companion/pages/companion_dashboard_page.dart';
+import 'package:thawani_pos/features/pos_customization/pages/customization_dashboard_page.dart';
+import 'package:thawani_pos/features/auto_update/pages/auto_update_dashboard_page.dart';
+import 'package:thawani_pos/features/accessibility/pages/accessibility_dashboard_page.dart';
+import 'package:thawani_pos/features/nice_to_have/presentation/nice_to_have_dashboard_page.dart';
+// Industry Workflows
+import 'package:thawani_pos/features/industry_pharmacy/pages/pharmacy_dashboard_page.dart';
+import 'package:thawani_pos/features/industry_jewelry/pages/jewelry_dashboard_page.dart';
+import 'package:thawani_pos/features/industry_electronics/pages/electronics_dashboard_page.dart';
+import 'package:thawani_pos/features/industry_florist/pages/florist_dashboard_page.dart';
+import 'package:thawani_pos/features/industry_bakery/pages/bakery_dashboard_page.dart';
+import 'package:thawani_pos/features/industry_restaurant/pages/restaurant_dashboard_page.dart';
 import 'route_names.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -72,11 +184,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(path: Routes.register, name: 'register', builder: (context, state) => const RegisterPage()),
 
       // ─── Main (protected) ─────────────────────────
-      GoRoute(
-        path: Routes.dashboard,
-        name: 'dashboard',
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Dashboard — Phase 2'))),
-      ),
+      GoRoute(path: Routes.dashboard, name: 'dashboard', builder: (context, state) => const OwnerDashboardPage()),
       GoRoute(
         path: Routes.pos,
         name: 'pos',
@@ -162,6 +270,452 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const SubscriptionStatusPage(),
       ),
       GoRoute(path: Routes.billingHistory, name: 'billingHistory', builder: (context, state) => const BillingHistoryPage()),
+
+      // ─── Admin Panel – P15: Financial Operations ──
+      GoRoute(path: Routes.adminFinOps, name: 'adminFinOps', builder: (context, state) => const AdminFinOpsOverviewPage()),
+      GoRoute(
+        path: Routes.adminFinOpsPayments,
+        name: 'adminFinOpsPayments',
+        builder: (context, state) => const AdminFinOpsPaymentListPage(),
+      ),
+      GoRoute(
+        path: '${Routes.adminFinOpsPaymentDetail}/:id',
+        name: 'adminFinOpsPaymentDetail',
+        builder: (context, state) => AdminFinOpsPaymentDetailPage(id: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: Routes.adminFinOpsRefunds,
+        name: 'adminFinOpsRefunds',
+        builder: (context, state) => const AdminFinOpsRefundListPage(),
+      ),
+      GoRoute(
+        path: Routes.adminFinOpsCashSessions,
+        name: 'adminFinOpsCashSessions',
+        builder: (context, state) => const AdminFinOpsCashSessionListPage(),
+      ),
+      GoRoute(
+        path: Routes.adminFinOpsExpenses,
+        name: 'adminFinOpsExpenses',
+        builder: (context, state) => const AdminFinOpsExpenseListPage(),
+      ),
+      GoRoute(
+        path: Routes.adminFinOpsGiftCards,
+        name: 'adminFinOpsGiftCards',
+        builder: (context, state) => const AdminFinOpsGiftCardListPage(),
+      ),
+      GoRoute(
+        path: Routes.adminFinOpsAccounting,
+        name: 'adminFinOpsAccounting',
+        builder: (context, state) => const AdminFinOpsAccountingConfigListPage(),
+      ),
+      GoRoute(
+        path: Routes.adminFinOpsThawani,
+        name: 'adminFinOpsThawani',
+        builder: (context, state) => const AdminFinOpsThawaniSettlementListPage(),
+      ),
+      GoRoute(
+        path: Routes.adminFinOpsSalesReports,
+        name: 'adminFinOpsSalesReports',
+        builder: (context, state) => const AdminFinOpsDailySalesPage(),
+      ),
+
+      // ─── Admin Panel – P16: Infrastructure ────────
+      GoRoute(
+        path: Routes.adminInfrastructure,
+        name: 'adminInfrastructure',
+        builder: (context, state) => const AdminInfraOverviewPage(),
+      ),
+      GoRoute(
+        path: Routes.adminInfraFailedJobs,
+        name: 'adminInfraFailedJobs',
+        builder: (context, state) => const AdminInfraFailedJobsPage(),
+      ),
+      GoRoute(path: Routes.adminInfraHealth, name: 'adminInfraHealth', builder: (context, state) => const AdminInfraHealthPage()),
+      GoRoute(
+        path: Routes.adminInfraStorage,
+        name: 'adminInfraStorage',
+        builder: (context, state) => const AdminInfraBackupsPage(),
+      ),
+
+      // ─── Admin Panel – P17: Provider Roles ────────
+      GoRoute(
+        path: Routes.adminProviderPermissions,
+        name: 'adminProviderPermissions',
+        builder: (context, state) => const AdminProviderPermissionsPage(),
+      ),
+      GoRoute(
+        path: Routes.adminProviderRoleTemplates,
+        name: 'adminProviderRoleTemplates',
+        builder: (context, state) => const AdminProviderRoleTemplateListPage(),
+      ),
+      GoRoute(
+        path: '${Routes.adminProviderRoleTemplateDetail}/:id',
+        name: 'adminProviderRoleTemplateDetail',
+        builder: (context, state) => AdminProviderRoleTemplateDetailPage(templateId: state.pathParameters['id']!),
+      ),
+
+      // ─── Admin Panel – P1: Provider Management ────
+      GoRoute(path: Routes.adminStores, name: 'adminStores', builder: (context, state) => const AdminStoreListPage()),
+      GoRoute(
+        path: '${Routes.adminStoreDetail}/:id',
+        name: 'adminStoreDetail',
+        builder: (context, state) => AdminStoreDetailPage(storeId: state.pathParameters['id']!),
+      ),
+      GoRoute(
+        path: Routes.adminRegistrations,
+        name: 'adminRegistrations',
+        builder: (context, state) => const RegistrationQueuePage(),
+      ),
+      GoRoute(
+        path: '${Routes.adminNotes}/:organizationId',
+        name: 'adminNotes',
+        builder: (context, state) => ProviderNotesPage(organizationId: state.pathParameters['organizationId']!),
+      ),
+
+      // ─── Admin Panel – P2: Platform Roles ─────────
+      GoRoute(path: Routes.adminRoles, name: 'adminRoles', builder: (context, state) => const AdminRoleListPage()),
+      GoRoute(
+        path: '${Routes.adminRoleDetail}/:roleId',
+        name: 'adminRoleDetail',
+        builder: (context, state) => AdminRoleDetailPage(roleId: state.pathParameters['roleId']!),
+      ),
+      GoRoute(path: Routes.adminPermissions, name: 'adminPermissions', builder: (context, state) => const AdminPermissionsPage()),
+      GoRoute(path: Routes.adminTeam, name: 'adminTeam', builder: (context, state) => const AdminTeamListPage()),
+      GoRoute(
+        path: '${Routes.adminTeamUserDetail}/:userId',
+        name: 'adminTeamUserDetail',
+        builder: (context, state) => AdminTeamUserDetailPage(userId: state.pathParameters['userId']!),
+      ),
+      GoRoute(path: Routes.adminActivityLog, name: 'adminActivityLog', builder: (context, state) => const AdminActivityLogPage()),
+
+      // ─── Admin Panel – P3: Package & Subscription ─
+      GoRoute(path: Routes.adminPlans, name: 'adminPlans', builder: (context, state) => const AdminPlanListPage()),
+      GoRoute(
+        path: '${Routes.adminPlanDetail}/:planId',
+        name: 'adminPlanDetail',
+        builder: (context, state) => AdminPlanDetailPage(planId: state.pathParameters['planId']!),
+      ),
+      GoRoute(path: Routes.adminDiscounts, name: 'adminDiscounts', builder: (context, state) => const AdminDiscountListPage()),
+      GoRoute(
+        path: Routes.adminSubscriptions,
+        name: 'adminSubscriptions',
+        builder: (context, state) => const AdminSubscriptionListPage(),
+      ),
+      GoRoute(path: Routes.adminInvoices, name: 'adminInvoices', builder: (context, state) => const AdminInvoiceListPage()),
+      GoRoute(
+        path: Routes.adminRevenueDashboard,
+        name: 'adminRevenueDashboard',
+        builder: (context, state) => const p3.AdminRevenueDashboardPage(),
+      ),
+
+      // ─── Admin Panel – P4: User Management ────────
+      GoRoute(
+        path: Routes.adminProviderUsers,
+        name: 'adminProviderUsers',
+        builder: (context, state) => const AdminProviderUserListPage(),
+      ),
+      GoRoute(
+        path: '${Routes.adminProviderUserDetail}/:userId',
+        name: 'adminProviderUserDetail',
+        builder: (context, state) => AdminProviderUserDetailPage(userId: state.pathParameters['userId']!),
+      ),
+      GoRoute(path: Routes.adminAdminUsers, name: 'adminAdminUsers', builder: (context, state) => const AdminAdminUserListPage()),
+      GoRoute(
+        path: '${Routes.adminAdminUserDetail}/:userId',
+        name: 'adminAdminUserDetail',
+        builder: (context, state) => AdminAdminUserDetailPage(userId: state.pathParameters['userId']!),
+      ),
+
+      // ─── Admin Panel – P5: Billing & Finance ──────
+      GoRoute(
+        path: Routes.adminBillingInvoices,
+        name: 'adminBillingInvoices',
+        builder: (context, state) => const AdminBillingInvoiceListPage(),
+      ),
+      GoRoute(
+        path: '${Routes.adminBillingInvoiceDetail}/:invoiceId',
+        name: 'adminBillingInvoiceDetail',
+        builder: (context, state) => AdminBillingInvoiceDetailPage(invoiceId: state.pathParameters['invoiceId']!),
+      ),
+      GoRoute(
+        path: Routes.adminBillingFailedPayments,
+        name: 'adminBillingFailedPayments',
+        builder: (context, state) => const AdminFailedPaymentsPage(),
+      ),
+      GoRoute(
+        path: Routes.adminBillingRetryRules,
+        name: 'adminBillingRetryRules',
+        builder: (context, state) => const AdminRetryRulesPage(),
+      ),
+      GoRoute(
+        path: Routes.adminBillingRevenue,
+        name: 'adminBillingRevenue',
+        builder: (context, state) => const p5.AdminRevenueDashboardPage(),
+      ),
+      GoRoute(
+        path: Routes.adminBillingGateways,
+        name: 'adminBillingGateways',
+        builder: (context, state) => const AdminGatewayListPage(),
+      ),
+      GoRoute(
+        path: Routes.adminBillingHardwareSales,
+        name: 'adminBillingHardwareSales',
+        builder: (context, state) => const AdminHardwareSaleListPage(),
+      ),
+      GoRoute(
+        path: Routes.adminBillingImplementationFees,
+        name: 'adminBillingImplementationFees',
+        builder: (context, state) => const AdminImplementationFeeListPage(),
+      ),
+
+      // ─── Admin Panel – P6: Analytics & Reporting ──
+      GoRoute(
+        path: Routes.adminAnalyticsDashboard,
+        name: 'adminAnalyticsDashboard',
+        builder: (context, state) => const AdminAnalyticsDashboardPage(),
+      ),
+      GoRoute(
+        path: Routes.adminAnalyticsRevenue,
+        name: 'adminAnalyticsRevenue',
+        builder: (context, state) => const AdminAnalyticsRevenuePage(),
+      ),
+      GoRoute(
+        path: Routes.adminAnalyticsStores,
+        name: 'adminAnalyticsStores',
+        builder: (context, state) => const AdminAnalyticsStoresPage(),
+      ),
+      GoRoute(
+        path: Routes.adminAnalyticsSubscriptions,
+        name: 'adminAnalyticsSubscriptions',
+        builder: (context, state) => const AdminAnalyticsSubscriptionsPage(),
+      ),
+      GoRoute(
+        path: Routes.adminAnalyticsFeatures,
+        name: 'adminAnalyticsFeatures',
+        builder: (context, state) => const AdminAnalyticsFeaturesPage(),
+      ),
+      GoRoute(
+        path: Routes.adminAnalyticsSystemHealth,
+        name: 'adminAnalyticsSystemHealth',
+        builder: (context, state) => const AdminAnalyticsSystemHealthPage(),
+      ),
+
+      // ─── Admin Panel – P7: Support Tickets ────────
+      GoRoute(
+        path: Routes.adminSupportTickets,
+        name: 'adminSupportTickets',
+        builder: (context, state) => const AdminSupportTicketListPage(),
+      ),
+      GoRoute(
+        path: Routes.adminCannedResponses,
+        name: 'adminCannedResponses',
+        builder: (context, state) => const AdminCannedResponseListPage(),
+      ),
+
+      // ─── Admin Panel – P8: Feature Flags ──────────
+      GoRoute(
+        path: Routes.adminFeatureFlags,
+        name: 'adminFeatureFlags',
+        builder: (context, state) => const AdminFeatureFlagListPage(),
+      ),
+      GoRoute(
+        path: '${Routes.adminFeatureFlagDetail}/:flagId',
+        name: 'adminFeatureFlagDetail',
+        builder: (context, state) => AdminFeatureFlagDetailPage(flagId: state.pathParameters['flagId']!),
+      ),
+
+      // ─── Admin Panel – P9: Notification Templates ─
+      GoRoute(
+        path: Routes.adminNotificationTemplates,
+        name: 'adminNotificationTemplates',
+        builder: (context, state) => const AdminNotificationTemplateListPage(),
+      ),
+      GoRoute(
+        path: Routes.adminNotificationLogs,
+        name: 'adminNotificationLogs',
+        builder: (context, state) => const AdminNotificationLogListPage(),
+      ),
+
+      // ─── Admin Panel – P10: A-B Tests / Events ────
+      GoRoute(path: Routes.adminABTests, name: 'adminABTests', builder: (context, state) => const AdminABTestListPage()),
+      GoRoute(
+        path: '${Routes.adminABTestDetail}/:testId',
+        name: 'adminABTestDetail',
+        builder: (context, state) => AdminABTestDetailPage(testId: state.pathParameters['testId']!),
+      ),
+      GoRoute(
+        path: '${Routes.adminABTestResults}/:testId',
+        name: 'adminABTestResults',
+        builder: (context, state) => AdminABTestResultsPage(testId: state.pathParameters['testId']!),
+      ),
+      GoRoute(
+        path: Routes.adminPlatformEvents,
+        name: 'adminPlatformEvents',
+        builder: (context, state) => const AdminPlatformEventListPage(),
+      ),
+
+      // ─── Admin Panel – P11: Content & Onboarding ──
+      GoRoute(path: Routes.adminCmsPages, name: 'adminCmsPages', builder: (context, state) => const AdminCmsPageListPage()),
+      GoRoute(
+        path: '${Routes.adminCmsPageDetail}/:pageId',
+        name: 'adminCmsPageDetail',
+        builder: (context, state) => AdminCmsPageDetailPage(pageId: state.pathParameters['pageId']!),
+      ),
+      GoRoute(path: Routes.adminArticles, name: 'adminArticles', builder: (context, state) => const AdminArticleListPage()),
+      GoRoute(
+        path: Routes.adminAnnouncements,
+        name: 'adminAnnouncements',
+        builder: (context, state) => const AdminAnnouncementListPage(),
+      ),
+
+      // ─── Admin Panel – P13: Marketplace ───────────
+      GoRoute(
+        path: Routes.adminMarketplaceStores,
+        name: 'adminMarketplaceStores',
+        builder: (context, state) => const AdminMarketplaceStoreListPage(),
+      ),
+      GoRoute(
+        path: Routes.adminMarketplaceSettlements,
+        name: 'adminMarketplaceSettlements',
+        builder: (context, state) => const AdminMarketplaceSettlementListPage(),
+      ),
+
+      // ─── Admin Panel – P14: Deployment ────────────
+      GoRoute(
+        path: Routes.adminDeploymentOverview,
+        name: 'adminDeploymentOverview',
+        builder: (context, state) => const AdminDeploymentOverviewPage(),
+      ),
+      GoRoute(
+        path: Routes.adminDeploymentReleases,
+        name: 'adminDeploymentReleases',
+        builder: (context, state) => const AdminDeploymentReleaseListPage(),
+      ),
+
+      // ─── Admin Panel – Security Center ────────────
+      GoRoute(
+        path: Routes.adminSecurityOverview,
+        name: 'adminSecurityOverview',
+        builder: (context, state) => const AdminSecurityOverviewPage(),
+      ),
+      GoRoute(
+        path: Routes.adminSecurityAlerts,
+        name: 'adminSecurityAlerts',
+        builder: (context, state) => const AdminSecurityAlertsPage(),
+      ),
+      GoRoute(
+        path: Routes.adminSecurityAlertList,
+        name: 'adminSecurityAlertList',
+        builder: (context, state) => const AdminSecurityAlertListPage(),
+      ),
+      GoRoute(
+        path: Routes.adminActivityLogList,
+        name: 'adminActivityLogList',
+        builder: (context, state) => const AdminActivityLogListPage(),
+      ),
+      GoRoute(
+        path: '${Routes.adminUserActivity}/:userId',
+        name: 'adminUserActivity',
+        builder: (context, state) => AdminUserActivityPage(userId: state.pathParameters['userId']!),
+      ),
+
+      // ─── Admin Panel – Data Management & Health ───
+      GoRoute(
+        path: Routes.adminDataManagement,
+        name: 'adminDataManagement',
+        builder: (context, state) => const AdminDataManagementOverviewPage(),
+      ),
+      GoRoute(
+        path: Routes.adminDatabaseBackups,
+        name: 'adminDatabaseBackups',
+        builder: (context, state) => const AdminDatabaseBackupListPage(),
+      ),
+      GoRoute(
+        path: Routes.adminHealthDashboard,
+        name: 'adminHealthDashboard',
+        builder: (context, state) => const AdminHealthDashboardPage(),
+      ),
+
+      // ─── ZATCA Compliance ───
+      GoRoute(path: Routes.zatcaDashboard, name: 'zatcaDashboard', builder: (context, state) => const ZatcaDashboardPage()),
+
+      // ─── Sync ───
+      GoRoute(path: Routes.syncDashboard, name: 'syncDashboard', builder: (context, state) => const SyncDashboardPage()),
+
+      // ─── Hardware ───
+      GoRoute(
+        path: Routes.hardwareDashboard,
+        name: 'hardwareDashboard',
+        builder: (context, state) => const HardwareDashboardPage(),
+      ),
+
+      // ─── Localization ───
+      GoRoute(path: Routes.localization, name: 'localization', builder: (context, state) => const LocalizationPage()),
+
+      // ─── Security ───
+      GoRoute(
+        path: Routes.securityDashboard,
+        name: 'securityDashboard',
+        builder: (context, state) => const SecurityDashboardPage(),
+      ),
+
+      // ─── Backup & Recovery ───
+      GoRoute(path: Routes.backupDashboard, name: 'backupDashboard', builder: (context, state) => const BackupDashboardPage()),
+
+      // ─── Mobile Companion ───
+      GoRoute(
+        path: Routes.companionDashboard,
+        name: 'companionDashboard',
+        builder: (context, state) => const CompanionDashboardPage(),
+      ),
+
+      // ─── POS Customization ───
+      GoRoute(
+        path: Routes.customizationDashboard,
+        name: 'customizationDashboard',
+        builder: (context, state) => const CustomizationDashboardPage(),
+      ),
+
+      // ─── Auto Updates ───
+      GoRoute(
+        path: Routes.autoUpdateDashboard,
+        name: 'autoUpdateDashboard',
+        builder: (context, state) => const AutoUpdateDashboardPage(),
+      ),
+
+      // ─── Accessibility ───
+      GoRoute(
+        path: Routes.accessibilityDashboard,
+        name: 'accessibilityDashboard',
+        builder: (context, state) => const AccessibilityDashboardPage(),
+      ),
+
+      // ─── Nice-to-Have ───
+      GoRoute(
+        path: Routes.niceToHaveDashboard,
+        name: 'niceToHaveDashboard',
+        builder: (context, state) => const NiceToHaveDashboardPage(),
+      ),
+
+      // ─── Industry Workflows ───
+      GoRoute(
+        path: Routes.industryPharmacy,
+        name: 'industryPharmacy',
+        builder: (context, state) => const PharmacyDashboardPage(),
+      ),
+      GoRoute(path: Routes.industryJewelry, name: 'industryJewelry', builder: (context, state) => const JewelryDashboardPage()),
+      GoRoute(
+        path: Routes.industryElectronics,
+        name: 'industryElectronics',
+        builder: (context, state) => const ElectronicsDashboardPage(),
+      ),
+      GoRoute(path: Routes.industryFlorist, name: 'industryFlorist', builder: (context, state) => const FloristDashboardPage()),
+      GoRoute(path: Routes.industryBakery, name: 'industryBakery', builder: (context, state) => const BakeryDashboardPage()),
+      GoRoute(
+        path: Routes.industryRestaurant,
+        name: 'industryRestaurant',
+        builder: (context, state) => const RestaurantDashboardPage(),
+      ),
     ],
   );
 });

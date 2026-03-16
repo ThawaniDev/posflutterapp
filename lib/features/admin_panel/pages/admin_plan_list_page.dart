@@ -43,7 +43,7 @@ class _AdminPlanListPageState extends ConsumerState<AdminPlanListPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(message, style: const TextStyle(color: AppColors.error)),
-              AppSpacing.verticalGap16,
+              AppSpacing.gapH16,
               PosButton(
                 label: 'Retry',
                 variant: PosButtonVariant.outline,
@@ -106,7 +106,7 @@ class _PlanCard extends StatelessWidget {
                       style: TextStyle(color: AppColors.primary, fontSize: 12, fontWeight: FontWeight.w600),
                     ),
                   ),
-                AppSpacing.horizontalGap8,
+                AppSpacing.gapW8,
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(
@@ -124,7 +124,7 @@ class _PlanCard extends StatelessWidget {
                 ),
               ],
             ),
-            AppSpacing.verticalGap8,
+            AppSpacing.gapH8,
             Row(
               children: [
                 Text(
@@ -132,13 +132,13 @@ class _PlanCard extends StatelessWidget {
                   style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.primary),
                 ),
                 if (plan['annual_price'] != null) ...[
-                  AppSpacing.horizontalGap16,
+                  AppSpacing.gapW16,
                   Text('\$${plan['annual_price']}/yr', style: TextStyle(fontSize: 14, color: AppColors.textSecondary)),
                 ],
               ],
             ),
             if (plan['trial_days'] != null && plan['trial_days'] > 0) ...[
-              AppSpacing.verticalGap4,
+              AppSpacing.gapH4,
               Text('${plan['trial_days']} day trial', style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
             ],
           ],

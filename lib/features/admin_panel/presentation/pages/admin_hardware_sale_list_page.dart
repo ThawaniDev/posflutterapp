@@ -317,7 +317,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
             onPressed: () async {
-              await ref.read(hardwareSaleActionProvider.notifier).deleteSale(id);
+              await ref.read(hardwareSaleActionProvider.notifier).deleteSale(id.toString());
               if (ctx.mounted) Navigator.pop(ctx);
               ref.read(hardwareSaleListProvider.notifier).loadSales();
             },

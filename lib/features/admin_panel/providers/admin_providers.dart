@@ -3654,3 +3654,890 @@ class SecurityIpBlocklistNotifier extends StateNotifier<SecurityIpListState> {
     }
   }
 }
+
+// ═══════════════════════════════════════════════════════════════
+// P15: Financial Operations
+// ═══════════════════════════════════════════════════════════════
+
+final finOpsOverviewProvider = StateNotifierProvider<FinOpsOverviewNotifier, FinOpsOverviewState>(
+  (ref) => FinOpsOverviewNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsOverviewNotifier extends StateNotifier<FinOpsOverviewState> {
+  final AdminRepository _repo;
+  FinOpsOverviewNotifier(this._repo) : super(const FinOpsOverviewInitial());
+  Future<void> load() async {
+    state = const FinOpsOverviewLoading();
+    try {
+      state = FinOpsOverviewLoaded(await _repo.getFinOpsOverview());
+    } catch (e) {
+      state = FinOpsOverviewError(e.toString());
+    }
+  }
+}
+
+final finOpsPaymentsProvider = StateNotifierProvider<FinOpsPaymentsNotifier, FinOpsListState>(
+  (ref) => FinOpsPaymentsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsPaymentsNotifier extends StateNotifier<FinOpsListState> {
+  final AdminRepository _repo;
+  FinOpsPaymentsNotifier(this._repo) : super(const FinOpsListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const FinOpsListLoading();
+    try {
+      state = FinOpsListLoaded(await _repo.getFinOpsPayments(params: params));
+    } catch (e) {
+      state = FinOpsListError(e.toString());
+    }
+  }
+}
+
+final finOpsPaymentDetailProvider = StateNotifierProvider<FinOpsPaymentDetailNotifier, FinOpsDetailState>(
+  (ref) => FinOpsPaymentDetailNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsPaymentDetailNotifier extends StateNotifier<FinOpsDetailState> {
+  final AdminRepository _repo;
+  FinOpsPaymentDetailNotifier(this._repo) : super(const FinOpsDetailInitial());
+  Future<void> load(String id) async {
+    state = const FinOpsDetailLoading();
+    try {
+      state = FinOpsDetailLoaded(await _repo.getFinOpsPayment(id));
+    } catch (e) {
+      state = FinOpsDetailError(e.toString());
+    }
+  }
+}
+
+final finOpsRefundsProvider = StateNotifierProvider<FinOpsRefundsNotifier, FinOpsListState>(
+  (ref) => FinOpsRefundsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsRefundsNotifier extends StateNotifier<FinOpsListState> {
+  final AdminRepository _repo;
+  FinOpsRefundsNotifier(this._repo) : super(const FinOpsListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const FinOpsListLoading();
+    try {
+      state = FinOpsListLoaded(await _repo.getFinOpsRefunds(params: params));
+    } catch (e) {
+      state = FinOpsListError(e.toString());
+    }
+  }
+}
+
+final finOpsRefundDetailProvider = StateNotifierProvider<FinOpsRefundDetailNotifier, FinOpsDetailState>(
+  (ref) => FinOpsRefundDetailNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsRefundDetailNotifier extends StateNotifier<FinOpsDetailState> {
+  final AdminRepository _repo;
+  FinOpsRefundDetailNotifier(this._repo) : super(const FinOpsDetailInitial());
+  Future<void> load(String id) async {
+    state = const FinOpsDetailLoading();
+    try {
+      state = FinOpsDetailLoaded(await _repo.getFinOpsRefund(id));
+    } catch (e) {
+      state = FinOpsDetailError(e.toString());
+    }
+  }
+}
+
+final finOpsCashSessionsProvider = StateNotifierProvider<FinOpsCashSessionsNotifier, FinOpsListState>(
+  (ref) => FinOpsCashSessionsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsCashSessionsNotifier extends StateNotifier<FinOpsListState> {
+  final AdminRepository _repo;
+  FinOpsCashSessionsNotifier(this._repo) : super(const FinOpsListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const FinOpsListLoading();
+    try {
+      state = FinOpsListLoaded(await _repo.getFinOpsCashSessions(params: params));
+    } catch (e) {
+      state = FinOpsListError(e.toString());
+    }
+  }
+}
+
+final finOpsCashSessionDetailProvider = StateNotifierProvider<FinOpsCashSessionDetailNotifier, FinOpsDetailState>(
+  (ref) => FinOpsCashSessionDetailNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsCashSessionDetailNotifier extends StateNotifier<FinOpsDetailState> {
+  final AdminRepository _repo;
+  FinOpsCashSessionDetailNotifier(this._repo) : super(const FinOpsDetailInitial());
+  Future<void> load(String id) async {
+    state = const FinOpsDetailLoading();
+    try {
+      state = FinOpsDetailLoaded(await _repo.getFinOpsCashSession(id));
+    } catch (e) {
+      state = FinOpsDetailError(e.toString());
+    }
+  }
+}
+
+final finOpsCashEventsProvider = StateNotifierProvider<FinOpsCashEventsNotifier, FinOpsListState>(
+  (ref) => FinOpsCashEventsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsCashEventsNotifier extends StateNotifier<FinOpsListState> {
+  final AdminRepository _repo;
+  FinOpsCashEventsNotifier(this._repo) : super(const FinOpsListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const FinOpsListLoading();
+    try {
+      state = FinOpsListLoaded(await _repo.getFinOpsCashEvents(params: params));
+    } catch (e) {
+      state = FinOpsListError(e.toString());
+    }
+  }
+}
+
+final finOpsExpensesProvider = StateNotifierProvider<FinOpsExpensesNotifier, FinOpsListState>(
+  (ref) => FinOpsExpensesNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsExpensesNotifier extends StateNotifier<FinOpsListState> {
+  final AdminRepository _repo;
+  FinOpsExpensesNotifier(this._repo) : super(const FinOpsListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const FinOpsListLoading();
+    try {
+      state = FinOpsListLoaded(await _repo.getFinOpsExpenses(params: params));
+    } catch (e) {
+      state = FinOpsListError(e.toString());
+    }
+  }
+}
+
+final finOpsGiftCardsProvider = StateNotifierProvider<FinOpsGiftCardsNotifier, FinOpsListState>(
+  (ref) => FinOpsGiftCardsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsGiftCardsNotifier extends StateNotifier<FinOpsListState> {
+  final AdminRepository _repo;
+  FinOpsGiftCardsNotifier(this._repo) : super(const FinOpsListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const FinOpsListLoading();
+    try {
+      state = FinOpsListLoaded(await _repo.getFinOpsGiftCards(params: params));
+    } catch (e) {
+      state = FinOpsListError(e.toString());
+    }
+  }
+}
+
+final finOpsGiftCardDetailProvider = StateNotifierProvider<FinOpsGiftCardDetailNotifier, FinOpsDetailState>(
+  (ref) => FinOpsGiftCardDetailNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsGiftCardDetailNotifier extends StateNotifier<FinOpsDetailState> {
+  final AdminRepository _repo;
+  FinOpsGiftCardDetailNotifier(this._repo) : super(const FinOpsDetailInitial());
+  Future<void> load(String id) async {
+    state = const FinOpsDetailLoading();
+    try {
+      state = FinOpsDetailLoaded(await _repo.getFinOpsGiftCard(id));
+    } catch (e) {
+      state = FinOpsDetailError(e.toString());
+    }
+  }
+}
+
+final finOpsGiftCardTxnsProvider = StateNotifierProvider<FinOpsGiftCardTxnsNotifier, FinOpsListState>(
+  (ref) => FinOpsGiftCardTxnsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsGiftCardTxnsNotifier extends StateNotifier<FinOpsListState> {
+  final AdminRepository _repo;
+  FinOpsGiftCardTxnsNotifier(this._repo) : super(const FinOpsListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const FinOpsListLoading();
+    try {
+      state = FinOpsListLoaded(await _repo.getFinOpsGiftCardTxns(params: params));
+    } catch (e) {
+      state = FinOpsListError(e.toString());
+    }
+  }
+}
+
+final finOpsAccountingConfigsProvider = StateNotifierProvider<FinOpsAccountingConfigsNotifier, FinOpsListState>(
+  (ref) => FinOpsAccountingConfigsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsAccountingConfigsNotifier extends StateNotifier<FinOpsListState> {
+  final AdminRepository _repo;
+  FinOpsAccountingConfigsNotifier(this._repo) : super(const FinOpsListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const FinOpsListLoading();
+    try {
+      state = FinOpsListLoaded(await _repo.getFinOpsAccountingConfigs(params: params));
+    } catch (e) {
+      state = FinOpsListError(e.toString());
+    }
+  }
+}
+
+final finOpsAccountingExportsProvider = StateNotifierProvider<FinOpsAccountingExportsNotifier, FinOpsListState>(
+  (ref) => FinOpsAccountingExportsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsAccountingExportsNotifier extends StateNotifier<FinOpsListState> {
+  final AdminRepository _repo;
+  FinOpsAccountingExportsNotifier(this._repo) : super(const FinOpsListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const FinOpsListLoading();
+    try {
+      state = FinOpsListLoaded(await _repo.getFinOpsAccountingExports(params: params));
+    } catch (e) {
+      state = FinOpsListError(e.toString());
+    }
+  }
+}
+
+final finOpsAutoExportConfigsProvider = StateNotifierProvider<FinOpsAutoExportConfigsNotifier, FinOpsListState>(
+  (ref) => FinOpsAutoExportConfigsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsAutoExportConfigsNotifier extends StateNotifier<FinOpsListState> {
+  final AdminRepository _repo;
+  FinOpsAutoExportConfigsNotifier(this._repo) : super(const FinOpsListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const FinOpsListLoading();
+    try {
+      state = FinOpsListLoaded(await _repo.getFinOpsAutoExportConfigs(params: params));
+    } catch (e) {
+      state = FinOpsListError(e.toString());
+    }
+  }
+}
+
+final finOpsThawaniSettlementsProvider = StateNotifierProvider<FinOpsThawaniSettlementsNotifier, FinOpsListState>(
+  (ref) => FinOpsThawaniSettlementsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsThawaniSettlementsNotifier extends StateNotifier<FinOpsListState> {
+  final AdminRepository _repo;
+  FinOpsThawaniSettlementsNotifier(this._repo) : super(const FinOpsListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const FinOpsListLoading();
+    try {
+      state = FinOpsListLoaded(await _repo.getFinOpsThawaniSettlements(params: params));
+    } catch (e) {
+      state = FinOpsListError(e.toString());
+    }
+  }
+}
+
+final finOpsThawaniOrdersProvider = StateNotifierProvider<FinOpsThawaniOrdersNotifier, FinOpsListState>(
+  (ref) => FinOpsThawaniOrdersNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsThawaniOrdersNotifier extends StateNotifier<FinOpsListState> {
+  final AdminRepository _repo;
+  FinOpsThawaniOrdersNotifier(this._repo) : super(const FinOpsListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const FinOpsListLoading();
+    try {
+      state = FinOpsListLoaded(await _repo.getFinOpsThawaniOrders(params: params));
+    } catch (e) {
+      state = FinOpsListError(e.toString());
+    }
+  }
+}
+
+final finOpsThawaniStoreConfigsProvider = StateNotifierProvider<FinOpsThawaniStoreConfigsNotifier, FinOpsListState>(
+  (ref) => FinOpsThawaniStoreConfigsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsThawaniStoreConfigsNotifier extends StateNotifier<FinOpsListState> {
+  final AdminRepository _repo;
+  FinOpsThawaniStoreConfigsNotifier(this._repo) : super(const FinOpsListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const FinOpsListLoading();
+    try {
+      state = FinOpsListLoaded(await _repo.getFinOpsThawaniStoreConfigs(params: params));
+    } catch (e) {
+      state = FinOpsListError(e.toString());
+    }
+  }
+}
+
+final finOpsDailySalesSummaryProvider = StateNotifierProvider<FinOpsDailySalesSummaryNotifier, FinOpsListState>(
+  (ref) => FinOpsDailySalesSummaryNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsDailySalesSummaryNotifier extends StateNotifier<FinOpsListState> {
+  final AdminRepository _repo;
+  FinOpsDailySalesSummaryNotifier(this._repo) : super(const FinOpsListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const FinOpsListLoading();
+    try {
+      state = FinOpsListLoaded(await _repo.getFinOpsDailySalesSummary(params: params));
+    } catch (e) {
+      state = FinOpsListError(e.toString());
+    }
+  }
+}
+
+final finOpsProductSalesSummaryProvider = StateNotifierProvider<FinOpsProductSalesSummaryNotifier, FinOpsListState>(
+  (ref) => FinOpsProductSalesSummaryNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsProductSalesSummaryNotifier extends StateNotifier<FinOpsListState> {
+  final AdminRepository _repo;
+  FinOpsProductSalesSummaryNotifier(this._repo) : super(const FinOpsListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const FinOpsListLoading();
+    try {
+      state = FinOpsListLoaded(await _repo.getFinOpsProductSalesSummary(params: params));
+    } catch (e) {
+      state = FinOpsListError(e.toString());
+    }
+  }
+}
+
+// ── P15 Mutation Providers ──────────────────────────────────
+
+final finOpsExpenseActionProvider = StateNotifierProvider<FinOpsExpenseActionNotifier, FinOpsActionState>(
+  (ref) => FinOpsExpenseActionNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsExpenseActionNotifier extends StateNotifier<FinOpsActionState> {
+  final AdminRepository _repo;
+  FinOpsExpenseActionNotifier(this._repo) : super(const FinOpsActionInitial());
+
+  Future<void> create(Map<String, dynamic> data) async {
+    state = const FinOpsActionLoading();
+    try {
+      state = FinOpsActionSuccess(await _repo.createFinOpsExpense(data));
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+
+  Future<void> update(String id, Map<String, dynamic> data) async {
+    state = const FinOpsActionLoading();
+    try {
+      state = FinOpsActionSuccess(await _repo.updateFinOpsExpense(id, data));
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+
+  Future<void> delete(String id) async {
+    state = const FinOpsActionLoading();
+    try {
+      await _repo.deleteFinOpsExpense(id);
+      state = const FinOpsActionSuccess();
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+}
+
+final finOpsGiftCardActionProvider = StateNotifierProvider<FinOpsGiftCardActionNotifier, FinOpsActionState>(
+  (ref) => FinOpsGiftCardActionNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsGiftCardActionNotifier extends StateNotifier<FinOpsActionState> {
+  final AdminRepository _repo;
+  FinOpsGiftCardActionNotifier(this._repo) : super(const FinOpsActionInitial());
+
+  Future<void> issue(Map<String, dynamic> data) async {
+    state = const FinOpsActionLoading();
+    try {
+      state = FinOpsActionSuccess(await _repo.issueFinOpsGiftCard(data));
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+
+  Future<void> update(String id, Map<String, dynamic> data) async {
+    state = const FinOpsActionLoading();
+    try {
+      state = FinOpsActionSuccess(await _repo.updateFinOpsGiftCard(id, data));
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+
+  Future<void> voidCard(String id) async {
+    state = const FinOpsActionLoading();
+    try {
+      state = FinOpsActionSuccess(await _repo.voidFinOpsGiftCard(id));
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+}
+
+final finOpsRefundActionProvider = StateNotifierProvider<FinOpsRefundActionNotifier, FinOpsActionState>(
+  (ref) => FinOpsRefundActionNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsRefundActionNotifier extends StateNotifier<FinOpsActionState> {
+  final AdminRepository _repo;
+  FinOpsRefundActionNotifier(this._repo) : super(const FinOpsActionInitial());
+
+  Future<void> process(String id, Map<String, dynamic> data) async {
+    state = const FinOpsActionLoading();
+    try {
+      state = FinOpsActionSuccess(await _repo.processFinOpsRefund(id, data));
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+}
+
+final finOpsCashSessionActionProvider = StateNotifierProvider<FinOpsCashSessionActionNotifier, FinOpsActionState>(
+  (ref) => FinOpsCashSessionActionNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsCashSessionActionNotifier extends StateNotifier<FinOpsActionState> {
+  final AdminRepository _repo;
+  FinOpsCashSessionActionNotifier(this._repo) : super(const FinOpsActionInitial());
+
+  Future<void> forceClose(String id, {Map<String, dynamic>? data}) async {
+    state = const FinOpsActionLoading();
+    try {
+      state = FinOpsActionSuccess(await _repo.forceCloseFinOpsCashSession(id, data: data));
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+}
+
+final finOpsAccountingConfigActionProvider = StateNotifierProvider<FinOpsAccountingConfigActionNotifier, FinOpsActionState>(
+  (ref) => FinOpsAccountingConfigActionNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsAccountingConfigActionNotifier extends StateNotifier<FinOpsActionState> {
+  final AdminRepository _repo;
+  FinOpsAccountingConfigActionNotifier(this._repo) : super(const FinOpsActionInitial());
+
+  Future<void> create(Map<String, dynamic> data) async {
+    state = const FinOpsActionLoading();
+    try {
+      state = FinOpsActionSuccess(await _repo.createFinOpsAccountingConfig(data));
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+
+  Future<void> update(String id, Map<String, dynamic> data) async {
+    state = const FinOpsActionLoading();
+    try {
+      state = FinOpsActionSuccess(await _repo.updateFinOpsAccountingConfig(id, data));
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+
+  Future<void> delete(String id) async {
+    state = const FinOpsActionLoading();
+    try {
+      await _repo.deleteFinOpsAccountingConfig(id);
+      state = const FinOpsActionSuccess();
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+}
+
+final finOpsAccountMappingActionProvider = StateNotifierProvider<FinOpsAccountMappingActionNotifier, FinOpsActionState>(
+  (ref) => FinOpsAccountMappingActionNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsAccountMappingActionNotifier extends StateNotifier<FinOpsActionState> {
+  final AdminRepository _repo;
+  FinOpsAccountMappingActionNotifier(this._repo) : super(const FinOpsActionInitial());
+
+  Future<void> create(Map<String, dynamic> data) async {
+    state = const FinOpsActionLoading();
+    try {
+      state = FinOpsActionSuccess(await _repo.createFinOpsAccountMapping(data));
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+
+  Future<void> update(String id, Map<String, dynamic> data) async {
+    state = const FinOpsActionLoading();
+    try {
+      state = FinOpsActionSuccess(await _repo.updateFinOpsAccountMapping(id, data));
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+
+  Future<void> delete(String id) async {
+    state = const FinOpsActionLoading();
+    try {
+      await _repo.deleteFinOpsAccountMapping(id);
+      state = const FinOpsActionSuccess();
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+}
+
+final finOpsAccountingExportActionProvider = StateNotifierProvider<FinOpsAccountingExportActionNotifier, FinOpsActionState>(
+  (ref) => FinOpsAccountingExportActionNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsAccountingExportActionNotifier extends StateNotifier<FinOpsActionState> {
+  final AdminRepository _repo;
+  FinOpsAccountingExportActionNotifier(this._repo) : super(const FinOpsActionInitial());
+
+  Future<void> trigger(Map<String, dynamic> data) async {
+    state = const FinOpsActionLoading();
+    try {
+      state = FinOpsActionSuccess(await _repo.triggerFinOpsAccountingExport(data));
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+
+  Future<void> retry(String id) async {
+    state = const FinOpsActionLoading();
+    try {
+      state = FinOpsActionSuccess(await _repo.retryFinOpsAccountingExport(id));
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+}
+
+final finOpsAutoExportConfigActionProvider = StateNotifierProvider<FinOpsAutoExportConfigActionNotifier, FinOpsActionState>(
+  (ref) => FinOpsAutoExportConfigActionNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsAutoExportConfigActionNotifier extends StateNotifier<FinOpsActionState> {
+  final AdminRepository _repo;
+  FinOpsAutoExportConfigActionNotifier(this._repo) : super(const FinOpsActionInitial());
+
+  Future<void> create(Map<String, dynamic> data) async {
+    state = const FinOpsActionLoading();
+    try {
+      state = FinOpsActionSuccess(await _repo.createFinOpsAutoExportConfig(data));
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+
+  Future<void> delete(String id) async {
+    state = const FinOpsActionLoading();
+    try {
+      await _repo.deleteFinOpsAutoExportConfig(id);
+      state = const FinOpsActionSuccess();
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+}
+
+final finOpsThawaniSettlementActionProvider = StateNotifierProvider<FinOpsThawaniSettlementActionNotifier, FinOpsActionState>(
+  (ref) => FinOpsThawaniSettlementActionNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsThawaniSettlementActionNotifier extends StateNotifier<FinOpsActionState> {
+  final AdminRepository _repo;
+  FinOpsThawaniSettlementActionNotifier(this._repo) : super(const FinOpsActionInitial());
+
+  Future<void> reconcile(String id, Map<String, dynamic> data) async {
+    state = const FinOpsActionLoading();
+    try {
+      state = FinOpsActionSuccess(await _repo.reconcileFinOpsThawaniSettlement(id, data));
+    } catch (e) {
+      state = FinOpsActionError(e.toString());
+    }
+  }
+}
+
+final finOpsGiftCardTxnDetailProvider = StateNotifierProvider<FinOpsGiftCardTxnDetailNotifier, FinOpsDetailState>(
+  (ref) => FinOpsGiftCardTxnDetailNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsGiftCardTxnDetailNotifier extends StateNotifier<FinOpsDetailState> {
+  final AdminRepository _repo;
+  FinOpsGiftCardTxnDetailNotifier(this._repo) : super(const FinOpsDetailInitial());
+  Future<void> load(String id) async {
+    state = const FinOpsDetailLoading();
+    try {
+      state = FinOpsDetailLoaded(await _repo.getFinOpsGiftCardTxn(id));
+    } catch (e) {
+      state = FinOpsDetailError(e.toString());
+    }
+  }
+}
+
+final finOpsDailySalesSummaryDetailProvider = StateNotifierProvider<FinOpsDailySalesSummaryDetailNotifier, FinOpsDetailState>(
+  (ref) => FinOpsDailySalesSummaryDetailNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsDailySalesSummaryDetailNotifier extends StateNotifier<FinOpsDetailState> {
+  final AdminRepository _repo;
+  FinOpsDailySalesSummaryDetailNotifier(this._repo) : super(const FinOpsDetailInitial());
+  Future<void> load(String id) async {
+    state = const FinOpsDetailLoading();
+    try {
+      state = FinOpsDetailLoaded(await _repo.getFinOpsDailySalesSummaryDetail(id));
+    } catch (e) {
+      state = FinOpsDetailError(e.toString());
+    }
+  }
+}
+
+final finOpsProductSalesSummaryDetailProvider = StateNotifierProvider<FinOpsProductSalesSummaryDetailNotifier, FinOpsDetailState>(
+  (ref) => FinOpsProductSalesSummaryDetailNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class FinOpsProductSalesSummaryDetailNotifier extends StateNotifier<FinOpsDetailState> {
+  final AdminRepository _repo;
+  FinOpsProductSalesSummaryDetailNotifier(this._repo) : super(const FinOpsDetailInitial());
+  Future<void> load(String id) async {
+    state = const FinOpsDetailLoading();
+    try {
+      state = FinOpsDetailLoaded(await _repo.getFinOpsProductSalesSummaryDetail(id));
+    } catch (e) {
+      state = FinOpsDetailError(e.toString());
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// P16: Infrastructure & Operations
+// ═══════════════════════════════════════════════════════════════
+
+final infraOverviewProvider = StateNotifierProvider<InfraOverviewNotifier, InfraOverviewState>(
+  (ref) => InfraOverviewNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class InfraOverviewNotifier extends StateNotifier<InfraOverviewState> {
+  final AdminRepository _repo;
+  InfraOverviewNotifier(this._repo) : super(const InfraOverviewInitial());
+  Future<void> load() async {
+    state = const InfraOverviewLoading();
+    try {
+      state = InfraOverviewLoaded(await _repo.getInfraOverview());
+    } catch (e) {
+      state = InfraOverviewError(e.toString());
+    }
+  }
+}
+
+final infraQueuesProvider = StateNotifierProvider<InfraQueuesNotifier, InfraListState>(
+  (ref) => InfraQueuesNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class InfraQueuesNotifier extends StateNotifier<InfraListState> {
+  final AdminRepository _repo;
+  InfraQueuesNotifier(this._repo) : super(const InfraListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const InfraListLoading();
+    try {
+      state = InfraListLoaded(await _repo.getInfraQueues(params: params));
+    } catch (e) {
+      state = InfraListError(e.toString());
+    }
+  }
+}
+
+final infraFailedJobsProvider = StateNotifierProvider<InfraFailedJobsNotifier, InfraListState>(
+  (ref) => InfraFailedJobsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class InfraFailedJobsNotifier extends StateNotifier<InfraListState> {
+  final AdminRepository _repo;
+  InfraFailedJobsNotifier(this._repo) : super(const InfraListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const InfraListLoading();
+    try {
+      state = InfraListLoaded(await _repo.getInfraFailedJobs(params: params));
+    } catch (e) {
+      state = InfraListError(e.toString());
+    }
+  }
+}
+
+final infraHealthProvider = StateNotifierProvider<InfraHealthNotifier, InfraOverviewState>(
+  (ref) => InfraHealthNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class InfraHealthNotifier extends StateNotifier<InfraOverviewState> {
+  final AdminRepository _repo;
+  InfraHealthNotifier(this._repo) : super(const InfraOverviewInitial());
+  Future<void> load() async {
+    state = const InfraOverviewLoading();
+    try {
+      state = InfraOverviewLoaded(await _repo.getInfraHealth());
+    } catch (e) {
+      state = InfraOverviewError(e.toString());
+    }
+  }
+}
+
+final infraScheduledTasksProvider = StateNotifierProvider<InfraScheduledTasksNotifier, InfraListState>(
+  (ref) => InfraScheduledTasksNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class InfraScheduledTasksNotifier extends StateNotifier<InfraListState> {
+  final AdminRepository _repo;
+  InfraScheduledTasksNotifier(this._repo) : super(const InfraListInitial());
+  Future<void> load() async {
+    state = const InfraListLoading();
+    try {
+      state = InfraListLoaded(await _repo.getInfraScheduledTasks());
+    } catch (e) {
+      state = InfraListError(e.toString());
+    }
+  }
+}
+
+final infraServerMetricsProvider = StateNotifierProvider<InfraServerMetricsNotifier, InfraOverviewState>(
+  (ref) => InfraServerMetricsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class InfraServerMetricsNotifier extends StateNotifier<InfraOverviewState> {
+  final AdminRepository _repo;
+  InfraServerMetricsNotifier(this._repo) : super(const InfraOverviewInitial());
+  Future<void> load() async {
+    state = const InfraOverviewLoading();
+    try {
+      state = InfraOverviewLoaded(await _repo.getInfraServerMetrics());
+    } catch (e) {
+      state = InfraOverviewError(e.toString());
+    }
+  }
+}
+
+final infraStorageUsageProvider = StateNotifierProvider<InfraStorageUsageNotifier, InfraOverviewState>(
+  (ref) => InfraStorageUsageNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class InfraStorageUsageNotifier extends StateNotifier<InfraOverviewState> {
+  final AdminRepository _repo;
+  InfraStorageUsageNotifier(this._repo) : super(const InfraOverviewInitial());
+  Future<void> load() async {
+    state = const InfraOverviewLoading();
+    try {
+      state = InfraOverviewLoaded(await _repo.getInfraStorageUsage());
+    } catch (e) {
+      state = InfraOverviewError(e.toString());
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// P17: Provider Roles & Permissions
+// ═══════════════════════════════════════════════════════════════
+
+final providerPermissionListProvider = StateNotifierProvider<ProviderPermissionListNotifier, ProviderPermissionListState>(
+  (ref) => ProviderPermissionListNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class ProviderPermissionListNotifier extends StateNotifier<ProviderPermissionListState> {
+  final AdminRepository _repo;
+  ProviderPermissionListNotifier(this._repo) : super(const ProviderPermissionListInitial());
+  Future<void> load() async {
+    state = const ProviderPermissionListLoading();
+    try {
+      state = ProviderPermissionListLoaded(await _repo.getProviderPermissions());
+    } catch (e) {
+      state = ProviderPermissionListError(e.toString());
+    }
+  }
+}
+
+final providerRoleTemplateListProvider = StateNotifierProvider<ProviderRoleTemplateListNotifier, ProviderRoleTemplateListState>(
+  (ref) => ProviderRoleTemplateListNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class ProviderRoleTemplateListNotifier extends StateNotifier<ProviderRoleTemplateListState> {
+  final AdminRepository _repo;
+  ProviderRoleTemplateListNotifier(this._repo) : super(const ProviderRoleTemplateListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const ProviderRoleTemplateListLoading();
+    try {
+      state = ProviderRoleTemplateListLoaded(await _repo.getProviderRoleTemplates(params: params));
+    } catch (e) {
+      state = ProviderRoleTemplateListError(e.toString());
+    }
+  }
+}
+
+final providerRoleTemplateDetailProvider =
+    StateNotifierProvider<ProviderRoleTemplateDetailNotifier, ProviderRoleTemplateDetailState>(
+      (ref) => ProviderRoleTemplateDetailNotifier(ref.read(adminRepositoryProvider)),
+    );
+
+class ProviderRoleTemplateDetailNotifier extends StateNotifier<ProviderRoleTemplateDetailState> {
+  final AdminRepository _repo;
+  ProviderRoleTemplateDetailNotifier(this._repo) : super(const ProviderRoleTemplateDetailInitial());
+  Future<void> load(String id) async {
+    state = const ProviderRoleTemplateDetailLoading();
+    try {
+      state = ProviderRoleTemplateDetailLoaded(await _repo.getProviderRoleTemplate(id));
+    } catch (e) {
+      state = ProviderRoleTemplateDetailError(e.toString());
+    }
+  }
+}
+
+// ── P16 Backup Providers ────────────────────────────────────
+
+final infraDatabaseBackupsProvider = StateNotifierProvider<InfraDatabaseBackupsNotifier, InfraListState>(
+  (ref) => InfraDatabaseBackupsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class InfraDatabaseBackupsNotifier extends StateNotifier<InfraListState> {
+  final AdminRepository _repo;
+  InfraDatabaseBackupsNotifier(this._repo) : super(const InfraListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const InfraListLoading();
+    try {
+      state = InfraListLoaded(await _repo.getDatabaseBackups(params: params));
+    } catch (e) {
+      state = InfraListError(e.toString());
+    }
+  }
+}
+
+final infraProviderBackupsProvider = StateNotifierProvider<InfraProviderBackupsNotifier, InfraListState>(
+  (ref) => InfraProviderBackupsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class InfraProviderBackupsNotifier extends StateNotifier<InfraListState> {
+  final AdminRepository _repo;
+  InfraProviderBackupsNotifier(this._repo) : super(const InfraListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const InfraListLoading();
+    try {
+      state = InfraListLoaded(await _repo.getProviderBackupStatuses(params: params));
+    } catch (e) {
+      state = InfraListError(e.toString());
+    }
+  }
+}
+
+// ── P16 Health Checks List Provider ─────────────────────────
+
+final infraHealthChecksProvider = StateNotifierProvider<InfraHealthChecksNotifier, InfraListState>(
+  (ref) => InfraHealthChecksNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class InfraHealthChecksNotifier extends StateNotifier<InfraListState> {
+  final AdminRepository _repo;
+  InfraHealthChecksNotifier(this._repo) : super(const InfraListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const InfraListLoading();
+    try {
+      state = InfraListLoaded(await _repo.getHealthChecks(params: params));
+    } catch (e) {
+      state = InfraListError(e.toString());
+    }
+  }
+}

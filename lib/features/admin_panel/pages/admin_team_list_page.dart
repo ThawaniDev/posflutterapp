@@ -71,14 +71,14 @@ class _AdminTeamListPageState extends ConsumerState<AdminTeamListPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: PosInput(
+                  child: PosTextField(
                     controller: _searchController,
                     hint: 'Search by name or email...',
                     prefixIcon: Icons.search,
                     onChanged: (_) => _loadTeam(),
                   ),
                 ),
-                AppSpacing.horizontalGap8,
+                AppSpacing.gapW8,
                 DropdownButton<bool?>(
                   value: _activeFilter,
                   hint: const Text('Status'),
@@ -105,7 +105,7 @@ class _AdminTeamListPageState extends ConsumerState<AdminTeamListPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(msg, style: theme.textTheme.bodyLarge),
-                    AppSpacing.verticalGap16,
+                    AppSpacing.gapH16,
                     PosButton(label: 'Retry', onPressed: _loadTeam),
                   ],
                 ),
@@ -123,7 +123,7 @@ class _AdminTeamListPageState extends ConsumerState<AdminTeamListPage> {
                           : ListView.separated(
                               padding: AppSpacing.paddingAll16,
                               itemCount: users.length,
-                              separatorBuilder: (_, __) => AppSpacing.verticalGap8,
+                              separatorBuilder: (_, __) => AppSpacing.gapH8,
                               itemBuilder: (context, index) {
                                 final user = users[index];
                                 final isActive = user['is_active'] == true;

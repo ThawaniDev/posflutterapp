@@ -111,7 +111,7 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(admin['email']?.toString() ?? ''),
-            AppSpacing.verticalGap4,
+            AppSpacing.gapH4,
             Wrap(
               spacing: 4,
               children: [

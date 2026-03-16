@@ -49,6 +49,18 @@ class ApiEndpoints {
   static const String labelPresets = '/labels/templates/presets';
   static const String labelPrintHistory = '/labels/print-history';
 
+  // Owner Dashboard
+  static const String ownerDashboardStats = '/owner-dashboard/stats';
+  static const String ownerDashboardSalesTrend = '/owner-dashboard/sales-trend';
+  static const String ownerDashboardTopProducts = '/owner-dashboard/top-products';
+  static const String ownerDashboardLowStock = '/owner-dashboard/low-stock';
+  static const String ownerDashboardActiveCashiers = '/owner-dashboard/active-cashiers';
+  static const String ownerDashboardRecentOrders = '/owner-dashboard/recent-orders';
+  static const String ownerDashboardFinancialSummary = '/owner-dashboard/financial-summary';
+  static const String ownerDashboardHourlySales = '/owner-dashboard/hourly-sales';
+  static const String ownerDashboardBranches = '/owner-dashboard/branches';
+  static const String ownerDashboardStaffPerformance = '/owner-dashboard/staff-performance';
+
   // Reports
   static const String dailySales = '/reports/daily-sales';
   static const String productSales = '/reports/product-sales';
@@ -87,6 +99,16 @@ class ApiEndpoints {
   // Settings
   static const String settings = '/settings';
   static const String featureFlags = '/settings/feature-flags';
+
+  // Localization & Translations
+  static const String locales = '/settings/locales';
+  static const String translations = '/settings/translations';
+  static const String translationsBulkImport = '/settings/translations/bulk-import';
+  static const String exportTranslations = '/settings/export-translations';
+  static const String translationOverrides = '/settings/translation-overrides';
+  static String translationOverrideDelete(String id) => '/settings/translation-overrides/$id';
+  static const String publishTranslations = '/settings/publish-translations';
+  static const String translationVersions = '/settings/translation-versions';
 
   // Notifications
   static const String notifications = '/notifications';
@@ -356,4 +378,219 @@ class ApiEndpoints {
   static String adminSecurityIpAllowlistById(String id) => '/admin/security-center/ip-allowlist/$id';
   static const String adminSecurityIpBlocklist = '/admin/security-center/ip-blocklist';
   static String adminSecurityIpBlocklistById(String id) => '/admin/security-center/ip-blocklist/$id';
+
+  // ─── P15: Financial Operations ───────────────────────────
+  static const String adminFinOpsOverview = '/admin/financial-operations/overview';
+  static const String adminFinOpsPayments = '/admin/financial-operations/payments';
+  static String adminFinOpsPaymentById(String id) => '/admin/financial-operations/payments/$id';
+  static const String adminFinOpsRefunds = '/admin/financial-operations/refunds';
+  static String adminFinOpsRefundById(String id) => '/admin/financial-operations/refunds/$id';
+  static const String adminFinOpsCashSessions = '/admin/financial-operations/cash-sessions';
+  static String adminFinOpsCashSessionById(String id) => '/admin/financial-operations/cash-sessions/$id';
+  static const String adminFinOpsCashEvents = '/admin/financial-operations/cash-events';
+  static String adminFinOpsCashEventById(String id) => '/admin/financial-operations/cash-events/$id';
+  static const String adminFinOpsExpenses = '/admin/financial-operations/expenses';
+  static String adminFinOpsExpenseById(String id) => '/admin/financial-operations/expenses/$id';
+  static const String adminFinOpsGiftCards = '/admin/financial-operations/gift-cards';
+  static String adminFinOpsGiftCardById(String id) => '/admin/financial-operations/gift-cards/$id';
+  static const String adminFinOpsGiftCardTxns = '/admin/financial-operations/gift-card-transactions';
+  static const String adminFinOpsAccountingConfigs = '/admin/financial-operations/accounting-configs';
+  static String adminFinOpsAccountingConfigById(String id) => '/admin/financial-operations/accounting-configs/$id';
+  static const String adminFinOpsAccountMappings = '/admin/financial-operations/account-mappings';
+  static String adminFinOpsAccountMappingById(String id) => '/admin/financial-operations/account-mappings/$id';
+  static const String adminFinOpsAccountingExports = '/admin/financial-operations/accounting-exports';
+  static String adminFinOpsAccountingExportById(String id) => '/admin/financial-operations/accounting-exports/$id';
+  static const String adminFinOpsAutoExportConfigs = '/admin/financial-operations/auto-export-configs';
+  static String adminFinOpsAutoExportConfigById(String id) => '/admin/financial-operations/auto-export-configs/$id';
+  static const String adminFinOpsThawaniSettlements = '/admin/financial-operations/thawani-settlements';
+  static String adminFinOpsThawaniSettlementById(String id) => '/admin/financial-operations/thawani-settlements/$id';
+  static const String adminFinOpsThawaniOrders = '/admin/financial-operations/thawani-orders';
+  static String adminFinOpsThawaniOrderById(String id) => '/admin/financial-operations/thawani-orders/$id';
+  static const String adminFinOpsThawaniStoreConfigs = '/admin/financial-operations/thawani-store-configs';
+  static String adminFinOpsThawaniStoreConfigById(String id) => '/admin/financial-operations/thawani-store-configs/$id';
+  static const String adminFinOpsDailySalesSummary = '/admin/financial-operations/daily-sales-summary';
+  static String adminFinOpsDailySalesSummaryById(String id) => '/admin/financial-operations/daily-sales-summary/$id';
+  static const String adminFinOpsProductSalesSummary = '/admin/financial-operations/product-sales-summary';
+  static String adminFinOpsProductSalesSummaryById(String id) => '/admin/financial-operations/product-sales-summary/$id';
+  static String adminFinOpsGiftCardTxnById(String id) => '/admin/financial-operations/gift-card-transactions/$id';
+  static String adminFinOpsRefundProcess(String id) => '/admin/financial-operations/refunds/$id/process';
+  static String adminFinOpsCashSessionForceClose(String id) => '/admin/financial-operations/cash-sessions/$id/force-close';
+  static String adminFinOpsGiftCardVoid(String id) => '/admin/financial-operations/gift-cards/$id/void';
+  static String adminFinOpsAccountingExportRetry(String id) => '/admin/financial-operations/accounting-exports/$id/retry';
+  static String adminFinOpsThawaniSettlementReconcile(String id) =>
+      '/admin/financial-operations/thawani-settlements/$id/reconcile';
+
+  // ─── P16: Infrastructure & Operations ────────────────────
+  static const String adminInfraOverview = '/admin/infrastructure/overview';
+  static const String adminInfraQueues = '/admin/infrastructure/queues';
+  static String adminInfraQueueRetry(String id) => '/admin/infrastructure/queues/$id/retry';
+  static const String adminInfraFailedJobs = '/admin/infrastructure/failed-jobs';
+  static String adminInfraFailedJobRetry(String id) => '/admin/infrastructure/failed-jobs/$id/retry';
+  static String adminInfraFailedJobDelete(String id) => '/admin/infrastructure/failed-jobs/$id';
+  static const String adminInfraCacheFlush = '/admin/infrastructure/cache/flush';
+  static const String adminInfraHealth = '/admin/infrastructure/health';
+  static const String adminInfraScheduledTasks = '/admin/infrastructure/scheduled-tasks';
+  static String adminInfraScheduledTaskToggle(String id) => '/admin/infrastructure/scheduled-tasks/$id/toggle';
+  static const String adminInfraServerMetrics = '/admin/infrastructure/server-metrics';
+  static const String adminInfraStorageUsage = '/admin/infrastructure/storage-usage';
+  static String adminInfraFailedJobById(String id) => '/admin/infrastructure/failed-jobs/$id';
+  static const String adminInfraDatabaseBackups = '/admin/infrastructure/database-backups';
+  static String adminInfraDatabaseBackupById(String id) => '/admin/infrastructure/database-backups/$id';
+  static const String adminInfraHealthChecks = '/admin/infrastructure/health-checks';
+  static String adminInfraHealthCheckById(String id) => '/admin/infrastructure/health-checks/$id';
+  static const String adminInfraProviderBackups = '/admin/infrastructure/provider-backups';
+  static String adminInfraProviderBackupById(String id) => '/admin/infrastructure/provider-backups/$id';
+  static const String adminInfraSystemSettings = '/admin/infrastructure/system-settings';
+  static String adminInfraSystemSettingById(String id) => '/admin/infrastructure/system-settings/$id';
+  static const String adminInfraCacheStats = '/admin/infrastructure/cache/stats';
+
+  // ─── P17: Provider Roles & Permissions ───────────────────
+  static const String adminProviderPermissions = '/admin/provider-roles/permissions';
+  static const String adminProviderRoleTemplates = '/admin/provider-roles/templates';
+  static String adminProviderRoleTemplateById(String id) => '/admin/provider-roles/templates/$id';
+  static String adminProviderRoleTemplatePermissions(String id) => '/admin/provider-roles/templates/$id/permissions';
+
+  // ─── POS Feature #20: ZATCA Compliance ───────────────────
+  static const String zatcaEnroll = '/zatca/enroll';
+  static const String zatcaRenew = '/zatca/renew';
+  static const String zatcaSubmitInvoice = '/zatca/submit-invoice';
+  static const String zatcaSubmitBatch = '/zatca/submit-batch';
+  static const String zatcaInvoices = '/zatca/invoices';
+  static String zatcaInvoiceXml(String id) => '/zatca/invoices/$id/xml';
+  static const String zatcaComplianceSummary = '/zatca/compliance-summary';
+  static const String zatcaVatReport = '/zatca/vat-report';
+
+  // ─── POS Feature #21: Offline/Online Sync ────────────────
+  static const String syncPush = '/sync/push';
+  static const String syncPull = '/sync/pull';
+  static const String syncFull = '/sync/full';
+  static const String syncStatus = '/sync/status';
+  static String syncResolveConflict(String id) => '/sync/resolve-conflict/$id';
+  static const String syncConflicts = '/sync/conflicts';
+  static const String syncHeartbeat = '/sync/heartbeat';
+
+  // ─── POS Feature #22: Hardware Support ───────────────────
+  static const String hardwareConfig = '/hardware/config';
+  static String hardwareConfigDelete(String id) => '/hardware/config/$id';
+  static const String hardwareSupportedModels = '/hardware/supported-models';
+  static const String hardwareTest = '/hardware/test';
+  static const String hardwareEventLog = '/hardware/event-log';
+  static const String hardwareEventLogs = '/hardware/event-logs';
+
+  // ─── POS Feature #24: Security Provider ──────────────────
+  static const String securityPolicy = '/security/policy';
+  static const String securityAuditLogs = '/security/audit-logs';
+  static const String securityDevices = '/security/devices';
+  static String securityDeviceDeactivate(String id) => '/security/devices/$id/deactivate';
+  static String securityDeviceRemoteWipe(String id) => '/security/devices/$id/remote-wipe';
+  static const String securityLoginAttempts = '/security/login-attempts';
+  static const String securityLoginAttemptsFailedCount = '/security/login-attempts/failed-count';
+
+  // ─── POS Feature #25: Backup & Recovery ──────────────────
+  static const String backupCreate = '/backup/create';
+  static const String backupList = '/backup/list';
+  static const String backupSchedule = '/backup/schedule';
+  static const String backupStorage = '/backup/storage';
+  static const String backupExport = '/backup/export';
+  static const String backupProviderStatus = '/backup/provider-status';
+  static String backupById(String id) => '/backup/$id';
+  static String backupRestore(String id) => '/backup/$id/restore';
+  static String backupVerify(String id) => '/backup/$id/verify';
+  static String backupDelete(String id) => '/backup/$id';
+
+  // ─── POS Feature #26: Mobile Companion ───────────────────
+  static const String companionQuickStats = '/companion/quick-stats';
+  static const String companionSummary = '/companion/summary';
+  static const String companionSessions = '/companion/sessions';
+  static String companionSessionEnd(String id) => '/companion/sessions/$id/end';
+  static const String companionPreferences = '/companion/preferences';
+  static const String companionQuickActions = '/companion/quick-actions';
+  static const String companionEvents = '/companion/events';
+
+  // ─── POS Feature #27: POS Customization ─────────────────
+  static const String customizationSettings = '/customization/settings';
+  static const String customizationReceipt = '/customization/receipt';
+  static const String customizationQuickAccess = '/customization/quick-access';
+  static const String customizationExport = '/customization/export';
+
+  // ─── POS Feature #28: Auto Updates ──────────────────────
+  static const String autoUpdateCheck = '/auto-update/check';
+  static const String autoUpdateReportStatus = '/auto-update/report-status';
+  static const String autoUpdateChangelog = '/auto-update/changelog';
+  static const String autoUpdateHistory = '/auto-update/history';
+  static const String autoUpdateCurrentVersion = '/auto-update/current-version';
+
+  // ─── POS Feature #29: Accessibility ─────────────────────
+  static const String accessibilityPreferences = '/accessibility/preferences';
+  static const String accessibilityShortcuts = '/accessibility/shortcuts';
+
+  // ─── POS Feature #30: Nice-to-Have ──────────────────────
+  static const String wishlist = '/wishlist';
+  static const String appointments = '/appointments';
+  static String appointmentUpdate(String id) => '/appointments/$id';
+  static String appointmentCancel(String id) => '/appointments/$id/cancel';
+  static const String cfdConfig = '/cfd/config';
+  static const String giftRegistry = '/gift-registry';
+  static String giftRegistryShare(String code) => '/gift-registry/share/$code';
+  static String giftRegistryItems(String id) => '/gift-registry/$id/items';
+  static const String signagePlaylists = '/signage/playlists';
+  static String signagePlaylist(String id) => '/signage/playlists/$id';
+  static const String gamificationChallenges = '/gamification/challenges';
+  static const String gamificationBadges = '/gamification/badges';
+  static const String gamificationTiers = '/gamification/tiers';
+  static String gamificationCustomerProgress(String id) => '/gamification/customer/$id/progress';
+  static String gamificationCustomerBadges(String id) => '/gamification/customer/$id/badges';
+
+  // ─── POS Feature #31: Industry Workflows ────────────────
+
+  // Pharmacy
+  static const String pharmacyPrescriptions = '/industry/pharmacy/prescriptions';
+  static String pharmacyPrescription(String id) => '/industry/pharmacy/prescriptions/$id';
+  static const String pharmacyDrugSchedules = '/industry/pharmacy/drug-schedules';
+  static String pharmacyDrugSchedule(String id) => '/industry/pharmacy/drug-schedules/$id';
+
+  // Jewelry
+  static const String jewelryMetalRates = '/industry/jewelry/metal-rates';
+  static const String jewelryProductDetails = '/industry/jewelry/product-details';
+  static String jewelryProductDetail(String id) => '/industry/jewelry/product-details/$id';
+  static const String jewelryBuybacks = '/industry/jewelry/buybacks';
+
+  // Electronics
+  static const String electronicsImeiRecords = '/industry/electronics/imei-records';
+  static String electronicsImeiRecord(String id) => '/industry/electronics/imei-records/$id';
+  static const String electronicsRepairJobs = '/industry/electronics/repair-jobs';
+  static String electronicsRepairJob(String id) => '/industry/electronics/repair-jobs/$id';
+  static String electronicsRepairJobStatus(String id) => '/industry/electronics/repair-jobs/$id/status';
+  static const String electronicsTradeIns = '/industry/electronics/trade-ins';
+
+  // Florist
+  static const String floristArrangements = '/industry/florist/arrangements';
+  static String floristArrangement(String id) => '/industry/florist/arrangements/$id';
+  static const String floristFreshnessLogs = '/industry/florist/freshness-logs';
+  static String floristFreshnessLogStatus(String id) => '/industry/florist/freshness-logs/$id/status';
+  static const String floristSubscriptions = '/industry/florist/subscriptions';
+  static String floristSubscription(String id) => '/industry/florist/subscriptions/$id';
+  static String floristSubscriptionToggle(String id) => '/industry/florist/subscriptions/$id/toggle';
+
+  // Bakery
+  static const String bakeryRecipes = '/industry/bakery/recipes';
+  static String bakeryRecipe(String id) => '/industry/bakery/recipes/$id';
+  static const String bakeryProductionSchedules = '/industry/bakery/production-schedules';
+  static String bakeryProductionSchedule(String id) => '/industry/bakery/production-schedules/$id';
+  static String bakeryProductionScheduleStatus(String id) => '/industry/bakery/production-schedules/$id/status';
+  static const String bakeryCakeOrders = '/industry/bakery/cake-orders';
+  static String bakeryCakeOrder(String id) => '/industry/bakery/cake-orders/$id';
+  static String bakeryCakeOrderStatus(String id) => '/industry/bakery/cake-orders/$id/status';
+
+  // Restaurant
+  static const String restaurantTables = '/industry/restaurant/tables';
+  static String restaurantTable(String id) => '/industry/restaurant/tables/$id';
+  static String restaurantTableStatus(String id) => '/industry/restaurant/tables/$id/status';
+  static const String restaurantKitchenTickets = '/industry/restaurant/kitchen-tickets';
+  static String restaurantKitchenTicketStatus(String id) => '/industry/restaurant/kitchen-tickets/$id/status';
+  static const String restaurantReservations = '/industry/restaurant/reservations';
+  static String restaurantReservation(String id) => '/industry/restaurant/reservations/$id';
+  static String restaurantReservationStatus(String id) => '/industry/restaurant/reservations/$id/status';
+  static const String restaurantTabs = '/industry/restaurant/tabs';
+  static String restaurantTabClose(String id) => '/industry/restaurant/tabs/$id/close';
 }

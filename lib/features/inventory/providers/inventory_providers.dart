@@ -20,11 +20,9 @@ class StockLevelsNotifier extends StateNotifier<StockLevelsState> {
 
   bool _lowStockOnly = false;
   String? _search;
-  int _currentPage = 1;
 
   Future<void> load({int page = 1}) async {
     state = const StockLevelsLoading();
-    _currentPage = page;
     try {
       final result = await _repository.listStockLevels(page: page, lowStock: _lowStockOnly ? true : null, search: _search);
       state = StockLevelsLoaded(
@@ -44,13 +42,11 @@ class StockLevelsNotifier extends StateNotifier<StockLevelsState> {
 
   Future<void> toggleLowStockFilter(bool value) async {
     _lowStockOnly = value;
-    _currentPage = 1;
     await load();
   }
 
   Future<void> search(String? query) async {
     _search = (query != null && query.isEmpty) ? null : query;
-    _currentPage = 1;
     await load();
   }
 
@@ -106,11 +102,9 @@ class StockMovementsNotifier extends StateNotifier<StockMovementsState> {
   StockMovementsNotifier(this._repository) : super(const StockMovementsInitial());
 
   String? _productId;
-  int _currentPage = 1;
 
   Future<void> load({int page = 1, String? productId}) async {
     state = const StockMovementsLoading();
-    _currentPage = page;
     if (productId != null) _productId = productId;
     try {
       final result = await _repository.listStockMovements(page: page, productId: _productId);

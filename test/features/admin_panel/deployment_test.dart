@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/constants/api_endpoints.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';

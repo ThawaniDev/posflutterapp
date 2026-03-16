@@ -43,9 +43,9 @@ class _OrderListPageState extends ConsumerState<OrderListPage> {
                   itemBuilder: (context, index) {
                     final order = orders[index];
                     return ListTile(
-                      title: Text(order.orderNumber ?? 'Order #${order.id?.substring(0, 8)}'),
-                      subtitle: Text('Status: ${order.status?.name ?? 'unknown'}'),
-                      trailing: Text(order.total != null ? '\$${order.total!.toStringAsFixed(2)}' : ''),
+                      title: Text(order.orderNumber),
+                      subtitle: Text('Status: ${order.status.name}'),
+                      trailing: Text('\$${order.total.toStringAsFixed(2)}'),
                     );
                   },
                 ),

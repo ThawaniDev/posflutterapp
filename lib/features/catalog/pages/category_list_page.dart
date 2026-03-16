@@ -37,11 +37,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                PosTextField(
-                  controller: nameController,
-                  label: 'Category Name *',
-                  hint: 'Enter category name',
-                ),
+                PosTextField(controller: nameController, label: 'Category Name *', hint: 'Enter category name'),
                 const SizedBox(height: AppSpacing.md),
                 PosTextField(
                   controller: nameArController,
@@ -81,7 +77,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
     if (result != null && mounted) {
       try {
         if (isEditing) {
-          await ref.read(categoriesProvider.notifier).updateCategory(category!.id, result);
+          await ref.read(categoriesProvider.notifier).updateCategory(category.id, result);
           if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Category updated.')));
         } else {
           await ref.read(categoriesProvider.notifier).createCategory(result);
@@ -89,9 +85,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error),
-          );
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
         }
       }
     }
@@ -122,9 +116,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error),
-          );
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
         }
       }
     }
@@ -145,11 +137,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
           ),
         ],
       ),
-      floatingActionButton: PosButton(
-        label: 'New Category',
-        icon: Icons.add,
-        onPressed: () => _showCategoryDialog(),
-      ),
+      floatingActionButton: PosButton(label: 'New Category', icon: Icons.add, onPressed: () => _showCategoryDialog()),
       body: _buildBody(categoriesState),
     );
   }
@@ -190,9 +178,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
               const SizedBox(height: AppSpacing.xs),
               Text(
                 'Create categories to organise your products.',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
             ],
           ),
@@ -238,15 +224,15 @@ class _CategoryTile extends StatelessWidget {
         leading: Container(
           width: 44,
           height: 44,
-          decoration: BoxDecoration(
-            color: AppColors.primary10,
-            borderRadius: BorderRadius.circular(10),
-          ),
+          decoration: BoxDecoration(color: AppColors.primary10, borderRadius: BorderRadius.circular(10)),
           child: category.imageUrl != null
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(category.imageUrl!, fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Icon(Icons.category, color: AppColors.primary)),
+                  child: Image.network(
+                    category.imageUrl!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => Icon(Icons.category, color: AppColors.primary),
+                  ),
                 )
               : Icon(Icons.category, color: AppColors.primary),
         ),
@@ -267,9 +253,9 @@ class _CategoryTile extends StatelessWidget {
               ),
               child: Text(
                 category.isActive == true ? 'Active' : 'Inactive',
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: category.isActive == true ? AppColors.success : AppColors.error,
-                    ),
+                style: Theme.of(
+                  context,
+                ).textTheme.labelSmall?.copyWith(color: category.isActive == true ? AppColors.success : AppColors.error),
               ),
             ),
             const SizedBox(width: AppSpacing.sm),

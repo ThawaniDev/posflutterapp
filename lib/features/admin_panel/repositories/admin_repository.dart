@@ -607,4 +607,129 @@ class AdminRepository {
   Future<Map<String, dynamic>> createSecurityIpBlocklistEntry(Map<String, dynamic> data) =>
       _apiService.createSecurityIpBlocklistEntry(data);
   Future<Map<String, dynamic>> deleteSecurityIpBlocklistEntry(String id) => _apiService.deleteSecurityIpBlocklistEntry(id);
+
+  // ─── P15: Financial Operations ───────────────────────────
+  Future<Map<String, dynamic>> getFinOpsOverview() => _apiService.getFinOpsOverview();
+  Future<Map<String, dynamic>> getFinOpsPayments({Map<String, dynamic>? params}) => _apiService.getFinOpsPayments(params: params);
+  Future<Map<String, dynamic>> getFinOpsPayment(String id) => _apiService.getFinOpsPayment(id);
+  Future<Map<String, dynamic>> getFinOpsRefunds({Map<String, dynamic>? params}) => _apiService.getFinOpsRefunds(params: params);
+  Future<Map<String, dynamic>> getFinOpsRefund(String id) => _apiService.getFinOpsRefund(id);
+  Future<Map<String, dynamic>> getFinOpsCashSessions({Map<String, dynamic>? params}) =>
+      _apiService.getFinOpsCashSessions(params: params);
+  Future<Map<String, dynamic>> getFinOpsCashSession(String id) => _apiService.getFinOpsCashSession(id);
+  Future<Map<String, dynamic>> getFinOpsCashEvents({Map<String, dynamic>? params}) =>
+      _apiService.getFinOpsCashEvents(params: params);
+  Future<Map<String, dynamic>> getFinOpsCashEvent(String id) => _apiService.getFinOpsCashEvent(id);
+  Future<Map<String, dynamic>> getFinOpsExpenses({Map<String, dynamic>? params}) => _apiService.getFinOpsExpenses(params: params);
+  Future<Map<String, dynamic>> getFinOpsExpense(String id) => _apiService.getFinOpsExpense(id);
+  Future<Map<String, dynamic>> getFinOpsGiftCards({Map<String, dynamic>? params}) =>
+      _apiService.getFinOpsGiftCards(params: params);
+  Future<Map<String, dynamic>> getFinOpsGiftCard(String id) => _apiService.getFinOpsGiftCard(id);
+  Future<Map<String, dynamic>> getFinOpsGiftCardTxns({Map<String, dynamic>? params}) =>
+      _apiService.getFinOpsGiftCardTxns(params: params);
+  Future<Map<String, dynamic>> getFinOpsAccountingConfigs({Map<String, dynamic>? params}) =>
+      _apiService.getFinOpsAccountingConfigs(params: params);
+  Future<Map<String, dynamic>> getFinOpsAccountingConfig(String id) => _apiService.getFinOpsAccountingConfig(id);
+  Future<Map<String, dynamic>> getFinOpsAccountMappings({Map<String, dynamic>? params}) =>
+      _apiService.getFinOpsAccountMappings(params: params);
+  Future<Map<String, dynamic>> getFinOpsAccountMapping(String id) => _apiService.getFinOpsAccountMapping(id);
+  Future<Map<String, dynamic>> getFinOpsAccountingExports({Map<String, dynamic>? params}) =>
+      _apiService.getFinOpsAccountingExports(params: params);
+  Future<Map<String, dynamic>> getFinOpsAccountingExport(String id) => _apiService.getFinOpsAccountingExport(id);
+  Future<Map<String, dynamic>> getFinOpsAutoExportConfigs({Map<String, dynamic>? params}) =>
+      _apiService.getFinOpsAutoExportConfigs(params: params);
+  Future<Map<String, dynamic>> getFinOpsAutoExportConfig(String id) => _apiService.getFinOpsAutoExportConfig(id);
+  Future<Map<String, dynamic>> updateFinOpsAutoExportConfig(String id, Map<String, dynamic> data) =>
+      _apiService.updateFinOpsAutoExportConfig(id, data);
+  Future<Map<String, dynamic>> getFinOpsThawaniSettlements({Map<String, dynamic>? params}) =>
+      _apiService.getFinOpsThawaniSettlements(params: params);
+  Future<Map<String, dynamic>> getFinOpsThawaniSettlement(String id) => _apiService.getFinOpsThawaniSettlement(id);
+  Future<Map<String, dynamic>> getFinOpsThawaniOrders({Map<String, dynamic>? params}) =>
+      _apiService.getFinOpsThawaniOrders(params: params);
+  Future<Map<String, dynamic>> getFinOpsThawaniOrder(String id) => _apiService.getFinOpsThawaniOrder(id);
+  Future<Map<String, dynamic>> getFinOpsThawaniStoreConfigs({Map<String, dynamic>? params}) =>
+      _apiService.getFinOpsThawaniStoreConfigs(params: params);
+  Future<Map<String, dynamic>> getFinOpsThawaniStoreConfig(String id) => _apiService.getFinOpsThawaniStoreConfig(id);
+  Future<Map<String, dynamic>> getFinOpsDailySalesSummary({Map<String, dynamic>? params}) =>
+      _apiService.getFinOpsDailySalesSummary(params: params);
+  Future<Map<String, dynamic>> getFinOpsProductSalesSummary({Map<String, dynamic>? params}) =>
+      _apiService.getFinOpsProductSalesSummary(params: params);
+
+  // P15 Mutations
+  Future<Map<String, dynamic>> createFinOpsExpense(Map<String, dynamic> data) => _apiService.createFinOpsExpense(data);
+  Future<Map<String, dynamic>> updateFinOpsExpense(String id, Map<String, dynamic> data) =>
+      _apiService.updateFinOpsExpense(id, data);
+  Future<Map<String, dynamic>> deleteFinOpsExpense(String id) => _apiService.deleteFinOpsExpense(id);
+  Future<Map<String, dynamic>> issueFinOpsGiftCard(Map<String, dynamic> data) => _apiService.issueFinOpsGiftCard(data);
+  Future<Map<String, dynamic>> updateFinOpsGiftCard(String id, Map<String, dynamic> data) =>
+      _apiService.updateFinOpsGiftCard(id, data);
+  Future<Map<String, dynamic>> voidFinOpsGiftCard(String id) => _apiService.voidFinOpsGiftCard(id);
+  Future<Map<String, dynamic>> getFinOpsGiftCardTxn(String id) => _apiService.getFinOpsGiftCardTxn(id);
+  Future<Map<String, dynamic>> processFinOpsRefund(String id, Map<String, dynamic> data) =>
+      _apiService.processFinOpsRefund(id, data);
+  Future<Map<String, dynamic>> forceCloseFinOpsCashSession(String id, {Map<String, dynamic>? data}) =>
+      _apiService.forceCloseFinOpsCashSession(id, data: data);
+  Future<Map<String, dynamic>> createFinOpsAccountingConfig(Map<String, dynamic> data) =>
+      _apiService.createFinOpsAccountingConfig(data);
+  Future<Map<String, dynamic>> updateFinOpsAccountingConfig(String id, Map<String, dynamic> data) =>
+      _apiService.updateFinOpsAccountingConfig(id, data);
+  Future<Map<String, dynamic>> deleteFinOpsAccountingConfig(String id) => _apiService.deleteFinOpsAccountingConfig(id);
+  Future<Map<String, dynamic>> createFinOpsAccountMapping(Map<String, dynamic> data) =>
+      _apiService.createFinOpsAccountMapping(data);
+  Future<Map<String, dynamic>> updateFinOpsAccountMapping(String id, Map<String, dynamic> data) =>
+      _apiService.updateFinOpsAccountMapping(id, data);
+  Future<Map<String, dynamic>> deleteFinOpsAccountMapping(String id) => _apiService.deleteFinOpsAccountMapping(id);
+  Future<Map<String, dynamic>> triggerFinOpsAccountingExport(Map<String, dynamic> data) =>
+      _apiService.triggerFinOpsAccountingExport(data);
+  Future<Map<String, dynamic>> retryFinOpsAccountingExport(String id) => _apiService.retryFinOpsAccountingExport(id);
+  Future<Map<String, dynamic>> createFinOpsAutoExportConfig(Map<String, dynamic> data) =>
+      _apiService.createFinOpsAutoExportConfig(data);
+  Future<Map<String, dynamic>> deleteFinOpsAutoExportConfig(String id) => _apiService.deleteFinOpsAutoExportConfig(id);
+  Future<Map<String, dynamic>> reconcileFinOpsThawaniSettlement(String id, Map<String, dynamic> data) =>
+      _apiService.reconcileFinOpsThawaniSettlement(id, data);
+  Future<Map<String, dynamic>> getFinOpsDailySalesSummaryDetail(String id) => _apiService.getFinOpsDailySalesSummaryDetail(id);
+  Future<Map<String, dynamic>> getFinOpsProductSalesSummaryDetail(String id) =>
+      _apiService.getFinOpsProductSalesSummaryDetail(id);
+
+  // ─── P16: Infrastructure & Operations ────────────────────
+  Future<Map<String, dynamic>> getInfraOverview() => _apiService.getInfraOverview();
+  Future<Map<String, dynamic>> getInfraQueues({Map<String, dynamic>? params}) => _apiService.getInfraQueues(params: params);
+  Future<Map<String, dynamic>> retryInfraQueue(String id) => _apiService.retryInfraQueue(id);
+  Future<Map<String, dynamic>> getInfraFailedJobs({Map<String, dynamic>? params}) =>
+      _apiService.getInfraFailedJobs(params: params);
+  Future<Map<String, dynamic>> retryInfraFailedJob(String id) => _apiService.retryInfraFailedJob(id);
+  Future<Map<String, dynamic>> deleteInfraFailedJob(String id) => _apiService.deleteInfraFailedJob(id);
+  Future<Map<String, dynamic>> flushInfraCache() => _apiService.flushInfraCache();
+  Future<Map<String, dynamic>> getInfraHealth() => _apiService.getInfraHealth();
+  Future<Map<String, dynamic>> getInfraScheduledTasks() => _apiService.getInfraScheduledTasks();
+  Future<Map<String, dynamic>> toggleInfraScheduledTask(String id) => _apiService.toggleInfraScheduledTask(id);
+  Future<Map<String, dynamic>> getInfraServerMetrics() => _apiService.getInfraServerMetrics();
+  Future<Map<String, dynamic>> getInfraStorageUsage() => _apiService.getInfraStorageUsage();
+  Future<Map<String, dynamic>> showInfraFailedJob(String id) => _apiService.showInfraFailedJob(id);
+  Future<Map<String, dynamic>> getInfraDatabaseBackups({Map<String, dynamic>? params}) =>
+      _apiService.getInfraDatabaseBackups(params: params);
+  Future<Map<String, dynamic>> showInfraDatabaseBackup(String id) => _apiService.showInfraDatabaseBackup(id);
+  Future<Map<String, dynamic>> getInfraHealthChecks({Map<String, dynamic>? params}) =>
+      _apiService.getInfraHealthChecks(params: params);
+  Future<Map<String, dynamic>> showInfraHealthCheck(String id) => _apiService.showInfraHealthCheck(id);
+  Future<Map<String, dynamic>> getInfraProviderBackups({Map<String, dynamic>? params}) =>
+      _apiService.getInfraProviderBackups(params: params);
+  Future<Map<String, dynamic>> showInfraProviderBackup(String id) => _apiService.showInfraProviderBackup(id);
+  Future<Map<String, dynamic>> getInfraSystemSettings({Map<String, dynamic>? params}) =>
+      _apiService.getInfraSystemSettings(params: params);
+  Future<Map<String, dynamic>> showInfraSystemSetting(String id) => _apiService.showInfraSystemSetting(id);
+  Future<Map<String, dynamic>> getInfraCacheStats() => _apiService.getInfraCacheStats();
+
+  // ─── P17: Provider Roles & Permissions ───────────────────
+  Future<Map<String, dynamic>> getProviderPermissions() => _apiService.getProviderPermissions();
+  Future<Map<String, dynamic>> getProviderRoleTemplates({Map<String, dynamic>? params}) =>
+      _apiService.getProviderRoleTemplates(params: params);
+  Future<Map<String, dynamic>> getProviderRoleTemplate(String id) => _apiService.getProviderRoleTemplate(id);
+  Future<Map<String, dynamic>> createProviderRoleTemplate(Map<String, dynamic> data) =>
+      _apiService.createProviderRoleTemplate(data);
+  Future<Map<String, dynamic>> updateProviderRoleTemplate(String id, Map<String, dynamic> data) =>
+      _apiService.updateProviderRoleTemplate(id, data);
+  Future<Map<String, dynamic>> deleteProviderRoleTemplate(String id) => _apiService.deleteProviderRoleTemplate(id);
+  Future<Map<String, dynamic>> updateProviderRoleTemplatePermissions(String id, Map<String, dynamic> data) =>
+      _apiService.updateProviderRoleTemplatePermissions(id, data);
 }

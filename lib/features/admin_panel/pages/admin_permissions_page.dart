@@ -34,7 +34,7 @@ class _AdminPermissionsPageState extends ConsumerState<AdminPermissionsPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(msg),
-              AppSpacing.verticalGap16,
+              AppSpacing.gapH16,
               PosButton(label: 'Retry', onPressed: () => ref.read(permissionListProvider.notifier).load()),
             ],
           ),

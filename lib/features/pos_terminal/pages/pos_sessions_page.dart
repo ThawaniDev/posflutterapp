@@ -43,8 +43,8 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
                   itemBuilder: (context, index) {
                     final session = sessions[index];
                     return ListTile(
-                      title: Text('Register: ${session.registerId ?? 'N/A'}'),
-                      subtitle: Text('Status: ${session.status?.name ?? 'unknown'}'),
+                      title: Text('Register: ${session.registerId}'),
+                      subtitle: Text('Status: ${session.status.name}'),
                       trailing: Text(session.openedAt?.toString().substring(0, 16) ?? ''),
                     );
                   },

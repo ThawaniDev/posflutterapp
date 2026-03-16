@@ -319,15 +319,22 @@ void main() {
       expect(state, isA<RevenueDashboardState>());
     });
 
-    test('RevenueDashboardLoaded holds subscription counts and revenue', () {
+    test('RevenueDashboardLoaded holds revenue metrics', () {
       const state = RevenueDashboardLoaded(
-        subscriptions: {'active': 50, 'trial': 10, 'grace': 3, 'cancelled': 5},
-        revenue: {'monthly': 5000.0, 'pending_invoices': 7},
+        mrr: 5000.0,
+        arr: 60000.0,
+        revenueByStatus: [],
+        upcomingRenewals: 10,
+        hardwareRevenue: 2000.0,
+        implementationRevenue: 3000.0,
+        totalInvoices: 50,
+        paidInvoices: 40,
+        failedInvoices: 5,
       );
-      expect(state.subscriptions['active'], 50);
-      expect(state.subscriptions['trial'], 10);
-      expect(state.revenue['monthly'], 5000.0);
-      expect(state.revenue['pending_invoices'], 7);
+      expect(state.mrr, 5000.0);
+      expect(state.arr, 60000.0);
+      expect(state.upcomingRenewals, 10);
+      expect(state.totalInvoices, 50);
     });
 
     test('RevenueDashboardError holds error message', () {
@@ -429,17 +436,24 @@ void main() {
       expect(ApiEndpoints.adminPlanToggle(testId), contains(testId));
     });
 
-    test('revenue dashboard state tracks all subscription statuses', () {
+    test('revenue dashboard state tracks all revenue fields', () {
       const state = RevenueDashboardLoaded(
-        subscriptions: {'active': 100, 'trial': 20, 'grace': 5, 'cancelled': 10},
-        revenue: {'monthly': 15000.0, 'pending_invoices': 12},
+        mrr: 15000.0,
+        arr: 180000.0,
+        revenueByStatus: [],
+        upcomingRenewals: 20,
+        hardwareRevenue: 5000.0,
+        implementationRevenue: 10000.0,
+        totalInvoices: 100,
+        paidInvoices: 80,
+        failedInvoices: 10,
       );
 
-      expect(state.subscriptions.keys.length, 4);
-      expect(state.subscriptions.containsKey('active'), true);
-      expect(state.subscriptions.containsKey('trial'), true);
-      expect(state.subscriptions.containsKey('grace'), true);
-      expect(state.subscriptions.containsKey('cancelled'), true);
+      expect(state.mrr, 15000.0);
+      expect(state.arr, 180000.0);
+      expect(state.upcomingRenewals, 20);
+      expect(state.paidInvoices, 80);
+      expect(state.failedInvoices, 10);
     });
   });
 }

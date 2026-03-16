@@ -94,7 +94,7 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
               NotificationTemplateListError(:final message) => Center(
                 child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
               ),
-              NotificationTemplateListLoaded(:final templates, :final total) =>
+              NotificationTemplateListLoaded(:final templates) =>
                 templates.isEmpty
                     ? const Center(child: Text('No templates found'))
                     : ListView.builder(

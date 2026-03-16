@@ -1469,4 +1469,418 @@ class AdminApiService {
     final response = await _dio.delete(ApiEndpoints.adminSecurityIpBlocklistById(id));
     return response.data as Map<String, dynamic>;
   }
+
+  // ─── P15: Financial Operations ───────────────────────────
+  Future<Map<String, dynamic>> getFinOpsOverview() async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsOverview);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsPayments({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsPayments, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsPayment(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsPaymentById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsRefunds({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsRefunds, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsRefund(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsRefundById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsCashSessions({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsCashSessions, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsCashSession(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsCashSessionById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsCashEvents({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsCashEvents, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsCashEvent(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsCashEventById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsExpenses({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsExpenses, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsExpense(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsExpenseById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsGiftCards({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsGiftCards, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsGiftCard(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsGiftCardById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsGiftCardTxns({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsGiftCardTxns, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsAccountingConfigs({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsAccountingConfigs, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsAccountingConfig(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsAccountingConfigById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsAccountMappings({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsAccountMappings, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsAccountMapping(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsAccountMappingById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsAccountingExports({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsAccountingExports, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsAccountingExport(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsAccountingExportById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsAutoExportConfigs({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsAutoExportConfigs, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsAutoExportConfig(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsAutoExportConfigById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> updateFinOpsAutoExportConfig(String id, Map<String, dynamic> data) async {
+    final response = await _dio.put(ApiEndpoints.adminFinOpsAutoExportConfigById(id), data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsThawaniSettlements({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsThawaniSettlements, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsThawaniSettlement(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsThawaniSettlementById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsThawaniOrders({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsThawaniOrders, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsThawaniOrder(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsThawaniOrderById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsThawaniStoreConfigs({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsThawaniStoreConfigs, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsThawaniStoreConfig(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsThawaniStoreConfigById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsDailySalesSummary({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsDailySalesSummary, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsProductSalesSummary({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsProductSalesSummary, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  // P15 Mutation Methods
+  Future<Map<String, dynamic>> createFinOpsExpense(Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.adminFinOpsExpenses, data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> updateFinOpsExpense(String id, Map<String, dynamic> data) async {
+    final response = await _dio.put(ApiEndpoints.adminFinOpsExpenseById(id), data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> deleteFinOpsExpense(String id) async {
+    final response = await _dio.delete(ApiEndpoints.adminFinOpsExpenseById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> issueFinOpsGiftCard(Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.adminFinOpsGiftCards, data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> updateFinOpsGiftCard(String id, Map<String, dynamic> data) async {
+    final response = await _dio.put(ApiEndpoints.adminFinOpsGiftCardById(id), data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> voidFinOpsGiftCard(String id) async {
+    final response = await _dio.post(ApiEndpoints.adminFinOpsGiftCardVoid(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsGiftCardTxn(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsGiftCardTxnById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> processFinOpsRefund(String id, Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.adminFinOpsRefundProcess(id), data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> forceCloseFinOpsCashSession(String id, {Map<String, dynamic>? data}) async {
+    final response = await _dio.post(ApiEndpoints.adminFinOpsCashSessionForceClose(id), data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> createFinOpsAccountingConfig(Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.adminFinOpsAccountingConfigs, data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> updateFinOpsAccountingConfig(String id, Map<String, dynamic> data) async {
+    final response = await _dio.put(ApiEndpoints.adminFinOpsAccountingConfigById(id), data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> deleteFinOpsAccountingConfig(String id) async {
+    final response = await _dio.delete(ApiEndpoints.adminFinOpsAccountingConfigById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> createFinOpsAccountMapping(Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.adminFinOpsAccountMappings, data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> updateFinOpsAccountMapping(String id, Map<String, dynamic> data) async {
+    final response = await _dio.put(ApiEndpoints.adminFinOpsAccountMappingById(id), data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> deleteFinOpsAccountMapping(String id) async {
+    final response = await _dio.delete(ApiEndpoints.adminFinOpsAccountMappingById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> triggerFinOpsAccountingExport(Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.adminFinOpsAccountingExports, data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> retryFinOpsAccountingExport(String id) async {
+    final response = await _dio.post(ApiEndpoints.adminFinOpsAccountingExportRetry(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> createFinOpsAutoExportConfig(Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.adminFinOpsAutoExportConfigs, data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> deleteFinOpsAutoExportConfig(String id) async {
+    final response = await _dio.delete(ApiEndpoints.adminFinOpsAutoExportConfigById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> reconcileFinOpsThawaniSettlement(String id, Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.adminFinOpsThawaniSettlementReconcile(id), data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsDailySalesSummaryDetail(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsDailySalesSummaryById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getFinOpsProductSalesSummaryDetail(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminFinOpsProductSalesSummaryById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  // ─── P16: Infrastructure & Operations ────────────────────
+  Future<Map<String, dynamic>> getInfraOverview() async {
+    final response = await _dio.get(ApiEndpoints.adminInfraOverview);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getInfraQueues({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminInfraQueues, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> retryInfraQueue(String id) async {
+    final response = await _dio.post(ApiEndpoints.adminInfraQueueRetry(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getInfraFailedJobs({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminInfraFailedJobs, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> retryInfraFailedJob(String id) async {
+    final response = await _dio.post(ApiEndpoints.adminInfraFailedJobRetry(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> deleteInfraFailedJob(String id) async {
+    final response = await _dio.delete(ApiEndpoints.adminInfraFailedJobDelete(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> flushInfraCache() async {
+    final response = await _dio.post(ApiEndpoints.adminInfraCacheFlush);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getInfraHealth() async {
+    final response = await _dio.get(ApiEndpoints.adminInfraHealth);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getInfraScheduledTasks() async {
+    final response = await _dio.get(ApiEndpoints.adminInfraScheduledTasks);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> toggleInfraScheduledTask(String id) async {
+    final response = await _dio.post(ApiEndpoints.adminInfraScheduledTaskToggle(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getInfraServerMetrics() async {
+    final response = await _dio.get(ApiEndpoints.adminInfraServerMetrics);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getInfraStorageUsage() async {
+    final response = await _dio.get(ApiEndpoints.adminInfraStorageUsage);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> showInfraFailedJob(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminInfraFailedJobById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getInfraDatabaseBackups({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminInfraDatabaseBackups, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> showInfraDatabaseBackup(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminInfraDatabaseBackupById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getInfraHealthChecks({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminInfraHealthChecks, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> showInfraHealthCheck(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminInfraHealthCheckById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getInfraProviderBackups({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminInfraProviderBackups, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> showInfraProviderBackup(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminInfraProviderBackupById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getInfraSystemSettings({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminInfraSystemSettings, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> showInfraSystemSetting(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminInfraSystemSettingById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getInfraCacheStats() async {
+    final response = await _dio.get(ApiEndpoints.adminInfraCacheStats);
+    return response.data as Map<String, dynamic>;
+  }
+
+  // ─── P17: Provider Roles & Permissions ───────────────────
+  Future<Map<String, dynamic>> getProviderPermissions() async {
+    final response = await _dio.get(ApiEndpoints.adminProviderPermissions);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getProviderRoleTemplates({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminProviderRoleTemplates, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getProviderRoleTemplate(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminProviderRoleTemplateById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> createProviderRoleTemplate(Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.adminProviderRoleTemplates, data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> updateProviderRoleTemplate(String id, Map<String, dynamic> data) async {
+    final response = await _dio.put(ApiEndpoints.adminProviderRoleTemplateById(id), data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> deleteProviderRoleTemplate(String id) async {
+    final response = await _dio.delete(ApiEndpoints.adminProviderRoleTemplateById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> updateProviderRoleTemplatePermissions(String id, Map<String, dynamic> data) async {
+    final response = await _dio.put(ApiEndpoints.adminProviderRoleTemplatePermissions(id), data: data);
+    return response.data as Map<String, dynamic>;
+  }
 }

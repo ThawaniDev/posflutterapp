@@ -128,7 +128,7 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
 
   void _retryPayment(int invoiceId) async {
     try {
-      await ref.read(billingInvoiceActionProvider.notifier).retryPayment(invoiceId);
+      await ref.read(billingInvoiceActionProvider.notifier).retryPayment(invoiceId.toString());
       if (mounted) {
         ScaffoldMessenger.of(
           context,

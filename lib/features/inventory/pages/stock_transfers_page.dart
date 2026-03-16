@@ -4,7 +4,6 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
-import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
 import 'package:thawani_pos/features/inventory/enums/stock_transfer_status.dart';
 import 'package:thawani_pos/features/inventory/models/stock_transfer.dart';

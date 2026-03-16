@@ -1,4 +1,3 @@
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
 import 'package:thawani_pos/features/catalog/models/category.dart';
 import 'package:thawani_pos/features/catalog/models/product.dart';
 import 'package:thawani_pos/features/catalog/models/supplier.dart';
@@ -120,8 +119,7 @@ class CategoriesLoaded extends CategoriesState {
 
   const CategoriesLoaded({required this.categories});
 
-  CategoriesLoaded copyWith({List<Category>? categories}) =>
-      CategoriesLoaded(categories: categories ?? this.categories);
+  CategoriesLoaded copyWith({List<Category>? categories}) => CategoriesLoaded(categories: categories ?? this.categories);
 }
 
 class CategoriesError extends CategoriesState {
@@ -161,13 +159,7 @@ class SuppliersLoaded extends SuppliersState {
 
   bool get hasMore => currentPage < lastPage;
 
-  SuppliersLoaded copyWith({
-    List<Supplier>? suppliers,
-    int? total,
-    int? currentPage,
-    int? lastPage,
-    int? perPage,
-  }) {
+  SuppliersLoaded copyWith({List<Supplier>? suppliers, int? total, int? currentPage, int? lastPage, int? perPage}) {
     return SuppliersLoaded(
       suppliers: suppliers ?? this.suppliers,
       total: total ?? this.total,

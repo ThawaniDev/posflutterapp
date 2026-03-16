@@ -18,8 +18,6 @@ class PurchaseOrdersPage extends ConsumerStatefulWidget {
 }
 
 class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
-  String? _statusFilter;
-
   @override
   void initState() {
     super.initState();
@@ -99,7 +97,6 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
             icon: const Icon(Icons.filter_list),
             tooltip: 'Filter by status',
             onSelected: (value) {
-              setState(() => _statusFilter = value);
               ref.read(purchaseOrdersProvider.notifier).filterByStatus(value);
             },
             itemBuilder: (ctx) => [

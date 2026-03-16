@@ -43,8 +43,8 @@ class _CustomerListPageState extends ConsumerState<CustomerListPage> {
                   itemBuilder: (context, index) {
                     final customer = customers[index];
                     return ListTile(
-                      title: Text(customer.name ?? 'Unnamed'),
-                      subtitle: Text(customer.phone ?? customer.email ?? ''),
+                      title: Text(customer.name),
+                      subtitle: Text(customer.email ?? customer.phone),
                       trailing: customer.loyaltyPoints != null ? Text('${customer.loyaltyPoints} pts') : null,
                     );
                   },

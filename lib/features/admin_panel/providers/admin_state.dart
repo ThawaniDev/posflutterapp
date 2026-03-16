@@ -2731,3 +2731,213 @@ class SecurityIpListError extends SecurityIpListState {
   final String message;
   const SecurityIpListError(this.message);
 }
+
+// ═══════════════════════════════════════════════════════════════
+// P15: Financial Operations
+// ═══════════════════════════════════════════════════════════════
+
+sealed class FinOpsOverviewState {
+  const FinOpsOverviewState();
+}
+
+class FinOpsOverviewInitial extends FinOpsOverviewState {
+  const FinOpsOverviewInitial();
+}
+
+class FinOpsOverviewLoading extends FinOpsOverviewState {
+  const FinOpsOverviewLoading();
+}
+
+class FinOpsOverviewLoaded extends FinOpsOverviewState {
+  final Map<String, dynamic> data;
+  const FinOpsOverviewLoaded(this.data);
+}
+
+class FinOpsOverviewError extends FinOpsOverviewState {
+  final String message;
+  const FinOpsOverviewError(this.message);
+}
+
+sealed class FinOpsListState {
+  const FinOpsListState();
+}
+
+class FinOpsListInitial extends FinOpsListState {
+  const FinOpsListInitial();
+}
+
+class FinOpsListLoading extends FinOpsListState {
+  const FinOpsListLoading();
+}
+
+class FinOpsListLoaded extends FinOpsListState {
+  final Map<String, dynamic> data;
+  const FinOpsListLoaded(this.data);
+}
+
+class FinOpsListError extends FinOpsListState {
+  final String message;
+  const FinOpsListError(this.message);
+}
+
+sealed class FinOpsDetailState {
+  const FinOpsDetailState();
+}
+
+class FinOpsDetailInitial extends FinOpsDetailState {
+  const FinOpsDetailInitial();
+}
+
+class FinOpsDetailLoading extends FinOpsDetailState {
+  const FinOpsDetailLoading();
+}
+
+class FinOpsDetailLoaded extends FinOpsDetailState {
+  final Map<String, dynamic> data;
+  const FinOpsDetailLoaded(this.data);
+}
+
+class FinOpsDetailError extends FinOpsDetailState {
+  final String message;
+  const FinOpsDetailError(this.message);
+}
+
+sealed class FinOpsActionState {
+  const FinOpsActionState();
+}
+
+class FinOpsActionInitial extends FinOpsActionState {
+  const FinOpsActionInitial();
+}
+
+class FinOpsActionLoading extends FinOpsActionState {
+  const FinOpsActionLoading();
+}
+
+class FinOpsActionSuccess extends FinOpsActionState {
+  final Map<String, dynamic>? data;
+  const FinOpsActionSuccess([this.data]);
+}
+
+class FinOpsActionError extends FinOpsActionState {
+  final String message;
+  const FinOpsActionError(this.message);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// P16: Infrastructure & Operations
+// ═══════════════════════════════════════════════════════════════
+
+sealed class InfraOverviewState {
+  const InfraOverviewState();
+}
+
+class InfraOverviewInitial extends InfraOverviewState {
+  const InfraOverviewInitial();
+}
+
+class InfraOverviewLoading extends InfraOverviewState {
+  const InfraOverviewLoading();
+}
+
+class InfraOverviewLoaded extends InfraOverviewState {
+  final Map<String, dynamic> data;
+  const InfraOverviewLoaded(this.data);
+}
+
+class InfraOverviewError extends InfraOverviewState {
+  final String message;
+  const InfraOverviewError(this.message);
+}
+
+sealed class InfraListState {
+  const InfraListState();
+}
+
+class InfraListInitial extends InfraListState {
+  const InfraListInitial();
+}
+
+class InfraListLoading extends InfraListState {
+  const InfraListLoading();
+}
+
+class InfraListLoaded extends InfraListState {
+  final Map<String, dynamic> data;
+  const InfraListLoaded(this.data);
+}
+
+class InfraListError extends InfraListState {
+  final String message;
+  const InfraListError(this.message);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// P17: Provider Roles & Permissions
+// ═══════════════════════════════════════════════════════════════
+
+sealed class ProviderRoleTemplateListState {
+  const ProviderRoleTemplateListState();
+}
+
+class ProviderRoleTemplateListInitial extends ProviderRoleTemplateListState {
+  const ProviderRoleTemplateListInitial();
+}
+
+class ProviderRoleTemplateListLoading extends ProviderRoleTemplateListState {
+  const ProviderRoleTemplateListLoading();
+}
+
+class ProviderRoleTemplateListLoaded extends ProviderRoleTemplateListState {
+  final Map<String, dynamic> data;
+  const ProviderRoleTemplateListLoaded(this.data);
+}
+
+class ProviderRoleTemplateListError extends ProviderRoleTemplateListState {
+  final String message;
+  const ProviderRoleTemplateListError(this.message);
+}
+
+sealed class ProviderRoleTemplateDetailState {
+  const ProviderRoleTemplateDetailState();
+}
+
+class ProviderRoleTemplateDetailInitial extends ProviderRoleTemplateDetailState {
+  const ProviderRoleTemplateDetailInitial();
+}
+
+class ProviderRoleTemplateDetailLoading extends ProviderRoleTemplateDetailState {
+  const ProviderRoleTemplateDetailLoading();
+}
+
+class ProviderRoleTemplateDetailLoaded extends ProviderRoleTemplateDetailState {
+  final Map<String, dynamic> data;
+  const ProviderRoleTemplateDetailLoaded(this.data);
+}
+
+class ProviderRoleTemplateDetailError extends ProviderRoleTemplateDetailState {
+  final String message;
+  const ProviderRoleTemplateDetailError(this.message);
+}
+
+sealed class ProviderPermissionListState {
+  const ProviderPermissionListState();
+}
+
+class ProviderPermissionListInitial extends ProviderPermissionListState {
+  const ProviderPermissionListInitial();
+}
+
+class ProviderPermissionListLoading extends ProviderPermissionListState {
+  const ProviderPermissionListLoading();
+}
+
+class ProviderPermissionListLoaded extends ProviderPermissionListState {
+  final Map<String, dynamic> data;
+  const ProviderPermissionListLoaded(this.data);
+}
+
+class ProviderPermissionListError extends ProviderPermissionListState {
+  final String message;
+  const ProviderPermissionListError(this.message);
+}

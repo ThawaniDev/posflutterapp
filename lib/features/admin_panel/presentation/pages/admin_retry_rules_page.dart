@@ -185,9 +185,7 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
     }
 
     try {
-      await ref
-          .read(retryRulesProvider.notifier)
-          .updateRules(maxRetries: maxRetries, retryIntervalHours: interval, gracePeriodDays: grace);
+      await ref.read(retryRulesProvider.notifier).updateRules(maxRetries, interval, grace);
       if (mounted) {
         ScaffoldMessenger.of(
           context,

@@ -48,6 +48,7 @@ class AppColors {
 
   static const Color textSecondaryLight = Color(0xFF475569); // slate-600
   static const Color textSecondaryDark = Color(0xFF94A3B8); // slate-400
+  static const Color textSecondary = textSecondaryLight;
 
   static const Color textMutedLight = Color(0xFF64748B); // slate-500
   static const Color textMutedDark = Color(0xFF94A3B8); // slate-400

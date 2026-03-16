@@ -18,17 +18,11 @@ class ProductsNotifier extends StateNotifier<ProductsState> {
 
   String? _categoryFilter;
   String? _searchQuery;
-  int _currentPage = 1;
 
   Future<void> load({int page = 1}) async {
     state = const ProductsLoading();
-    _currentPage = page;
     try {
-      final result = await _repository.listProducts(
-        page: page,
-        categoryId: _categoryFilter,
-        search: _searchQuery,
-      );
+      final result = await _repository.listProducts(page: page, categoryId: _categoryFilter, search: _searchQuery);
       state = ProductsLoaded(
         products: result.items,
         total: result.total,
@@ -47,13 +41,11 @@ class ProductsNotifier extends StateNotifier<ProductsState> {
 
   Future<void> filterByCategory(String? categoryId) async {
     _categoryFilter = categoryId;
-    _currentPage = 1;
     await load();
   }
 
   Future<void> search(String? query) async {
     _searchQuery = (query != null && query.isEmpty) ? null : query;
-    _currentPage = 1;
     await load();
   }
 
@@ -80,10 +72,7 @@ class ProductsNotifier extends StateNotifier<ProductsState> {
       await _repository.deleteProduct(productId);
       if (state is ProductsLoaded) {
         final loaded = state as ProductsLoaded;
-        state = loaded.copyWith(
-          products: loaded.products.where((p) => p.id != productId).toList(),
-          total: loaded.total - 1,
-        );
+        state = loaded.copyWith(products: loaded.products.where((p) => p.id != productId).toList(), total: loaded.total - 1);
       }
     } on DioException catch (e) {
       throw Exception(_extractError(e));
@@ -95,8 +84,7 @@ class ProductsNotifier extends StateNotifier<ProductsState> {
 // Product Detail / Form
 // ═══════════════════════════════════════════════════════════════
 
-final productDetailProvider =
-    StateNotifierProvider.family<ProductDetailNotifier, ProductDetailState, String?>((ref, productId) {
+final productDetailProvider = StateNotifierProvider.family<ProductDetailNotifier, ProductDetailState, String?>((ref, productId) {
   return ProductDetailNotifier(ref.watch(catalogRepositoryProvider), productId);
 });
 
@@ -176,9 +164,7 @@ class CategoriesNotifier extends StateNotifier<CategoriesState> {
       final updated = await _repository.updateCategory(categoryId, data);
       if (state is CategoriesLoaded) {
         final current = (state as CategoriesLoaded).categories;
-        state = CategoriesLoaded(
-          categories: current.map((c) => c.id == categoryId ? updated : c).toList(),
-        );
+        state = CategoriesLoaded(categories: current.map((c) => c.id == categoryId ? updated : c).toList());
       }
     } on DioException catch (e) {
       throw Exception(_extractError(e));
@@ -190,9 +176,7 @@ class CategoriesNotifier extends StateNotifier<CategoriesState> {
       await _repository.deleteCategory(categoryId);
       if (state is CategoriesLoaded) {
         final current = (state as CategoriesLoaded).categories;
-        state = CategoriesLoaded(
-          categories: current.where((c) => c.id != categoryId).toList(),
-        );
+        state = CategoriesLoaded(categories: current.where((c) => c.id != categoryId).toList());
       }
     } on DioException catch (e) {
       throw Exception(_extractError(e));
@@ -218,10 +202,7 @@ class SuppliersNotifier extends StateNotifier<SuppliersState> {
   Future<void> load({int page = 1}) async {
     state = const SuppliersLoading();
     try {
-      final result = await _repository.listSuppliers(
-        page: page,
-        search: _searchQuery,
-      );
+      final result = await _repository.listSuppliers(page: page, search: _searchQuery);
       state = SuppliersLoaded(
         suppliers: result.items,
         total: result.total,
@@ -246,10 +227,7 @@ class SuppliersNotifier extends StateNotifier<SuppliersState> {
       final supplier = await _repository.createSupplier(data);
       if (state is SuppliersLoaded) {
         final loaded = state as SuppliersLoaded;
-        state = loaded.copyWith(
-          suppliers: [...loaded.suppliers, supplier],
-          total: loaded.total + 1,
-        );
+        state = loaded.copyWith(suppliers: [...loaded.suppliers, supplier], total: loaded.total + 1);
       }
     } on DioException catch (e) {
       throw Exception(_extractError(e));
@@ -261,9 +239,7 @@ class SuppliersNotifier extends StateNotifier<SuppliersState> {
       final updated = await _repository.updateSupplier(supplierId, data);
       if (state is SuppliersLoaded) {
         final loaded = state as SuppliersLoaded;
-        state = loaded.copyWith(
-          suppliers: loaded.suppliers.map((s) => s.id == supplierId ? updated : s).toList(),
-        );
+        state = loaded.copyWith(suppliers: loaded.suppliers.map((s) => s.id == supplierId ? updated : s).toList());
       }
     } on DioException catch (e) {
       throw Exception(_extractError(e));
@@ -275,10 +251,7 @@ class SuppliersNotifier extends StateNotifier<SuppliersState> {
       await _repository.deleteSupplier(supplierId);
       if (state is SuppliersLoaded) {
         final loaded = state as SuppliersLoaded;
-        state = loaded.copyWith(
-          suppliers: loaded.suppliers.where((s) => s.id != supplierId).toList(),
-          total: loaded.total - 1,
-        );
+        state = loaded.copyWith(suppliers: loaded.suppliers.where((s) => s.id != supplierId).toList(), total: loaded.total - 1);
       }
     } on DioException catch (e) {
       throw Exception(_extractError(e));

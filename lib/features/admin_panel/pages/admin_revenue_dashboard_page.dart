@@ -33,7 +33,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(message, style: const TextStyle(color: AppColors.error)),
-              AppSpacing.verticalGap16,
+              AppSpacing.gapH16,
               PosButton(
                 label: 'Retry',
                 variant: PosButtonVariant.outline,
@@ -42,13 +42,13 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
             ],
           ),
         ),
-        RevenueDashboardLoaded(:final subscriptions, :final revenue) => SingleChildScrollView(
+        final RevenueDashboardLoaded loaded => SingleChildScrollView(
           padding: AppSpacing.paddingAll16,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text('Subscriptions Overview', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              AppSpacing.verticalGap16,
+              AppSpacing.gapH16,
               GridView.count(
                 crossAxisCount: 2,
                 shrinkWrap: true,
@@ -57,35 +57,20 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                 crossAxisSpacing: 12,
                 childAspectRatio: 1.8,
                 children: [
+                  _StatCard(label: 'Active', value: '${loaded.paidInvoices}', color: AppColors.success, icon: Icons.check_circle),
                   _StatCard(
-                    label: 'Active',
-                    value: '${subscriptions['active'] ?? 0}',
-                    color: AppColors.success,
-                    icon: Icons.check_circle,
-                  ),
-                  _StatCard(
-                    label: 'Trial',
-                    value: '${subscriptions['trial'] ?? 0}',
+                    label: 'Upcoming Renewals',
+                    value: '${loaded.upcomingRenewals}',
                     color: AppColors.warning,
                     icon: Icons.hourglass_empty,
                   ),
-                  _StatCard(
-                    label: 'Grace',
-                    value: '${subscriptions['grace'] ?? 0}',
-                    color: Colors.orange,
-                    icon: Icons.warning_amber,
-                  ),
-                  _StatCard(
-                    label: 'Cancelled',
-                    value: '${subscriptions['cancelled'] ?? 0}',
-                    color: AppColors.error,
-                    icon: Icons.cancel,
-                  ),
+                  _StatCard(label: 'Failed', value: '${loaded.failedInvoices}', color: Colors.orange, icon: Icons.warning_amber),
+                  _StatCard(label: 'Total', value: '${loaded.totalInvoices}', color: AppColors.error, icon: Icons.receipt_long),
                 ],
               ),
-              AppSpacing.verticalGap24,
+              AppSpacing.gapH24,
               const Text('Revenue', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              AppSpacing.verticalGap16,
+              AppSpacing.gapH16,
               Card(
                 child: Padding(
                   padding: AppSpacing.paddingAll16,
@@ -94,9 +79,9 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Monthly Revenue', style: TextStyle(fontSize: 16)),
+                          const Text('Monthly Revenue (MRR)', style: TextStyle(fontSize: 16)),
                           Text(
-                            '\$${revenue['monthly'] ?? 0}',
+                            '\$${loaded.mrr.toStringAsFixed(2)}',
                             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
                           ),
                         ],
@@ -105,9 +90,9 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Pending Invoices', style: TextStyle(fontSize: 16)),
+                          const Text('Annual Revenue (ARR)', style: TextStyle(fontSize: 16)),
                           Text(
-                            '${revenue['pending_invoices'] ?? 0}',
+                            '\$${loaded.arr.toStringAsFixed(2)}',
                             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -145,11 +130,11 @@ class _StatCard extends StatelessWidget {
             Row(
               children: [
                 Icon(icon, color: color, size: 20),
-                AppSpacing.horizontalGap8,
+                AppSpacing.gapW8,
                 Text(label, style: TextStyle(color: AppColors.textSecondary, fontSize: 14)),
               ],
             ),
-            AppSpacing.verticalGap4,
+            AppSpacing.gapH4,
             Text(
               value,
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: color),

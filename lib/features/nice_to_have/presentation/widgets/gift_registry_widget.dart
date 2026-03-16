@@ -1,0 +1,42 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import '../nice_to_have_providers.dart';
+import '../nice_to_have_state.dart';
+
+class GiftRegistryWidget extends ConsumerWidget {
+  const GiftRegistryWidget({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(giftRegistryProvider);
+    return switch (state) {
+      GiftRegistryInitial() || GiftRegistryLoading() => const Center(child: CircularProgressIndicator()),
+      GiftRegistryError(:final message) => Center(
+        child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+      ),
+      GiftRegistryLoaded(:final registries) =>
+        registries.isEmpty
+            ? const Center(child: Text('No gift registries'))
+            : ListView.builder(
+                padding: AppSpacing.paddingAll16,
+                itemCount: registries.length,
+                itemBuilder: (_, i) {
+                  final r = registries[i] as Map<String, dynamic>;
+                  return Card(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    child: ListTile(
+                      leading: const Icon(Icons.card_giftcard),
+                      title: Text(r['name']?.toString() ?? 'Unnamed'),
+                      subtitle: Text('${r['event_type'] ?? '-'} • ${r['event_date'] ?? '-'}'),
+                      trailing: Text(
+                        r['share_code']?.toString() ?? '',
+                        style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+                      ),
+                    ),
+                  );
+                },
+              ),
+    };
+  }
+}

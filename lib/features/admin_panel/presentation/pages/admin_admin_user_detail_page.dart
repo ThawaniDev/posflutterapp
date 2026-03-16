@@ -59,13 +59,13 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
                     style: const TextStyle(color: Colors.white, fontSize: 32),
                   ),
                 ),
-                AppSpacing.verticalGap8,
+                AppSpacing.gapH8,
                 Text(admin['name']?.toString() ?? 'Unknown', style: Theme.of(context).textTheme.titleLarge),
                 Text(admin['email']?.toString() ?? '', style: Theme.of(context).textTheme.bodyMedium),
               ],
             ),
           ),
-          AppSpacing.verticalGap24,
+          AppSpacing.gapH24,
 
           // Info card
           Card(
@@ -75,7 +75,7 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Account Info', style: Theme.of(context).textTheme.titleMedium),
-                  AppSpacing.verticalGap16,
+                  AppSpacing.gapH16,
                   _infoRow('Phone', admin['phone']?.toString() ?? 'N/A'),
                   _infoRow('Status', isActive ? 'Active' : 'Inactive'),
                   _infoRow('2FA', has2fa ? 'Enabled' : 'Disabled'),
@@ -86,7 +86,7 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
               ),
             ),
           ),
-          AppSpacing.verticalGap16,
+          AppSpacing.gapH16,
 
           // Roles
           Card(
@@ -96,9 +96,9 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Roles', style: Theme.of(context).textTheme.titleMedium),
-                  AppSpacing.verticalGap8,
+                  AppSpacing.gapH8,
                   if (roles.isEmpty)
-                    const Text('No roles assigned', style: TextStyle(color: AppColors.textSecondary))
+                    Text('No roles assigned', style: TextStyle(color: AppColors.textSecondary))
                   else
                     ...roles.map((r) {
                       final role = r as Map<String, dynamic>;
@@ -113,7 +113,7 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
               ),
             ),
           ),
-          AppSpacing.verticalGap16,
+          AppSpacing.gapH16,
 
           // Actions
           Card(
@@ -123,7 +123,7 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Actions', style: Theme.of(context).textTheme.titleMedium),
-                  AppSpacing.verticalGap8,
+                  AppSpacing.gapH8,
                   if (has2fa)
                     ListTile(
                       leading: const Icon(Icons.security, color: AppColors.warning),
@@ -150,7 +150,7 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
             width: 120,
             child: Text(
               label,
-              style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondary),
+              style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondary),
             ),
           ),
           Expanded(child: Text(value)),

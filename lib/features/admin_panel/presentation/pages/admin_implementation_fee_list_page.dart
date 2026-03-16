@@ -303,7 +303,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
             onPressed: () async {
-              await ref.read(implementationFeeActionProvider.notifier).deleteFee(id);
+              await ref.read(implementationFeeActionProvider.notifier).deleteFee(id.toString());
               if (ctx.mounted) Navigator.pop(ctx);
               ref.read(implementationFeeListProvider.notifier).loadFees();
             },

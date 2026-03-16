@@ -48,6 +48,7 @@ class Routes {
 
   // Settings
   static const String settings = '/settings';
+  static const String localization = '/settings/localization';
 
   // Staff
   static const String staff = '/staff';
@@ -117,4 +118,127 @@ class Routes {
   static const String adminBillingImplementationFees = '/admin/billing/implementation-fees';
   static const String adminBillingImplementationFeeDetail = '/admin/billing/implementation-fees/detail'; // + /:feeId
   static const String adminBillingImplementationFeeCreate = '/admin/billing/implementation-fees/create';
+
+  // ─── P15: Financial Operations ──────────────────────────────────
+  static const String adminFinOps = '/admin/financial-operations';
+  static const String adminFinOpsPayments = '/admin/financial-operations/payments';
+  static const String adminFinOpsPaymentDetail = '/admin/financial-operations/payments/detail'; // + /:id
+  static const String adminFinOpsRefunds = '/admin/financial-operations/refunds';
+  static const String adminFinOpsCashSessions = '/admin/financial-operations/cash-sessions';
+  static const String adminFinOpsExpenses = '/admin/financial-operations/expenses';
+  static const String adminFinOpsGiftCards = '/admin/financial-operations/gift-cards';
+  static const String adminFinOpsAccounting = '/admin/financial-operations/accounting';
+  static const String adminFinOpsThawani = '/admin/financial-operations/thawani';
+  static const String adminFinOpsSalesReports = '/admin/financial-operations/sales-reports';
+
+  // ─── P16: Infrastructure & Operations ───────────────────────────
+  static const String adminInfrastructure = '/admin/infrastructure';
+  static const String adminInfraQueues = '/admin/infrastructure/queues';
+  static const String adminInfraFailedJobs = '/admin/infrastructure/failed-jobs';
+  static const String adminInfraHealth = '/admin/infrastructure/health';
+  static const String adminInfraScheduledTasks = '/admin/infrastructure/scheduled-tasks';
+  static const String adminInfraMetrics = '/admin/infrastructure/metrics';
+  static const String adminInfraStorage = '/admin/infrastructure/storage';
+
+  // ─── P17: Provider Roles & Permissions ──────────────────────────
+  static const String adminProviderRoles = '/admin/provider-roles';
+  static const String adminProviderRoleTemplates = '/admin/provider-roles/templates';
+  static const String adminProviderRoleTemplateDetail = '/admin/provider-roles/templates/detail'; // + /:id
+  static const String adminProviderPermissions = '/admin/provider-roles/permissions';
+
+  // ─── P6: Analytics & Reporting ──────────────────────────────────
+  static const String adminAnalyticsDashboard = '/admin/analytics';
+  static const String adminAnalyticsRevenue = '/admin/analytics/revenue';
+  static const String adminAnalyticsStores = '/admin/analytics/stores';
+  static const String adminAnalyticsSubscriptions = '/admin/analytics/subscriptions';
+  static const String adminAnalyticsFeatures = '/admin/analytics/features';
+  static const String adminAnalyticsSystemHealth = '/admin/analytics/system-health';
+
+  // ─── P7: Support Tickets ────────────────────────────────────────
+  static const String adminSupportTickets = '/admin/support/tickets';
+  static const String adminCannedResponses = '/admin/support/canned-responses';
+
+  // ─── P8: System Configuration / Feature Flags ───────────────────
+  static const String adminFeatureFlags = '/admin/feature-flags';
+  static const String adminFeatureFlagDetail = '/admin/feature-flags/detail'; // + /:flagId
+
+  // ─── P9: Notification Templates ─────────────────────────────────
+  static const String adminNotificationTemplates = '/admin/notifications/templates';
+  static const String adminNotificationLogs = '/admin/notifications/logs';
+
+  // ─── P10: Log Monitoring / A-B Tests ────────────────────────────
+  static const String adminABTests = '/admin/ab-tests';
+  static const String adminABTestDetail = '/admin/ab-tests/detail'; // + /:testId
+  static const String adminABTestResults = '/admin/ab-tests/results'; // + /:testId
+  static const String adminPlatformEvents = '/admin/platform-events';
+
+  // ─── P11: Content & Onboarding ──────────────────────────────────
+  static const String adminCmsPages = '/admin/content/pages';
+  static const String adminCmsPageDetail = '/admin/content/pages/detail'; // + /:pageId
+  static const String adminArticles = '/admin/content/articles';
+  static const String adminAnnouncements = '/admin/content/announcements';
+
+  // ─── P13: Marketplace / Delivery ────────────────────────────────
+  static const String adminMarketplaceStores = '/admin/marketplace/stores';
+  static const String adminMarketplaceSettlements = '/admin/marketplace/settlements';
+
+  // ─── P14: Deployment / App Updates ──────────────────────────────
+  static const String adminDeploymentOverview = '/admin/deployment';
+  static const String adminDeploymentReleases = '/admin/deployment/releases';
+
+  // ─── P15B: Security Center ──────────────────────────────────────
+  static const String adminSecurityOverview = '/admin/security';
+  static const String adminSecurityAlerts = '/admin/security/alerts';
+  static const String adminSecurityAlertList = '/admin/security/alert-list';
+  static const String adminActivityLogList = '/admin/security/activity-log';
+  static const String adminUserActivity = '/admin/security/user-activity'; // + /:userId
+
+  // ─── Data Management ───────────────────────────────────────────
+  static const String adminDataManagement = '/admin/data-management';
+  static const String adminDatabaseBackups = '/admin/data-management/backups';
+
+  // ─── Health Dashboard ──────────────────────────────────────────
+  static const String adminHealthDashboard = '/admin/health-dashboard';
+
+  // ─── ZATCA Compliance ──────────────────────────────────────────
+  static const String zatcaDashboard = '/zatca';
+  static const String zatcaEnrollment = '/zatca/enrollment';
+  static const String zatcaInvoices = '/zatca/invoices';
+  static const String zatcaVatReport = '/zatca/vat-report';
+
+  // ─── Sync ────────────────────────────────────────────────────
+  static const String syncDashboard = '/sync';
+  static const String syncConflicts = '/sync/conflicts';
+
+  // ─── Hardware ───────────────────────────────────────────────
+  static const String hardwareDashboard = '/hardware';
+
+  // ─── Security ──────────────────────────────────────────────
+  static const String securityDashboard = '/security';
+
+  // ─── Backup & Recovery ────────────────────────────────────
+  static const String backupDashboard = '/backup';
+
+  // ─── Mobile Companion ─────────────────────────────────────
+  static const String companionDashboard = '/companion';
+
+  // ─── POS Customization ──────────────────────────────────
+  static const String customizationDashboard = '/customization';
+
+  // ─── Auto Updates ───────────────────────────────────────
+  static const String autoUpdateDashboard = '/auto-update';
+
+  // ─── Accessibility ──────────────────────────────────────
+  static const String accessibilityDashboard = '/accessibility';
+
+  // ─── Nice-to-Have ─────────────────────────────────────
+  static const String niceToHaveDashboard = '/nice-to-have';
+
+  // ─── Industry Workflows ─────────────────────────────────
+  static const String industryPharmacy = '/industry/pharmacy';
+  static const String industryJewelry = '/industry/jewelry';
+  static const String industryElectronics = '/industry/electronics';
+  static const String industryFlorist = '/industry/florist';
+  static const String industryBakery = '/industry/bakery';
+  static const String industryRestaurant = '/industry/restaurant';
 }

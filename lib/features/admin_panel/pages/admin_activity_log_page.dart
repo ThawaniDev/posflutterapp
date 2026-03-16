@@ -70,7 +70,7 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
                     },
                   ),
                 ),
-                AppSpacing.horizontalGap8,
+                AppSpacing.gapW8,
                 Expanded(
                   child: DropdownButton<String?>(
                     value: _entityTypeFilter,
@@ -103,7 +103,7 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(msg),
-                    AppSpacing.verticalGap16,
+                    AppSpacing.gapH16,
                     PosButton(label: 'Retry', onPressed: _loadLogs),
                   ],
                 ),
@@ -121,7 +121,7 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
                           : ListView.separated(
                               padding: AppSpacing.paddingAll16,
                               itemCount: logs.length,
-                              separatorBuilder: (_, __) => AppSpacing.verticalGap4,
+                              separatorBuilder: (_, __) => AppSpacing.gapH4,
                               itemBuilder: (context, index) {
                                 final log = logs[index];
                                 return Card(

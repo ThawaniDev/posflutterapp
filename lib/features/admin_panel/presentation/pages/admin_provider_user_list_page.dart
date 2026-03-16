@@ -81,7 +81,7 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
                   });
                   _applyFilters();
                 }),
-                AppSpacing.horizontalGap8,
+                AppSpacing.gapW8,
                 _buildFilterChip('Active', _activeFilter == true, () {
                   setState(() {
                     _activeFilter = true;
@@ -89,7 +89,7 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
                   });
                   _applyFilters();
                 }),
-                AppSpacing.horizontalGap8,
+                AppSpacing.gapW8,
                 _buildFilterChip('Inactive', _activeFilter == false, () {
                   setState(() {
                     _activeFilter = false;
@@ -97,7 +97,7 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
                   });
                   _applyFilters();
                 }),
-                AppSpacing.horizontalGap8,
+                AppSpacing.gapW8,
                 _buildFilterChip('Cashier', _roleFilter == 'cashier', () {
                   setState(() {
                     _roleFilter = 'cashier';
@@ -105,7 +105,7 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
                   });
                   _applyFilters();
                 }),
-                AppSpacing.horizontalGap8,
+                AppSpacing.gapW8,
                 _buildFilterChip('Owner', _roleFilter == 'owner', () {
                   setState(() {
                     _roleFilter = 'owner';
@@ -116,7 +116,7 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
               ],
             ),
           ),
-          AppSpacing.verticalGap8,
+          AppSpacing.gapH8,
 
           // User list
           Expanded(child: _buildContent(state)),
@@ -186,7 +186,7 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
                   ),
                   child: Text(user['role']?.toString() ?? 'unknown', style: const TextStyle(fontSize: 11)),
                 ),
-                AppSpacing.horizontalGap8,
+                AppSpacing.gapW8,
                 Icon(
                   isActive ? Icons.check_circle : Icons.cancel,
                   size: 14,

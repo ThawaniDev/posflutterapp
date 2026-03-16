@@ -157,7 +157,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
 
   void _testConnection(int id) async {
     try {
-      await ref.read(gatewayActionProvider.notifier).testConnection(id);
+      await ref.read(gatewayActionProvider.notifier).testConnection(id.toString());
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Connection test successful')));
       }
@@ -278,7 +278,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
             onPressed: () async {
-              await ref.read(gatewayActionProvider.notifier).deleteGateway(id);
+              await ref.read(gatewayActionProvider.notifier).deleteGateway(id.toString());
               if (ctx.mounted) Navigator.pop(ctx);
               ref.read(gatewayListProvider.notifier).loadGateways();
             },

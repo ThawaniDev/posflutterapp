@@ -63,7 +63,7 @@ class _AdminInvoiceListPageState extends ConsumerState<AdminInvoiceListPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(message, style: const TextStyle(color: AppColors.error)),
-                    AppSpacing.verticalGap16,
+                    AppSpacing.gapH16,
                     PosButton(
                       label: 'Retry',
                       variant: PosButtonVariant.outline,

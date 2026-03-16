@@ -1,4 +1,3 @@
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
 import 'package:thawani_pos/features/inventory/models/goods_receipt.dart';
 import 'package:thawani_pos/features/inventory/models/purchase_order.dart';
 import 'package:thawani_pos/features/inventory/models/recipe.dart';

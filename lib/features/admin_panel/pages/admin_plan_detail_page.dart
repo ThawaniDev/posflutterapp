@@ -34,7 +34,7 @@ class _AdminPlanDetailPageState extends ConsumerState<AdminPlanDetailPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(message, style: const TextStyle(color: AppColors.error)),
-              AppSpacing.verticalGap16,
+              AppSpacing.gapH16,
               PosButton(
                 label: 'Retry',
                 variant: PosButtonVariant.outline,
@@ -73,14 +73,14 @@ class _PlanDetailBody extends StatelessWidget {
                 children: [
                   Text(plan['name'] ?? '', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                   if (plan['name_ar'] != null) ...[
-                    AppSpacing.verticalGap4,
+                    AppSpacing.gapH4,
                     Text(plan['name_ar'], style: TextStyle(fontSize: 16, color: AppColors.textSecondary)),
                   ],
-                  AppSpacing.verticalGap8,
+                  AppSpacing.gapH8,
                   Row(
                     children: [
                       _PriceChip(label: 'Monthly', price: plan['monthly_price']?.toString() ?? '0'),
-                      AppSpacing.horizontalGap8,
+                      AppSpacing.gapW8,
                       if (plan['annual_price'] != null) _PriceChip(label: 'Annual', price: plan['annual_price'].toString()),
                     ],
                   ),
@@ -89,12 +89,12 @@ class _PlanDetailBody extends StatelessWidget {
             ),
           ),
 
-          AppSpacing.verticalGap16,
+          AppSpacing.gapH16,
 
           // Features
           if (features.isNotEmpty) ...[
             const Text('Features', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-            AppSpacing.verticalGap8,
+            AppSpacing.gapH8,
             ...features.map(
               (f) => ListTile(
                 leading: Icon(
@@ -105,13 +105,13 @@ class _PlanDetailBody extends StatelessWidget {
                 dense: true,
               ),
             ),
-            AppSpacing.verticalGap16,
+            AppSpacing.gapH16,
           ],
 
           // Limits
           if (limits.isNotEmpty) ...[
             const Text('Limits', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-            AppSpacing.verticalGap8,
+            AppSpacing.gapH8,
             ...limits.map(
               (l) => ListTile(
                 leading: const Icon(Icons.data_usage),

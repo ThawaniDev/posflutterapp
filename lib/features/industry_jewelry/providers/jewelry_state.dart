@@ -1,0 +1,38 @@
+import 'package:thawani_pos/features/industry_jewelry/models/daily_metal_rate.dart';
+import 'package:thawani_pos/features/industry_jewelry/models/jewelry_product_detail.dart';
+import 'package:thawani_pos/features/industry_jewelry/models/buyback_transaction.dart';
+
+sealed class JewelryState {
+  const JewelryState();
+}
+
+class JewelryInitial extends JewelryState {
+  const JewelryInitial();
+}
+
+class JewelryLoading extends JewelryState {
+  const JewelryLoading();
+}
+
+class JewelryLoaded extends JewelryState {
+  final List<DailyMetalRate> metalRates;
+  final List<JewelryProductDetail> productDetails;
+  final List<BuybackTransaction> buybacks;
+
+  const JewelryLoaded({required this.metalRates, required this.productDetails, required this.buybacks});
+
+  JewelryLoaded copyWith({
+    List<DailyMetalRate>? metalRates,
+    List<JewelryProductDetail>? productDetails,
+    List<BuybackTransaction>? buybacks,
+  }) => JewelryLoaded(
+    metalRates: metalRates ?? this.metalRates,
+    productDetails: productDetails ?? this.productDetails,
+    buybacks: buybacks ?? this.buybacks,
+  );
+}
+
+class JewelryError extends JewelryState {
+  final String message;
+  const JewelryError({required this.message});
+}

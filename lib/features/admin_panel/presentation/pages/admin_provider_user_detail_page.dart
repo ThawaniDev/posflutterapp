@@ -58,13 +58,13 @@ class _AdminProviderUserDetailPageState extends ConsumerState<AdminProviderUserD
                     style: const TextStyle(color: Colors.white, fontSize: 32),
                   ),
                 ),
-                AppSpacing.verticalGap8,
+                AppSpacing.gapH8,
                 Text(user['name']?.toString() ?? 'Unknown', style: Theme.of(context).textTheme.titleLarge),
                 Text(user['email']?.toString() ?? '', style: Theme.of(context).textTheme.bodyMedium),
               ],
             ),
           ),
-          AppSpacing.verticalGap24,
+          AppSpacing.gapH24,
 
           // Info card
           Card(
@@ -74,7 +74,7 @@ class _AdminProviderUserDetailPageState extends ConsumerState<AdminProviderUserD
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Account Info', style: Theme.of(context).textTheme.titleMedium),
-                  AppSpacing.verticalGap16,
+                  AppSpacing.gapH16,
                   _infoRow('Phone', user['phone']?.toString() ?? 'N/A'),
                   _infoRow('Role', user['role']?.toString() ?? 'N/A'),
                   _infoRow('Locale', user['locale']?.toString() ?? 'N/A'),
@@ -88,7 +88,7 @@ class _AdminProviderUserDetailPageState extends ConsumerState<AdminProviderUserD
               ),
             ),
           ),
-          AppSpacing.verticalGap16,
+          AppSpacing.gapH16,
 
           // Actions
           Card(
@@ -98,7 +98,7 @@ class _AdminProviderUserDetailPageState extends ConsumerState<AdminProviderUserD
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Actions', style: Theme.of(context).textTheme.titleMedium),
-                  AppSpacing.verticalGap8,
+                  AppSpacing.gapH8,
                   ListTile(
                     leading: const Icon(Icons.lock_reset, color: AppColors.primary),
                     title: const Text('Reset Password'),
