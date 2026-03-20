@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/errors/app_exception.dart';
 import 'package:thawani_pos/features/auth/models/user.dart';
 import 'package:thawani_pos/features/auth/providers/auth_state.dart';
 import 'package:thawani_pos/features/auth/repositories/auth_repository.dart';
@@ -86,6 +87,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
       );
 
       state = AuthAuthenticated(user: response.user, token: response.token.token);
+    } on AppException catch (e) {
+      state = AuthError(message: e.message, code: e.code);
     } on DioException catch (e) {
       state = AuthError(message: _extractErrorMessage(e), code: e.response?.statusCode?.toString());
     } catch (e) {
@@ -101,6 +104,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final response = await _repository.login(email: email, password: password, deviceId: deviceId, platform: platform);
 
       state = AuthAuthenticated(user: response.user, token: response.token.token);
+    } on AppException catch (e) {
+      state = AuthError(message: e.message, code: e.code);
     } on DioException catch (e) {
       state = AuthError(message: _extractErrorMessage(e), code: e.response?.statusCode?.toString());
     } catch (e) {
@@ -116,6 +121,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final response = await _repository.loginByPin(storeId: storeId, pin: pin);
 
       state = AuthAuthenticated(user: response.user, token: response.token.token);
+    } on AppException catch (e) {
+      state = AuthError(message: e.message, code: e.code);
     } on DioException catch (e) {
       state = AuthError(message: _extractErrorMessage(e), code: e.response?.statusCode?.toString());
     } catch (e) {

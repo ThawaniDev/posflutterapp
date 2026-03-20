@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/features/companion/providers/companion_providers.dart';
 import 'package:thawani_pos/features/companion/widgets/quick_stats_widget.dart';
 import 'package:thawani_pos/features/companion/widgets/quick_actions_widget.dart';
@@ -36,13 +37,13 @@ class _CompanionDashboardPageState extends ConsumerState<CompanionDashboardPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Companion'),
+        title: Text(AppLocalizations.of(context)!.companionTitle),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(icon: Icon(Icons.dashboard), text: 'Stats'),
-            Tab(icon: Icon(Icons.touch_app), text: 'Actions'),
-            Tab(icon: Icon(Icons.settings), text: 'Preferences'),
+          tabs: [
+            Tab(icon: const Icon(Icons.dashboard), text: AppLocalizations.of(context)!.companionQuickStats),
+            Tab(icon: const Icon(Icons.touch_app), text: AppLocalizations.of(context)!.companionQuickActions),
+            Tab(icon: const Icon(Icons.settings), text: AppLocalizations.of(context)!.companionPreferences),
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/features/backup/providers/backup_providers.dart';
 import 'package:thawani_pos/features/backup/widgets/backup_list_widget.dart';
 import 'package:thawani_pos/features/backup/widgets/backup_schedule_widget.dart';
@@ -36,13 +37,13 @@ class _BackupDashboardPageState extends ConsumerState<BackupDashboardPage> with 
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Backup & Recovery'),
+        title: Text(AppLocalizations.of(context)!.backupTitle),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(icon: Icon(Icons.backup), text: 'Backups'),
-            Tab(icon: Icon(Icons.schedule), text: 'Schedule'),
-            Tab(icon: Icon(Icons.storage), text: 'Storage'),
+          tabs: [
+            Tab(icon: const Icon(Icons.backup), text: AppLocalizations.of(context)!.backupHistory),
+            Tab(icon: const Icon(Icons.schedule), text: AppLocalizations.of(context)!.backupSchedule),
+            Tab(icon: const Icon(Icons.storage), text: AppLocalizations.of(context)!.backupStorage),
           ],
         ),
       ),

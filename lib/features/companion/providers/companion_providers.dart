@@ -13,7 +13,7 @@ class QuickStatsNotifier extends StateNotifier<QuickStatsState> {
   QuickStatsNotifier(this._repo) : super(const QuickStatsInitial());
 
   Future<void> load() async {
-    state = const QuickStatsLoading();
+    if (state is! QuickStatsLoaded) state = const QuickStatsLoading();
     try {
       final res = await _repo.quickStats();
       final d = res['data'] as Map<String, dynamic>? ?? res;
@@ -29,7 +29,7 @@ class QuickStatsNotifier extends StateNotifier<QuickStatsState> {
         raw: d,
       );
     } catch (e) {
-      state = QuickStatsError(e.toString());
+      if (state is! QuickStatsLoaded) state = QuickStatsError(e.toString());
     }
   }
 }
@@ -45,7 +45,7 @@ class PreferencesNotifier extends StateNotifier<PreferencesState> {
   PreferencesNotifier(this._repo) : super(const PreferencesInitial());
 
   Future<void> load() async {
-    state = const PreferencesLoading();
+    if (state is! PreferencesLoaded) state = const PreferencesLoading();
     try {
       final res = await _repo.getPreferences();
       final d = res['data'] as Map<String, dynamic>? ?? res;
@@ -60,7 +60,7 @@ class PreferencesNotifier extends StateNotifier<PreferencesState> {
         raw: d,
       );
     } catch (e) {
-      state = PreferencesError(e.toString());
+      if (state is! PreferencesLoaded) state = PreferencesError(e.toString());
     }
   }
 
@@ -86,14 +86,14 @@ class QuickActionsNotifier extends StateNotifier<QuickActionsState> {
   QuickActionsNotifier(this._repo) : super(const QuickActionsInitial());
 
   Future<void> load() async {
-    state = const QuickActionsLoading();
+    if (state is! QuickActionsLoaded) state = const QuickActionsLoading();
     try {
       final res = await _repo.getQuickActions();
       final d = res['data'] as Map<String, dynamic>? ?? res;
       final actions = (d['actions'] as List<dynamic>?)?.map((e) => Map<String, dynamic>.from(e as Map)).toList() ?? [];
       state = QuickActionsLoaded(actions: actions);
     } catch (e) {
-      state = QuickActionsError(e.toString());
+      if (state is! QuickActionsLoaded) state = QuickActionsError(e.toString());
     }
   }
 

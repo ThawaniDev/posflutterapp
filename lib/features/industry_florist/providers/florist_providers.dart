@@ -34,6 +34,60 @@ class FloristNotifier extends StateNotifier<FloristState> {
     }
   }
 
+  Future<void> updateArrangement(String id, Map<String, dynamic> data) async {
+    try {
+      await _repo.updateArrangement(id, data);
+      await load();
+    } on DioException catch (e) {
+      state = FloristError(message: _extractError(e));
+    }
+  }
+
+  Future<void> deleteArrangement(String id) async {
+    try {
+      await _repo.deleteArrangement(id);
+      await load();
+    } on DioException catch (e) {
+      state = FloristError(message: _extractError(e));
+    }
+  }
+
+  Future<void> createFreshnessLog(Map<String, dynamic> data) async {
+    try {
+      await _repo.createFreshnessLog(data);
+      await load();
+    } on DioException catch (e) {
+      state = FloristError(message: _extractError(e));
+    }
+  }
+
+  Future<void> updateFreshnessLogStatus(String id, String status) async {
+    try {
+      await _repo.updateFreshnessLogStatus(id, status);
+      await load();
+    } on DioException catch (e) {
+      state = FloristError(message: _extractError(e));
+    }
+  }
+
+  Future<void> createSubscription(Map<String, dynamic> data) async {
+    try {
+      await _repo.createSubscription(data);
+      await load();
+    } on DioException catch (e) {
+      state = FloristError(message: _extractError(e));
+    }
+  }
+
+  Future<void> updateSubscription(String id, Map<String, dynamic> data) async {
+    try {
+      await _repo.updateSubscription(id, data);
+      await load();
+    } on DioException catch (e) {
+      state = FloristError(message: _extractError(e));
+    }
+  }
+
   Future<void> toggleSubscription(String id) async {
     try {
       await _repo.toggleSubscription(id);

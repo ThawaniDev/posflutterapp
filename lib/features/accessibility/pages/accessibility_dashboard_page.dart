@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/features/accessibility/providers/accessibility_providers.dart';
 import 'package:thawani_pos/features/accessibility/widgets/accessibility_prefs_widget.dart';
 import 'package:thawani_pos/features/accessibility/widgets/shortcuts_widget.dart';
@@ -34,12 +35,12 @@ class _AccessibilityDashboardPageState extends ConsumerState<AccessibilityDashbo
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Accessibility'),
+        title: Text(AppLocalizations.of(context)!.accessibilityTitle),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Preferences'),
-            Tab(text: 'Shortcuts'),
+          tabs: [
+            Tab(text: AppLocalizations.of(context)!.accessibilityPreferences),
+            Tab(text: AppLocalizations.of(context)!.accessibilityShortcuts),
           ],
         ),
       ),

@@ -21,7 +21,7 @@ class PosSidebarItem {
 
 /// Thawani POS Sidebar — fixed 256px desktop drawer with collapsible mobile.
 ///
-/// All 31 features are pre-configured via [defaultItems].
+/// All 37 features are pre-configured via [defaultItems].
 class PosSidebar extends StatelessWidget {
   const PosSidebar({
     super.key,
@@ -34,7 +34,7 @@ class PosSidebar extends StatelessWidget {
     this.footerWidget,
   });
 
-  /// Nav items. Defaults to [defaultItems] which covers all 31 features.
+  /// Nav items. Defaults to [defaultItems] which covers all 37 features.
   final List<PosSidebarItem>? items;
 
   /// Currently active route for highlight.
@@ -104,23 +104,23 @@ class PosSidebar extends StatelessWidget {
     );
   }
 
-  // ─── Default navigation items for all 31 features ─────────
+  // ─── Default navigation items for all 37 features ─────────
 
   static const List<PosSidebarItem> defaultItems = [
     // Core
     PosSidebarItem(label: 'Dashboard', icon: Icons.dashboard_rounded, route: '/dashboard'),
-    PosSidebarItem(label: 'POS Terminal', icon: Icons.point_of_sale_rounded, route: '/pos-terminal'),
+    PosSidebarItem(label: 'POS Terminal', icon: Icons.point_of_sale_rounded, route: '/pos'),
     PosSidebarItem(label: 'Orders', icon: Icons.receipt_long_rounded, route: '/orders'),
-    PosSidebarItem(label: 'Payments', icon: Icons.payments_rounded, route: '/payments'),
+    PosSidebarItem(label: 'Payments', icon: Icons.payments_rounded, route: '/cash-sessions'),
 
     // Catalog & Inventory
-    PosSidebarItem(label: 'Catalog', icon: Icons.inventory_2_rounded, route: '/catalog'),
+    PosSidebarItem(label: 'Products', icon: Icons.inventory_2_rounded, route: '/products'),
     PosSidebarItem(label: 'Inventory', icon: Icons.warehouse_rounded, route: '/inventory'),
     PosSidebarItem(label: 'Labels', icon: Icons.label_rounded, route: '/labels'),
 
     // People
     PosSidebarItem(label: 'Customers', icon: Icons.people_rounded, route: '/customers'),
-    PosSidebarItem(label: 'Staff', icon: Icons.badge_rounded, route: '/staff'),
+    PosSidebarItem(label: 'Staff & Roles', icon: Icons.badge_rounded, route: '/staff/roles'),
 
     // Business
     PosSidebarItem(label: 'Branches', icon: Icons.store_rounded, route: '/branches'),
@@ -129,32 +129,38 @@ class PosSidebar extends StatelessWidget {
     PosSidebarItem(label: 'Promotions', icon: Icons.local_offer_rounded, route: '/promotions'),
 
     // Integrations
-    PosSidebarItem(label: 'Thawani Pay', icon: Icons.credit_card_rounded, route: '/thawani-integration'),
-    PosSidebarItem(label: 'Delivery', icon: Icons.local_shipping_rounded, route: '/delivery-integration'),
+    PosSidebarItem(label: 'Thawani Pay', icon: Icons.credit_card_rounded, route: '/thawani-pay'),
+    PosSidebarItem(label: 'Delivery', icon: Icons.local_shipping_rounded, route: '/delivery'),
     PosSidebarItem(label: 'ZATCA', icon: Icons.verified_rounded, route: '/zatca'),
 
-    // Hardware
+    // Hardware & Sync
     PosSidebarItem(label: 'Hardware', icon: Icons.print_rounded, route: '/hardware'),
+    PosSidebarItem(label: 'Sync', icon: Icons.sync_rounded, route: '/sync'),
+    PosSidebarItem(label: 'Backup', icon: Icons.backup_rounded, route: '/backup'),
 
     // Industry Verticals
-    PosSidebarItem(label: 'Restaurant', icon: Icons.restaurant_rounded, route: '/industry-restaurant'),
-    PosSidebarItem(label: 'Bakery', icon: Icons.cake_rounded, route: '/industry-bakery'),
-    PosSidebarItem(label: 'Pharmacy', icon: Icons.local_pharmacy_rounded, route: '/industry-pharmacy'),
-    PosSidebarItem(label: 'Electronics', icon: Icons.devices_rounded, route: '/industry-electronics'),
-    PosSidebarItem(label: 'Florist', icon: Icons.local_florist_rounded, route: '/industry-florist'),
-    PosSidebarItem(label: 'Jewelry', icon: Icons.diamond_rounded, route: '/industry-jewelry'),
+    PosSidebarItem(label: 'Restaurant', icon: Icons.restaurant_rounded, route: '/industry/restaurant'),
+    PosSidebarItem(label: 'Bakery', icon: Icons.cake_rounded, route: '/industry/bakery'),
+    PosSidebarItem(label: 'Pharmacy', icon: Icons.local_pharmacy_rounded, route: '/industry/pharmacy'),
+    PosSidebarItem(label: 'Electronics', icon: Icons.devices_rounded, route: '/industry/electronics'),
+    PosSidebarItem(label: 'Florist', icon: Icons.local_florist_rounded, route: '/industry/florist'),
+    PosSidebarItem(label: 'Jewelry', icon: Icons.diamond_rounded, route: '/industry/jewelry'),
+
+    // Tools
+    PosSidebarItem(label: 'Companion App', icon: Icons.phone_android_rounded, route: '/companion'),
+    PosSidebarItem(label: 'Nice-to-Have', icon: Icons.auto_awesome_rounded, route: '/nice-to-have'),
 
     // Settings & Support
-    PosSidebarItem(label: 'POS Customize', icon: Icons.tune_rounded, route: '/pos-customization'),
+    PosSidebarItem(label: 'POS Customize', icon: Icons.tune_rounded, route: '/customization'),
     PosSidebarItem(label: 'Notifications', icon: Icons.notifications_rounded, route: '/notifications'),
     PosSidebarItem(label: 'Security', icon: Icons.security_rounded, route: '/security'),
+    PosSidebarItem(label: 'Accessibility', icon: Icons.accessibility_new_rounded, route: '/accessibility'),
+    PosSidebarItem(label: 'Localization', icon: Icons.translate_rounded, route: '/settings/localization'),
+    PosSidebarItem(label: 'Auto Update', icon: Icons.system_update_rounded, route: '/auto-update'),
     PosSidebarItem(label: 'Settings', icon: Icons.settings_rounded, route: '/settings'),
-    PosSidebarItem(label: 'Subscription', icon: Icons.card_membership_rounded, route: '/subscription'),
+    PosSidebarItem(label: 'Subscription', icon: Icons.card_membership_rounded, route: '/subscription/status'),
     PosSidebarItem(label: 'Onboarding', icon: Icons.rocket_launch_rounded, route: '/onboarding'),
     PosSidebarItem(label: 'Support', icon: Icons.support_agent_rounded, route: '/support'),
-
-    // Auth (usually hidden but defined for routing)
-    PosSidebarItem(label: 'Auth', icon: Icons.lock_rounded, route: '/auth'),
   ];
 }
 

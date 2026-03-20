@@ -14,7 +14,7 @@ class SalesSummaryNotifier extends StateNotifier<SalesSummaryState> {
   SalesSummaryNotifier(this._repo) : super(const SalesSummaryInitial());
 
   Future<void> load({String? dateFrom, String? dateTo}) async {
-    state = const SalesSummaryLoading();
+    if (state is! SalesSummaryLoaded) state = const SalesSummaryLoading();
     try {
       final data = await _repo.getSalesSummary(dateFrom: dateFrom, dateTo: dateTo);
       state = SalesSummaryLoaded(
@@ -22,7 +22,7 @@ class SalesSummaryNotifier extends StateNotifier<SalesSummaryState> {
         daily: (data['daily'] as List).cast<Map<String, dynamic>>(),
       );
     } catch (e) {
-      state = SalesSummaryError(message: e.toString());
+      if (state is! SalesSummaryLoaded) state = SalesSummaryError(message: e.toString());
     }
   }
 }
@@ -39,12 +39,12 @@ class ProductPerformanceNotifier extends StateNotifier<ProductPerformanceState> 
   ProductPerformanceNotifier(this._repo) : super(const ProductPerformanceInitial());
 
   Future<void> load({String? dateFrom, String? dateTo, String? categoryId, int? limit}) async {
-    state = const ProductPerformanceLoading();
+    if (state is! ProductPerformanceLoaded) state = const ProductPerformanceLoading();
     try {
       final data = await _repo.getProductPerformance(dateFrom: dateFrom, dateTo: dateTo, categoryId: categoryId, limit: limit);
       state = ProductPerformanceLoaded(products: data);
     } catch (e) {
-      state = ProductPerformanceError(message: e.toString());
+      if (state is! ProductPerformanceLoaded) state = ProductPerformanceError(message: e.toString());
     }
   }
 }
@@ -61,12 +61,12 @@ class CategoryBreakdownNotifier extends StateNotifier<CategoryBreakdownState> {
   CategoryBreakdownNotifier(this._repo) : super(const CategoryBreakdownInitial());
 
   Future<void> load({String? dateFrom, String? dateTo}) async {
-    state = const CategoryBreakdownLoading();
+    if (state is! CategoryBreakdownLoaded) state = const CategoryBreakdownLoading();
     try {
       final data = await _repo.getCategoryBreakdown(dateFrom: dateFrom, dateTo: dateTo);
       state = CategoryBreakdownLoaded(categories: data);
     } catch (e) {
-      state = CategoryBreakdownError(message: e.toString());
+      if (state is! CategoryBreakdownLoaded) state = CategoryBreakdownError(message: e.toString());
     }
   }
 }
@@ -83,12 +83,12 @@ class StaffPerformanceNotifier extends StateNotifier<StaffPerformanceState> {
   StaffPerformanceNotifier(this._repo) : super(const StaffPerformanceInitial());
 
   Future<void> load({String? dateFrom, String? dateTo}) async {
-    state = const StaffPerformanceLoading();
+    if (state is! StaffPerformanceLoaded) state = const StaffPerformanceLoading();
     try {
       final data = await _repo.getStaffPerformance(dateFrom: dateFrom, dateTo: dateTo);
       state = StaffPerformanceLoaded(staff: data);
     } catch (e) {
-      state = StaffPerformanceError(message: e.toString());
+      if (state is! StaffPerformanceLoaded) state = StaffPerformanceError(message: e.toString());
     }
   }
 }
@@ -105,12 +105,12 @@ class HourlySalesNotifier extends StateNotifier<HourlySalesState> {
   HourlySalesNotifier(this._repo) : super(const HourlySalesInitial());
 
   Future<void> load({String? dateFrom, String? dateTo}) async {
-    state = const HourlySalesLoading();
+    if (state is! HourlySalesLoaded) state = const HourlySalesLoading();
     try {
       final data = await _repo.getHourlySales(dateFrom: dateFrom, dateTo: dateTo);
       state = HourlySalesLoaded(hours: data);
     } catch (e) {
-      state = HourlySalesError(message: e.toString());
+      if (state is! HourlySalesLoaded) state = HourlySalesError(message: e.toString());
     }
   }
 }
@@ -127,12 +127,12 @@ class PaymentMethodsNotifier extends StateNotifier<PaymentMethodsState> {
   PaymentMethodsNotifier(this._repo) : super(const PaymentMethodsInitial());
 
   Future<void> load({String? dateFrom, String? dateTo}) async {
-    state = const PaymentMethodsLoading();
+    if (state is! PaymentMethodsLoaded) state = const PaymentMethodsLoading();
     try {
       final data = await _repo.getPaymentMethods(dateFrom: dateFrom, dateTo: dateTo);
       state = PaymentMethodsLoaded(methods: data);
     } catch (e) {
-      state = PaymentMethodsError(message: e.toString());
+      if (state is! PaymentMethodsLoaded) state = PaymentMethodsError(message: e.toString());
     }
   }
 }
@@ -149,7 +149,7 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
   DashboardNotifier(this._repo) : super(const DashboardInitial());
 
   Future<void> load() async {
-    state = const DashboardLoading();
+    if (state is! DashboardLoaded) state = const DashboardLoading();
     try {
       final data = await _repo.getDashboard();
       state = DashboardLoaded(
@@ -158,7 +158,7 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
         topProducts: (data['top_products'] as List).cast<Map<String, dynamic>>(),
       );
     } catch (e) {
-      state = DashboardError(message: e.toString());
+      if (state is! DashboardLoaded) state = DashboardError(message: e.toString());
     }
   }
 }

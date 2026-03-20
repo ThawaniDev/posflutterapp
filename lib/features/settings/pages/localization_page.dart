@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/settings/providers/localization_providers.dart';
 import 'package:thawani_pos/features/settings/providers/localization_state.dart';
@@ -40,13 +41,13 @@ class _LocalizationPageState extends ConsumerState<LocalizationPage> with Single
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Language & Localization'),
+        title: Text(AppLocalizations.of(context)!.localizationTitle),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(icon: Icon(Icons.language), text: 'Languages'),
-            Tab(icon: Icon(Icons.translate), text: 'Translations'),
-            Tab(icon: Icon(Icons.history), text: 'Versions'),
+          tabs: [
+            Tab(icon: const Icon(Icons.language), text: AppLocalizations.of(context)!.localizationLanguage),
+            Tab(icon: const Icon(Icons.translate), text: AppLocalizations.of(context)!.localizationTranslations),
+            Tab(icon: const Icon(Icons.history), text: AppLocalizations.of(context)!.autoUpdateHistory),
           ],
         ),
       ),

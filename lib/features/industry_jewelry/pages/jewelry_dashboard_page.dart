@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/industry_jewelry/providers/jewelry_providers.dart';
 import 'package:thawani_pos/features/industry_jewelry/providers/jewelry_state.dart';
+import 'package:thawani_pos/features/industry_jewelry/widgets/metal_rate_card.dart';
+import 'package:thawani_pos/features/industry_jewelry/widgets/jewelry_detail_card.dart';
+import 'package:thawani_pos/features/industry_jewelry/widgets/buyback_card.dart';
+import 'package:thawani_pos/features/industry_jewelry/pages/metal_rate_form_page.dart';
+import 'package:thawani_pos/features/industry_jewelry/pages/product_detail_form_page.dart';
+import 'package:thawani_pos/features/industry_jewelry/pages/buyback_form_page.dart';
 
 class JewelryDashboardPage extends ConsumerStatefulWidget {
   const JewelryDashboardPage({super.key});
@@ -17,6 +24,7 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> wit
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(() => setState(() {}));
     Future.microtask(() => ref.read(jewelryProvider.notifier).load());
   }
 
@@ -24,6 +32,17 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> wit
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  void _onFabPressed() {
+    final page = switch (_tabController.index) {
+      0 => const MetalRateFormPage(),
+      1 => const ProductDetailFormPage(),
+      _ => const BuybackFormPage(),
+    };
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => page)).then((_) {
+      ref.read(jewelryProvider.notifier).load();
+    });
   }
 
   @override
@@ -42,50 +61,63 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> wit
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: _onFabPressed, child: const Icon(Icons.add)),
       body: switch (state) {
-        JewelryInitial() || JewelryLoading() => const Center(child: CircularProgressIndicator()),
-        JewelryError(:final message) => Center(child: Text(message)),
+        JewelryInitial() || JewelryLoading() => const PosLoadingSkeleton(),
+        JewelryError(:final message) => PosErrorState(message: message, onRetry: () => ref.read(jewelryProvider.notifier).load()),
         JewelryLoaded(:final metalRates, :final productDetails, :final buybacks) => TabBarView(
           controller: _tabController,
           children: [
             metalRates.isEmpty
-                ? const Center(child: Text('No metal rates'))
+                ? const PosEmptyState(message: 'No metal rates set', icon: Icons.monetization_on)
                 : ListView.builder(
+                    padding: const EdgeInsets.all(12),
                     itemCount: metalRates.length,
                     itemBuilder: (context, i) {
                       final r = metalRates[i];
-                      return ListTile(
-                        title: Text('${r.metalType.value} ${r.karat ?? ''}'),
-                        subtitle: Text('Rate: ${r.ratePerGram.toStringAsFixed(2)}/g'),
-                        trailing: r.buybackRatePerGram != null
-                            ? Text('Buyback: ${r.buybackRatePerGram!.toStringAsFixed(2)}/g')
-                            : null,
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: MetalRateCard(
+                          rate: r,
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (_) => MetalRateFormPage(rate: r)))
+                                .then((_) => ref.read(jewelryProvider.notifier).load());
+                          },
+                        ),
                       );
                     },
                   ),
             productDetails.isEmpty
-                ? const Center(child: Text('No product details'))
+                ? const PosEmptyState(message: 'No product details', icon: Icons.diamond)
                 : ListView.builder(
+                    padding: const EdgeInsets.all(12),
                     itemCount: productDetails.length,
                     itemBuilder: (context, i) {
                       final d = productDetails[i];
-                      return ListTile(
-                        title: Text('${d.metalType.value} ${d.karat ?? ''} — ${d.grossWeightG}g'),
-                        subtitle: Text('Net: ${d.netWeightG}g • Making: ${d.makingChargesValue}'),
-                        trailing: d.certificateNumber != null ? Text(d.certificateNumber!) : null,
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: JewelryDetailCard(
+                          detail: d,
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (_) => ProductDetailFormPage(detail: d)))
+                                .then((_) => ref.read(jewelryProvider.notifier).load());
+                          },
+                        ),
                       );
                     },
                   ),
             buybacks.isEmpty
-                ? const Center(child: Text('No buyback transactions'))
+                ? const PosEmptyState(message: 'No buyback transactions', icon: Icons.swap_horiz)
                 : ListView.builder(
+                    padding: const EdgeInsets.all(12),
                     itemCount: buybacks.length,
                     itemBuilder: (context, i) {
                       final b = buybacks[i];
-                      return ListTile(
-                        title: Text('${b.metalType.value} ${b.karat} — ${b.weightG}g'),
-                        subtitle: Text('${b.paymentMethod.value} • ${b.ratePerGram.toStringAsFixed(2)}/g'),
-                        trailing: Text('${b.totalAmount.toStringAsFixed(2)} OMR'),
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: BuybackCard(transaction: b),
                       );
                     },
                   ),

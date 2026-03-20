@@ -9,7 +9,7 @@ class SyncStatusNotifier extends StateNotifier<SyncStatusState> {
   SyncStatusNotifier(this._repo) : super(const SyncStatusInitial());
 
   Future<void> load() async {
-    state = const SyncStatusLoading();
+    if (state is! SyncStatusLoaded) state = const SyncStatusLoading();
     try {
       final data = await _repo.status();
       state = SyncStatusLoaded(
@@ -21,7 +21,7 @@ class SyncStatusNotifier extends StateNotifier<SyncStatusState> {
         recentLogs: List<Map<String, dynamic>>.from(data['recent_logs'] as List),
       );
     } catch (e) {
-      state = SyncStatusError(e.toString());
+      if (state is! SyncStatusLoaded) state = SyncStatusError(e.toString());
     }
   }
 }
@@ -78,7 +78,7 @@ class SyncConflictListNotifier extends StateNotifier<SyncConflictListState> {
   SyncConflictListNotifier(this._repo) : super(const SyncConflictListInitial());
 
   Future<void> load({String? status, String? tableName}) async {
-    state = const SyncConflictListLoading();
+    if (state is! SyncConflictListLoaded) state = const SyncConflictListLoading();
     try {
       final data = await _repo.listConflicts(status: status, tableName: tableName);
       final pagination = data['pagination'] as Map<String, dynamic>;
@@ -90,7 +90,7 @@ class SyncConflictListNotifier extends StateNotifier<SyncConflictListState> {
         total: pagination['total'] as int,
       );
     } catch (e) {
-      state = SyncConflictListError(e.toString());
+      if (state is! SyncConflictListLoaded) state = SyncConflictListError(e.toString());
     }
   }
 

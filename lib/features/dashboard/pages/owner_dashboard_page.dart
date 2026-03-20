@@ -33,110 +33,102 @@ class _OwnerDashboardPageState extends ConsumerState<OwnerDashboardPage> {
     final state = ref.watch(ownerDashboardProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Dashboard', style: AppTypography.headlineMedium),
-        actions: [
-          IconButton(icon: const Icon(Icons.refresh_rounded), onPressed: () => ref.read(ownerDashboardProvider.notifier).load()),
-        ],
-      ),
-      body: switch (state) {
-        OwnerDashboardInitial() || OwnerDashboardLoading() => const Center(child: CircularProgressIndicator()),
-        OwnerDashboardError(:final message) => Center(
-          child: Padding(
-            padding: AppSpacing.paddingAll16,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.error_outline_rounded, size: 48, color: AppColors.error),
-                AppSpacing.gapH12,
-                Text(
-                  message,
-                  style: AppTypography.bodyLarge.copyWith(
-                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
-                  ),
-                  textAlign: TextAlign.center,
+    return switch (state) {
+      OwnerDashboardInitial() || OwnerDashboardLoading() => const Center(child: CircularProgressIndicator()),
+      OwnerDashboardError(:final message) => Center(
+        child: Padding(
+          padding: AppSpacing.paddingAll16,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.error_outline_rounded, size: 48, color: AppColors.error),
+              AppSpacing.gapH12,
+              Text(
+                message,
+                style: AppTypography.bodyLarge.copyWith(
+                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
                 ),
-                AppSpacing.gapH16,
-                FilledButton.icon(
-                  onPressed: () => ref.read(ownerDashboardProvider.notifier).load(),
-                  icon: const Icon(Icons.refresh),
-                  label: const Text('Retry'),
-                ),
-              ],
-            ),
+                textAlign: TextAlign.center,
+              ),
+              AppSpacing.gapH16,
+              FilledButton.icon(
+                onPressed: () => ref.read(ownerDashboardProvider.notifier).load(),
+                icon: const Icon(Icons.refresh),
+                label: const Text('Retry'),
+              ),
+            ],
           ),
         ),
-        OwnerDashboardLoaded(
-          :final stats,
-          :final salesTrend,
-          :final topProducts,
-          :final lowStock,
-          :final activeCashiers,
-          :final recentOrders,
-        ) =>
-          RefreshIndicator(
-            onRefresh: () => ref.read(ownerDashboardProvider.notifier).load(),
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                final isWide = constraints.maxWidth > 900;
+      ),
+      OwnerDashboardLoaded(
+        :final stats,
+        :final salesTrend,
+        :final topProducts,
+        :final lowStock,
+        :final activeCashiers,
+        :final recentOrders,
+      ) =>
+        RefreshIndicator(
+          onRefresh: () => ref.read(ownerDashboardProvider.notifier).load(),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final isWide = constraints.maxWidth > 900;
 
-                return ListView(
-                  padding: AppSpacing.paddingAll16,
-                  children: [
-                    // KPI Cards
-                    DashboardKpiCards(stats: stats),
-                    AppSpacing.gapH16,
+              return ListView(
+                padding: AppSpacing.paddingAll16,
+                children: [
+                  // KPI Cards
+                  DashboardKpiCards(stats: stats),
+                  AppSpacing.gapH16,
 
-                    // Sales Trend Chart (full width)
-                    SalesTrendChart(salesTrend: salesTrend),
-                    AppSpacing.gapH16,
+                  // Sales Trend Chart (full width)
+                  SalesTrendChart(salesTrend: salesTrend),
+                  AppSpacing.gapH16,
 
-                    // Two-column layout on wide screens
-                    if (isWide)
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Left column
-                          Expanded(
-                            flex: 3,
-                            child: Column(
-                              children: [
-                                TopProductsTable(products: topProducts),
-                                AppSpacing.gapH16,
-                                RecentOrdersList(orders: recentOrders),
-                              ],
-                            ),
+                  // Two-column layout on wide screens
+                  if (isWide)
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Left column
+                        Expanded(
+                          flex: 3,
+                          child: Column(
+                            children: [
+                              TopProductsTable(products: topProducts),
+                              AppSpacing.gapH16,
+                              RecentOrdersList(orders: recentOrders),
+                            ],
                           ),
-                          AppSpacing.gapW16,
-                          // Right column
-                          Expanded(
-                            flex: 2,
-                            child: Column(
-                              children: [
-                                LowStockAlerts(items: lowStock),
-                                AppSpacing.gapH16,
-                                ActiveCashiersList(cashiers: activeCashiers),
-                              ],
-                            ),
+                        ),
+                        AppSpacing.gapW16,
+                        // Right column
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            children: [
+                              LowStockAlerts(items: lowStock),
+                              AppSpacing.gapH16,
+                              ActiveCashiersList(cashiers: activeCashiers),
+                            ],
                           ),
-                        ],
-                      )
-                    else ...[
-                      TopProductsTable(products: topProducts),
-                      AppSpacing.gapH16,
-                      LowStockAlerts(items: lowStock),
-                      AppSpacing.gapH16,
-                      ActiveCashiersList(cashiers: activeCashiers),
-                      AppSpacing.gapH16,
-                      RecentOrdersList(orders: recentOrders),
-                    ],
+                        ),
+                      ],
+                    )
+                  else ...[
+                    TopProductsTable(products: topProducts),
+                    AppSpacing.gapH16,
+                    LowStockAlerts(items: lowStock),
+                    AppSpacing.gapH16,
+                    ActiveCashiersList(cashiers: activeCashiers),
+                    AppSpacing.gapH16,
+                    RecentOrdersList(orders: recentOrders),
                   ],
-                );
-              },
-            ),
+                ],
+              );
+            },
           ),
-      },
-    );
+        ),
+    };
   }
 }

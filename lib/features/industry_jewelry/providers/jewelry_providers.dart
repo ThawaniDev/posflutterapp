@@ -34,6 +34,24 @@ class JewelryNotifier extends StateNotifier<JewelryState> {
     }
   }
 
+  Future<void> createProductDetail(Map<String, dynamic> data) async {
+    try {
+      await _repo.createProductDetail(data);
+      await load();
+    } on DioException catch (e) {
+      state = JewelryError(message: _extractError(e));
+    }
+  }
+
+  Future<void> updateProductDetail(String id, Map<String, dynamic> data) async {
+    try {
+      await _repo.updateProductDetail(id, data);
+      await load();
+    } on DioException catch (e) {
+      state = JewelryError(message: _extractError(e));
+    }
+  }
+
   Future<void> createBuyback(Map<String, dynamic> data) async {
     try {
       await _repo.createBuyback(data);

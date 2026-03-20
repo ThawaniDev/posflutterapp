@@ -1,0 +1,31 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/features/support/data/remote/support_api_service.dart';
+
+class SupportRepository {
+  final SupportApiService _apiService;
+
+  SupportRepository(this._apiService);
+
+  Future<Map<String, dynamic>> getStats() => _apiService.getStats();
+
+  Future<Map<String, dynamic>> listTickets({String? status, String? category, String? priority, int? perPage}) =>
+      _apiService.listTickets(status: status, category: category, priority: priority, perPage: perPage);
+
+  Future<Map<String, dynamic>> getTicket(String id) => _apiService.getTicket(id);
+
+  Future<Map<String, dynamic>> createTicket({
+    required String category,
+    required String subject,
+    required String description,
+    String? priority,
+  }) => _apiService.createTicket(category: category, subject: subject, description: description, priority: priority);
+
+  Future<Map<String, dynamic>> addMessage(String ticketId, {required String message}) =>
+      _apiService.addMessage(ticketId, message: message);
+
+  Future<Map<String, dynamic>> closeTicket(String id) => _apiService.closeTicket(id);
+}
+
+final supportRepositoryProvider = Provider<SupportRepository>((ref) {
+  return SupportRepository(ref.watch(supportApiServiceProvider));
+});

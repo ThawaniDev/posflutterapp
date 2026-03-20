@@ -33,9 +33,27 @@ class PharmacyNotifier extends StateNotifier<PharmacyState> {
     }
   }
 
+  Future<void> updatePrescription(String id, Map<String, dynamic> data) async {
+    try {
+      await _repo.updatePrescription(id, data);
+      await load();
+    } on DioException catch (e) {
+      state = PharmacyError(message: _extractError(e));
+    }
+  }
+
   Future<void> createDrugSchedule(Map<String, dynamic> data) async {
     try {
       await _repo.createDrugSchedule(data);
+      await load();
+    } on DioException catch (e) {
+      state = PharmacyError(message: _extractError(e));
+    }
+  }
+
+  Future<void> updateDrugSchedule(String id, Map<String, dynamic> data) async {
+    try {
+      await _repo.updateDrugSchedule(id, data);
       await load();
     } on DioException catch (e) {
       state = PharmacyError(message: _extractError(e));

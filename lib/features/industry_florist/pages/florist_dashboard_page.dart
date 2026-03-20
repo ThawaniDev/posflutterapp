@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/industry_florist/providers/florist_providers.dart';
 import 'package:thawani_pos/features/industry_florist/providers/florist_state.dart';
+import 'package:thawani_pos/features/industry_florist/widgets/arrangement_card.dart';
+import 'package:thawani_pos/features/industry_florist/widgets/freshness_log_card.dart';
+import 'package:thawani_pos/features/industry_florist/widgets/flower_subscription_card.dart';
+import 'package:thawani_pos/features/industry_florist/pages/arrangement_form_page.dart';
+import 'package:thawani_pos/features/industry_florist/pages/freshness_log_form_page.dart';
+import 'package:thawani_pos/features/industry_florist/pages/subscription_form_page.dart';
 
 class FloristDashboardPage extends ConsumerStatefulWidget {
   const FloristDashboardPage({super.key});
@@ -17,6 +24,7 @@ class _FloristDashboardPageState extends ConsumerState<FloristDashboardPage> wit
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(() => setState(() {}));
     Future.microtask(() => ref.read(floristProvider.notifier).load());
   }
 
@@ -24,6 +32,17 @@ class _FloristDashboardPageState extends ConsumerState<FloristDashboardPage> wit
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  void _onFabPressed() {
+    final page = switch (_tabController.index) {
+      0 => const ArrangementFormPage(),
+      1 => const FreshnessLogFormPage(),
+      _ => const SubscriptionFormPage(),
+    };
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => page)).then((_) {
+      ref.read(floristProvider.notifier).load();
+    });
   }
 
   @override
@@ -42,64 +61,71 @@ class _FloristDashboardPageState extends ConsumerState<FloristDashboardPage> wit
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: _onFabPressed, child: const Icon(Icons.add)),
       body: switch (state) {
-        FloristInitial() || FloristLoading() => const Center(child: CircularProgressIndicator()),
-        FloristError(:final message) => Center(child: Text(message)),
+        FloristInitial() || FloristLoading() => const PosLoadingSkeleton(),
+        FloristError(:final message) => PosErrorState(message: message, onRetry: () => ref.read(floristProvider.notifier).load()),
         FloristLoaded(:final arrangements, :final freshnessLogs, :final subscriptions) => TabBarView(
           controller: _tabController,
           children: [
             arrangements.isEmpty
-                ? const Center(child: Text('No arrangements'))
+                ? const PosEmptyState(message: 'No arrangements', icon: Icons.local_florist)
                 : ListView.builder(
+                    padding: const EdgeInsets.all(12),
                     itemCount: arrangements.length,
                     itemBuilder: (context, i) {
                       final a = arrangements[i];
-                      return ListTile(
-                        title: Text(a.name),
-                        subtitle: Text(a.occasion ?? 'General'),
-                        trailing: Text('${a.totalPrice.toStringAsFixed(2)} OMR'),
-                        leading: a.isTemplate == true
-                            ? const Icon(Icons.bookmark, color: Colors.amber)
-                            : const Icon(Icons.local_florist),
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: ArrangementCard(
+                          arrangement: a,
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (_) => ArrangementFormPage(arrangement: a)))
+                                .then((_) => ref.read(floristProvider.notifier).load());
+                          },
+                        ),
                       );
                     },
                   ),
             freshnessLogs.isEmpty
-                ? const Center(child: Text('No freshness logs'))
+                ? const PosEmptyState(message: 'No freshness logs', icon: Icons.eco)
                 : ListView.builder(
+                    padding: const EdgeInsets.all(12),
                     itemCount: freshnessLogs.length,
                     itemBuilder: (context, i) {
                       final l = freshnessLogs[i];
-                      return ListTile(
-                        title: Text('Product ${l.productId} • Qty: ${l.quantity}'),
-                        subtitle: Text('Vase life: ${l.expectedVaseLifeDays} days • ${l.status?.value ?? 'fresh'}'),
-                        trailing: Icon(
-                          l.status?.value == 'disposed'
-                              ? Icons.delete
-                              : l.status?.value == 'marked_down'
-                              ? Icons.trending_down
-                              : Icons.eco,
-                          color: l.status?.value == 'disposed'
-                              ? Colors.red
-                              : l.status?.value == 'marked_down'
-                              ? Colors.orange
-                              : Colors.green,
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: FreshnessLogCard(
+                          log: l,
+                          onStatusChange: (status) {
+                            ref.read(floristProvider.notifier).updateFreshnessLogStatus(l.id, status);
+                          },
                         ),
                       );
                     },
                   ),
             subscriptions.isEmpty
-                ? const Center(child: Text('No subscriptions'))
+                ? const PosEmptyState(message: 'No subscriptions', icon: Icons.repeat)
                 : ListView.builder(
+                    padding: const EdgeInsets.all(12),
                     itemCount: subscriptions.length,
                     itemBuilder: (context, i) {
                       final s = subscriptions[i];
-                      return ListTile(
-                        title: Text('${s.frequency.value} — ${s.deliveryAddress}'),
-                        subtitle: Text('${s.pricePerDelivery.toStringAsFixed(2)} OMR/delivery'),
-                        trailing: s.isActive == true
-                            ? const Chip(label: Text('Active'), backgroundColor: Colors.green)
-                            : const Chip(label: Text('Inactive')),
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: FlowerSubscriptionCard(
+                          subscription: s,
+                          onTap: () {
+                            Navigator.of(context)
+                                .push(MaterialPageRoute(builder: (_) => SubscriptionFormPage(subscription: s)))
+                                .then((_) => ref.read(floristProvider.notifier).load());
+                          },
+                          onToggle: () {
+                            ref.read(floristProvider.notifier).toggleSubscription(s.id);
+                          },
+                        ),
                       );
                     },
                   ),

@@ -1,0 +1,95 @@
+import 'package:flutter/material.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_spacing.dart';
+import '../../../core/theme/app_typography.dart';
+import '../../../core/widgets/pos_status_badge.dart';
+import '../models/repair_job.dart';
+import '../enums/repair_job_status.dart';
+
+class RepairJobCard extends StatelessWidget {
+  final RepairJob job;
+  final VoidCallback? onTap;
+
+  const RepairJobCard({super.key, required this.job, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.border),
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        child: Padding(
+          padding: AppSpacing.paddingCard,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: AppColors.info.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
+                    ),
+                    child: const Icon(Icons.build, color: AppColors.info, size: 22),
+                  ),
+                  AppSpacing.gapW12,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(job.deviceDescription, style: AppTypography.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
+                        if (job.imei != null)
+                          Text('IMEI: ${job.imei}', style: AppTypography.caption),
+                      ],
+                    ),
+                  ),
+                  _statusBadge(job.status),
+                ],
+              ),
+              AppSpacing.gapH8,
+              Text(job.issueDescription, style: AppTypography.bodySmall, maxLines: 2, overflow: TextOverflow.ellipsis),
+              if (job.estimatedCost != null || job.finalCost != null) ...[
+                AppSpacing.gapH8,
+                Row(
+                  children: [
+                    if (job.estimatedCost != null)
+                      Text('Est: ${job.estimatedCost!.toStringAsFixed(2)} OMR', style: AppTypography.bodySmall),
+                    if (job.finalCost != null) ...[
+                      AppSpacing.gapW16,
+                      Text(
+                        'Final: ${job.finalCost!.toStringAsFixed(2)} OMR',
+                        style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ],
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _statusBadge(RepairJobStatus status) {
+    final (label, variant) = switch (status) {
+      RepairJobStatus.received => ('Received', PosStatusBadgeVariant.neutral),
+      RepairJobStatus.diagnosing => ('Diagnosing', PosStatusBadgeVariant.info),
+      RepairJobStatus.quoteSent => ('Quote Sent', PosStatusBadgeVariant.info),
+      RepairJobStatus.approved => ('Approved', PosStatusBadgeVariant.success),
+      RepairJobStatus.repairing => ('Repairing', PosStatusBadgeVariant.warning),
+      RepairJobStatus.readyForCollection => ('Ready', PosStatusBadgeVariant.success),
+      RepairJobStatus.collected => ('Collected', PosStatusBadgeVariant.neutral),
+    };
+    return PosStatusBadge(label: label, variant: variant);
+  }
+}

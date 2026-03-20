@@ -12,7 +12,7 @@ class UpdateCheckNotifier extends StateNotifier<UpdateCheckState> {
   UpdateCheckNotifier(this._repo) : super(const UpdateCheckInitial());
 
   Future<void> check({required String currentVersion, required String platform, String? channel}) async {
-    state = const UpdateCheckLoading();
+    if (state is! UpdateCheckLoaded) state = const UpdateCheckLoading();
     try {
       final res = await _repo.checkForUpdate(currentVersion: currentVersion, platform: platform, channel: channel);
       final data = res['data'] as Map<String, dynamic>? ?? res;
@@ -28,7 +28,7 @@ class UpdateCheckNotifier extends StateNotifier<UpdateCheckState> {
         raw: data,
       );
     } catch (e) {
-      state = UpdateCheckError(e.toString());
+      if (state is! UpdateCheckLoaded) state = UpdateCheckError(e.toString());
     }
   }
 }
@@ -43,14 +43,14 @@ class ChangelogNotifier extends StateNotifier<ChangelogState> {
   ChangelogNotifier(this._repo) : super(const ChangelogInitial());
 
   Future<void> load({String? platform, String? channel}) async {
-    state = const ChangelogLoading();
+    if (state is! ChangelogLoaded) state = const ChangelogLoading();
     try {
       final res = await _repo.getChangelog(platform: platform, channel: channel);
       final data = res['data'];
       final list = data is List ? data.cast<Map<String, dynamic>>() : <Map<String, dynamic>>[];
       state = ChangelogLoaded(releases: list);
     } catch (e) {
-      state = ChangelogError(e.toString());
+      if (state is! ChangelogLoaded) state = ChangelogError(e.toString());
     }
   }
 }
@@ -65,14 +65,14 @@ class UpdateHistoryNotifier extends StateNotifier<UpdateHistoryState> {
   UpdateHistoryNotifier(this._repo) : super(const HistoryInitial());
 
   Future<void> load() async {
-    state = const HistoryLoading();
+    if (state is! HistoryLoaded) state = const HistoryLoading();
     try {
       final res = await _repo.getUpdateHistory();
       final data = res['data'];
       final list = data is List ? data.cast<Map<String, dynamic>>() : <Map<String, dynamic>>[];
       state = HistoryLoaded(entries: list);
     } catch (e) {
-      state = HistoryError(e.toString());
+      if (state is! HistoryLoaded) state = HistoryError(e.toString());
     }
   }
 }

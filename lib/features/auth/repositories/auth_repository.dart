@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/errors/app_exception.dart';
 import 'package:thawani_pos/features/auth/data/local/auth_local_storage.dart';
@@ -192,6 +193,37 @@ class AuthRepository {
 
   AppException _mapError(dynamic error) {
     if (error is AppException) return error;
+    if (error is DioException) {
+      final data = error.response?.data;
+      if (data is Map<String, dynamic>) {
+        // Laravel validation: {"message": "...", "errors": {...}}
+        if (data.containsKey('errors')) {
+          final errors = data['errors'];
+          if (errors is Map<String, dynamic>) {
+            final firstError = errors.values.first;
+            if (firstError is List && firstError.isNotEmpty) {
+              return AuthException(
+                message: firstError.first.toString(),
+                code: error.response?.statusCode?.toString(),
+                originalError: error,
+              );
+            }
+          }
+        }
+        if (data.containsKey('message') && data['message'] != null) {
+          return AuthException(
+            message: data['message'] as String,
+            code: error.response?.statusCode?.toString(),
+            originalError: error,
+          );
+        }
+      }
+      return AuthException(
+        message: error.message ?? 'An unexpected error occurred.',
+        code: error.response?.statusCode?.toString(),
+        originalError: error,
+      );
+    }
     return AuthException(message: error.toString(), originalError: error);
   }
 }

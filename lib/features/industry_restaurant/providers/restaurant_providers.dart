@@ -26,6 +26,24 @@ class RestaurantNotifier extends StateNotifier<RestaurantState> {
     }
   }
 
+  Future<void> createTable(Map<String, dynamic> data) async {
+    try {
+      await _repo.createTable(data);
+      await load();
+    } on DioException catch (e) {
+      state = RestaurantError(message: _extractError(e));
+    }
+  }
+
+  Future<void> updateTable(String id, Map<String, dynamic> data) async {
+    try {
+      await _repo.updateTable(id, data);
+      await load();
+    } on DioException catch (e) {
+      state = RestaurantError(message: _extractError(e));
+    }
+  }
+
   Future<void> updateTableStatus(String id, String status) async {
     try {
       await _repo.updateTableStatus(id, status);
@@ -35,9 +53,54 @@ class RestaurantNotifier extends StateNotifier<RestaurantState> {
     }
   }
 
+  Future<void> createKitchenTicket(Map<String, dynamic> data) async {
+    try {
+      await _repo.createKitchenTicket(data);
+      await load();
+    } on DioException catch (e) {
+      state = RestaurantError(message: _extractError(e));
+    }
+  }
+
+  Future<void> updateKitchenTicketStatus(String id, String status) async {
+    try {
+      await _repo.updateKitchenTicketStatus(id, status);
+      await load();
+    } on DioException catch (e) {
+      state = RestaurantError(message: _extractError(e));
+    }
+  }
+
   Future<void> createReservation(Map<String, dynamic> data) async {
     try {
       await _repo.createReservation(data);
+      await load();
+    } on DioException catch (e) {
+      state = RestaurantError(message: _extractError(e));
+    }
+  }
+
+  Future<void> updateReservation(String id, Map<String, dynamic> data) async {
+    try {
+      await _repo.updateReservation(id, data);
+      await load();
+    } on DioException catch (e) {
+      state = RestaurantError(message: _extractError(e));
+    }
+  }
+
+  Future<void> updateReservationStatus(String id, String status) async {
+    try {
+      await _repo.updateReservationStatus(id, status);
+      await load();
+    } on DioException catch (e) {
+      state = RestaurantError(message: _extractError(e));
+    }
+  }
+
+  Future<void> openTab(Map<String, dynamic> data) async {
+    try {
+      await _repo.openTab(data);
       await load();
     } on DioException catch (e) {
       state = RestaurantError(message: _extractError(e));

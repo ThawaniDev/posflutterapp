@@ -76,12 +76,16 @@ class DashboardKpiCards extends StatelessWidget {
 
   String _formatNum(dynamic value) {
     if (value == null) return '0.00';
-    return (value as num).toStringAsFixed(2);
+    if (value is num) return value.toStringAsFixed(2);
+    if (value is String) return double.tryParse(value)?.toStringAsFixed(2) ?? '0.00';
+    return '0.00';
   }
 
   double? _toDouble(dynamic value) {
     if (value == null) return null;
-    return (value as num).toDouble();
+    if (value is num) return value.toDouble();
+    if (value is String) return double.tryParse(value);
+    return null;
   }
 }
 

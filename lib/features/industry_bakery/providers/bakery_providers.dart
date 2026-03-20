@@ -34,6 +34,69 @@ class BakeryNotifier extends StateNotifier<BakeryState> {
     }
   }
 
+  Future<void> updateRecipe(String id, Map<String, dynamic> data) async {
+    try {
+      await _repo.updateRecipe(id, data);
+      await load();
+    } on DioException catch (e) {
+      state = BakeryError(message: _extractError(e));
+    }
+  }
+
+  Future<void> deleteRecipe(String id) async {
+    try {
+      await _repo.deleteRecipe(id);
+      await load();
+    } on DioException catch (e) {
+      state = BakeryError(message: _extractError(e));
+    }
+  }
+
+  Future<void> createProductionSchedule(Map<String, dynamic> data) async {
+    try {
+      await _repo.createProductionSchedule(data);
+      await load();
+    } on DioException catch (e) {
+      state = BakeryError(message: _extractError(e));
+    }
+  }
+
+  Future<void> updateProductionSchedule(String id, Map<String, dynamic> data) async {
+    try {
+      await _repo.updateProductionSchedule(id, data);
+      await load();
+    } on DioException catch (e) {
+      state = BakeryError(message: _extractError(e));
+    }
+  }
+
+  Future<void> updateProductionScheduleStatus(String id, String status) async {
+    try {
+      await _repo.updateProductionScheduleStatus(id, status);
+      await load();
+    } on DioException catch (e) {
+      state = BakeryError(message: _extractError(e));
+    }
+  }
+
+  Future<void> createCakeOrder(Map<String, dynamic> data) async {
+    try {
+      await _repo.createCakeOrder(data);
+      await load();
+    } on DioException catch (e) {
+      state = BakeryError(message: _extractError(e));
+    }
+  }
+
+  Future<void> updateCakeOrder(String id, Map<String, dynamic> data) async {
+    try {
+      await _repo.updateCakeOrder(id, data);
+      await load();
+    } on DioException catch (e) {
+      state = BakeryError(message: _extractError(e));
+    }
+  }
+
   Future<void> updateCakeOrderStatus(String id, String status) async {
     try {
       await _repo.updateCakeOrderStatus(id, status);

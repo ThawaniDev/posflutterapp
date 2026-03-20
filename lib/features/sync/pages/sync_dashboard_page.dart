@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_app_bar.dart';
 import 'package:thawani_pos/features/sync/providers/sync_providers.dart';
@@ -32,7 +33,7 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
     final operationState = ref.watch(syncOperationProvider);
 
     return Scaffold(
-      appBar: const PosAppBar(title: 'Sync Dashboard'),
+      appBar: PosAppBar(title: AppLocalizations.of(context)!.syncTitle),
       body: RefreshIndicator(
         onRefresh: () async {
           ref.read(syncStatusProvider.notifier).load();
@@ -81,7 +82,10 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Sync Actions', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+            Text(
+              AppLocalizations.of(context)!.syncFullSync,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+            ),
             AppSpacing.gapH12,
             if (state is SyncOperationRunning) LinearProgressIndicator(semanticsLabel: 'Sync ${state.operation} in progress'),
             if (state is SyncOperationSuccess)
@@ -106,21 +110,21 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
                       ? null
                       : () => ref.read(syncOperationProvider.notifier).push(terminalId: 'local', changes: []),
                   icon: const Icon(Icons.cloud_upload),
-                  label: const Text('Push'),
+                  label: Text(AppLocalizations.of(context)!.syncPush),
                 ),
                 OutlinedButton.icon(
                   onPressed: state is SyncOperationRunning
                       ? null
                       : () => ref.read(syncOperationProvider.notifier).pull(terminalId: 'local'),
                   icon: const Icon(Icons.cloud_download),
-                  label: const Text('Pull'),
+                  label: Text(AppLocalizations.of(context)!.syncPull),
                 ),
                 OutlinedButton.icon(
                   onPressed: state is SyncOperationRunning
                       ? null
                       : () => ref.read(syncOperationProvider.notifier).fullSync(terminalId: 'local'),
                   icon: const Icon(Icons.sync),
-                  label: const Text('Full Sync'),
+                  label: Text(AppLocalizations.of(context)!.syncFullSync),
                 ),
               ],
             ),

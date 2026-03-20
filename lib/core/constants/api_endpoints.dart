@@ -593,4 +593,29 @@ class ApiEndpoints {
   static String restaurantReservationStatus(String id) => '/industry/restaurant/reservations/$id/status';
   static const String restaurantTabs = '/industry/restaurant/tabs';
   static String restaurantTabClose(String id) => '/industry/restaurant/tabs/$id/close';
+
+  // Support
+  static const String supportStats = '/support/stats';
+  static const String supportTickets = '/support/tickets';
+  static String supportTicketById(String id) => '/support/tickets/$id';
+  static String supportTicketMessages(String id) => '/support/tickets/$id/messages';
+  static String supportTicketClose(String id) => '/support/tickets/$id/close';
+
+  // Delivery Integration
+  static const String deliveryStats = '/delivery/stats';
+  static const String deliveryConfigs = '/delivery/configs';
+  static String deliveryConfigToggle(String id) => '/delivery/configs/$id/toggle';
+  static const String deliveryOrders = '/delivery/orders';
+  static const String deliverySyncLogs = '/delivery/sync-logs';
+
+  // Thawani Integration
+  static const String thawaniStats = '/thawani/stats';
+  static const String thawaniConfig = '/thawani/config';
+  static const String thawaniDisconnect = '/thawani/disconnect';
+  static const String thawaniOrders = '/thawani/orders';
+  static const String thawaniProductMappings = '/thawani/product-mappings';
+  static const String thawaniSettlements = '/thawani/settlements';
+
+  // Branches (uses core stores)
+  static const String branches = '/core/stores';
 }

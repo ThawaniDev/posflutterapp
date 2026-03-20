@@ -13,12 +13,12 @@ class BackupListNotifier extends StateNotifier<BackupListState> {
   BackupListNotifier(this._repo) : super(const BackupListInitial());
 
   Future<void> load({String? backupType, String? status}) async {
-    state = const BackupListLoading();
+    if (state is! BackupListLoaded) state = const BackupListLoading();
     try {
       final data = await _repo.listBackups(backupType: backupType, status: status);
       state = BackupListLoaded(data);
     } catch (e) {
-      state = BackupListError(e.toString());
+      if (state is! BackupListLoaded) state = BackupListError(e.toString());
     }
   }
 }
@@ -34,12 +34,12 @@ class BackupScheduleNotifier extends StateNotifier<BackupScheduleState> {
   BackupScheduleNotifier(this._repo) : super(const BackupScheduleInitial());
 
   Future<void> load() async {
-    state = const BackupScheduleLoading();
+    if (state is! BackupScheduleLoaded) state = const BackupScheduleLoading();
     try {
       final data = await _repo.getSchedule();
       state = BackupScheduleLoaded(data);
     } catch (e) {
-      state = BackupScheduleError(e.toString());
+      if (state is! BackupScheduleLoaded) state = BackupScheduleError(e.toString());
     }
   }
 
@@ -75,12 +75,12 @@ class BackupStorageNotifier extends StateNotifier<BackupStorageState> {
   BackupStorageNotifier(this._repo) : super(const BackupStorageInitial());
 
   Future<void> load() async {
-    state = const BackupStorageLoading();
+    if (state is! BackupStorageLoaded) state = const BackupStorageLoading();
     try {
       final data = await _repo.getStorageUsage();
       state = BackupStorageLoaded(data);
     } catch (e) {
-      state = BackupStorageError(e.toString());
+      if (state is! BackupStorageLoaded) state = BackupStorageError(e.toString());
     }
   }
 }

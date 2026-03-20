@@ -8,13 +8,13 @@ class NotificationListNotifier extends StateNotifier<NotificationListState> {
   NotificationListNotifier(this._repository) : super(const NotificationListInitial());
 
   Future<void> load({String? category, bool? isRead, int? limit}) async {
-    state = const NotificationListLoading();
+    if (state is! NotificationListLoaded) state = const NotificationListLoading();
     try {
       final result = await _repository.listNotifications(category: category, isRead: isRead, limit: limit);
       final data = result['data'] as List<dynamic>? ?? [];
       state = NotificationListLoaded(data.cast<Map<String, dynamic>>());
     } catch (e) {
-      state = NotificationListError(e.toString());
+      if (state is! NotificationListLoaded) state = NotificationListError(e.toString());
     }
   }
 }
@@ -29,13 +29,13 @@ class UnreadCountNotifier extends StateNotifier<UnreadCountState> {
   UnreadCountNotifier(this._repository) : super(const UnreadCountInitial());
 
   Future<void> load() async {
-    state = const UnreadCountLoading();
+    if (state is! UnreadCountLoaded) state = const UnreadCountLoading();
     try {
       final result = await _repository.getUnreadCount();
       final data = result['data'] as Map<String, dynamic>? ?? {};
       state = UnreadCountLoaded(data['unread_count'] as int? ?? 0);
     } catch (e) {
-      state = UnreadCountError(e.toString());
+      if (state is! UnreadCountLoaded) state = UnreadCountError(e.toString());
     }
   }
 }
@@ -92,7 +92,7 @@ class NotificationPreferencesNotifier extends StateNotifier<NotificationPreferen
   NotificationPreferencesNotifier(this._repository) : super(const NotificationPreferencesInitial());
 
   Future<void> load() async {
-    state = const NotificationPreferencesLoading();
+    if (state is! NotificationPreferencesLoaded) state = const NotificationPreferencesLoading();
     try {
       final result = await _repository.getPreferences();
       final data = result['data'] as Map<String, dynamic>? ?? {};
@@ -102,7 +102,7 @@ class NotificationPreferencesNotifier extends StateNotifier<NotificationPreferen
         quietHoursEnd: data['quiet_hours_end'] as String?,
       );
     } catch (e) {
-      state = NotificationPreferencesError(e.toString());
+      if (state is! NotificationPreferencesLoaded) state = NotificationPreferencesError(e.toString());
     }
   }
 

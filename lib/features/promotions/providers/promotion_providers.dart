@@ -15,7 +15,7 @@ class PromotionsNotifier extends StateNotifier<PromotionsState> {
   PromotionsNotifier(this._repo) : super(const PromotionsInitial());
 
   Future<void> load({int page = 1, String? search, bool? isActive, String? type, bool? isCoupon}) async {
-    state = const PromotionsLoading();
+    if (state is! PromotionsLoaded) state = const PromotionsLoading();
     try {
       final result = await _repo.listPromotions(page: page, search: search, isActive: isActive, type: type, isCoupon: isCoupon);
       state = PromotionsLoaded(
@@ -30,9 +30,9 @@ class PromotionsNotifier extends StateNotifier<PromotionsState> {
         couponFilter: isCoupon,
       );
     } on DioException catch (e) {
-      state = PromotionsError(message: _extractError(e));
+      if (state is! PromotionsLoaded) state = PromotionsError(message: _extractError(e));
     } catch (e) {
-      state = PromotionsError(message: e.toString());
+      if (state is! PromotionsLoaded) state = PromotionsError(message: e.toString());
     }
   }
 
@@ -81,14 +81,14 @@ class PromotionDetailNotifier extends StateNotifier<PromotionDetailState> {
 
   Future<void> load() async {
     if (_promotionId == null) return;
-    state = const PromotionDetailLoading();
+    if (state is! PromotionDetailLoaded) state = const PromotionDetailLoading();
     try {
       final promotion = await _repo.getPromotion(_promotionId);
       state = PromotionDetailLoaded(promotion: promotion);
     } on DioException catch (e) {
-      state = PromotionDetailError(message: _extractError(e));
+      if (state is! PromotionDetailLoaded) state = PromotionDetailError(message: _extractError(e));
     } catch (e) {
-      state = PromotionDetailError(message: e.toString());
+      if (state is! PromotionDetailLoaded) state = PromotionDetailError(message: e.toString());
     }
   }
 
@@ -174,14 +174,14 @@ class PromotionAnalyticsNotifier extends StateNotifier<PromotionAnalyticsState> 
   PromotionAnalyticsNotifier(this._repo, this._promotionId) : super(const PromotionAnalyticsInitial());
 
   Future<void> load() async {
-    state = const PromotionAnalyticsLoading();
+    if (state is! PromotionAnalyticsLoaded) state = const PromotionAnalyticsLoading();
     try {
       final data = await _repo.getPromotionAnalytics(_promotionId);
       state = PromotionAnalyticsLoaded(analytics: data);
     } on DioException catch (e) {
-      state = PromotionAnalyticsError(message: _extractError(e));
+      if (state is! PromotionAnalyticsLoaded) state = PromotionAnalyticsError(message: _extractError(e));
     } catch (e) {
-      state = PromotionAnalyticsError(message: e.toString());
+      if (state is! PromotionAnalyticsLoaded) state = PromotionAnalyticsError(message: e.toString());
     }
   }
 }

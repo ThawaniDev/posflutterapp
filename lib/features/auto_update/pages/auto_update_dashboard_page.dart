@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/auto_update/providers/auto_update_providers.dart';
 import 'package:thawani_pos/features/auto_update/providers/auto_update_state.dart';
@@ -40,13 +41,13 @@ class _AutoUpdateDashboardPageState extends ConsumerState<AutoUpdateDashboardPag
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Auto Updates'),
+        title: Text(AppLocalizations.of(context)!.autoUpdateTitle),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Status'),
-            Tab(text: 'Changelog'),
-            Tab(text: 'History'),
+          tabs: [
+            Tab(text: AppLocalizations.of(context)!.syncStatus),
+            Tab(text: AppLocalizations.of(context)!.autoUpdateChangelog),
+            Tab(text: AppLocalizations.of(context)!.autoUpdateHistory),
           ],
         ),
       ),

@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/widgets/app_shell.dart';
 import 'package:thawani_pos/features/auth/pages/login_page.dart';
 import 'package:thawani_pos/features/auth/pages/pin_login_page.dart';
 import 'package:thawani_pos/features/auth/pages/register_page.dart';
@@ -138,6 +138,37 @@ import 'package:thawani_pos/features/pos_customization/pages/customization_dashb
 import 'package:thawani_pos/features/auto_update/pages/auto_update_dashboard_page.dart';
 import 'package:thawani_pos/features/accessibility/pages/accessibility_dashboard_page.dart';
 import 'package:thawani_pos/features/nice_to_have/presentation/nice_to_have_dashboard_page.dart';
+// Reports
+import 'package:thawani_pos/features/reports/pages/dashboard_page.dart' as reports;
+import 'package:thawani_pos/features/reports/pages/sales_summary_page.dart';
+import 'package:thawani_pos/features/reports/pages/hourly_sales_page.dart';
+import 'package:thawani_pos/features/reports/pages/product_performance_page.dart';
+import 'package:thawani_pos/features/reports/pages/category_breakdown_page.dart';
+import 'package:thawani_pos/features/reports/pages/payment_methods_page.dart';
+import 'package:thawani_pos/features/reports/pages/staff_performance_page.dart';
+// Accounting
+import 'package:thawani_pos/features/accounting/pages/accounting_settings_page.dart';
+import 'package:thawani_pos/features/accounting/pages/account_mapping_page.dart';
+import 'package:thawani_pos/features/accounting/pages/export_history_page.dart';
+import 'package:thawani_pos/features/accounting/pages/auto_export_settings_page.dart';
+// Promotions
+import 'package:thawani_pos/features/promotions/pages/promotion_list_page.dart';
+import 'package:thawani_pos/features/promotions/pages/promotion_analytics_page.dart';
+// Notifications
+import 'package:thawani_pos/features/notifications/pages/notifications_list_page.dart';
+import 'package:thawani_pos/features/notifications/pages/notification_preferences_page.dart';
+// Support
+import 'package:thawani_pos/features/support/pages/support_dashboard_page.dart';
+import 'package:thawani_pos/features/support/pages/create_ticket_page.dart';
+import 'package:thawani_pos/features/support/pages/ticket_detail_page.dart';
+// Delivery
+import 'package:thawani_pos/features/delivery_integration/pages/delivery_dashboard_page.dart';
+// Thawani Pay
+import 'package:thawani_pos/features/thawani_integration/pages/thawani_dashboard_page.dart';
+// Branches
+import 'package:thawani_pos/features/branches/pages/branch_list_page.dart';
+// Settings
+import 'package:thawani_pos/features/settings/pages/settings_page.dart';
 // Industry Workflows
 import 'package:thawani_pos/features/industry_pharmacy/pages/pharmacy_dashboard_page.dart';
 import 'package:thawani_pos/features/industry_jewelry/pages/jewelry_dashboard_page.dart';
@@ -178,544 +209,674 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       return null;
     },
     routes: [
-      // ─── Auth ─────────────────────────────────────
+      // ─── Auth (no shell — standalone pages) ─────
       GoRoute(path: Routes.login, name: 'login', builder: (context, state) => const LoginPage()),
       GoRoute(path: Routes.loginPin, name: 'loginPin', builder: (context, state) => const PinLoginPage()),
       GoRoute(path: Routes.register, name: 'register', builder: (context, state) => const RegisterPage()),
 
-      // ─── Main (protected) ─────────────────────────
-      GoRoute(path: Routes.dashboard, name: 'dashboard', builder: (context, state) => const OwnerDashboardPage()),
-      GoRoute(
-        path: Routes.pos,
-        name: 'pos',
-        builder: (context, state) => const Scaffold(body: Center(child: Text('POS Terminal — Phase 2'))),
-      ),
+      // ─── Authenticated Shell (sidebar wrapper) ──
+      ShellRoute(
+        builder: (context, state, child) => AppShell(child: child),
+        routes: [
+          // ─── Main (protected) ─────────────────────────
+          GoRoute(path: Routes.dashboard, name: 'dashboard', builder: (context, state) => const OwnerDashboardPage()),
+          GoRoute(path: Routes.pos, name: 'pos', builder: (context, state) => const PosSessionsPage()),
 
-      // ─── Catalog ──────────────────────────────────
-      GoRoute(path: Routes.products, name: 'products', builder: (context, state) => const ProductListPage()),
-      GoRoute(path: Routes.productsAdd, name: 'productsAdd', builder: (context, state) => const ProductFormPage()),
-      GoRoute(
-        path: '${Routes.products}/:id',
-        name: 'productsEdit',
-        builder: (context, state) {
-          final id = state.pathParameters['id']!;
-          return ProductFormPage(productId: id);
-        },
-      ),
-      GoRoute(path: Routes.categories, name: 'categories', builder: (context, state) => const CategoryListPage()),
-      GoRoute(path: Routes.suppliers, name: 'suppliers', builder: (context, state) => const SupplierListPage()),
+          // ─── Catalog ──────────────────────────────────
+          GoRoute(path: Routes.products, name: 'products', builder: (context, state) => const ProductListPage()),
+          GoRoute(path: Routes.productsAdd, name: 'productsAdd', builder: (context, state) => const ProductFormPage()),
+          GoRoute(
+            path: '${Routes.products}/:id',
+            name: 'productsEdit',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return ProductFormPage(productId: id);
+            },
+          ),
+          GoRoute(path: Routes.categories, name: 'categories', builder: (context, state) => const CategoryListPage()),
+          GoRoute(path: Routes.suppliers, name: 'suppliers', builder: (context, state) => const SupplierListPage()),
 
-      // ─── Inventory ────────────────────────────────
-      GoRoute(path: Routes.inventory, name: 'inventory', builder: (context, state) => const InventoryPage()),
-      GoRoute(path: Routes.stockLevels, name: 'stockLevels', builder: (context, state) => const StockLevelsPage()),
-      GoRoute(path: Routes.stockMovements, name: 'stockMovements', builder: (context, state) => const StockMovementsPage()),
-      GoRoute(path: Routes.goodsReceipts, name: 'goodsReceipts', builder: (context, state) => const GoodsReceiptsPage()),
-      GoRoute(path: Routes.goodsReceiptsAdd, name: 'goodsReceiptsAdd', builder: (context, state) => const GoodsReceiptFormPage()),
-      GoRoute(path: Routes.stockAdjustments, name: 'stockAdjustments', builder: (context, state) => const StockAdjustmentsPage()),
-      GoRoute(path: Routes.stockTransfers, name: 'stockTransfers', builder: (context, state) => const StockTransfersPage()),
-      GoRoute(path: Routes.purchaseOrders, name: 'purchaseOrders', builder: (context, state) => const PurchaseOrdersPage()),
-      GoRoute(path: Routes.recipes, name: 'recipes', builder: (context, state) => const RecipesPage()),
+          // ─── Inventory ────────────────────────────────
+          GoRoute(path: Routes.inventory, name: 'inventory', builder: (context, state) => const InventoryPage()),
+          GoRoute(path: Routes.stockLevels, name: 'stockLevels', builder: (context, state) => const StockLevelsPage()),
+          GoRoute(path: Routes.stockMovements, name: 'stockMovements', builder: (context, state) => const StockMovementsPage()),
+          GoRoute(path: Routes.goodsReceipts, name: 'goodsReceipts', builder: (context, state) => const GoodsReceiptsPage()),
+          GoRoute(
+            path: Routes.goodsReceiptsAdd,
+            name: 'goodsReceiptsAdd',
+            builder: (context, state) => const GoodsReceiptFormPage(),
+          ),
+          GoRoute(
+            path: Routes.stockAdjustments,
+            name: 'stockAdjustments',
+            builder: (context, state) => const StockAdjustmentsPage(),
+          ),
+          GoRoute(path: Routes.stockTransfers, name: 'stockTransfers', builder: (context, state) => const StockTransfersPage()),
+          GoRoute(path: Routes.purchaseOrders, name: 'purchaseOrders', builder: (context, state) => const PurchaseOrdersPage()),
+          GoRoute(path: Routes.recipes, name: 'recipes', builder: (context, state) => const RecipesPage()),
 
-      // ─── POS Terminal ─────────────────────────────
-      GoRoute(path: Routes.posSessions, name: 'posSessions', builder: (context, state) => const PosSessionsPage()),
+          // ─── POS Terminal ─────────────────────────────
+          GoRoute(path: Routes.posSessions, name: 'posSessions', builder: (context, state) => const PosSessionsPage()),
 
-      // ─── Orders ───────────────────────────────────
-      GoRoute(path: Routes.orders, name: 'orders', builder: (context, state) => const OrderListPage()),
+          // ─── Orders ───────────────────────────────────
+          GoRoute(path: Routes.orders, name: 'orders', builder: (context, state) => const OrderListPage()),
 
-      // ─── Payments ─────────────────────────────────
-      GoRoute(path: Routes.cashSessions, name: 'cashSessions', builder: (context, state) => const CashSessionsPage()),
+          // ─── Payments ─────────────────────────────────
+          GoRoute(path: Routes.cashSessions, name: 'cashSessions', builder: (context, state) => const CashSessionsPage()),
 
-      // ─── Customers ────────────────────────────────
-      GoRoute(path: Routes.customers, name: 'customers', builder: (context, state) => const CustomerListPage()),
+          // ─── Customers ────────────────────────────────
+          GoRoute(path: Routes.customers, name: 'customers', builder: (context, state) => const CustomerListPage()),
 
-      // ─── Labels ───────────────────────────────────
-      GoRoute(path: Routes.labels, name: 'labels', builder: (context, state) => const LabelListPage()),
+          // ─── Labels ───────────────────────────────────
+          GoRoute(path: Routes.labels, name: 'labels', builder: (context, state) => const LabelListPage()),
 
-      // ─── Staff / Roles ────────────────────────────
-      GoRoute(path: Routes.staffRoles, name: 'staffRoles', builder: (context, state) => const RolesListPage()),
-      GoRoute(path: Routes.staffRoleCreate, name: 'staffRoleCreate', builder: (context, state) => const RoleCreatePage()),
-      GoRoute(
-        path: '${Routes.staffRoleDetail}/:id',
-        name: 'staffRoleDetail',
-        builder: (context, state) {
-          final id = int.parse(state.pathParameters['id']!);
-          return RoleDetailPage(roleId: id);
-        },
-      ),
+          // ─── Staff / Roles ────────────────────────────
+          GoRoute(path: Routes.staffRoles, name: 'staffRoles', builder: (context, state) => const RolesListPage()),
+          GoRoute(path: Routes.staffRoleCreate, name: 'staffRoleCreate', builder: (context, state) => const RoleCreatePage()),
+          GoRoute(
+            path: '${Routes.staffRoleDetail}/:id',
+            name: 'staffRoleDetail',
+            builder: (context, state) {
+              final id = int.parse(state.pathParameters['id']!);
+              return RoleDetailPage(roleId: id);
+            },
+          ),
 
-      // ─── Onboarding & Store Setup ────────────────
-      GoRoute(path: Routes.onboarding, name: 'onboarding', builder: (context, state) => const OnboardingWizardPage()),
-      GoRoute(
-        path: '${Routes.storeSettings}/:storeId',
-        name: 'storeSettings',
-        builder: (context, state) {
-          final storeId = state.pathParameters['storeId']!;
-          return StoreSettingsPage(storeId: storeId);
-        },
-      ),
-      GoRoute(
-        path: '${Routes.workingHours}/:storeId',
-        name: 'workingHours',
-        builder: (context, state) {
-          final storeId = state.pathParameters['storeId']!;
-          return WorkingHoursPage(storeId: storeId);
-        },
-      ),
+          // ─── Onboarding & Store Setup ────────────────
+          GoRoute(path: Routes.onboarding, name: 'onboarding', builder: (context, state) => const OnboardingWizardPage()),
+          GoRoute(
+            path: '${Routes.storeSettings}/:storeId',
+            name: 'storeSettings',
+            builder: (context, state) {
+              final storeId = state.pathParameters['storeId']!;
+              return StoreSettingsPage(storeId: storeId);
+            },
+          ),
+          GoRoute(
+            path: '${Routes.workingHours}/:storeId',
+            name: 'workingHours',
+            builder: (context, state) {
+              final storeId = state.pathParameters['storeId']!;
+              return WorkingHoursPage(storeId: storeId);
+            },
+          ),
 
-      // ─── Subscription ─────────────────────────────
-      GoRoute(path: Routes.planSelection, name: 'planSelection', builder: (context, state) => const PlanSelectionPage()),
-      GoRoute(
-        path: Routes.subscriptionStatus,
-        name: 'subscriptionStatus',
-        builder: (context, state) => const SubscriptionStatusPage(),
-      ),
-      GoRoute(path: Routes.billingHistory, name: 'billingHistory', builder: (context, state) => const BillingHistoryPage()),
+          // ─── Subscription ─────────────────────────────
+          GoRoute(path: Routes.planSelection, name: 'planSelection', builder: (context, state) => const PlanSelectionPage()),
+          GoRoute(
+            path: Routes.subscriptionStatus,
+            name: 'subscriptionStatus',
+            builder: (context, state) => const SubscriptionStatusPage(),
+          ),
+          GoRoute(path: Routes.billingHistory, name: 'billingHistory', builder: (context, state) => const BillingHistoryPage()),
 
-      // ─── Admin Panel – P15: Financial Operations ──
-      GoRoute(path: Routes.adminFinOps, name: 'adminFinOps', builder: (context, state) => const AdminFinOpsOverviewPage()),
-      GoRoute(
-        path: Routes.adminFinOpsPayments,
-        name: 'adminFinOpsPayments',
-        builder: (context, state) => const AdminFinOpsPaymentListPage(),
-      ),
-      GoRoute(
-        path: '${Routes.adminFinOpsPaymentDetail}/:id',
-        name: 'adminFinOpsPaymentDetail',
-        builder: (context, state) => AdminFinOpsPaymentDetailPage(id: state.pathParameters['id']!),
-      ),
-      GoRoute(
-        path: Routes.adminFinOpsRefunds,
-        name: 'adminFinOpsRefunds',
-        builder: (context, state) => const AdminFinOpsRefundListPage(),
-      ),
-      GoRoute(
-        path: Routes.adminFinOpsCashSessions,
-        name: 'adminFinOpsCashSessions',
-        builder: (context, state) => const AdminFinOpsCashSessionListPage(),
-      ),
-      GoRoute(
-        path: Routes.adminFinOpsExpenses,
-        name: 'adminFinOpsExpenses',
-        builder: (context, state) => const AdminFinOpsExpenseListPage(),
-      ),
-      GoRoute(
-        path: Routes.adminFinOpsGiftCards,
-        name: 'adminFinOpsGiftCards',
-        builder: (context, state) => const AdminFinOpsGiftCardListPage(),
-      ),
-      GoRoute(
-        path: Routes.adminFinOpsAccounting,
-        name: 'adminFinOpsAccounting',
-        builder: (context, state) => const AdminFinOpsAccountingConfigListPage(),
-      ),
-      GoRoute(
-        path: Routes.adminFinOpsThawani,
-        name: 'adminFinOpsThawani',
-        builder: (context, state) => const AdminFinOpsThawaniSettlementListPage(),
-      ),
-      GoRoute(
-        path: Routes.adminFinOpsSalesReports,
-        name: 'adminFinOpsSalesReports',
-        builder: (context, state) => const AdminFinOpsDailySalesPage(),
-      ),
+          // ─── Admin Panel – P15: Financial Operations ──
+          GoRoute(path: Routes.adminFinOps, name: 'adminFinOps', builder: (context, state) => const AdminFinOpsOverviewPage()),
+          GoRoute(
+            path: Routes.adminFinOpsPayments,
+            name: 'adminFinOpsPayments',
+            builder: (context, state) => const AdminFinOpsPaymentListPage(),
+          ),
+          GoRoute(
+            path: '${Routes.adminFinOpsPaymentDetail}/:id',
+            name: 'adminFinOpsPaymentDetail',
+            builder: (context, state) => AdminFinOpsPaymentDetailPage(id: state.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: Routes.adminFinOpsRefunds,
+            name: 'adminFinOpsRefunds',
+            builder: (context, state) => const AdminFinOpsRefundListPage(),
+          ),
+          GoRoute(
+            path: Routes.adminFinOpsCashSessions,
+            name: 'adminFinOpsCashSessions',
+            builder: (context, state) => const AdminFinOpsCashSessionListPage(),
+          ),
+          GoRoute(
+            path: Routes.adminFinOpsExpenses,
+            name: 'adminFinOpsExpenses',
+            builder: (context, state) => const AdminFinOpsExpenseListPage(),
+          ),
+          GoRoute(
+            path: Routes.adminFinOpsGiftCards,
+            name: 'adminFinOpsGiftCards',
+            builder: (context, state) => const AdminFinOpsGiftCardListPage(),
+          ),
+          GoRoute(
+            path: Routes.adminFinOpsAccounting,
+            name: 'adminFinOpsAccounting',
+            builder: (context, state) => const AdminFinOpsAccountingConfigListPage(),
+          ),
+          GoRoute(
+            path: Routes.adminFinOpsThawani,
+            name: 'adminFinOpsThawani',
+            builder: (context, state) => const AdminFinOpsThawaniSettlementListPage(),
+          ),
+          GoRoute(
+            path: Routes.adminFinOpsSalesReports,
+            name: 'adminFinOpsSalesReports',
+            builder: (context, state) => const AdminFinOpsDailySalesPage(),
+          ),
 
-      // ─── Admin Panel – P16: Infrastructure ────────
-      GoRoute(
-        path: Routes.adminInfrastructure,
-        name: 'adminInfrastructure',
-        builder: (context, state) => const AdminInfraOverviewPage(),
-      ),
-      GoRoute(
-        path: Routes.adminInfraFailedJobs,
-        name: 'adminInfraFailedJobs',
-        builder: (context, state) => const AdminInfraFailedJobsPage(),
-      ),
-      GoRoute(path: Routes.adminInfraHealth, name: 'adminInfraHealth', builder: (context, state) => const AdminInfraHealthPage()),
-      GoRoute(
-        path: Routes.adminInfraStorage,
-        name: 'adminInfraStorage',
-        builder: (context, state) => const AdminInfraBackupsPage(),
-      ),
+          // ─── Admin Panel – P16: Infrastructure ────────
+          GoRoute(
+            path: Routes.adminInfrastructure,
+            name: 'adminInfrastructure',
+            builder: (context, state) => const AdminInfraOverviewPage(),
+          ),
+          GoRoute(
+            path: Routes.adminInfraFailedJobs,
+            name: 'adminInfraFailedJobs',
+            builder: (context, state) => const AdminInfraFailedJobsPage(),
+          ),
+          GoRoute(
+            path: Routes.adminInfraHealth,
+            name: 'adminInfraHealth',
+            builder: (context, state) => const AdminInfraHealthPage(),
+          ),
+          GoRoute(
+            path: Routes.adminInfraStorage,
+            name: 'adminInfraStorage',
+            builder: (context, state) => const AdminInfraBackupsPage(),
+          ),
 
-      // ─── Admin Panel – P17: Provider Roles ────────
-      GoRoute(
-        path: Routes.adminProviderPermissions,
-        name: 'adminProviderPermissions',
-        builder: (context, state) => const AdminProviderPermissionsPage(),
-      ),
-      GoRoute(
-        path: Routes.adminProviderRoleTemplates,
-        name: 'adminProviderRoleTemplates',
-        builder: (context, state) => const AdminProviderRoleTemplateListPage(),
-      ),
-      GoRoute(
-        path: '${Routes.adminProviderRoleTemplateDetail}/:id',
-        name: 'adminProviderRoleTemplateDetail',
-        builder: (context, state) => AdminProviderRoleTemplateDetailPage(templateId: state.pathParameters['id']!),
-      ),
+          // ─── Admin Panel – P17: Provider Roles ────────
+          GoRoute(
+            path: Routes.adminProviderPermissions,
+            name: 'adminProviderPermissions',
+            builder: (context, state) => const AdminProviderPermissionsPage(),
+          ),
+          GoRoute(
+            path: Routes.adminProviderRoleTemplates,
+            name: 'adminProviderRoleTemplates',
+            builder: (context, state) => const AdminProviderRoleTemplateListPage(),
+          ),
+          GoRoute(
+            path: '${Routes.adminProviderRoleTemplateDetail}/:id',
+            name: 'adminProviderRoleTemplateDetail',
+            builder: (context, state) => AdminProviderRoleTemplateDetailPage(templateId: state.pathParameters['id']!),
+          ),
 
-      // ─── Admin Panel – P1: Provider Management ────
-      GoRoute(path: Routes.adminStores, name: 'adminStores', builder: (context, state) => const AdminStoreListPage()),
-      GoRoute(
-        path: '${Routes.adminStoreDetail}/:id',
-        name: 'adminStoreDetail',
-        builder: (context, state) => AdminStoreDetailPage(storeId: state.pathParameters['id']!),
-      ),
-      GoRoute(
-        path: Routes.adminRegistrations,
-        name: 'adminRegistrations',
-        builder: (context, state) => const RegistrationQueuePage(),
-      ),
-      GoRoute(
-        path: '${Routes.adminNotes}/:organizationId',
-        name: 'adminNotes',
-        builder: (context, state) => ProviderNotesPage(organizationId: state.pathParameters['organizationId']!),
-      ),
+          // ─── Admin Panel – P1: Provider Management ────
+          GoRoute(path: Routes.adminStores, name: 'adminStores', builder: (context, state) => const AdminStoreListPage()),
+          GoRoute(
+            path: '${Routes.adminStoreDetail}/:id',
+            name: 'adminStoreDetail',
+            builder: (context, state) => AdminStoreDetailPage(storeId: state.pathParameters['id']!),
+          ),
+          GoRoute(
+            path: Routes.adminRegistrations,
+            name: 'adminRegistrations',
+            builder: (context, state) => const RegistrationQueuePage(),
+          ),
+          GoRoute(
+            path: '${Routes.adminNotes}/:organizationId',
+            name: 'adminNotes',
+            builder: (context, state) => ProviderNotesPage(organizationId: state.pathParameters['organizationId']!),
+          ),
 
-      // ─── Admin Panel – P2: Platform Roles ─────────
-      GoRoute(path: Routes.adminRoles, name: 'adminRoles', builder: (context, state) => const AdminRoleListPage()),
-      GoRoute(
-        path: '${Routes.adminRoleDetail}/:roleId',
-        name: 'adminRoleDetail',
-        builder: (context, state) => AdminRoleDetailPage(roleId: state.pathParameters['roleId']!),
-      ),
-      GoRoute(path: Routes.adminPermissions, name: 'adminPermissions', builder: (context, state) => const AdminPermissionsPage()),
-      GoRoute(path: Routes.adminTeam, name: 'adminTeam', builder: (context, state) => const AdminTeamListPage()),
-      GoRoute(
-        path: '${Routes.adminTeamUserDetail}/:userId',
-        name: 'adminTeamUserDetail',
-        builder: (context, state) => AdminTeamUserDetailPage(userId: state.pathParameters['userId']!),
-      ),
-      GoRoute(path: Routes.adminActivityLog, name: 'adminActivityLog', builder: (context, state) => const AdminActivityLogPage()),
+          // ─── Admin Panel – P2: Platform Roles ─────────
+          GoRoute(path: Routes.adminRoles, name: 'adminRoles', builder: (context, state) => const AdminRoleListPage()),
+          GoRoute(
+            path: '${Routes.adminRoleDetail}/:roleId',
+            name: 'adminRoleDetail',
+            builder: (context, state) => AdminRoleDetailPage(roleId: state.pathParameters['roleId']!),
+          ),
+          GoRoute(
+            path: Routes.adminPermissions,
+            name: 'adminPermissions',
+            builder: (context, state) => const AdminPermissionsPage(),
+          ),
+          GoRoute(path: Routes.adminTeam, name: 'adminTeam', builder: (context, state) => const AdminTeamListPage()),
+          GoRoute(
+            path: '${Routes.adminTeamUserDetail}/:userId',
+            name: 'adminTeamUserDetail',
+            builder: (context, state) => AdminTeamUserDetailPage(userId: state.pathParameters['userId']!),
+          ),
+          GoRoute(
+            path: Routes.adminActivityLog,
+            name: 'adminActivityLog',
+            builder: (context, state) => const AdminActivityLogPage(),
+          ),
 
-      // ─── Admin Panel – P3: Package & Subscription ─
-      GoRoute(path: Routes.adminPlans, name: 'adminPlans', builder: (context, state) => const AdminPlanListPage()),
-      GoRoute(
-        path: '${Routes.adminPlanDetail}/:planId',
-        name: 'adminPlanDetail',
-        builder: (context, state) => AdminPlanDetailPage(planId: state.pathParameters['planId']!),
-      ),
-      GoRoute(path: Routes.adminDiscounts, name: 'adminDiscounts', builder: (context, state) => const AdminDiscountListPage()),
-      GoRoute(
-        path: Routes.adminSubscriptions,
-        name: 'adminSubscriptions',
-        builder: (context, state) => const AdminSubscriptionListPage(),
-      ),
-      GoRoute(path: Routes.adminInvoices, name: 'adminInvoices', builder: (context, state) => const AdminInvoiceListPage()),
-      GoRoute(
-        path: Routes.adminRevenueDashboard,
-        name: 'adminRevenueDashboard',
-        builder: (context, state) => const p3.AdminRevenueDashboardPage(),
-      ),
+          // ─── Admin Panel – P3: Package & Subscription ─
+          GoRoute(path: Routes.adminPlans, name: 'adminPlans', builder: (context, state) => const AdminPlanListPage()),
+          GoRoute(
+            path: '${Routes.adminPlanDetail}/:planId',
+            name: 'adminPlanDetail',
+            builder: (context, state) => AdminPlanDetailPage(planId: state.pathParameters['planId']!),
+          ),
+          GoRoute(
+            path: Routes.adminDiscounts,
+            name: 'adminDiscounts',
+            builder: (context, state) => const AdminDiscountListPage(),
+          ),
+          GoRoute(
+            path: Routes.adminSubscriptions,
+            name: 'adminSubscriptions',
+            builder: (context, state) => const AdminSubscriptionListPage(),
+          ),
+          GoRoute(path: Routes.adminInvoices, name: 'adminInvoices', builder: (context, state) => const AdminInvoiceListPage()),
+          GoRoute(
+            path: Routes.adminRevenueDashboard,
+            name: 'adminRevenueDashboard',
+            builder: (context, state) => const p3.AdminRevenueDashboardPage(),
+          ),
 
-      // ─── Admin Panel – P4: User Management ────────
-      GoRoute(
-        path: Routes.adminProviderUsers,
-        name: 'adminProviderUsers',
-        builder: (context, state) => const AdminProviderUserListPage(),
-      ),
-      GoRoute(
-        path: '${Routes.adminProviderUserDetail}/:userId',
-        name: 'adminProviderUserDetail',
-        builder: (context, state) => AdminProviderUserDetailPage(userId: state.pathParameters['userId']!),
-      ),
-      GoRoute(path: Routes.adminAdminUsers, name: 'adminAdminUsers', builder: (context, state) => const AdminAdminUserListPage()),
-      GoRoute(
-        path: '${Routes.adminAdminUserDetail}/:userId',
-        name: 'adminAdminUserDetail',
-        builder: (context, state) => AdminAdminUserDetailPage(userId: state.pathParameters['userId']!),
-      ),
+          // ─── Admin Panel – P4: User Management ────────
+          GoRoute(
+            path: Routes.adminProviderUsers,
+            name: 'adminProviderUsers',
+            builder: (context, state) => const AdminProviderUserListPage(),
+          ),
+          GoRoute(
+            path: '${Routes.adminProviderUserDetail}/:userId',
+            name: 'adminProviderUserDetail',
+            builder: (context, state) => AdminProviderUserDetailPage(userId: state.pathParameters['userId']!),
+          ),
+          GoRoute(
+            path: Routes.adminAdminUsers,
+            name: 'adminAdminUsers',
+            builder: (context, state) => const AdminAdminUserListPage(),
+          ),
+          GoRoute(
+            path: '${Routes.adminAdminUserDetail}/:userId',
+            name: 'adminAdminUserDetail',
+            builder: (context, state) => AdminAdminUserDetailPage(userId: state.pathParameters['userId']!),
+          ),
 
-      // ─── Admin Panel – P5: Billing & Finance ──────
-      GoRoute(
-        path: Routes.adminBillingInvoices,
-        name: 'adminBillingInvoices',
-        builder: (context, state) => const AdminBillingInvoiceListPage(),
-      ),
-      GoRoute(
-        path: '${Routes.adminBillingInvoiceDetail}/:invoiceId',
-        name: 'adminBillingInvoiceDetail',
-        builder: (context, state) => AdminBillingInvoiceDetailPage(invoiceId: state.pathParameters['invoiceId']!),
-      ),
-      GoRoute(
-        path: Routes.adminBillingFailedPayments,
-        name: 'adminBillingFailedPayments',
-        builder: (context, state) => const AdminFailedPaymentsPage(),
-      ),
-      GoRoute(
-        path: Routes.adminBillingRetryRules,
-        name: 'adminBillingRetryRules',
-        builder: (context, state) => const AdminRetryRulesPage(),
-      ),
-      GoRoute(
-        path: Routes.adminBillingRevenue,
-        name: 'adminBillingRevenue',
-        builder: (context, state) => const p5.AdminRevenueDashboardPage(),
-      ),
-      GoRoute(
-        path: Routes.adminBillingGateways,
-        name: 'adminBillingGateways',
-        builder: (context, state) => const AdminGatewayListPage(),
-      ),
-      GoRoute(
-        path: Routes.adminBillingHardwareSales,
-        name: 'adminBillingHardwareSales',
-        builder: (context, state) => const AdminHardwareSaleListPage(),
-      ),
-      GoRoute(
-        path: Routes.adminBillingImplementationFees,
-        name: 'adminBillingImplementationFees',
-        builder: (context, state) => const AdminImplementationFeeListPage(),
-      ),
+          // ─── Admin Panel – P5: Billing & Finance ──────
+          GoRoute(
+            path: Routes.adminBillingInvoices,
+            name: 'adminBillingInvoices',
+            builder: (context, state) => const AdminBillingInvoiceListPage(),
+          ),
+          GoRoute(
+            path: '${Routes.adminBillingInvoiceDetail}/:invoiceId',
+            name: 'adminBillingInvoiceDetail',
+            builder: (context, state) => AdminBillingInvoiceDetailPage(invoiceId: state.pathParameters['invoiceId']!),
+          ),
+          GoRoute(
+            path: Routes.adminBillingFailedPayments,
+            name: 'adminBillingFailedPayments',
+            builder: (context, state) => const AdminFailedPaymentsPage(),
+          ),
+          GoRoute(
+            path: Routes.adminBillingRetryRules,
+            name: 'adminBillingRetryRules',
+            builder: (context, state) => const AdminRetryRulesPage(),
+          ),
+          GoRoute(
+            path: Routes.adminBillingRevenue,
+            name: 'adminBillingRevenue',
+            builder: (context, state) => const p5.AdminRevenueDashboardPage(),
+          ),
+          GoRoute(
+            path: Routes.adminBillingGateways,
+            name: 'adminBillingGateways',
+            builder: (context, state) => const AdminGatewayListPage(),
+          ),
+          GoRoute(
+            path: Routes.adminBillingHardwareSales,
+            name: 'adminBillingHardwareSales',
+            builder: (context, state) => const AdminHardwareSaleListPage(),
+          ),
+          GoRoute(
+            path: Routes.adminBillingImplementationFees,
+            name: 'adminBillingImplementationFees',
+            builder: (context, state) => const AdminImplementationFeeListPage(),
+          ),
 
-      // ─── Admin Panel – P6: Analytics & Reporting ──
-      GoRoute(
-        path: Routes.adminAnalyticsDashboard,
-        name: 'adminAnalyticsDashboard',
-        builder: (context, state) => const AdminAnalyticsDashboardPage(),
-      ),
-      GoRoute(
-        path: Routes.adminAnalyticsRevenue,
-        name: 'adminAnalyticsRevenue',
-        builder: (context, state) => const AdminAnalyticsRevenuePage(),
-      ),
-      GoRoute(
-        path: Routes.adminAnalyticsStores,
-        name: 'adminAnalyticsStores',
-        builder: (context, state) => const AdminAnalyticsStoresPage(),
-      ),
-      GoRoute(
-        path: Routes.adminAnalyticsSubscriptions,
-        name: 'adminAnalyticsSubscriptions',
-        builder: (context, state) => const AdminAnalyticsSubscriptionsPage(),
-      ),
-      GoRoute(
-        path: Routes.adminAnalyticsFeatures,
-        name: 'adminAnalyticsFeatures',
-        builder: (context, state) => const AdminAnalyticsFeaturesPage(),
-      ),
-      GoRoute(
-        path: Routes.adminAnalyticsSystemHealth,
-        name: 'adminAnalyticsSystemHealth',
-        builder: (context, state) => const AdminAnalyticsSystemHealthPage(),
-      ),
+          // ─── Admin Panel – P6: Analytics & Reporting ──
+          GoRoute(
+            path: Routes.adminAnalyticsDashboard,
+            name: 'adminAnalyticsDashboard',
+            builder: (context, state) => const AdminAnalyticsDashboardPage(),
+          ),
+          GoRoute(
+            path: Routes.adminAnalyticsRevenue,
+            name: 'adminAnalyticsRevenue',
+            builder: (context, state) => const AdminAnalyticsRevenuePage(),
+          ),
+          GoRoute(
+            path: Routes.adminAnalyticsStores,
+            name: 'adminAnalyticsStores',
+            builder: (context, state) => const AdminAnalyticsStoresPage(),
+          ),
+          GoRoute(
+            path: Routes.adminAnalyticsSubscriptions,
+            name: 'adminAnalyticsSubscriptions',
+            builder: (context, state) => const AdminAnalyticsSubscriptionsPage(),
+          ),
+          GoRoute(
+            path: Routes.adminAnalyticsFeatures,
+            name: 'adminAnalyticsFeatures',
+            builder: (context, state) => const AdminAnalyticsFeaturesPage(),
+          ),
+          GoRoute(
+            path: Routes.adminAnalyticsSystemHealth,
+            name: 'adminAnalyticsSystemHealth',
+            builder: (context, state) => const AdminAnalyticsSystemHealthPage(),
+          ),
 
-      // ─── Admin Panel – P7: Support Tickets ────────
-      GoRoute(
-        path: Routes.adminSupportTickets,
-        name: 'adminSupportTickets',
-        builder: (context, state) => const AdminSupportTicketListPage(),
-      ),
-      GoRoute(
-        path: Routes.adminCannedResponses,
-        name: 'adminCannedResponses',
-        builder: (context, state) => const AdminCannedResponseListPage(),
-      ),
+          // ─── Admin Panel – P7: Support Tickets ────────
+          GoRoute(
+            path: Routes.adminSupportTickets,
+            name: 'adminSupportTickets',
+            builder: (context, state) => const AdminSupportTicketListPage(),
+          ),
+          GoRoute(
+            path: Routes.adminCannedResponses,
+            name: 'adminCannedResponses',
+            builder: (context, state) => const AdminCannedResponseListPage(),
+          ),
 
-      // ─── Admin Panel – P8: Feature Flags ──────────
-      GoRoute(
-        path: Routes.adminFeatureFlags,
-        name: 'adminFeatureFlags',
-        builder: (context, state) => const AdminFeatureFlagListPage(),
-      ),
-      GoRoute(
-        path: '${Routes.adminFeatureFlagDetail}/:flagId',
-        name: 'adminFeatureFlagDetail',
-        builder: (context, state) => AdminFeatureFlagDetailPage(flagId: state.pathParameters['flagId']!),
-      ),
+          // ─── Admin Panel – P8: Feature Flags ──────────
+          GoRoute(
+            path: Routes.adminFeatureFlags,
+            name: 'adminFeatureFlags',
+            builder: (context, state) => const AdminFeatureFlagListPage(),
+          ),
+          GoRoute(
+            path: '${Routes.adminFeatureFlagDetail}/:flagId',
+            name: 'adminFeatureFlagDetail',
+            builder: (context, state) => AdminFeatureFlagDetailPage(flagId: state.pathParameters['flagId']!),
+          ),
 
-      // ─── Admin Panel – P9: Notification Templates ─
-      GoRoute(
-        path: Routes.adminNotificationTemplates,
-        name: 'adminNotificationTemplates',
-        builder: (context, state) => const AdminNotificationTemplateListPage(),
-      ),
-      GoRoute(
-        path: Routes.adminNotificationLogs,
-        name: 'adminNotificationLogs',
-        builder: (context, state) => const AdminNotificationLogListPage(),
-      ),
+          // ─── Admin Panel – P9: Notification Templates ─
+          GoRoute(
+            path: Routes.adminNotificationTemplates,
+            name: 'adminNotificationTemplates',
+            builder: (context, state) => const AdminNotificationTemplateListPage(),
+          ),
+          GoRoute(
+            path: Routes.adminNotificationLogs,
+            name: 'adminNotificationLogs',
+            builder: (context, state) => const AdminNotificationLogListPage(),
+          ),
 
-      // ─── Admin Panel – P10: A-B Tests / Events ────
-      GoRoute(path: Routes.adminABTests, name: 'adminABTests', builder: (context, state) => const AdminABTestListPage()),
-      GoRoute(
-        path: '${Routes.adminABTestDetail}/:testId',
-        name: 'adminABTestDetail',
-        builder: (context, state) => AdminABTestDetailPage(testId: state.pathParameters['testId']!),
-      ),
-      GoRoute(
-        path: '${Routes.adminABTestResults}/:testId',
-        name: 'adminABTestResults',
-        builder: (context, state) => AdminABTestResultsPage(testId: state.pathParameters['testId']!),
-      ),
-      GoRoute(
-        path: Routes.adminPlatformEvents,
-        name: 'adminPlatformEvents',
-        builder: (context, state) => const AdminPlatformEventListPage(),
-      ),
+          // ─── Admin Panel – P10: A-B Tests / Events ────
+          GoRoute(path: Routes.adminABTests, name: 'adminABTests', builder: (context, state) => const AdminABTestListPage()),
+          GoRoute(
+            path: '${Routes.adminABTestDetail}/:testId',
+            name: 'adminABTestDetail',
+            builder: (context, state) => AdminABTestDetailPage(testId: state.pathParameters['testId']!),
+          ),
+          GoRoute(
+            path: '${Routes.adminABTestResults}/:testId',
+            name: 'adminABTestResults',
+            builder: (context, state) => AdminABTestResultsPage(testId: state.pathParameters['testId']!),
+          ),
+          GoRoute(
+            path: Routes.adminPlatformEvents,
+            name: 'adminPlatformEvents',
+            builder: (context, state) => const AdminPlatformEventListPage(),
+          ),
 
-      // ─── Admin Panel – P11: Content & Onboarding ──
-      GoRoute(path: Routes.adminCmsPages, name: 'adminCmsPages', builder: (context, state) => const AdminCmsPageListPage()),
-      GoRoute(
-        path: '${Routes.adminCmsPageDetail}/:pageId',
-        name: 'adminCmsPageDetail',
-        builder: (context, state) => AdminCmsPageDetailPage(pageId: state.pathParameters['pageId']!),
-      ),
-      GoRoute(path: Routes.adminArticles, name: 'adminArticles', builder: (context, state) => const AdminArticleListPage()),
-      GoRoute(
-        path: Routes.adminAnnouncements,
-        name: 'adminAnnouncements',
-        builder: (context, state) => const AdminAnnouncementListPage(),
-      ),
+          // ─── Admin Panel – P11: Content & Onboarding ──
+          GoRoute(path: Routes.adminCmsPages, name: 'adminCmsPages', builder: (context, state) => const AdminCmsPageListPage()),
+          GoRoute(
+            path: '${Routes.adminCmsPageDetail}/:pageId',
+            name: 'adminCmsPageDetail',
+            builder: (context, state) => AdminCmsPageDetailPage(pageId: state.pathParameters['pageId']!),
+          ),
+          GoRoute(path: Routes.adminArticles, name: 'adminArticles', builder: (context, state) => const AdminArticleListPage()),
+          GoRoute(
+            path: Routes.adminAnnouncements,
+            name: 'adminAnnouncements',
+            builder: (context, state) => const AdminAnnouncementListPage(),
+          ),
 
-      // ─── Admin Panel – P13: Marketplace ───────────
-      GoRoute(
-        path: Routes.adminMarketplaceStores,
-        name: 'adminMarketplaceStores',
-        builder: (context, state) => const AdminMarketplaceStoreListPage(),
-      ),
-      GoRoute(
-        path: Routes.adminMarketplaceSettlements,
-        name: 'adminMarketplaceSettlements',
-        builder: (context, state) => const AdminMarketplaceSettlementListPage(),
-      ),
+          // ─── Admin Panel – P13: Marketplace ───────────
+          GoRoute(
+            path: Routes.adminMarketplaceStores,
+            name: 'adminMarketplaceStores',
+            builder: (context, state) => const AdminMarketplaceStoreListPage(),
+          ),
+          GoRoute(
+            path: Routes.adminMarketplaceSettlements,
+            name: 'adminMarketplaceSettlements',
+            builder: (context, state) => const AdminMarketplaceSettlementListPage(),
+          ),
 
-      // ─── Admin Panel – P14: Deployment ────────────
-      GoRoute(
-        path: Routes.adminDeploymentOverview,
-        name: 'adminDeploymentOverview',
-        builder: (context, state) => const AdminDeploymentOverviewPage(),
-      ),
-      GoRoute(
-        path: Routes.adminDeploymentReleases,
-        name: 'adminDeploymentReleases',
-        builder: (context, state) => const AdminDeploymentReleaseListPage(),
-      ),
+          // ─── Admin Panel – P14: Deployment ────────────
+          GoRoute(
+            path: Routes.adminDeploymentOverview,
+            name: 'adminDeploymentOverview',
+            builder: (context, state) => const AdminDeploymentOverviewPage(),
+          ),
+          GoRoute(
+            path: Routes.adminDeploymentReleases,
+            name: 'adminDeploymentReleases',
+            builder: (context, state) => const AdminDeploymentReleaseListPage(),
+          ),
 
-      // ─── Admin Panel – Security Center ────────────
-      GoRoute(
-        path: Routes.adminSecurityOverview,
-        name: 'adminSecurityOverview',
-        builder: (context, state) => const AdminSecurityOverviewPage(),
-      ),
-      GoRoute(
-        path: Routes.adminSecurityAlerts,
-        name: 'adminSecurityAlerts',
-        builder: (context, state) => const AdminSecurityAlertsPage(),
-      ),
-      GoRoute(
-        path: Routes.adminSecurityAlertList,
-        name: 'adminSecurityAlertList',
-        builder: (context, state) => const AdminSecurityAlertListPage(),
-      ),
-      GoRoute(
-        path: Routes.adminActivityLogList,
-        name: 'adminActivityLogList',
-        builder: (context, state) => const AdminActivityLogListPage(),
-      ),
-      GoRoute(
-        path: '${Routes.adminUserActivity}/:userId',
-        name: 'adminUserActivity',
-        builder: (context, state) => AdminUserActivityPage(userId: state.pathParameters['userId']!),
-      ),
+          // ─── Admin Panel – Security Center ────────────
+          GoRoute(
+            path: Routes.adminSecurityOverview,
+            name: 'adminSecurityOverview',
+            builder: (context, state) => const AdminSecurityOverviewPage(),
+          ),
+          GoRoute(
+            path: Routes.adminSecurityAlerts,
+            name: 'adminSecurityAlerts',
+            builder: (context, state) => const AdminSecurityAlertsPage(),
+          ),
+          GoRoute(
+            path: Routes.adminSecurityAlertList,
+            name: 'adminSecurityAlertList',
+            builder: (context, state) => const AdminSecurityAlertListPage(),
+          ),
+          GoRoute(
+            path: Routes.adminActivityLogList,
+            name: 'adminActivityLogList',
+            builder: (context, state) => const AdminActivityLogListPage(),
+          ),
+          GoRoute(
+            path: '${Routes.adminUserActivity}/:userId',
+            name: 'adminUserActivity',
+            builder: (context, state) => AdminUserActivityPage(userId: state.pathParameters['userId']!),
+          ),
 
-      // ─── Admin Panel – Data Management & Health ───
-      GoRoute(
-        path: Routes.adminDataManagement,
-        name: 'adminDataManagement',
-        builder: (context, state) => const AdminDataManagementOverviewPage(),
-      ),
-      GoRoute(
-        path: Routes.adminDatabaseBackups,
-        name: 'adminDatabaseBackups',
-        builder: (context, state) => const AdminDatabaseBackupListPage(),
-      ),
-      GoRoute(
-        path: Routes.adminHealthDashboard,
-        name: 'adminHealthDashboard',
-        builder: (context, state) => const AdminHealthDashboardPage(),
-      ),
+          // ─── Admin Panel – Data Management & Health ───
+          GoRoute(
+            path: Routes.adminDataManagement,
+            name: 'adminDataManagement',
+            builder: (context, state) => const AdminDataManagementOverviewPage(),
+          ),
+          GoRoute(
+            path: Routes.adminDatabaseBackups,
+            name: 'adminDatabaseBackups',
+            builder: (context, state) => const AdminDatabaseBackupListPage(),
+          ),
+          GoRoute(
+            path: Routes.adminHealthDashboard,
+            name: 'adminHealthDashboard',
+            builder: (context, state) => const AdminHealthDashboardPage(),
+          ),
 
-      // ─── ZATCA Compliance ───
-      GoRoute(path: Routes.zatcaDashboard, name: 'zatcaDashboard', builder: (context, state) => const ZatcaDashboardPage()),
+          // ─── ZATCA Compliance ───
+          GoRoute(path: Routes.zatcaDashboard, name: 'zatcaDashboard', builder: (context, state) => const ZatcaDashboardPage()),
 
-      // ─── Sync ───
-      GoRoute(path: Routes.syncDashboard, name: 'syncDashboard', builder: (context, state) => const SyncDashboardPage()),
+          // ─── Sync ───
+          GoRoute(path: Routes.syncDashboard, name: 'syncDashboard', builder: (context, state) => const SyncDashboardPage()),
 
-      // ─── Hardware ───
-      GoRoute(
-        path: Routes.hardwareDashboard,
-        name: 'hardwareDashboard',
-        builder: (context, state) => const HardwareDashboardPage(),
-      ),
+          // ─── Hardware ───
+          GoRoute(
+            path: Routes.hardwareDashboard,
+            name: 'hardwareDashboard',
+            builder: (context, state) => const HardwareDashboardPage(),
+          ),
 
-      // ─── Localization ───
-      GoRoute(path: Routes.localization, name: 'localization', builder: (context, state) => const LocalizationPage()),
+          // ─── Localization ───
+          GoRoute(path: Routes.localization, name: 'localization', builder: (context, state) => const LocalizationPage()),
 
-      // ─── Security ───
-      GoRoute(
-        path: Routes.securityDashboard,
-        name: 'securityDashboard',
-        builder: (context, state) => const SecurityDashboardPage(),
-      ),
+          // ─── Security ───
+          GoRoute(
+            path: Routes.securityDashboard,
+            name: 'securityDashboard',
+            builder: (context, state) => const SecurityDashboardPage(),
+          ),
 
-      // ─── Backup & Recovery ───
-      GoRoute(path: Routes.backupDashboard, name: 'backupDashboard', builder: (context, state) => const BackupDashboardPage()),
+          // ─── Backup & Recovery ───
+          GoRoute(
+            path: Routes.backupDashboard,
+            name: 'backupDashboard',
+            builder: (context, state) => const BackupDashboardPage(),
+          ),
 
-      // ─── Mobile Companion ───
-      GoRoute(
-        path: Routes.companionDashboard,
-        name: 'companionDashboard',
-        builder: (context, state) => const CompanionDashboardPage(),
-      ),
+          // ─── Mobile Companion ───
+          GoRoute(
+            path: Routes.companionDashboard,
+            name: 'companionDashboard',
+            builder: (context, state) => const CompanionDashboardPage(),
+          ),
 
-      // ─── POS Customization ───
-      GoRoute(
-        path: Routes.customizationDashboard,
-        name: 'customizationDashboard',
-        builder: (context, state) => const CustomizationDashboardPage(),
-      ),
+          // ─── POS Customization ───
+          GoRoute(
+            path: Routes.customizationDashboard,
+            name: 'customizationDashboard',
+            builder: (context, state) => const CustomizationDashboardPage(),
+          ),
 
-      // ─── Auto Updates ───
-      GoRoute(
-        path: Routes.autoUpdateDashboard,
-        name: 'autoUpdateDashboard',
-        builder: (context, state) => const AutoUpdateDashboardPage(),
-      ),
+          // ─── Auto Updates ───
+          GoRoute(
+            path: Routes.autoUpdateDashboard,
+            name: 'autoUpdateDashboard',
+            builder: (context, state) => const AutoUpdateDashboardPage(),
+          ),
 
-      // ─── Accessibility ───
-      GoRoute(
-        path: Routes.accessibilityDashboard,
-        name: 'accessibilityDashboard',
-        builder: (context, state) => const AccessibilityDashboardPage(),
-      ),
+          // ─── Accessibility ───
+          GoRoute(
+            path: Routes.accessibilityDashboard,
+            name: 'accessibilityDashboard',
+            builder: (context, state) => const AccessibilityDashboardPage(),
+          ),
 
-      // ─── Nice-to-Have ───
-      GoRoute(
-        path: Routes.niceToHaveDashboard,
-        name: 'niceToHaveDashboard',
-        builder: (context, state) => const NiceToHaveDashboardPage(),
-      ),
+          // ─── Nice-to-Have ───
+          GoRoute(
+            path: Routes.niceToHaveDashboard,
+            name: 'niceToHaveDashboard',
+            builder: (context, state) => const NiceToHaveDashboardPage(),
+          ),
 
-      // ─── Industry Workflows ───
-      GoRoute(
-        path: Routes.industryPharmacy,
-        name: 'industryPharmacy',
-        builder: (context, state) => const PharmacyDashboardPage(),
-      ),
-      GoRoute(path: Routes.industryJewelry, name: 'industryJewelry', builder: (context, state) => const JewelryDashboardPage()),
-      GoRoute(
-        path: Routes.industryElectronics,
-        name: 'industryElectronics',
-        builder: (context, state) => const ElectronicsDashboardPage(),
-      ),
-      GoRoute(path: Routes.industryFlorist, name: 'industryFlorist', builder: (context, state) => const FloristDashboardPage()),
-      GoRoute(path: Routes.industryBakery, name: 'industryBakery', builder: (context, state) => const BakeryDashboardPage()),
-      GoRoute(
-        path: Routes.industryRestaurant,
-        name: 'industryRestaurant',
-        builder: (context, state) => const RestaurantDashboardPage(),
-      ),
+          // ─── Settings ───
+          GoRoute(path: Routes.settings, name: 'settings', builder: (context, state) => const SettingsPage()),
+
+          // ─── Reports ───
+          GoRoute(path: Routes.reports, name: 'reports', builder: (context, state) => const reports.DashboardPage()),
+          GoRoute(
+            path: Routes.reportsSalesSummary,
+            name: 'reportsSalesSummary',
+            builder: (context, state) => const SalesSummaryPage(),
+          ),
+          GoRoute(
+            path: Routes.reportsHourlySales,
+            name: 'reportsHourlySales',
+            builder: (context, state) => const HourlySalesPage(),
+          ),
+          GoRoute(
+            path: Routes.reportsProductPerformance,
+            name: 'reportsProductPerformance',
+            builder: (context, state) => const ProductPerformancePage(),
+          ),
+          GoRoute(
+            path: Routes.reportsCategoryBreakdown,
+            name: 'reportsCategoryBreakdown',
+            builder: (context, state) => const CategoryBreakdownPage(),
+          ),
+          GoRoute(
+            path: Routes.reportsPaymentMethods,
+            name: 'reportsPaymentMethods',
+            builder: (context, state) => const PaymentMethodsPage(),
+          ),
+          GoRoute(
+            path: Routes.reportsStaffPerformance,
+            name: 'reportsStaffPerformance',
+            builder: (context, state) => const StaffPerformancePage(),
+          ),
+
+          // ─── Branches ───
+          GoRoute(path: Routes.branches, name: 'branches', builder: (context, state) => const BranchListPage()),
+
+          // ─── Accounting ───
+          GoRoute(path: Routes.accounting, name: 'accounting', builder: (context, state) => const AccountingSettingsPage()),
+          GoRoute(
+            path: Routes.accountingMappings,
+            name: 'accountingMappings',
+            builder: (context, state) => const AccountMappingPage(),
+          ),
+          GoRoute(
+            path: Routes.accountingExportHistory,
+            name: 'accountingExportHistory',
+            builder: (context, state) => const ExportHistoryPage(),
+          ),
+          GoRoute(
+            path: Routes.accountingAutoExport,
+            name: 'accountingAutoExport',
+            builder: (context, state) => const AutoExportSettingsPage(),
+          ),
+
+          // ─── Promotions ───
+          GoRoute(path: Routes.promotions, name: 'promotions', builder: (context, state) => const PromotionListPage()),
+          GoRoute(
+            path: '${Routes.promotionAnalytics}/:id',
+            name: 'promotionAnalytics',
+            builder: (context, state) => PromotionAnalyticsPage(promotionId: state.pathParameters['id']!),
+          ),
+
+          // ─── Thawani Pay ───
+          GoRoute(path: Routes.thawaniPay, name: 'thawaniPay', builder: (context, state) => const ThawaniDashboardPage()),
+
+          // ─── Delivery Integration ───
+          GoRoute(path: Routes.delivery, name: 'delivery', builder: (context, state) => const DeliveryDashboardPage()),
+
+          // ─── Notifications ───
+          GoRoute(path: Routes.notifications, name: 'notifications', builder: (context, state) => const NotificationsListPage()),
+          GoRoute(
+            path: Routes.notificationPreferences,
+            name: 'notificationPreferences',
+            builder: (context, state) => const NotificationPreferencesPage(),
+          ),
+
+          // ─── Support ───
+          GoRoute(path: Routes.support, name: 'support', builder: (context, state) => const SupportDashboardPage()),
+          GoRoute(path: Routes.supportCreate, name: 'supportCreate', builder: (context, state) => const CreateTicketPage()),
+          GoRoute(
+            path: '${Routes.support}/tickets/:id',
+            name: 'supportTicketDetail',
+            builder: (context, state) => TicketDetailPage(ticketId: state.pathParameters['id']!),
+          ),
+
+          // ─── Industry Workflows ───
+          GoRoute(
+            path: Routes.industryPharmacy,
+            name: 'industryPharmacy',
+            builder: (context, state) => const PharmacyDashboardPage(),
+          ),
+          GoRoute(
+            path: Routes.industryJewelry,
+            name: 'industryJewelry',
+            builder: (context, state) => const JewelryDashboardPage(),
+          ),
+          GoRoute(
+            path: Routes.industryElectronics,
+            name: 'industryElectronics',
+            builder: (context, state) => const ElectronicsDashboardPage(),
+          ),
+          GoRoute(
+            path: Routes.industryFlorist,
+            name: 'industryFlorist',
+            builder: (context, state) => const FloristDashboardPage(),
+          ),
+          GoRoute(path: Routes.industryBakery, name: 'industryBakery', builder: (context, state) => const BakeryDashboardPage()),
+          GoRoute(
+            path: Routes.industryRestaurant,
+            name: 'industryRestaurant',
+            builder: (context, state) => const RestaurantDashboardPage(),
+          ),
+        ], // end ShellRoute routes
+      ), // end ShellRoute
     ],
   );
 });

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/features/nice_to_have/presentation/nice_to_have_state.dart';
 import 'package:thawani_pos/features/nice_to_have/presentation/nice_to_have_providers.dart';
 import 'package:thawani_pos/features/nice_to_have/presentation/nice_to_have_dashboard_page.dart';
@@ -54,7 +56,16 @@ class MockGamificationNotifier extends StateNotifier<GamificationState> implemen
 Widget _wrap(Widget child, {List<Override> overrides = const []}) {
   return ProviderScope(
     overrides: overrides,
-    child: MaterialApp(home: child),
+    child: MaterialApp(
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: child,
+    ),
   );
 }
 
@@ -217,9 +228,9 @@ void main() {
 
       expect(find.text('Wishlist'), findsOneWidget);
       expect(find.text('Appointments'), findsOneWidget);
-      expect(find.text('CFD'), findsOneWidget);
+      expect(find.text('Customer Facing Display'), findsOneWidget);
       expect(find.text('Gift Registry'), findsOneWidget);
-      expect(find.text('Signage'), findsOneWidget);
+      expect(find.text('Digital Signage'), findsOneWidget);
       expect(find.text('Gamification'), findsOneWidget);
     });
 
@@ -266,7 +277,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('CFD'));
+      await tester.tap(find.text('Customer Facing Display'));
       await tester.pumpAndSettle();
       expect(find.text('CFD Enabled'), findsOneWidget);
       expect(find.text('Target Monitor'), findsOneWidget);
@@ -289,6 +300,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
+      await tester.ensureVisible(find.text('Gift Registry'));
       await tester.tap(find.text('Gift Registry'));
       await tester.pumpAndSettle();
       expect(find.text('No gift registries'), findsOneWidget);
@@ -311,7 +323,8 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Signage'));
+      await tester.ensureVisible(find.text('Digital Signage'));
+      await tester.tap(find.text('Digital Signage'));
       await tester.pumpAndSettle();
       expect(find.text('No signage playlists'), findsOneWidget);
     });

@@ -16,7 +16,7 @@ class AccountingConnectionNotifier extends StateNotifier<AccountingConnectionSta
   AccountingConnectionNotifier(this._repository) : super(const AccountingConnectionInitial());
 
   Future<void> loadStatus() async {
-    state = const AccountingConnectionLoading();
+    if (state is! AccountingConnectionLoaded) state = const AccountingConnectionLoading();
     try {
       final response = await _repository.getStatus();
       final data = response['data'] as Map<String, dynamic>;
@@ -30,7 +30,7 @@ class AccountingConnectionNotifier extends StateNotifier<AccountingConnectionSta
         health: data['health'] as String,
       );
     } catch (e) {
-      state = AccountingConnectionError(e.toString());
+      if (state is! AccountingConnectionLoaded) state = AccountingConnectionError(e.toString());
     }
   }
 }
@@ -119,7 +119,7 @@ class AccountMappingNotifier extends StateNotifier<AccountMappingState> {
   AccountMappingNotifier(this._repository) : super(const AccountMappingInitial());
 
   Future<void> loadMappings() async {
-    state = const AccountMappingLoading();
+    if (state is! AccountMappingLoaded) state = const AccountMappingLoading();
     try {
       final response = await _repository.getMappings();
       final data = response['data'] as Map<String, dynamic>;
@@ -128,7 +128,7 @@ class AccountMappingNotifier extends StateNotifier<AccountMappingState> {
         posAccountKeys: data['pos_account_keys'] as Map<String, dynamic>,
       );
     } catch (e) {
-      state = AccountMappingError(e.toString());
+      if (state is! AccountMappingLoaded) state = AccountMappingError(e.toString());
     }
   }
 
@@ -170,13 +170,13 @@ class AccountingExportsNotifier extends StateNotifier<AccountingExportsState> {
   AccountingExportsNotifier(this._repository) : super(const AccountingExportsInitial());
 
   Future<void> loadExports({String? status, int? limit}) async {
-    state = const AccountingExportsLoading();
+    if (state is! AccountingExportsLoaded) state = const AccountingExportsLoading();
     try {
       final response = await _repository.listExports(status: status, limit: limit);
       final data = response['data'] as List;
       state = AccountingExportsLoaded(List<Map<String, dynamic>>.from(data));
     } catch (e) {
-      state = AccountingExportsError(e.toString());
+      if (state is! AccountingExportsLoaded) state = AccountingExportsError(e.toString());
     }
   }
 
@@ -214,7 +214,7 @@ class AutoExportConfigNotifier extends StateNotifier<AutoExportConfigState> {
   AutoExportConfigNotifier(this._repository) : super(const AutoExportConfigInitial());
 
   Future<void> loadConfig() async {
-    state = const AutoExportConfigLoading();
+    if (state is! AutoExportConfigLoaded) state = const AutoExportConfigLoading();
     try {
       final response = await _repository.getAutoExportConfig();
       final data = response['data'] as Map<String, dynamic>;
@@ -231,7 +231,7 @@ class AutoExportConfigNotifier extends StateNotifier<AutoExportConfigState> {
         nextRunAt: data['next_run_at'] as String?,
       );
     } catch (e) {
-      state = AutoExportConfigError(e.toString());
+      if (state is! AutoExportConfigLoaded) state = AutoExportConfigError(e.toString());
     }
   }
 

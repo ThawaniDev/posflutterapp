@@ -34,9 +34,36 @@ class ElectronicsNotifier extends StateNotifier<ElectronicsState> {
     }
   }
 
+  Future<void> updateRepairJob(String id, Map<String, dynamic> data) async {
+    try {
+      await _repo.updateRepairJob(id, data);
+      await load();
+    } on DioException catch (e) {
+      state = ElectronicsError(message: _extractError(e));
+    }
+  }
+
   Future<void> updateRepairJobStatus(String id, String status) async {
     try {
       await _repo.updateRepairJobStatus(id, status);
+      await load();
+    } on DioException catch (e) {
+      state = ElectronicsError(message: _extractError(e));
+    }
+  }
+
+  Future<void> createImeiRecord(Map<String, dynamic> data) async {
+    try {
+      await _repo.createImeiRecord(data);
+      await load();
+    } on DioException catch (e) {
+      state = ElectronicsError(message: _extractError(e));
+    }
+  }
+
+  Future<void> updateImeiRecord(String id, Map<String, dynamic> data) async {
+    try {
+      await _repo.updateImeiRecord(id, data);
       await load();
     } on DioException catch (e) {
       state = ElectronicsError(message: _extractError(e));

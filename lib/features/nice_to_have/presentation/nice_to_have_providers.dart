@@ -12,13 +12,13 @@ class WishlistNotifier extends StateNotifier<WishlistState> {
   WishlistNotifier(this._repo) : super(const WishlistInitial());
 
   Future<void> load(String customerId) async {
-    state = const WishlistLoading();
+    if (state is! WishlistLoaded) state = const WishlistLoading();
     try {
       final res = await _repo.getWishlist(customerId);
       final data = res.data['data'] as List? ?? [];
       state = WishlistLoaded(data);
     } catch (e) {
-      state = WishlistError(e.toString());
+      if (state is! WishlistLoaded) state = WishlistError(e.toString());
     }
   }
 }
@@ -33,13 +33,13 @@ class AppointmentNotifier extends StateNotifier<AppointmentState> {
   AppointmentNotifier(this._repo) : super(const AppointmentInitial());
 
   Future<void> load() async {
-    state = const AppointmentLoading();
+    if (state is! AppointmentLoaded) state = const AppointmentLoading();
     try {
       final res = await _repo.getAppointments();
       final data = res.data['data'] as List? ?? [];
       state = AppointmentLoaded(data);
     } catch (e) {
-      state = AppointmentError(e.toString());
+      if (state is! AppointmentLoaded) state = AppointmentError(e.toString());
     }
   }
 }
@@ -54,13 +54,13 @@ class CfdConfigNotifier extends StateNotifier<CfdConfigState> {
   CfdConfigNotifier(this._repo) : super(const CfdConfigInitial());
 
   Future<void> load() async {
-    state = const CfdConfigLoading();
+    if (state is! CfdConfigLoaded) state = const CfdConfigLoading();
     try {
       final res = await _repo.getCfdConfig();
       final data = (res.data['data'] as Map<String, dynamic>?) ?? {};
       state = CfdConfigLoaded(data);
     } catch (e) {
-      state = CfdConfigError(e.toString());
+      if (state is! CfdConfigLoaded) state = CfdConfigError(e.toString());
     }
   }
 }
@@ -75,13 +75,13 @@ class GiftRegistryNotifier extends StateNotifier<GiftRegistryState> {
   GiftRegistryNotifier(this._repo) : super(const GiftRegistryInitial());
 
   Future<void> load() async {
-    state = const GiftRegistryLoading();
+    if (state is! GiftRegistryLoaded) state = const GiftRegistryLoading();
     try {
       final res = await _repo.getRegistries();
       final data = res.data['data'] as List? ?? [];
       state = GiftRegistryLoaded(data);
     } catch (e) {
-      state = GiftRegistryError(e.toString());
+      if (state is! GiftRegistryLoaded) state = GiftRegistryError(e.toString());
     }
   }
 }
@@ -96,13 +96,13 @@ class SignageNotifier extends StateNotifier<SignageState> {
   SignageNotifier(this._repo) : super(const SignageInitial());
 
   Future<void> load() async {
-    state = const SignageLoading();
+    if (state is! SignageLoaded) state = const SignageLoading();
     try {
       final res = await _repo.getPlaylists();
       final data = res.data['data'] as List? ?? [];
       state = SignageLoaded(data);
     } catch (e) {
-      state = SignageError(e.toString());
+      if (state is! SignageLoaded) state = SignageError(e.toString());
     }
   }
 }
@@ -117,7 +117,7 @@ class GamificationNotifier extends StateNotifier<GamificationState> {
   GamificationNotifier(this._repo) : super(const GamificationInitial());
 
   Future<void> load() async {
-    state = const GamificationLoading();
+    if (state is! GamificationLoaded) state = const GamificationLoading();
     try {
       final cRes = await _repo.getChallenges();
       final bRes = await _repo.getBadges();
@@ -128,7 +128,7 @@ class GamificationNotifier extends StateNotifier<GamificationState> {
         tiers: tRes.data['data'] as List? ?? [],
       );
     } catch (e) {
-      state = GamificationError(e.toString());
+      if (state is! GamificationLoaded) state = GamificationError(e.toString());
     }
   }
 }

@@ -12,7 +12,7 @@ class AccessibilityPrefsNotifier extends StateNotifier<AccessibilityPrefsState> 
   AccessibilityPrefsNotifier(this._repo) : super(const PrefsInitial());
 
   Future<void> load() async {
-    state = const PrefsLoading();
+    if (state is! PrefsLoaded) state = const PrefsLoading();
     try {
       final res = await _repo.getPreferences();
       final d = res['data'] as Map<String, dynamic>? ?? res;
@@ -30,7 +30,7 @@ class AccessibilityPrefsNotifier extends StateNotifier<AccessibilityPrefsState> 
         raw: d,
       );
     } catch (e) {
-      state = PrefsError(e.toString());
+      if (state is! PrefsLoaded) state = PrefsError(e.toString());
     }
   }
 
@@ -91,13 +91,13 @@ class ShortcutsNotifier extends StateNotifier<ShortcutsState> {
   ShortcutsNotifier(this._repo) : super(const ShortcutsInitial());
 
   Future<void> load() async {
-    state = const ShortcutsLoading();
+    if (state is! ShortcutsLoaded) state = const ShortcutsLoading();
     try {
       final res = await _repo.getShortcuts();
       final d = res['data'] as Map<String, dynamic>? ?? res;
       state = ShortcutsLoaded(shortcuts: d);
     } catch (e) {
-      state = ShortcutsError(e.toString());
+      if (state is! ShortcutsLoaded) state = ShortcutsError(e.toString());
     }
   }
 

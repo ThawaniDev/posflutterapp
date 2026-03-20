@@ -45,10 +45,43 @@ class Routes {
 
   // Reports
   static const String reports = '/reports';
+  static const String reportsSalesSummary = '/reports/sales-summary';
+  static const String reportsHourlySales = '/reports/hourly-sales';
+  static const String reportsProductPerformance = '/reports/product-performance';
+  static const String reportsCategoryBreakdown = '/reports/category-breakdown';
+  static const String reportsPaymentMethods = '/reports/payment-methods';
+  static const String reportsStaffPerformance = '/reports/staff-performance';
 
   // Settings
   static const String settings = '/settings';
   static const String localization = '/settings/localization';
+
+  // Branches
+  static const String branches = '/branches';
+
+  // Accounting
+  static const String accounting = '/accounting';
+  static const String accountingMappings = '/accounting/mappings';
+  static const String accountingExportHistory = '/accounting/export-history';
+  static const String accountingAutoExport = '/accounting/auto-export';
+
+  // Promotions
+  static const String promotions = '/promotions';
+  static const String promotionAnalytics = '/promotions/analytics';
+
+  // Thawani Pay
+  static const String thawaniPay = '/thawani-pay';
+
+  // Delivery
+  static const String delivery = '/delivery';
+
+  // Notifications
+  static const String notifications = '/notifications';
+  static const String notificationPreferences = '/notifications/preferences';
+
+  // Support
+  static const String support = '/support';
+  static const String supportCreate = '/support/create';
 
   // Staff
   static const String staff = '/staff';
