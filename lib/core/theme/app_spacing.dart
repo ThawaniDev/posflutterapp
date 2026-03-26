@@ -107,6 +107,8 @@ class AppSpacing {
   static const EdgeInsets paddingAllMd = EdgeInsets.all(md);
   static const EdgeInsets paddingAllLg = EdgeInsets.all(lg);
   static const EdgeInsets paddingAllXl = EdgeInsets.all(xl);
+
+  static const EdgeInsets paddingCard = EdgeInsets.all(cardPadding);
 }
 
 /// Border Radius Tokens

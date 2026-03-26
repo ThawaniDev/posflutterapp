@@ -59,7 +59,7 @@ class _PharmacyDashboardPageState extends ConsumerState<PharmacyDashboardPage> w
       ),
       floatingActionButton: FloatingActionButton(onPressed: _onFabPressed, child: const Icon(Icons.add)),
       body: switch (state) {
-        PharmacyInitial() || PharmacyLoading() => const PosLoadingSkeleton(),
+        PharmacyInitial() || PharmacyLoading() => PosLoadingSkeleton.list(),
         PharmacyError(:final message) => PosErrorState(
           message: message,
           onRetry: () => ref.read(pharmacyProvider.notifier).load(),
@@ -68,7 +68,7 @@ class _PharmacyDashboardPageState extends ConsumerState<PharmacyDashboardPage> w
           controller: _tabController,
           children: [
             prescriptions.isEmpty
-                ? const PosEmptyState(message: 'No prescriptions', icon: Icons.medical_services)
+                ? const PosEmptyState(title: 'No prescriptions', icon: Icons.medical_services)
                 : ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: prescriptions.length,
@@ -88,7 +88,7 @@ class _PharmacyDashboardPageState extends ConsumerState<PharmacyDashboardPage> w
                     },
                   ),
             drugSchedules.isEmpty
-                ? const PosEmptyState(message: 'No drug schedules', icon: Icons.medication)
+                ? const PosEmptyState(title: 'No drug schedules', icon: Icons.medication)
                 : ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: drugSchedules.length,
@@ -97,7 +97,7 @@ class _PharmacyDashboardPageState extends ConsumerState<PharmacyDashboardPage> w
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 8),
                         child: DrugScheduleCard(
-                          schedule: d,
+                          drug: d,
                           onTap: () {
                             Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (_) => DrugScheduleFormPage(schedule: d)))

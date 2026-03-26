@@ -78,7 +78,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateListPage> {
                       item['description'].toString(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 11, color: Colors.grey),
+                      style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
                     ),
                 ],
               ),

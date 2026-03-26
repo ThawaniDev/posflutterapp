@@ -1406,6 +1406,330 @@ abstract class AppLocalizations {
   /// **'No delivery orders yet'**
   String get deliveryNoOrders;
 
+  /// No description provided for @deliveryAccepted.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted'**
+  String get deliveryAccepted;
+
+  /// No description provided for @deliveryActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get deliveryActive;
+
+  /// No description provided for @deliveryAddPlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Platform'**
+  String get deliveryAddPlatform;
+
+  /// No description provided for @deliveryAdditionalInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Additional Info'**
+  String get deliveryAdditionalInfo;
+
+  /// No description provided for @deliveryAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get deliveryAddress;
+
+  /// No description provided for @deliveryAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get deliveryAll;
+
+  /// No description provided for @deliveryAllPlatforms.
+  ///
+  /// In en, this message translates to:
+  /// **'All Platforms'**
+  String get deliveryAllPlatforms;
+
+  /// No description provided for @deliveryApiKey.
+  ///
+  /// In en, this message translates to:
+  /// **'API Key'**
+  String get deliveryApiKey;
+
+  /// No description provided for @deliveryApiSecret.
+  ///
+  /// In en, this message translates to:
+  /// **'API Secret'**
+  String get deliveryApiSecret;
+
+  /// No description provided for @deliveryAutoAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto Accept Orders'**
+  String get deliveryAutoAccept;
+
+  /// No description provided for @deliveryAutoAcceptDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically accept incoming delivery orders'**
+  String get deliveryAutoAcceptDesc;
+
+  /// No description provided for @deliveryCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get deliveryCreated;
+
+  /// No description provided for @deliveryCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Credentials'**
+  String get deliveryCredentials;
+
+  /// No description provided for @deliveryCustomerInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Information'**
+  String get deliveryCustomerInfo;
+
+  /// No description provided for @deliveryCustomerName.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Name'**
+  String get deliveryCustomerName;
+
+  /// No description provided for @deliveryCustomerPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Phone'**
+  String get deliveryCustomerPhone;
+
+  /// No description provided for @deliveryDelivered.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get deliveryDelivered;
+
+  /// No description provided for @deliveryDeliveryFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Fee'**
+  String get deliveryDeliveryFee;
+
+  /// No description provided for @deliveryDispatched.
+  ///
+  /// In en, this message translates to:
+  /// **'Dispatched'**
+  String get deliveryDispatched;
+
+  /// No description provided for @deliveryEditPlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Platform'**
+  String get deliveryEditPlatform;
+
+  /// No description provided for @deliveryEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled'**
+  String get deliveryEnabled;
+
+  /// No description provided for @deliveryEnabledDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable this delivery platform integration'**
+  String get deliveryEnabledDesc;
+
+  /// No description provided for @deliveryEstimatedPrep.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated Prep Time'**
+  String get deliveryEstimatedPrep;
+
+  /// No description provided for @deliveryFieldRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get deliveryFieldRequired;
+
+  /// No description provided for @deliveryFinancials.
+  ///
+  /// In en, this message translates to:
+  /// **'Financials'**
+  String get deliveryFinancials;
+
+  /// No description provided for @deliveryItemsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Items Count'**
+  String get deliveryItemsCount;
+
+  /// No description provided for @deliveryMaxDailyOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Max Daily Orders'**
+  String get deliveryMaxDailyOrders;
+
+  /// No description provided for @deliveryMenuSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Menu Sync'**
+  String get deliveryMenuSync;
+
+  /// No description provided for @deliveryMerchantId.
+  ///
+  /// In en, this message translates to:
+  /// **'Merchant ID'**
+  String get deliveryMerchantId;
+
+  /// No description provided for @deliveryNoPlatformsForSync.
+  ///
+  /// In en, this message translates to:
+  /// **'No platforms available for sync'**
+  String get deliveryNoPlatformsForSync;
+
+  /// No description provided for @deliveryNoSyncLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'No sync logs yet'**
+  String get deliveryNoSyncLogs;
+
+  /// No description provided for @deliveryNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get deliveryNotes;
+
+  /// No description provided for @deliveryOrderDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Detail'**
+  String get deliveryOrderDetail;
+
+  /// No description provided for @deliveryPlatformBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform Breakdown'**
+  String get deliveryPlatformBreakdown;
+
+  /// No description provided for @deliveryQuickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get deliveryQuickActions;
+
+  /// No description provided for @deliveryReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get deliveryReady;
+
+  /// No description provided for @deliveryRejectionReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejection Reason'**
+  String get deliveryRejectionReason;
+
+  /// No description provided for @deliverySave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get deliverySave;
+
+  /// No description provided for @deliverySaving.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving...'**
+  String get deliverySaving;
+
+  /// No description provided for @deliverySelectPlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Platform'**
+  String get deliverySelectPlatform;
+
+  /// No description provided for @deliverySettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get deliverySettings;
+
+  /// No description provided for @deliverySubtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get deliverySubtotal;
+
+  /// No description provided for @deliverySyncHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync History'**
+  String get deliverySyncHistory;
+
+  /// No description provided for @deliverySyncInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Interval (hours)'**
+  String get deliverySyncInterval;
+
+  /// No description provided for @deliverySyncNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Now'**
+  String get deliverySyncNow;
+
+  /// No description provided for @deliverySyncOnChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync on Product Change'**
+  String get deliverySyncOnChange;
+
+  /// No description provided for @deliverySyncOnChangeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically sync menu when products are updated'**
+  String get deliverySyncOnChangeDesc;
+
+  /// No description provided for @deliverySyncing.
+  ///
+  /// In en, this message translates to:
+  /// **'Syncing...'**
+  String get deliverySyncing;
+
+  /// No description provided for @deliveryTestConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Test Connection'**
+  String get deliveryTestConnection;
+
+  /// No description provided for @deliveryTimeline.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeline'**
+  String get deliveryTimeline;
+
+  /// No description provided for @deliveryTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get deliveryTotal;
+
+  /// No description provided for @deliveryTriggerSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Trigger Menu Sync'**
+  String get deliveryTriggerSync;
+
+  /// No description provided for @deliveryTriggerSyncDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync your product menu with delivery platforms'**
+  String get deliveryTriggerSyncDesc;
+
+  /// No description provided for @deliveryViewPending.
+  ///
+  /// In en, this message translates to:
+  /// **'View Pending'**
+  String get deliveryViewPending;
+
   /// No description provided for @thawaniPay.
   ///
   /// In en, this message translates to:

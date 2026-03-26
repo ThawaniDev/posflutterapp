@@ -668,6 +668,171 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deliveryNoOrders => 'No delivery orders yet';
 
   @override
+  String get deliveryAccepted => 'Accepted';
+
+  @override
+  String get deliveryActive => 'Active';
+
+  @override
+  String get deliveryAddPlatform => 'Add Platform';
+
+  @override
+  String get deliveryAdditionalInfo => 'Additional Info';
+
+  @override
+  String get deliveryAddress => 'Address';
+
+  @override
+  String get deliveryAll => 'All';
+
+  @override
+  String get deliveryAllPlatforms => 'All Platforms';
+
+  @override
+  String get deliveryApiKey => 'API Key';
+
+  @override
+  String get deliveryApiSecret => 'API Secret';
+
+  @override
+  String get deliveryAutoAccept => 'Auto Accept Orders';
+
+  @override
+  String get deliveryAutoAcceptDesc =>
+      'Automatically accept incoming delivery orders';
+
+  @override
+  String get deliveryCreated => 'Created';
+
+  @override
+  String get deliveryCredentials => 'Credentials';
+
+  @override
+  String get deliveryCustomerInfo => 'Customer Information';
+
+  @override
+  String get deliveryCustomerName => 'Customer Name';
+
+  @override
+  String get deliveryCustomerPhone => 'Customer Phone';
+
+  @override
+  String get deliveryDelivered => 'Delivered';
+
+  @override
+  String get deliveryDeliveryFee => 'Delivery Fee';
+
+  @override
+  String get deliveryDispatched => 'Dispatched';
+
+  @override
+  String get deliveryEditPlatform => 'Edit Platform';
+
+  @override
+  String get deliveryEnabled => 'Enabled';
+
+  @override
+  String get deliveryEnabledDesc => 'Enable this delivery platform integration';
+
+  @override
+  String get deliveryEstimatedPrep => 'Estimated Prep Time';
+
+  @override
+  String get deliveryFieldRequired => 'This field is required';
+
+  @override
+  String get deliveryFinancials => 'Financials';
+
+  @override
+  String get deliveryItemsCount => 'Items Count';
+
+  @override
+  String get deliveryMaxDailyOrders => 'Max Daily Orders';
+
+  @override
+  String get deliveryMenuSync => 'Menu Sync';
+
+  @override
+  String get deliveryMerchantId => 'Merchant ID';
+
+  @override
+  String get deliveryNoPlatformsForSync => 'No platforms available for sync';
+
+  @override
+  String get deliveryNoSyncLogs => 'No sync logs yet';
+
+  @override
+  String get deliveryNotes => 'Notes';
+
+  @override
+  String get deliveryOrderDetail => 'Order Detail';
+
+  @override
+  String get deliveryPlatformBreakdown => 'Platform Breakdown';
+
+  @override
+  String get deliveryQuickActions => 'Quick Actions';
+
+  @override
+  String get deliveryReady => 'Ready';
+
+  @override
+  String get deliveryRejectionReason => 'Rejection Reason';
+
+  @override
+  String get deliverySave => 'Save';
+
+  @override
+  String get deliverySaving => 'Saving...';
+
+  @override
+  String get deliverySelectPlatform => 'Select Platform';
+
+  @override
+  String get deliverySettings => 'Settings';
+
+  @override
+  String get deliverySubtotal => 'Subtotal';
+
+  @override
+  String get deliverySyncHistory => 'Sync History';
+
+  @override
+  String get deliverySyncInterval => 'Sync Interval (hours)';
+
+  @override
+  String get deliverySyncNow => 'Sync Now';
+
+  @override
+  String get deliverySyncOnChange => 'Sync on Product Change';
+
+  @override
+  String get deliverySyncOnChangeDesc =>
+      'Automatically sync menu when products are updated';
+
+  @override
+  String get deliverySyncing => 'Syncing...';
+
+  @override
+  String get deliveryTestConnection => 'Test Connection';
+
+  @override
+  String get deliveryTimeline => 'Timeline';
+
+  @override
+  String get deliveryTotal => 'Total';
+
+  @override
+  String get deliveryTriggerSync => 'Trigger Menu Sync';
+
+  @override
+  String get deliveryTriggerSyncDesc =>
+      'Sync your product menu with delivery platforms';
+
+  @override
+  String get deliveryViewPending => 'View Pending';
+
+  @override
   String get thawaniPay => 'Thawani Pay';
 
   @override

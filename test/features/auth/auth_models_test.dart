@@ -26,7 +26,7 @@ void main() {
           'name': 'Main Branch',
           'name_ar': 'الفرع الرئيسي',
           'slug': 'main-branch',
-          'currency': 'OMR',
+          'currency': 'SAR',
           'locale': 'ar',
           'business_type': 'retail',
           'is_main_branch': true,
@@ -180,7 +180,7 @@ void main() {
       final store = UserStore(
         id: 'store-1',
         name: 'Store',
-        currency: 'OMR',
+        currency: 'SAR',
         isMainBranch: false,
       );
 

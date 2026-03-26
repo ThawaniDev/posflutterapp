@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
@@ -27,10 +28,10 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
   }
 
   Color _typeColor(String? type) => switch (type) {
-    'warning' => Colors.orange,
-    'maintenance' => Colors.red,
-    'update' => Colors.blue,
-    _ => Colors.green,
+    'warning' => AppColors.warning,
+    'maintenance' => AppColors.error,
+    'update' => AppColors.info,
+    _ => AppColors.success,
   };
 
   @override
@@ -84,7 +85,7 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
             child: switch (state) {
               AnnouncementListInitial() || AnnouncementListLoading() => const Center(child: CircularProgressIndicator()),
               AnnouncementListError(:final message) => Center(
-                child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+                child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
               ),
               AnnouncementListLoaded(:final announcements, :final total, :final currentPage, :final lastPage) =>
                 announcements.isEmpty

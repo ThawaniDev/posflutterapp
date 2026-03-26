@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/staff/enums/shift_schedule_status.dart';
 import 'package:thawani_pos/features/staff/models/shift_schedule.dart';
 import 'package:thawani_pos/features/staff/models/shift_template.dart';
@@ -39,7 +42,6 @@ class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(shiftProvider);
-    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -73,7 +75,7 @@ class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
                   visualDensity: VisualDensity.compact,
                 ),
                 for (final status in ShiftScheduleStatus.values) ...[
-                  const SizedBox(width: 8),
+                  AppSpacing.gapW8,
                   FilterChip(
                     label: Text(status.value.toUpperCase(), style: const TextStyle(fontSize: 12)),
                     selected: _statusFilter == status.value,
@@ -107,35 +109,15 @@ class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
                 ],
               ),
             ),
-          const SizedBox(height: 4),
+          AppSpacing.gapH4,
           // Shift list
           Expanded(
             child: switch (state) {
-              ShiftInitial() || ShiftLoading() => const Center(child: CircularProgressIndicator()),
-              ShiftError(message: final msg) => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.error_outline, size: 48, color: colorScheme.error),
-                    const SizedBox(height: 16),
-                    Text(msg),
-                    const SizedBox(height: 16),
-                    FilledButton(onPressed: _loadShifts, child: const Text('Retry')),
-                  ],
-                ),
-              ),
+              ShiftInitial() || ShiftLoading() => PosLoadingSkeleton.list(),
+              ShiftError(message: final msg) => PosErrorState(message: msg, onRetry: _loadShifts),
               ShiftLoaded(shifts: final shifts) =>
                 shifts.isEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.calendar_today, size: 64, color: colorScheme.outline),
-                            const SizedBox(height: 16),
-                            const Text('No shifts found'),
-                          ],
-                        ),
-                      )
+                    ? const PosEmptyState(title: 'No shifts found', icon: Icons.calendar_today)
                     : RefreshIndicator(
                         onRefresh: () async => _loadShifts(),
                         child: ListView.builder(
@@ -241,9 +223,14 @@ class _ShiftCard extends StatelessWidget {
     final (statusColor, statusLabel) = _statusInfo(shift.status);
 
     return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        side: BorderSide(color: Theme.of(context).dividerColor),
+      ),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: AppSpacing.paddingAll16,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -265,7 +252,7 @@ class _ShiftCard extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 16),
+            AppSpacing.gapW16,
             // Details
             Expanded(
               child: Column(
@@ -323,11 +310,11 @@ class _ShiftCard extends StatelessWidget {
 
   (Color, String) _statusInfo(ShiftScheduleStatus? status) {
     return switch (status) {
-      ShiftScheduleStatus.scheduled => (Colors.blue, 'Scheduled'),
-      ShiftScheduleStatus.completed => (Colors.green, 'Completed'),
-      ShiftScheduleStatus.missed => (Colors.red, 'Missed'),
-      ShiftScheduleStatus.swapped => (Colors.orange, 'Swapped'),
-      null => (Colors.grey, 'Unknown'),
+      ShiftScheduleStatus.scheduled => (AppColors.info, 'Scheduled'),
+      ShiftScheduleStatus.completed => (AppColors.success, 'Completed'),
+      ShiftScheduleStatus.missed => (AppColors.error, 'Missed'),
+      ShiftScheduleStatus.swapped => (AppColors.warning, 'Swapped'),
+      null => (AppColors.textSecondary, 'Unknown'),
     };
   }
 }
@@ -378,7 +365,7 @@ class _CreateShiftDialogState extends ConsumerState<_CreateShiftDialog> {
               items: staffList.map((s) => DropdownMenuItem(value: s, child: Text('${s.firstName} ${s.lastName}'))).toList(),
               onChanged: (v) => setState(() => _selectedStaff = v),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
             DropdownButtonFormField<ShiftTemplate>(
               decoration: const InputDecoration(labelText: 'Shift Template *', border: OutlineInputBorder()),
               items: widget.templates
@@ -386,7 +373,7 @@ class _CreateShiftDialogState extends ConsumerState<_CreateShiftDialog> {
                   .toList(),
               onChanged: (v) => setState(() => _selectedTemplate = v),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
             ListTile(
               contentPadding: EdgeInsets.zero,
               title: const Text('Date'),

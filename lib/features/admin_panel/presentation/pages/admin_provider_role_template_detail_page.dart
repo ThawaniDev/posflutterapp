@@ -77,7 +77,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
                               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                             if (template['name_ar'] != null)
-                              Text(template['name_ar'].toString(), style: const TextStyle(fontSize: 14, color: Colors.grey)),
+                              Text(template['name_ar'].toString(), style: const TextStyle(fontSize: 14, color: AppColors.textSecondary)),
                           ],
                         ),
                       ),
@@ -113,7 +113,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
               child: Padding(
                 padding: EdgeInsets.all(AppSpacing.md),
                 child: Center(
-                  child: Text('No permissions assigned', style: TextStyle(color: Colors.grey)),
+                  child: Text('No permissions assigned', style: TextStyle(color: AppColors.textSecondary)),
                 ),
               ),
             )
@@ -145,7 +145,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
           children: entry.value.map((perm) {
             return ListTile(
               dense: true,
-              leading: const Icon(Icons.check_circle, size: 16, color: Colors.green),
+              leading: const Icon(Icons.check_circle, size: 16, color: AppColors.success),
               title: Text(perm['name']?.toString() ?? '', style: const TextStyle(fontSize: 13)),
               subtitle: perm['description'] != null
                   ? Text(perm['description'].toString(), style: const TextStyle(fontSize: 11))
@@ -165,7 +165,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
         children: [
           SizedBox(
             width: 120,
-            child: Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+            child: Text(label, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
           ),
           Expanded(child: Text(value, style: const TextStyle(fontSize: 12))),
         ],

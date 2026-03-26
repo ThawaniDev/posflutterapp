@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/security/models/device_registration.dart';
 
@@ -35,7 +36,7 @@ class _DeviceTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final statusColor = device.isActive ? Colors.green : Colors.grey;
+    final statusColor = device.isActive ? AppColors.success : AppColors.textSecondary;
 
     return Card(
       margin: AppSpacing.paddingV4,
@@ -66,7 +67,7 @@ class _DeviceTile extends StatelessWidget {
             if (device.remoteWipeRequested)
               Padding(
                 padding: const EdgeInsets.only(top: 4),
-                child: Text('⚠ Remote wipe requested', style: theme.textTheme.bodySmall?.copyWith(color: Colors.red)),
+                child: Text('⚠ Remote wipe requested', style: theme.textTheme.bodySmall?.copyWith(color: AppColors.error)),
               ),
             if (device.isActive) ...[
               AppSpacing.gapH8,
@@ -80,7 +81,7 @@ class _DeviceTile extends StatelessWidget {
                   AppSpacing.gapW8,
                   TextButton(
                     onPressed: onRemoteWipe != null ? () => onRemoteWipe!(device.id) : null,
-                    style: TextButton.styleFrom(foregroundColor: Colors.red),
+                    style: TextButton.styleFrom(foregroundColor: AppColors.error),
                     child: const Text('Remote Wipe'),
                   ),
                 ],

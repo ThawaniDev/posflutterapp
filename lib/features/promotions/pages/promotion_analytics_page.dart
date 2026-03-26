@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/features/promotions/providers/promotion_providers.dart';
 import 'package:thawani_pos/features/promotions/providers/promotion_state.dart';
 
@@ -93,7 +94,7 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
                 label: 'Active Coupons',
                 value: '${data['active_coupons'] ?? 0}',
                 icon: Icons.confirmation_number,
-                color: Colors.green,
+                color: AppColors.success,
               ),
             ),
           ],
@@ -106,7 +107,7 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
                 label: 'Total Coupons',
                 value: '${data['total_coupons'] ?? 0}',
                 icon: Icons.inventory_2,
-                color: Colors.orange,
+                color: AppColors.warning,
               ),
             ),
             const SizedBox(width: 12),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/staff/models/attendance_record.dart';
 import 'package:thawani_pos/features/staff/models/staff_user.dart';
 import 'package:thawani_pos/features/staff/providers/staff_providers.dart';
@@ -86,7 +89,7 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
                       },
                       visualDensity: VisualDensity.compact,
                     ),
-                    const SizedBox(width: 8),
+                    AppSpacing.gapW8,
                   ],
                   if (_selectedStaffId != null)
                     Chip(
@@ -105,31 +108,11 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
           // Attendance list
           Expanded(
             child: switch (state) {
-              AttendanceInitial() || AttendanceLoading() => const Center(child: CircularProgressIndicator()),
-              AttendanceError(message: final msg) => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.error_outline, size: 48, color: colorScheme.error),
-                    const SizedBox(height: 16),
-                    Text(msg),
-                    const SizedBox(height: 16),
-                    FilledButton(onPressed: _loadAttendance, child: const Text('Retry')),
-                  ],
-                ),
-              ),
+              AttendanceInitial() || AttendanceLoading() => PosLoadingSkeleton.list(),
+              AttendanceError(message: final msg) => PosErrorState(message: msg, onRetry: _loadAttendance),
               AttendanceLoaded(records: final records) =>
                 records.isEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.access_time, size: 64, color: colorScheme.outline),
-                            const SizedBox(height: 16),
-                            const Text('No attendance records found'),
-                          ],
-                        ),
-                      )
+                    ? const PosEmptyState(title: 'No attendance records found', icon: Icons.access_time)
                     : RefreshIndicator(
                         onRefresh: () async => _loadAttendance(),
                         child: ListView.builder(
@@ -214,16 +197,21 @@ class _AttendanceCard extends StatelessWidget {
     final isOpen = record.clockOutAt == null;
 
     return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        side: BorderSide(color: Theme.of(context).dividerColor),
+      ),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: AppSpacing.paddingAll16,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Icon(isOpen ? Icons.timer : Icons.check_circle, color: isOpen ? Colors.orange : Colors.green, size: 20),
-                const SizedBox(width: 8),
+                Icon(isOpen ? Icons.timer : Icons.check_circle, color: isOpen ? AppColors.warning : AppColors.success, size: 20),
+                AppSpacing.gapW8,
                 Expanded(
                   child: Text(
                     dateTimeFormat.format(record.clockInAt),
@@ -234,39 +222,39 @@ class _AttendanceCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
-                      color: Colors.orange.withValues(alpha: 0.15),
+                      color: AppColors.warning.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Text(
                       'Active',
-                      style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Colors.orange),
+                      style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.warning),
                     ),
                   ),
               ],
             ),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             Row(
               children: [
                 _InfoChip(icon: Icons.login, label: 'In: ${timeFormat.format(record.clockInAt)}'),
-                const SizedBox(width: 12),
+                AppSpacing.gapW12,
                 if (record.clockOutAt != null)
                   _InfoChip(icon: Icons.logout, label: 'Out: ${timeFormat.format(record.clockOutAt!)}'),
                 if (record.breakMinutes != null && record.breakMinutes! > 0) ...[
-                  const SizedBox(width: 12),
+                  AppSpacing.gapW12,
                   _InfoChip(icon: Icons.coffee, label: 'Break: ${record.breakMinutes}m'),
                 ],
                 if (record.overtimeMinutes != null && record.overtimeMinutes! > 0) ...[
-                  const SizedBox(width: 12),
+                  AppSpacing.gapW12,
                   _InfoChip(icon: Icons.more_time, label: 'OT: ${record.overtimeMinutes}m', color: colorScheme.error),
                 ],
               ],
             ),
             if (record.notes != null) ...[
-              const SizedBox(height: 8),
-              Text(record.notes!, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: colorScheme.outline)),
+              AppSpacing.gapH8,
+              Text(record.notes!, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
             ],
             if (isOpen) ...[
-              const SizedBox(height: 12),
+              AppSpacing.gapH12,
               Row(
                 children: [
                   OutlinedButton.icon(
@@ -274,7 +262,7 @@ class _AttendanceCard extends StatelessWidget {
                     icon: const Icon(Icons.coffee, size: 16),
                     label: const Text('Start Break'),
                   ),
-                  const SizedBox(width: 8),
+                  AppSpacing.gapW8,
                   OutlinedButton.icon(
                     onPressed: onEndBreak,
                     icon: const Icon(Icons.play_arrow, size: 16),
@@ -304,7 +292,7 @@ class _InfoChip extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(icon, size: 14, color: c),
-        const SizedBox(width: 4),
+        AppSpacing.gapW4,
         Text(label, style: TextStyle(fontSize: 12, color: c)),
       ],
     );
@@ -362,7 +350,7 @@ class _ClockDialogState extends ConsumerState<_ClockDialog> {
               items: staffList.map((s) => DropdownMenuItem(value: s, child: Text('${s.firstName} ${s.lastName}'))).toList(),
               onChanged: (v) => setState(() => _selectedStaff = v),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
             SegmentedButton<bool>(
               segments: const [
                 ButtonSegment(value: true, label: Text('Clock In'), icon: Icon(Icons.login)),
@@ -371,7 +359,7 @@ class _ClockDialogState extends ConsumerState<_ClockDialog> {
               selected: {_isClockIn},
               onSelectionChanged: (v) => setState(() => _isClockIn = v.first),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
             TextField(
               controller: _notesController,
               decoration: const InputDecoration(labelText: 'Notes (optional)', border: OutlineInputBorder()),

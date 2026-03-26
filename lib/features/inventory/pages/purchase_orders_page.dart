@@ -197,14 +197,14 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
     if (order.status == PurchaseOrderStatus.draft) {
       actions.add(
         IconButton(
-          icon: const Icon(Icons.send_outlined, size: 20, color: Colors.blue),
+          icon: const Icon(Icons.send_outlined, size: 20, color: AppColors.info),
           tooltip: 'Send',
           onPressed: () => _handleSend(order),
         ),
       );
       actions.add(
         IconButton(
-          icon: const Icon(Icons.cancel_outlined, size: 20, color: Colors.red),
+          icon: const Icon(Icons.cancel_outlined, size: 20, color: AppColors.error),
           tooltip: 'Cancel',
           onPressed: () => _handleCancel(order),
         ),
@@ -212,7 +212,7 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
     } else if (order.status == PurchaseOrderStatus.sent) {
       actions.add(
         IconButton(
-          icon: const Icon(Icons.archive_outlined, size: 20, color: Colors.green),
+          icon: const Icon(Icons.archive_outlined, size: 20, color: AppColors.success),
           tooltip: 'Receive',
           onPressed: () {
             // TODO: Show receive dialog with item quantities
@@ -221,7 +221,7 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
       );
       actions.add(
         IconButton(
-          icon: const Icon(Icons.cancel_outlined, size: 20, color: Colors.red),
+          icon: const Icon(Icons.cancel_outlined, size: 20, color: AppColors.error),
           tooltip: 'Cancel',
           onPressed: () => _handleCancel(order),
         ),

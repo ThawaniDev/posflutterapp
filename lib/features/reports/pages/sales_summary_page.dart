@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
 
@@ -58,19 +61,10 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
         ],
       ),
       body: switch (state) {
-        SalesSummaryInitial() || SalesSummaryLoading() => const Center(child: CircularProgressIndicator()),
-        SalesSummaryError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message),
-              const SizedBox(height: 16),
-              FilledButton(onPressed: _loadData, child: const Text('Retry')),
-            ],
-          ),
-        ),
+        SalesSummaryInitial() || SalesSummaryLoading() => PosLoadingSkeleton.list(),
+        SalesSummaryError(:final message) => PosErrorState(message: message, onRetry: _loadData),
         SalesSummaryLoaded(:final totals, :final daily) => ListView(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.paddingAll16,
           children: [
             if (_dateRange != null)
               Chip(
@@ -82,11 +76,10 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
                   _loadData();
                 },
               ),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
 
-            // Totals cards
             Text('Overview', style: theme.textTheme.titleLarge),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             _SummaryCard(
               items: [
                 _SummaryItem('Total Revenue', '\$${(totals['total_revenue'] as num).toStringAsFixed(2)}'),
@@ -95,7 +88,7 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
                 _SummaryItem('Avg Basket', '\$${(totals['avg_basket_size'] as num).toStringAsFixed(2)}'),
               ],
             ),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             _SummaryCard(
               items: [
                 _SummaryItem('Cost', '\$${(totals['total_cost'] as num).toStringAsFixed(2)}'),
@@ -104,7 +97,7 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
                 _SummaryItem('Refunds', '\$${(totals['total_refunds'] as num).toStringAsFixed(2)}'),
               ],
             ),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             _SummaryCard(
               items: [
                 _SummaryItem('Cash', '\$${(totals['cash_revenue'] as num).toStringAsFixed(2)}'),
@@ -114,17 +107,19 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
               ],
             ),
 
-            // Daily breakdown
-            const SizedBox(height: 24),
+            AppSpacing.gapH24,
             Text('Daily Breakdown', style: theme.textTheme.titleLarge),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             if (daily.isEmpty)
-              const Card(
-                child: Padding(padding: EdgeInsets.all(16), child: Text('No data for selected period')),
-              )
+              const PosEmptyState(title: 'No data for selected period', icon: Icons.calendar_today)
             else
               ...daily.map(
                 (d) => Card(
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                    side: BorderSide(color: theme.dividerColor),
+                  ),
                   child: ListTile(
                     title: Text(d['date'] as String),
                     subtitle: Text('${d['total_transactions']} orders'),
@@ -163,8 +158,13 @@ class _SummaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        side: BorderSide(color: theme.dividerColor),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: AppSpacing.paddingAll16,
         child: Wrap(
           spacing: 24,
           runSpacing: 12,
@@ -176,7 +176,7 @@ class _SummaryCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(item.value, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-                      Text(item.label, style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey.shade600)),
+                      Text(item.label, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
                     ],
                   ),
                 ),

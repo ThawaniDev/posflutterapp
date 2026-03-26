@@ -64,7 +64,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                     color: AppColors.warning,
                     icon: Icons.hourglass_empty,
                   ),
-                  _StatCard(label: 'Failed', value: '${loaded.failedInvoices}', color: Colors.orange, icon: Icons.warning_amber),
+                  _StatCard(label: 'Failed', value: '${loaded.failedInvoices}', color: AppColors.warning, icon: Icons.warning_amber),
                   _StatCard(label: 'Total', value: '${loaded.totalInvoices}', color: AppColors.error, icon: Icons.receipt_long),
                 ],
               ),

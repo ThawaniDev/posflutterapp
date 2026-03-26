@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
 
@@ -56,22 +59,13 @@ class _CategoryBreakdownPageState extends ConsumerState<CategoryBreakdownPage> {
         ],
       ),
       body: switch (state) {
-        CategoryBreakdownInitial() || CategoryBreakdownLoading() => const Center(child: CircularProgressIndicator()),
-        CategoryBreakdownError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message),
-              const SizedBox(height: 16),
-              FilledButton(onPressed: _loadData, child: const Text('Retry')),
-            ],
-          ),
-        ),
+        CategoryBreakdownInitial() || CategoryBreakdownLoading() => PosLoadingSkeleton.list(),
+        CategoryBreakdownError(:final message) => PosErrorState(message: message, onRetry: _loadData),
         CategoryBreakdownLoaded(:final categories) =>
           categories.isEmpty
-              ? const Center(child: Text('No category data for selected period'))
+              ? const PosEmptyState(title: 'No category data for selected period', icon: Icons.category)
               : ListView.builder(
-                  padding: const EdgeInsets.all(16),
+                  padding: AppSpacing.paddingAll16,
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
                     final c = categories[index];
@@ -79,8 +73,13 @@ class _CategoryBreakdownPageState extends ConsumerState<CategoryBreakdownPage> {
                     final pct = totalRevenue > 0 ? (c['total_revenue'] as num) / totalRevenue : 0.0;
 
                     return Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.md),
+                        side: BorderSide(color: theme.dividerColor),
+                      ),
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: AppSpacing.paddingAll16,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -108,9 +107,16 @@ class _CategoryBreakdownPageState extends ConsumerState<CategoryBreakdownPage> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8),
-                            LinearProgressIndicator(value: pct.toDouble(), backgroundColor: Colors.grey.shade200),
-                            const SizedBox(height: 8),
+                            AppSpacing.gapH8,
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(AppRadius.xs),
+                              child: LinearProgressIndicator(
+                                value: pct.toDouble(),
+                                backgroundColor: AppColors.primary5,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                            AppSpacing.gapH8,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -119,7 +125,7 @@ class _CategoryBreakdownPageState extends ConsumerState<CategoryBreakdownPage> {
                                 Text(
                                   'Profit: \$${(c['profit'] as num).toStringAsFixed(2)}',
                                   style: theme.textTheme.bodySmall?.copyWith(
-                                    color: (c['profit'] as num) >= 0 ? Colors.green : Colors.red,
+                                    color: (c['profit'] as num) >= 0 ? AppColors.success : AppColors.error,
                                   ),
                                 ),
                               ],

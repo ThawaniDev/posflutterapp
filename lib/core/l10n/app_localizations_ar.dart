@@ -670,6 +670,169 @@ class AppLocalizationsAr extends AppLocalizations {
   String get deliveryNoOrders => 'لا توجد طلبات توصيل بعد';
 
   @override
+  String get deliveryAccepted => 'مقبول';
+
+  @override
+  String get deliveryActive => 'نشط';
+
+  @override
+  String get deliveryAddPlatform => 'إضافة منصة';
+
+  @override
+  String get deliveryAdditionalInfo => 'معلومات إضافية';
+
+  @override
+  String get deliveryAddress => 'العنوان';
+
+  @override
+  String get deliveryAll => 'الكل';
+
+  @override
+  String get deliveryAllPlatforms => 'جميع المنصات';
+
+  @override
+  String get deliveryApiKey => 'مفتاح API';
+
+  @override
+  String get deliveryApiSecret => 'كلمة سر API';
+
+  @override
+  String get deliveryAutoAccept => 'قبول الطلبات تلقائياً';
+
+  @override
+  String get deliveryAutoAcceptDesc => 'قبول طلبات التوصيل الواردة تلقائياً';
+
+  @override
+  String get deliveryCreated => 'تم الإنشاء';
+
+  @override
+  String get deliveryCredentials => 'بيانات الاعتماد';
+
+  @override
+  String get deliveryCustomerInfo => 'معلومات العميل';
+
+  @override
+  String get deliveryCustomerName => 'اسم العميل';
+
+  @override
+  String get deliveryCustomerPhone => 'هاتف العميل';
+
+  @override
+  String get deliveryDelivered => 'تم التوصيل';
+
+  @override
+  String get deliveryDeliveryFee => 'رسوم التوصيل';
+
+  @override
+  String get deliveryDispatched => 'تم الإرسال';
+
+  @override
+  String get deliveryEditPlatform => 'تعديل المنصة';
+
+  @override
+  String get deliveryEnabled => 'مفعّل';
+
+  @override
+  String get deliveryEnabledDesc => 'تفعيل تكامل منصة التوصيل هذه';
+
+  @override
+  String get deliveryEstimatedPrep => 'وقت التحضير المتوقع';
+
+  @override
+  String get deliveryFieldRequired => 'هذا الحقل مطلوب';
+
+  @override
+  String get deliveryFinancials => 'البيانات المالية';
+
+  @override
+  String get deliveryItemsCount => 'عدد العناصر';
+
+  @override
+  String get deliveryMaxDailyOrders => 'الحد الأقصى للطلبات اليومية';
+
+  @override
+  String get deliveryMenuSync => 'مزامنة القائمة';
+
+  @override
+  String get deliveryMerchantId => 'معرّف التاجر';
+
+  @override
+  String get deliveryNoPlatformsForSync => 'لا توجد منصات متاحة للمزامنة';
+
+  @override
+  String get deliveryNoSyncLogs => 'لا توجد سجلات مزامنة بعد';
+
+  @override
+  String get deliveryNotes => 'ملاحظات';
+
+  @override
+  String get deliveryOrderDetail => 'تفاصيل الطلب';
+
+  @override
+  String get deliveryPlatformBreakdown => 'تفصيل المنصات';
+
+  @override
+  String get deliveryQuickActions => 'إجراءات سريعة';
+
+  @override
+  String get deliveryReady => 'جاهز';
+
+  @override
+  String get deliveryRejectionReason => 'سبب الرفض';
+
+  @override
+  String get deliverySave => 'حفظ';
+
+  @override
+  String get deliverySaving => 'جارٍ الحفظ...';
+
+  @override
+  String get deliverySelectPlatform => 'اختر المنصة';
+
+  @override
+  String get deliverySettings => 'الإعدادات';
+
+  @override
+  String get deliverySubtotal => 'المجموع الفرعي';
+
+  @override
+  String get deliverySyncHistory => 'سجل المزامنة';
+
+  @override
+  String get deliverySyncInterval => 'فترة المزامنة (ساعات)';
+
+  @override
+  String get deliverySyncNow => 'مزامنة الآن';
+
+  @override
+  String get deliverySyncOnChange => 'مزامنة عند تغيير المنتج';
+
+  @override
+  String get deliverySyncOnChangeDesc =>
+      'مزامنة القائمة تلقائياً عند تحديث المنتجات';
+
+  @override
+  String get deliverySyncing => 'جارٍ المزامنة...';
+
+  @override
+  String get deliveryTestConnection => 'اختبار الاتصال';
+
+  @override
+  String get deliveryTimeline => 'الجدول الزمني';
+
+  @override
+  String get deliveryTotal => 'الإجمالي';
+
+  @override
+  String get deliveryTriggerSync => 'بدء المزامنة';
+
+  @override
+  String get deliveryTriggerSyncDesc => 'مزامنة قائمة منتجاتك مع منصات التوصيل';
+
+  @override
+  String get deliveryViewPending => 'عرض المعلقة';
+
+  @override
   String get thawaniPay => 'ثواني باي';
 
   @override

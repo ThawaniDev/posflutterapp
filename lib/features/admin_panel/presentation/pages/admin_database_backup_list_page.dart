@@ -36,7 +36,7 @@ class _AdminDatabaseBackupListPageState extends ConsumerState<AdminDatabaseBacku
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.error_outline, size: 48, color: Colors.red),
+              const Icon(Icons.error_outline, size: 48, color: AppColors.error),
               const SizedBox(height: AppSpacing.md),
               Text(msg, textAlign: TextAlign.center),
               const SizedBox(height: AppSpacing.md),
@@ -85,10 +85,10 @@ class _AdminDatabaseBackupListPageState extends ConsumerState<AdminDatabaseBacku
   };
 
   Color _backupColor(String status) => switch (status) {
-    'completed' => Colors.green,
-    'in_progress' => Colors.orange,
-    'failed' => Colors.red,
-    _ => Colors.grey,
+    'completed' => AppColors.success,
+    'in_progress' => AppColors.warning,
+    'failed' => AppColors.error,
+    _ => AppColors.textSecondary,
   };
 
   void _showCreateDialog(BuildContext context) {

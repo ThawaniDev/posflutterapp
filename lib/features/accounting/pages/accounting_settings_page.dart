@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/accounting/providers/accounting_providers.dart';
 import 'package:thawani_pos/features/accounting/providers/accounting_state.dart';
 
@@ -31,28 +34,17 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message)));
         ref.read(accountingConnectionProvider.notifier).loadStatus();
       } else if (next is AccountingActionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: Colors.red));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
       }
     });
 
     return Scaffold(
       appBar: AppBar(title: const Text('Accounting Integration')),
       body: switch (connectionState) {
-        AccountingConnectionInitial() || AccountingConnectionLoading() => const Center(child: CircularProgressIndicator()),
-        AccountingConnectionError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.error_outline, size: 48, color: Colors.red.shade300),
-              const SizedBox(height: 12),
-              Text('Error: $message', style: const TextStyle(color: Colors.red)),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () => ref.read(accountingConnectionProvider.notifier).loadStatus(),
-                child: const Text('Retry'),
-              ),
-            ],
-          ),
+        AccountingConnectionInitial() || AccountingConnectionLoading() => PosLoadingSkeleton.list(),
+        AccountingConnectionError(:final message) => PosErrorState(
+          message: message,
+          onRetry: () => ref.read(accountingConnectionProvider.notifier).loadStatus(),
         ),
         AccountingConnectionLoaded(
           :final connected,
@@ -88,9 +80,9 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
     required bool actionLoading,
   }) {
     final Color healthColor = switch (health) {
-      'healthy' => Colors.green,
-      'warning' => Colors.orange,
-      _ => Colors.red,
+      'healthy' => AppColors.success,
+      'warning' => AppColors.warning,
+      _ => AppColors.error,
     };
 
     final IconData healthIcon = switch (health) {
@@ -100,21 +92,26 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
     };
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.paddingAll16,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Connection status card
           Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              side: BorderSide(color: Theme.of(context).dividerColor),
+            ),
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: AppSpacing.paddingAll16,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
                       Icon(healthIcon, color: healthColor, size: 28),
-                      const SizedBox(width: 12),
+                      AppSpacing.gapW12,
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,7 +120,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
                               'Connected to ${_providerDisplayName(provider ?? '')}',
                               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                             ),
-                            const SizedBox(height: 4),
+                            AppSpacing.gapH4,
                             Text(
                               'Status: ${health[0].toUpperCase()}${health.substring(1)}',
                               style: TextStyle(color: healthColor, fontWeight: FontWeight.w600),
@@ -142,17 +139,22 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          AppSpacing.gapH16,
 
           // Quick actions
           Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              side: BorderSide(color: Theme.of(context).dividerColor),
+            ),
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: AppSpacing.paddingAll16,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('Quick Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 12),
+                  AppSpacing.gapH12,
                   ListTile(
                     leading: const Icon(Icons.sync),
                     title: const Text('Account Mappings'),
@@ -178,16 +180,16 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
               ),
             ),
           ),
-          const SizedBox(height: 24),
+          AppSpacing.gapH24,
 
           // Disconnect button
           OutlinedButton.icon(
             onPressed: actionLoading ? null : _showDisconnectDialog,
-            icon: const Icon(Icons.link_off, color: Colors.red),
-            label: const Text('Disconnect', style: TextStyle(color: Colors.red)),
+            icon: const Icon(Icons.link_off, color: AppColors.error),
+            label: const Text('Disconnect', style: TextStyle(color: AppColors.error)),
             style: OutlinedButton.styleFrom(
-              side: const BorderSide(color: Colors.red),
-              padding: const EdgeInsets.symmetric(vertical: 14),
+              side: const BorderSide(color: AppColors.error),
+              padding: AppSpacing.paddingV12,
             ),
           ),
         ],
@@ -199,36 +201,41 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
     const providers = ['quickbooks', 'xero', 'qoyod'];
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.paddingAll16,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Empty state
-          const SizedBox(height: 32),
-          Icon(Icons.account_balance, size: 72, color: Colors.grey.shade400),
-          const SizedBox(height: 16),
+          AppSpacing.gapH32,
+          const Icon(Icons.account_balance, size: 72, color: AppColors.textSecondary),
+          AppSpacing.gapH16,
           const Text(
             'No Accounting Provider Connected',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 8),
-          Text(
+          AppSpacing.gapH8,
+          const Text(
             'Connect your accounting software to sync transactions, invoices, and reports.',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey.shade600),
+            style: TextStyle(color: AppColors.textSecondary),
           ),
-          const SizedBox(height: 32),
+          AppSpacing.gapH32,
 
           // Provider selection
           Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              side: BorderSide(color: Theme.of(context).dividerColor),
+            ),
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: AppSpacing.paddingAll16,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('Select Provider', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 12),
+                  AppSpacing.gapH12,
                   ...providers.map(
                     (p) => RadioListTile<String>(
                       value: p,
@@ -244,7 +251,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          AppSpacing.gapH16,
 
           // Connect button
           ElevatedButton.icon(
@@ -266,7 +273,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(color: Colors.grey.shade600)),
+          Text(label, style: const TextStyle(color: AppColors.textSecondary)),
           Text(value, style: const TextStyle(fontWeight: FontWeight.w500)),
         ],
       ),
@@ -291,17 +298,17 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
                 controller: accessTokenController,
                 decoration: const InputDecoration(labelText: 'Access Token', border: OutlineInputBorder()),
               ),
-              const SizedBox(height: 12),
+              AppSpacing.gapH12,
               TextField(
                 controller: refreshTokenController,
                 decoration: const InputDecoration(labelText: 'Refresh Token', border: OutlineInputBorder()),
               ),
-              const SizedBox(height: 12),
+              AppSpacing.gapH12,
               TextField(
                 controller: expiresAtController,
                 decoration: const InputDecoration(labelText: 'Token Expires At (YYYY-MM-DD)', border: OutlineInputBorder()),
               ),
-              const SizedBox(height: 12),
+              AppSpacing.gapH12,
               TextField(
                 controller: companyController,
                 decoration: const InputDecoration(labelText: 'Company Name (optional)', border: OutlineInputBorder()),
@@ -347,7 +354,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
               Navigator.of(ctx).pop();
               ref.read(accountingActionProvider.notifier).disconnect();
             },
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
             child: const Text('Disconnect', style: TextStyle(color: Colors.white)),
           ),
         ],

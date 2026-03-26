@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
 
@@ -55,12 +58,12 @@ class _PaymentMethodsPageState extends ConsumerState<PaymentMethodsPage> {
 
   Color _colorForMethod(String method) {
     return switch (method) {
-      'cash' => Colors.green,
-      'card' => Colors.blue,
-      'gift_card' => Colors.purple,
-      'mobile' => Colors.orange,
-      'bank_transfer' => Colors.teal,
-      _ => Colors.grey,
+      'cash' => AppColors.success,
+      'card' => AppColors.info,
+      'gift_card' => AppColors.purple,
+      'mobile' => AppColors.warning,
+      'bank_transfer' => AppColors.successDark,
+      _ => AppColors.textSecondary,
     };
   }
 
@@ -78,22 +81,13 @@ class _PaymentMethodsPageState extends ConsumerState<PaymentMethodsPage> {
         ],
       ),
       body: switch (state) {
-        PaymentMethodsInitial() || PaymentMethodsLoading() => const Center(child: CircularProgressIndicator()),
-        PaymentMethodsError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message),
-              const SizedBox(height: 16),
-              FilledButton(onPressed: _loadData, child: const Text('Retry')),
-            ],
-          ),
-        ),
+        PaymentMethodsInitial() || PaymentMethodsLoading() => PosLoadingSkeleton.list(),
+        PaymentMethodsError(:final message) => PosErrorState(message: message, onRetry: _loadData),
         PaymentMethodsLoaded(:final methods) =>
           methods.isEmpty
-              ? const Center(child: Text('No payment data for selected period'))
+              ? const PosEmptyState(title: 'No payment data for selected period', icon: Icons.payment)
               : ListView(
-                  padding: const EdgeInsets.all(16),
+                  padding: AppSpacing.paddingAll16,
                   children: [
                     if (_dateRange != null)
                       Chip(
@@ -105,16 +99,21 @@ class _PaymentMethodsPageState extends ConsumerState<PaymentMethodsPage> {
                           _loadData();
                         },
                       ),
-                    const SizedBox(height: 8),
+                    AppSpacing.gapH8,
 
-                    // Total
+                    // Total card
                     Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.md),
+                        side: BorderSide(color: theme.dividerColor),
+                      ),
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: AppSpacing.paddingAll16,
                         child: Column(
                           children: [
                             Text('Total', style: theme.textTheme.titleSmall),
-                            const SizedBox(height: 4),
+                            AppSpacing.gapH4,
                             Text(
                               '\$${methods.fold<double>(0, (sum, m) => sum + (m['total_amount'] as num).toDouble()).toStringAsFixed(2)}',
                               style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
@@ -123,7 +122,7 @@ class _PaymentMethodsPageState extends ConsumerState<PaymentMethodsPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    AppSpacing.gapH16,
 
                     // Method cards
                     ...methods.map((m) {
@@ -134,15 +133,20 @@ class _PaymentMethodsPageState extends ConsumerState<PaymentMethodsPage> {
                       final color = _colorForMethod(method);
 
                       return Card(
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(AppRadius.md),
+                          side: BorderSide(color: theme.dividerColor),
+                        ),
                         child: Padding(
-                          padding: const EdgeInsets.all(16),
+                          padding: AppSpacing.paddingAll16,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
                                   Icon(_iconForMethod(method), color: color),
-                                  const SizedBox(width: 12),
+                                  AppSpacing.gapW12,
                                   Expanded(child: Text(method.toUpperCase(), style: theme.textTheme.titleSmall)),
                                   Text(
                                     '\$${amount.toStringAsFixed(2)}',
@@ -150,13 +154,16 @@ class _PaymentMethodsPageState extends ConsumerState<PaymentMethodsPage> {
                                   ),
                                 ],
                               ),
-                              const SizedBox(height: 8),
-                              LinearProgressIndicator(
-                                value: pct.toDouble(),
-                                color: color,
-                                backgroundColor: color.withValues(alpha: 0.1),
+                              AppSpacing.gapH8,
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(AppRadius.xs),
+                                child: LinearProgressIndicator(
+                                  value: pct.toDouble(),
+                                  color: color,
+                                  backgroundColor: color.withValues(alpha: 0.1),
+                                ),
                               ),
-                              const SizedBox(height: 8),
+                              AppSpacing.gapH8,
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [

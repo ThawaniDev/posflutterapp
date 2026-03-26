@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
@@ -36,12 +37,12 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
   }
 
   Color _levelColor(String? level) => switch (level) {
-    'critical' => Colors.red.shade800,
-    'error' => Colors.red,
-    'warning' => Colors.orange,
-    'info' => Colors.blue,
-    'debug' => Colors.grey,
-    _ => Colors.grey,
+    'critical' => AppColors.errorDark,
+    'error' => AppColors.error,
+    'warning' => AppColors.warning,
+    'info' => AppColors.info,
+    'debug' => AppColors.textSecondary,
+    _ => AppColors.textSecondary,
   };
 
   IconData _levelIcon(String? level) => switch (level) {
@@ -117,7 +118,7 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
               PlatformEventListInitial() || PlatformEventListLoading() => const Center(child: CircularProgressIndicator()),
               PlatformEventListLoaded(data: final data) => _buildList(data),
               PlatformEventListError(message: final msg) => Center(
-                child: Text(msg, style: const TextStyle(color: Colors.red)),
+                child: Text(msg, style: const TextStyle(color: AppColors.error)),
               ),
             },
           ),

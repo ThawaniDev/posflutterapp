@@ -31,10 +31,10 @@ class UsageProgress extends StatelessWidget {
                 isUnlimited ? '$current / ∞' : '$current / $limit',
                 style: TextStyle(
                   color: isDanger
-                      ? Colors.red
+                      ? AppColors.error
                       : isWarning
-                      ? Colors.orange
-                      : Colors.grey[600],
+                      ? AppColors.warning
+                      : AppColors.textSecondary,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -46,12 +46,12 @@ class UsageProgress extends StatelessWidget {
             child: LinearProgressIndicator(
               value: isUnlimited ? 0 : progress,
               minHeight: 8,
-              backgroundColor: Colors.grey[200],
+              backgroundColor: AppColors.borderLight,
               valueColor: AlwaysStoppedAnimation(
                 isDanger
-                    ? Colors.red
+                    ? AppColors.error
                     : isWarning
-                    ? Colors.orange
+                    ? AppColors.warning
                     : AppColors.primary,
               ),
             ),

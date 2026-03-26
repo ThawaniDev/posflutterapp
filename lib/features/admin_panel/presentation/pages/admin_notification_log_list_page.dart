@@ -37,12 +37,12 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
   }
 
   Color _channelColor(String? channel) => switch (channel) {
-    'push' => Colors.blue,
-    'email' => Colors.teal,
-    'sms' => Colors.purple,
-    'whatsapp' => Colors.green,
+    'push' => AppColors.info,
+    'email' => AppColors.info,
+    'sms' => AppColors.purple,
+    'whatsapp' => AppColors.success,
     'in_app' => AppColors.primary,
-    _ => Colors.grey,
+    _ => AppColors.textSecondary,
   };
 
   @override
@@ -108,7 +108,7 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
               NotificationLogListInitial() || NotificationLogListLoading() => const Center(child: CircularProgressIndicator()),
               NotificationLogListLoaded(data: final data) => _buildList(data),
               NotificationLogListError(message: final msg) => Center(
-                child: Text(msg, style: const TextStyle(color: Colors.red)),
+                child: Text(msg, style: const TextStyle(color: AppColors.error)),
               ),
             },
           ),
@@ -139,10 +139,10 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
             ),
             title: Text(
               '${channel?.replaceAll('_', ' ').toUpperCase() ?? 'UNKNOWN'} • $status',
-              style: TextStyle(fontWeight: FontWeight.w600, color: isFailed ? Colors.red : null),
+              style: TextStyle(fontWeight: FontWeight.w600, color: isFailed ? AppColors.error : null),
             ),
             subtitle: isFailed
-                ? Text(log['error_message']?.toString() ?? '', style: const TextStyle(color: Colors.red))
+                ? Text(log['error_message']?.toString() ?? '', style: const TextStyle(color: AppColors.error))
                 : Text('Sent: ${log['sent_at'] ?? 'N/A'}'),
           ),
         );

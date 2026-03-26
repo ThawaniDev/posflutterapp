@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/accounting/providers/accounting_providers.dart';
 import 'package:thawani_pos/features/accounting/providers/accounting_state.dart';
 
@@ -51,21 +54,10 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
         ],
       ),
       body: switch (mappingState) {
-        AccountMappingInitial() || AccountMappingLoading() => const Center(child: CircularProgressIndicator()),
-        AccountMappingError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.error_outline, size: 48, color: Colors.red.shade300),
-              const SizedBox(height: 12),
-              Text('Error: $message', style: const TextStyle(color: Colors.red)),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () => ref.read(accountMappingProvider.notifier).loadMappings(),
-                child: const Text('Retry'),
-              ),
-            ],
-          ),
+        AccountMappingInitial() || AccountMappingLoading() => PosLoadingSkeleton.list(),
+        AccountMappingError(:final message) => PosErrorState(
+          message: message,
+          onRetry: () => ref.read(accountMappingProvider.notifier).loadMappings(),
         ),
         AccountMappingLoaded(:final mappings, :final posAccountKeys) => _buildMappingForm(mappings, posAccountKeys),
       },
@@ -86,16 +78,16 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
         // Info banner
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(12),
-          color: Colors.blue.shade50,
+          padding: AppSpacing.paddingAll12,
+          color: AppColors.info.withValues(alpha: 0.08),
           child: Row(
             children: [
-              Icon(Icons.info_outline, color: Colors.blue.shade700, size: 20),
-              const SizedBox(width: 8),
+              const Icon(Icons.info_outline, color: AppColors.info, size: 20),
+              AppSpacing.gapW8,
               Expanded(
                 child: Text(
                   'Map your POS account categories to your accounting provider\'s chart of accounts.',
-                  style: TextStyle(color: Colors.blue.shade700, fontSize: 13),
+                  style: TextStyle(color: AppColors.infoDark, fontSize: 13),
                 ),
               ),
             ],
@@ -103,9 +95,9 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
         ),
         Expanded(
           child: ListView.separated(
-            padding: const EdgeInsets.all(16),
+            padding: AppSpacing.paddingAll16,
             itemCount: keys.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 12),
+            separatorBuilder: (_, __) => AppSpacing.gapH12,
             itemBuilder: (context, index) {
               final entry = keys[index];
               final key = entry.key;
@@ -143,14 +135,19 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
     );
 
     final Color dirColor = switch (direction) {
-      'debit' => Colors.red.shade700,
-      'credit' => Colors.green.shade700,
-      _ => Colors.grey.shade700,
+      'debit' => AppColors.error,
+      'credit' => AppColors.success,
+      _ => AppColors.textSecondary,
     };
 
     return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        side: BorderSide(color: Theme.of(context).dividerColor),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: AppSpacing.paddingAll12,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -167,11 +164,11 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
                     style: TextStyle(color: dirColor, fontSize: 11, fontWeight: FontWeight.w600),
                   ),
                 ),
-                if (required) ...[const SizedBox(width: 6), const Text('*', style: TextStyle(color: Colors.red, fontSize: 16))],
+                if (required) ...[AppSpacing.gapW8, const Text('*', style: TextStyle(color: AppColors.error, fontSize: 16))],
               ],
             ),
-            Text(posAccountKey, style: TextStyle(color: Colors.grey.shade500, fontSize: 12)),
-            const SizedBox(height: 10),
+            Text(posAccountKey, style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+            AppSpacing.gapH12,
             TextField(
               controller: _accountIdControllers[posAccountKey],
               onChanged: (_) => setState(() => _hasUnsavedChanges = true),
@@ -182,7 +179,7 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
                 contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               ),
             ),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             TextField(
               controller: _accountNameControllers[posAccountKey],
               onChanged: (_) => setState(() => _hasUnsavedChanges = true),
@@ -194,13 +191,13 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
               ),
             ),
             if (existingMapping != null) ...[
-              const SizedBox(height: 8),
+              AppSpacing.gapH8,
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton.icon(
                   onPressed: () => _deleteMapping(existingMapping['id'] as String),
-                  icon: const Icon(Icons.delete_outline, size: 18, color: Colors.red),
-                  label: const Text('Remove', style: TextStyle(color: Colors.red, fontSize: 12)),
+                  icon: const Icon(Icons.delete_outline, size: 18, color: AppColors.error),
+                  label: const Text('Remove', style: TextStyle(color: AppColors.error, fontSize: 12)),
                 ),
               ),
             ],
@@ -245,7 +242,7 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
               Navigator.of(ctx).pop();
               ref.read(accountMappingProvider.notifier).deleteMapping(id);
             },
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
             child: const Text('Delete', style: TextStyle(color: Colors.white)),
           ),
         ],

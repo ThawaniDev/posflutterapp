@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/features/promotions/providers/promotion_providers.dart';
 import 'package:thawani_pos/features/promotions/providers/promotion_state.dart';
 
@@ -73,18 +74,18 @@ class _CouponValidationDialogState extends ConsumerState<_CouponValidationDialog
               CouponValidationValid(:final promotionName, :final discountAmount, :final type) => Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.green.shade50,
+                  color: AppColors.success.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.green.shade200),
+                  border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
                 ),
                 child: Column(
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.check_circle, color: Colors.green.shade700, size: 20),
+                        Icon(Icons.check_circle, color: AppColors.successDark, size: 20),
                         const SizedBox(width: 8),
                         Expanded(
-                          child: Text(promotionName, style: theme.textTheme.titleSmall?.copyWith(color: Colors.green.shade800)),
+                          child: Text(promotionName, style: theme.textTheme.titleSmall?.copyWith(color: AppColors.successDark)),
                         ),
                       ],
                     ),

@@ -174,14 +174,14 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
     if (transfer.status == StockTransferStatus.pending) {
       actions.add(
         IconButton(
-          icon: const Icon(Icons.check_circle_outline, size: 20, color: Colors.green),
+          icon: const Icon(Icons.check_circle_outline, size: 20, color: AppColors.success),
           tooltip: 'Approve',
           onPressed: () => _handleAction(transfer, 'approve'),
         ),
       );
       actions.add(
         IconButton(
-          icon: const Icon(Icons.cancel_outlined, size: 20, color: Colors.red),
+          icon: const Icon(Icons.cancel_outlined, size: 20, color: AppColors.error),
           tooltip: 'Cancel',
           onPressed: () => _handleAction(transfer, 'cancel'),
         ),
@@ -189,7 +189,7 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
     } else if (transfer.status == StockTransferStatus.inTransit) {
       actions.add(
         IconButton(
-          icon: const Icon(Icons.archive_outlined, size: 20, color: Colors.blue),
+          icon: const Icon(Icons.archive_outlined, size: 20, color: AppColors.info),
           tooltip: 'Receive',
           onPressed: () => _handleAction(transfer, 'receive'),
         ),

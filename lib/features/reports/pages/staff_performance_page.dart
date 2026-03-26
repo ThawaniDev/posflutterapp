@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
 
@@ -56,46 +59,46 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
         ],
       ),
       body: switch (state) {
-        StaffPerformanceInitial() || StaffPerformanceLoading() => const Center(child: CircularProgressIndicator()),
-        StaffPerformanceError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message),
-              const SizedBox(height: 16),
-              FilledButton(onPressed: _loadData, child: const Text('Retry')),
-            ],
-          ),
-        ),
+        StaffPerformanceInitial() || StaffPerformanceLoading() => PosLoadingSkeleton.list(),
+        StaffPerformanceError(:final message) => PosErrorState(message: message, onRetry: _loadData),
         StaffPerformanceLoaded(:final staff) =>
           staff.isEmpty
-              ? const Center(child: Text('No staff performance data'))
+              ? const PosEmptyState(title: 'No staff performance data', icon: Icons.people)
               : ListView.builder(
-                  padding: const EdgeInsets.all(16),
+                  padding: AppSpacing.paddingAll16,
                   itemCount: staff.length,
                   itemBuilder: (context, index) {
                     final s = staff[index];
                     return Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.md),
+                        side: BorderSide(color: theme.dividerColor),
+                      ),
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: AppSpacing.paddingAll16,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
-                                CircleAvatar(child: Text((s['staff_name'] as String? ?? 'U').substring(0, 1).toUpperCase())),
-                                const SizedBox(width: 12),
+                                CircleAvatar(
+                                  backgroundColor: AppColors.primary10,
+                                  foregroundColor: AppColors.primary,
+                                  child: Text((s['staff_name'] as String? ?? 'U').substring(0, 1).toUpperCase()),
+                                ),
+                                AppSpacing.gapW12,
                                 Expanded(child: Text(s['staff_name'] as String? ?? '', style: theme.textTheme.titleSmall)),
                                 Text(
                                   '\$${(s['total_revenue'] as num).toStringAsFixed(2)}',
                                   style: theme.textTheme.titleMedium?.copyWith(
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.green.shade700,
+                                    color: AppColors.success,
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 12),
+                            AppSpacing.gapH12,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -129,7 +132,7 @@ class _StatCol extends StatelessWidget {
     return Column(
       children: [
         Text(value, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
-        Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey.shade600)),
+        Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
       ],
     );
   }

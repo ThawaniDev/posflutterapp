@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
@@ -63,7 +64,7 @@ class _AdminABTestDetailPageState extends ConsumerState<AdminABTestDetailPage> {
                   (v) => Card(
                     child: ListTile(
                       leading: v['is_control'] == true
-                          ? const Icon(Icons.science, color: Colors.blue)
+                          ? const Icon(Icons.science, color: AppColors.info)
                           : const Icon(Icons.science_outlined),
                       title: Text(v['variant_key'] as String? ?? ''),
                       subtitle: Text(v['variant_label'] as String? ?? ''),
@@ -82,7 +83,7 @@ class _AdminABTestDetailPageState extends ConsumerState<AdminABTestDetailPage> {
                       onPressed: () {},
                       icon: const Icon(Icons.stop),
                       label: const Text('Stop'),
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                      style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
                     ),
                   ElevatedButton.icon(onPressed: () {}, icon: const Icon(Icons.bar_chart), label: const Text('View Results')),
                 ],
@@ -94,7 +95,7 @@ class _AdminABTestDetailPageState extends ConsumerState<AdminABTestDetailPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.error_outline, size: 48, color: Colors.red),
+              const Icon(Icons.error_outline, size: 48, color: AppColors.error),
               const SizedBox(height: 8),
               Text(message),
             ],

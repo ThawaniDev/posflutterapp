@@ -42,7 +42,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
           if (exportState is AnalyticsExportSuccess)
             MaterialBanner(
               content: Text('Export ready: ${exportState.recordCount} records'),
-              backgroundColor: Colors.green.shade50,
+              backgroundColor: AppColors.success.withValues(alpha: 0.08),
               actions: [
                 TextButton(
                   onPressed: () => ref.read(analyticsExportProvider.notifier).exportStores(),
@@ -67,11 +67,11 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                       // Overview cards
                       Row(
                         children: [
-                          Expanded(child: _metricCard('Total Stores', '$total', Colors.blue)),
+                          Expanded(child: _metricCard('Total Stores', '$total', AppColors.info)),
                           const SizedBox(width: AppSpacing.sm),
-                          Expanded(child: _metricCard('Active', '$active', Colors.green)),
+                          Expanded(child: _metricCard('Active', '$active', AppColors.success)),
                           const SizedBox(width: AppSpacing.sm),
-                          Expanded(child: _metricCard('Inactive', '${total - active}', Colors.grey)),
+                          Expanded(child: _metricCard('Inactive', '${total - active}', AppColors.textSecondary)),
                         ],
                       ),
                       const SizedBox(height: AppSpacing.lg),
@@ -90,7 +90,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                             child: ListTile(
                               leading: Icon(
                                 e.key == 'ok' ? Icons.check_circle : Icons.warning,
-                                color: e.key == 'ok' ? Colors.green : Colors.orange,
+                                color: e.key == 'ok' ? AppColors.success : AppColors.warning,
                               ),
                               title: Text(e.key.toUpperCase()),
                               trailing: Text('${e.value}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
@@ -108,13 +108,18 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                           margin: const EdgeInsets.only(bottom: AppSpacing.xs),
                           child: ListTile(
                             leading: CircleAvatar(
-                              backgroundColor: (s['is_active'] == true) ? Colors.green.shade50 : Colors.grey.shade100,
-                              child: Icon(Icons.store, color: (s['is_active'] == true) ? Colors.green : Colors.grey),
+                              backgroundColor: (s['is_active'] == true)
+                                  ? AppColors.success.withValues(alpha: 0.08)
+                                  : AppColors.textSecondary.withValues(alpha: 0.08),
+                              child: Icon(
+                                Icons.store,
+                                color: (s['is_active'] == true) ? AppColors.success : AppColors.textSecondary,
+                              ),
                             ),
                             title: Text(s['name'] as String? ?? 'Store #${s['id']}'),
                             trailing: Icon(
                               (s['is_active'] == true) ? Icons.check_circle : Icons.cancel,
-                              color: (s['is_active'] == true) ? Colors.green : Colors.red,
+                              color: (s['is_active'] == true) ? AppColors.success : AppColors.error,
                             ),
                           ),
                         ),
@@ -155,7 +160,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: color),
             ),
             const SizedBox(height: 4),
-            Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+            Text(label, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
           ],
         ),
       ),

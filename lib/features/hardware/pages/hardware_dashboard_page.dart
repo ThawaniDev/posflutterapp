@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/hardware/providers/hardware_providers.dart';
 import 'package:thawani_pos/features/hardware/providers/hardware_state.dart';
@@ -135,14 +136,14 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
           ),
           DeviceTestSuccess(:final success, :final message) => Row(
             children: [
-              Icon(success ? Icons.check_circle : Icons.cancel, color: success ? Colors.green : Colors.red),
+              Icon(success ? Icons.check_circle : Icons.cancel, color: success ? AppColors.success : AppColors.error),
               AppSpacing.gapW8,
               Expanded(child: Text(message)),
             ],
           ),
           DeviceTestError(:final message) => Row(
             children: [
-              const Icon(Icons.error_outline, color: Colors.red),
+              const Icon(Icons.error_outline, color: AppColors.error),
               AppSpacing.gapW8,
               Expanded(
                 child: Text(message, style: TextStyle(color: Theme.of(context).colorScheme.error)),
@@ -172,12 +173,12 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
 
   Widget _errorCard(String message) {
     return Card(
-      color: Colors.red.shade50,
+      color: AppColors.error.withValues(alpha: 0.08),
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Row(
           children: [
-            const Icon(Icons.error_outline, color: Colors.red),
+            const Icon(Icons.error_outline, color: AppColors.error),
             AppSpacing.gapW8,
             Expanded(child: Text(message)),
           ],

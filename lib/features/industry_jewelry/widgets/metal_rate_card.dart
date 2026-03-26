@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
+import '../enums/metal_type.dart';
 import '../models/daily_metal_rate.dart';
 
 class MetalRateCard extends StatelessWidget {
@@ -18,7 +19,7 @@ class MetalRateCard extends StatelessWidget {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.border),
+        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       child: InkWell(
         onTap: onTap,
@@ -39,7 +40,10 @@ class MetalRateCard extends StatelessWidget {
                   children: [
                     Icon(Icons.diamond, size: 20, color: _metalColor),
                     if (rate.karat != null)
-                      Text(rate.karat!, style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: _metalColor)),
+                      Text(
+                        rate.karat!,
+                        style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: _metalColor),
+                      ),
                   ],
                 ),
               ),
@@ -48,10 +52,7 @@ class MetalRateCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '${rate.metalType.toUpperCase()} ${rate.karat ?? ''}',
-                      style: AppTypography.titleSmall,
-                    ),
+                    Text('${rate.metalType.value.toUpperCase()} ${rate.karat ?? ''}', style: AppTypography.titleSmall),
                     Text('Effective: ${rate.effectiveDate}', style: AppTypography.caption),
                   ],
                 ),
@@ -78,11 +79,10 @@ class MetalRateCard extends StatelessWidget {
   }
 
   Color get _metalColor {
-    return switch (rate.metalType.toLowerCase()) {
-      'gold' => const Color(0xFFD4A017),
-      'silver' => const Color(0xFFC0C0C0),
-      'platinum' => const Color(0xFFE5E4E2),
-      _ => Colors.grey,
+    return switch (rate.metalType) {
+      MetalType.gold => const Color(0xFFD4A017),
+      MetalType.silver => const Color(0xFFC0C0C0),
+      MetalType.platinum => const Color(0xFFE5E4E2),
     };
   }
 }

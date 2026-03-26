@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/auto_update/providers/auto_update_providers.dart';
 import 'package:thawani_pos/features/auto_update/providers/auto_update_state.dart';
@@ -80,10 +81,10 @@ class _AutoUpdateDashboardPageState extends ConsumerState<AutoUpdateDashboardPag
                                 ? Icons.error
                                 : Icons.downloading,
                             color: e['status'] == 'installed'
-                                ? Colors.green
+                                ? AppColors.success
                                 : e['status'] == 'failed'
-                                ? Colors.red
-                                : Colors.orange,
+                                ? AppColors.error
+                                : AppColors.warning,
                           ),
                           title: Text('v${rel['version_number'] ?? '?'}'),
                           subtitle: Text(e['status']?.toString() ?? ''),

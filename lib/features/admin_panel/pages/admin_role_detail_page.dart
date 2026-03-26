@@ -142,7 +142,7 @@ class _AdminRoleDetailPageState extends ConsumerState<AdminRoleDetailPage> {
               ref.read(roleActionProvider.notifier).deleteRole(roleId);
               Navigator.pop(context);
             },
-            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+            child: const Text('Delete', style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),

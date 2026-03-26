@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 /// Thawani POS Formatters — currency, dates, numbers, relative time.
 ///
 /// Conventions:
-///  - Currency: Omani Rial (OMR) with 3 decimal places.
+///  - Currency: Saudi Riyal (SAR) with 3 decimal places.
 ///  - Dates: dd/MM/yyyy (display), yyyy-MM-dd (API/ISO).
 ///  - Arabic numerals are handled via Intl locale.
 class Formatters {
@@ -11,20 +11,20 @@ class Formatters {
 
   // ─── Currency ────────────────────────────────────────────
 
-  /// Omani Rial: 1234.567 → "ر.ع. 1,234.567"
-  static String currency(double amount, {String symbol = 'ر.ع.'}) {
+  /// Saudi Riyal: 1234.567 → "ر.س 1,234.567"
+  static String currency(double amount, {String symbol = 'ر.س'}) {
     final formatter = NumberFormat.currency(decimalDigits: 3, symbol: '$symbol ');
     return formatter.format(amount);
   }
 
-  /// Short currency (no decimals): 1234 → "ر.ع. 1,234"
-  static String currencyShort(double amount, {String symbol = 'ر.ع.'}) {
+  /// Short currency (no decimals): 1234 → "ر.س 1,234"
+  static String currencyShort(double amount, {String symbol = 'ر.س'}) {
     final formatter = NumberFormat.currency(decimalDigits: 0, symbol: '$symbol ');
     return formatter.format(amount);
   }
 
-  /// Compact currency: 12500 → "ر.ع. 12.5K"
-  static String currencyCompact(double amount, {String symbol = 'ر.ع.'}) {
+  /// Compact currency: 12500 → "ر.س 12.5K"
+  static String currencyCompact(double amount, {String symbol = 'ر.س'}) {
     return '$symbol ${NumberFormat.compact().format(amount)}';
   }
 

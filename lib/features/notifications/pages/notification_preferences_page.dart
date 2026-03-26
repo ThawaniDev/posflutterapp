@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/notifications/providers/notification_providers.dart';
 import 'package:thawani_pos/features/notifications/providers/notification_state.dart';
 
@@ -71,9 +73,10 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
         ],
       ),
       body: switch (state) {
-        NotificationPreferencesInitial() || NotificationPreferencesLoading() => const Center(child: CircularProgressIndicator()),
-        NotificationPreferencesError(:final message) => Center(
-          child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+        NotificationPreferencesInitial() || NotificationPreferencesLoading() => Center(child: PosLoadingSkeleton.list()),
+        NotificationPreferencesError(:final message) => PosErrorState(
+          message: message,
+          onRetry: () => ref.read(notificationPreferencesProvider.notifier).load(),
         ),
         NotificationPreferencesLoaded() => _buildPreferences(),
       },
@@ -97,7 +100,7 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
         // ─── Quiet Hours ──────────────────────────
         const Text('Quiet Hours', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 4),
-        Text('Mute push notifications during these hours', style: TextStyle(color: Colors.grey.shade600)),
+        Text('Mute push notifications during these hours', style: TextStyle(color: AppColors.textSecondary)),
         const SizedBox(height: 12),
         Row(
           children: [
@@ -113,7 +116,7 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Icon(Icons.arrow_forward, color: Colors.grey),
+              child: Icon(Icons.arrow_forward, color: AppColors.textSecondary),
             ),
             Expanded(
               child: _buildTimePicker(
@@ -164,7 +167,7 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-                      Text(subtitle, style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
+                      Text(subtitle, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                     ],
                   ),
                 ),
@@ -222,7 +225,7 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
         ),
         child: Text(
           value != null ? value.format(context) : 'Not set',
-          style: TextStyle(color: value != null ? null : Colors.grey),
+          style: TextStyle(color: value != null ? null : AppColors.textSecondary),
         ),
       ),
     );

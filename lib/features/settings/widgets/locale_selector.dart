@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/settings/enums/locale_direction.dart';
 import 'package:thawani_pos/features/settings/models/supported_locale.dart';
@@ -42,7 +43,7 @@ class LocaleSelector extends StatelessWidget {
                     AppSpacing.gapW8,
                     Icon(
                       locale.isActive == true ? Icons.check_circle : Icons.cancel,
-                      color: locale.isActive == true ? Colors.green : Colors.grey,
+                      color: locale.isActive == true ? AppColors.success : AppColors.textSecondary,
                       size: 20,
                     ),
                   ],

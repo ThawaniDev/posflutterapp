@@ -147,7 +147,7 @@ class _CakeOrderFormPageState extends ConsumerState<CakeOrderFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _priceCtrl,
-                    label: 'Price (OMR)',
+                    label: 'Price (SAR)',
                     hint: '0.000',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),

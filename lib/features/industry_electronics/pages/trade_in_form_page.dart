@@ -16,7 +16,6 @@ class TradeInFormPage extends ConsumerStatefulWidget {
 class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
-  bool get _isEditing => widget.record != null;
 
   late final TextEditingController _deviceDescCtrl;
   late final TextEditingController _imeiCtrl;
@@ -106,7 +105,7 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _assessedValueCtrl,
-              label: 'Assessed Value (OMR)',
+              label: 'Assessed Value (SAR)',
               hint: '0.000',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),

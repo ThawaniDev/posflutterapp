@@ -61,7 +61,7 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
                                 '${adoption.toStringAsFixed(1)}%',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: adoption > 50 ? Colors.green : Colors.orange,
+                                  color: adoption > 50 ? AppColors.success : AppColors.warning,
                                 ),
                               ),
                             ],
@@ -69,13 +69,13 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
                           const SizedBox(height: 8),
                           LinearProgressIndicator(
                             value: adoption / 100,
-                            backgroundColor: Colors.grey.shade200,
-                            color: adoption > 50 ? Colors.green : Colors.orange,
+                            backgroundColor: AppColors.borderLight,
+                            color: adoption > 50 ? AppColors.success : AppColors.warning,
                           ),
                           const SizedBox(height: 4),
                           Text(
                             '${f['stores_using'] ?? 0} of ${f['total_eligible'] ?? 0} stores',
-                            style: const TextStyle(fontSize: 12, color: Colors.grey),
+                            style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
                           ),
                         ],
                       ),

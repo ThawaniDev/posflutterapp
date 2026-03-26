@@ -45,7 +45,7 @@ class _AdminMarketplaceSettlementListPageState extends ConsumerState<AdminMarket
             child: switch (listState) {
               MarketplaceSettlementListLoading() => const Center(child: CircularProgressIndicator()),
               MarketplaceSettlementListError(:final message) => Center(
-                child: Text(message, style: const TextStyle(color: Colors.red)),
+                child: Text(message, style: const TextStyle(color: AppColors.error)),
               ),
               MarketplaceSettlementListLoaded(:final data) => _buildList(data),
               _ => const SizedBox.shrink(),
@@ -80,7 +80,7 @@ class _AdminMarketplaceSettlementListPageState extends ConsumerState<AdminMarket
       children: [
         Text(value, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 4),
-        Text(label, style: TextStyle(color: Colors.grey.shade600, fontSize: 12)),
+        Text(label, style: TextStyle(color: AppColors.textSecondary, fontSize: 12)),
       ],
     );
   }
@@ -104,7 +104,7 @@ class _AdminMarketplaceSettlementListPageState extends ConsumerState<AdminMarket
             subtitle: Text('${s['settlement_date']} • ${s['order_count']} orders'),
             trailing: Text(
               '${s['net_amount']} SAR',
-              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+              style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.success),
             ),
           ),
         );

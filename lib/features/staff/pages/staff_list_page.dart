@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/staff/enums/employment_type.dart';
 import 'package:thawani_pos/features/staff/enums/salary_type.dart';
 import 'package:thawani_pos/features/staff/enums/staff_status.dart';
@@ -46,7 +49,6 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(staffListProvider);
-    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -62,7 +64,7 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
         children: [
           // Search bar
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: AppSpacing.paddingAll16,
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
@@ -98,7 +100,7 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
                   },
                 ),
                 for (final status in StaffStatus.values) ...[
-                  const SizedBox(width: 8),
+                  AppSpacing.gapW8,
                   _buildFilterChip(
                     label: status.value.replaceAll('_', ' ').toUpperCase(),
                     selected: _statusFilter == status.value,
@@ -108,9 +110,9 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
                     },
                   ),
                 ],
-                const SizedBox(width: 16),
+                AppSpacing.gapW16,
                 const VerticalDivider(),
-                const SizedBox(width: 8),
+                AppSpacing.gapW8,
                 _buildFilterChip(
                   label: 'All Types',
                   selected: _employmentTypeFilter == null,
@@ -120,7 +122,7 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
                   },
                 ),
                 for (final type in EmploymentType.values) ...[
-                  const SizedBox(width: 8),
+                  AppSpacing.gapW8,
                   _buildFilterChip(
                     label: type.value.replaceAll('_', ' ').toUpperCase(),
                     selected: _employmentTypeFilter == type.value,
@@ -133,35 +135,15 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          AppSpacing.gapH8,
           // Staff list
           Expanded(
             child: switch (state) {
-              StaffListInitial() || StaffListLoading() => const Center(child: CircularProgressIndicator()),
-              StaffListError(message: final msg) => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.error_outline, size: 48, color: colorScheme.error),
-                    const SizedBox(height: 16),
-                    Text(msg),
-                    const SizedBox(height: 16),
-                    FilledButton(onPressed: _loadStaff, child: const Text('Retry')),
-                  ],
-                ),
-              ),
+              StaffListInitial() || StaffListLoading() => PosLoadingSkeleton.list(),
+              StaffListError(message: final msg) => PosErrorState(message: msg, onRetry: _loadStaff),
               StaffListLoaded(staff: final staff) =>
                 staff.isEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.people_outline, size: 64, color: colorScheme.outline),
-                            const SizedBox(height: 16),
-                            const Text('No staff members found'),
-                          ],
-                        ),
-                      )
+                    ? const PosEmptyState(title: 'No staff members found', icon: Icons.people_outline)
                     : RefreshIndicator(
                         onRefresh: () async => _loadStaff(),
                         child: ListView.builder(
@@ -244,11 +226,16 @@ class _StaffCard extends StatelessWidget {
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        side: BorderSide(color: Theme.of(context).dividerColor),
+      ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(AppRadius.md),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.paddingAll16,
           child: Row(
             children: [
               CircleAvatar(
@@ -262,7 +249,7 @@ class _StaffCard extends StatelessWidget {
                       )
                     : null,
               ),
-              const SizedBox(width: 16),
+              AppSpacing.gapW16,
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -271,11 +258,11 @@ class _StaffCard extends StatelessWidget {
                       '${staff.firstName} ${staff.lastName}',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
                     ),
-                    const SizedBox(height: 4),
+                    AppSpacing.gapH4,
                     Row(
                       children: [
                         _StatusBadge(status: staff.status),
-                        const SizedBox(width: 8),
+                        AppSpacing.gapW8,
                         Text(
                           staff.employmentType.value.replaceAll('_', ' ').toUpperCase(),
                           style: Theme.of(context).textTheme.labelSmall?.copyWith(color: colorScheme.outline),
@@ -283,7 +270,7 @@ class _StaffCard extends StatelessWidget {
                       ],
                     ),
                     if (staff.email != null) ...[
-                      const SizedBox(height: 2),
+                      AppSpacing.gapH2,
                       Text(staff.email!, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: colorScheme.outline)),
                     ],
                   ],
@@ -306,8 +293,8 @@ class _StaffCard extends StatelessWidget {
                   PopupMenuItem(
                     value: 'delete',
                     child: ListTile(
-                      leading: Icon(Icons.delete, color: Colors.red),
-                      title: Text('Delete', style: TextStyle(color: Colors.red)),
+                      leading: Icon(Icons.delete, color: AppColors.error),
+                      title: Text('Delete', style: TextStyle(color: AppColors.error)),
                       dense: true,
                     ),
                   ),
@@ -329,10 +316,10 @@ class _StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (color, label) = switch (status) {
-      StaffStatus.active => (Colors.green, 'Active'),
-      StaffStatus.inactive => (Colors.grey, 'Inactive'),
-      StaffStatus.onLeave => (Colors.orange, 'On Leave'),
-      null => (Colors.grey, 'Unknown'),
+      StaffStatus.active => (AppColors.success, 'Active'),
+      StaffStatus.inactive => (AppColors.textSecondary, 'Inactive'),
+      StaffStatus.onLeave => (AppColors.warning, 'On Leave'),
+      null => (AppColors.textSecondary, 'Unknown'),
     };
 
     return Container(
@@ -407,7 +394,7 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.paddingAll16,
           children: [
             // Name
             Row(
@@ -419,7 +406,7 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
                     validator: (v) => v == null || v.isEmpty ? 'Required' : null,
                   ),
                 ),
-                const SizedBox(width: 16),
+                AppSpacing.gapW16,
                 Expanded(
                   child: TextFormField(
                     controller: _lastNameController,
@@ -429,7 +416,7 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
 
             // Contact
             TextFormField(
@@ -441,7 +428,7 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
               ),
               keyboardType: TextInputType.emailAddress,
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
             TextFormField(
               controller: _phoneController,
               decoration: const InputDecoration(
@@ -451,7 +438,7 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
               ),
               keyboardType: TextInputType.phone,
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
 
             // National ID
             TextFormField(
@@ -462,11 +449,11 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
                 prefixIcon: Icon(Icons.badge_outlined),
               ),
             ),
-            const SizedBox(height: 24),
+            AppSpacing.gapH24,
 
             // Employment section
             Text('Employment Details', style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
 
             DropdownButtonFormField<EmploymentType>(
               initialValue: _employmentType,
@@ -478,7 +465,7 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
                 if (v != null) setState(() => _employmentType = v);
               },
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
 
             DropdownButtonFormField<SalaryType>(
               initialValue: _salaryType,
@@ -490,7 +477,7 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
                 if (v != null) setState(() => _salaryType = v);
               },
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
 
             if (_salaryType == SalaryType.hourly)
               TextFormField(
@@ -502,7 +489,7 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
                 ),
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
               ),
-            if (_salaryType == SalaryType.hourly) const SizedBox(height: 16),
+            if (_salaryType == SalaryType.hourly) AppSpacing.gapH16,
 
             DropdownButtonFormField<StaffStatus>(
               initialValue: _status,
@@ -514,7 +501,7 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
                 if (v != null) setState(() => _status = v);
               },
             ),
-            const SizedBox(height: 32),
+            AppSpacing.gapH32,
 
             // Submit
             FilledButton.icon(

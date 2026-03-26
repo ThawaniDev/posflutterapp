@@ -91,7 +91,7 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
               ActivityLogListInitial() || ActivityLogListLoading() => const Center(child: CircularProgressIndicator()),
               ActivityLogListLoaded(data: final data) => _buildList(data),
               ActivityLogListError(message: final msg) => Center(
-                child: Text(msg, style: const TextStyle(color: Colors.red)),
+                child: Text(msg, style: const TextStyle(color: AppColors.error)),
               ),
             },
           ),

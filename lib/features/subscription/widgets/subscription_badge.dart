@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 
 /// A colored badge indicating subscription status.
 class SubscriptionBadge extends StatelessWidget {
@@ -22,13 +23,41 @@ class SubscriptionBadge extends StatelessWidget {
 
   _BadgeConfig _getConfig(String status) {
     return switch (status.toLowerCase()) {
-      'active' => _BadgeConfig(label: 'Active', backgroundColor: Colors.green[100]!, textColor: Colors.green[800]!),
-      'trial' => _BadgeConfig(label: 'Trial', backgroundColor: Colors.blue[100]!, textColor: Colors.blue[800]!),
-      'grace' => _BadgeConfig(label: 'Grace Period', backgroundColor: Colors.orange[100]!, textColor: Colors.orange[800]!),
-      'cancelled' => _BadgeConfig(label: 'Cancelled', backgroundColor: Colors.red[100]!, textColor: Colors.red[800]!),
-      'expired' => _BadgeConfig(label: 'Expired', backgroundColor: Colors.grey[200]!, textColor: Colors.grey[700]!),
-      'past_due' => _BadgeConfig(label: 'Past Due', backgroundColor: Colors.red[50]!, textColor: Colors.red[700]!),
-      _ => _BadgeConfig(label: status, backgroundColor: Colors.grey[200]!, textColor: Colors.grey[700]!),
+      'active' => _BadgeConfig(
+        label: 'Active',
+        backgroundColor: AppColors.success.withValues(alpha: 0.15),
+        textColor: AppColors.successDark,
+      ),
+      'trial' => _BadgeConfig(
+        label: 'Trial',
+        backgroundColor: AppColors.info.withValues(alpha: 0.15),
+        textColor: AppColors.infoDark,
+      ),
+      'grace' => _BadgeConfig(
+        label: 'Grace Period',
+        backgroundColor: AppColors.warning.withValues(alpha: 0.15),
+        textColor: AppColors.warning,
+      ),
+      'cancelled' => _BadgeConfig(
+        label: 'Cancelled',
+        backgroundColor: AppColors.error.withValues(alpha: 0.15),
+        textColor: AppColors.errorDark,
+      ),
+      'expired' => _BadgeConfig(
+        label: 'Expired',
+        backgroundColor: AppColors.textSecondary.withValues(alpha: 0.15),
+        textColor: AppColors.textSecondary,
+      ),
+      'past_due' => _BadgeConfig(
+        label: 'Past Due',
+        backgroundColor: AppColors.error.withValues(alpha: 0.1),
+        textColor: AppColors.errorDark,
+      ),
+      _ => _BadgeConfig(
+        label: status,
+        backgroundColor: AppColors.textSecondary.withValues(alpha: 0.15),
+        textColor: AppColors.textSecondary,
+      ),
     };
   }
 }

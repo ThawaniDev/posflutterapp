@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/thawani_integration/providers/thawani_providers.dart';
 import 'package:thawani_pos/features/thawani_integration/providers/thawani_state.dart';
 
@@ -42,7 +45,7 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
         ref.read(thawaniStatsProvider.notifier).load();
         ref.read(thawaniConfigProvider.notifier).load();
       } else if (next is ThawaniActionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: Colors.red));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
       }
     });
 
@@ -76,9 +79,10 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
 
   Widget _buildOverview(ThawaniStatsState state) {
     return switch (state) {
-      ThawaniStatsInitial() || ThawaniStatsLoading() => const Center(child: CircularProgressIndicator()),
-      ThawaniStatsError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+      ThawaniStatsInitial() || ThawaniStatsLoading() => Center(child: PosLoadingSkeleton.list()),
+      ThawaniStatsError(:final message) => PosErrorState(
+        message: message,
+        onRetry: () => ref.read(thawaniStatsProvider.notifier).load(),
       ),
       ThawaniStatsLoaded(
         :final isConnected,
@@ -89,17 +93,28 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
         :final pendingOrders,
       ) =>
         ListView(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.paddingAll16,
           children: [
             // Connection status banner
             Card(
-              color: isConnected ? Colors.green.withValues(alpha: 0.1) : Colors.orange.withValues(alpha: 0.1),
+              elevation: 0,
+              color: isConnected ? AppColors.success.withValues(alpha: 0.1) : AppColors.warning.withValues(alpha: 0.1),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppRadius.md),
+                side: BorderSide(
+                  color: isConnected ? AppColors.success.withValues(alpha: 0.3) : AppColors.warning.withValues(alpha: 0.3),
+                ),
+              ),
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: AppSpacing.paddingAll16,
                 child: Row(
                   children: [
-                    Icon(isConnected ? Icons.link : Icons.link_off, color: isConnected ? Colors.green : Colors.orange, size: 32),
-                    const SizedBox(width: 12),
+                    Icon(
+                      isConnected ? Icons.link : Icons.link_off,
+                      color: isConnected ? AppColors.success : AppColors.warning,
+                      size: 32,
+                    ),
+                    AppSpacing.gapW12,
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +126,7 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
-                              color: isConnected ? Colors.green : Colors.orange,
+                              color: isConnected ? AppColors.success : AppColors.warning,
                             ),
                           ),
                           if (thawaniStoreId != null)
@@ -126,26 +141,31 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
                 ),
               ),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
             // Stats grid
             Row(
               children: [
-                _statCard(AppLocalizations.of(context)!.thawaniTotalOrders, '$totalOrders', Icons.receipt, Colors.blue),
-                const SizedBox(width: 12),
-                _statCard(AppLocalizations.of(context)!.thawaniProducts, '$totalProductsMapped', Icons.inventory, Colors.purple),
+                _statCard(AppLocalizations.of(context)!.thawaniTotalOrders, '$totalOrders', Icons.receipt, AppColors.info),
+                AppSpacing.gapW12,
+                _statCard(
+                  AppLocalizations.of(context)!.thawaniProducts,
+                  '$totalProductsMapped',
+                  Icons.inventory,
+                  AppColors.purple,
+                ),
               ],
             ),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             Row(
               children: [
                 _statCard(
                   AppLocalizations.of(context)!.thawaniSettlements,
                   '$totalSettlements',
                   Icons.account_balance,
-                  Colors.teal,
+                  AppColors.info,
                 ),
-                const SizedBox(width: 12),
-                _statCard(AppLocalizations.of(context)!.thawaniPendingOrders, '$pendingOrders', Icons.pending, Colors.orange),
+                AppSpacing.gapW12,
+                _statCard(AppLocalizations.of(context)!.thawaniPendingOrders, '$pendingOrders', Icons.pending, AppColors.warning),
               ],
             ),
           ],
@@ -156,18 +176,23 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
   Widget _statCard(String label, String value, IconData icon, Color color) {
     return Expanded(
       child: Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.md),
+          side: BorderSide(color: Theme.of(context).dividerColor),
+        ),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.paddingAll16,
           child: Column(
             children: [
               Icon(icon, color: color, size: 28),
-              const SizedBox(height: 8),
+              AppSpacing.gapH8,
               Text(
                 value,
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: color),
               ),
-              const SizedBox(height: 4),
-              Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+              AppSpacing.gapH4,
+              Text(label, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
             ],
           ),
         ),
@@ -180,9 +205,10 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
     final isLoading = actionState is ThawaniActionLoading;
 
     return switch (configState) {
-      ThawaniConfigInitial() || ThawaniConfigLoading() => const Center(child: CircularProgressIndicator()),
-      ThawaniConfigError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+      ThawaniConfigInitial() || ThawaniConfigLoading() => Center(child: PosLoadingSkeleton.list()),
+      ThawaniConfigError(:final message) => PosErrorState(
+        message: message,
+        onRetry: () => ref.read(thawaniConfigProvider.notifier).load(),
       ),
       ThawaniConfigLoaded(:final config) => ListView(
         padding: const EdgeInsets.all(16),
@@ -217,9 +243,9 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
           if (config?['is_connected'] == true)
             OutlinedButton.icon(
               onPressed: isLoading ? null : () => ref.read(thawaniActionProvider.notifier).disconnect(),
-              icon: const Icon(Icons.link_off, color: Colors.red),
-              label: Text(AppLocalizations.of(context)!.thawaniDisconnect, style: const TextStyle(color: Colors.red)),
-              style: OutlinedButton.styleFrom(side: const BorderSide(color: Colors.red)),
+              icon: Icon(Icons.link_off, color: AppColors.error),
+              label: Text(AppLocalizations.of(context)!.thawaniDisconnect, style: TextStyle(color: AppColors.error)),
+              style: OutlinedButton.styleFrom(side: BorderSide(color: AppColors.error)),
             ),
         ],
       ),
@@ -227,17 +253,6 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
   }
 
   Widget _buildOrders() {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.receipt_long, size: 64, color: Colors.grey),
-          const SizedBox(height: 12),
-          Text(AppLocalizations.of(context)!.thawaniOrdersPlaceholder, style: const TextStyle(fontSize: 16, color: Colors.grey)),
-          const SizedBox(height: 4),
-          Text(AppLocalizations.of(context)!.thawaniOrdersDesc, style: const TextStyle(color: Colors.grey)),
-        ],
-      ),
-    );
+    return PosEmptyState(title: AppLocalizations.of(context)!.thawaniOrdersPlaceholder, icon: Icons.receipt_long);
   }
 }

@@ -69,7 +69,7 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
                       const SizedBox(height: AppSpacing.md),
                       const Text(
                         'Configure how failed payments should be retried automatically.',
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(color: AppColors.textSecondary),
                       ),
                       const SizedBox(height: AppSpacing.lg),
 
@@ -133,13 +133,13 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
 
               // Info card
               Card(
-                color: Colors.blue.shade50,
+                color: AppColors.info.withValues(alpha: 0.08),
                 child: Padding(
                   padding: const EdgeInsets.all(AppSpacing.md),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(Icons.info_outline, color: Colors.blue.shade700),
+                      Icon(Icons.info_outline, color: AppColors.infoDark),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(
@@ -147,7 +147,7 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
                           children: [
                             Text(
                               'How retry rules work',
-                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue.shade700),
+                              style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.infoDark),
                             ),
                             const SizedBox(height: 4),
                             Text(
@@ -156,7 +156,7 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
                               'the specified interval between attempts. If all retries '
                               'fail, the subscription enters a grace period before '
                               'being suspended.',
-                              style: TextStyle(fontSize: 13, color: Colors.blue.shade900),
+                              style: TextStyle(fontSize: 13, color: AppColors.info),
                             ),
                           ],
                         ),
@@ -189,11 +189,13 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text('Retry rules updated successfully'), backgroundColor: Colors.green));
+        ).showSnackBar(const SnackBar(content: Text('Retry rules updated successfully'), backgroundColor: AppColors.success));
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to save: $e'), backgroundColor: Colors.red));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Failed to save: $e'), backgroundColor: AppColors.error));
       }
     }
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/auto_update/providers/auto_update_providers.dart';
 import 'package:thawani_pos/features/auto_update/providers/auto_update_state.dart';
@@ -30,7 +31,7 @@ class UpdateStatusWidget extends ConsumerWidget {
                 children: [
                   Icon(
                     s.updateAvailable ? Icons.system_update : Icons.check_circle,
-                    color: s.updateAvailable ? theme.colorScheme.primary : Colors.green,
+                    color: s.updateAvailable ? theme.colorScheme.primary : AppColors.success,
                     size: 32,
                   ),
                   AppSpacing.gapW12,

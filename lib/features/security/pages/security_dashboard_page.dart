@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/security/providers/security_providers.dart';
 import 'package:thawani_pos/features/security/providers/security_state.dart';
@@ -107,7 +108,7 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> w
       itemCount: attempts.length,
       itemBuilder: (context, index) {
         final a = attempts[index];
-        final color = a.isSuccessful ? Colors.green : Colors.red;
+        final color = a.isSuccessful ? AppColors.success : AppColors.error;
         return ListTile(
           leading: Icon(a.isSuccessful ? Icons.check_circle : Icons.cancel, color: color),
           title: Text(a.userIdentifier),

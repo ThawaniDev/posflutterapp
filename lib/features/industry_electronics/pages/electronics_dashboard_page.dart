@@ -63,7 +63,7 @@ class _ElectronicsDashboardPageState extends ConsumerState<ElectronicsDashboardP
       ),
       floatingActionButton: FloatingActionButton(onPressed: _onFabPressed, child: const Icon(Icons.add)),
       body: switch (state) {
-        ElectronicsInitial() || ElectronicsLoading() => const PosLoadingSkeleton(),
+        ElectronicsInitial() || ElectronicsLoading() => PosLoadingSkeleton.list(),
         ElectronicsError(:final message) => PosErrorState(
           message: message,
           onRetry: () => ref.read(electronicsProvider.notifier).load(),
@@ -72,7 +72,7 @@ class _ElectronicsDashboardPageState extends ConsumerState<ElectronicsDashboardP
           controller: _tabController,
           children: [
             imeiRecords.isEmpty
-                ? const PosEmptyState(message: 'No IMEI records', icon: Icons.phone_android)
+                ? const PosEmptyState(title: 'No IMEI records', icon: Icons.phone_android)
                 : ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: imeiRecords.length,
@@ -92,7 +92,7 @@ class _ElectronicsDashboardPageState extends ConsumerState<ElectronicsDashboardP
                     },
                   ),
             repairJobs.isEmpty
-                ? const PosEmptyState(message: 'No repair jobs', icon: Icons.build)
+                ? const PosEmptyState(title: 'No repair jobs', icon: Icons.build)
                 : ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: repairJobs.length,
@@ -107,15 +107,12 @@ class _ElectronicsDashboardPageState extends ConsumerState<ElectronicsDashboardP
                                 .push(MaterialPageRoute(builder: (_) => RepairJobFormPage(job: j)))
                                 .then((_) => ref.read(electronicsProvider.notifier).load());
                           },
-                          onStatusChange: (status) {
-                            ref.read(electronicsProvider.notifier).updateRepairJobStatus(j.id, status);
-                          },
                         ),
                       );
                     },
                   ),
             tradeIns.isEmpty
-                ? const PosEmptyState(message: 'No trade-in records', icon: Icons.swap_horiz)
+                ? const PosEmptyState(title: 'No trade-in records', icon: Icons.swap_horiz)
                 : ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: tradeIns.length,

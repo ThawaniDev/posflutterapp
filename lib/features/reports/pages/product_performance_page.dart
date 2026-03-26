@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
 
@@ -56,26 +59,22 @@ class _ProductPerformancePageState extends ConsumerState<ProductPerformancePage>
         ],
       ),
       body: switch (state) {
-        ProductPerformanceInitial() || ProductPerformanceLoading() => const Center(child: CircularProgressIndicator()),
-        ProductPerformanceError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message),
-              const SizedBox(height: 16),
-              FilledButton(onPressed: _loadData, child: const Text('Retry')),
-            ],
-          ),
-        ),
+        ProductPerformanceInitial() || ProductPerformanceLoading() => PosLoadingSkeleton.list(),
+        ProductPerformanceError(:final message) => PosErrorState(message: message, onRetry: _loadData),
         ProductPerformanceLoaded(:final products) =>
           products.isEmpty
-              ? const Center(child: Text('No product data for selected period'))
+              ? const PosEmptyState(title: 'No product data for selected period', icon: Icons.inventory_2)
               : ListView.builder(
-                  padding: const EdgeInsets.all(16),
+                  padding: AppSpacing.paddingAll16,
                   itemCount: products.length,
                   itemBuilder: (context, index) {
                     final p = products[index];
                     return Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadius.md),
+                        side: BorderSide(color: theme.dividerColor),
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Column(
@@ -83,8 +82,12 @@ class _ProductPerformancePageState extends ConsumerState<ProductPerformancePage>
                           children: [
                             Row(
                               children: [
-                                CircleAvatar(backgroundColor: theme.colorScheme.primaryContainer, child: Text('${index + 1}')),
-                                const SizedBox(width: 12),
+                                CircleAvatar(
+                                  backgroundColor: AppColors.primary10,
+                                  foregroundColor: AppColors.primary,
+                                  child: Text('${index + 1}'),
+                                ),
+                                AppSpacing.gapW12,
                                 Expanded(
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +104,7 @@ class _ProductPerformancePageState extends ConsumerState<ProductPerformancePage>
                                       '\$${(p['total_revenue'] as num).toStringAsFixed(2)}',
                                       style: theme.textTheme.titleMedium?.copyWith(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.green.shade700,
+                                        color: AppColors.success,
                                       ),
                                     ),
                                     Text(
@@ -112,24 +115,24 @@ class _ProductPerformancePageState extends ConsumerState<ProductPerformancePage>
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8),
+                            AppSpacing.gapH8,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 _MetricChip(
                                   label: 'Profit',
                                   value: '\$${(p['profit'] as num).toStringAsFixed(2)}',
-                                  color: (p['profit'] as num) >= 0 ? Colors.green : Colors.red,
+                                  color: (p['profit'] as num) >= 0 ? AppColors.success : AppColors.error,
                                 ),
                                 _MetricChip(
                                   label: 'Cost',
                                   value: '\$${(p['total_cost'] as num).toStringAsFixed(2)}',
-                                  color: Colors.grey,
+                                  color: AppColors.textSecondary,
                                 ),
                                 _MetricChip(
                                   label: 'Returns',
                                   value: '${(p['total_returns'] as num).toStringAsFixed(0)}',
-                                  color: (p['total_returns'] as num) > 0 ? Colors.orange : Colors.grey,
+                                  color: (p['total_returns'] as num) > 0 ? AppColors.warning : AppColors.textSecondary,
                                 ),
                               ],
                             ),

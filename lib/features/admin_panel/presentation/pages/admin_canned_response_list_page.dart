@@ -97,7 +97,7 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
             child: switch (state) {
               CannedResponseListLoading() => const Center(child: CircularProgressIndicator()),
               CannedResponseListError(:final message) => Center(
-                child: Text(message, style: const TextStyle(color: Colors.red)),
+                child: Text(message, style: const TextStyle(color: AppColors.error)),
               ),
               CannedResponseListLoaded(:final data) => _buildList(data),
               _ => const SizedBox.shrink(),
@@ -122,7 +122,7 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
         return Card(
           margin: const EdgeInsets.only(bottom: AppSpacing.sm),
           child: ListTile(
-            leading: Icon(Icons.quickreply, color: isActive ? AppColors.primary : Colors.grey),
+            leading: Icon(Icons.quickreply, color: isActive ? AppColors.primary : AppColors.textSecondary),
             title: Text(r['title']?.toString() ?? ''),
             subtitle: Text(r['body']?.toString() ?? '', maxLines: 2, overflow: TextOverflow.ellipsis),
             trailing: Row(
@@ -133,12 +133,16 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     margin: const EdgeInsets.only(right: 8),
                     decoration: BoxDecoration(
-                      color: Colors.blueGrey.withValues(alpha: 0.1),
+                      color: AppColors.info.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(r['category'].toString(), style: const TextStyle(fontSize: 11)),
                   ),
-                Icon(isActive ? Icons.check_circle : Icons.cancel, color: isActive ? Colors.green : Colors.red, size: 20),
+                Icon(
+                  isActive ? Icons.check_circle : Icons.cancel,
+                  color: isActive ? AppColors.success : AppColors.error,
+                  size: 20,
+                ),
               ],
             ),
           ),

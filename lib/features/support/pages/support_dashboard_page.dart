@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/support/providers/support_providers.dart';
 import 'package:thawani_pos/features/support/providers/support_state.dart';
 
@@ -71,21 +74,21 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
   Widget _buildStatsSection(SupportStatsState state) {
     return switch (state) {
       SupportStatsInitial() || SupportStatsLoading() => const Padding(
-        padding: EdgeInsets.all(16),
-        child: Center(child: CircularProgressIndicator()),
+        padding: AppSpacing.paddingAll16,
+        child: Center(child: PosLoadingSkeleton(height: 120)),
       ),
       SupportStatsError(:final message) => Padding(
-        padding: const EdgeInsets.all(16),
-        child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+        padding: AppSpacing.paddingAll16,
+        child: Text('Error: $message', style: TextStyle(color: AppColors.error)),
       ),
       SupportStatsLoaded(:final total, :final open, :final inProgress, :final resolved) => Padding(
-        padding: const EdgeInsets.all(12),
+        padding: AppSpacing.paddingAll12,
         child: Row(
           children: [
-            _statCard(AppLocalizations.of(context)!.supportTotal, total, Colors.blue),
-            _statCard(AppLocalizations.of(context)!.supportOpen, open, Colors.orange),
-            _statCard(AppLocalizations.of(context)!.supportInProgress, inProgress, Colors.amber),
-            _statCard(AppLocalizations.of(context)!.supportResolved, resolved, Colors.green),
+            _statCard(AppLocalizations.of(context)!.supportTotal, total, AppColors.info),
+            _statCard(AppLocalizations.of(context)!.supportOpen, open, AppColors.warning),
+            _statCard(AppLocalizations.of(context)!.supportInProgress, inProgress, AppColors.primary),
+            _statCard(AppLocalizations.of(context)!.supportResolved, resolved, AppColors.success),
           ],
         ),
       ),
@@ -95,6 +98,11 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
   Widget _statCard(String label, int value, Color color) {
     return Expanded(
       child: Card(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppRadius.md),
+          side: BorderSide(color: Theme.of(context).dividerColor),
+        ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           child: Column(
@@ -103,8 +111,8 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
                 '$value',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: color),
               ),
-              const SizedBox(height: 4),
-              Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+              AppSpacing.gapH4,
+              Text(label, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
             ],
           ),
         ),
@@ -131,7 +139,7 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
             selected: _statusFilter == null,
             onSelected: (_) => _applyFilter(null),
           ),
-          const SizedBox(width: 8),
+          AppSpacing.gapW8,
           ...statuses.map(
             (s) => Padding(
               padding: const EdgeInsets.only(right: 8),
@@ -145,27 +153,14 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
 
   Widget _buildTicketList(TicketListState state) {
     return switch (state) {
-      TicketListInitial() || TicketListLoading() => const Center(child: CircularProgressIndicator()),
-      TicketListError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+      TicketListInitial() || TicketListLoading() => PosLoadingSkeleton.list(),
+      TicketListError(:final message) => PosErrorState(
+        message: message,
+        onRetry: () => ref.read(ticketListProvider.notifier).load(status: _statusFilter),
       ),
       TicketListLoaded(:final tickets) =>
         tickets.isEmpty
-            ? Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.support_agent, size: 64, color: Colors.grey),
-                    const SizedBox(height: 12),
-                    Text(
-                      AppLocalizations.of(context)!.supportNoTickets,
-                      style: const TextStyle(color: Colors.grey, fontSize: 16),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(AppLocalizations.of(context)!.supportTapToCreate, style: const TextStyle(color: Colors.grey)),
-                  ],
-                ),
-              )
+            ? PosEmptyState(title: AppLocalizations.of(context)!.supportNoTickets, icon: Icons.support_agent)
             : RefreshIndicator(
                 onRefresh: () => ref.read(ticketListProvider.notifier).load(status: _statusFilter),
                 child: ListView.builder(
@@ -181,21 +176,26 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
     final status = ticket['status'] as String? ?? 'open';
     final priority = ticket['priority'] as String? ?? 'medium';
     final statusColor = switch (status) {
-      'open' => Colors.orange,
-      'in_progress' => Colors.amber,
-      'resolved' => Colors.green,
-      'closed' => Colors.grey,
-      _ => Colors.blue,
+      'open' => AppColors.warning,
+      'in_progress' => AppColors.primary,
+      'resolved' => AppColors.success,
+      'closed' => AppColors.textSecondary,
+      _ => AppColors.info,
     };
     final priorityColor = switch (priority) {
-      'critical' => Colors.red,
-      'high' => Colors.deepOrange,
-      'medium' => Colors.amber,
-      'low' => Colors.green,
-      _ => Colors.grey,
+      'critical' => AppColors.error,
+      'high' => AppColors.errorDark,
+      'medium' => AppColors.warning,
+      'low' => AppColors.success,
+      _ => AppColors.textSecondary,
     };
 
     return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        side: BorderSide(color: Theme.of(context).dividerColor),
+      ),
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: CircleAvatar(
@@ -206,7 +206,7 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
         subtitle: Row(
           children: [
             Text(ticket['ticket_number'] as String? ?? '', style: const TextStyle(fontSize: 12)),
-            const SizedBox(width: 8),
+            AppSpacing.gapW8,
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(color: priorityColor.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(4)),

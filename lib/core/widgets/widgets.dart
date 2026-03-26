@@ -11,7 +11,6 @@ export 'pos_badge.dart';
 export 'pos_button.dart';
 export 'pos_card.dart';
 export 'pos_dialog.dart';
-export 'pos_empty_state.dart';
 export 'pos_error_state.dart';
 export 'pos_input.dart';
 export 'pos_loading_skeleton.dart';

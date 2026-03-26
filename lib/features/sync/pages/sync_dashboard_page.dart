@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_app_bar.dart';
 import 'package:thawani_pos/features/sync/providers/sync_providers.dart';
@@ -93,13 +94,13 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Text(
                   '${state.recordsSynced} records synced',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.green),
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.success),
                 ),
               ),
             if (state is SyncOperationError)
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
-                child: Text(state.message, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.red)),
+                child: Text(state.message, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.error)),
               ),
             Wrap(
               spacing: 8,
@@ -187,12 +188,12 @@ class _ErrorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.red.shade50,
+      color: AppColors.error.withValues(alpha: 0.08),
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
           children: [
-            Text(message, style: const TextStyle(color: Colors.red)),
+            Text(message, style: const TextStyle(color: AppColors.error)),
             AppSpacing.gapH8,
             TextButton(onPressed: onRetry, child: const Text('Retry')),
           ],

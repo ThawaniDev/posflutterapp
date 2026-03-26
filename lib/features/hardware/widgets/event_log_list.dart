@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/hardware/models/hardware_event_log.dart';
 
@@ -9,15 +10,15 @@ class EventLogList extends StatelessWidget {
 
   Color _eventColor(String event) {
     if (event.contains('error') || event.contains('failed') || event.contains('disconnected')) {
-      return Colors.red;
+      return AppColors.error;
     }
     if (event.contains('connected') || event.contains('passed') || event.contains('configured')) {
-      return Colors.green;
+      return AppColors.success;
     }
     if (event.contains('removed')) {
-      return Colors.orange;
+      return AppColors.warning;
     }
-    return Colors.blueGrey;
+    return AppColors.textSecondary;
   }
 
   IconData _eventIcon(String event) {

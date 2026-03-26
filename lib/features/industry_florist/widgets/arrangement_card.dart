@@ -11,13 +11,7 @@ class ArrangementCard extends StatelessWidget {
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
 
-  const ArrangementCard({
-    super.key,
-    required this.arrangement,
-    this.onTap,
-    this.onEdit,
-    this.onDelete,
-  });
+  const ArrangementCard({super.key, required this.arrangement, this.onTap, this.onEdit, this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +21,7 @@ class ArrangementCard extends StatelessWidget {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.border),
+        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       child: InkWell(
         onTap: onTap,
@@ -43,10 +37,10 @@ class ArrangementCard extends StatelessWidget {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: Colors.pink.withValues(alpha: 0.1),
+                      color: AppColors.rose.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(AppRadius.sm),
                     ),
-                    child: const Icon(Icons.local_florist, color: Colors.pink, size: 22),
+                    child: const Icon(Icons.local_florist, color: AppColors.rose, size: 22),
                   ),
                   AppSpacing.gapW12,
                   Expanded(
@@ -54,27 +48,33 @@ class ArrangementCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(arrangement.name, style: AppTypography.titleSmall),
-                        if (arrangement.occasion != null)
-                          Text(arrangement.occasion!, style: AppTypography.caption),
+                        if (arrangement.occasion != null) Text(arrangement.occasion!, style: AppTypography.caption),
                       ],
                     ),
                   ),
-                  if (arrangement.isTemplate)
+                  if (arrangement.isTemplate == true)
                     const PosStatusBadge(label: 'Template', variant: PosStatusBadgeVariant.info),
                   if (onEdit != null)
-                    IconButton(icon: const Icon(Icons.edit_outlined, size: 20), onPressed: onEdit, visualDensity: VisualDensity.compact),
+                    IconButton(
+                      icon: const Icon(Icons.edit_outlined, size: 20),
+                      onPressed: onEdit,
+                      visualDensity: VisualDensity.compact,
+                    ),
                   if (onDelete != null)
-                    IconButton(icon: Icon(Icons.delete_outline, size: 20, color: AppColors.error), onPressed: onDelete, visualDensity: VisualDensity.compact),
+                    IconButton(
+                      icon: Icon(Icons.delete_outline, size: 20, color: AppColors.error),
+                      onPressed: onDelete,
+                      visualDensity: VisualDensity.compact,
+                    ),
                 ],
               ),
               AppSpacing.gapH8,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (arrangement.itemsJson != null)
-                    Text('${arrangement.itemsJson!.length} flower types', style: AppTypography.bodySmall),
+                  Text('${arrangement.itemsJson.length} flower types', style: AppTypography.bodySmall),
                   Text(
-                    '${arrangement.totalPrice.toStringAsFixed(2)} OMR',
+                    '${arrangement.totalPrice.toStringAsFixed(2)} SAR',
                     style: AppTypography.priceSmall.copyWith(color: AppColors.primary),
                   ),
                 ],

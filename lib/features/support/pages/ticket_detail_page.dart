@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/support/providers/support_providers.dart';
 import 'package:thawani_pos/features/support/providers/support_state.dart';
 
@@ -62,9 +65,10 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
         ],
       ),
       body: switch (detailState) {
-        TicketDetailInitial() || TicketDetailLoading() => const Center(child: CircularProgressIndicator()),
-        TicketDetailError(:final message) => Center(
-          child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+        TicketDetailInitial() || TicketDetailLoading() => Center(child: PosLoadingSkeleton.list()),
+        TicketDetailError(:final message) => PosErrorState(
+          message: message,
+          onRetry: () => ref.read(ticketDetailProvider.notifier).load(widget.ticketId),
         ),
         TicketDetailLoaded(:final ticket) => Column(
           children: [
@@ -84,15 +88,15 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
   Widget _buildHeader(Map<String, dynamic> ticket) {
     final status = ticket['status'] as String? ?? 'open';
     final statusColor = switch (status) {
-      'open' => Colors.orange,
-      'in_progress' => Colors.amber,
-      'resolved' => Colors.green,
-      'closed' => Colors.grey,
-      _ => Colors.blue,
+      'open' => AppColors.warning,
+      'in_progress' => AppColors.primary,
+      'resolved' => AppColors.success,
+      'closed' => AppColors.textSecondary,
+      _ => AppColors.info,
     };
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.paddingAll16,
       color: Theme.of(context).colorScheme.surfaceContainerLow,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,20 +115,20 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          AppSpacing.gapH8,
           Text(ticket['subject'] as String? ?? '', style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 4),
+          AppSpacing.gapH4,
           Text(
             ticket['description'] as String? ?? '',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey[700]),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 8),
+          AppSpacing.gapH8,
           Row(
             children: [
               _chipInfo('Category', ticket['category'] as String? ?? ''),
-              const SizedBox(width: 8),
+              AppSpacing.gapW8,
               _chipInfo('Priority', ticket['priority'] as String? ?? ''),
             ],
           ),
@@ -149,7 +153,7 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
 
     if (messages.isEmpty) {
       return Center(
-        child: Text(AppLocalizations.of(context)!.supportNoMessages, style: const TextStyle(color: Colors.grey)),
+        child: Text(AppLocalizations.of(context)!.supportNoMessages, style: TextStyle(color: AppColors.textSecondary)),
       );
     }
 
@@ -176,7 +180,7 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
               children: [
                 Text(msg['message_text'] as String? ?? ''),
                 const SizedBox(height: 4),
-                Text(msg['sent_at'] as String? ?? '', style: TextStyle(fontSize: 10, color: Colors.grey[600])),
+                Text(msg['sent_at'] as String? ?? '', style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
               ],
             ),
           ),
@@ -208,7 +212,7 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
               minLines: 1,
             ),
           ),
-          const SizedBox(width: 8),
+          AppSpacing.gapW8,
           IconButton.filled(
             onPressed: isLoading ? null : _sendMessage,
             icon: isLoading

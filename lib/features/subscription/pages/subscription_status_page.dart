@@ -6,6 +6,7 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/subscription/providers/subscription_providers.dart';
 import 'package:thawani_pos/features/subscription/providers/subscription_state.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/subscription/widgets/subscription_badge.dart';
 import 'package:thawani_pos/features/subscription/widgets/usage_progress.dart';
 
@@ -35,12 +36,12 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
     // Listen for action results
     ref.listen<SubscriptionState>(subscriptionProvider, (prev, next) {
       if (next is SubscriptionActionSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: Colors.green));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.success));
         // Reload data
         ref.read(subscriptionProvider.notifier).loadCurrent();
         ref.read(usageProvider.notifier).loadUsage();
       } else if (next is SubscriptionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: Colors.red[700]));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
       }
     });
 
@@ -62,22 +63,11 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
 
   Widget _buildBody(SubscriptionState subState, UsageState usageState) {
     if (subState is SubscriptionLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return Center(child: PosLoadingSkeleton.list());
     }
 
     if (subState is SubscriptionError) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.error_outline, size: 48, color: Colors.red[300]),
-            AppSpacing.verticalMd,
-            Text(subState.message, style: const TextStyle(color: Colors.red)),
-            AppSpacing.verticalMd,
-            ElevatedButton(onPressed: () => ref.read(subscriptionProvider.notifier).loadCurrent(), child: const Text('Retry')),
-          ],
-        ),
-      );
+      return PosErrorState(message: subState.message, onRetry: () => ref.read(subscriptionProvider.notifier).loadCurrent());
     }
 
     if (subState is SubscriptionLoaded) {
@@ -95,7 +85,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.card_membership, size: 64, color: Colors.grey[400]),
+          Icon(Icons.card_membership, size: 64, color: AppColors.textSecondary),
           AppSpacing.verticalLg,
           Text('No Active Subscription', style: Theme.of(context).textTheme.titleLarge),
           AppSpacing.verticalSm,
@@ -148,7 +138,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
                   if (sub.currentPeriodStart != null && sub.currentPeriodEnd != null)
                     Text('Period: ${_formatDate(sub.currentPeriodStart!)} — ${_formatDate(sub.currentPeriodEnd!)}'),
                   if (sub.trialEndsAt != null)
-                    Text('Trial ends: ${_formatDate(sub.trialEndsAt!)}', style: const TextStyle(color: Colors.orange)),
+                    Text('Trial ends: ${_formatDate(sub.trialEndsAt!)}', style: TextStyle(color: AppColors.warning)),
                 ],
               ),
             ),
@@ -198,9 +188,9 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
           else
             OutlinedButton.icon(
               onPressed: _confirmCancel,
-              icon: const Icon(Icons.cancel, color: Colors.red),
-              label: const Text('Cancel Subscription', style: TextStyle(color: Colors.red)),
-              style: OutlinedButton.styleFrom(side: const BorderSide(color: Colors.red)),
+              icon: Icon(Icons.cancel, color: AppColors.error),
+              label: Text('Cancel Subscription', style: TextStyle(color: AppColors.error)),
+              style: OutlinedButton.styleFrom(side: BorderSide(color: AppColors.error)),
             ),
         ],
       ),
@@ -229,7 +219,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Keep Plan')),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
             onPressed: () {
               Navigator.pop(ctx);
               ref

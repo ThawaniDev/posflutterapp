@@ -63,13 +63,13 @@ class _FloristDashboardPageState extends ConsumerState<FloristDashboardPage> wit
       ),
       floatingActionButton: FloatingActionButton(onPressed: _onFabPressed, child: const Icon(Icons.add)),
       body: switch (state) {
-        FloristInitial() || FloristLoading() => const PosLoadingSkeleton(),
+        FloristInitial() || FloristLoading() => PosLoadingSkeleton.list(),
         FloristError(:final message) => PosErrorState(message: message, onRetry: () => ref.read(floristProvider.notifier).load()),
         FloristLoaded(:final arrangements, :final freshnessLogs, :final subscriptions) => TabBarView(
           controller: _tabController,
           children: [
             arrangements.isEmpty
-                ? const PosEmptyState(message: 'No arrangements', icon: Icons.local_florist)
+                ? const PosEmptyState(title: 'No arrangements', icon: Icons.local_florist)
                 : ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: arrangements.length,
@@ -89,7 +89,7 @@ class _FloristDashboardPageState extends ConsumerState<FloristDashboardPage> wit
                     },
                   ),
             freshnessLogs.isEmpty
-                ? const PosEmptyState(message: 'No freshness logs', icon: Icons.eco)
+                ? const PosEmptyState(title: 'No freshness logs', icon: Icons.eco)
                 : ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: freshnessLogs.length,
@@ -99,15 +99,15 @@ class _FloristDashboardPageState extends ConsumerState<FloristDashboardPage> wit
                         padding: const EdgeInsets.only(bottom: 8),
                         child: FreshnessLogCard(
                           log: l,
-                          onStatusChange: (status) {
-                            ref.read(floristProvider.notifier).updateFreshnessLogStatus(l.id, status);
+                          onTap: () {
+                            // View freshness log details
                           },
                         ),
                       );
                     },
                   ),
             subscriptions.isEmpty
-                ? const PosEmptyState(message: 'No subscriptions', icon: Icons.repeat)
+                ? const PosEmptyState(title: 'No subscriptions', icon: Icons.repeat)
                 : ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: subscriptions.length,

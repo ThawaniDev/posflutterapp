@@ -22,11 +22,11 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
 
   Color _statusColor(String status) {
     return switch (status) {
-      'paid' => Colors.green,
-      'pending' => Colors.orange,
-      'failed' => Colors.red,
-      'refunded' => Colors.purple,
-      _ => Colors.grey,
+      'paid' => AppColors.success,
+      'pending' => AppColors.warning,
+      'failed' => AppColors.error,
+      'refunded' => AppColors.purple,
+      _ => AppColors.textSecondary,
     };
   }
 
@@ -106,7 +106,7 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
                     onPressed: () => ref.read(billingInvoiceActionProvider.notifier).markPaid(widget.invoiceId),
                     icon: const Icon(Icons.check_circle),
                     label: const Text('Mark as Paid'),
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.green, foregroundColor: Colors.white),
+                    style: ElevatedButton.styleFrom(backgroundColor: AppColors.success, foregroundColor: Colors.white),
                   ),
                 ),
               ],
@@ -119,7 +119,7 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
                     },
                     icon: const Icon(Icons.undo),
                     label: const Text('Process Refund'),
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, foregroundColor: Colors.white),
+                    style: ElevatedButton.styleFrom(backgroundColor: AppColors.warning, foregroundColor: Colors.white),
                   ),
                 ),
               ],
@@ -160,7 +160,7 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: const TextStyle(color: Colors.grey)),
+          Text(label, style: const TextStyle(color: AppColors.textSecondary)),
           Text(value, style: const TextStyle(fontWeight: FontWeight.w500)),
         ],
       ),

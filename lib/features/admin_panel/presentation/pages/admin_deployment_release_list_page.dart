@@ -96,7 +96,7 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
             child: switch (state) {
               DeploymentReleaseListLoading() => const Center(child: CircularProgressIndicator()),
               DeploymentReleaseListError(message: final m) => Center(
-                child: Text(m, style: const TextStyle(color: Colors.red)),
+                child: Text(m, style: const TextStyle(color: AppColors.error)),
               ),
               DeploymentReleaseListLoaded(data: final d) => _buildList(d),
               _ => const Center(child: Text('Load releases')),
@@ -122,7 +122,7 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
         return Card(
           margin: const EdgeInsets.only(bottom: AppSpacing.sm),
           child: ListTile(
-            leading: Icon(_platformIcon(r['platform'] ?? ''), color: isActive ? Colors.green : Colors.grey),
+            leading: Icon(_platformIcon(r['platform'] ?? ''), color: isActive ? AppColors.success : AppColors.textSecondary),
             title: Text('v${r['version']} (${r['platform']})', style: const TextStyle(fontWeight: FontWeight.w600)),
             subtitle: Text(
               'Build: ${r['build_number'] ?? 'N/A'} · '
@@ -132,12 +132,12 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
             trailing: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: isActive ? Colors.green.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
+                color: isActive ? AppColors.success.withOpacity(0.1) : AppColors.textSecondary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
                 isActive ? 'Active' : 'Inactive',
-                style: TextStyle(color: isActive ? Colors.green : Colors.grey, fontSize: 12, fontWeight: FontWeight.w600),
+                style: TextStyle(color: isActive ? AppColors.success : AppColors.textSecondary, fontSize: 12, fontWeight: FontWeight.w600),
               ),
             ),
           ),

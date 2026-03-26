@@ -35,7 +35,7 @@ class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOve
       body: switch (state) {
         DeploymentOverviewLoading() => const Center(child: CircularProgressIndicator()),
         DeploymentOverviewError(message: final m) => Center(
-          child: Text(m, style: const TextStyle(color: Colors.red)),
+          child: Text(m, style: const TextStyle(color: AppColors.error)),
         ),
         DeploymentOverviewLoaded(data: final d) => _buildOverview(d),
         _ => const Center(child: Text('Load overview')),
@@ -88,11 +88,11 @@ class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOve
                   const Divider(),
                   Text(
                     'Active: v${activeRelease['version']}',
-                    style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.green),
+                    style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.success),
                   ),
-                  Text('Rollout: ${activeRelease['rollout_percentage']}%', style: TextStyle(color: Colors.grey[600])),
+                  Text('Rollout: ${activeRelease['rollout_percentage']}%', style: TextStyle(color: AppColors.textSecondary)),
                 ] else
-                  Text('No active release', style: TextStyle(color: Colors.grey[500])),
+                  Text('No active release', style: TextStyle(color: AppColors.textSecondary)),
               ],
             ),
           ),

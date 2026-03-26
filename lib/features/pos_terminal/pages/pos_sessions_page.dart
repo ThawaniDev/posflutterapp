@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/features/pos_terminal/providers/pos_terminal_providers.dart';
 import 'package:thawani_pos/features/pos_terminal/providers/pos_terminal_state.dart';
 
@@ -29,7 +30,7 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(message, style: const TextStyle(color: Colors.red)),
+              Text(message, style: const TextStyle(color: AppColors.error)),
               const SizedBox(height: 16),
               ElevatedButton(onPressed: () => ref.read(posSessionsProvider.notifier).load(), child: const Text('Retry')),
             ],

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/accounting/providers/accounting_providers.dart';
 import 'package:thawani_pos/features/accounting/providers/accounting_state.dart';
 
@@ -93,21 +96,10 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
         ],
       ),
       body: switch (configState) {
-        AutoExportConfigInitial() || AutoExportConfigLoading() => const Center(child: CircularProgressIndicator()),
-        AutoExportConfigError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.error_outline, size: 48, color: Colors.red.shade300),
-              const SizedBox(height: 12),
-              Text('Error: $message', style: const TextStyle(color: Colors.red)),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () => ref.read(autoExportConfigProvider.notifier).loadConfig(),
-                child: const Text('Retry'),
-              ),
-            ],
-          ),
+        AutoExportConfigInitial() || AutoExportConfigLoading() => PosLoadingSkeleton.list(),
+        AutoExportConfigError(:final message) => PosErrorState(
+          message: message,
+          onRetry: () => ref.read(autoExportConfigProvider.notifier).loadConfig(),
         ),
         AutoExportConfigLoaded() => _buildForm(),
       },
@@ -116,12 +108,17 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
 
   Widget _buildForm() {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.paddingAll16,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Enable toggle
           Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              side: BorderSide(color: Theme.of(context).dividerColor),
+            ),
             child: SwitchListTile(
               title: const Text('Enable Auto Export', style: TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(_enabled ? 'Exports will run automatically on schedule' : 'Auto export is disabled'),
@@ -132,17 +129,22 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
               }),
             ),
           ),
-          const SizedBox(height: 12),
+          AppSpacing.gapH12,
 
           // Frequency
           Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              side: BorderSide(color: Theme.of(context).dividerColor),
+            ),
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: AppSpacing.paddingAll16,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('Frequency', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 12),
+                  AppSpacing.gapH12,
                   SegmentedButton<String>(
                     segments: const [
                       ButtonSegment(value: 'daily', label: Text('Daily')),
@@ -155,12 +157,12 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
                       _hasChanges = true;
                     }),
                   ),
-                  const SizedBox(height: 16),
+                  AppSpacing.gapH16,
 
                   // Day selection
                   if (_frequency == 'weekly') ...[
                     const Text('Day of Week'),
-                    const SizedBox(height: 8),
+                    AppSpacing.gapH8,
                     Wrap(
                       spacing: 8,
                       children: List.generate(7, (i) {
@@ -177,7 +179,7 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
                   ],
                   if (_frequency == 'monthly') ...[
                     const Text('Day of Month'),
-                    const SizedBox(height: 8),
+                    AppSpacing.gapH8,
                     DropdownButtonFormField<int>(
                       value: _dayOfMonth.clamp(1, 28),
                       decoration: const InputDecoration(border: OutlineInputBorder(), isDense: true),
@@ -194,7 +196,7 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
                   ],
 
                   // Time
-                  const SizedBox(height: 16),
+                  AppSpacing.gapH16,
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.access_time),
@@ -214,17 +216,22 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
               ),
             ),
           ),
-          const SizedBox(height: 12),
+          AppSpacing.gapH12,
 
           // Export types
           Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              side: BorderSide(color: Theme.of(context).dividerColor),
+            ),
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: AppSpacing.paddingAll16,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('Export Types', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 8),
+                  AppSpacing.gapH8,
                   ..._allExportTypes.map(
                     (t) => CheckboxListTile(
                       title: Text(_formatExportType(t)),
@@ -244,17 +251,22 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
               ),
             ),
           ),
-          const SizedBox(height: 12),
+          AppSpacing.gapH12,
 
           // Notification & retry
           Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              side: BorderSide(color: Theme.of(context).dividerColor),
+            ),
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: AppSpacing.paddingAll16,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('Notifications', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 12),
+                  AppSpacing.gapH12,
                   TextField(
                     controller: _emailController,
                     onChanged: (_) => setState(() => _hasChanges = true),
@@ -265,7 +277,7 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
                     ),
                     keyboardType: TextInputType.emailAddress,
                   ),
-                  const SizedBox(height: 12),
+                  AppSpacing.gapH12,
                   SwitchListTile(
                     contentPadding: EdgeInsets.zero,
                     title: const Text('Retry on Failure'),
@@ -280,23 +292,28 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          AppSpacing.gapH16,
 
           // Last/Next run info
           if (ref.read(autoExportConfigProvider) case AutoExportConfigLoaded(:final lastRunAt, :final nextRunAt))
             Card(
-              color: Colors.grey.shade50,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppRadius.md),
+                side: BorderSide(color: Theme.of(context).dividerColor),
+              ),
+              color: AppColors.primary5,
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: AppSpacing.paddingAll16,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('Schedule Info', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 8),
+                    AppSpacing.gapH8,
                     if (lastRunAt != null) _buildInfoRow('Last Run', _formatDate(lastRunAt)),
                     if (nextRunAt != null) _buildInfoRow('Next Run', _formatDate(nextRunAt)),
                     if (lastRunAt == null && nextRunAt == null)
-                      Text('No runs scheduled yet', style: TextStyle(color: Colors.grey.shade500)),
+                      const Text('No runs scheduled yet', style: TextStyle(color: AppColors.textSecondary)),
                   ],
                 ),
               ),
@@ -312,7 +329,7 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(color: Colors.grey.shade600)),
+          Text(label, style: const TextStyle(color: AppColors.textSecondary)),
           Text(value, style: const TextStyle(fontWeight: FontWeight.w500)),
         ],
       ),

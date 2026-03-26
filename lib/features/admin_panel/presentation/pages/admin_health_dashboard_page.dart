@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
@@ -21,10 +22,10 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
   }
 
   Color _statusColor(String? status) => switch (status) {
-    'healthy' => Colors.green,
-    'degraded' => Colors.orange,
-    'down' => Colors.red,
-    _ => Colors.grey,
+    'healthy' => AppColors.success,
+    'degraded' => AppColors.warning,
+    'down' => AppColors.error,
+    _ => AppColors.textSecondary,
   };
 
   IconData _statusIcon(String? status) => switch (status) {
@@ -74,7 +75,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
               HealthDashboardError(message: final msg) => Card(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
-                  child: Text(msg, style: const TextStyle(color: Colors.red)),
+                  child: Text(msg, style: const TextStyle(color: AppColors.error)),
                 ),
               ),
             },
@@ -85,7 +86,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
             switch (storeState) {
               StoreHealthListInitial() || StoreHealthListLoading() => const Center(child: CircularProgressIndicator()),
               StoreHealthListLoaded(data: final data) => _buildStoreHealth(data),
-              StoreHealthListError(message: final msg) => Text(msg, style: const TextStyle(color: Colors.red)),
+              StoreHealthListError(message: final msg) => Text(msg, style: const TextStyle(color: AppColors.error)),
             },
           ],
         ),
@@ -116,13 +117,13 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
                       CircularProgressIndicator(
                         value: healthScore / 100,
                         strokeWidth: 8,
-                        backgroundColor: Colors.grey.shade200,
+                        backgroundColor: AppColors.borderLight,
                         valueColor: AlwaysStoppedAnimation(
                           healthScore >= 80
-                              ? Colors.green
+                              ? AppColors.success
                               : healthScore >= 50
-                              ? Colors.orange
-                              : Colors.red,
+                              ? AppColors.warning
+                              : AppColors.error,
                         ),
                       ),
                       Text(
@@ -141,11 +142,11 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
                       const SizedBox(height: 8),
                       Row(
                         children: [
-                          _statChip('Healthy', summary['healthy'] ?? 0, Colors.green),
+                          _statChip('Healthy', summary['healthy'] ?? 0, AppColors.success),
                           const SizedBox(width: 8),
-                          _statChip('Degraded', summary['degraded'] ?? 0, Colors.orange),
+                          _statChip('Degraded', summary['degraded'] ?? 0, AppColors.warning),
                           const SizedBox(width: 8),
-                          _statChip('Down', summary['down'] ?? 0, Colors.red),
+                          _statChip('Down', summary['down'] ?? 0, AppColors.error),
                         ],
                       ),
                     ],
@@ -200,12 +201,12 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
         return Card(
           margin: const EdgeInsets.only(bottom: 8),
           child: ListTile(
-            leading: Icon(isOk ? Icons.check_circle : Icons.error, color: isOk ? Colors.green : Colors.red),
+            leading: Icon(isOk ? Icons.check_circle : Icons.error, color: isOk ? AppColors.success : AppColors.error),
             title: Text('Store: ${s['store_id']?.toString().substring(0, 8) ?? ''}...'),
             subtitle: Text('Date: ${s['date'] ?? ''} • Errors: ${s['error_count'] ?? 0}'),
             trailing: Chip(
               label: Text(syncStatus, style: const TextStyle(fontSize: 11)),
-              backgroundColor: isOk ? Colors.green.shade50 : Colors.red.shade50,
+              backgroundColor: isOk ? AppColors.success.withValues(alpha: 0.08) : AppColors.error.withValues(alpha: 0.08),
               side: BorderSide.none,
             ),
           ),

@@ -163,6 +163,9 @@ import 'package:thawani_pos/features/support/pages/create_ticket_page.dart';
 import 'package:thawani_pos/features/support/pages/ticket_detail_page.dart';
 // Delivery
 import 'package:thawani_pos/features/delivery_integration/pages/delivery_dashboard_page.dart';
+import 'package:thawani_pos/features/delivery_integration/pages/delivery_config_page.dart';
+import 'package:thawani_pos/features/delivery_integration/pages/delivery_order_detail_page.dart';
+import 'package:thawani_pos/features/delivery_integration/pages/menu_sync_page.dart';
 // Thawani Pay
 import 'package:thawani_pos/features/thawani_integration/pages/thawani_dashboard_page.dart';
 // Branches
@@ -830,6 +833,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
           // ─── Delivery Integration ───
           GoRoute(path: Routes.delivery, name: 'delivery', builder: (context, state) => const DeliveryDashboardPage()),
+          GoRoute(path: Routes.deliveryConfig, name: 'deliveryConfig', builder: (context, state) => const DeliveryConfigPage()),
+          GoRoute(path: '${Routes.deliveryConfig}/:id', name: 'deliveryConfigEdit', builder: (context, state) => DeliveryConfigPage(configId: state.pathParameters['id'])),
+          GoRoute(path: '${Routes.deliveryOrderDetail}/:id', name: 'deliveryOrderDetail', builder: (context, state) => DeliveryOrderDetailPage(orderId: state.pathParameters['id']!)),
+          GoRoute(path: Routes.deliveryMenuSync, name: 'deliveryMenuSync', builder: (context, state) => const MenuSyncPage()),
 
           // ─── Notifications ───
           GoRoute(path: Routes.notifications, name: 'notifications', builder: (context, state) => const NotificationsListPage()),

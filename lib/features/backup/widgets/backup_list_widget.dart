@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/backup/providers/backup_providers.dart';
 import 'package:thawani_pos/features/backup/providers/backup_state.dart';
@@ -18,7 +19,7 @@ class BackupListWidget extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error_outline, size: 48, color: Colors.red),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.error),
             AppSpacing.gapH8,
             Text(message, textAlign: TextAlign.center),
           ],
@@ -36,7 +37,7 @@ class BackupListWidget extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.cloud_off, size: 48, color: Colors.grey),
+            Icon(Icons.cloud_off, size: 48, color: AppColors.textSecondary),
             SizedBox(height: 8),
             Text('No backups yet'),
           ],
@@ -63,14 +64,14 @@ class BackupListWidget extends ConsumerWidget {
                   ? Icons.error
                   : Icons.hourglass_empty,
               color: status == 'completed'
-                  ? Colors.green
+                  ? AppColors.success
                   : status == 'failed'
-                  ? Colors.red
-                  : Colors.orange,
+                  ? AppColors.error
+                  : AppColors.warning,
             ),
             title: Text('${type[0].toUpperCase()}${type.substring(1)} Backup'),
             subtitle: Text('Size: ${_formatBytes(size)} • Status: $status'),
-            trailing: b['is_verified'] == true ? const Icon(Icons.verified, color: Colors.blue, size: 20) : null,
+            trailing: b['is_verified'] == true ? const Icon(Icons.verified, color: AppColors.info, size: 20) : null,
           ),
         );
       },

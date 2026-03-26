@@ -53,7 +53,7 @@ class PlanCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  '${price.toStringAsFixed(2)} OMR',
+                  '${price.toStringAsFixed(2)} SAR',
                   style: Theme.of(
                     context,
                   ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
@@ -70,7 +70,7 @@ class PlanCard extends StatelessWidget {
               AppSpacing.verticalXs,
               Text(
                 '${plan.trialDays}-day free trial',
-                style: TextStyle(color: Colors.green[700], fontSize: 13, fontWeight: FontWeight.w500),
+                style: TextStyle(color: AppColors.successDark, fontSize: 13, fontWeight: FontWeight.w500),
               ),
             ],
 

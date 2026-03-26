@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/hardware/enums/connection_type.dart';
 import 'package:thawani_pos/features/hardware/enums/hardware_device_type.dart';
@@ -68,14 +69,17 @@ class DeviceConfigCard extends StatelessWidget {
                 if (config.isActive == true)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(color: Colors.green.shade50, borderRadius: AppRadius.borderSm),
-                    child: Text('Active', style: theme.textTheme.labelSmall?.copyWith(color: Colors.green.shade700)),
+                    decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.1), borderRadius: AppRadius.borderSm),
+                    child: Text('Active', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.successDark)),
                   )
                 else
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(color: Colors.grey.shade100, borderRadius: AppRadius.borderSm),
-                    child: Text('Inactive', style: theme.textTheme.labelSmall?.copyWith(color: Colors.grey.shade600)),
+                    decoration: BoxDecoration(
+                      color: AppColors.textSecondary.withValues(alpha: 0.1),
+                      borderRadius: AppRadius.borderSm,
+                    ),
+                    child: Text('Inactive', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.textSecondary)),
                   ),
               ],
             ),

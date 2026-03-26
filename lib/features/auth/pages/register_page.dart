@@ -27,7 +27,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
   final _storeNameController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
-  String _selectedCountry = 'OM';
+  String _selectedCountry = 'SA';
 
   @override
   void dispose() {
@@ -54,7 +54,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
           organizationName: _orgNameController.text.trim().isNotEmpty ? _orgNameController.text.trim() : null,
           storeName: _storeNameController.text.trim().isNotEmpty ? _storeNameController.text.trim() : null,
           country: _selectedCountry,
-          currency: _selectedCountry == 'OM' ? 'OMR' : 'SAR',
+          currency: 'SAR',
         );
   }
 
@@ -67,7 +67,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
       if (next is AuthAuthenticated) {
         context.go(Routes.dashboard);
       } else if (next is AuthError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: Colors.red.shade700));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
       }
     });
 
@@ -171,10 +171,10 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                       ),
                       items: const [
-                        DropdownMenuItem(value: 'OM', child: Text('Oman (OMR)')),
-                        DropdownMenuItem(value: 'SA', child: Text('Saudi Arabia (SAR)')),
+                        DropdownMenuItem(value: 'OM', child: Text('Oman')),
+                        DropdownMenuItem(value: 'SA', child: Text('Saudi Arabia')),
                       ],
-                      onChanged: isLoading ? null : (v) => setState(() => _selectedCountry = v ?? 'OM'),
+                      onChanged: isLoading ? null : (v) => setState(() => _selectedCountry = v ?? 'SA'),
                     ),
                     const SizedBox(height: AppSpacing.xl),
 

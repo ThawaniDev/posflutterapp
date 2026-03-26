@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import '../nice_to_have_providers.dart';
 import '../nice_to_have_state.dart';
@@ -13,7 +14,7 @@ class CfdConfigWidget extends ConsumerWidget {
     return switch (state) {
       CfdConfigInitial() || CfdConfigLoading() => const Center(child: CircularProgressIndicator()),
       CfdConfigError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+        child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
       ),
       CfdConfigLoaded(:final config) => SingleChildScrollView(
         padding: AppSpacing.paddingAll16,

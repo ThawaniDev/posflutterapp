@@ -48,7 +48,10 @@ class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDash
                     leading: const Icon(Icons.history, color: AppColors.primary),
                     title: Text(a['action'] as String? ?? ''),
                     subtitle: Text(a['entity_type'] as String? ?? ''),
-                    trailing: Text(_formatDate(a['created_at']), style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                    trailing: Text(
+                      _formatDate(a['created_at']),
+                      style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                    ),
                   ),
                 ),
               ),
@@ -72,13 +75,13 @@ class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDash
 
   Widget _buildKpiGrid(Map<String, dynamic> kpi) {
     final items = [
-      _KpiItem('Active Stores', '${kpi['total_active_stores'] ?? 0}', Icons.store, Colors.blue),
-      _KpiItem('MRR', '\$${(kpi['mrr'] as num? ?? 0).toStringAsFixed(2)}', Icons.attach_money, Colors.green),
-      _KpiItem('New Signups', '${kpi['new_signups_this_month'] ?? 0}', Icons.person_add, Colors.orange),
-      _KpiItem('Churn Rate', '${kpi['churn_rate'] ?? 0}%', Icons.trending_down, Colors.red),
-      _KpiItem('Total Orders', '${kpi['total_orders'] ?? 0}', Icons.shopping_cart, Colors.purple),
-      _KpiItem('Total GMV', '\$${(kpi['total_gmv'] as num? ?? 0).toStringAsFixed(2)}', Icons.payments, Colors.teal),
-      _KpiItem('ZATCA Compliance', '${kpi['zatca_compliance_rate'] ?? 100}%', Icons.verified, Colors.indigo),
+      _KpiItem('Active Stores', '${kpi['total_active_stores'] ?? 0}', Icons.store, AppColors.info),
+      _KpiItem('MRR', '\$${(kpi['mrr'] as num? ?? 0).toStringAsFixed(2)}', Icons.attach_money, AppColors.success),
+      _KpiItem('New Signups', '${kpi['new_signups_this_month'] ?? 0}', Icons.person_add, AppColors.warning),
+      _KpiItem('Churn Rate', '${kpi['churn_rate'] ?? 0}%', Icons.trending_down, AppColors.error),
+      _KpiItem('Total Orders', '${kpi['total_orders'] ?? 0}', Icons.shopping_cart, AppColors.purple),
+      _KpiItem('Total GMV', '\$${(kpi['total_gmv'] as num? ?? 0).toStringAsFixed(2)}', Icons.payments, AppColors.info),
+      _KpiItem('ZATCA Compliance', '${kpi['zatca_compliance_rate'] ?? 100}%', Icons.verified, AppColors.info),
     ];
 
     return GridView.builder(
@@ -107,7 +110,7 @@ class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDash
                   item.value,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: item.color),
                 ),
-                Text(item.label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                Text(item.label, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
               ],
             ),
           ),

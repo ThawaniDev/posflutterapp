@@ -31,7 +31,7 @@ class AuthRepository {
     String? storeName,
     String? storeNameAr,
     String country = 'OM',
-    String currency = 'OMR',
+    String currency = 'SAR',
     String locale = 'ar',
     String? businessType,
   }) async {

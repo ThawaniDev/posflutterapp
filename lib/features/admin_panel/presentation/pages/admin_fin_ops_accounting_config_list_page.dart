@@ -86,7 +86,7 @@ class _ConfigsTab extends ConsumerWidget {
           child: ListTile(
             leading: const CircleAvatar(
               backgroundColor: Color(0xFFE8F5E9),
-              child: Icon(Icons.settings, color: Colors.green, size: 20),
+              child: Icon(Icons.settings, color: AppColors.success, size: 20),
             ),
             title: Text(
               item['provider']?.toString() ?? 'Config #${item['id']}',

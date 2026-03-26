@@ -40,19 +40,19 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
   }
 
   Color _statusColor(String status) => switch (status) {
-    'open' => Colors.blue,
-    'in_progress' => Colors.orange,
-    'resolved' => Colors.green,
-    'closed' => Colors.grey,
-    _ => Colors.grey,
+    'open' => AppColors.info,
+    'in_progress' => AppColors.warning,
+    'resolved' => AppColors.success,
+    'closed' => AppColors.textSecondary,
+    _ => AppColors.textSecondary,
   };
 
   Color _priorityColor(String priority) => switch (priority) {
-    'low' => Colors.grey,
-    'medium' => Colors.blue,
-    'high' => Colors.orange,
-    'critical' => Colors.red,
-    _ => Colors.grey,
+    'low' => AppColors.textSecondary,
+    'medium' => AppColors.info,
+    'high' => AppColors.warning,
+    'critical' => AppColors.error,
+    _ => AppColors.textSecondary,
   };
 
   IconData _priorityIcon(String priority) => switch (priority) {
@@ -172,7 +172,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
             child: switch (state) {
               TicketListLoading() => const Center(child: CircularProgressIndicator()),
               TicketListError(:final message) => Center(
-                child: Text(message, style: const TextStyle(color: Colors.red)),
+                child: Text(message, style: const TextStyle(color: AppColors.error)),
               ),
               TicketListLoaded(:final data) => _buildList(data),
               _ => const SizedBox.shrink(),

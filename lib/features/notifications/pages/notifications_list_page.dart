@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/notifications/providers/notification_providers.dart';
 import 'package:thawani_pos/features/notifications/providers/notification_state.dart';
 
@@ -53,7 +56,7 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
               padding: const EdgeInsets.only(right: 8),
               child: Chip(
                 label: Text('${unreadState.count} unread', style: const TextStyle(color: Colors.white, fontSize: 12)),
-                backgroundColor: Colors.red,
+                backgroundColor: AppColors.error,
               ),
             ),
           // Mark all as read
@@ -87,7 +90,7 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
       child: Row(
         children: [
           FilterChip(label: const Text('All'), selected: _selectedCategory == null, onSelected: (_) => _filterByCategory(null)),
-          const SizedBox(width: 8),
+          AppSpacing.gapW8,
           ...categories.map(
             (cat) => Padding(
               padding: const EdgeInsets.only(right: 8),
@@ -105,22 +108,14 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
 
   Widget _buildList(NotificationListState state) {
     return switch (state) {
-      NotificationListInitial() || NotificationListLoading() => const Center(child: CircularProgressIndicator()),
-      NotificationListError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+      NotificationListInitial() || NotificationListLoading() => Center(child: PosLoadingSkeleton.list()),
+      NotificationListError(:final message) => PosErrorState(
+        message: message,
+        onRetry: () => ref.read(notificationListProvider.notifier).load(category: _selectedCategory),
       ),
       NotificationListLoaded(:final notifications) =>
         notifications.isEmpty
-            ? const Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.notifications_none, size: 64, color: Colors.grey),
-                    SizedBox(height: 12),
-                    Text('No notifications', style: TextStyle(color: Colors.grey, fontSize: 16)),
-                  ],
-                ),
-              )
+            ? const PosEmptyState(title: 'No notifications', icon: Icons.notifications_none)
             : RefreshIndicator(
                 onRefresh: () => ref.read(notificationListProvider.notifier).load(category: _selectedCategory),
                 child: ListView.separated(
@@ -144,7 +139,7 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
       key: Key(id),
       direction: DismissDirection.endToStart,
       background: Container(
-        color: Colors.red,
+        color: AppColors.error,
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 16),
         child: const Icon(Icons.delete, color: Colors.white),
@@ -152,8 +147,8 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
       onDismissed: (_) => ref.read(notificationActionProvider.notifier).delete(id),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: isRead ? Colors.grey.shade200 : _categoryColor(category),
-          child: Icon(_categoryIcon(category), color: isRead ? Colors.grey : Colors.white, size: 20),
+          backgroundColor: isRead ? AppColors.borderLight : _categoryColor(category),
+          child: Icon(_categoryIcon(category), color: isRead ? AppColors.textSecondary : Colors.white, size: 20),
         ),
         title: Text(title, style: TextStyle(fontWeight: isRead ? FontWeight.normal : FontWeight.bold)),
         subtitle: Column(
@@ -161,14 +156,14 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
           children: [
             Text(message, maxLines: 2, overflow: TextOverflow.ellipsis),
             if (createdAt != null) ...[
-              const SizedBox(height: 4),
-              Text(_formatTime(createdAt), style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
+              AppSpacing.gapH4,
+              Text(_formatTime(createdAt), style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
             ],
           ],
         ),
         trailing: !isRead
             ? IconButton(
-                icon: const Icon(Icons.circle, size: 12, color: Colors.blue),
+                icon: const Icon(Icons.circle, size: 12, color: AppColors.info),
                 tooltip: 'Mark as read',
                 onPressed: () => ref.read(notificationActionProvider.notifier).markAsRead(id),
               )
@@ -192,13 +187,13 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
 
   Color _categoryColor(String category) {
     return switch (category) {
-      'order' => Colors.blue,
-      'inventory' => Colors.orange,
-      'promotion' => Colors.purple,
-      'system' => Colors.grey,
-      'payment' => Colors.green,
-      'staff' => Colors.teal,
-      _ => Colors.blueGrey,
+      'order' => AppColors.info,
+      'inventory' => AppColors.warning,
+      'promotion' => AppColors.purple,
+      'system' => AppColors.textSecondary,
+      'payment' => AppColors.success,
+      'staff' => AppColors.info,
+      _ => AppColors.textSecondary,
     };
   }
 

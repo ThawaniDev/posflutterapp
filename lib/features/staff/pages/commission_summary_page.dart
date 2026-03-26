@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/staff/providers/staff_providers.dart';
 import 'package:thawani_pos/features/staff/providers/staff_state.dart';
 
@@ -17,7 +20,7 @@ class CommissionSummaryPage extends ConsumerStatefulWidget {
 class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
   DateTimeRange? _dateRange;
   final _dateFormat = DateFormat('yyyy-MM-dd');
-  final _currencyFormat = NumberFormat.currency(symbol: 'OMR ');
+  final _currencyFormat = NumberFormat.currency(symbol: 'SAR ');
 
   @override
   void initState() {
@@ -37,7 +40,6 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(commissionProvider(widget.staffId));
-    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -48,32 +50,20 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
         ],
       ),
       body: switch (state) {
-        CommissionInitial() || CommissionLoading() => const Center(child: CircularProgressIndicator()),
-        CommissionError(message: final msg) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.error_outline, size: 48, color: colorScheme.error),
-              const SizedBox(height: 16),
-              Text(msg),
-              const SizedBox(height: 16),
-              FilledButton(onPressed: _load, child: const Text('Retry')),
-            ],
-          ),
-        ),
+        CommissionInitial() || CommissionLoading() => PosLoadingSkeleton.list(),
+        CommissionError(message: final msg) => PosErrorState(message: msg, onRetry: _load),
         CommissionLoaded(summary: final summary) => _buildContent(context, summary),
       },
     );
   }
 
   Widget _buildContent(BuildContext context, Map<String, dynamic> summary) {
-    final colorScheme = Theme.of(context).colorScheme;
     final totalEarnings = (summary['total_earnings'] as num?)?.toDouble() ?? 0.0;
     final totalOrders = (summary['total_orders'] as num?)?.toInt() ?? 0;
     final avgPerOrder = (summary['avg_per_order'] as num?)?.toDouble() ?? 0.0;
 
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: AppSpacing.paddingAll16,
       children: [
         // Date range indicator
         if (_dateRange != null)
@@ -96,46 +86,51 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
                 title: 'Total Earnings',
                 value: _currencyFormat.format(totalEarnings),
                 icon: Icons.attach_money,
-                color: Colors.green,
+                color: AppColors.success,
               ),
             ),
-            const SizedBox(width: 12),
+            AppSpacing.gapW12,
             Expanded(
               child: _SummaryCard(
                 title: 'Total Orders',
                 value: totalOrders.toString(),
                 icon: Icons.receipt_long,
-                color: Colors.blue,
+                color: AppColors.info,
               ),
             ),
-            const SizedBox(width: 12),
+            AppSpacing.gapW12,
             Expanded(
               child: _SummaryCard(
                 title: 'Avg / Order',
                 value: _currencyFormat.format(avgPerOrder),
                 icon: Icons.trending_up,
-                color: Colors.purple,
+                color: AppColors.purple,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 32),
+        AppSpacing.gapH32,
 
         // Performance section
         Text('Performance Overview', style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 16),
+        AppSpacing.gapH16,
 
         Card(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadius.md),
+            side: BorderSide(color: Theme.of(context).dividerColor),
+          ),
           child: Padding(
-            padding: const EdgeInsets.all(24),
+            padding: AppSpacing.paddingAll24,
             child: totalOrders == 0
                 ? Center(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.analytics_outlined, size: 48, color: colorScheme.outline),
-                        const SizedBox(height: 16),
-                        Text('No commission data for this period', style: TextStyle(color: colorScheme.outline)),
+                        Icon(Icons.analytics_outlined, size: 48, color: AppColors.textSecondary),
+                        AppSpacing.gapH16,
+                        Text('No commission data for this period', style: TextStyle(color: AppColors.textSecondary)),
                       ],
                     ),
                   )
@@ -191,16 +186,21 @@ class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        side: BorderSide(color: Theme.of(context).dividerColor),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: AppSpacing.paddingAll16,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Icon(icon, color: color, size: 28),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             Text(value, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 4),
-            Text(title, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.outline)),
+            AppSpacing.gapH4,
+            Text(title, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
           ],
         ),
       ),

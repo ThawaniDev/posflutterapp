@@ -111,7 +111,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
     return FilterChip(
       label: Text(label),
       selected: selected,
-      selectedColor: Colors.blue.withValues(alpha: 0.2),
+      selectedColor: AppColors.info.withValues(alpha: 0.2),
       onSelected: (_) {
         setState(() => _statusFilter = value);
         _applyFilters();
@@ -145,7 +145,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
                         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                       ),
                       if (fee['store_name'] != null)
-                        Text('Store: ${fee['store_name']}', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                        Text('Store: ${fee['store_name']}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
                     ],
                   ),
                 ),
@@ -158,7 +158,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: isPaid ? Colors.green.shade100 : Colors.orange.shade100,
+                    color: isPaid ? AppColors.success.withValues(alpha: 0.15) : AppColors.warning.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -166,7 +166,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
                     style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
-                      color: isPaid ? Colors.green.shade800 : Colors.orange.shade800,
+                      color: isPaid ? AppColors.successDark : AppColors.warningDark,
                     ),
                   ),
                 ),
@@ -177,8 +177,8 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
                   onPressed: () => _showEditDialog(fee),
                 ),
                 TextButton.icon(
-                  icon: const Icon(Icons.delete, size: 16, color: Colors.red),
-                  label: const Text('Delete', style: TextStyle(color: Colors.red)),
+                  icon: const Icon(Icons.delete, size: 16, color: AppColors.error),
+                  label: const Text('Delete', style: TextStyle(color: AppColors.error)),
                   onPressed: () => _confirmDelete(fee['id']),
                 ),
               ],
@@ -186,7 +186,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
             if (fee['notes'] != null && (fee['notes'] as String).isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: AppSpacing.xs),
-                child: Text('Notes: ${fee['notes']}', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                child: Text('Notes: ${fee['notes']}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
               ),
           ],
         ),
@@ -301,7 +301,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
             onPressed: () async {
               await ref.read(implementationFeeActionProvider.notifier).deleteFee(id.toString());
               if (ctx.mounted) Navigator.pop(ctx);

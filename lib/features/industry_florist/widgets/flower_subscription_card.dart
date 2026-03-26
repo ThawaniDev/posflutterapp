@@ -75,7 +75,7 @@ class FlowerSubscriptionCard extends StatelessWidget {
                   ],
                   const Spacer(),
                   Text(
-                    '${subscription.pricePerDelivery.toStringAsFixed(2)} OMR',
+                    '${subscription.pricePerDelivery.toStringAsFixed(2)} SAR',
                     style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.w600),
                   ),
                 ],

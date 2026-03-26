@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/accounting/providers/accounting_providers.dart';
 import 'package:thawani_pos/features/accounting/providers/accounting_state.dart';
 
@@ -56,7 +59,7 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
               ref.read(accountingExportsProvider.notifier).loadExports();
             },
           ),
-          const SizedBox(width: 8),
+          AppSpacing.gapW8,
           ...statuses.map(
             (s) => Padding(
               padding: const EdgeInsets.only(right: 8),
@@ -78,36 +81,14 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
 
   Widget _buildExportList(AccountingExportsState state) {
     return switch (state) {
-      AccountingExportsInitial() || AccountingExportsLoading() => const Center(child: CircularProgressIndicator()),
-      AccountingExportsError(:final message) => Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.error_outline, size: 48, color: Colors.red.shade300),
-            const SizedBox(height: 12),
-            Text('Error: $message', style: const TextStyle(color: Colors.red)),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => ref.read(accountingExportsProvider.notifier).loadExports(),
-              child: const Text('Retry'),
-            ),
-          ],
-        ),
+      AccountingExportsInitial() || AccountingExportsLoading() => PosLoadingSkeleton.list(),
+      AccountingExportsError(:final message) => PosErrorState(
+        message: message,
+        onRetry: () => ref.read(accountingExportsProvider.notifier).loadExports(),
       ),
       AccountingExportsLoaded(:final exports) =>
         exports.isEmpty
-            ? Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.file_download_off, size: 64, color: Colors.grey.shade400),
-                    const SizedBox(height: 12),
-                    const Text('No exports yet', style: TextStyle(color: Colors.grey, fontSize: 16)),
-                    const SizedBox(height: 8),
-                    Text('Tap + to create your first export', style: TextStyle(color: Colors.grey.shade500, fontSize: 14)),
-                  ],
-                ),
-              )
+            ? const PosEmptyState(title: 'No exports yet\nTap + to create your first export', icon: Icons.file_download_off)
             : RefreshIndicator(
                 onRefresh: () => ref.read(accountingExportsProvider.notifier).loadExports(status: _statusFilter),
                 child: ListView.separated(
@@ -145,12 +126,12 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
           Row(
             children: [
               _buildStatusChip(status, statusColor),
-              const SizedBox(width: 8),
-              Text('$entriesCount entries', style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
-              const SizedBox(width: 8),
-              Icon(triggeredBy == 'scheduled' ? Icons.schedule : Icons.touch_app, size: 14, color: Colors.grey.shade500),
-              const SizedBox(width: 4),
-              Text(triggeredBy, style: TextStyle(fontSize: 12, color: Colors.grey.shade500)),
+              AppSpacing.gapW8,
+              Text('$entriesCount entries', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+              AppSpacing.gapW8,
+              Icon(triggeredBy == 'scheduled' ? Icons.schedule : Icons.touch_app, size: 14, color: AppColors.textSecondary),
+              AppSpacing.gapW4,
+              Text(triggeredBy, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
             ],
           ),
           if (exportTypes != null && exportTypes.isNotEmpty)
@@ -177,7 +158,7 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
               padding: const EdgeInsets.only(top: 4),
               child: Text(
                 errorMessage,
-                style: TextStyle(color: Colors.red.shade600, fontSize: 12),
+                style: const TextStyle(color: AppColors.errorDark, fontSize: 12),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -185,14 +166,14 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
           if (createdAt != null)
             Padding(
               padding: const EdgeInsets.only(top: 4),
-              child: Text(_formatDate(createdAt), style: TextStyle(fontSize: 11, color: Colors.grey.shade500)),
+              child: Text(_formatDate(createdAt), style: const TextStyle(fontSize: 11, color: AppColors.textSecondary)),
             ),
         ],
       ),
       isThreeLine: true,
       trailing: status == 'failed'
           ? IconButton(
-              icon: const Icon(Icons.replay, color: Colors.orange),
+              icon: const Icon(Icons.replay, color: AppColors.warning),
               tooltip: 'Retry Export',
               onPressed: () => ref.read(accountingExportsProvider.notifier).retryExport(id),
             )
@@ -255,7 +236,7 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
                   },
                   readOnly: true,
                 ),
-                const SizedBox(height: 12),
+                AppSpacing.gapH12,
                 TextField(
                   controller: endController,
                   decoration: const InputDecoration(
@@ -277,9 +258,9 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
                   },
                   readOnly: true,
                 ),
-                const SizedBox(height: 16),
+                AppSpacing.gapH16,
                 const Text('Export Types (optional)', style: TextStyle(fontWeight: FontWeight.w600)),
-                const SizedBox(height: 8),
+                AppSpacing.gapH8,
                 ...allTypes.map(
                   (t) => CheckboxListTile(
                     title: Text(
@@ -339,11 +320,11 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
 
   Color _statusColor(String status) {
     return switch (status) {
-      'pending' => Colors.orange,
-      'processing' => Colors.blue,
-      'success' => Colors.green,
-      'failed' => Colors.red,
-      _ => Colors.grey,
+      'pending' => AppColors.warning,
+      'processing' => AppColors.info,
+      'success' => AppColors.success,
+      'failed' => AppColors.error,
+      _ => AppColors.textSecondary,
     };
   }
 

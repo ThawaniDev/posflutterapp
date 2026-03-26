@@ -605,8 +605,14 @@ class ApiEndpoints {
   static const String deliveryStats = '/delivery/stats';
   static const String deliveryConfigs = '/delivery/configs';
   static String deliveryConfigToggle(String id) => '/delivery/configs/$id/toggle';
+  static String deliveryConfigTestConnection(String id) => '/delivery/configs/$id/test-connection';
   static const String deliveryOrders = '/delivery/orders';
+  static const String deliveryOrdersActive = '/delivery/orders/active';
+  static String deliveryOrderDetail(String id) => '/delivery/orders/$id';
+  static String deliveryOrderUpdateStatus(String id) => '/delivery/orders/$id/status';
   static const String deliverySyncLogs = '/delivery/sync-logs';
+  static const String deliveryMenuSync = '/delivery/menu-sync';
+  static const String deliveryPlatforms = '/delivery/platforms';
 
   // Thawani Integration
   static const String thawaniStats = '/thawani/stats';

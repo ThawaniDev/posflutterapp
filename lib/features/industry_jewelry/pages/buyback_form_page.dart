@@ -115,7 +115,7 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _ratePerGramCtrl,
-                    label: 'Rate/g (OMR)',
+                    label: 'Rate/g (SAR)',
                     hint: '0.000',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (_) => setState(() {}),
@@ -127,7 +127,7 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
             Align(
               alignment: AlignmentDirectional.centerEnd,
               child: Text(
-                'Total: ${_totalAmount.toStringAsFixed(3)} OMR',
+                'Total: ${_totalAmount.toStringAsFixed(3)} SAR',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
             ),

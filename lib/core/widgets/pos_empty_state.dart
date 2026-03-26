@@ -18,7 +18,7 @@ class PosEmptyState extends StatelessWidget {
 
     return Center(
       child: Padding(
-        padding: AppSpacing.paddingPage,
+        padding: AppSpacing.paddingAll24,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -31,14 +31,16 @@ class PosEmptyState extends StatelessWidget {
             AppSpacing.gapH24,
             Text(
               title,
-              style: AppTypography.headingMedium.copyWith(color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary),
+              style: AppTypography.headlineMedium.copyWith(
+                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+              ),
               textAlign: TextAlign.center,
             ),
             if (subtitle != null) ...[
               AppSpacing.gapH8,
               Text(
                 subtitle!,
-                style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMuted),
+                style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                 textAlign: TextAlign.center,
               ),
             ],

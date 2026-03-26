@@ -74,6 +74,9 @@ class Routes {
 
   // Delivery
   static const String delivery = '/delivery';
+  static const String deliveryConfig = '/delivery/config';
+  static const String deliveryOrderDetail = '/delivery/orders';
+  static const String deliveryMenuSync = '/delivery/menu-sync';
 
   // Notifications
   static const String notifications = '/notifications';

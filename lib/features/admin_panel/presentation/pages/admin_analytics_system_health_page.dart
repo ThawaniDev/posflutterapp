@@ -41,13 +41,13 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
                 // KPI cards
                 Row(
                   children: [
-                    Expanded(child: _metricCard('Monitored', '$monitored', Colors.blue, Icons.monitor_heart)),
+                    Expanded(child: _metricCard('Monitored', '$monitored', AppColors.info, Icons.monitor_heart)),
                     const SizedBox(width: AppSpacing.sm),
-                    Expanded(child: _metricCard('With Errors', '$withErrors', Colors.red, Icons.error)),
+                    Expanded(child: _metricCard('With Errors', '$withErrors', AppColors.error, Icons.error)),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                _metricCard('Total Errors Today', '$errors', Colors.orange, Icons.warning),
+                _metricCard('Total Errors Today', '$errors', AppColors.warning, Icons.warning),
                 const SizedBox(height: AppSpacing.lg),
 
                 // Sync status breakdown
@@ -63,7 +63,7 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
                     return Card(
                       margin: const EdgeInsets.only(bottom: AppSpacing.xs),
                       child: ListTile(
-                        leading: Icon(isOk ? Icons.check_circle : Icons.sync_problem, color: isOk ? Colors.green : Colors.orange),
+                        leading: Icon(isOk ? Icons.check_circle : Icons.sync_problem, color: isOk ? AppColors.success : AppColors.warning),
                         title: Text(e.key.toUpperCase()),
                         trailing: Text('${e.value}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       ),
@@ -106,7 +106,7 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
                   value,
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: color),
                 ),
-                Text(label, style: const TextStyle(fontSize: 13, color: Colors.grey)),
+                Text(label, style: const TextStyle(fontSize: 13, color: AppColors.textSecondary)),
               ],
             ),
           ],

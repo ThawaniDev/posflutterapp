@@ -123,7 +123,7 @@ class _SubscriptionCard extends StatelessWidget {
     return switch (status) {
       'active' => AppColors.success,
       'trial' => AppColors.warning,
-      'grace' => Colors.orange,
+      'grace' => AppColors.warning,
       'cancelled' => AppColors.error,
       _ => AppColors.textSecondary,
     };

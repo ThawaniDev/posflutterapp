@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/features/orders/providers/order_providers.dart';
 import 'package:thawani_pos/features/orders/providers/order_state.dart';
 
@@ -29,7 +30,7 @@ class _OrderListPageState extends ConsumerState<OrderListPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(message, style: const TextStyle(color: Colors.red)),
+              Text(message, style: const TextStyle(color: AppColors.error)),
               const SizedBox(height: 16),
               ElevatedButton(onPressed: () => ref.read(ordersProvider.notifier).load(), child: const Text('Retry')),
             ],

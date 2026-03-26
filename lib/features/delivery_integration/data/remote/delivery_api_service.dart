@@ -32,6 +32,12 @@ class DeliveryApiService {
     return response.data as Map<String, dynamic>;
   }
 
+  /// POST /delivery/configs/{id}/test-connection
+  Future<Map<String, dynamic>> testConnection(String id) async {
+    final response = await _dio.post(ApiEndpoints.deliveryConfigTestConnection(id));
+    return response.data as Map<String, dynamic>;
+  }
+
   /// GET /delivery/orders
   Future<Map<String, dynamic>> getOrders({String? platform, String? status, int? perPage}) async {
     final params = <String, dynamic>{};
@@ -43,6 +49,26 @@ class DeliveryApiService {
     return response.data as Map<String, dynamic>;
   }
 
+  /// GET /delivery/orders/active
+  Future<Map<String, dynamic>> getActiveOrders() async {
+    final response = await _dio.get(ApiEndpoints.deliveryOrdersActive);
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// GET /delivery/orders/{id}
+  Future<Map<String, dynamic>> getOrderDetail(String id) async {
+    final response = await _dio.get(ApiEndpoints.deliveryOrderDetail(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// PUT /delivery/orders/{id}/status
+  Future<Map<String, dynamic>> updateOrderStatus(String id, {required String status, String? rejectionReason}) async {
+    final data = <String, dynamic>{'status': status};
+    if (rejectionReason != null) data['rejection_reason'] = rejectionReason;
+    final response = await _dio.put(ApiEndpoints.deliveryOrderUpdateStatus(id), data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
   /// GET /delivery/sync-logs
   Future<Map<String, dynamic>> getSyncLogs({String? platform, int? perPage}) async {
     final params = <String, dynamic>{};
@@ -50,6 +76,20 @@ class DeliveryApiService {
     if (perPage != null) params['per_page'] = perPage;
 
     final response = await _dio.get(ApiEndpoints.deliverySyncLogs, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// POST /delivery/menu-sync
+  Future<Map<String, dynamic>> triggerMenuSync({String? platform, required List<Map<String, dynamic>> products}) async {
+    final data = <String, dynamic>{'products': products};
+    if (platform != null) data['platform'] = platform;
+    final response = await _dio.post(ApiEndpoints.deliveryMenuSync, data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// GET /delivery/platforms
+  Future<Map<String, dynamic>> getPlatforms() async {
+    final response = await _dio.get(ApiEndpoints.deliveryPlatforms);
     return response.data as Map<String, dynamic>;
   }
 }

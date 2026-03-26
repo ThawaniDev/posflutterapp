@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/security/models/security_audit_log.dart';
 
@@ -33,9 +34,9 @@ class _AuditLogTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final severityColor = switch (log.severity?.value) {
-      'critical' => Colors.red,
-      'warning' => Colors.orange,
-      _ => Colors.blue,
+      'critical' => AppColors.error,
+      'warning' => AppColors.warning,
+      _ => AppColors.info,
     };
 
     return ListTile(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
@@ -18,10 +19,10 @@ class _AdminABTestListPageState extends ConsumerState<AdminABTestListPage> {
   }
 
   Color _statusColor(String status) => switch (status) {
-    'running' => Colors.green,
-    'completed' => Colors.blue,
-    'cancelled' => Colors.red,
-    _ => Colors.grey,
+    'running' => AppColors.success,
+    'completed' => AppColors.info,
+    'cancelled' => AppColors.error,
+    _ => AppColors.textSecondary,
   };
 
   @override
@@ -75,7 +76,7 @@ class _AdminABTestListPageState extends ConsumerState<AdminABTestListPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.error_outline, size: 48, color: Colors.red),
+              const Icon(Icons.error_outline, size: 48, color: AppColors.error),
               const SizedBox(height: 8),
               Text(message),
               const SizedBox(height: 16),

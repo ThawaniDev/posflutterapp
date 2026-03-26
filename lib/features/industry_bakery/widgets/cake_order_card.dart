@@ -11,12 +11,7 @@ class CakeOrderCard extends StatelessWidget {
   final VoidCallback? onTap;
   final ValueChanged<CustomCakeOrderStatus>? onStatusChange;
 
-  const CakeOrderCard({
-    super.key,
-    required this.order,
-    this.onTap,
-    this.onStatusChange,
-  });
+  const CakeOrderCard({super.key, required this.order, this.onTap, this.onStatusChange});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +21,7 @@ class CakeOrderCard extends StatelessWidget {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(
-          color: isDark ? AppColors.borderDark : AppColors.border,
-        ),
+        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       child: InkWell(
         onTap: onTap,
@@ -41,20 +34,15 @@ class CakeOrderCard extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: Text(
-                      order.description,
-                      style: AppTypography.titleSmall,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    child: Text(order.description, style: AppTypography.titleSmall, maxLines: 2, overflow: TextOverflow.ellipsis),
                   ),
-                  _statusBadge(order.status),
+                  if (order.status != null) _statusBadge(order.status!),
                 ],
               ),
               AppSpacing.gapH8,
               Row(
                 children: [
-                  const Icon(Icons.cake, size: 16, color: Colors.pink),
+                  const Icon(Icons.cake, size: 16, color: AppColors.rose),
                   AppSpacing.gapW4,
                   Text('${order.size} · ${order.flavor}', style: AppTypography.bodySmall),
                 ],
@@ -62,12 +50,12 @@ class CakeOrderCard extends StatelessWidget {
               AppSpacing.gapH4,
               Row(
                 children: [
-                  const Icon(Icons.calendar_today, size: 16, color: Colors.grey),
+                  const Icon(Icons.calendar_today, size: 16, color: AppColors.textSecondary),
                   AppSpacing.gapW4,
                   Text('Delivery: ${order.deliveryDate}', style: AppTypography.bodySmall),
                   const Spacer(),
                   Text(
-                    '${order.price.toStringAsFixed(2)} OMR',
+                    '${order.price.toStringAsFixed(2)} SAR',
                     style: AppTypography.priceSmall.copyWith(color: AppColors.primary),
                   ),
                 ],

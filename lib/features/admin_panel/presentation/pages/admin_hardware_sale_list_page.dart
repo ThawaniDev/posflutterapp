@@ -151,7 +151,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(sale['item_description'] ?? type, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                      Text(type.toUpperCase(), style: const TextStyle(color: Colors.grey, fontSize: 11)),
+                      Text(type.toUpperCase(), style: const TextStyle(color: AppColors.textSecondary, fontSize: 11)),
                     ],
                   ),
                 ),
@@ -160,11 +160,11 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
             ),
             const SizedBox(height: AppSpacing.xs),
             if (sale['serial_number'] != null)
-              Text('S/N: ${sale['serial_number']}', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+              Text('S/N: ${sale['serial_number']}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
             if (sale['store_name'] != null)
-              Text('Store: ${sale['store_name']}', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+              Text('Store: ${sale['store_name']}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
             if (sale['sold_at'] != null)
-              Text('Sold: ${sale['sold_at']}', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+              Text('Sold: ${sale['sold_at']}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -174,8 +174,8 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
                   onPressed: () => _showEditDialog(sale),
                 ),
                 TextButton.icon(
-                  icon: const Icon(Icons.delete, size: 16, color: Colors.red),
-                  label: const Text('Delete', style: TextStyle(color: Colors.red)),
+                  icon: const Icon(Icons.delete, size: 16, color: AppColors.error),
+                  label: const Text('Delete', style: TextStyle(color: AppColors.error)),
                   onPressed: () => _confirmDelete(sale['id']),
                 ),
               ],
@@ -315,7 +315,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
             onPressed: () async {
               await ref.read(hardwareSaleActionProvider.notifier).deleteSale(id.toString());
               if (ctx.mounted) Navigator.pop(ctx);

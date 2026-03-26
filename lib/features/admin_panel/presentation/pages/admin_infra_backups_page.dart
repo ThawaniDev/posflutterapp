@@ -89,7 +89,7 @@ class _DatabaseBackupsTab extends ConsumerWidget {
               child: Icon(
                 status == 'completed' ? Icons.check_circle_outline : Icons.schedule,
                 size: 20,
-                color: status == 'completed' ? Colors.green : Colors.orange,
+                color: status == 'completed' ? AppColors.success : AppColors.warning,
               ),
             ),
             title: Text(
@@ -140,7 +140,7 @@ class _ProviderBackupsTab extends ConsumerWidget {
               child: Icon(
                 status == 'success' ? Icons.cloud_done : Icons.cloud_off,
                 size: 20,
-                color: status == 'success' ? Colors.green : AppColors.error,
+                color: status == 'success' ? AppColors.success : AppColors.error,
               ),
             ),
             title: Text(

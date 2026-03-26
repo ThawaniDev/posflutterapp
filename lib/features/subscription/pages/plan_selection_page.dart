@@ -36,10 +36,10 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
     // Listen for subscription action results
     ref.listen<SubscriptionState>(subscriptionProvider, (prev, next) {
       if (next is SubscriptionActionSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: Colors.green));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.success));
         context.go(Routes.subscriptionStatus);
       } else if (next is SubscriptionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: Colors.red[700]));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
       }
     });
 
@@ -59,12 +59,12 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline, size: 48, color: Colors.red[300]),
+            Icon(Icons.error_outline, size: 48, color: AppColors.error.withValues(alpha: 0.6)),
             AppSpacing.verticalMd,
             Text(
               plansState.message,
               textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.red),
+              style: TextStyle(color: AppColors.error),
             ),
             AppSpacing.verticalMd,
             ElevatedButton(onPressed: () => ref.read(plansProvider.notifier).loadPlans(), child: const Text('Retry')),
@@ -104,10 +104,13 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
                 Container(
                   margin: const EdgeInsets.only(left: 8),
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(color: Colors.green[100], borderRadius: BorderRadius.circular(12)),
-                  child: const Text(
+                  decoration: BoxDecoration(
+                    color: AppColors.success.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
                     'Save ~17%',
-                    style: TextStyle(fontSize: 12, color: Colors.green, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 12, color: AppColors.success, fontWeight: FontWeight.bold),
                   ),
                 ),
             ],
@@ -138,7 +141,7 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
         title: Text('Subscribe to ${plan.name}?'),
         content: Text(
           'You will be subscribed to ${plan.name} on a $billingCycle basis.\n\n'
-          'Price: ${_isAnnual ? plan.annualPrice : plan.monthlyPrice} OMR/$billingCycle',
+          'Price: ${_isAnnual ? plan.annualPrice : plan.monthlyPrice} SAR/$billingCycle',
         ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),

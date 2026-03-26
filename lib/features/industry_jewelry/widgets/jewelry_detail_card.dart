@@ -75,7 +75,7 @@ class JewelryDetailCard extends StatelessWidget {
   Widget _chip(String text) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(color: AppColors.surfaceVariant, borderRadius: BorderRadius.circular(AppRadius.sm)),
+      decoration: BoxDecoration(color: AppColors.borderSubtleLight, borderRadius: BorderRadius.circular(AppRadius.sm)),
       child: Text(text, style: AppTypography.caption),
     );
   }

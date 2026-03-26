@@ -88,10 +88,10 @@ class _State extends ConsumerState<AdminInfraHealthPage> {
           final item = items[i];
           final status = item['status']?.toString() ?? 'unknown';
           final (Color iconColor, Color bgColor, IconData icon) = switch (status) {
-            'ok' => (Colors.green, const Color(0xFFDCFCE7), Icons.check_circle),
-            'warning' => (Colors.orange, const Color(0xFFFEF3C7), Icons.warning_amber),
+            'ok' => (AppColors.success, const Color(0xFFDCFCE7), Icons.check_circle),
+            'warning' => (AppColors.warning, const Color(0xFFFEF3C7), Icons.warning_amber),
             'critical' => (AppColors.error, const Color(0xFFFEE2E2), Icons.cancel),
-            _ => (Colors.grey, const Color(0xFFF3F4F6), Icons.help_outline),
+            _ => (AppColors.textSecondary, const Color(0xFFF3F4F6), Icons.help_outline),
           };
           return Card(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

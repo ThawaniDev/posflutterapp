@@ -134,7 +134,7 @@ class _PinLoginPageState extends ConsumerState<PinLoginPage> {
                       padding: const EdgeInsets.only(bottom: AppSpacing.md),
                       child: Text(
                         _errorMessage!,
-                        style: TextStyle(color: Colors.red.shade700, fontSize: 14),
+                        style: TextStyle(color: AppColors.error, fontSize: 14),
                         textAlign: TextAlign.center,
                       ),
                     ),

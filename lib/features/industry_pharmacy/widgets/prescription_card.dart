@@ -19,7 +19,7 @@ class PrescriptionCard extends StatelessWidget {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.border),
+        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       child: InkWell(
         onTap: onTap,
@@ -57,7 +57,7 @@ class PrescriptionCard extends StatelessWidget {
               AppSpacing.gapH8,
               Row(
                 children: [
-                  const Icon(Icons.local_hospital, size: 14, color: Colors.grey),
+                  const Icon(Icons.local_hospital, size: 14, color: AppColors.textSecondary),
                   AppSpacing.gapW4,
                   Expanded(
                     child: Text(
@@ -72,7 +72,7 @@ class PrescriptionCard extends StatelessWidget {
               if (prescription.insuranceClaimAmount != null) ...[
                 AppSpacing.gapH4,
                 Text(
-                  'Claim: ${prescription.insuranceClaimAmount!.toStringAsFixed(2)} OMR',
+                  'Claim: ${prescription.insuranceClaimAmount!.toStringAsFixed(2)} SAR',
                   style: AppTypography.bodySmall.copyWith(color: AppColors.primary),
                 ),
               ],

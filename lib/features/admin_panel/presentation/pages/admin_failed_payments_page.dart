@@ -43,9 +43,9 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.check_circle, size: 64, color: Colors.green),
+                      Icon(Icons.check_circle, size: 64, color: AppColors.success),
                       SizedBox(height: 16),
-                      Text('No failed payments', style: TextStyle(fontSize: 18, color: Colors.grey)),
+                      Text('No failed payments', style: TextStyle(fontSize: 18, color: AppColors.textSecondary)),
                     ],
                   ),
                 )
@@ -70,7 +70,7 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
           children: [
             Row(
               children: [
-                const Icon(Icons.error_outline, color: Colors.red),
+                const Icon(Icons.error_outline, color: AppColors.error),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Column(
@@ -81,13 +81,13 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
                         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                       ),
                       if (invoice['store_name'] != null)
-                        Text('Store: ${invoice['store_name']}', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                        Text('Store: ${invoice['store_name']}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
                     ],
                   ),
                 ),
                 Text(
                   '${invoice['total_amount'] ?? 0} SAR',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.red),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.error),
                 ),
               ],
             ),
@@ -95,17 +95,17 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
             Row(
               children: [
                 if (invoice['due_date'] != null) ...[
-                  const Icon(Icons.calendar_today, size: 14, color: Colors.grey),
+                  const Icon(Icons.calendar_today, size: 14, color: AppColors.textSecondary),
                   const SizedBox(width: 4),
-                  Text('Due: ${invoice['due_date']}', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                  Text('Due: ${invoice['due_date']}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
                   const Spacer(),
                 ],
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(color: Colors.red.shade100, borderRadius: BorderRadius.circular(12)),
+                  decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(12)),
                   child: Text(
                     'FAILED',
-                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: Colors.red.shade800),
+                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.errorDark),
                   ),
                 ),
               ],
@@ -132,12 +132,12 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
       if (mounted) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(const SnackBar(content: Text('Payment retry initiated'), backgroundColor: Colors.green));
+        ).showSnackBar(const SnackBar(content: Text('Payment retry initiated'), backgroundColor: AppColors.success));
         ref.read(failedPaymentsProvider.notifier).loadFailedPayments();
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Retry failed: $e'), backgroundColor: Colors.red));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Retry failed: $e'), backgroundColor: AppColors.error));
       }
     }
   }

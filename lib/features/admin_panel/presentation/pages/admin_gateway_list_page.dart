@@ -103,28 +103,28 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: env == 'production' ? Colors.green.shade100 : Colors.orange.shade100,
+                    color: env == 'production' ? AppColors.success.withValues(alpha: 0.15) : AppColors.warning.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
                     env.toUpperCase(),
-                    style: TextStyle(fontSize: 11, color: env == 'production' ? Colors.green.shade800 : Colors.orange.shade800),
+                    style: TextStyle(fontSize: 11, color: env == 'production' ? AppColors.successDark : AppColors.warningDark),
                   ),
                 ),
                 const SizedBox(width: 8),
-                Icon(isActive ? Icons.check_circle : Icons.cancel, color: isActive ? Colors.green : Colors.red, size: 20),
+                Icon(isActive ? Icons.check_circle : Icons.cancel, color: isActive ? AppColors.success : AppColors.error, size: 20),
               ],
             ),
             const SizedBox(height: AppSpacing.xs),
             if (gw['webhook_url'] != null)
-              Text('Webhook: ${gw['webhook_url']}', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+              Text('Webhook: ${gw['webhook_url']}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
             Row(
               children: [
-                Icon(hasCreds ? Icons.key : Icons.key_off, size: 14, color: hasCreds ? Colors.green : Colors.red),
+                Icon(hasCreds ? Icons.key : Icons.key_off, size: 14, color: hasCreds ? AppColors.success : AppColors.error),
                 const SizedBox(width: 4),
                 Text(
                   hasCreds ? 'Credentials configured' : 'No credentials',
-                  style: TextStyle(fontSize: 12, color: hasCreds ? Colors.green : Colors.red),
+                  style: TextStyle(fontSize: 12, color: hasCreds ? AppColors.success : AppColors.error),
                 ),
               ],
             ),
@@ -143,8 +143,8 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
                   onPressed: () => _showEditDialog(gw),
                 ),
                 TextButton.icon(
-                  icon: const Icon(Icons.delete, size: 16, color: Colors.red),
-                  label: const Text('Delete', style: TextStyle(color: Colors.red)),
+                  icon: const Icon(Icons.delete, size: 16, color: AppColors.error),
+                  label: const Text('Delete', style: TextStyle(color: AppColors.error)),
                   onPressed: () => _confirmDelete(gw['id']),
                 ),
               ],
@@ -276,7 +276,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
             onPressed: () async {
               await ref.read(gatewayActionProvider.notifier).deleteGateway(id.toString());
               if (ctx.mounted) Navigator.pop(ctx);

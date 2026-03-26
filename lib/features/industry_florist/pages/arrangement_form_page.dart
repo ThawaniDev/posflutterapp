@@ -88,7 +88,7 @@ class _ArrangementFormPageState extends ConsumerState<ArrangementFormPage> {
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _totalPriceCtrl,
-              label: 'Total Price (OMR)',
+              label: 'Total Price (SAR)',
               hint: '0.000',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),

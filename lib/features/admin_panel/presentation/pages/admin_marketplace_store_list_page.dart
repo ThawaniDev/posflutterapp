@@ -94,7 +94,7 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
             child: switch (state) {
               MarketplaceStoreListLoading() => const Center(child: CircularProgressIndicator()),
               MarketplaceStoreListError(:final message) => Center(
-                child: Text(message, style: const TextStyle(color: Colors.red)),
+                child: Text(message, style: const TextStyle(color: AppColors.error)),
               ),
               MarketplaceStoreListLoaded(:final data) => _buildList(data),
               _ => const SizedBox.shrink(),
@@ -120,18 +120,18 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
         return Card(
           margin: const EdgeInsets.only(bottom: AppSpacing.sm),
           child: ListTile(
-            leading: Icon(Icons.storefront, color: isConnected ? Colors.green : Colors.grey),
+            leading: Icon(Icons.storefront, color: isConnected ? AppColors.success : AppColors.textSecondary),
             title: Text(store?['name']?.toString() ?? 'Unknown Store'),
             subtitle: Text('Commission: ${s['commission_rate'] ?? 'N/A'}%'),
             trailing: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: (isConnected ? Colors.green : Colors.grey).withValues(alpha: 0.15),
+                color: (isConnected ? AppColors.success : AppColors.textSecondary).withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
                 isConnected ? 'CONNECTED' : 'DISCONNECTED',
-                style: TextStyle(color: isConnected ? Colors.green : Colors.grey, fontSize: 11, fontWeight: FontWeight.w600),
+                style: TextStyle(color: isConnected ? AppColors.success : AppColors.textSecondary, fontSize: 11, fontWeight: FontWeight.w600),
               ),
             ),
           ),

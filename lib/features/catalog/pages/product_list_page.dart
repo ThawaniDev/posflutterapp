@@ -234,7 +234,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                 ),
               ),
               DataCell(Text(product.sku ?? '—')),
-              DataCell(Text('${product.sellPrice.toStringAsFixed(3)} OMR')),
+              DataCell(Text('${product.sellPrice.toStringAsFixed(3)} SAR')),
               DataCell(
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -366,7 +366,7 @@ class _ProductGridCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${product.sellPrice.toStringAsFixed(3)} OMR',
+                        '${product.sellPrice.toStringAsFixed(3)} SAR',
                         style: Theme.of(context).textTheme.labelMedium?.copyWith(
                               color: AppColors.primary,
                               fontWeight: FontWeight.w700,

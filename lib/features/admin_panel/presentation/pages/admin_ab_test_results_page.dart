@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
@@ -77,19 +78,19 @@ class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage>
                               Column(
                                 children: [
                                   Text('${r['impressions'] ?? 0}'),
-                                  const Text('Impressions', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                                  const Text('Impressions', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                                 ],
                               ),
                               Column(
                                 children: [
                                   Text('${r['conversions'] ?? 0}'),
-                                  const Text('Conversions', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                                  const Text('Conversions', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                                 ],
                               ),
                               Column(
                                 children: [
                                   Text('${((r['conversion_rate'] as num?) ?? 0.0).toStringAsFixed(2)}%'),
-                                  const Text('Rate', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                                  const Text('Rate', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                                 ],
                               ),
                             ],
@@ -106,7 +107,7 @@ class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage>
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.error_outline, size: 48, color: Colors.red),
+              const Icon(Icons.error_outline, size: 48, color: AppColors.error),
               const SizedBox(height: 8),
               Text(message),
             ],

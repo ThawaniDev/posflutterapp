@@ -31,7 +31,7 @@ class _AdminSecurityAlertsPageState extends ConsumerState<AdminSecurityAlertsPag
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.error_outline, size: 48, color: Colors.red),
+              const Icon(Icons.error_outline, size: 48, color: AppColors.error),
               const SizedBox(height: AppSpacing.md),
               Text(msg, textAlign: TextAlign.center),
               const SizedBox(height: AppSpacing.md),
@@ -64,10 +64,10 @@ class _AdminSecurityAlertsPageState extends ConsumerState<AdminSecurityAlertsPag
               leading: Icon(
                 Icons.warning_amber_rounded,
                 color: severity == 'critical'
-                    ? Colors.red
+                    ? AppColors.error
                     : severity == 'high'
-                    ? Colors.orange
-                    : Colors.yellow.shade700,
+                    ? AppColors.warning
+                    : AppColors.warning,
               ),
               title: Text(item['alert_type']?.toString() ?? 'Alert'),
               subtitle: Text('Severity: $severity\nStatus: ${item['status'] ?? 'unknown'}'),

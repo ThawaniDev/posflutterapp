@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import '../nice_to_have_providers.dart';
 import '../nice_to_have_state.dart';
@@ -13,7 +14,7 @@ class GamificationWidget extends ConsumerWidget {
     return switch (state) {
       GamificationInitial() || GamificationLoading() => const Center(child: CircularProgressIndicator()),
       GamificationError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+        child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
       ),
       GamificationLoaded(:final challenges, :final badges, :final tiers) => SingleChildScrollView(
         padding: AppSpacing.paddingAll16,

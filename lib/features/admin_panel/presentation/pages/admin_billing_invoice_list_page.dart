@@ -34,12 +34,12 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
 
   Color _statusColor(String status) {
     return switch (status) {
-      'paid' => Colors.green,
-      'pending' => Colors.orange,
-      'failed' => Colors.red,
-      'refunded' => Colors.purple,
-      'draft' => Colors.grey,
-      _ => Colors.blueGrey,
+      'paid' => AppColors.success,
+      'pending' => AppColors.warning,
+      'failed' => AppColors.error,
+      'refunded' => AppColors.purple,
+      'draft' => AppColors.textSecondary,
+      _ => AppColors.info,
     };
   }
 

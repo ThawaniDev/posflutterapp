@@ -13,7 +13,7 @@ class TableGridTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final (bgColor, fgColor, icon) = _statusDecoration(table.status);
+    final (bgColor, fgColor, icon) = _statusDecoration(table.status ?? RestaurantTableStatus.available);
 
     return Material(
       color: bgColor,
@@ -36,10 +36,7 @@ class TableGridTile extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               AppSpacing.gapH2,
-              Text(
-                '${table.seats} seats',
-                style: AppTypography.caption.copyWith(color: fgColor.withValues(alpha: 0.7)),
-              ),
+              Text('${table.seats} seats', style: AppTypography.caption.copyWith(color: fgColor.withValues(alpha: 0.7))),
               if (table.zone != null) ...[
                 AppSpacing.gapH2,
                 Text(
@@ -63,21 +60,9 @@ class TableGridTile extends StatelessWidget {
         AppColors.success,
         Icons.check_circle_outline,
       ),
-      RestaurantTableStatus.occupied => (
-        AppColors.error.withValues(alpha: 0.1),
-        AppColors.error,
-        Icons.dinner_dining,
-      ),
-      RestaurantTableStatus.reserved => (
-        AppColors.warning.withValues(alpha: 0.1),
-        AppColors.warning,
-        Icons.event_seat,
-      ),
-      RestaurantTableStatus.cleaning => (
-        AppColors.info.withValues(alpha: 0.1),
-        AppColors.info,
-        Icons.cleaning_services,
-      ),
+      RestaurantTableStatus.occupied => (AppColors.error.withValues(alpha: 0.1), AppColors.error, Icons.dinner_dining),
+      RestaurantTableStatus.reserved => (AppColors.warning.withValues(alpha: 0.1), AppColors.warning, Icons.event_seat),
+      RestaurantTableStatus.cleaning => (AppColors.info.withValues(alpha: 0.1), AppColors.info, Icons.cleaning_services),
     };
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/companion/providers/companion_state.dart';
 import 'package:thawani_pos/features/companion/providers/companion_providers.dart';
@@ -42,23 +43,23 @@ class QuickStatsWidget extends ConsumerWidget {
                   icon: Icons.attach_money,
                   label: 'Revenue',
                   value: '$currency ${todayRevenue.toStringAsFixed(2)}',
-                  color: Colors.green,
+                  color: AppColors.success,
                 ),
-                _StatTile(icon: Icons.receipt_long, label: 'Transactions', value: '$todayTransactions', color: Colors.blue),
+                _StatTile(icon: Icons.receipt_long, label: 'Transactions', value: '$todayTransactions', color: AppColors.info),
               ]),
               AppSpacing.gapH12,
               _buildStatRow(context, [
-                _StatTile(icon: Icons.shopping_bag, label: 'Orders', value: '$todayOrders', color: Colors.orange),
-                _StatTile(icon: Icons.pending_actions, label: 'Pending', value: '$pendingOrders', color: Colors.red),
+                _StatTile(icon: Icons.shopping_bag, label: 'Orders', value: '$todayOrders', color: AppColors.warning),
+                _StatTile(icon: Icons.pending_actions, label: 'Pending', value: '$pendingOrders', color: AppColors.error),
               ]),
               AppSpacing.gapH12,
               _buildStatRow(context, [
-                _StatTile(icon: Icons.people, label: 'Active Staff', value: '$activeStaff', color: Colors.teal),
+                _StatTile(icon: Icons.people, label: 'Active Staff', value: '$activeStaff', color: AppColors.info),
                 _StatTile(
                   icon: Icons.inventory_2,
                   label: 'Low Stock',
                   value: '$lowStockItems',
-                  color: lowStockItems > 0 ? Colors.red : Colors.grey,
+                  color: lowStockItems > 0 ? AppColors.error : AppColors.textSecondary,
                 ),
               ]),
             ],

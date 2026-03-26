@@ -6,15 +6,8 @@ import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/features/nice_to_have/presentation/nice_to_have_state.dart';
 import 'package:thawani_pos/features/nice_to_have/presentation/nice_to_have_providers.dart';
 import 'package:thawani_pos/features/nice_to_have/presentation/nice_to_have_dashboard_page.dart';
-import 'package:thawani_pos/features/nice_to_have/presentation/widgets/wishlist_widget.dart';
-import 'package:thawani_pos/features/nice_to_have/presentation/widgets/appointments_widget.dart';
-import 'package:thawani_pos/features/nice_to_have/presentation/widgets/cfd_config_widget.dart';
-import 'package:thawani_pos/features/nice_to_have/presentation/widgets/gift_registry_widget.dart';
-import 'package:thawani_pos/features/nice_to_have/presentation/widgets/signage_widget.dart';
-import 'package:thawani_pos/features/nice_to_have/presentation/widgets/gamification_widget.dart';
 import 'package:thawani_pos/core/constants/api_endpoints.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/features/nice_to_have/data/nice_to_have_repository.dart';
 
 // ─── Mock Notifiers ──────────────────────────────────────────
 class MockWishlistNotifier extends StateNotifier<WishlistState> implements WishlistNotifier {

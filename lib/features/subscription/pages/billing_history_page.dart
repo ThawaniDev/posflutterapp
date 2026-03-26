@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/subscription/providers/subscription_providers.dart';
 import 'package:thawani_pos/features/subscription/providers/subscription_state.dart';
 import 'package:thawani_pos/features/subscription/widgets/invoice_tile.dart';
@@ -34,36 +35,16 @@ class _BillingHistoryPageState extends ConsumerState<BillingHistoryPage> {
 
   Widget _buildBody(InvoicesState state) {
     if (state is InvoicesLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return Center(child: PosLoadingSkeleton.list());
     }
 
     if (state is InvoicesError) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.error_outline, size: 48, color: Colors.red[300]),
-            AppSpacing.verticalMd,
-            Text(state.message, style: const TextStyle(color: Colors.red)),
-            AppSpacing.verticalMd,
-            ElevatedButton(onPressed: () => ref.read(invoicesProvider.notifier).loadInvoices(), child: const Text('Retry')),
-          ],
-        ),
-      );
+      return PosErrorState(message: state.message, onRetry: () => ref.read(invoicesProvider.notifier).loadInvoices());
     }
 
     if (state is InvoicesLoaded) {
       if (state.invoices.isEmpty) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.receipt_long, size: 64, color: Colors.grey[400]),
-              AppSpacing.verticalLg,
-              const Text('No invoices yet'),
-            ],
-          ),
-        );
+        return const PosEmptyState(title: 'No invoices yet', icon: Icons.receipt_long);
       }
 
       return RefreshIndicator(

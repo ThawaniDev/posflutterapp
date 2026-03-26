@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/support/providers/support_providers.dart';
 import 'package:thawani_pos/features/support/providers/support_state.dart';
 
@@ -48,7 +50,7 @@ class _CreateTicketPageState extends ConsumerState<CreateTicketPage> {
         ref.read(ticketActionProvider.notifier).reset();
         context.pop();
       } else if (next is TicketActionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: Colors.red));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
       }
     });
 
@@ -59,7 +61,7 @@ class _CreateTicketPageState extends ConsumerState<CreateTicketPage> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: AppSpacing.paddingAll16,
           children: [
             // Category
             DropdownButtonFormField<String>(
@@ -80,7 +82,7 @@ class _CreateTicketPageState extends ConsumerState<CreateTicketPage> {
               ],
               onChanged: (v) => setState(() => _category = v!),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
 
             // Priority
             DropdownButtonFormField<String>(
@@ -97,7 +99,7 @@ class _CreateTicketPageState extends ConsumerState<CreateTicketPage> {
               ],
               onChanged: (v) => setState(() => _priority = v!),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
 
             // Subject
             TextFormField(
@@ -109,7 +111,7 @@ class _CreateTicketPageState extends ConsumerState<CreateTicketPage> {
               validator: (v) => (v == null || v.trim().isEmpty) ? AppLocalizations.of(context)!.supportRequired : null,
               maxLength: 255,
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
 
             // Description
             TextFormField(
@@ -123,7 +125,7 @@ class _CreateTicketPageState extends ConsumerState<CreateTicketPage> {
               maxLines: 6,
               maxLength: 5000,
             ),
-            const SizedBox(height: 24),
+            AppSpacing.gapH24,
 
             // Submit
             FilledButton.icon(

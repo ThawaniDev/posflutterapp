@@ -103,7 +103,7 @@ class _MetalRateFormPageState extends ConsumerState<MetalRateFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _ratePerGramCtrl,
-                    label: 'Sell Rate/g (OMR)',
+                    label: 'Sell Rate/g (SAR)',
                     hint: '0.000',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),

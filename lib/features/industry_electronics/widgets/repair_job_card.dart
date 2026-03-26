@@ -20,7 +20,7 @@ class RepairJobCard extends StatelessWidget {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.border),
+        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       child: InkWell(
         onTap: onTap,
@@ -46,13 +46,17 @@ class RepairJobCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(job.deviceDescription, style: AppTypography.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
-                        if (job.imei != null)
-                          Text('IMEI: ${job.imei}', style: AppTypography.caption),
+                        Text(
+                          job.deviceDescription,
+                          style: AppTypography.titleSmall,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        if (job.imei != null) Text('IMEI: ${job.imei}', style: AppTypography.caption),
                       ],
                     ),
                   ),
-                  _statusBadge(job.status),
+                  if (job.status != null) _statusBadge(job.status!),
                 ],
               ),
               AppSpacing.gapH8,
@@ -62,11 +66,11 @@ class RepairJobCard extends StatelessWidget {
                 Row(
                   children: [
                     if (job.estimatedCost != null)
-                      Text('Est: ${job.estimatedCost!.toStringAsFixed(2)} OMR', style: AppTypography.bodySmall),
+                      Text('Est: ${job.estimatedCost!.toStringAsFixed(2)} SAR', style: AppTypography.bodySmall),
                     if (job.finalCost != null) ...[
                       AppSpacing.gapW16,
                       Text(
-                        'Final: ${job.finalCost!.toStringAsFixed(2)} OMR',
+                        'Final: ${job.finalCost!.toStringAsFixed(2)} SAR',
                         style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.w600),
                       ),
                     ],
@@ -84,11 +88,11 @@ class RepairJobCard extends StatelessWidget {
     final (label, variant) = switch (status) {
       RepairJobStatus.received => ('Received', PosStatusBadgeVariant.neutral),
       RepairJobStatus.diagnosing => ('Diagnosing', PosStatusBadgeVariant.info),
-      RepairJobStatus.quoteSent => ('Quote Sent', PosStatusBadgeVariant.info),
-      RepairJobStatus.approved => ('Approved', PosStatusBadgeVariant.success),
       RepairJobStatus.repairing => ('Repairing', PosStatusBadgeVariant.warning),
-      RepairJobStatus.readyForCollection => ('Ready', PosStatusBadgeVariant.success),
+      RepairJobStatus.testing => ('Testing', PosStatusBadgeVariant.info),
+      RepairJobStatus.ready => ('Ready', PosStatusBadgeVariant.success),
       RepairJobStatus.collected => ('Collected', PosStatusBadgeVariant.neutral),
+      RepairJobStatus.cancelled => ('Cancelled', PosStatusBadgeVariant.error),
     };
     return PosStatusBadge(label: label, variant: variant);
   }

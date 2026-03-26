@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/subscription/models/invoice.dart';
 
@@ -28,7 +29,7 @@ class InvoiceTile extends StatelessWidget {
             if (invoice.paidAt != null)
               Text(
                 'Paid: ${_formatDate(invoice.paidAt!)}',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.green),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.success),
               ),
           ],
         ),
@@ -36,7 +37,7 @@ class InvoiceTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text('${invoice.total.toStringAsFixed(2)} OMR', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+            Text('${invoice.total.toStringAsFixed(2)} SAR', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
             AppSpacing.verticalXs,
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -57,11 +58,11 @@ class InvoiceTile extends StatelessWidget {
 
   Color _statusColor(String status) {
     return switch (status.toLowerCase()) {
-      'paid' => Colors.green,
-      'pending' => Colors.orange,
-      'overdue' => Colors.red,
-      'cancelled' || 'voided' => Colors.grey,
-      _ => Colors.blue,
+      'paid' => AppColors.success,
+      'pending' => AppColors.warning,
+      'overdue' => AppColors.error,
+      'cancelled' || 'voided' => AppColors.textSecondary,
+      _ => AppColors.info,
     };
   }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/branches/providers/branch_providers.dart';
 import 'package:thawani_pos/features/branches/providers/branch_state.dart';
 
@@ -28,37 +30,14 @@ class _BranchListPageState extends ConsumerState<BranchListPage> {
         actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.read(branchListProvider.notifier).load())],
       ),
       body: switch (state) {
-        BranchListInitial() || BranchListLoading() => const Center(child: CircularProgressIndicator()),
-        BranchListError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.error_outline, size: 48, color: Colors.red),
-              const SizedBox(height: 12),
-              Text('Error: $message', style: const TextStyle(color: Colors.red)),
-              const SizedBox(height: 12),
-              FilledButton(
-                onPressed: () => ref.read(branchListProvider.notifier).load(),
-                child: Text(AppLocalizations.of(context)!.retry),
-              ),
-            ],
-          ),
+        BranchListInitial() || BranchListLoading() => Center(child: PosLoadingSkeleton.list()),
+        BranchListError(:final message) => PosErrorState(
+          message: message,
+          onRetry: () => ref.read(branchListProvider.notifier).load(),
         ),
         BranchListLoaded(:final branches) =>
           branches.isEmpty
-              ? Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.store_outlined, size: 64, color: Colors.grey),
-                      const SizedBox(height: 12),
-                      Text(
-                        AppLocalizations.of(context)!.branchesNoBranches,
-                        style: const TextStyle(color: Colors.grey, fontSize: 16),
-                      ),
-                    ],
-                  ),
-                )
+              ? PosEmptyState(title: AppLocalizations.of(context)!.branchesNoBranches, icon: Icons.store_outlined)
               : RefreshIndicator(
                   onRefresh: () => ref.read(branchListProvider.notifier).load(),
                   child: ListView.builder(
@@ -79,8 +58,8 @@ class _BranchListPageState extends ConsumerState<BranchListPage> {
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: isActive ? Colors.green.withValues(alpha: 0.15) : Colors.grey.withValues(alpha: 0.15),
-          child: Icon(isMain ? Icons.store : Icons.storefront, color: isActive ? Colors.green : Colors.grey),
+          backgroundColor: isActive ? AppColors.success.withValues(alpha: 0.15) : AppColors.textSecondary.withValues(alpha: 0.15),
+          child: Icon(isMain ? Icons.store : Icons.storefront, color: isActive ? AppColors.success : AppColors.textSecondary),
         ),
         title: Row(
           children: [
@@ -89,10 +68,10 @@ class _BranchListPageState extends ConsumerState<BranchListPage> {
               Container(
                 margin: const EdgeInsets.only(left: 8),
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                decoration: BoxDecoration(color: Colors.blue.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(4)),
+                decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(4)),
                 child: const Text(
                   'MAIN',
-                  style: TextStyle(fontSize: 10, color: Colors.blue, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 10, color: AppColors.info, fontWeight: FontWeight.bold),
                 ),
               ),
           ],
@@ -109,17 +88,17 @@ class _BranchListPageState extends ConsumerState<BranchListPage> {
               ),
             Row(
               children: [
-                Icon(Icons.circle, size: 8, color: isActive ? Colors.green : Colors.red),
+                Icon(Icons.circle, size: 8, color: isActive ? AppColors.success : AppColors.error),
                 const SizedBox(width: 4),
                 Text(
                   isActive ? AppLocalizations.of(context)!.branchesActive : AppLocalizations.of(context)!.branchesInactive,
-                  style: TextStyle(fontSize: 11, color: isActive ? Colors.green : Colors.red),
+                  style: TextStyle(fontSize: 11, color: isActive ? AppColors.success : AppColors.error),
                 ),
                 if (branch['branch_code'] != null) ...[
                   const SizedBox(width: 12),
                   Text(
                     AppLocalizations.of(context)!.branchesCode(branch['branch_code']),
-                    style: const TextStyle(fontSize: 11, color: Colors.grey),
+                    style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
                   ),
                 ],
               ],

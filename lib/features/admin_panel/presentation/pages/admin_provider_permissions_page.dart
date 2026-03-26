@@ -108,7 +108,7 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundColor: isActive ? const Color(0xFFDCFCE7) : const Color(0xFFF3F4F6),
-                    child: Icon(Icons.security, size: 20, color: isActive ? Colors.green : Colors.grey),
+                    child: Icon(Icons.security, size: 20, color: isActive ? AppColors.success : AppColors.textSecondary),
                   ),
                   title: Text(item['name']?.toString() ?? '', style: const TextStyle(fontWeight: FontWeight.bold)),
                   subtitle: Text(item['description']?.toString() ?? '', maxLines: 1, overflow: TextOverflow.ellipsis),
@@ -120,7 +120,7 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
                     ),
                     child: Text(
                       isActive ? 'Active' : 'Inactive',
-                      style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: isActive ? Colors.green : Colors.grey),
+                      style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: isActive ? AppColors.success : AppColors.textSecondary),
                     ),
                   ),
                 ),

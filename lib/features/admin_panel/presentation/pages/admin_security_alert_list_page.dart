@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
@@ -36,11 +37,11 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
   }
 
   Color _severityColor(String? severity) => switch (severity) {
-    'critical' => Colors.red.shade800,
-    'high' => Colors.red,
-    'medium' => Colors.orange,
-    'low' => Colors.blue,
-    _ => Colors.grey,
+    'critical' => AppColors.errorDark,
+    'high' => AppColors.error,
+    'medium' => AppColors.warning,
+    'low' => AppColors.info,
+    _ => AppColors.textSecondary,
   };
 
   IconData _severityIcon(String? severity) => switch (severity) {
@@ -112,7 +113,7 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
               SecurityAlertListInitial() || SecurityAlertListLoading() => const Center(child: CircularProgressIndicator()),
               SecurityAlertListLoaded(data: final data) => _buildList(data),
               SecurityAlertListError(message: final msg) => Center(
-                child: Text(msg, style: const TextStyle(color: Colors.red)),
+                child: Text(msg, style: const TextStyle(color: AppColors.error)),
               ),
             },
           ),
@@ -147,7 +148,7 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
             subtitle: Text(alert['description']?.toString() ?? ''),
             trailing: Chip(
               label: Text(status, style: const TextStyle(fontSize: 11)),
-              backgroundColor: status == 'resolved' ? Colors.green.shade50 : Colors.orange.shade50,
+              backgroundColor: status == 'resolved' ? AppColors.success.withValues(alpha: 0.08) : AppColors.warning.withValues(alpha: 0.08),
               side: BorderSide.none,
             ),
           ),

@@ -16,7 +16,6 @@ class FreshnessLogFormPage extends ConsumerStatefulWidget {
 class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
-  bool get _isEditing => widget.log != null;
 
   late final TextEditingController _productIdCtrl;
   late final TextEditingController _expectedVaseLifeCtrl;

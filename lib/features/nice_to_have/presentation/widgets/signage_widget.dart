@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import '../nice_to_have_providers.dart';
 import '../nice_to_have_state.dart';
@@ -13,7 +14,7 @@ class SignageWidget extends ConsumerWidget {
     return switch (state) {
       SignageInitial() || SignageLoading() => const Center(child: CircularProgressIndicator()),
       SignageError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+        child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
       ),
       SignageLoaded(:final playlists) =>
         playlists.isEmpty
@@ -32,7 +33,7 @@ class SignageWidget extends ConsumerWidget {
                       subtitle: Text('${slides.length} slide(s)'),
                       trailing: Icon(
                         p['is_active'] == true ? Icons.check_circle : Icons.pause_circle,
-                        color: p['is_active'] == true ? Colors.green : Colors.grey,
+                        color: p['is_active'] == true ? AppColors.success : AppColors.textSecondary,
                       ),
                     ),
                   );

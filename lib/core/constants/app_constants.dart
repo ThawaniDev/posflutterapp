@@ -18,8 +18,8 @@ class AppConstants {
   static const Duration maxOfflineDuration = Duration(hours: 72);
 
   // POS
-  static const String defaultCurrency = 'OMR';
-  static const String currencySymbol = 'ر.ع.';
+  static const String defaultCurrency = 'SAR';
+  static const String currencySymbol = 'ر.س';
   static const int decimalPlaces = 3;
 
   // Pagination

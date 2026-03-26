@@ -21,7 +21,7 @@ class FreshnessLogCard extends StatelessWidget {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.border),
+        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       child: InkWell(
         onTap: onTap,
@@ -41,7 +41,7 @@ class FreshnessLogCard extends StatelessWidget {
                   ],
                 ),
               ),
-              _statusBadge(log.status),
+              if (log.status != null) _statusBadge(log.status!),
             ],
           ),
         ),
@@ -50,9 +50,7 @@ class FreshnessLogCard extends StatelessWidget {
   }
 
   int get _daysUntilExpiry {
-    final received = DateTime.tryParse(log.receivedDate);
-    if (received == null) return 0;
-    final expiryDate = received.add(Duration(days: log.expectedVaseLifeDays));
+    final expiryDate = log.receivedDate.add(Duration(days: log.expectedVaseLifeDays));
     return expiryDate.difference(DateTime.now()).inDays;
   }
 
@@ -60,16 +58,13 @@ class FreshnessLogCard extends StatelessWidget {
     final color = daysLeft <= 0
         ? AppColors.error
         : daysLeft <= 2
-            ? AppColors.warning
-            : AppColors.success;
+        ? AppColors.warning
+        : AppColors.success;
 
     return Container(
       width: 44,
       height: 44,
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(AppRadius.sm),
-      ),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(AppRadius.sm)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

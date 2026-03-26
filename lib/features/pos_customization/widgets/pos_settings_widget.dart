@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/pos_customization/providers/customization_state.dart';
 import 'package:thawani_pos/features/pos_customization/providers/customization_providers.dart';
@@ -66,7 +67,7 @@ class PosSettingsWidget extends ConsumerWidget {
     try {
       color = Color(int.parse(hex.replaceFirst('#', '0xFF')));
     } catch (_) {
-      color = Colors.grey;
+      color = AppColors.textSecondary;
     }
     return ListTile(
       leading: CircleAvatar(backgroundColor: color, radius: 14),
@@ -77,7 +78,7 @@ class PosSettingsWidget extends ConsumerWidget {
 
   Widget _boolTile(String title, bool value) {
     return ListTile(
-      leading: Icon(value ? Icons.check_circle : Icons.cancel, color: value ? Colors.green : Colors.red),
+      leading: Icon(value ? Icons.check_circle : Icons.cancel, color: value ? AppColors.success : AppColors.error),
       title: Text(title),
       subtitle: Text(value ? 'Yes' : 'No'),
     );

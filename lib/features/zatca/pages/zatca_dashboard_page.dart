@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/pos_app_bar.dart';
 import '../providers/zatca_providers.dart';
@@ -186,7 +187,10 @@ class _ErrorCard extends StatelessWidget {
     final theme = Theme.of(context);
     return Container(
       padding: AppSpacing.paddingAll20,
-      decoration: BoxDecoration(color: Colors.red.withValues(alpha: 0.05), borderRadius: BorderRadius.circular(AppRadius.md)),
+      decoration: BoxDecoration(
+        color: AppColors.error.withValues(alpha: 0.05),
+        borderRadius: BorderRadius.circular(AppRadius.md),
+      ),
       child: Column(
         children: [
           Icon(Icons.error_outline, color: theme.colorScheme.error, size: 32),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 
 class CertifiedHardwareList extends StatelessWidget {
@@ -32,7 +33,10 @@ class CertifiedHardwareList extends StatelessWidget {
         final isCertified = m['is_certified'] as bool? ?? false;
 
         return ListTile(
-          leading: Icon(isCertified ? Icons.verified : Icons.device_unknown, color: isCertified ? Colors.green : Colors.grey),
+          leading: Icon(
+            isCertified ? Icons.verified : Icons.device_unknown,
+            color: isCertified ? AppColors.success : AppColors.textSecondary,
+          ),
           title: Text('$brand $model'),
           subtitle: Text(deviceType, style: theme.textTheme.bodySmall),
           trailing: isCertified ? const Chip(label: Text('Certified'), backgroundColor: Color(0xFFE8F5E9)) : null,

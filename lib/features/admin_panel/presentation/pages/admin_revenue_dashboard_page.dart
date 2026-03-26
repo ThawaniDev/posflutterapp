@@ -45,9 +45,13 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
               // MRR / ARR Cards
               Row(
                 children: [
-                  Expanded(child: _metricCard('MRR', '${state.mrr.toStringAsFixed(2)} SAR', Icons.trending_up, Colors.green)),
+                  Expanded(
+                    child: _metricCard('MRR', '${state.mrr.toStringAsFixed(2)} SAR', Icons.trending_up, AppColors.success),
+                  ),
                   const SizedBox(width: AppSpacing.sm),
-                  Expanded(child: _metricCard('ARR', '${state.arr.toStringAsFixed(2)} SAR', Icons.calendar_today, Colors.blue)),
+                  Expanded(
+                    child: _metricCard('ARR', '${state.arr.toStringAsFixed(2)} SAR', Icons.calendar_today, AppColors.info),
+                  ),
                 ],
               ),
               const SizedBox(height: AppSpacing.md),
@@ -55,11 +59,11 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
               // Invoice stats
               Row(
                 children: [
-                  Expanded(child: _metricCard('Total Invoices', '${state.totalInvoices}', Icons.receipt, Colors.blueGrey)),
+                  Expanded(child: _metricCard('Total Invoices', '${state.totalInvoices}', Icons.receipt, AppColors.info)),
                   const SizedBox(width: AppSpacing.sm),
-                  Expanded(child: _metricCard('Paid', '${state.paidInvoices}', Icons.check_circle, Colors.green)),
+                  Expanded(child: _metricCard('Paid', '${state.paidInvoices}', Icons.check_circle, AppColors.success)),
                   const SizedBox(width: AppSpacing.sm),
-                  Expanded(child: _metricCard('Failed', '${state.failedInvoices}', Icons.error, Colors.red)),
+                  Expanded(child: _metricCard('Failed', '${state.failedInvoices}', Icons.error, AppColors.error)),
                 ],
               ),
               const SizedBox(height: AppSpacing.md),
@@ -67,14 +71,14 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
               // Additional metrics
               Row(
                 children: [
-                  Expanded(child: _metricCard('Upcoming Renewals', '${state.upcomingRenewals}', Icons.event, Colors.orange)),
+                  Expanded(child: _metricCard('Upcoming Renewals', '${state.upcomingRenewals}', Icons.event, AppColors.warning)),
                   const SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: _metricCard(
                       'Hardware Revenue',
                       '${state.hardwareRevenue.toStringAsFixed(2)} SAR',
                       Icons.devices,
-                      Colors.purple,
+                      AppColors.purple,
                     ),
                   ),
                 ],
@@ -84,7 +88,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                 'Implementation Revenue',
                 '${state.implementationRevenue.toStringAsFixed(2)} SAR',
                 Icons.build_circle,
-                Colors.teal,
+                AppColors.info,
               ),
               const SizedBox(height: AppSpacing.lg),
 
@@ -120,7 +124,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
             Icon(icon, color: color, size: 28),
             const SizedBox(height: AppSpacing.xs),
             Text(value, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            Text(label, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+            Text(label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
           ],
         ),
       ),
@@ -129,11 +133,11 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
 
   Color _statusColor(String status) {
     return switch (status) {
-      'paid' => Colors.green,
-      'pending' => Colors.orange,
-      'failed' => Colors.red,
-      'refunded' => Colors.purple,
-      _ => Colors.grey,
+      'paid' => AppColors.success,
+      'pending' => AppColors.warning,
+      'failed' => AppColors.error,
+      'refunded' => AppColors.purple,
+      _ => AppColors.textSecondary,
     };
   }
 }

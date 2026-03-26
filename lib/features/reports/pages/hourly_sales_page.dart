@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
 
@@ -62,22 +65,13 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
         ],
       ),
       body: switch (state) {
-        HourlySalesInitial() || HourlySalesLoading() => const Center(child: CircularProgressIndicator()),
-        HourlySalesError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message),
-              const SizedBox(height: 16),
-              FilledButton(onPressed: _loadData, child: const Text('Retry')),
-            ],
-          ),
-        ),
+        HourlySalesInitial() || HourlySalesLoading() => PosLoadingSkeleton.list(),
+        HourlySalesError(:final message) => PosErrorState(message: message, onRetry: _loadData),
         HourlySalesLoaded(:final hours) =>
           hours.isEmpty
-              ? const Center(child: Text('No hourly data for selected period'))
+              ? const PosEmptyState(title: 'No hourly data for selected period', icon: Icons.access_time)
               : ListView(
-                  padding: const EdgeInsets.all(16),
+                  padding: AppSpacing.paddingAll16,
                   children: [
                     if (_dateRange != null)
                       Chip(
@@ -89,9 +83,8 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                           _loadData();
                         },
                       ),
-                    const SizedBox(height: 8),
+                    AppSpacing.gapH8,
 
-                    // Visual bar chart
                     ...hours.map((h) {
                       final maxRevenue = hours.fold<double>(0, (max, item) {
                         final rev = (item['total_revenue'] as num).toDouble();
@@ -112,23 +105,19 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                                 textAlign: TextAlign.right,
                               ),
                             ),
-                            const SizedBox(width: 8),
+                            AppSpacing.gapW8,
                             Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(4),
-                                    child: LinearProgressIndicator(
-                                      value: barWidth.toDouble(),
-                                      minHeight: 24,
-                                      backgroundColor: Colors.grey.shade100,
-                                    ),
-                                  ),
-                                ],
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(AppRadius.xs),
+                                child: LinearProgressIndicator(
+                                  value: barWidth.toDouble(),
+                                  minHeight: 24,
+                                  backgroundColor: AppColors.primary5,
+                                  color: AppColors.primary,
+                                ),
                               ),
                             ),
-                            const SizedBox(width: 8),
+                            AppSpacing.gapW8,
                             SizedBox(
                               width: 100,
                               child: Column(
@@ -140,7 +129,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                                   ),
                                   Text(
                                     '${h['total_orders']} orders',
-                                    style: theme.textTheme.bodySmall?.copyWith(fontSize: 10, color: Colors.grey.shade600),
+                                    style: theme.textTheme.bodySmall?.copyWith(fontSize: 10, color: AppColors.textSecondary),
                                   ),
                                 ],
                               ),

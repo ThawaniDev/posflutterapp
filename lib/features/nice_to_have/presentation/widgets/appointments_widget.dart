@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import '../nice_to_have_providers.dart';
 import '../nice_to_have_state.dart';
@@ -13,7 +14,7 @@ class AppointmentsWidget extends ConsumerWidget {
     return switch (state) {
       AppointmentInitial() || AppointmentLoading() => const Center(child: CircularProgressIndicator()),
       AppointmentError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+        child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
       ),
       AppointmentLoaded(:final appointments) =>
         appointments.isEmpty
@@ -31,7 +32,7 @@ class AppointmentsWidget extends ConsumerWidget {
                       subtitle: Text('Status: ${a['status'] ?? '-'}'),
                       trailing: Icon(
                         a['status'] == 'cancelled' ? Icons.cancel : Icons.check_circle_outline,
-                        color: a['status'] == 'cancelled' ? Colors.red : Colors.green,
+                        color: a['status'] == 'cancelled' ? AppColors.error : AppColors.success,
                       ),
                     ),
                   );

@@ -63,13 +63,13 @@ class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> with 
       ),
       floatingActionButton: FloatingActionButton(onPressed: _onFabPressed, child: const Icon(Icons.add)),
       body: switch (state) {
-        BakeryInitial() || BakeryLoading() => const PosLoadingSkeleton(),
+        BakeryInitial() || BakeryLoading() => PosLoadingSkeleton.list(),
         BakeryError(:final message) => PosErrorState(message: message, onRetry: () => ref.read(bakeryProvider.notifier).load()),
         BakeryLoaded(:final recipes, :final productionSchedules, :final cakeOrders) => TabBarView(
           controller: _tabController,
           children: [
             recipes.isEmpty
-                ? const PosEmptyState(message: 'No recipes yet', icon: Icons.bakery_dining)
+                ? const PosEmptyState(title: 'No recipes yet', icon: Icons.bakery_dining)
                 : ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: recipes.length,
@@ -89,7 +89,7 @@ class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> with 
                     },
                   ),
             productionSchedules.isEmpty
-                ? const PosEmptyState(message: 'No production schedules', icon: Icons.schedule)
+                ? const PosEmptyState(title: 'No production schedules', icon: Icons.schedule)
                 : ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: productionSchedules.length,
@@ -109,7 +109,7 @@ class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> with 
                     },
                   ),
             cakeOrders.isEmpty
-                ? const PosEmptyState(message: 'No cake orders', icon: Icons.cake)
+                ? const PosEmptyState(title: 'No cake orders', icon: Icons.cake)
                 : ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: cakeOrders.length,
@@ -125,7 +125,7 @@ class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> with 
                                 .then((_) => ref.read(bakeryProvider.notifier).load());
                           },
                           onStatusChange: (status) {
-                            ref.read(bakeryProvider.notifier).updateCakeOrderStatus(c.id, status);
+                            ref.read(bakeryProvider.notifier).updateCakeOrderStatus(c.id, status.name);
                           },
                         ),
                       );

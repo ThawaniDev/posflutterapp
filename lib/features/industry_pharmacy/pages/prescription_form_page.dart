@@ -124,7 +124,7 @@ class _PrescriptionFormPageState extends ConsumerState<PrescriptionFormPage> {
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _insuranceClaimCtrl,
-              label: 'Claim Amount (OMR)',
+              label: 'Claim Amount (SAR)',
               hint: '0.000',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),

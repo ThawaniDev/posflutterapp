@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
@@ -83,7 +84,7 @@ class _AdminArticleListPageState extends ConsumerState<AdminArticleListPage> {
             child: switch (state) {
               ArticleListInitial() || ArticleListLoading() => const Center(child: CircularProgressIndicator()),
               ArticleListError(:final message) => Center(
-                child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+                child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
               ),
               ArticleListLoaded(:final articles, :final total, :final currentPage, :final lastPage) =>
                 articles.isEmpty
@@ -103,8 +104,8 @@ class _AdminArticleListPageState extends ConsumerState<AdminArticleListPage> {
                                     trailing: Chip(
                                       label: Text(article['is_published'] == true ? 'Published' : 'Draft'),
                                       backgroundColor: article['is_published'] == true
-                                          ? Colors.green.shade100
-                                          : Colors.grey.shade200,
+                                          ? AppColors.success.withValues(alpha: 0.15)
+                                          : AppColors.borderLight,
                                     ),
                                   ),
                                 );

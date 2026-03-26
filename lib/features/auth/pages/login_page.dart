@@ -44,7 +44,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       if (next is AuthAuthenticated) {
         context.go(Routes.dashboard);
       } else if (next is AuthError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: Colors.red.shade700));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
       }
     });
 

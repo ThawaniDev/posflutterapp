@@ -16,7 +16,7 @@ class PosErrorState extends StatelessWidget {
 
     return Center(
       child: Padding(
-        padding: AppSpacing.paddingPage,
+        padding: AppSpacing.paddingAll24,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

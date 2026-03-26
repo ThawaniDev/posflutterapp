@@ -63,13 +63,13 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> wit
       ),
       floatingActionButton: FloatingActionButton(onPressed: _onFabPressed, child: const Icon(Icons.add)),
       body: switch (state) {
-        JewelryInitial() || JewelryLoading() => const PosLoadingSkeleton(),
+        JewelryInitial() || JewelryLoading() => PosLoadingSkeleton.list(),
         JewelryError(:final message) => PosErrorState(message: message, onRetry: () => ref.read(jewelryProvider.notifier).load()),
         JewelryLoaded(:final metalRates, :final productDetails, :final buybacks) => TabBarView(
           controller: _tabController,
           children: [
             metalRates.isEmpty
-                ? const PosEmptyState(message: 'No metal rates set', icon: Icons.monetization_on)
+                ? const PosEmptyState(title: 'No metal rates set', icon: Icons.monetization_on)
                 : ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: metalRates.length,
@@ -89,7 +89,7 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> wit
                     },
                   ),
             productDetails.isEmpty
-                ? const PosEmptyState(message: 'No product details', icon: Icons.diamond)
+                ? const PosEmptyState(title: 'No product details', icon: Icons.diamond)
                 : ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: productDetails.length,
@@ -109,7 +109,7 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> wit
                     },
                   ),
             buybacks.isEmpty
-                ? const PosEmptyState(message: 'No buyback transactions', icon: Icons.swap_horiz)
+                ? const PosEmptyState(title: 'No buyback transactions', icon: Icons.swap_horiz)
                 : ListView.builder(
                     padding: const EdgeInsets.all(12),
                     itemCount: buybacks.length,
@@ -117,7 +117,7 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> wit
                       final b = buybacks[i];
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 8),
-                        child: BuybackCard(transaction: b),
+                        child: BuybackCard(buyback: b),
                       );
                     },
                   ),

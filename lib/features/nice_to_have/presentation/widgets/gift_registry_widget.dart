@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import '../nice_to_have_providers.dart';
 import '../nice_to_have_state.dart';
@@ -13,7 +14,7 @@ class GiftRegistryWidget extends ConsumerWidget {
     return switch (state) {
       GiftRegistryInitial() || GiftRegistryLoading() => const Center(child: CircularProgressIndicator()),
       GiftRegistryError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+        child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
       ),
       GiftRegistryLoaded(:final registries) =>
         registries.isEmpty

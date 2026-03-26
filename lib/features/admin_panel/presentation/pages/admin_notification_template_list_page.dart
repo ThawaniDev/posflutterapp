@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
@@ -33,12 +34,12 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
   }
 
   Color _channelColor(String? channel) => switch (channel) {
-    'push' => Colors.blue,
-    'email' => Colors.purple,
-    'sms' => Colors.green,
-    'whatsapp' => Colors.teal,
-    'in_app' => Colors.orange,
-    _ => Colors.grey,
+    'push' => AppColors.info,
+    'email' => AppColors.purple,
+    'sms' => AppColors.success,
+    'whatsapp' => AppColors.info,
+    'in_app' => AppColors.warning,
+    _ => AppColors.textSecondary,
   };
 
   @override
@@ -92,7 +93,7 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
               NotificationTemplateListInitial() ||
               NotificationTemplateListLoading() => const Center(child: CircularProgressIndicator()),
               NotificationTemplateListError(:final message) => Center(
-                child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+                child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
               ),
               NotificationTemplateListLoaded(:final templates) =>
                 templates.isEmpty

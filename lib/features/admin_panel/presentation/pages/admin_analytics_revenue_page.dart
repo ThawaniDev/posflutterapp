@@ -54,17 +54,17 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                 // MRR & ARR cards
                 Row(
                   children: [
-                    Expanded(child: _metricCard('MRR', '\$${mrr.toStringAsFixed(2)}', Colors.green)),
+                    Expanded(child: _metricCard('MRR', '\$${mrr.toStringAsFixed(2)}', AppColors.success)),
                     const SizedBox(width: AppSpacing.sm),
-                    Expanded(child: _metricCard('ARR', '\$${arr.toStringAsFixed(2)}', Colors.blue)),
+                    Expanded(child: _metricCard('ARR', '\$${arr.toStringAsFixed(2)}', AppColors.info)),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Row(
                   children: [
-                    Expanded(child: _metricCard('Failed Payments', '$failed', Colors.red)),
+                    Expanded(child: _metricCard('Failed Payments', '$failed', AppColors.error)),
                     const SizedBox(width: AppSpacing.sm),
-                    Expanded(child: _metricCard('Upcoming Renewals', '$renewals', Colors.orange)),
+                    Expanded(child: _metricCard('Upcoming Renewals', '$renewals', AppColors.warning)),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.lg),
@@ -89,7 +89,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                         subtitle: Text('${p['active_count'] ?? 0} active stores'),
                         trailing: Text(
                           '\$${(p['mrr'] as num? ?? 0).toStringAsFixed(2)}',
-                          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+                          style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.success),
                         ),
                       ),
                     ),
@@ -161,7 +161,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: color),
             ),
             const SizedBox(height: 4),
-            Text(label, style: const TextStyle(fontSize: 13, color: Colors.grey)),
+            Text(label, style: const TextStyle(fontSize: 13, color: AppColors.textSecondary)),
           ],
         ),
       ),

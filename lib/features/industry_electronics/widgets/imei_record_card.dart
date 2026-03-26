@@ -20,7 +20,7 @@ class ImeiRecordCard extends StatelessWidget {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.border),
+        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       child: InkWell(
         onTap: onTap,
@@ -32,10 +32,7 @@ class ImeiRecordCard extends StatelessWidget {
               Container(
                 width: 40,
                 height: 40,
-                decoration: BoxDecoration(
-                  color: AppColors.primary10,
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                ),
+                decoration: BoxDecoration(color: AppColors.primary10, borderRadius: BorderRadius.circular(AppRadius.sm)),
                 child: const Icon(Icons.smartphone, color: AppColors.primary, size: 22),
               ),
               AppSpacing.gapW12,
@@ -44,17 +41,13 @@ class ImeiRecordCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(record.imei, style: AppTypography.titleSmall),
-                    if (record.serialNumber != null)
-                      Text('S/N: ${record.serialNumber}', style: AppTypography.caption),
+                    if (record.serialNumber != null) Text('S/N: ${record.serialNumber}', style: AppTypography.caption),
                     AppSpacing.gapH4,
                     Row(
                       children: [
-                        PosStatusBadge(
-                          label: 'Grade: ${record.conditionGrade}',
-                          variant: PosStatusBadgeVariant.info,
-                        ),
+                        PosStatusBadge(label: 'Grade: ${record.conditionGrade}', variant: PosStatusBadgeVariant.info),
                         AppSpacing.gapW8,
-                        _statusBadge(record.status),
+                        if (record.status != null) _statusBadge(record.status!),
                       ],
                     ),
                   ],
@@ -76,9 +69,8 @@ class ImeiRecordCard extends StatelessWidget {
     final (label, variant) = switch (status) {
       DeviceImeiStatus.inStock => ('In Stock', PosStatusBadgeVariant.success),
       DeviceImeiStatus.sold => ('Sold', PosStatusBadgeVariant.neutral),
+      DeviceImeiStatus.tradedIn => ('Traded In', PosStatusBadgeVariant.info),
       DeviceImeiStatus.returned => ('Returned', PosStatusBadgeVariant.warning),
-      DeviceImeiStatus.defective => ('Defective', PosStatusBadgeVariant.error),
-      DeviceImeiStatus.inRepair => ('In Repair', PosStatusBadgeVariant.info),
     };
     return PosStatusBadge(label: label, variant: variant);
   }

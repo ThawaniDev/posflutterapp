@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/backup/providers/backup_providers.dart';
 import 'package:thawani_pos/features/backup/providers/backup_state.dart';
@@ -18,7 +19,7 @@ class BackupStorageWidget extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.error_outline, size: 48, color: Colors.red),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.error),
             AppSpacing.gapH8,
             Text(message, textAlign: TextAlign.center),
           ],
@@ -50,7 +51,7 @@ class BackupStorageWidget extends ConsumerWidget {
                   AppSpacing.gapH16,
                   LinearProgressIndicator(
                     value: usagePercent / 100,
-                    backgroundColor: Colors.grey[200],
+                    backgroundColor: AppColors.borderLight,
                     minHeight: 10,
                     borderRadius: AppRadius.borderMd,
                   ),
@@ -77,7 +78,7 @@ class BackupStorageWidget extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: Colors.grey[600]),
+          Icon(icon, size: 20, color: AppColors.textSecondary),
           const SizedBox(width: 12),
           Expanded(child: Text(label)),
           Text(value, style: const TextStyle(fontWeight: FontWeight.w600)),

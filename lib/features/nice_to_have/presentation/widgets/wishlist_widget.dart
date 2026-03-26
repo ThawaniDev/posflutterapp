@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import '../nice_to_have_providers.dart';
 import '../nice_to_have_state.dart';
@@ -14,7 +15,7 @@ class WishlistWidget extends ConsumerWidget {
       WishlistInitial() => const Center(child: Text('Enter a customer ID to view wishlist')),
       WishlistLoading() => const Center(child: CircularProgressIndicator()),
       WishlistError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+        child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
       ),
       WishlistLoaded(:final items) =>
         items.isEmpty
@@ -27,7 +28,7 @@ class WishlistWidget extends ConsumerWidget {
                   return Card(
                     margin: const EdgeInsets.only(bottom: 8),
                     child: ListTile(
-                      leading: const Icon(Icons.favorite, color: Colors.red),
+                      leading: const Icon(Icons.favorite, color: AppColors.error),
                       title: Text(item['product_id']?.toString() ?? 'Unknown'),
                       subtitle: Text('Added: ${item['added_at'] ?? '-'}'),
                     ),

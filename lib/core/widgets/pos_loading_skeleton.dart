@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 
 class PosLoadingSkeleton extends StatefulWidget {
@@ -71,10 +70,10 @@ class _PosListSkeletonState extends State<_PosListSkeleton> {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: (widget as _PosListSkeleton).count,
+      itemCount: widget.count,
       separatorBuilder: (_, __) => AppSpacing.gapH12,
       itemBuilder: (_, __) => Padding(
-        padding: AppSpacing.paddingCardH,
+        padding: AppSpacing.paddingH16,
         child: Row(
           children: [
             const PosLoadingSkeleton(width: 48, height: 48, borderRadius: 24),

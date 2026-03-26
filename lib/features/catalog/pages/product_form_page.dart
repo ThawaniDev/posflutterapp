@@ -256,7 +256,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
       children: [
         PosTextField(
           controller: _sellPriceController,
-          label: 'Sell Price (OMR) *',
+          label: 'Sell Price (SAR) *',
           hint: '0.000',
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
@@ -264,7 +264,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
         const SizedBox(height: AppSpacing.md),
         PosTextField(
           controller: _costPriceController,
-          label: 'Cost Price (OMR)',
+          label: 'Cost Price (SAR)',
           hint: '0.000',
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],

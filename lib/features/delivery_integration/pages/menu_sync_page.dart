@@ -1,0 +1,258 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/delivery_integration/enums/delivery_config_platform.dart';
+import 'package:thawani_pos/features/delivery_integration/providers/delivery_providers.dart';
+import 'package:thawani_pos/features/delivery_integration/providers/delivery_state.dart';
+import 'package:thawani_pos/features/delivery_integration/widgets/menu_sync_status_card.dart';
+import 'package:thawani_pos/features/delivery_integration/repositories/delivery_repository.dart';
+
+/// Sync log list provider
+final _syncLogsProvider = FutureProvider.autoDispose<List<Map<String, dynamic>>>((ref) async {
+  final result = await ref.watch(deliveryRepositoryProvider).getSyncLogs(perPage: 20);
+  final data = result['data'] as Map<String, dynamic>? ?? {};
+  final items = data['data'] as List<dynamic>? ?? [];
+  return items.cast<Map<String, dynamic>>();
+});
+
+class MenuSyncPage extends ConsumerWidget {
+  const MenuSyncPage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final syncState = ref.watch(deliveryMenuSyncProvider);
+    final logsAsync = ref.watch(_syncLogsProvider);
+    final configsState = ref.watch(deliveryConfigsProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(l10n.deliveryMenuSync),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () => ref.invalidate(_syncLogsProvider),
+          ),
+        ],
+      ),
+      body: ListView(
+        padding: AppSpacing.paddingAll16,
+        children: [
+          // Sync trigger section
+          _SyncTriggerSection(
+            syncState: syncState,
+            configsState: configsState,
+            onSync: (platform) {
+              // trigger sync with dummy products payload — the API expects product list
+              ref.read(deliveryMenuSyncProvider.notifier).sync(
+                platform: platform,
+                products: [
+                  {'name': 'Full menu sync', 'price': 0, 'is_available': true},
+                ],
+              );
+            },
+          ),
+          AppSpacing.gapH24,
+
+          // Sync history
+          Text(
+            l10n.deliverySyncHistory,
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+          AppSpacing.gapH12,
+          logsAsync.when(
+            data: (logs) => logs.isEmpty
+                ? PosEmptyState(title: l10n.deliveryNoSyncLogs, icon: Icons.sync_disabled)
+                : Column(
+                    children: logs.map((log) => Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: MenuSyncStatusCard(syncLog: log),
+                    )).toList(),
+                  ),
+            loading: () => PosLoadingSkeleton.list(),
+            error: (e, _) => PosErrorState(
+              message: e.toString(),
+              onRetry: () => ref.invalidate(_syncLogsProvider),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SyncTriggerSection extends StatefulWidget {
+  final DeliveryMenuSyncState syncState;
+  final DeliveryConfigsState configsState;
+  final void Function(String? platform) onSync;
+
+  const _SyncTriggerSection({
+    required this.syncState,
+    required this.configsState,
+    required this.onSync,
+  });
+
+  @override
+  State<_SyncTriggerSection> createState() => _SyncTriggerSectionState();
+}
+
+class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
+  String? _selectedPlatform;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final isLoading = widget.syncState is DeliveryMenuSyncLoading;
+
+    // Get enabled platforms from configs
+    final enabledPlatforms = <Map<String, dynamic>>[];
+    if (widget.configsState is DeliveryConfigsLoaded) {
+      enabledPlatforms.addAll(
+        (widget.configsState as DeliveryConfigsLoaded).configs.where((c) => c['is_enabled'] == true),
+      );
+    }
+
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        side: BorderSide(color: AppColors.info.withValues(alpha: 0.3)),
+      ),
+      child: Padding(
+        padding: AppSpacing.paddingAll16,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.sync, color: AppColors.info),
+                AppSpacing.gapW12,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(l10n.deliveryTriggerSync, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
+                      Text(
+                        l10n.deliveryTriggerSyncDesc,
+                        style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            AppSpacing.gapH16,
+
+            // Platform selector
+            if (enabledPlatforms.isNotEmpty) ...[
+              DropdownButtonFormField<String>(
+                value: _selectedPlatform,
+                decoration: InputDecoration(
+                  labelText: l10n.deliverySelectPlatform,
+                  border: const OutlineInputBorder(),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                ),
+                items: [
+                  DropdownMenuItem(value: null, child: Text(l10n.deliveryAllPlatforms)),
+                  ...enabledPlatforms.map((c) {
+                    final slug = c['platform'] as String? ?? '';
+                    final platform = DeliveryConfigPlatform.tryFromValue(slug);
+                    return DropdownMenuItem(
+                      value: slug,
+                      child: Row(
+                        children: [
+                          if (platform != null) ...[
+                            Icon(platform.icon, size: 16, color: platform.color),
+                            AppSpacing.gapW8,
+                          ],
+                          Text(platform?.label ?? slug),
+                        ],
+                      ),
+                    );
+                  }),
+                ],
+                onChanged: (v) => setState(() => _selectedPlatform = v),
+              ),
+              AppSpacing.gapH12,
+            ],
+
+            // Sync button
+            SizedBox(
+              width: double.infinity,
+              child: FilledButton.icon(
+                onPressed: isLoading || enabledPlatforms.isEmpty
+                    ? null
+                    : () => widget.onSync(_selectedPlatform),
+                icon: isLoading
+                    ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                    : const Icon(Icons.sync),
+                label: Text(isLoading ? l10n.deliverySyncing : l10n.deliverySyncNow),
+                style: FilledButton.styleFrom(
+                  backgroundColor: AppColors.info,
+                  padding: AppSpacing.paddingV12,
+                ),
+              ),
+            ),
+
+            // Result message
+            if (widget.syncState is DeliveryMenuSyncSuccess) ...[
+              AppSpacing.gapH12,
+              Container(
+                padding: AppSpacing.paddingAll12,
+                decoration: BoxDecoration(
+                  color: AppColors.success.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(AppRadius.md),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.check_circle, color: AppColors.success, size: 18),
+                    AppSpacing.gapW8,
+                    Expanded(
+                      child: Text(
+                        (widget.syncState as DeliveryMenuSyncSuccess).message,
+                        style: TextStyle(fontSize: 12, color: AppColors.success),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+            if (widget.syncState is DeliveryMenuSyncError) ...[
+              AppSpacing.gapH12,
+              Container(
+                padding: AppSpacing.paddingAll12,
+                decoration: BoxDecoration(
+                  color: AppColors.error.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(AppRadius.md),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.error_outline, color: AppColors.error, size: 18),
+                    AppSpacing.gapW8,
+                    Expanded(
+                      child: Text(
+                        (widget.syncState as DeliveryMenuSyncError).message,
+                        style: TextStyle(fontSize: 12, color: AppColors.error),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+
+            if (enabledPlatforms.isEmpty) ...[
+              AppSpacing.gapH12,
+              Text(
+                l10n.deliveryNoPlatformsForSync,
+                style: TextStyle(fontSize: 12, color: AppColors.warning),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}

@@ -181,7 +181,7 @@ class _GoodsReceiptsPageState extends ConsumerState<GoodsReceiptsPage> {
                         size: PosButtonSize.sm,
                         onPressed: () => _handleConfirm(receipt),
                       )
-                    : const Icon(Icons.check_circle, color: Colors.green, size: 20),
+                    : const Icon(Icons.check_circle, color: AppColors.success, size: 20),
               ),
             ],
           );

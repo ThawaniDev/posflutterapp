@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
@@ -80,7 +81,7 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
             child: switch (state) {
               CmsPageListInitial() || CmsPageListLoading() => const Center(child: CircularProgressIndicator()),
               CmsPageListError(:final message) => Center(
-                child: Text('Error: $message', style: const TextStyle(color: Colors.red)),
+                child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
               ),
               CmsPageListLoaded(:final pages, :final total) =>
                 pages.isEmpty
@@ -99,7 +100,7 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
                                 children: [
                                   Chip(
                                     label: Text(page['is_published'] == true ? 'Published' : 'Draft'),
-                                    backgroundColor: page['is_published'] == true ? Colors.green.shade100 : Colors.grey.shade200,
+                                    backgroundColor: page['is_published'] == true ? AppColors.success.withValues(alpha: 0.15) : AppColors.borderLight,
                                   ),
                                   const SizedBox(width: 8),
                                   Text('$total total'),

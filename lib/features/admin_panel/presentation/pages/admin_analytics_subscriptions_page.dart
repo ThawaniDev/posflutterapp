@@ -21,12 +21,12 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
 
   Color _statusColor(String status) {
     return switch (status) {
-      'active' => Colors.green,
-      'trial' => Colors.blue,
-      'cancelled' => Colors.red,
-      'past_due' => Colors.orange,
-      'expired' => Colors.grey,
-      _ => Colors.blueGrey,
+      'active' => AppColors.success,
+      'trial' => AppColors.info,
+      'cancelled' => AppColors.error,
+      'past_due' => AppColors.warning,
+      'expired' => AppColors.textSecondary,
+      _ => AppColors.info,
     };
   }
 
@@ -64,13 +64,13 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
                 // Conversion & Churn highlights
                 Row(
                   children: [
-                    Expanded(child: _metricCard('Conversion Rate', '${conversion.toStringAsFixed(1)}%', Colors.green)),
+                    Expanded(child: _metricCard('Conversion Rate', '${conversion.toStringAsFixed(1)}%', AppColors.success)),
                     const SizedBox(width: AppSpacing.sm),
-                    Expanded(child: _metricCard('Churn (Period)', '$churn', Colors.red)),
+                    Expanded(child: _metricCard('Churn (Period)', '$churn', AppColors.error)),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                _metricCard('Avg Sub Age', '${avgAge.toStringAsFixed(0)} days', Colors.blue),
+                _metricCard('Avg Sub Age', '${avgAge.toStringAsFixed(0)} days', AppColors.info),
                 const SizedBox(height: AppSpacing.lg),
 
                 // Status breakdown
@@ -142,7 +142,7 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: color),
             ),
             const SizedBox(height: 4),
-            Text(label, style: const TextStyle(fontSize: 13, color: Colors.grey)),
+            Text(label, style: const TextStyle(fontSize: 13, color: AppColors.textSecondary)),
           ],
         ),
       ),
