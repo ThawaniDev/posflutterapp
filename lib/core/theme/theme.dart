@@ -1,4 +1,4 @@
-/// Thawani POS Design System — single barrel import
+/// Wameed POS Design System — single barrel import
 ///
 /// ```dart
 /// import 'package:posflutterapp/core/theme/theme.dart';

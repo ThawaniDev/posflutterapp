@@ -6,7 +6,7 @@ class SupportTicketMessage {
   final TicketSenderType senderType;
   final String senderId;
   final String messageText;
-  final Map<String, dynamic>? attachments;
+  final List<dynamic>? attachments;
   final bool? isInternalNote;
   final DateTime? sentAt;
 
@@ -28,7 +28,7 @@ class SupportTicketMessage {
       senderType: TicketSenderType.fromValue(json['sender_type'] as String),
       senderId: json['sender_id'] as String,
       messageText: json['message_text'] as String,
-      attachments: json['attachments'] != null ? Map<String, dynamic>.from(json['attachments'] as Map) : null,
+      attachments: json['attachments'] != null ? List<dynamic>.from(json['attachments'] as List) : null,
       isInternalNote: json['is_internal_note'] as bool?,
       sentAt: json['sent_at'] != null ? DateTime.parse(json['sent_at'] as String) : null,
     );
@@ -53,7 +53,7 @@ class SupportTicketMessage {
     TicketSenderType? senderType,
     String? senderId,
     String? messageText,
-    Map<String, dynamic>? attachments,
+    List<dynamic>? attachments,
     bool? isInternalNote,
     DateTime? sentAt,
   }) {
@@ -70,13 +70,12 @@ class SupportTicketMessage {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SupportTicketMessage && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is SupportTicketMessage && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'SupportTicketMessage(id: $id, supportTicketId: $supportTicketId, senderType: $senderType, senderId: $senderId, messageText: $messageText, attachments: $attachments, ...)';
+  String toString() =>
+      'SupportTicketMessage(id: $id, supportTicketId: $supportTicketId, senderType: $senderType, senderId: $senderId, messageText: $messageText, attachments: $attachments, ...)';
 }

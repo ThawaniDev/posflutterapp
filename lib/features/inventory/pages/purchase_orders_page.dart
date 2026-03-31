@@ -5,6 +5,10 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:thawani_pos/features/catalog/models/supplier.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
 import 'package:thawani_pos/features/inventory/enums/purchase_order_status.dart';
 import 'package:thawani_pos/features/inventory/models/purchase_order.dart';
 import 'package:thawani_pos/features/inventory/providers/inventory_providers.dart';
@@ -121,204 +125,180 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
   }
 
   Widget _buildBody(PurchaseOrdersState state) {
-    if (state is PurchaseOrdersLoading || state is PurchaseOrdersInitial) {
-      return const Center(child: CircularProgressIndicator());
-    }
+    final isLoading = state is PurchaseOrdersLoading || state is PurchaseOrdersInitial;
+    final error = state is PurchaseOrdersError ? state.message : null;
+    final orders = state is PurchaseOrdersLoaded ? state.orders : <PurchaseOrder>[];
 
-    if (state is PurchaseOrdersError) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
-            const SizedBox(height: AppSpacing.md),
-            Text(state.message, textAlign: TextAlign.center),
-            const SizedBox(height: AppSpacing.lg),
-            PosButton(
-              label: 'Retry',
-              onPressed: () => ref.read(purchaseOrdersProvider.notifier).load(),
-              variant: PosButtonVariant.outline,
-            ),
-          ],
-        ),
-      );
-    }
-
-    if (state is PurchaseOrdersLoaded) {
-      if (state.orders.isEmpty) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.shopping_cart_outlined, size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
-              const SizedBox(height: AppSpacing.md),
-              Text('No purchase orders yet', style: Theme.of(context).textTheme.titleMedium),
-            ],
-          ),
-        );
-      }
-
-      return SingleChildScrollView(padding: const EdgeInsets.all(AppSpacing.md), child: _buildTable(state.orders));
-    }
-
-    return const SizedBox.shrink();
-  }
-
-  Widget _buildTable(List<PurchaseOrder> orders) {
-    return PosDataTable(
+    return PosDataTable<PurchaseOrder>(
       columns: const [
-        DataColumn(label: Text('REF')),
-        DataColumn(label: Text('SUPPLIER')),
-        DataColumn(label: Text('STATUS')),
-        DataColumn(label: Text('TOTAL'), numeric: true),
-        DataColumn(label: Text('EXPECTED')),
-        DataColumn(label: Text('ACTIONS')),
+        PosTableColumn(title: 'Ref'),
+        PosTableColumn(title: 'Supplier'),
+        PosTableColumn(title: 'Status'),
+        PosTableColumn(title: 'Total', numeric: true),
+        PosTableColumn(title: 'Expected'),
       ],
-      rows: orders.map((po) {
-        return DataRow(
-          cells: [
-            DataCell(Text(po.referenceNumber ?? po.id.substring(0, 8))),
-            DataCell(Text(po.supplierId.substring(0, 8))),
-            DataCell(PosBadge(label: po.status?.value ?? 'draft', variant: _statusVariant(po.status))),
-            DataCell(Text(po.totalCost?.toStringAsFixed(2) ?? '-')),
-            DataCell(
-              Text(po.expectedDate != null ? '${po.expectedDate!.day}/${po.expectedDate!.month}/${po.expectedDate!.year}' : '-'),
-            ),
-            DataCell(_buildActionButtons(po)),
-          ],
-        );
-      }).toList(),
-    );
-  }
-
-  Widget _buildActionButtons(PurchaseOrder order) {
-    final actions = <Widget>[];
-
-    if (order.status == PurchaseOrderStatus.draft) {
-      actions.add(
-        IconButton(
-          icon: const Icon(Icons.send_outlined, size: 20, color: AppColors.info),
-          tooltip: 'Send',
-          onPressed: () => _handleSend(order),
+      items: orders,
+      isLoading: isLoading,
+      error: error,
+      onRetry: () => ref.read(purchaseOrdersProvider.notifier).load(),
+      emptyConfig: const PosTableEmptyConfig(icon: Icons.shopping_cart_outlined, title: 'No purchase orders yet'),
+      actions: [
+        PosTableRowAction<PurchaseOrder>(
+          label: 'Send',
+          icon: Icons.send_outlined,
+          color: AppColors.info,
+          isVisible: (po) => po.status == PurchaseOrderStatus.draft,
+          onTap: (po) => _handleSend(po),
         ),
-      );
-      actions.add(
-        IconButton(
-          icon: const Icon(Icons.cancel_outlined, size: 20, color: AppColors.error),
-          tooltip: 'Cancel',
-          onPressed: () => _handleCancel(order),
-        ),
-      );
-    } else if (order.status == PurchaseOrderStatus.sent) {
-      actions.add(
-        IconButton(
-          icon: const Icon(Icons.archive_outlined, size: 20, color: AppColors.success),
-          tooltip: 'Receive',
-          onPressed: () {
+        PosTableRowAction<PurchaseOrder>(
+          label: 'Receive',
+          icon: Icons.archive_outlined,
+          color: AppColors.success,
+          isVisible: (po) => po.status == PurchaseOrderStatus.sent,
+          onTap: (po) {
             // TODO: Show receive dialog with item quantities
           },
         ),
-      );
-      actions.add(
-        IconButton(
-          icon: const Icon(Icons.cancel_outlined, size: 20, color: AppColors.error),
-          tooltip: 'Cancel',
-          onPressed: () => _handleCancel(order),
+        PosTableRowAction<PurchaseOrder>(
+          label: 'Cancel',
+          icon: Icons.cancel_outlined,
+          isDestructive: true,
+          isVisible: (po) => po.status == PurchaseOrderStatus.draft || po.status == PurchaseOrderStatus.sent,
+          onTap: (po) => _handleCancel(po),
         ),
-      );
-    }
-
-    if (actions.isEmpty) return const SizedBox.shrink();
-    return Row(mainAxisSize: MainAxisSize.min, children: actions);
+      ],
+      cellBuilder: (po, colIndex, col) {
+        switch (colIndex) {
+          case 0:
+            return Text(po.referenceNumber ?? po.id.substring(0, 8));
+          case 1:
+            return Text(po.supplierName ?? po.supplierId.substring(0, 8));
+          case 2:
+            return PosBadge(label: po.status?.value ?? 'draft', variant: _statusVariant(po.status));
+          case 3:
+            return Text(po.totalCost?.toStringAsFixed(2) ?? '-');
+          case 4:
+            return Text(
+              po.expectedDate != null ? '${po.expectedDate!.day}/${po.expectedDate!.month}/${po.expectedDate!.year}' : '-',
+            );
+          default:
+            return const SizedBox.shrink();
+        }
+      },
+    );
   }
 
   Future<void> _showCreateDialog() async {
+    // Ensure suppliers and products are loaded
+    if (ref.read(suppliersProvider) is! SuppliersLoaded) {
+      await ref.read(suppliersProvider.notifier).load();
+    }
+    if (ref.read(productsProvider) is! ProductsLoaded) {
+      await ref.read(productsProvider.notifier).load();
+    }
+
     final formKey = GlobalKey<FormState>();
-    final supplierController = TextEditingController();
     final refController = TextEditingController();
-    final productIdController = TextEditingController();
     final quantityController = TextEditingController();
     final unitCostController = TextEditingController();
+    String? selectedSupplierId;
+    String? selectedProductId;
 
     final result = await showDialog<Map<String, dynamic>>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('New Purchase Order'),
-        content: Form(
-          key: formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  controller: supplierController,
-                  decoration: const InputDecoration(labelText: 'Supplier ID'),
-                  validator: (v) => (v == null || v.isEmpty) ? 'Required' : null,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) {
+          final suppState = ref.read(suppliersProvider);
+          final supplierList = suppState is SuppliersLoaded ? suppState.suppliers : <Supplier>[];
+          final prodState = ref.read(productsProvider);
+          final productList = prodState is ProductsLoaded ? prodState.products : <Product>[];
+
+          return AlertDialog(
+            title: const Text('New Purchase Order'),
+            content: SizedBox(
+              width: 500,
+              child: Form(
+                key: formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      DropdownButtonFormField<String>(
+                        value: selectedSupplierId,
+                        decoration: const InputDecoration(labelText: 'Supplier'),
+                        isExpanded: true,
+                        items: supplierList.map((s) => DropdownMenuItem(value: s.id, child: Text(s.name))).toList(),
+                        onChanged: (v) => setDialogState(() => selectedSupplierId = v),
+                        validator: (v) => v == null ? 'Required' : null,
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      TextFormField(
+                        controller: refController,
+                        decoration: const InputDecoration(labelText: 'Reference (optional)'),
+                      ),
+                      const Divider(height: 24),
+                      const Text('Item', style: TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: AppSpacing.sm),
+                      DropdownButtonFormField<String>(
+                        value: selectedProductId,
+                        decoration: const InputDecoration(labelText: 'Product'),
+                        isExpanded: true,
+                        items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
+                        onChanged: (v) => setDialogState(() => selectedProductId = v),
+                        validator: (v) => v == null ? 'Required' : null,
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      TextFormField(
+                        controller: quantityController,
+                        decoration: const InputDecoration(labelText: 'Quantity'),
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        validator: (v) {
+                          if (v == null || v.isEmpty) return 'Required';
+                          if (double.tryParse(v) == null) return 'Invalid';
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      TextFormField(
+                        controller: unitCostController,
+                        decoration: const InputDecoration(labelText: 'Unit Cost'),
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        validator: (v) {
+                          if (v == null || v.isEmpty) return 'Required';
+                          if (double.tryParse(v) == null) return 'Invalid';
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                TextFormField(
-                  controller: refController,
-                  decoration: const InputDecoration(labelText: 'Reference (optional)'),
-                ),
-                const Divider(),
-                const Text('Item', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextFormField(
-                  controller: productIdController,
-                  decoration: const InputDecoration(labelText: 'Product ID'),
-                  validator: (v) => (v == null || v.isEmpty) ? 'Required' : null,
-                ),
-                TextFormField(
-                  controller: quantityController,
-                  decoration: const InputDecoration(labelText: 'Quantity'),
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  validator: (v) {
-                    if (v == null || v.isEmpty) return 'Required';
-                    if (double.tryParse(v) == null) return 'Invalid';
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: unitCostController,
-                  decoration: const InputDecoration(labelText: 'Unit Cost'),
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  validator: (v) {
-                    if (v == null || v.isEmpty) return 'Required';
-                    if (double.tryParse(v) == null) return 'Invalid';
-                    return null;
-                  },
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          TextButton(
-            onPressed: () {
-              if (formKey.currentState!.validate()) {
-                Navigator.pop(ctx, {
-                  'supplier_id': supplierController.text,
-                  if (refController.text.isNotEmpty) 'reference_number': refController.text,
-                  'items': [
-                    {
-                      'product_id': productIdController.text,
-                      'quantity': double.parse(quantityController.text),
-                      'unit_cost': double.parse(unitCostController.text),
-                    },
-                  ],
-                });
-              }
-            },
-            child: const Text('Create'),
-          ),
-        ],
+            actions: [
+              TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+              TextButton(
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    Navigator.pop(ctx, {
+                      'supplier_id': selectedSupplierId,
+                      if (refController.text.isNotEmpty) 'reference_number': refController.text,
+                      'items': [
+                        {
+                          'product_id': selectedProductId,
+                          'quantity_ordered': double.parse(quantityController.text),
+                          'unit_cost': double.parse(unitCostController.text),
+                        },
+                      ],
+                    });
+                  }
+                },
+                child: const Text('Create'),
+              ),
+            ],
+          );
+        },
       ),
     );
-
-    supplierController.dispose();
-    refController.dispose();
-    productIdController.dispose();
-    quantityController.dispose();
-    unitCostController.dispose();
 
     if (result != null && mounted) {
       try {
@@ -332,5 +312,9 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
         }
       }
     }
+
+    refController.dispose();
+    quantityController.dispose();
+    unitCostController.dispose();
   }
 }

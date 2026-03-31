@@ -3,7 +3,7 @@ import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_typography.dart';
 
-/// Thawani POS App Bar — sticky top bar with logo area, title,
+/// Wameed POS App Bar — sticky top bar with logo area, title,
 /// optional search, notification badge, and user avatar.
 ///
 /// Matches the stitch prototype: white bg, bottom border, 56px height.

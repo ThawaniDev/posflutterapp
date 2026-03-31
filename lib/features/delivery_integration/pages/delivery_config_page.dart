@@ -43,10 +43,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
   void _loadExistingConfig() {
     final configsState = ref.read(deliveryConfigsProvider);
     if (configsState is DeliveryConfigsLoaded) {
-      final config = configsState.configs.firstWhere(
-        (c) => '${c['id']}' == widget.configId,
-        orElse: () => <String, dynamic>{},
-      );
+      final config = configsState.configs.firstWhere((c) => '${c['id']}' == widget.configId, orElse: () => <String, dynamic>{});
       if (config.isNotEmpty) {
         setState(() {
           _selectedPlatformSlug = config['platform'] as String?;
@@ -165,7 +162,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
                     decoration: InputDecoration(
                       labelText: l10n.deliverySyncInterval,
                       border: const OutlineInputBorder(),
-                      suffixText: 'hours',
+                      suffixText: l10n.deliveryHours,
                     ),
                     keyboardType: TextInputType.number,
                     onChanged: (v) => _menuSyncIntervalHours = int.tryParse(v) ?? 24,
@@ -178,7 +175,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
                     decoration: InputDecoration(
                       labelText: l10n.deliveryMaxDailyOrders,
                       border: const OutlineInputBorder(),
-                      helperText: '0 = unlimited',
+                      helperText: l10n.deliveryUnlimitedHint,
                     ),
                     keyboardType: TextInputType.number,
                     onChanged: (v) => _maxDailyOrders = int.tryParse(v) ?? 0,
@@ -191,7 +188,9 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
             // Submit
             FilledButton.icon(
               onPressed: _isSaving ? null : _save,
-              icon: _isSaving ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)) : const Icon(Icons.save),
+              icon: _isSaving
+                  ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
+                  : const Icon(Icons.save),
               label: Text(_isSaving ? l10n.deliverySaving : l10n.deliverySave),
               style: FilledButton.styleFrom(padding: AppSpacing.paddingV16),
             ),
@@ -205,10 +204,8 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
     final platformsState = ref.watch(deliveryPlatformsProvider);
 
     return switch (platformsState) {
-      DeliveryPlatformsLoading() || DeliveryPlatformsInitial() =>
-        const Center(child: CircularProgressIndicator()),
-      DeliveryPlatformsError(:final message) =>
-        Text(message, style: TextStyle(color: AppColors.error)),
+      DeliveryPlatformsLoading() || DeliveryPlatformsInitial() => const Center(child: CircularProgressIndicator()),
+      DeliveryPlatformsError(:final message) => Text(message, style: TextStyle(color: AppColors.error)),
       DeliveryPlatformsLoaded(:final platforms) => Wrap(
         spacing: 8,
         runSpacing: 8,
@@ -224,9 +221,11 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
             selected: isSelected,
             avatar: Icon(icon, size: 18, color: isSelected ? Colors.white : color),
             selectedColor: color,
-            onSelected: _isEditing ? null : (selected) {
-              if (selected) setState(() => _selectedPlatformSlug = slug);
-            },
+            onSelected: _isEditing
+                ? null
+                : (selected) {
+                    if (selected) setState(() => _selectedPlatformSlug = slug);
+                  },
           );
         }).toList(),
       ),
@@ -245,11 +244,11 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
           color: AppColors.info.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(AppRadius.md),
         ),
-        child: const Row(
+        child: Row(
           children: [
-            SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
-            SizedBox(width: 12),
-            Text('Testing connection...'),
+            const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
+            const SizedBox(width: 12),
+            Text(AppLocalizations.of(context)!.deliveryTestingConnection),
           ],
         ),
       ),
@@ -265,7 +264,9 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
           children: [
             Icon(Icons.check_circle, color: AppColors.success, size: 20),
             const SizedBox(width: 12),
-            Expanded(child: Text(message, style: TextStyle(color: AppColors.success))),
+            Expanded(
+              child: Text(message, style: TextStyle(color: AppColors.success)),
+            ),
           ],
         ),
       ),
@@ -281,7 +282,9 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
           children: [
             Icon(Icons.error_outline, color: AppColors.error, size: 20),
             const SizedBox(width: 12),
-            Expanded(child: Text(message, style: TextStyle(color: AppColors.error))),
+            Expanded(
+              child: Text(message, style: TextStyle(color: AppColors.error)),
+            ),
           ],
         ),
       ),
@@ -289,11 +292,10 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
   }
 
   Future<void> _save() async {
+    final l10n = AppLocalizations.of(context)!;
     if (!_formKey.currentState!.validate()) return;
     if (_selectedPlatformSlug == null && !_isEditing) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select a platform')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.deliverySelectPlatform)));
       return;
     }
 
@@ -317,9 +319,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
 
     if (mounted) {
       setState(() => _isSaving = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Configuration saved')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.deliveryConfigSaved)));
       context.pop();
     }
   }

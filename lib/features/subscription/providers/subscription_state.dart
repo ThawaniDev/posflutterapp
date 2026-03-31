@@ -72,7 +72,10 @@ class InvoicesLoading extends InvoicesState {
 
 class InvoicesLoaded extends InvoicesState {
   final List<Invoice> invoices;
-  const InvoicesLoaded({required this.invoices});
+  final int currentPage;
+  final int lastPage;
+  final int total;
+  const InvoicesLoaded({required this.invoices, this.currentPage = 1, this.lastPage = 1, this.total = 0});
 }
 
 class InvoicesError extends InvoicesState {
@@ -102,4 +105,77 @@ class UsageLoaded extends UsageState {
 class UsageError extends UsageState {
   final String message;
   const UsageError({required this.message});
+}
+
+// ─── Invoice Detail State ────────────────────────────────────────
+
+sealed class InvoiceDetailState {
+  const InvoiceDetailState();
+}
+
+class InvoiceDetailInitial extends InvoiceDetailState {
+  const InvoiceDetailInitial();
+}
+
+class InvoiceDetailLoading extends InvoiceDetailState {
+  const InvoiceDetailLoading();
+}
+
+class InvoiceDetailLoaded extends InvoiceDetailState {
+  final Invoice invoice;
+  const InvoiceDetailLoaded({required this.invoice});
+}
+
+class InvoiceDetailError extends InvoiceDetailState {
+  final String message;
+  const InvoiceDetailError({required this.message});
+}
+
+// ─── Add-Ons State ───────────────────────────────────────────────
+
+sealed class AddOnsState {
+  const AddOnsState();
+}
+
+class AddOnsInitial extends AddOnsState {
+  const AddOnsInitial();
+}
+
+class AddOnsLoading extends AddOnsState {
+  const AddOnsLoading();
+}
+
+class AddOnsLoaded extends AddOnsState {
+  final List<Map<String, dynamic>> availableAddOns;
+  final List<Map<String, dynamic>> storeAddOns;
+  const AddOnsLoaded({required this.availableAddOns, required this.storeAddOns});
+}
+
+class AddOnsError extends AddOnsState {
+  final String message;
+  const AddOnsError({required this.message});
+}
+
+// ─── Plan Comparison State ───────────────────────────────────────
+
+sealed class PlanComparisonState {
+  const PlanComparisonState();
+}
+
+class PlanComparisonInitial extends PlanComparisonState {
+  const PlanComparisonInitial();
+}
+
+class PlanComparisonLoading extends PlanComparisonState {
+  const PlanComparisonLoading();
+}
+
+class PlanComparisonLoaded extends PlanComparisonState {
+  final Map<String, dynamic> comparison;
+  const PlanComparisonLoaded({required this.comparison});
+}
+
+class PlanComparisonError extends PlanComparisonState {
+  final String message;
+  const PlanComparisonError({required this.message});
 }

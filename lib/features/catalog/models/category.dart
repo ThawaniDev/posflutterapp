@@ -4,6 +4,8 @@ class Category {
   final String? parentId;
   final String name;
   final String? nameAr;
+  final String? description;
+  final String? descriptionAr;
   final String? imageUrl;
   final int? sortOrder;
   final bool? isActive;
@@ -17,6 +19,8 @@ class Category {
     this.parentId,
     required this.name,
     this.nameAr,
+    this.description,
+    this.descriptionAr,
     this.imageUrl,
     this.sortOrder,
     this.isActive,
@@ -32,6 +36,8 @@ class Category {
       parentId: json['parent_id'] as String?,
       name: json['name'] as String,
       nameAr: json['name_ar'] as String?,
+      description: json['description'] as String?,
+      descriptionAr: json['description_ar'] as String?,
       imageUrl: json['image_url'] as String?,
       sortOrder: (json['sort_order'] as num?)?.toInt(),
       isActive: json['is_active'] as bool?,
@@ -48,6 +54,8 @@ class Category {
       'parent_id': parentId,
       'name': name,
       'name_ar': nameAr,
+      'description': description,
+      'description_ar': descriptionAr,
       'image_url': imageUrl,
       'sort_order': sortOrder,
       'is_active': isActive,
@@ -63,6 +71,8 @@ class Category {
     String? parentId,
     String? name,
     String? nameAr,
+    String? description,
+    String? descriptionAr,
     String? imageUrl,
     int? sortOrder,
     bool? isActive,
@@ -76,6 +86,8 @@ class Category {
       parentId: parentId ?? this.parentId,
       name: name ?? this.name,
       nameAr: nameAr ?? this.nameAr,
+      description: description ?? this.description,
+      descriptionAr: descriptionAr ?? this.descriptionAr,
       imageUrl: imageUrl ?? this.imageUrl,
       sortOrder: sortOrder ?? this.sortOrder,
       isActive: isActive ?? this.isActive,
@@ -86,13 +98,12 @@ class Category {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Category && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is Category && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'Category(id: $id, organizationId: $organizationId, parentId: $parentId, name: $name, nameAr: $nameAr, imageUrl: $imageUrl, ...)';
+  String toString() =>
+      'Category(id: $id, organizationId: $organizationId, parentId: $parentId, name: $name, nameAr: $nameAr, imageUrl: $imageUrl, ...)';
 }

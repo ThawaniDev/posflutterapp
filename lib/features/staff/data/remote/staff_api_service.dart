@@ -20,6 +20,28 @@ class StaffApiService {
 
   StaffApiService(this._dio);
 
+  /// Parses a paginated API response that may be a Map (with pagination meta) or a flat List.
+  PaginatedResult<T> _parsePaginated<T>(
+    dynamic raw,
+    T Function(Map<String, dynamic>) fromJson, {
+    int page = 1,
+    int perPage = 20,
+  }) {
+    if (raw is List) {
+      final items = raw.map((j) => fromJson(j as Map<String, dynamic>)).toList();
+      return PaginatedResult(items: items, total: items.length, currentPage: 1, lastPage: 1, perPage: items.length);
+    }
+    final map = raw as Map<String, dynamic>;
+    final items = (map['data'] as List).map((j) => fromJson(j as Map<String, dynamic>)).toList();
+    return PaginatedResult(
+      items: items,
+      total: map['total'] as int? ?? items.length,
+      currentPage: map['current_page'] as int? ?? page,
+      lastPage: map['last_page'] as int? ?? 1,
+      perPage: map['per_page'] as int? ?? perPage,
+    );
+  }
+
   // ─── Staff Members CRUD ───────────────────────────────────
 
   Future<PaginatedResult<StaffUser>> listStaff({
@@ -40,15 +62,7 @@ class StaffApiService {
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final map = apiResponse.data as Map<String, dynamic>;
-    final items = (map['data'] as List).map((j) => StaffUser.fromJson(j as Map<String, dynamic>)).toList();
-    return PaginatedResult(
-      items: items,
-      total: map['total'] as int? ?? items.length,
-      currentPage: map['current_page'] as int? ?? page,
-      lastPage: map['last_page'] as int? ?? 1,
-      perPage: map['per_page'] as int? ?? perPage,
-    );
+    return _parsePaginated(apiResponse.data, (j) => StaffUser.fromJson(j), page: page, perPage: perPage);
   }
 
   Future<StaffUser> getStaff(String staffId) async {
@@ -103,15 +117,7 @@ class StaffApiService {
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final map = apiResponse.data as Map<String, dynamic>;
-    final items = (map['data'] as List).map((j) => AttendanceRecord.fromJson(j as Map<String, dynamic>)).toList();
-    return PaginatedResult(
-      items: items,
-      total: map['total'] as int? ?? items.length,
-      currentPage: map['current_page'] as int? ?? page,
-      lastPage: map['last_page'] as int? ?? 1,
-      perPage: map['per_page'] as int? ?? perPage,
-    );
+    return _parsePaginated(apiResponse.data, (j) => AttendanceRecord.fromJson(j), page: page, perPage: perPage);
   }
 
   Future<AttendanceRecord> clockIn({required String staffUserId, required String storeId, String? notes}) async {
@@ -162,15 +168,7 @@ class StaffApiService {
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final map = apiResponse.data as Map<String, dynamic>;
-    final items = (map['data'] as List).map((j) => ShiftSchedule.fromJson(j as Map<String, dynamic>)).toList();
-    return PaginatedResult(
-      items: items,
-      total: map['total'] as int? ?? items.length,
-      currentPage: map['current_page'] as int? ?? page,
-      lastPage: map['last_page'] as int? ?? 1,
-      perPage: map['per_page'] as int? ?? perPage,
-    );
+    return _parsePaginated(apiResponse.data, (j) => ShiftSchedule.fromJson(j), page: page, perPage: perPage);
   }
 
   Future<ShiftSchedule> createShift(Map<String, dynamic> data) async {
@@ -229,14 +227,68 @@ class StaffApiService {
       queryParameters: {'page': page, 'per_page': perPage},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final map = apiResponse.data as Map<String, dynamic>;
-    final items = (map['data'] as List).map((j) => StaffActivityLog.fromJson(j as Map<String, dynamic>)).toList();
-    return PaginatedResult(
-      items: items,
-      total: map['total'] as int? ?? items.length,
-      currentPage: map['current_page'] as int? ?? page,
-      lastPage: map['last_page'] as int? ?? 1,
-      perPage: map['per_page'] as int? ?? perPage,
+    return _parsePaginated(apiResponse.data, (j) => StaffActivityLog.fromJson(j), page: page, perPage: perPage);
+  }
+
+  // ─── Staff Stats ──────────────────────────────────────────
+
+  Future<Map<String, dynamic>> getStats() async {
+    final response = await _dio.get(ApiEndpoints.staffStats);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return apiResponse.data as Map<String, dynamic>;
+  }
+
+  // ─── Branch Assignments ───────────────────────────────────
+
+  Future<List<BranchAssignment>> listBranchAssignments(String staffId) async {
+    final response = await _dio.get(ApiEndpoints.staffMemberBranchAssignments(staffId));
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final list = apiResponse.data as List;
+    return list.map((j) => BranchAssignment.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  Future<BranchAssignment> assignBranch(String staffId, Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.staffMemberBranchAssignments(staffId), data: data);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return BranchAssignment.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<void> unassignBranch(String staffId, String branchId) async {
+    await _dio.delete(ApiEndpoints.staffMemberBranchAssignments(staffId), data: {'branch_id': branchId});
+  }
+
+  // ─── Attendance Export ────────────────────────────────────
+
+  Future<Map<String, dynamic>> exportAttendance({String? staffUserId, String? dateFrom, String? dateTo}) async {
+    final response = await _dio.get(
+      ApiEndpoints.attendanceExport,
+      queryParameters: {
+        if (staffUserId != null) 'staff_user_id': staffUserId,
+        if (dateFrom != null) 'date_from': dateFrom,
+        if (dateTo != null) 'date_to': dateTo,
+      },
     );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return apiResponse.data as Map<String, dynamic>;
+  }
+
+  // ─── User Account Linking ─────────────────────────────────
+
+  Future<StaffUser> linkUser(String staffId, String userId) async {
+    final response = await _dio.post(ApiEndpoints.staffMemberLinkUser(staffId), data: {'user_id': userId});
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return StaffUser.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<StaffUser> unlinkUser(String staffId) async {
+    final response = await _dio.delete(ApiEndpoints.staffMemberLinkUser(staffId));
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return StaffUser.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<List<Map<String, dynamic>>> getLinkableUsers() async {
+    final response = await _dio.get(ApiEndpoints.staffLinkableUsers);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return (apiResponse.data as List).map((j) => j as Map<String, dynamic>).toList();
   }
 }

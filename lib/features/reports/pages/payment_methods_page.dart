@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
+import 'package:thawani_pos/features/reports/widgets/report_widgets.dart';
 
 class PaymentMethodsPage extends ConsumerStatefulWidget {
   const PaymentMethodsPage({super.key});
@@ -45,144 +45,162 @@ class _PaymentMethodsPageState extends ConsumerState<PaymentMethodsPage> {
     }
   }
 
-  IconData _iconForMethod(String method) {
-    return switch (method) {
-      'cash' => Icons.payments,
-      'card' => Icons.credit_card,
-      'gift_card' => Icons.card_giftcard,
-      'mobile' => Icons.phone_android,
-      'bank_transfer' => Icons.account_balance,
-      _ => Icons.attach_money,
-    };
-  }
-
-  Color _colorForMethod(String method) {
-    return switch (method) {
-      'cash' => AppColors.success,
-      'card' => AppColors.info,
-      'gift_card' => AppColors.purple,
-      'mobile' => AppColors.warning,
-      'bank_transfer' => AppColors.successDark,
-      _ => AppColors.textSecondary,
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(paymentMethodsProvider);
-    final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Payment Methods'),
-        actions: [
-          IconButton(icon: const Icon(Icons.date_range), onPressed: _pickDateRange),
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData),
-        ],
-      ),
+    return ReportPageScaffold(
+      title: 'Payment Methods',
+      dateRange: _dateRange,
+      onPickDate: _pickDateRange,
+      onClearDate: () {
+        setState(() => _dateRange = null);
+        _loadData();
+      },
+      onRefresh: _loadData,
       body: switch (state) {
         PaymentMethodsInitial() || PaymentMethodsLoading() => PosLoadingSkeleton.list(),
         PaymentMethodsError(:final message) => PosErrorState(message: message, onRetry: _loadData),
         PaymentMethodsLoaded(:final methods) =>
           methods.isEmpty
               ? const PosEmptyState(title: 'No payment data for selected period', icon: Icons.payment)
-              : ListView(
-                  padding: AppSpacing.paddingAll16,
-                  children: [
-                    if (_dateRange != null)
-                      Chip(
-                        label: Text(
-                          '${DateFormat('MMM d').format(_dateRange!.start)} - ${DateFormat('MMM d, yyyy').format(_dateRange!.end)}',
-                        ),
-                        onDeleted: () {
-                          setState(() => _dateRange = null);
-                          _loadData();
-                        },
-                      ),
-                    AppSpacing.gapH8,
+              : _PaymentList(methods: methods),
+      },
+    );
+  }
+}
 
-                    // Total card
-                    Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.md),
-                        side: BorderSide(color: theme.dividerColor),
+IconData _iconForMethod(String method) {
+  return switch (method) {
+    'cash' => Icons.payments_rounded,
+    'card' => Icons.credit_card_rounded,
+    'gift_card' => Icons.card_giftcard_rounded,
+    'mobile' => Icons.phone_android_rounded,
+    'bank_transfer' => Icons.account_balance_rounded,
+    _ => Icons.attach_money_rounded,
+  };
+}
+
+Color _colorForMethod(String method) {
+  return switch (method) {
+    'cash' => AppColors.success,
+    'card' => AppColors.info,
+    'gift_card' => AppColors.purple,
+    'mobile' => AppColors.warning,
+    'bank_transfer' => const Color(0xFF2E7D32),
+    _ => AppColors.primary,
+  };
+}
+
+class _PaymentList extends StatelessWidget {
+  final List<Map<String, dynamic>> methods;
+
+  const _PaymentList({required this.methods});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final totalAmount = methods.fold<double>(0, (sum, m) => sum + (m['total_amount'] as num).toDouble());
+    final totalTx = methods.fold<int>(0, (sum, m) => sum + (m['transaction_count'] as num).toInt());
+    final maxAmount = methods.isEmpty
+        ? 1.0
+        : methods.map((m) => (m['total_amount'] as num).toDouble()).reduce((a, b) => a > b ? a : b);
+
+    return ListView(
+      padding: const EdgeInsets.all(20),
+      children: [
+        // Top KPIs
+        ReportKpiGrid(
+          cards: [
+            ReportKpiCard(
+              label: 'Total Revenue',
+              value: formatCurrency(totalAmount),
+              icon: Icons.account_balance_wallet_rounded,
+              color: AppColors.success,
+            ),
+            ReportKpiCard(
+              label: 'Transactions',
+              value: formatCompact(totalTx),
+              icon: Icons.receipt_long_rounded,
+              color: AppColors.info,
+            ),
+            ReportKpiCard(
+              label: 'Methods Used',
+              value: '${methods.length}',
+              icon: Icons.payment_rounded,
+              color: AppColors.primary,
+            ),
+            ReportKpiCard(
+              label: 'Avg per Tx',
+              value: totalTx > 0 ? formatCurrency(totalAmount / totalTx) : '\$0',
+              icon: Icons.calculate_rounded,
+              color: AppColors.warning,
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 24),
+        const ReportSectionHeader(title: 'Breakdown by Method', icon: Icons.pie_chart_outline_rounded),
+
+        ...methods.map((m) {
+          final method = m['method'] as String;
+          final amount = (m['total_amount'] as num).toDouble();
+          final txCount = (m['transaction_count'] as num).toInt();
+          final avg = (m['avg_amount'] as num).toDouble();
+          final pct = totalAmount > 0 ? amount / totalAmount : 0.0;
+          final color = _colorForMethod(method);
+
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: ReportDataCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                        child: Icon(_iconForMethod(method), color: color, size: 22),
                       ),
-                      child: Padding(
-                        padding: AppSpacing.paddingAll16,
+                      const SizedBox(width: 14),
+                      Expanded(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Total', style: theme.textTheme.titleSmall),
-                            AppSpacing.gapH4,
                             Text(
-                              '\$${methods.fold<double>(0, (sum, m) => sum + (m['total_amount'] as num).toDouble()).toStringAsFixed(2)}',
-                              style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
+                              method.replaceAll('_', ' ').toUpperCase(),
+                              style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              '$txCount transactions · Avg ${formatCurrency(avg)}',
+                              style: Theme.of(
+                                context,
+                              ).textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                             ),
                           ],
                         ),
                       ),
-                    ),
-                    AppSpacing.gapH16,
-
-                    // Method cards
-                    ...methods.map((m) {
-                      final method = m['method'] as String;
-                      final total = methods.fold<double>(0, (sum, item) => sum + (item['total_amount'] as num).toDouble());
-                      final amount = (m['total_amount'] as num).toDouble();
-                      final pct = total > 0 ? (amount / total) : 0.0;
-                      final color = _colorForMethod(method);
-
-                      return Card(
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(AppRadius.md),
-                          side: BorderSide(color: theme.dividerColor),
-                        ),
-                        child: Padding(
-                          padding: AppSpacing.paddingAll16,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(_iconForMethod(method), color: color),
-                                  AppSpacing.gapW12,
-                                  Expanded(child: Text(method.toUpperCase(), style: theme.textTheme.titleSmall)),
-                                  Text(
-                                    '\$${amount.toStringAsFixed(2)}',
-                                    style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                              AppSpacing.gapH8,
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(AppRadius.xs),
-                                child: LinearProgressIndicator(
-                                  value: pct.toDouble(),
-                                  color: color,
-                                  backgroundColor: color.withValues(alpha: 0.1),
-                                ),
-                              ),
-                              AppSpacing.gapH8,
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('${m['transaction_count']} transactions', style: theme.textTheme.bodySmall),
-                                  Text('Avg: \$${(m['avg_amount'] as num).toStringAsFixed(2)}', style: theme.textTheme.bodySmall),
-                                  Text(
-                                    '${(pct * 100).toStringAsFixed(1)}%',
-                                    style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            formatCurrency(amount),
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                           ),
-                        ),
-                      );
-                    }),
-                  ],
-                ),
-      },
+                          ReportBadge(label: formatPercent(pct * 100), color: color),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  ReportBar(value: amount, maxValue: maxAmount, color: color, height: 10),
+                ],
+              ),
+            ),
+          );
+        }),
+      ],
     );
   }
 }

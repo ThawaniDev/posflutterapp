@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/features/staff/models/staff_user.dart';
 import 'package:thawani_pos/features/staff/providers/staff_state.dart';
 import 'package:thawani_pos/features/staff/repositories/staff_repository.dart';
 
@@ -274,3 +275,78 @@ class CommissionNotifier extends StateNotifier<CommissionState> {
     }
   }
 }
+
+// ═══════════════════════════════════════════════════════════════
+// Staff Stats Provider
+// ═══════════════════════════════════════════════════════════════
+
+final staffStatsProvider = StateNotifierProvider<StaffStatsNotifier, StaffStatsState>((ref) {
+  return StaffStatsNotifier(ref.watch(staffRepositoryProvider));
+});
+
+class StaffStatsNotifier extends StateNotifier<StaffStatsState> {
+  final StaffRepository _repo;
+
+  StaffStatsNotifier(this._repo) : super(const StaffStatsInitial());
+
+  Future<void> load() async {
+    state = const StaffStatsLoading();
+    try {
+      final data = await _repo.getStats();
+      state = StaffStatsLoaded(
+        totalStaff: data['total_staff'] as int? ?? 0,
+        activeStaff: data['active_staff'] as int? ?? 0,
+        inactiveStaff: data['inactive_staff'] as int? ?? 0,
+        onLeaveStaff: data['on_leave_staff'] as int? ?? 0,
+        clockedInNow: data['clocked_in_now'] as int? ?? 0,
+        todayAttendance: data['today_attendance'] as int? ?? 0,
+      );
+    } catch (e) {
+      state = StaffStatsError(message: e.toString());
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Staff Form Provider (Create / Update)
+// ═══════════════════════════════════════════════════════════════
+
+final staffFormProvider = StateNotifierProvider<StaffFormNotifier, StaffFormState>((ref) {
+  return StaffFormNotifier(ref.watch(staffRepositoryProvider));
+});
+
+class StaffFormNotifier extends StateNotifier<StaffFormState> {
+  final StaffRepository _repo;
+
+  StaffFormNotifier(this._repo) : super(const StaffFormIdle());
+
+  Future<void> create(Map<String, dynamic> data) async {
+    state = const StaffFormSaving();
+    try {
+      final staff = await _repo.createStaff(data);
+      state = StaffFormSuccess(staff: staff);
+    } catch (e) {
+      state = StaffFormError(message: e.toString());
+    }
+  }
+
+  Future<void> update(String id, Map<String, dynamic> data) async {
+    state = const StaffFormSaving();
+    try {
+      final staff = await _repo.updateStaff(id, data);
+      state = StaffFormSuccess(staff: staff);
+    } catch (e) {
+      state = StaffFormError(message: e.toString());
+    }
+  }
+
+  void reset() => state = const StaffFormIdle();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Branch Assignments Provider (by staff ID)
+// ═══════════════════════════════════════════════════════════════
+
+final branchAssignmentsProvider = FutureProvider.family<List<BranchAssignment>, String>((ref, staffId) async {
+  return ref.watch(staffRepositoryProvider).listBranchAssignments(staffId);
+});

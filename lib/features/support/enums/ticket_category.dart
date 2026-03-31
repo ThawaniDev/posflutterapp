@@ -3,7 +3,8 @@ enum TicketCategory {
   technical('technical'),
   zatca('zatca'),
   featureRequest('feature_request'),
-  general('general');
+  general('general'),
+  hardware('hardware');
 
   const TicketCategory(this.value);
   final String value;

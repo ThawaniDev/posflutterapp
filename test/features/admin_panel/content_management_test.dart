@@ -502,8 +502,8 @@ void main() {
           'body_ar': '<h1>حول</h1>',
           'page_type': 'marketing',
           'is_published': true,
-          'meta_title': 'About Us | Thawani POS',
-          'meta_description': 'Learn about Thawani POS platform.',
+          'meta_title': 'About Us | Wameed POS',
+          'meta_description': 'Learn about Wameed POS platform.',
           'sort_order': 3,
         },
       );

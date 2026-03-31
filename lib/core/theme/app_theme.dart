@@ -4,7 +4,7 @@ import 'app_colors.dart';
 import 'app_spacing.dart';
 import 'app_typography.dart';
 
-/// Thawani POS Design System — ThemeData Builder
+/// Wameed POS Design System — ThemeData Builder
 ///
 /// Provides a fully configured light & dark theme using Cairo font,
 /// Thawani brand colors, and all component theme overrides that match

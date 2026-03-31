@@ -5,6 +5,7 @@ class PurchaseOrder {
   final String organizationId;
   final String storeId;
   final String supplierId;
+  final String? supplierName;
   final String? referenceNumber;
   final PurchaseOrderStatus? status;
   final DateTime? expectedDate;
@@ -19,6 +20,7 @@ class PurchaseOrder {
     required this.organizationId,
     required this.storeId,
     required this.supplierId,
+    this.supplierName,
     this.referenceNumber,
     this.status,
     this.expectedDate,
@@ -35,6 +37,7 @@ class PurchaseOrder {
       organizationId: json['organization_id'] as String,
       storeId: json['store_id'] as String,
       supplierId: json['supplier_id'] as String,
+      supplierName: (json['supplier'] as Map<String, dynamic>?)?['name'] as String?,
       referenceNumber: json['reference_number'] as String?,
       status: PurchaseOrderStatus.tryFromValue(json['status'] as String?),
       expectedDate: json['expected_date'] != null ? DateTime.parse(json['expected_date'] as String) : null,
@@ -68,6 +71,7 @@ class PurchaseOrder {
     String? organizationId,
     String? storeId,
     String? supplierId,
+    String? supplierName,
     String? referenceNumber,
     PurchaseOrderStatus? status,
     DateTime? expectedDate,
@@ -82,6 +86,7 @@ class PurchaseOrder {
       organizationId: organizationId ?? this.organizationId,
       storeId: storeId ?? this.storeId,
       supplierId: supplierId ?? this.supplierId,
+      supplierName: supplierName ?? this.supplierName,
       referenceNumber: referenceNumber ?? this.referenceNumber,
       status: status ?? this.status,
       expectedDate: expectedDate ?? this.expectedDate,
@@ -94,13 +99,12 @@ class PurchaseOrder {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is PurchaseOrder && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is PurchaseOrder && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'PurchaseOrder(id: $id, organizationId: $organizationId, storeId: $storeId, supplierId: $supplierId, referenceNumber: $referenceNumber, status: $status, ...)';
+  String toString() =>
+      'PurchaseOrder(id: $id, organizationId: $organizationId, storeId: $storeId, supplierId: $supplierId, referenceNumber: $referenceNumber, status: $status, ...)';
 }

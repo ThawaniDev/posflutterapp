@@ -29,7 +29,7 @@ class _ArrangementFormPageState extends ConsumerState<ArrangementFormPage> {
     final a = widget.arrangement;
     _nameCtrl = TextEditingController(text: a?.name ?? '');
     _occasionCtrl = TextEditingController(text: a?.occasion ?? '');
-    _totalPriceCtrl = TextEditingController(text: a?.totalPrice.toStringAsFixed(3) ?? '');
+    _totalPriceCtrl = TextEditingController(text: a?.totalPrice.toStringAsFixed(2) ?? '');
     _isTemplate = a?.isTemplate ?? false;
   }
 

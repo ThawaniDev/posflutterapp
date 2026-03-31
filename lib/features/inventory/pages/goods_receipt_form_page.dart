@@ -4,6 +4,10 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
+import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:thawani_pos/features/catalog/models/supplier.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
 import 'package:thawani_pos/features/inventory/providers/inventory_providers.dart';
 
 /// Form page to create a new goods receipt.
@@ -23,6 +27,19 @@ class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
 
   // Dynamic line items
   final List<_LineItem> _items = [_LineItem()];
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      if (ref.read(suppliersProvider) is! SuppliersLoaded) {
+        ref.read(suppliersProvider.notifier).load();
+      }
+      if (ref.read(productsProvider) is! ProductsLoaded) {
+        ref.read(productsProvider.notifier).load();
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -76,6 +93,11 @@ class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final suppState = ref.watch(suppliersProvider);
+    final supplierList = suppState is SuppliersLoaded ? suppState.suppliers : <Supplier>[];
+    final prodState = ref.watch(productsProvider);
+    final productList = prodState is ProductsLoaded ? prodState.products : <Product>[];
+
     return Scaffold(
       appBar: AppBar(title: const Text('New Goods Receipt')),
       body: Form(
@@ -83,6 +105,14 @@ class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
+            DropdownButtonFormField<String>(
+              value: _supplierId,
+              decoration: const InputDecoration(labelText: 'Supplier'),
+              isExpanded: true,
+              items: supplierList.map((s) => DropdownMenuItem(value: s.id, child: Text(s.name))).toList(),
+              onChanged: (v) => setState(() => _supplierId = v),
+            ),
+            const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _refController, label: 'Reference Number', hint: 'Optional reference / PO number'),
             const SizedBox(height: AppSpacing.md),
             PosTextField(controller: _notesController, label: 'Notes', hint: 'Optional notes', maxLines: 2),
@@ -107,7 +137,13 @@ class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
                         ],
                       ),
                       const SizedBox(height: AppSpacing.sm),
-                      PosTextField(controller: item.productIdController, label: 'Product ID', hint: 'Enter product UUID'),
+                      DropdownButtonFormField<String>(
+                        value: item.productId,
+                        decoration: const InputDecoration(labelText: 'Product'),
+                        isExpanded: true,
+                        items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
+                        onChanged: (v) => setState(() => item.productId = v),
+                      ),
                       const SizedBox(height: AppSpacing.sm),
                       Row(
                         children: [
@@ -146,18 +182,17 @@ class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
 }
 
 class _LineItem {
-  final productIdController = TextEditingController();
+  String? productId;
   final quantityController = TextEditingController();
   final unitCostController = TextEditingController();
 
   void dispose() {
-    productIdController.dispose();
     quantityController.dispose();
     unitCostController.dispose();
   }
 
   Map<String, dynamic> toJson() => {
-    'product_id': productIdController.text,
+    'product_id': productId ?? '',
     'quantity': double.tryParse(quantityController.text) ?? 0,
     'unit_cost': double.tryParse(unitCostController.text) ?? 0,
   };

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
@@ -40,12 +41,16 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(commissionProvider(widget.staffId));
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
-        title: Text('${widget.staffName} - Commissions'),
+        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        title: Text('${widget.staffName} - ${l10n.staffCommissions}'),
         actions: [
-          IconButton(icon: const Icon(Icons.date_range), onPressed: _pickDateRange, tooltip: 'Filter date range'),
+          IconButton(icon: const Icon(Icons.date_range), onPressed: _pickDateRange, tooltip: l10n.staffFilterByDate),
           IconButton(icon: const Icon(Icons.refresh), onPressed: _load),
         ],
       ),
@@ -58,6 +63,8 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
   }
 
   Widget _buildContent(BuildContext context, Map<String, dynamic> summary) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
     final totalEarnings = (summary['total_earnings'] as num?)?.toDouble() ?? 0.0;
     final totalOrders = (summary['total_orders'] as num?)?.toInt() ?? 0;
     final avgPerOrder = (summary['avg_per_order'] as num?)?.toDouble() ?? 0.0;
@@ -83,28 +90,31 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
           children: [
             Expanded(
               child: _SummaryCard(
-                title: 'Total Earnings',
+                title: l10n.staffTotalEarnings,
                 value: _currencyFormat.format(totalEarnings),
                 icon: Icons.attach_money,
                 color: AppColors.success,
+                isDark: isDark,
               ),
             ),
             AppSpacing.gapW12,
             Expanded(
               child: _SummaryCard(
-                title: 'Total Orders',
+                title: l10n.staffTotalOrders,
                 value: totalOrders.toString(),
                 icon: Icons.receipt_long,
                 color: AppColors.info,
+                isDark: isDark,
               ),
             ),
             AppSpacing.gapW12,
             Expanded(
               child: _SummaryCard(
-                title: 'Avg / Order',
+                title: l10n.staffAvgPerOrder,
                 value: _currencyFormat.format(avgPerOrder),
                 icon: Icons.trending_up,
                 color: AppColors.purple,
+                isDark: isDark,
               ),
             ),
           ],
@@ -112,14 +122,20 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
         AppSpacing.gapH32,
 
         // Performance section
-        Text('Performance Overview', style: Theme.of(context).textTheme.titleLarge),
+        Text(
+          l10n.staffPerformanceOverview,
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight),
+        ),
         AppSpacing.gapH16,
 
         Card(
           elevation: 0,
+          color: isDark ? AppColors.cardDark : AppColors.cardLight,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.md),
-            side: BorderSide(color: Theme.of(context).dividerColor),
+            side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
           ),
           child: Padding(
             padding: AppSpacing.paddingAll24,
@@ -128,23 +144,30 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.analytics_outlined, size: 48, color: AppColors.textSecondary),
+                        Icon(
+                          Icons.analytics_outlined,
+                          size: 48,
+                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                        ),
                         AppSpacing.gapH16,
-                        Text('No commission data for this period', style: TextStyle(color: AppColors.textSecondary)),
+                        Text(
+                          l10n.staffNoCommissionData,
+                          style: TextStyle(color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
+                        ),
                       ],
                     ),
                   )
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _MetricRow(label: 'Total Commission Earned', value: _currencyFormat.format(totalEarnings)),
+                      _MetricRow(label: l10n.staffTotalCommissionEarned, value: _currencyFormat.format(totalEarnings)),
                       const Divider(),
-                      _MetricRow(label: 'Orders with Commission', value: '$totalOrders'),
+                      _MetricRow(label: l10n.staffOrdersWithCommission, value: '$totalOrders'),
                       const Divider(),
-                      _MetricRow(label: 'Average per Order', value: _currencyFormat.format(avgPerOrder)),
+                      _MetricRow(label: l10n.staffAveragePerOrder, value: _currencyFormat.format(avgPerOrder)),
                       const Divider(),
                       _MetricRow(
-                        label: 'Effective Rate',
+                        label: l10n.staffEffectiveRate,
                         value: totalEarnings > 0 && totalOrders > 0
                             ? '${(avgPerOrder / totalEarnings * 100).toStringAsFixed(1)}%'
                             : '0.0%',
@@ -180,16 +203,18 @@ class _SummaryCard extends StatelessWidget {
   final String value;
   final IconData icon;
   final Color color;
+  final bool isDark;
 
-  const _SummaryCard({required this.title, required this.value, required this.icon, required this.color});
+  const _SummaryCard({required this.title, required this.value, required this.icon, required this.color, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 0,
+      color: isDark ? AppColors.cardDark : AppColors.cardLight,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
+        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       child: Padding(
         padding: AppSpacing.paddingAll16,

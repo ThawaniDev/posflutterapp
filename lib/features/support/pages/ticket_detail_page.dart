@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/core/theme/app_typography.dart';
+import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/pos_card.dart';
+import 'package:thawani_pos/core/widgets/pos_error_state.dart';
+import 'package:thawani_pos/core/widgets/pos_loading_skeleton.dart';
+import 'package:thawani_pos/features/support/enums/ticket_status.dart';
+import 'package:thawani_pos/features/support/models/support_ticket.dart';
 import 'package:thawani_pos/features/support/providers/support_providers.dart';
 import 'package:thawani_pos/features/support/providers/support_state.dart';
+import 'package:thawani_pos/features/support/widgets/message_bubble.dart';
+import 'package:thawani_pos/features/support/widgets/ticket_priority_badge.dart';
+import 'package:thawani_pos/features/support/widgets/ticket_status_badge.dart';
 
 class TicketDetailPage extends ConsumerStatefulWidget {
   final String ticketId;
@@ -17,6 +27,7 @@ class TicketDetailPage extends ConsumerStatefulWidget {
 
 class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
   final _messageController = TextEditingController();
+  final _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -27,6 +38,7 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
   @override
   void dispose() {
     _messageController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -37,31 +49,49 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
     _messageController.clear();
   }
 
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final detailState = ref.watch(ticketDetailProvider);
     final actionState = ref.watch(ticketActionProvider);
+    final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     ref.listen<TicketActionState>(ticketActionProvider, (prev, next) {
       if (next is TicketActionSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message)));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.success));
         ref.read(ticketActionProvider.notifier).reset();
         ref.read(ticketDetailProvider.notifier).load(widget.ticketId);
+        _scrollToBottom();
+      } else if (next is TicketActionError) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
       }
     });
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.supportTicketDetail),
+        title: Text(l10n.supportTicketDetail),
         actions: [
-          if (detailState is TicketDetailLoaded && detailState.ticket['status'] != 'closed')
-            TextButton.icon(
-              onPressed: actionState is TicketActionLoading
-                  ? null
-                  : () => ref.read(ticketActionProvider.notifier).closeTicket(widget.ticketId),
-              icon: const Icon(Icons.check_circle_outline),
-              label: Text(AppLocalizations.of(context)!.supportClose),
+          if (detailState is TicketDetailLoaded && detailState.ticket.status != TicketStatus.closed)
+            PosButton(
+              label: l10n.supportCloseTicket,
+              variant: PosButtonVariant.outline,
+              size: PosButtonSize.sm,
+              icon: Icons.check_circle_outline_rounded,
+              onPressed: actionState is TicketActionLoading ? null : () => _confirmCloseTicket(l10n),
             ),
+          AppSpacing.gapW8,
         ],
       ),
       body: switch (detailState) {
@@ -70,154 +100,194 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
           message: message,
           onRetry: () => ref.read(ticketDetailProvider.notifier).load(widget.ticketId),
         ),
-        TicketDetailLoaded(:final ticket) => Column(
+        TicketDetailLoaded(:final ticket, :final messages) => Column(
           children: [
             // Ticket info header
-            _buildHeader(ticket),
+            _buildHeader(ticket, isDark, l10n),
             const Divider(height: 1),
             // Messages
-            Expanded(child: _buildMessages(ticket)),
+            Expanded(
+              child: messages.isEmpty
+                  ? Center(
+                      child: Text(
+                        l10n.supportNoMessages,
+                        style: AppTypography.bodyMedium.copyWith(
+                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                        ),
+                      ),
+                    )
+                  : ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) => MessageBubble(message: messages[index]),
+                    ),
+            ),
             // Message input
-            if (ticket['status'] != 'closed') _buildMessageInput(actionState),
+            if (ticket.status != TicketStatus.closed) _buildMessageInput(actionState, l10n, isDark),
           ],
         ),
       },
     );
   }
 
-  Widget _buildHeader(Map<String, dynamic> ticket) {
-    final status = ticket['status'] as String? ?? 'open';
-    final statusColor = switch (status) {
-      'open' => AppColors.warning,
-      'in_progress' => AppColors.primary,
-      'resolved' => AppColors.success,
-      'closed' => AppColors.textSecondary,
-      _ => AppColors.info,
-    };
-
-    return Container(
-      padding: AppSpacing.paddingAll16,
-      color: Theme.of(context).colorScheme.surfaceContainerLow,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(ticket['ticket_number'] as String? ?? '', style: const TextStyle(fontWeight: FontWeight.bold)),
-              const Spacer(),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(8)),
-                child: Text(
-                  status.replaceAll('_', ' ').toUpperCase(),
-                  style: TextStyle(fontSize: 11, color: statusColor, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
-          AppSpacing.gapH8,
-          Text(ticket['subject'] as String? ?? '', style: Theme.of(context).textTheme.titleMedium),
-          AppSpacing.gapH4,
-          Text(
-            ticket['description'] as String? ?? '',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-          ),
-          AppSpacing.gapH8,
-          Row(
-            children: [
-              _chipInfo('Category', ticket['category'] as String? ?? ''),
-              AppSpacing.gapW8,
-              _chipInfo('Priority', ticket['priority'] as String? ?? ''),
-            ],
+  void _confirmCloseTicket(AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.supportCloseTicket),
+        content: Text(l10n.supportCloseConfirmation),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.supportCancel)),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              ref.read(ticketActionProvider.notifier).closeTicket(widget.ticketId);
+            },
+            child: Text(l10n.supportClose, style: TextStyle(color: AppColors.error)),
           ),
         ],
       ),
     );
   }
 
-  Widget _chipInfo(String label, String value) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHigh,
-        borderRadius: BorderRadius.circular(4),
+  Widget _buildHeader(SupportTicket ticket, bool isDark, AppLocalizations l10n) {
+    final dateStr = ticket.createdAt != null ? DateFormat.yMMMd().add_jm().format(ticket.createdAt!) : '';
+
+    return PosCard(
+      margin: EdgeInsets.zero,
+      borderRadius: BorderRadius.zero,
+      border: const Border(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Top row: ticket number + status badge
+          Row(
+            children: [
+              Text(
+                '#${ticket.ticketNumber}',
+                style: AppTypography.labelMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              ),
+              const Spacer(),
+              TicketStatusBadge(status: ticket.status),
+            ],
+          ),
+          AppSpacing.gapH8,
+          // Subject
+          Text(ticket.subject, style: AppTypography.titleMedium),
+          AppSpacing.gapH4,
+          // Description
+          Text(
+            ticket.description,
+            style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+          ),
+          AppSpacing.gapH12,
+          // Meta row: priority + category + date
+          Wrap(
+            spacing: 8,
+            runSpacing: 6,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              TicketPriorityBadge(priority: ticket.priority, isSmall: true),
+              Text(
+                ticket.category.value.replaceAll('_', ' ').toUpperCase(),
+                style: AppTypography.micro.copyWith(
+                  color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              if (dateStr.isNotEmpty)
+                Text(
+                  dateStr,
+                  style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                ),
+            ],
+          ),
+          // SLA info
+          if (ticket.slaDeadlineAt != null && ticket.status != TicketStatus.closed && ticket.status != TicketStatus.resolved)
+            Padding(padding: const EdgeInsets.only(top: 8), child: _buildSlaRow(ticket.slaDeadlineAt!, l10n)),
+        ],
       ),
-      child: Text('$label: ${value.replaceAll('_', ' ')}', style: const TextStyle(fontSize: 11)),
     );
   }
 
-  Widget _buildMessages(Map<String, dynamic> ticket) {
-    final messages = (ticket['messages'] as List<dynamic>?) ?? [];
+  Widget _buildSlaRow(DateTime deadline, AppLocalizations l10n) {
+    final now = DateTime.now();
+    final remaining = deadline.difference(now);
+    final isOverdue = remaining.isNegative;
 
-    if (messages.isEmpty) {
-      return Center(
-        child: Text(AppLocalizations.of(context)!.supportNoMessages, style: TextStyle(color: AppColors.textSecondary)),
-      );
+    final Color color;
+    final IconData icon;
+    final String text;
+
+    if (isOverdue) {
+      color = AppColors.error;
+      icon = Icons.warning_amber_rounded;
+      text = '${l10n.supportSlaOverdue} ${_fmtDuration(now.difference(deadline))}';
+    } else if (remaining.inMinutes < 30) {
+      color = AppColors.error;
+      icon = Icons.access_alarm_rounded;
+      text = '${l10n.supportSlaDueIn} ${_fmtDuration(remaining)}';
+    } else if (remaining.inHours < 2) {
+      color = AppColors.warning;
+      icon = Icons.access_time_rounded;
+      text = '${l10n.supportSlaDueIn} ${_fmtDuration(remaining)}';
+    } else {
+      color = AppColors.success;
+      icon = Icons.schedule_rounded;
+      text = '${l10n.supportSlaDueIn} ${_fmtDuration(remaining)}';
     }
 
-    return ListView.builder(
-      padding: const EdgeInsets.all(12),
-      itemCount: messages.length,
-      itemBuilder: (context, index) {
-        final msg = messages[index] as Map<String, dynamic>;
-        final isProvider = msg['sender_type'] == 'provider';
-        return Align(
-          alignment: isProvider ? Alignment.centerRight : Alignment.centerLeft,
-          child: Container(
-            margin: const EdgeInsets.only(bottom: 8),
-            padding: const EdgeInsets.all(12),
-            constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.75),
-            decoration: BoxDecoration(
-              color: isProvider
-                  ? Theme.of(context).colorScheme.primaryContainer
-                  : Theme.of(context).colorScheme.surfaceContainerHigh,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(msg['message_text'] as String? ?? ''),
-                const SizedBox(height: 4),
-                Text(msg['sent_at'] as String? ?? '', style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
-              ],
-            ),
-          ),
-        );
-      },
+    return Row(
+      children: [
+        Icon(icon, size: 16, color: color),
+        AppSpacing.gapW4,
+        Text(
+          text,
+          style: AppTypography.labelSmall.copyWith(color: color, fontWeight: FontWeight.w600),
+        ),
+      ],
     );
   }
 
-  Widget _buildMessageInput(TicketActionState actionState) {
+  String _fmtDuration(Duration d) {
+    if (d.inDays > 0) return '${d.inDays}d ${d.inHours.remainder(24)}h';
+    if (d.inHours > 0) return '${d.inHours}h ${d.inMinutes.remainder(60)}m';
+    return '${d.inMinutes}m';
+  }
+
+  Widget _buildMessageInput(TicketActionState actionState, AppLocalizations l10n, bool isDark) {
     final isLoading = actionState is TicketActionLoading;
 
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
-        border: Border(top: BorderSide(color: Theme.of(context).dividerColor)),
+        color: isDark ? AppColors.cardDark : AppColors.surfaceLight,
+        border: Border(top: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(
             child: TextField(
               controller: _messageController,
               decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.supportTypeMessage,
-                border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                hintText: l10n.supportTypeMessage,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               ),
-              maxLines: 3,
+              maxLines: 4,
               minLines: 1,
+              textInputAction: TextInputAction.newline,
             ),
           ),
           AppSpacing.gapW8,
-          IconButton.filled(
+          PosButton.icon(
+            icon: Icons.send_rounded,
             onPressed: isLoading ? null : _sendMessage,
-            icon: isLoading
-                ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
-                : const Icon(Icons.send),
+            variant: PosButtonVariant.primary,
+            tooltip: l10n.supportSend,
           ),
         ],
       ),

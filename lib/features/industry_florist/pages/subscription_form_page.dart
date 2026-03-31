@@ -35,7 +35,7 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
     _arrangementTemplateIdCtrl = TextEditingController(text: s?.arrangementTemplateId ?? '');
     _deliveryDayCtrl = TextEditingController(text: s?.deliveryDay ?? '');
     _deliveryAddressCtrl = TextEditingController(text: s?.deliveryAddress ?? '');
-    _pricePerDeliveryCtrl = TextEditingController(text: s?.pricePerDelivery.toStringAsFixed(3) ?? '');
+    _pricePerDeliveryCtrl = TextEditingController(text: s?.pricePerDelivery.toStringAsFixed(2) ?? '');
     if (s != null) {
       _frequency = s.frequency;
       _nextDeliveryDate = s.nextDeliveryDate;

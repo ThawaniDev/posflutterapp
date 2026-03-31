@@ -151,6 +151,28 @@ class _DeliveryDashboardPageState extends ConsumerState<DeliveryDashboardPage> w
                   },
                 ),
               ],
+              AppSpacing.gapH12,
+              Row(
+                children: [
+                  Expanded(
+                    child: _ActionCard(
+                      icon: Icons.webhook,
+                      label: l10n.deliveryWebhookLogs,
+                      color: AppColors.purple,
+                      onTap: () => context.push(Routes.deliveryWebhookLogs),
+                    ),
+                  ),
+                  AppSpacing.gapW12,
+                  Expanded(
+                    child: _ActionCard(
+                      icon: Icons.send,
+                      label: l10n.deliveryStatusPushLogs,
+                      color: AppColors.rose,
+                      onTap: () => context.push(Routes.deliveryStatusPushLogs),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -317,19 +339,20 @@ class _DeliveryDashboardPageState extends ConsumerState<DeliveryDashboardPage> w
   }
 
   Future<String?> _showRejectDialog() {
+    final l10n = AppLocalizations.of(context)!;
     final controller = TextEditingController();
     return showDialog<String>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Reject Order'),
+        title: Text(l10n.deliveryRejectOrder),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(hintText: 'Enter rejection reason...', border: OutlineInputBorder()),
+          decoration: InputDecoration(hintText: l10n.deliveryEnterRejectionReason, border: const OutlineInputBorder()),
           maxLines: 3,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          FilledButton(onPressed: () => Navigator.pop(ctx, controller.text), child: const Text('Reject')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.deliveryCancel)),
+          FilledButton(onPressed: () => Navigator.pop(ctx, controller.text), child: Text(l10n.deliveryReject)),
         ],
       ),
     );
@@ -368,7 +391,10 @@ class _PlatformBreakdownTile extends StatelessWidget {
           Expanded(
             child: Text(name, style: const TextStyle(fontWeight: FontWeight.w500)),
           ),
-          Text('$orders orders', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+          Text(
+            AppLocalizations.of(context)!.deliveryOrdersCount(orders),
+            style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+          ),
           AppSpacing.gapW16,
           Text('${revenue.toStringAsFixed(2)} SAR', style: const TextStyle(fontWeight: FontWeight.w500)),
         ],

@@ -73,10 +73,7 @@ class PosTextField extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (label != null) ...[
-          Text(
-            label!,
-            style: AppTypography.labelMedium.copyWith(color: AppColors.textPrimaryLight, fontWeight: FontWeight.w600),
-          ),
+          Text(label!, style: Theme.of(context).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w600)),
           AppSpacing.gapH4,
         ],
         TextField(
@@ -215,7 +212,7 @@ class PosDropdown<T> extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (label != null) ...[
-          Text(label!, style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600)),
+          Text(label!, style: Theme.of(context).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w600)),
           AppSpacing.gapH4,
         ],
         DropdownButtonFormField<T>(

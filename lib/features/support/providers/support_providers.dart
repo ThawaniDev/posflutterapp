@@ -1,4 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/features/support/models/knowledge_base_article.dart';
+import 'package:thawani_pos/features/support/models/support_ticket.dart';
+import 'package:thawani_pos/features/support/models/support_ticket_message.dart';
 import 'package:thawani_pos/features/support/repositories/support_repository.dart';
 import 'package:thawani_pos/features/support/providers/support_state.dart';
 
@@ -34,15 +37,50 @@ class TicketListNotifier extends StateNotifier<TicketListState> {
   final SupportRepository _repository;
   TicketListNotifier(this._repository) : super(const TicketListInitial());
 
-  Future<void> load({String? status, String? category, String? priority}) async {
+  String? _status;
+  String? _category;
+  String? _priority;
+  String? _search;
+
+  Future<void> load({String? status, String? category, String? priority, String? search, int page = 1}) async {
+    _status = status;
+    _category = category;
+    _priority = priority;
+    _search = search;
+
     if (state is! TicketListLoaded) state = const TicketListLoading();
     try {
-      final result = await _repository.listTickets(status: status, category: category, priority: priority);
+      final result = await _repository.listTickets(
+        status: _status,
+        category: _category,
+        priority: _priority,
+        search: _search,
+        page: page,
+      );
       final data = result['data'] as Map<String, dynamic>? ?? {};
-      final items = data['data'] as List<dynamic>? ?? [];
-      state = TicketListLoaded(items.cast<Map<String, dynamic>>());
+      final items = (data['data'] as List<dynamic>? ?? []).map((e) => SupportTicket.fromJson(e as Map<String, dynamic>)).toList();
+      state = TicketListLoaded(
+        tickets: items,
+        currentPage: data['current_page'] as int? ?? 1,
+        lastPage: data['last_page'] as int? ?? 1,
+        total: data['total'] as int? ?? 0,
+      );
     } catch (e) {
       if (state is! TicketListLoaded) state = TicketListError(e.toString());
+    }
+  }
+
+  Future<void> nextPage() async {
+    final current = state;
+    if (current is TicketListLoaded && current.hasMore) {
+      await load(status: _status, category: _category, priority: _priority, search: _search, page: current.currentPage + 1);
+    }
+  }
+
+  Future<void> previousPage() async {
+    final current = state;
+    if (current is TicketListLoaded && current.currentPage > 1) {
+      await load(status: _status, category: _category, priority: _priority, search: _search, page: current.currentPage - 1);
     }
   }
 }
@@ -61,7 +99,10 @@ class TicketDetailNotifier extends StateNotifier<TicketDetailState> {
     try {
       final result = await _repository.getTicket(id);
       final data = result['data'] as Map<String, dynamic>? ?? {};
-      state = TicketDetailLoaded(data);
+      final ticket = SupportTicket.fromJson(data);
+      final rawMessages = data['messages'] as List<dynamic>? ?? [];
+      final messages = rawMessages.map((e) => SupportTicketMessage.fromJson(e as Map<String, dynamic>)).toList();
+      state = TicketDetailLoaded(ticket: ticket, messages: messages);
     } catch (e) {
       if (state is! TicketDetailLoaded) state = TicketDetailError(e.toString());
     }
@@ -117,4 +158,47 @@ class TicketActionNotifier extends StateNotifier<TicketActionState> {
 
 final ticketActionProvider = StateNotifierProvider<TicketActionNotifier, TicketActionState>((ref) {
   return TicketActionNotifier(ref.watch(supportRepositoryProvider));
+});
+
+// ─── Knowledge Base List Provider ───────────────────────
+class KbListNotifier extends StateNotifier<KbListState> {
+  final SupportRepository _repository;
+  KbListNotifier(this._repository) : super(const KbListInitial());
+
+  Future<void> load({String? category, String? search}) async {
+    if (state is! KbListLoaded) state = const KbListLoading();
+    try {
+      final result = await _repository.getKbArticles(category: category, search: search);
+      final data = result['data'] as List<dynamic>? ?? [];
+      final articles = data.map((e) => KnowledgeBaseArticle.fromJson(e as Map<String, dynamic>)).toList();
+      state = KbListLoaded(articles);
+    } catch (e) {
+      if (state is! KbListLoaded) state = KbListError(e.toString());
+    }
+  }
+}
+
+final kbListProvider = StateNotifierProvider<KbListNotifier, KbListState>((ref) {
+  return KbListNotifier(ref.watch(supportRepositoryProvider));
+});
+
+// ─── Knowledge Base Article Detail Provider ─────────────
+class KbArticleNotifier extends StateNotifier<KbArticleState> {
+  final SupportRepository _repository;
+  KbArticleNotifier(this._repository) : super(const KbArticleInitial());
+
+  Future<void> load(String slug) async {
+    if (state is! KbArticleLoaded) state = const KbArticleLoading();
+    try {
+      final result = await _repository.getKbArticle(slug);
+      final data = result['data'] as Map<String, dynamic>? ?? {};
+      state = KbArticleLoaded(KnowledgeBaseArticle.fromJson(data));
+    } catch (e) {
+      if (state is! KbArticleLoaded) state = KbArticleError(e.toString());
+    }
+  }
+}
+
+final kbArticleProvider = StateNotifierProvider<KbArticleNotifier, KbArticleState>((ref) {
+  return KbArticleNotifier(ref.watch(supportRepositoryProvider));
 });

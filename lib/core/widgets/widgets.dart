@@ -1,4 +1,4 @@
-/// Thawani POS Widget Library — single barrel import
+/// Wameed POS Widget Library — single barrel import
 ///
 /// ```dart
 /// import 'package:posflutterapp/core/widgets/widgets.dart';

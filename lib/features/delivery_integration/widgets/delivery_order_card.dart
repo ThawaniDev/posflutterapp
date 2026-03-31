@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_status_badge.dart';
@@ -10,15 +11,11 @@ class DeliveryOrderCard extends StatelessWidget {
   final VoidCallback? onTap;
   final void Function(String status)? onStatusAction;
 
-  const DeliveryOrderCard({
-    super.key,
-    required this.order,
-    this.onTap,
-    this.onStatusAction,
-  });
+  const DeliveryOrderCard({super.key, required this.order, this.onTap, this.onStatusAction});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final statusString = order['delivery_status'] as String? ?? 'pending';
     final status = DeliveryOrderStatus.tryFromValue(statusString) ?? DeliveryOrderStatus.pending;
     final platformSlug = order['platform'] as String? ?? '';
@@ -56,22 +53,12 @@ class DeliveryOrderCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          '#$externalId',
-                          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-                        ),
-                        if (platform != null)
-                          Text(
-                            platform.label,
-                            style: TextStyle(fontSize: 12, color: platform.color),
-                          ),
+                        Text('#$externalId', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                        if (platform != null) Text(platform.label, style: TextStyle(fontSize: 12, color: platform.color)),
                       ],
                     ),
                   ),
-                  PosStatusBadge(
-                    label: status.label,
-                    variant: _statusToVariant(status),
-                  ),
+                  PosStatusBadge(label: status.label, variant: _statusToVariant(status)),
                 ],
               ),
 
@@ -96,7 +83,7 @@ class DeliveryOrderCard extends StatelessWidget {
                     if (itemsCount != null) ...[
                       AppSpacing.gapW12,
                       Text(
-                        '$itemsCount items',
+                        l10n.deliveryItemsCountValue(itemsCount),
                         style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
                       ),
                     ],
@@ -112,18 +99,12 @@ class DeliveryOrderCard extends StatelessWidget {
               ],
 
               // Action buttons
-              if (status.isActionable && onStatusAction != null) ...[
-                AppSpacing.gapH12,
-                _buildActionButtons(status),
-              ],
+              if (status.isActionable && onStatusAction != null) ...[AppSpacing.gapH12, _buildActionButtons(status)],
 
               // Timestamp
               if (createdAt != null) ...[
                 AppSpacing.gapH8,
-                Text(
-                  _formatTime(createdAt),
-                  style: TextStyle(fontSize: 10, color: AppColors.textSecondary),
-                ),
+                Text(_formatTime(context, createdAt), style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
               ],
             ],
           ),
@@ -138,7 +119,8 @@ class DeliveryOrderCard extends StatelessWidget {
 
     return Row(
       children: transitions.map((next) {
-        final isPrimary = next == transitions.first && next != DeliveryOrderStatus.rejected && next != DeliveryOrderStatus.cancelled;
+        final isPrimary =
+            next == transitions.first && next != DeliveryOrderStatus.rejected && next != DeliveryOrderStatus.cancelled;
         return Expanded(
           child: Padding(
             padding: EdgeInsets.only(left: next == transitions.first ? 0 : 8),
@@ -147,10 +129,7 @@ class DeliveryOrderCard extends StatelessWidget {
                     onPressed: () => onStatusAction?.call(next.value),
                     icon: Icon(next.icon, size: 16),
                     label: Text(next.label, style: const TextStyle(fontSize: 12)),
-                    style: FilledButton.styleFrom(
-                      backgroundColor: next.color,
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                    ),
+                    style: FilledButton.styleFrom(backgroundColor: next.color, padding: const EdgeInsets.symmetric(vertical: 8)),
                   )
                 : OutlinedButton.icon(
                     onPressed: () => onStatusAction?.call(next.value),
@@ -175,13 +154,14 @@ class DeliveryOrderCard extends StatelessWidget {
     _ => PosStatusBadgeVariant.neutral,
   };
 
-  String _formatTime(String dateString) {
+  String _formatTime(BuildContext context, String dateString) {
+    final l10n = AppLocalizations.of(context)!;
     try {
       final date = DateTime.parse(dateString);
       final diff = DateTime.now().difference(date);
-      if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-      if (diff.inHours < 24) return '${diff.inHours}h ago';
-      return '${diff.inDays}d ago';
+      if (diff.inMinutes < 60) return l10n.deliveryMinutesAgo(diff.inMinutes);
+      if (diff.inHours < 24) return l10n.deliveryHoursAgo(diff.inHours);
+      return l10n.deliveryDaysAgo(diff.inDays);
     } catch (_) {
       return dateString;
     }

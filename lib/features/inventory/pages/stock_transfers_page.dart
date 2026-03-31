@@ -5,6 +5,12 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/features/branches/models/store.dart';
+import 'package:thawani_pos/features/branches/providers/branch_providers.dart';
+import 'package:thawani_pos/features/branches/providers/branch_state.dart';
+import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
 import 'package:thawani_pos/features/inventory/enums/stock_transfer_status.dart';
 import 'package:thawani_pos/features/inventory/models/stock_transfer.dart';
 import 'package:thawani_pos/features/inventory/providers/inventory_providers.dart';
@@ -100,186 +106,169 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
   }
 
   Widget _buildBody(StockTransfersState state) {
-    if (state is StockTransfersLoading || state is StockTransfersInitial) {
-      return const Center(child: CircularProgressIndicator());
-    }
+    final isLoading = state is StockTransfersLoading || state is StockTransfersInitial;
+    final error = state is StockTransfersError ? state.message : null;
+    final transfers = state is StockTransfersLoaded ? state.transfers : <StockTransfer>[];
 
-    if (state is StockTransfersError) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
-            const SizedBox(height: AppSpacing.md),
-            Text(state.message, textAlign: TextAlign.center),
-            const SizedBox(height: AppSpacing.lg),
-            PosButton(
-              label: 'Retry',
-              onPressed: () => ref.read(stockTransfersProvider.notifier).load(),
-              variant: PosButtonVariant.outline,
-            ),
-          ],
-        ),
-      );
-    }
-
-    if (state is StockTransfersLoaded) {
-      if (state.transfers.isEmpty) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.swap_horiz_outlined, size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
-              const SizedBox(height: AppSpacing.md),
-              Text('No stock transfers yet', style: Theme.of(context).textTheme.titleMedium),
-            ],
-          ),
-        );
-      }
-
-      return SingleChildScrollView(padding: const EdgeInsets.all(AppSpacing.md), child: _buildTable(state.transfers));
-    }
-
-    return const SizedBox.shrink();
-  }
-
-  Widget _buildTable(List<StockTransfer> transfers) {
-    return PosDataTable(
+    return PosDataTable<StockTransfer>(
       columns: const [
-        DataColumn(label: Text('REF')),
-        DataColumn(label: Text('FROM')),
-        DataColumn(label: Text('TO')),
-        DataColumn(label: Text('STATUS')),
-        DataColumn(label: Text('CREATED')),
-        DataColumn(label: Text('ACTIONS')),
+        PosTableColumn(title: 'Ref'),
+        PosTableColumn(title: 'From'),
+        PosTableColumn(title: 'To'),
+        PosTableColumn(title: 'Status'),
+        PosTableColumn(title: 'Created'),
       ],
-      rows: transfers.map((t) {
-        return DataRow(
-          cells: [
-            DataCell(Text(t.referenceNumber ?? t.id.substring(0, 8))),
-            DataCell(Text(t.fromStoreId.substring(0, 8))),
-            DataCell(Text(t.toStoreId.substring(0, 8))),
-            DataCell(PosBadge(label: t.status?.value ?? 'pending', variant: _statusVariant(t.status))),
-            DataCell(Text(t.createdAt != null ? '${t.createdAt!.day}/${t.createdAt!.month}/${t.createdAt!.year}' : '-')),
-            DataCell(_buildActionButtons(t)),
-          ],
-        );
-      }).toList(),
+      items: transfers,
+      isLoading: isLoading,
+      error: error,
+      onRetry: () => ref.read(stockTransfersProvider.notifier).load(),
+      emptyConfig: const PosTableEmptyConfig(icon: Icons.swap_horiz_outlined, title: 'No stock transfers yet'),
+      actions: [
+        PosTableRowAction<StockTransfer>(
+          label: 'Approve',
+          icon: Icons.check_circle_outline,
+          color: AppColors.success,
+          isVisible: (t) => t.status == StockTransferStatus.pending,
+          onTap: (t) => _handleAction(t, 'approve'),
+        ),
+        PosTableRowAction<StockTransfer>(
+          label: 'Cancel',
+          icon: Icons.cancel_outlined,
+          isDestructive: true,
+          isVisible: (t) => t.status == StockTransferStatus.pending,
+          onTap: (t) => _handleAction(t, 'cancel'),
+        ),
+        PosTableRowAction<StockTransfer>(
+          label: 'Receive',
+          icon: Icons.archive_outlined,
+          color: AppColors.info,
+          isVisible: (t) => t.status == StockTransferStatus.inTransit,
+          onTap: (t) => _handleAction(t, 'receive'),
+        ),
+      ],
+      cellBuilder: (t, colIndex, col) {
+        switch (colIndex) {
+          case 0:
+            return Text(t.referenceNumber ?? t.id.substring(0, 8));
+          case 1:
+            return Text(t.fromStoreName ?? t.fromStoreId.substring(0, 8));
+          case 2:
+            return Text(t.toStoreName ?? t.toStoreId.substring(0, 8));
+          case 3:
+            return PosBadge(label: t.status?.value ?? 'pending', variant: _statusVariant(t.status));
+          case 4:
+            return Text(t.createdAt != null ? '${t.createdAt!.day}/${t.createdAt!.month}/${t.createdAt!.year}' : '-');
+          default:
+            return const SizedBox.shrink();
+        }
+      },
     );
-  }
-
-  Widget _buildActionButtons(StockTransfer transfer) {
-    final actions = <Widget>[];
-
-    if (transfer.status == StockTransferStatus.pending) {
-      actions.add(
-        IconButton(
-          icon: const Icon(Icons.check_circle_outline, size: 20, color: AppColors.success),
-          tooltip: 'Approve',
-          onPressed: () => _handleAction(transfer, 'approve'),
-        ),
-      );
-      actions.add(
-        IconButton(
-          icon: const Icon(Icons.cancel_outlined, size: 20, color: AppColors.error),
-          tooltip: 'Cancel',
-          onPressed: () => _handleAction(transfer, 'cancel'),
-        ),
-      );
-    } else if (transfer.status == StockTransferStatus.inTransit) {
-      actions.add(
-        IconButton(
-          icon: const Icon(Icons.archive_outlined, size: 20, color: AppColors.info),
-          tooltip: 'Receive',
-          onPressed: () => _handleAction(transfer, 'receive'),
-        ),
-      );
-    }
-
-    if (actions.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
-    return Row(mainAxisSize: MainAxisSize.min, children: actions);
   }
 
   Future<void> _showCreateTransferDialog() async {
+    // Ensure branches and products are loaded
+    if (ref.read(branchListProvider) is! BranchListLoaded) {
+      await ref.read(branchListProvider.notifier).load();
+    }
+    if (ref.read(productsProvider) is! ProductsLoaded) {
+      await ref.read(productsProvider.notifier).load();
+    }
+
     final formKey = GlobalKey<FormState>();
-    final fromStoreController = TextEditingController();
-    final toStoreController = TextEditingController();
     final notesController = TextEditingController();
-    final productIdController = TextEditingController();
     final quantityController = TextEditingController();
+    String? selectedFromStoreId;
+    String? selectedToStoreId;
+    String? selectedProductId;
 
     final result = await showDialog<Map<String, dynamic>>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('New Stock Transfer'),
-        content: Form(
-          key: formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  controller: fromStoreController,
-                  decoration: const InputDecoration(labelText: 'From Store ID'),
-                  validator: (v) => (v == null || v.isEmpty) ? 'Required' : null,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) {
+          final branchState = ref.read(branchListProvider);
+          final branches = branchState is BranchListLoaded ? branchState.branches : <Store>[];
+          final productsState = ref.read(productsProvider);
+          final productList = productsState is ProductsLoaded ? productsState.products : <Product>[];
+
+          return AlertDialog(
+            title: const Text('New Stock Transfer'),
+            content: SizedBox(
+              width: 500,
+              child: Form(
+                key: formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      DropdownButtonFormField<String>(
+                        value: selectedFromStoreId,
+                        decoration: const InputDecoration(labelText: 'From Store'),
+                        isExpanded: true,
+                        items: branches.map((b) => DropdownMenuItem(value: b.id, child: Text(b.name))).toList(),
+                        onChanged: (v) => setDialogState(() => selectedFromStoreId = v),
+                        validator: (v) => v == null ? 'Required' : null,
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      DropdownButtonFormField<String>(
+                        value: selectedToStoreId,
+                        decoration: const InputDecoration(labelText: 'To Store'),
+                        isExpanded: true,
+                        items: branches.map((b) => DropdownMenuItem(value: b.id, child: Text(b.name))).toList(),
+                        onChanged: (v) => setDialogState(() => selectedToStoreId = v),
+                        validator: (v) => v == null ? 'Required' : null,
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      DropdownButtonFormField<String>(
+                        value: selectedProductId,
+                        decoration: const InputDecoration(labelText: 'Product'),
+                        isExpanded: true,
+                        items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
+                        onChanged: (v) => setDialogState(() => selectedProductId = v),
+                        validator: (v) => v == null ? 'Required' : null,
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      TextFormField(
+                        controller: quantityController,
+                        decoration: const InputDecoration(labelText: 'Quantity'),
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        validator: (v) {
+                          if (v == null || v.isEmpty) return 'Required';
+                          if (double.tryParse(v) == null) return 'Invalid';
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      TextFormField(
+                        controller: notesController,
+                        decoration: const InputDecoration(labelText: 'Notes (optional)'),
+                      ),
+                    ],
+                  ),
                 ),
-                TextFormField(
-                  controller: toStoreController,
-                  decoration: const InputDecoration(labelText: 'To Store ID'),
-                  validator: (v) => (v == null || v.isEmpty) ? 'Required' : null,
-                ),
-                TextFormField(
-                  controller: productIdController,
-                  decoration: const InputDecoration(labelText: 'Product ID'),
-                  validator: (v) => (v == null || v.isEmpty) ? 'Required' : null,
-                ),
-                TextFormField(
-                  controller: quantityController,
-                  decoration: const InputDecoration(labelText: 'Quantity'),
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  validator: (v) {
-                    if (v == null || v.isEmpty) return 'Required';
-                    if (double.tryParse(v) == null) return 'Invalid';
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: notesController,
-                  decoration: const InputDecoration(labelText: 'Notes (optional)'),
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          TextButton(
-            onPressed: () {
-              if (formKey.currentState!.validate()) {
-                Navigator.pop(ctx, {
-                  'from_store_id': fromStoreController.text,
-                  'to_store_id': toStoreController.text,
-                  'notes': notesController.text.isNotEmpty ? notesController.text : null,
-                  'items': [
-                    {'product_id': productIdController.text, 'quantity': double.parse(quantityController.text)},
-                  ],
-                });
-              }
-            },
-            child: const Text('Create'),
-          ),
-        ],
+            actions: [
+              TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+              TextButton(
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    Navigator.pop(ctx, {
+                      'from_store_id': selectedFromStoreId,
+                      'to_store_id': selectedToStoreId,
+                      'notes': notesController.text.isNotEmpty ? notesController.text : null,
+                      'items': [
+                        {'product_id': selectedProductId, 'quantity_sent': double.parse(quantityController.text)},
+                      ],
+                    });
+                  }
+                },
+                child: const Text('Create'),
+              ),
+            ],
+          );
+        },
       ),
     );
-
-    fromStoreController.dispose();
-    toStoreController.dispose();
-    notesController.dispose();
-    productIdController.dispose();
-    quantityController.dispose();
 
     if (result != null && mounted) {
       try {
@@ -293,5 +282,8 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
         }
       }
     }
+
+    notesController.dispose();
+    quantityController.dispose();
   }
 }

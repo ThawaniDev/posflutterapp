@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
@@ -42,19 +43,23 @@ class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(shiftProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('Shift Schedule'),
+        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        title: Text(l10n.staffShiftSchedule),
         actions: [
-          IconButton(icon: const Icon(Icons.date_range), onPressed: _pickDateRange, tooltip: 'Filter by date range'),
+          IconButton(icon: const Icon(Icons.date_range), onPressed: _pickDateRange, tooltip: l10n.staffFilterByDate),
           IconButton(icon: const Icon(Icons.refresh), onPressed: _loadShifts),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showCreateShiftDialog(context, state),
         icon: const Icon(Icons.add),
-        label: const Text('Add Shift'),
+        label: Text(l10n.staffAddShift),
       ),
       body: Column(
         children: [
@@ -162,7 +167,8 @@ class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
           try {
             await ref.read(shiftProvider.notifier).createShift(data);
             if (mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Shift created')));
+              final l10n = AppLocalizations.of(context)!;
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.staffShiftCreated)));
             }
           } catch (e) {
             if (mounted) {
@@ -175,17 +181,18 @@ class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
   }
 
   Future<void> _confirmDeleteShift(BuildContext context, ShiftSchedule shift) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Delete Shift'),
-        content: const Text('Delete this shift? This cannot be undone.'),
+        title: Text(l10n.staffDeleteShift),
+        content: Text(l10n.staffDeleteShiftConfirm),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, true),
-            style: FilledButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.error),
-            child: const Text('Delete'),
+            style: FilledButton.styleFrom(backgroundColor: AppColors.error),
+            child: Text(l10n.delete),
           ),
         ],
       ),
@@ -195,7 +202,7 @@ class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
       try {
         await ref.read(shiftProvider.notifier).deleteShift(shift.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Shift deleted')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.staffShiftDeleted)));
         }
       } catch (e) {
         if (mounted) {
@@ -220,13 +227,15 @@ class _ShiftCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final (statusColor, statusLabel) = _statusInfo(shift.status);
 
     return Card(
       elevation: 0,
+      color: isDark ? AppColors.cardDark : AppColors.cardLight,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
+        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Padding(
@@ -352,22 +361,23 @@ class _CreateShiftDialogState extends ConsumerState<_CreateShiftDialog> {
   Widget build(BuildContext context) {
     final staffState = ref.watch(staffListProvider);
     final staffList = staffState is StaffListLoaded ? staffState.staff : <StaffUser>[];
+    final l10n = AppLocalizations.of(context)!;
 
     return AlertDialog(
-      title: const Text('Create Shift'),
+      title: Text(l10n.staffCreateShift),
       content: SizedBox(
         width: 400,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             DropdownButtonFormField<StaffUser>(
-              decoration: const InputDecoration(labelText: 'Staff Member *', border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: '${l10n.staffMember} *', border: const OutlineInputBorder()),
               items: staffList.map((s) => DropdownMenuItem(value: s, child: Text('${s.firstName} ${s.lastName}'))).toList(),
               onChanged: (v) => setState(() => _selectedStaff = v),
             ),
             AppSpacing.gapH16,
             DropdownButtonFormField<ShiftTemplate>(
-              decoration: const InputDecoration(labelText: 'Shift Template *', border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: '${l10n.staffShiftTemplate} *', border: const OutlineInputBorder()),
               items: widget.templates
                   .map((t) => DropdownMenuItem(value: t, child: Text('${t.name} (${t.startTime} - ${t.endTime})')))
                   .toList(),
@@ -393,7 +403,7 @@ class _CreateShiftDialogState extends ConsumerState<_CreateShiftDialog> {
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text(l10n.cancel)),
         FilledButton(
           onPressed: _selectedStaff == null || _selectedTemplate == null
               ? null
@@ -403,7 +413,7 @@ class _CreateShiftDialogState extends ConsumerState<_CreateShiftDialog> {
                   'shift_template_id': _selectedTemplate!.id,
                   'date': _dateFormat.format(_selectedDate),
                 }),
-          child: const Text('Create'),
+          child: Text(l10n.create),
         ),
       ],
     );

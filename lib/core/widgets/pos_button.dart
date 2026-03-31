@@ -3,7 +3,7 @@ import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_typography.dart';
 
-/// Thawani POS Button — unified button component
+/// Wameed POS Button — unified button component
 ///
 /// Supports multiple [PosButtonVariant] styles derived from the
 /// stitch HTML prototypes: primary, secondary, outline, danger, ghost,

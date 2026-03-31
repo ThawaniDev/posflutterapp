@@ -162,3 +162,207 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
     }
   }
 }
+
+// ─── Inventory Valuation ─────────────────────────────────────
+
+final inventoryValuationProvider = StateNotifierProvider<InventoryValuationNotifier, InventoryValuationState>((ref) {
+  return InventoryValuationNotifier(ref.watch(reportRepositoryProvider));
+});
+
+class InventoryValuationNotifier extends StateNotifier<InventoryValuationState> {
+  final ReportRepository _repo;
+
+  InventoryValuationNotifier(this._repo) : super(const InventoryValuationInitial());
+
+  Future<void> load() async {
+    if (state is! InventoryValuationLoaded) state = const InventoryValuationLoading();
+    try {
+      final data = await _repo.getInventoryValuation();
+      state = InventoryValuationLoaded(data: data);
+    } catch (e) {
+      if (state is! InventoryValuationLoaded) state = InventoryValuationError(message: e.toString());
+    }
+  }
+}
+
+// ─── Inventory Turnover ──────────────────────────────────────
+
+final inventoryTurnoverProvider = StateNotifierProvider<InventoryTurnoverNotifier, InventoryTurnoverState>((ref) {
+  return InventoryTurnoverNotifier(ref.watch(reportRepositoryProvider));
+});
+
+class InventoryTurnoverNotifier extends StateNotifier<InventoryTurnoverState> {
+  final ReportRepository _repo;
+
+  InventoryTurnoverNotifier(this._repo) : super(const InventoryTurnoverInitial());
+
+  Future<void> load({String? dateFrom, String? dateTo}) async {
+    if (state is! InventoryTurnoverLoaded) state = const InventoryTurnoverLoading();
+    try {
+      final data = await _repo.getInventoryTurnover(dateFrom: dateFrom, dateTo: dateTo);
+      state = InventoryTurnoverLoaded(products: data);
+    } catch (e) {
+      if (state is! InventoryTurnoverLoaded) state = InventoryTurnoverError(message: e.toString());
+    }
+  }
+}
+
+// ─── Inventory Shrinkage ─────────────────────────────────────
+
+final inventoryShrinkageProvider = StateNotifierProvider<InventoryShrinkageNotifier, InventoryShrinkageState>((ref) {
+  return InventoryShrinkageNotifier(ref.watch(reportRepositoryProvider));
+});
+
+class InventoryShrinkageNotifier extends StateNotifier<InventoryShrinkageState> {
+  final ReportRepository _repo;
+
+  InventoryShrinkageNotifier(this._repo) : super(const InventoryShrinkageInitial());
+
+  Future<void> load({String? dateFrom, String? dateTo}) async {
+    if (state is! InventoryShrinkageLoaded) state = const InventoryShrinkageLoading();
+    try {
+      final data = await _repo.getInventoryShrinkage(dateFrom: dateFrom, dateTo: dateTo);
+      state = InventoryShrinkageLoaded(data: data);
+    } catch (e) {
+      if (state is! InventoryShrinkageLoaded) state = InventoryShrinkageError(message: e.toString());
+    }
+  }
+}
+
+// ─── Inventory Low Stock ─────────────────────────────────────
+
+final inventoryLowStockProvider = StateNotifierProvider<InventoryLowStockNotifier, InventoryLowStockState>((ref) {
+  return InventoryLowStockNotifier(ref.watch(reportRepositoryProvider));
+});
+
+class InventoryLowStockNotifier extends StateNotifier<InventoryLowStockState> {
+  final ReportRepository _repo;
+
+  InventoryLowStockNotifier(this._repo) : super(const InventoryLowStockInitial());
+
+  Future<void> load() async {
+    if (state is! InventoryLowStockLoaded) state = const InventoryLowStockLoading();
+    try {
+      final data = await _repo.getInventoryLowStock();
+      state = InventoryLowStockLoaded(products: data);
+    } catch (e) {
+      if (state is! InventoryLowStockLoaded) state = InventoryLowStockError(message: e.toString());
+    }
+  }
+}
+
+// ─── Financial: Daily P&L ────────────────────────────────────
+
+final financialDailyPlProvider = StateNotifierProvider<FinancialDailyPlNotifier, FinancialDailyPlState>((ref) {
+  return FinancialDailyPlNotifier(ref.watch(reportRepositoryProvider));
+});
+
+class FinancialDailyPlNotifier extends StateNotifier<FinancialDailyPlState> {
+  final ReportRepository _repo;
+
+  FinancialDailyPlNotifier(this._repo) : super(const FinancialDailyPlInitial());
+
+  Future<void> load({String? dateFrom, String? dateTo}) async {
+    if (state is! FinancialDailyPlLoaded) state = const FinancialDailyPlLoading();
+    try {
+      final data = await _repo.getFinancialDailyPl(dateFrom: dateFrom, dateTo: dateTo);
+      state = FinancialDailyPlLoaded(
+        totals: data['totals'] as Map<String, dynamic>,
+        daily: (data['daily'] as List).cast<Map<String, dynamic>>(),
+      );
+    } catch (e) {
+      if (state is! FinancialDailyPlLoaded) state = FinancialDailyPlError(message: e.toString());
+    }
+  }
+}
+
+// ─── Financial: Expenses ─────────────────────────────────────
+
+final financialExpensesProvider = StateNotifierProvider<FinancialExpensesNotifier, FinancialExpensesState>((ref) {
+  return FinancialExpensesNotifier(ref.watch(reportRepositoryProvider));
+});
+
+class FinancialExpensesNotifier extends StateNotifier<FinancialExpensesState> {
+  final ReportRepository _repo;
+
+  FinancialExpensesNotifier(this._repo) : super(const FinancialExpensesInitial());
+
+  Future<void> load({String? dateFrom, String? dateTo}) async {
+    if (state is! FinancialExpensesLoaded) state = const FinancialExpensesLoading();
+    try {
+      final data = await _repo.getFinancialExpenses(dateFrom: dateFrom, dateTo: dateTo);
+      state = FinancialExpensesLoaded(
+        totalExpenses: (data['total_expenses'] as num).toDouble(),
+        categories: (data['categories'] as List).cast<Map<String, dynamic>>(),
+      );
+    } catch (e) {
+      if (state is! FinancialExpensesLoaded) state = FinancialExpensesError(message: e.toString());
+    }
+  }
+}
+
+// ─── Financial: Cash Variance ────────────────────────────────
+
+final cashVarianceProvider = StateNotifierProvider<CashVarianceNotifier, CashVarianceState>((ref) {
+  return CashVarianceNotifier(ref.watch(reportRepositoryProvider));
+});
+
+class CashVarianceNotifier extends StateNotifier<CashVarianceState> {
+  final ReportRepository _repo;
+
+  CashVarianceNotifier(this._repo) : super(const CashVarianceInitial());
+
+  Future<void> load({String? dateFrom, String? dateTo}) async {
+    if (state is! CashVarianceLoaded) state = const CashVarianceLoading();
+    try {
+      final data = await _repo.getFinancialCashVariance(dateFrom: dateFrom, dateTo: dateTo);
+      state = CashVarianceLoaded(data: data);
+    } catch (e) {
+      if (state is! CashVarianceLoaded) state = CashVarianceError(message: e.toString());
+    }
+  }
+}
+
+// ─── Top Customers ───────────────────────────────────────────
+
+final topCustomersProvider = StateNotifierProvider<TopCustomersNotifier, TopCustomersState>((ref) {
+  return TopCustomersNotifier(ref.watch(reportRepositoryProvider));
+});
+
+class TopCustomersNotifier extends StateNotifier<TopCustomersState> {
+  final ReportRepository _repo;
+
+  TopCustomersNotifier(this._repo) : super(const TopCustomersInitial());
+
+  Future<void> load({int? limit}) async {
+    if (state is! TopCustomersLoaded) state = const TopCustomersLoading();
+    try {
+      final data = await _repo.getTopCustomers(limit: limit);
+      state = TopCustomersLoaded(customers: data);
+    } catch (e) {
+      if (state is! TopCustomersLoaded) state = TopCustomersError(message: e.toString());
+    }
+  }
+}
+
+// ─── Customer Retention ──────────────────────────────────────
+
+final customerRetentionProvider = StateNotifierProvider<CustomerRetentionNotifier, CustomerRetentionState>((ref) {
+  return CustomerRetentionNotifier(ref.watch(reportRepositoryProvider));
+});
+
+class CustomerRetentionNotifier extends StateNotifier<CustomerRetentionState> {
+  final ReportRepository _repo;
+
+  CustomerRetentionNotifier(this._repo) : super(const CustomerRetentionInitial());
+
+  Future<void> load() async {
+    if (state is! CustomerRetentionLoaded) state = const CustomerRetentionLoading();
+    try {
+      final data = await _repo.getCustomerRetention();
+      state = CustomerRetentionLoaded(data: data);
+    } catch (e) {
+      if (state is! CustomerRetentionLoaded) state = CustomerRetentionError(message: e.toString());
+    }
+  }
+}

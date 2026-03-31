@@ -165,3 +165,212 @@ class DashboardError extends DashboardState {
   final String message;
   const DashboardError({required this.message});
 }
+
+// Inventory Valuation
+sealed class InventoryValuationState {
+  const InventoryValuationState();
+}
+
+class InventoryValuationInitial extends InventoryValuationState {
+  const InventoryValuationInitial();
+}
+
+class InventoryValuationLoading extends InventoryValuationState {
+  const InventoryValuationLoading();
+}
+
+class InventoryValuationLoaded extends InventoryValuationState {
+  final Map<String, dynamic> data;
+  const InventoryValuationLoaded({required this.data});
+}
+
+class InventoryValuationError extends InventoryValuationState {
+  final String message;
+  const InventoryValuationError({required this.message});
+}
+
+// Inventory Turnover
+sealed class InventoryTurnoverState {
+  const InventoryTurnoverState();
+}
+
+class InventoryTurnoverInitial extends InventoryTurnoverState {
+  const InventoryTurnoverInitial();
+}
+
+class InventoryTurnoverLoading extends InventoryTurnoverState {
+  const InventoryTurnoverLoading();
+}
+
+class InventoryTurnoverLoaded extends InventoryTurnoverState {
+  final List<Map<String, dynamic>> products;
+  const InventoryTurnoverLoaded({required this.products});
+}
+
+class InventoryTurnoverError extends InventoryTurnoverState {
+  final String message;
+  const InventoryTurnoverError({required this.message});
+}
+
+// Inventory Shrinkage
+sealed class InventoryShrinkageState {
+  const InventoryShrinkageState();
+}
+
+class InventoryShrinkageInitial extends InventoryShrinkageState {
+  const InventoryShrinkageInitial();
+}
+
+class InventoryShrinkageLoading extends InventoryShrinkageState {
+  const InventoryShrinkageLoading();
+}
+
+class InventoryShrinkageLoaded extends InventoryShrinkageState {
+  final Map<String, dynamic> data;
+  const InventoryShrinkageLoaded({required this.data});
+}
+
+class InventoryShrinkageError extends InventoryShrinkageState {
+  final String message;
+  const InventoryShrinkageError({required this.message});
+}
+
+// Inventory Low Stock
+sealed class InventoryLowStockState {
+  const InventoryLowStockState();
+}
+
+class InventoryLowStockInitial extends InventoryLowStockState {
+  const InventoryLowStockInitial();
+}
+
+class InventoryLowStockLoading extends InventoryLowStockState {
+  const InventoryLowStockLoading();
+}
+
+class InventoryLowStockLoaded extends InventoryLowStockState {
+  final List<Map<String, dynamic>> products;
+  const InventoryLowStockLoaded({required this.products});
+}
+
+class InventoryLowStockError extends InventoryLowStockState {
+  final String message;
+  const InventoryLowStockError({required this.message});
+}
+
+// Financial Daily P&L
+sealed class FinancialDailyPlState {
+  const FinancialDailyPlState();
+}
+
+class FinancialDailyPlInitial extends FinancialDailyPlState {
+  const FinancialDailyPlInitial();
+}
+
+class FinancialDailyPlLoading extends FinancialDailyPlState {
+  const FinancialDailyPlLoading();
+}
+
+class FinancialDailyPlLoaded extends FinancialDailyPlState {
+  final Map<String, dynamic> totals;
+  final List<Map<String, dynamic>> daily;
+  const FinancialDailyPlLoaded({required this.totals, required this.daily});
+}
+
+class FinancialDailyPlError extends FinancialDailyPlState {
+  final String message;
+  const FinancialDailyPlError({required this.message});
+}
+
+// Financial Expenses
+sealed class FinancialExpensesState {
+  const FinancialExpensesState();
+}
+
+class FinancialExpensesInitial extends FinancialExpensesState {
+  const FinancialExpensesInitial();
+}
+
+class FinancialExpensesLoading extends FinancialExpensesState {
+  const FinancialExpensesLoading();
+}
+
+class FinancialExpensesLoaded extends FinancialExpensesState {
+  final double totalExpenses;
+  final List<Map<String, dynamic>> categories;
+  const FinancialExpensesLoaded({required this.totalExpenses, required this.categories});
+}
+
+class FinancialExpensesError extends FinancialExpensesState {
+  final String message;
+  const FinancialExpensesError({required this.message});
+}
+
+// Financial Cash Variance
+sealed class CashVarianceState {
+  const CashVarianceState();
+}
+
+class CashVarianceInitial extends CashVarianceState {
+  const CashVarianceInitial();
+}
+
+class CashVarianceLoading extends CashVarianceState {
+  const CashVarianceLoading();
+}
+
+class CashVarianceLoaded extends CashVarianceState {
+  final Map<String, dynamic> data;
+  const CashVarianceLoaded({required this.data});
+}
+
+class CashVarianceError extends CashVarianceState {
+  final String message;
+  const CashVarianceError({required this.message});
+}
+
+// Top Customers
+sealed class TopCustomersState {
+  const TopCustomersState();
+}
+
+class TopCustomersInitial extends TopCustomersState {
+  const TopCustomersInitial();
+}
+
+class TopCustomersLoading extends TopCustomersState {
+  const TopCustomersLoading();
+}
+
+class TopCustomersLoaded extends TopCustomersState {
+  final List<Map<String, dynamic>> customers;
+  const TopCustomersLoaded({required this.customers});
+}
+
+class TopCustomersError extends TopCustomersState {
+  final String message;
+  const TopCustomersError({required this.message});
+}
+
+// Customer Retention
+sealed class CustomerRetentionState {
+  const CustomerRetentionState();
+}
+
+class CustomerRetentionInitial extends CustomerRetentionState {
+  const CustomerRetentionInitial();
+}
+
+class CustomerRetentionLoading extends CustomerRetentionState {
+  const CustomerRetentionLoading();
+}
+
+class CustomerRetentionLoaded extends CustomerRetentionState {
+  final Map<String, dynamic> data;
+  const CustomerRetentionLoaded({required this.data});
+}
+
+class CustomerRetentionError extends CustomerRetentionState {
+  final String message;
+  const CustomerRetentionError({required this.message});
+}

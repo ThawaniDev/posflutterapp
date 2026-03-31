@@ -1,8 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/features/hardware/enums/hardware_device_type.dart';
 import 'package:thawani_pos/features/hardware/models/hardware_configuration.dart';
 import 'package:thawani_pos/features/hardware/models/hardware_event_log.dart';
 import 'package:thawani_pos/features/hardware/providers/hardware_state.dart';
 import 'package:thawani_pos/features/hardware/repositories/hardware_repository.dart';
+import 'package:thawani_pos/features/hardware/services/hardware_auto_detector.dart';
+import 'package:thawani_pos/features/hardware/services/hardware_manager.dart';
 
 // ─── Config List Provider ──────────────────────────────────
 class HardwareConfigListNotifier extends StateNotifier<HardwareConfigListState> {
@@ -140,4 +143,52 @@ class EventLogListNotifier extends StateNotifier<EventLogListState> {
 
 final eventLogListProvider = StateNotifierProvider<EventLogListNotifier, EventLogListState>((ref) {
   return EventLogListNotifier(ref.watch(hardwareRepositoryProvider));
+});
+
+// ─── Hardware Manager Provider (singleton) ─────────────────
+final hardwareManagerProvider = Provider<HardwareManager>((ref) {
+  final manager = HardwareManager();
+  ref.onDispose(manager.dispose);
+  return manager;
+});
+
+// ─── Peripheral Status Provider ────────────────────────────
+final peripheralStatusProvider = StreamProvider<Map<HardwareDeviceType, PeripheralStatus>>((ref) {
+  return ref.watch(hardwareManagerProvider).statusStream;
+});
+
+// ─── Auto Detector Provider ────────────────────────────────
+final hardwareAutoDetectorProvider = Provider<HardwareAutoDetector>((ref) {
+  return HardwareAutoDetector();
+});
+
+// ─── Network Scan State ────────────────────────────────────
+class NetworkScanNotifier extends StateNotifier<NetworkScanState> {
+  NetworkScanNotifier(this._detector) : super(const NetworkScanIdle());
+
+  final HardwareAutoDetector _detector;
+
+  Future<void> scan({String? subnet}) async {
+    state = const NetworkScanRunning(scanned: 0, total: 254);
+    try {
+      final detectedSubnet = subnet ?? await _detector.detectSubnet() ?? '192.168.1';
+      final devices = await _detector.scanAll(
+        subnet: detectedSubnet,
+        onProgress: (scanned, total) {
+          if (mounted) {
+            state = NetworkScanRunning(scanned: scanned, total: total);
+          }
+        },
+      );
+      state = NetworkScanComplete(devices: devices);
+    } catch (e) {
+      state = NetworkScanError(e.toString());
+    }
+  }
+
+  void reset() => state = const NetworkScanIdle();
+}
+
+final networkScanProvider = StateNotifierProvider<NetworkScanNotifier, NetworkScanState>((ref) {
+  return NetworkScanNotifier(ref.watch(hardwareAutoDetectorProvider));
 });

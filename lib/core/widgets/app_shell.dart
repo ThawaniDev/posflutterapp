@@ -54,7 +54,7 @@ class AppShell extends ConsumerWidget {
         leading: Builder(
           builder: (ctx) => IconButton(icon: const Icon(Icons.menu_rounded), onPressed: () => Scaffold.of(ctx).openDrawer()),
         ),
-        title: const Text('Thawani POS'),
+        title: const Text('Wameed POS'),
       ),
       drawer: SizedBox(
         width: AppSizes.sidebarWidth,

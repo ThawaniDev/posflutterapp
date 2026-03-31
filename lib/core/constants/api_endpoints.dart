@@ -27,6 +27,7 @@ class ApiEndpoints {
   static const String posSessions = '/pos/sessions';
   static const String transactions = '/pos/transactions';
   static const String heldCarts = '/pos/held-carts';
+  static const String posTerminals = '/pos/terminals';
 
   // Orders
   static const String orders = '/orders';
@@ -38,6 +39,8 @@ class ApiEndpoints {
   static const String cashEvents = '/cash-events';
   static const String expenses = '/expenses';
   static const String giftCards = '/gift-cards';
+  static const String financeDailySummary = '/finance/daily-summary';
+  static const String financeReconciliation = '/finance/reconciliation';
 
   // Customers
   static const String customers = '/customers';
@@ -71,6 +74,20 @@ class ApiEndpoints {
   static const String hourlySales = '/reports/hourly-sales';
   static const String paymentMethods = '/reports/payment-methods';
   static const String dashboard = '/reports/dashboard';
+  static const String slowMovers = '/reports/products/slow-movers';
+  static const String productMargin = '/reports/products/margin';
+  static const String inventoryValuation = '/reports/inventory/valuation';
+  static const String inventoryTurnover = '/reports/inventory/turnover';
+  static const String inventoryShrinkage = '/reports/inventory/shrinkage';
+  static const String inventoryLowStock = '/reports/inventory/low-stock';
+  static const String financialDailyPl = '/reports/financial/daily-pl';
+  static const String financialExpenses = '/reports/financial/expenses';
+  static const String financialCashVariance = '/reports/financial/cash-variance';
+  static const String topCustomers = '/reports/customers/top';
+  static const String customerRetention = '/reports/customers/retention';
+  static const String reportExport = '/reports/export';
+  static const String reportSchedules = '/reports/schedules';
+  static String reportScheduleDelete(String id) => '/reports/schedules/$id';
 
   // Staff
   static const String staffUsers = '/staff/users';
@@ -81,8 +98,13 @@ class ApiEndpoints {
   static String staffMemberCommissions(String id) => '/staff/members/$id/commissions';
   static String staffMemberCommissionConfig(String id) => '/staff/members/$id/commission-config';
   static String staffMemberActivityLog(String id) => '/staff/members/$id/activity-log';
+  static String staffMemberBranchAssignments(String id) => '/staff/members/$id/branch-assignments';
+  static String staffMemberLinkUser(String id) => '/staff/members/$id/link-user';
+  static const String staffLinkableUsers = '/staff/members/linkable-users';
+  static const String staffStats = '/staff/members/stats';
   static const String attendance = '/staff/attendance';
   static const String attendanceClock = '/staff/attendance/clock';
+  static const String attendanceExport = '/staff/attendance/export';
   static const String shifts = '/staff/shifts';
   static String shiftById(String id) => '/staff/shifts/$id';
   static const String shiftTemplates = '/staff/shift-templates';
@@ -149,6 +171,9 @@ class ApiEndpoints {
   static const String subscriptionCheckFeature = '/subscription/check-feature';
   static const String subscriptionCheckLimit = '/subscription/check-limit';
   static const String subscriptionInvoices = '/subscription/invoices';
+  static String subscriptionInvoicePdf(String id) => '/subscription/invoices/$id/pdf';
+  static const String subscriptionSyncEntitlements = '/subscription/sync/entitlements';
+  static const String subscriptionStoreAddOns = '/subscription/store-add-ons';
 
   // Promotions & Coupons
   static const String promotions = '/promotions';
@@ -513,6 +538,49 @@ class ApiEndpoints {
   static const String customizationQuickAccess = '/customization/quick-access';
   static const String customizationExport = '/customization/export';
 
+  // ─── UI / Layout Management ─────────────────────────────
+  static const String uiDefaults = '/ui/defaults';
+  static const String uiLayouts = '/ui/layouts';
+  static const String uiThemes = '/ui/themes';
+  static const String uiPreferences = '/ui/preferences';
+  static const String uiStoreDefaults = '/ui/store-defaults';
+
+  // UI Template Browsing
+  static const String uiReceiptTemplates = '/ui/receipt-templates';
+  static String uiReceiptTemplateBySlug(String slug) => '/ui/receipt-templates/$slug';
+  static const String uiCfdThemes = '/ui/cfd-themes';
+  static String uiCfdThemeBySlug(String slug) => '/ui/cfd-themes/$slug';
+  static const String uiSignageTemplates = '/ui/signage-templates';
+  static String uiSignageTemplateBySlug(String slug) => '/ui/signage-templates/$slug';
+  static const String uiLabelTemplates = '/ui/label-templates';
+  static String uiLabelTemplateBySlug(String slug) => '/ui/label-templates/$slug';
+
+  // Layout Builder
+  static const String layoutBuilderWidgets = '/ui/layout-builder/widgets';
+  static String layoutBuilderWidgetById(String id) => '/ui/layout-builder/widgets/$id';
+  static const String layoutBuilderCanvas = '/ui/layout-builder/canvas';
+  static const String layoutBuilderPlacements = '/ui/layout-builder/placements';
+  static String layoutBuilderPlacementById(String id) => '/ui/layout-builder/placements/$id';
+  static const String layoutBuilderThemeOverrides = '/ui/layout-builder/theme-overrides';
+  static String layoutBuilderThemeOverrideById(String id) => '/ui/layout-builder/theme-overrides/$id';
+  static const String layoutBuilderClone = '/ui/layout-builder/clone';
+  static const String layoutBuilderVersions = '/ui/layout-builder/versions';
+  static const String layoutBuilderFull = '/ui/layout-builder/full';
+
+  // Template Marketplace
+  static const String marketplaceListings = '/ui/marketplace/listings';
+  static String marketplaceListingById(String id) => '/ui/marketplace/listings/$id';
+  static const String marketplaceCategories = '/ui/marketplace/categories';
+  static String marketplaceCategoryById(String id) => '/ui/marketplace/categories/$id';
+  static const String marketplacePurchase = '/ui/marketplace/purchase';
+  static const String marketplaceMyPurchases = '/ui/marketplace/my-purchases';
+  static const String marketplaceCheckAccess = '/ui/marketplace/check-access';
+  static const String marketplaceCancelPurchase = '/ui/marketplace/cancel';
+  static const String marketplaceMyInvoices = '/ui/marketplace/my-invoices';
+  static String marketplaceInvoiceById(String id) => '/ui/marketplace/invoices/$id';
+  static const String marketplaceReviews = '/ui/marketplace/reviews';
+  static String marketplaceReviewById(String id) => '/ui/marketplace/reviews/$id';
+
   // ─── POS Feature #28: Auto Updates ──────────────────────
   static const String autoUpdateCheck = '/auto-update/check';
   static const String autoUpdateReportStatus = '/auto-update/report-status';
@@ -600,10 +668,14 @@ class ApiEndpoints {
   static String supportTicketById(String id) => '/support/tickets/$id';
   static String supportTicketMessages(String id) => '/support/tickets/$id/messages';
   static String supportTicketClose(String id) => '/support/tickets/$id/close';
+  static const String supportKb = '/support/kb';
+  static String supportKbArticle(String slug) => '/support/kb/$slug';
 
   // Delivery Integration
   static const String deliveryStats = '/delivery/stats';
   static const String deliveryConfigs = '/delivery/configs';
+  static String deliveryConfigDetail(String id) => '/delivery/configs/$id';
+  static String deliveryConfigDelete(String id) => '/delivery/configs/$id';
   static String deliveryConfigToggle(String id) => '/delivery/configs/$id/toggle';
   static String deliveryConfigTestConnection(String id) => '/delivery/configs/$id/test-connection';
   static const String deliveryOrders = '/delivery/orders';
@@ -613,6 +685,8 @@ class ApiEndpoints {
   static const String deliverySyncLogs = '/delivery/sync-logs';
   static const String deliveryMenuSync = '/delivery/menu-sync';
   static const String deliveryPlatforms = '/delivery/platforms';
+  static const String deliveryWebhookLogs = '/delivery/webhook-logs';
+  static const String deliveryStatusPushLogs = '/delivery/status-push-logs';
 
   // Thawani Integration
   static const String thawaniStats = '/thawani/stats';
@@ -624,4 +698,13 @@ class ApiEndpoints {
 
   // Branches (uses core stores)
   static const String branches = '/core/stores';
+  static const String branchStats = '/core/stores/stats';
+  static const String branchManagers = '/core/stores/managers';
+  static const String branchSortOrder = '/core/stores/sort-order';
+  static String branchById(String id) => '/core/stores/$id';
+  static String branchToggleActive(String id) => '/core/stores/$id/toggle-active';
+  static String branchSettings(String id) => '/core/stores/$id/settings';
+  static String branchWorkingHours(String id) => '/core/stores/$id/working-hours';
+  static String branchCopySettings(String id) => '/core/stores/$id/copy-settings';
+  static String branchCopyWorkingHours(String id) => '/core/stores/$id/copy-working-hours';
 }

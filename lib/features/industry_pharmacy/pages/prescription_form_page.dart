@@ -37,7 +37,7 @@ class _PrescriptionFormPageState extends ConsumerState<PrescriptionFormPage> {
     _doctorNameCtrl = TextEditingController(text: p?.doctorName ?? '');
     _doctorLicenseCtrl = TextEditingController(text: p?.doctorLicense ?? '');
     _insuranceProviderCtrl = TextEditingController(text: p?.insuranceProvider ?? '');
-    _insuranceClaimCtrl = TextEditingController(text: p?.insuranceClaimAmount?.toStringAsFixed(3) ?? '');
+    _insuranceClaimCtrl = TextEditingController(text: p?.insuranceClaimAmount?.toStringAsFixed(2) ?? '');
     _notesCtrl = TextEditingController(text: p?.notes ?? '');
   }
 

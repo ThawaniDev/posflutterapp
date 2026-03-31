@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
+import 'package:thawani_pos/features/reports/widgets/report_widgets.dart';
 
 class CategoryBreakdownPage extends ConsumerStatefulWidget {
   const CategoryBreakdownPage({super.key});
@@ -48,95 +48,158 @@ class _CategoryBreakdownPageState extends ConsumerState<CategoryBreakdownPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(categoryBreakdownProvider);
-    final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Category Breakdown'),
-        actions: [
-          IconButton(icon: const Icon(Icons.date_range), onPressed: _pickDateRange),
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData),
-        ],
-      ),
+    return ReportPageScaffold(
+      title: 'Category Breakdown',
+      dateRange: _dateRange,
+      onPickDate: _pickDateRange,
+      onClearDate: () {
+        setState(() => _dateRange = null);
+        _loadData();
+      },
+      onRefresh: _loadData,
       body: switch (state) {
         CategoryBreakdownInitial() || CategoryBreakdownLoading() => PosLoadingSkeleton.list(),
         CategoryBreakdownError(:final message) => PosErrorState(message: message, onRetry: _loadData),
         CategoryBreakdownLoaded(:final categories) =>
           categories.isEmpty
               ? const PosEmptyState(title: 'No category data for selected period', icon: Icons.category)
-              : ListView.builder(
-                  padding: AppSpacing.paddingAll16,
-                  itemCount: categories.length,
-                  itemBuilder: (context, index) {
-                    final c = categories[index];
-                    final totalRevenue = categories.fold<double>(0, (sum, cat) => sum + (cat['total_revenue'] as num).toDouble());
-                    final pct = totalRevenue > 0 ? (c['total_revenue'] as num) / totalRevenue : 0.0;
+              : _CategoryList(categories: categories),
+      },
+    );
+  }
+}
 
-                    return Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.md),
-                        side: BorderSide(color: theme.dividerColor),
-                      ),
-                      child: Padding(
-                        padding: AppSpacing.paddingAll16,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+class _CategoryList extends StatelessWidget {
+  final List<Map<String, dynamic>> categories;
+
+  const _CategoryList({required this.categories});
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final totalRevenue = categories.fold<double>(0, (sum, c) => sum + (c['total_revenue'] as num).toDouble());
+    final maxRevenue = categories.isEmpty
+        ? 1.0
+        : categories.map((c) => (c['total_revenue'] as num).toDouble()).reduce((a, b) => a > b ? a : b);
+
+    return ListView(
+      padding: const EdgeInsets.all(20),
+      children: [
+        // Top KPIs
+        ReportKpiGrid(
+          cards: [
+            ReportKpiCard(
+              label: 'Categories',
+              value: '${categories.length}',
+              icon: Icons.category_rounded,
+              color: AppColors.primary,
+            ),
+            ReportKpiCard(
+              label: 'Total Revenue',
+              value: formatCurrency(totalRevenue),
+              icon: Icons.attach_money_rounded,
+              color: AppColors.success,
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 24),
+        const ReportSectionHeader(title: 'Revenue by Category', icon: Icons.pie_chart_rounded),
+
+        ReportDataCard(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Column(
+            children: List.generate(categories.length, (i) {
+              final c = categories[i];
+              final revenue = (c['total_revenue'] as num).toDouble();
+              final pct = totalRevenue > 0 ? revenue / totalRevenue : 0.0;
+              final profit = (c['profit'] as num).toDouble();
+              final qty = (c['total_quantity'] as num).toInt();
+
+              return Column(
+                children: [
+                  if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(c['category_name'] as String? ?? '', style: theme.textTheme.titleSmall),
-                                      if (c['category_name_ar'] != null)
-                                        Text(c['category_name_ar'] as String, style: theme.textTheme.bodySmall),
-                                    ],
-                                  ),
+                            Container(
+                              width: 32,
+                              height: 32,
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '${i + 1}',
+                                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.primary),
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      '\$${(c['total_revenue'] as num).toStringAsFixed(2)}',
-                                      style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                                    ),
-                                    Text('${(pct * 100).toStringAsFixed(1)}% of total', style: theme.textTheme.bodySmall),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            AppSpacing.gapH8,
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(AppRadius.xs),
-                              child: LinearProgressIndicator(
-                                value: pct.toDouble(),
-                                backgroundColor: AppColors.primary5,
-                                color: AppColors.primary,
                               ),
                             ),
-                            AppSpacing.gapH8,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    c['category_name'] as String? ?? '',
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                                  ),
+                                  if (c['category_name_ar'] != null)
+                                    Text(
+                                      c['category_name_ar'] as String,
+                                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                        color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text('${c['product_count']} products', style: theme.textTheme.bodySmall),
-                                Text('Qty: ${(c['total_quantity'] as num).toStringAsFixed(0)}', style: theme.textTheme.bodySmall),
                                 Text(
-                                  'Profit: \$${(c['profit'] as num).toStringAsFixed(2)}',
-                                  style: theme.textTheme.bodySmall?.copyWith(
-                                    color: (c['profit'] as num) >= 0 ? AppColors.success : AppColors.error,
+                                  formatCurrency(revenue),
+                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+                                ),
+                                Text(
+                                  formatPercent(pct * 100),
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                                   ),
                                 ),
                               ],
                             ),
                           ],
                         ),
-                      ),
-                    );
-                  },
-                ),
-      },
+                        const SizedBox(height: 8),
+                        ReportBar(value: revenue, maxValue: maxRevenue, color: AppColors.primary),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 6,
+                          children: [
+                            ReportBadge(label: '${c['product_count']} products', color: AppColors.info),
+                            ReportBadge(label: '$qty sold', color: AppColors.primary),
+                            ReportBadge(
+                              label: 'Profit ${formatCurrency(profit)}',
+                              color: profit >= 0 ? AppColors.success : AppColors.error,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }),
+          ),
+        ),
+      ],
     );
   }
 }

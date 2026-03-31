@@ -15,11 +15,20 @@ class SupportApiService {
   }
 
   /// GET /support/tickets
-  Future<Map<String, dynamic>> listTickets({String? status, String? category, String? priority, int? perPage}) async {
+  Future<Map<String, dynamic>> listTickets({
+    String? status,
+    String? category,
+    String? priority,
+    String? search,
+    int? page,
+    int? perPage,
+  }) async {
     final params = <String, dynamic>{};
     if (status != null) params['status'] = status;
     if (category != null) params['category'] = category;
     if (priority != null) params['priority'] = priority;
+    if (search != null && search.isNotEmpty) params['search'] = search;
+    if (page != null) params['page'] = page;
     if (perPage != null) params['per_page'] = perPage;
 
     final response = await _dio.get(ApiEndpoints.supportTickets, queryParameters: params);
@@ -55,6 +64,22 @@ class SupportApiService {
   /// PUT /support/tickets/{id}/close
   Future<Map<String, dynamic>> closeTicket(String id) async {
     final response = await _dio.put(ApiEndpoints.supportTicketClose(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// GET /support/kb
+  Future<Map<String, dynamic>> getKbArticles({String? category, String? search}) async {
+    final params = <String, dynamic>{};
+    if (category != null) params['category'] = category;
+    if (search != null && search.isNotEmpty) params['search'] = search;
+
+    final response = await _dio.get(ApiEndpoints.supportKb, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// GET /support/kb/{slug}
+  Future<Map<String, dynamic>> getKbArticle(String slug) async {
+    final response = await _dio.get(ApiEndpoints.supportKbArticle(slug));
     return response.data as Map<String, dynamic>;
   }
 }

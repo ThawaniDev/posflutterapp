@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/staff/enums/employment_type.dart';
-import 'package:thawani_pos/features/staff/enums/salary_type.dart';
 import 'package:thawani_pos/features/staff/enums/staff_status.dart';
 import 'package:thawani_pos/features/staff/models/staff_user.dart';
 import 'package:thawani_pos/features/staff/providers/staff_providers.dart';
 import 'package:thawani_pos/features/staff/providers/staff_state.dart';
-import 'package:thawani_pos/features/staff/repositories/staff_repository.dart';
 
 class StaffListPage extends ConsumerStatefulWidget {
   const StaffListPage({super.key});
@@ -49,16 +49,20 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(staffListProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('Staff Members'),
+        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        title: Text(l10n.staffMembers),
         actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: _loadStaff)],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _showStaffForm(context),
+        onPressed: () => context.push(Routes.staffMembersCreate),
         icon: const Icon(Icons.person_add),
-        label: const Text('Add Staff'),
+        label: Text(l10n.staffAddMember),
       ),
       body: Column(
         children: [
@@ -68,7 +72,7 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search staff...',
+                hintText: l10n.staffSearchHint,
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
@@ -143,7 +147,7 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
               StaffListError(message: final msg) => PosErrorState(message: msg, onRetry: _loadStaff),
               StaffListLoaded(staff: final staff) =>
                 staff.isEmpty
-                    ? const PosEmptyState(title: 'No staff members found', icon: Icons.people_outline)
+                    ? PosEmptyState(title: l10n.staffNoMembers, icon: Icons.people_outline)
                     : RefreshIndicator(
                         onRefresh: () async => _loadStaff(),
                         child: ListView.builder(
@@ -151,7 +155,7 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
                           itemCount: staff.length,
                           itemBuilder: (context, index) => _StaffCard(
                             staff: staff[index],
-                            onTap: () => context.push('/staff/members/${staff[index].id}'),
+                            onTap: () => context.push('${Routes.staffMembers}/${staff[index].id}'),
                             onDelete: () => _confirmDelete(context, staff[index]),
                           ),
                         ),
@@ -172,33 +176,31 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
     );
   }
 
-  Future<void> _showStaffForm(BuildContext context) async {
-    final result = await Navigator.of(context).push<bool>(MaterialPageRoute(builder: (_) => const StaffFormPage()));
-    if (result == true) _loadStaff();
-  }
-
   Future<void> _confirmDelete(BuildContext context, StaffUser staff) async {
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Delete Staff'),
-        content: Text('Delete ${staff.firstName} ${staff.lastName}? This cannot be undone.'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
-          FilledButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            style: FilledButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.error),
-            child: const Text('Delete'),
-          ),
-        ],
-      ),
+      builder: (ctx) {
+        final l10n = AppLocalizations.of(context)!;
+        return AlertDialog(
+          title: Text(l10n.staffDeleteTitle),
+          content: Text('${l10n.staffDeleteConfirm} ${staff.firstName} ${staff.lastName}?'),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
+            FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              style: FilledButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.error),
+              child: Text(l10n.delete),
+            ),
+          ],
+        );
+      },
     );
 
     if (confirmed == true && mounted) {
       try {
         await ref.read(staffListProvider.notifier).deleteStaff(staff.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Staff member deleted')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.staffDeleted)));
         }
       } catch (e) {
         if (mounted) {
@@ -222,14 +224,16 @@ class _StaffCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       elevation: 0,
+      color: isDark ? AppColors.cardDark : AppColors.cardLight,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
+        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       child: InkWell(
         onTap: onTap,
@@ -330,230 +334,5 @@ class _StatusBadge extends StatelessWidget {
         style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color),
       ),
     );
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════
-// Staff Form Page (Create / Edit)
-// ═══════════════════════════════════════════════════════════════
-
-class StaffFormPage extends ConsumerStatefulWidget {
-  final StaffUser? staff;
-
-  const StaffFormPage({super.key, this.staff});
-
-  @override
-  ConsumerState<StaffFormPage> createState() => _StaffFormPageState();
-}
-
-class _StaffFormPageState extends ConsumerState<StaffFormPage> {
-  final _formKey = GlobalKey<FormState>();
-  late final TextEditingController _firstNameController;
-  late final TextEditingController _lastNameController;
-  late final TextEditingController _emailController;
-  late final TextEditingController _phoneController;
-  late final TextEditingController _nationalIdController;
-  late final TextEditingController _hourlyRateController;
-  late EmploymentType _employmentType;
-  late SalaryType _salaryType;
-  late StaffStatus _status;
-  bool _isSubmitting = false;
-
-  bool get _isEditing => widget.staff != null;
-
-  @override
-  void initState() {
-    super.initState();
-    final s = widget.staff;
-    _firstNameController = TextEditingController(text: s?.firstName ?? '');
-    _lastNameController = TextEditingController(text: s?.lastName ?? '');
-    _emailController = TextEditingController(text: s?.email ?? '');
-    _phoneController = TextEditingController(text: s?.phone ?? '');
-    _nationalIdController = TextEditingController(text: s?.nationalId ?? '');
-    _hourlyRateController = TextEditingController(text: s?.hourlyRate?.toString() ?? '');
-    _employmentType = s?.employmentType ?? EmploymentType.fullTime;
-    _salaryType = s?.salaryType ?? SalaryType.monthly;
-    _status = s?.status ?? StaffStatus.active;
-  }
-
-  @override
-  void dispose() {
-    _firstNameController.dispose();
-    _lastNameController.dispose();
-    _emailController.dispose();
-    _phoneController.dispose();
-    _nationalIdController.dispose();
-    _hourlyRateController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(_isEditing ? 'Edit Staff' : 'Add Staff Member')),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          padding: AppSpacing.paddingAll16,
-          children: [
-            // Name
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    controller: _firstNameController,
-                    decoration: const InputDecoration(labelText: 'First Name *', border: OutlineInputBorder()),
-                    validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-                  ),
-                ),
-                AppSpacing.gapW16,
-                Expanded(
-                  child: TextFormField(
-                    controller: _lastNameController,
-                    decoration: const InputDecoration(labelText: 'Last Name *', border: OutlineInputBorder()),
-                    validator: (v) => v == null || v.isEmpty ? 'Required' : null,
-                  ),
-                ),
-              ],
-            ),
-            AppSpacing.gapH16,
-
-            // Contact
-            TextFormField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.email_outlined),
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            AppSpacing.gapH16,
-            TextFormField(
-              controller: _phoneController,
-              decoration: const InputDecoration(
-                labelText: 'Phone',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.phone_outlined),
-              ),
-              keyboardType: TextInputType.phone,
-            ),
-            AppSpacing.gapH16,
-
-            // National ID
-            TextFormField(
-              controller: _nationalIdController,
-              decoration: const InputDecoration(
-                labelText: 'National ID',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.badge_outlined),
-              ),
-            ),
-            AppSpacing.gapH24,
-
-            // Employment section
-            Text('Employment Details', style: Theme.of(context).textTheme.titleMedium),
-            AppSpacing.gapH12,
-
-            DropdownButtonFormField<EmploymentType>(
-              initialValue: _employmentType,
-              decoration: const InputDecoration(labelText: 'Employment Type *', border: OutlineInputBorder()),
-              items: EmploymentType.values
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e.value.replaceAll('_', ' ').toUpperCase())))
-                  .toList(),
-              onChanged: (v) {
-                if (v != null) setState(() => _employmentType = v);
-              },
-            ),
-            AppSpacing.gapH16,
-
-            DropdownButtonFormField<SalaryType>(
-              initialValue: _salaryType,
-              decoration: const InputDecoration(labelText: 'Salary Type *', border: OutlineInputBorder()),
-              items: SalaryType.values
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e.value.replaceAll('_', ' ').toUpperCase())))
-                  .toList(),
-              onChanged: (v) {
-                if (v != null) setState(() => _salaryType = v);
-              },
-            ),
-            AppSpacing.gapH16,
-
-            if (_salaryType == SalaryType.hourly)
-              TextFormField(
-                controller: _hourlyRateController,
-                decoration: const InputDecoration(
-                  labelText: 'Hourly Rate',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.attach_money),
-                ),
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              ),
-            if (_salaryType == SalaryType.hourly) AppSpacing.gapH16,
-
-            DropdownButtonFormField<StaffStatus>(
-              initialValue: _status,
-              decoration: const InputDecoration(labelText: 'Status *', border: OutlineInputBorder()),
-              items: StaffStatus.values
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e.value.replaceAll('_', ' ').toUpperCase())))
-                  .toList(),
-              onChanged: (v) {
-                if (v != null) setState(() => _status = v);
-              },
-            ),
-            AppSpacing.gapH32,
-
-            // Submit
-            FilledButton.icon(
-              onPressed: _isSubmitting ? null : _submit,
-              icon: _isSubmitting
-                  ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                  : Icon(_isEditing ? Icons.save : Icons.person_add),
-              label: Text(_isEditing ? 'Save Changes' : 'Create Staff'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Future<void> _submit() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    setState(() => _isSubmitting = true);
-
-    final data = {
-      'first_name': _firstNameController.text.trim(),
-      'last_name': _lastNameController.text.trim(),
-      if (_emailController.text.isNotEmpty) 'email': _emailController.text.trim(),
-      if (_phoneController.text.isNotEmpty) 'phone': _phoneController.text.trim(),
-      if (_nationalIdController.text.isNotEmpty) 'national_id': _nationalIdController.text.trim(),
-      'employment_type': _employmentType.value,
-      'salary_type': _salaryType.value,
-      'status': _status.value,
-      if (_hourlyRateController.text.isNotEmpty) 'hourly_rate': double.tryParse(_hourlyRateController.text),
-    };
-
-    try {
-      final repo = ref.read(staffRepositoryProvider);
-      if (_isEditing) {
-        await repo.updateStaff(widget.staff!.id, data);
-      } else {
-        await repo.createStaff(data);
-      }
-
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(_isEditing ? 'Staff updated successfully' : 'Staff created successfully')));
-        Navigator.of(context).pop(true);
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
-      }
-    } finally {
-      if (mounted) setState(() => _isSubmitting = false);
-    }
   }
 }

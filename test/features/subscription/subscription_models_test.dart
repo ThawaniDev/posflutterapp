@@ -120,7 +120,7 @@ void main() {
     test('fromJson parses full payload', () {
       final json = {
         'id': 'sub-uuid-1',
-        'store_id': 'store-uuid-1',
+        'organization_id': 'org-uuid-1',
         'subscription_plan_id': 'plan-uuid-1',
         'status': 'active',
         'billing_cycle': 'monthly',
@@ -138,7 +138,7 @@ void main() {
       final sub = StoreSubscription.fromJson(json);
 
       expect(sub.id, 'sub-uuid-1');
-      expect(sub.storeId, 'store-uuid-1');
+      expect(sub.organizationId, 'org-uuid-1');
       expect(sub.subscriptionPlanId, 'plan-uuid-1');
       expect(sub.status, SubscriptionStatus.active);
       expect(sub.billingCycle, BillingCycle.monthly);
@@ -153,7 +153,7 @@ void main() {
 
     test('fromJson parses all subscription statuses', () {
       for (final status in ['trial', 'active', 'grace', 'cancelled', 'expired']) {
-        final json = {'id': 'sub-1', 'store_id': 'store-1', 'subscription_plan_id': 'plan-1', 'status': status};
+        final json = {'id': 'sub-1', 'organization_id': 'org-1', 'subscription_plan_id': 'plan-1', 'status': status};
         final sub = StoreSubscription.fromJson(json);
         expect(sub.status, isNotNull, reason: 'Status "$status" should parse');
       }
@@ -163,7 +163,7 @@ void main() {
       for (final cycle in ['monthly', 'yearly']) {
         final json = {
           'id': 'sub-1',
-          'store_id': 'store-1',
+          'organization_id': 'org-1',
           'subscription_plan_id': 'plan-1',
           'status': 'active',
           'billing_cycle': cycle,
@@ -174,7 +174,7 @@ void main() {
     });
 
     test('fromJson handles null optional dates', () {
-      final json = {'id': 'sub-1', 'store_id': 'store-1', 'subscription_plan_id': 'plan-1', 'status': 'trial'};
+      final json = {'id': 'sub-1', 'organization_id': 'org-1', 'subscription_plan_id': 'plan-1', 'status': 'trial'};
 
       final sub = StoreSubscription.fromJson(json);
       expect(sub.cancelledAt, isNull);
@@ -183,7 +183,7 @@ void main() {
     });
 
     test('fromJson handles unknown status gracefully', () {
-      final json = {'id': 'sub-1', 'store_id': 'store-1', 'subscription_plan_id': 'plan-1', 'status': 'unknown_status'};
+      final json = {'id': 'sub-1', 'organization_id': 'org-1', 'subscription_plan_id': 'plan-1', 'status': 'unknown_status'};
 
       // Due to fromValue (throws) vs tryFromValue (null), check behavior
       // Status uses fromValue which throws — or if it uses tryFromValue, returns null
@@ -201,7 +201,7 @@ void main() {
     test('isActive checks status correctly', () {
       final activeSub = StoreSubscription(
         id: '1',
-        storeId: 'store-1',
+        organizationId: 'org-1',
         subscriptionPlanId: 'plan-1',
         status: SubscriptionStatus.active,
       );
@@ -209,7 +209,7 @@ void main() {
 
       final trialSub = StoreSubscription(
         id: '2',
-        storeId: 'store-1',
+        organizationId: 'org-1',
         subscriptionPlanId: 'plan-1',
         status: SubscriptionStatus.trial,
       );
@@ -217,7 +217,7 @@ void main() {
 
       final cancelledSub = StoreSubscription(
         id: '3',
-        storeId: 'store-1',
+        organizationId: 'org-1',
         subscriptionPlanId: 'plan-1',
         status: SubscriptionStatus.cancelled,
       );

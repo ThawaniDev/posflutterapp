@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/delivery_integration/enums/delivery_config_platform.dart';
@@ -10,6 +11,7 @@ class MenuSyncStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final platformSlug = syncLog['platform'] as String? ?? '';
     final platform = DeliveryConfigPlatform.tryFromValue(platformSlug);
     final status = syncLog['status'] as String? ?? 'unknown';
@@ -50,12 +52,9 @@ class MenuSyncStatusCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text(platform?.label ?? platformSlug, style: const TextStyle(fontWeight: FontWeight.w600)),
                       Text(
-                        platform?.label ?? platformSlug,
-                        style: const TextStyle(fontWeight: FontWeight.w600),
-                      ),
-                      Text(
-                        'Triggered by: $triggeredBy',
+                        '${l10n.deliveryTriggeredBy} $triggeredBy',
                         style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
                       ),
                     ],
@@ -79,20 +78,16 @@ class MenuSyncStatusCard extends StatelessWidget {
             AppSpacing.gapH12,
             Row(
               children: [
-                _MetricChip(label: 'Synced', value: '$itemsSynced', color: AppColors.success),
+                _MetricChip(label: l10n.deliverySynced, value: '$itemsSynced', color: AppColors.success),
                 AppSpacing.gapW16,
-                if (itemsFailed > 0)
-                  _MetricChip(label: 'Failed', value: '$itemsFailed', color: AppColors.error),
+                if (itemsFailed > 0) _MetricChip(label: l10n.deliveryFailed, value: '$itemsFailed', color: AppColors.error),
                 if (duration != null) ...[
                   AppSpacing.gapW16,
-                  _MetricChip(label: 'Duration', value: '${duration}s', color: AppColors.info),
+                  _MetricChip(label: l10n.deliveryDuration, value: '${duration}s', color: AppColors.info),
                 ],
                 const Spacer(),
                 if (createdAt != null)
-                  Text(
-                    _formatTime(createdAt),
-                    style: TextStyle(fontSize: 10, color: AppColors.textSecondary),
-                  ),
+                  Text(_formatTime(context, createdAt), style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
               ],
             ),
             if (errorMessage != null) ...[
@@ -104,10 +99,7 @@ class MenuSyncStatusCard extends StatelessWidget {
                   color: AppColors.error.withValues(alpha: 0.05),
                   borderRadius: BorderRadius.circular(AppRadius.sm),
                 ),
-                child: Text(
-                  errorMessage,
-                  style: TextStyle(fontSize: 11, color: AppColors.error),
-                ),
+                child: Text(errorMessage, style: TextStyle(fontSize: 11, color: AppColors.error)),
               ),
             ],
           ],
@@ -116,13 +108,14 @@ class MenuSyncStatusCard extends StatelessWidget {
     );
   }
 
-  String _formatTime(String dateString) {
+  String _formatTime(BuildContext context, String dateString) {
+    final l10n = AppLocalizations.of(context)!;
     try {
       final date = DateTime.parse(dateString);
       final diff = DateTime.now().difference(date);
-      if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-      if (diff.inHours < 24) return '${diff.inHours}h ago';
-      return '${diff.inDays}d ago';
+      if (diff.inMinutes < 60) return l10n.deliveryMinutesAgo(diff.inMinutes);
+      if (diff.inHours < 24) return l10n.deliveryHoursAgo(diff.inHours);
+      return l10n.deliveryDaysAgo(diff.inDays);
     } catch (_) {
       return dateString;
     }
@@ -141,10 +134,17 @@ class _MetricChip extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(width: 6, height: 6, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
+        Container(
+          width: 6,
+          height: 6,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
         AppSpacing.gapW4,
         Text('$label: ', style: TextStyle(fontSize: 11, color: AppColors.textSecondary)),
-        Text(value, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color)),
+        Text(
+          value,
+          style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color),
+        ),
       ],
     );
   }

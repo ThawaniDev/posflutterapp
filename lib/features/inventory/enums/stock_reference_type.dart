@@ -4,7 +4,8 @@ enum StockReferenceType {
   transfer('transfer'),
   transaction('transaction'),
   waste('waste'),
-  stocktake('stocktake');
+  stocktake('stocktake'),
+  recipe('recipe');
 
   const StockReferenceType(this.value);
   final String value;

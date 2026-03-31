@@ -7,6 +7,7 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/subscription/providers/subscription_providers.dart';
 import 'package:thawani_pos/features/subscription/providers/subscription_state.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/subscription/widgets/grace_period_banner.dart';
 import 'package:thawani_pos/features/subscription/widgets/subscription_badge.dart';
 import 'package:thawani_pos/features/subscription/widgets/usage_progress.dart';
 
@@ -103,6 +104,8 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
 
   Widget _buildSubscriptionDetails(SubscriptionLoaded subState, UsageState usageState) {
     final sub = subState.subscription!;
+    final isGracePeriod = sub.status.name == 'grace' || sub.status.name == 'past_due';
+    final isExpired = sub.status.name == 'expired';
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -112,6 +115,25 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
       child: ListView(
         padding: AppSpacing.paddingAllMd,
         children: [
+          // Grace period / expiry banner
+          if (isGracePeriod && sub.gracePeriodEndsAt != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: GracePeriodBanner(
+                gracePeriodEndsAt: sub.gracePeriodEndsAt!,
+                onRenewPressed: () => context.go(Routes.planSelection),
+              ),
+            ),
+          if (isExpired)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: GracePeriodBanner(
+                gracePeriodEndsAt: DateTime.now(),
+                isExpired: true,
+                onRenewPressed: () => context.go(Routes.planSelection),
+              ),
+            ),
+
           // Status card
           Card(
             child: Padding(
@@ -128,7 +150,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
                   ),
                   AppSpacing.verticalSm,
                   Text(
-                    sub.subscriptionPlanId,
+                    sub.plan?.name ?? sub.subscriptionPlanId,
                     style: Theme.of(
                       context,
                     ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
@@ -139,6 +161,8 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
                     Text('Period: ${_formatDate(sub.currentPeriodStart!)} — ${_formatDate(sub.currentPeriodEnd!)}'),
                   if (sub.trialEndsAt != null)
                     Text('Trial ends: ${_formatDate(sub.trialEndsAt!)}', style: TextStyle(color: AppColors.warning)),
+                  if (sub.gracePeriodEndsAt != null && isGracePeriod)
+                    Text('Grace period ends: ${_formatDate(sub.gracePeriodEndsAt!)}', style: TextStyle(color: AppColors.error)),
                 ],
               ),
             ),
@@ -152,10 +176,10 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
             AppSpacing.verticalSm,
             ...usageState.usageItems.map(
               (item) => UsageProgress(
-                label: item['limit_key'] as String,
-                current: item['current'] as int,
-                limit: item['limit'] as int?,
-                percentage: (item['percentage'] as num).toDouble(),
+                label: (item['limit_key'] as String?) ?? '',
+                current: (item['current'] as num?)?.toInt() ?? 0,
+                limit: (item['limit'] as num?)?.toInt(),
+                percentage: (item['percentage'] as num?)?.toDouble() ?? 0,
               ),
             ),
           ],
@@ -173,11 +197,25 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
             onTap: () => context.go(Routes.planSelection),
           ),
           ListTile(
+            leading: const Icon(Icons.compare_arrows),
+            title: const Text('Compare Plans'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.go(Routes.planComparison),
+          ),
+          ListTile(
+            leading: const Icon(Icons.extension),
+            title: const Text('Add-Ons'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.go(Routes.subscriptionAddOns),
+          ),
+          ListTile(
             leading: const Icon(Icons.receipt_long),
             title: const Text('Billing History'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.go(Routes.billingHistory),
           ),
+
+          AppSpacing.verticalMd,
 
           if (sub.status.name == 'cancelled' || sub.status.name == 'grace')
             ElevatedButton.icon(

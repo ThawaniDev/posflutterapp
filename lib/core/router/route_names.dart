@@ -12,6 +12,9 @@ class Routes {
   static const String posCheckout = '/pos/checkout';
   static const String posShiftOpen = '/pos/shift/open';
   static const String posSessions = '/pos/sessions';
+  static const String posTerminals = '/pos/terminals';
+  static const String posTerminalAdd = '/pos/terminals/add';
+  static const String posTerminalEdit = '/pos/terminals/:id/edit';
 
   // Catalog
   static const String products = '/products';
@@ -36,12 +39,20 @@ class Routes {
 
   // Payments
   static const String cashSessions = '/cash-sessions';
+  static const String cashManagement = '/cash-management';
+  static const String expenses = '/expenses';
+  static const String giftCards = '/gift-cards';
+  static const String financialReconciliation = '/finance/reconciliation';
+  static const String dailySummary = '/finance/daily-summary';
 
   // Customers
   static const String customers = '/customers';
 
   // Labels
   static const String labels = '/labels';
+  static const String labelDesigner = '/labels/designer';
+  static const String labelHistory = '/labels/history';
+  static const String labelPrintQueue = '/labels/print-queue';
 
   // Reports
   static const String reports = '/reports';
@@ -51,6 +62,9 @@ class Routes {
   static const String reportsCategoryBreakdown = '/reports/category-breakdown';
   static const String reportsPaymentMethods = '/reports/payment-methods';
   static const String reportsStaffPerformance = '/reports/staff-performance';
+  static const String reportsInventory = '/reports/inventory';
+  static const String reportsFinancial = '/reports/financial';
+  static const String reportsCustomers = '/reports/customers';
 
   // Settings
   static const String settings = '/settings';
@@ -77,6 +91,8 @@ class Routes {
   static const String deliveryConfig = '/delivery/config';
   static const String deliveryOrderDetail = '/delivery/orders';
   static const String deliveryMenuSync = '/delivery/menu-sync';
+  static const String deliveryWebhookLogs = '/delivery/webhook-logs';
+  static const String deliveryStatusPushLogs = '/delivery/status-push-logs';
 
   // Notifications
   static const String notifications = '/notifications';
@@ -85,12 +101,18 @@ class Routes {
   // Support
   static const String support = '/support';
   static const String supportCreate = '/support/create';
+  static const String supportKb = '/support/kb';
 
   // Staff
   static const String staff = '/staff';
+  static const String staffMembers = '/staff/members';
+  static const String staffMembersCreate = '/staff/members/create';
   static const String staffRoles = '/staff/roles';
   static const String staffRoleDetail = '/staff/roles/detail'; // + /:id
   static const String staffRoleCreate = '/staff/roles/create';
+  static const String staffAttendance = '/staff/attendance';
+  static const String staffShifts = '/staff/shifts';
+  static const String staffCommission = '/staff/commission'; // + /:id
 
   // Onboarding & Store Setup
   static const String onboarding = '/onboarding';
@@ -101,6 +123,9 @@ class Routes {
   static const String planSelection = '/subscription/plans';
   static const String subscriptionStatus = '/subscription/status';
   static const String billingHistory = '/subscription/billing';
+  static const String invoiceDetail = '/subscription/invoices'; // + /:id
+  static const String planComparison = '/subscription/compare';
+  static const String subscriptionAddOns = '/subscription/add-ons';
 
   // Admin Panel
   static const String adminStores = '/admin/stores';
@@ -260,6 +285,14 @@ class Routes {
 
   // ─── POS Customization ──────────────────────────────────
   static const String customizationDashboard = '/customization';
+
+  // ─── Layout Builder ─────────────────────────────────────
+  static const String layoutTemplates = '/layout-templates';
+  static const String layoutBuilder = '/layout-builder';
+
+  // ─── Marketplace ────────────────────────────────────────
+  static const String marketplace = '/marketplace';
+  static const String myPurchases = '/marketplace/purchases';
 
   // ─── Auto Updates ───────────────────────────────────────
   static const String autoUpdateDashboard = '/auto-update';

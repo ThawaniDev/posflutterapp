@@ -1,7 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
 import 'package:thawani_pos/features/catalog/models/category.dart';
+import 'package:thawani_pos/features/catalog/models/modifier_group.dart';
 import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:thawani_pos/features/catalog/models/product_barcode.dart';
+import 'package:thawani_pos/features/catalog/models/product_supplier.dart';
+import 'package:thawani_pos/features/catalog/models/product_variant.dart';
+import 'package:thawani_pos/features/catalog/models/store_price.dart';
 import 'package:thawani_pos/features/catalog/models/supplier.dart';
 
 final catalogRepositoryProvider = Provider<CatalogRepository>((ref) {
@@ -61,10 +66,6 @@ class CatalogRepository {
     return _apiService.getChanges(sinceVersion);
   }
 
-  Future<String> generateBarcode(String productId) {
-    return _apiService.generateBarcode(productId);
-  }
-
   // ─── Categories ───────────────────────────────────────────────
 
   Future<List<Category>> getCategoryTree({bool activeOnly = false}) {
@@ -103,5 +104,55 @@ class CatalogRepository {
 
   Future<void> deleteSupplier(String supplierId) {
     return _apiService.deleteSupplier(supplierId);
+  }
+
+  // ─── Product Extended Operations ──────────────────────────────
+
+  Future<void> bulkAction({required List<String> productIds, required String action, String? categoryId}) {
+    return _apiService.bulkAction(productIds: productIds, action: action, categoryId: categoryId);
+  }
+
+  Future<Product> duplicateProduct(String productId) {
+    return _apiService.duplicateProduct(productId);
+  }
+
+  Future<List<StorePrice>> getStorePrices(String productId) {
+    return _apiService.getStorePrices(productId);
+  }
+
+  Future<void> syncStorePrices(String productId, List<Map<String, dynamic>> prices) {
+    return _apiService.syncStorePrices(productId, prices);
+  }
+
+  Future<List<ProductSupplier>> getProductSuppliers(String productId) {
+    return _apiService.getProductSuppliers(productId);
+  }
+
+  Future<void> syncProductSuppliers(String productId, List<Map<String, dynamic>> suppliers) {
+    return _apiService.syncProductSuppliers(productId, suppliers);
+  }
+
+  Future<List<ModifierGroup>> getModifiers(String productId) {
+    return _apiService.getModifiers(productId);
+  }
+
+  Future<void> syncModifiers(String productId, List<Map<String, dynamic>> groups) {
+    return _apiService.syncModifiers(productId, groups);
+  }
+
+  Future<List<ProductVariant>> getVariants(String productId) {
+    return _apiService.getVariants(productId);
+  }
+
+  Future<void> syncVariants(String productId, List<Map<String, dynamic>> variants) {
+    return _apiService.syncVariants(productId, variants);
+  }
+
+  Future<List<ProductBarcode>> getBarcodes(String productId) {
+    return _apiService.getBarcodes(productId);
+  }
+
+  Future<String> generateBarcode(String productId) {
+    return _apiService.generateBarcode(productId);
   }
 }

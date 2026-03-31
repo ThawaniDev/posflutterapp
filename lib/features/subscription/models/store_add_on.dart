@@ -1,19 +1,14 @@
 class StoreAddOn {
-  final String storeId;
+  final String organizationId;
   final String planAddOnId;
   final DateTime? activatedAt;
   final bool? isActive;
 
-  const StoreAddOn({
-    required this.storeId,
-    required this.planAddOnId,
-    this.activatedAt,
-    this.isActive,
-  });
+  const StoreAddOn({required this.organizationId, required this.planAddOnId, this.activatedAt, this.isActive});
 
   factory StoreAddOn.fromJson(Map<String, dynamic> json) {
     return StoreAddOn(
-      storeId: json['store_id'] as String,
+      organizationId: (json['organization_id'] ?? json['store_id']) as String,
       planAddOnId: json['plan_add_on_id'] as String,
       activatedAt: json['activated_at'] != null ? DateTime.parse(json['activated_at'] as String) : null,
       isActive: json['is_active'] as bool?,
@@ -22,21 +17,16 @@ class StoreAddOn {
 
   Map<String, dynamic> toJson() {
     return {
-      'store_id': storeId,
+      'organization_id': organizationId,
       'plan_add_on_id': planAddOnId,
       'activated_at': activatedAt?.toIso8601String(),
       'is_active': isActive,
     };
   }
 
-  StoreAddOn copyWith({
-    String? storeId,
-    String? planAddOnId,
-    DateTime? activatedAt,
-    bool? isActive,
-  }) {
+  StoreAddOn copyWith({String? organizationId, String? planAddOnId, DateTime? activatedAt, bool? isActive}) {
     return StoreAddOn(
-      storeId: storeId ?? this.storeId,
+      organizationId: organizationId ?? this.organizationId,
       planAddOnId: planAddOnId ?? this.planAddOnId,
       activatedAt: activatedAt ?? this.activatedAt,
       isActive: isActive ?? this.isActive,
@@ -46,11 +36,16 @@ class StoreAddOn {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is StoreAddOn && other.storeId == storeId && other.planAddOnId == planAddOnId && other.activatedAt == activatedAt && other.isActive == isActive;
+      other is StoreAddOn &&
+          other.organizationId == organizationId &&
+          other.planAddOnId == planAddOnId &&
+          other.activatedAt == activatedAt &&
+          other.isActive == isActive;
 
   @override
-  int get hashCode => storeId.hashCode ^ planAddOnId.hashCode ^ activatedAt.hashCode ^ isActive.hashCode;
+  int get hashCode => organizationId.hashCode ^ planAddOnId.hashCode ^ activatedAt.hashCode ^ isActive.hashCode;
 
   @override
-  String toString() => 'StoreAddOn(storeId: $storeId, planAddOnId: $planAddOnId, activatedAt: $activatedAt, isActive: $isActive)';
+  String toString() =>
+      'StoreAddOn(organizationId: $organizationId, planAddOnId: $planAddOnId, activatedAt: $activatedAt, isActive: $isActive)';
 }

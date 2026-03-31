@@ -1,7 +1,65 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/network/dio_client.dart';
+import 'package:thawani_pos/features/sync/data/remote/sync_api_service.dart';
 import 'package:thawani_pos/features/sync/models/sync_conflict.dart';
 import 'package:thawani_pos/features/sync/providers/sync_state.dart';
 import 'package:thawani_pos/features/sync/repositories/sync_repository.dart';
+import 'package:thawani_pos/features/sync/services/connectivity_service.dart';
+import 'package:thawani_pos/features/sync/services/sync_engine.dart';
+import 'package:thawani_pos/features/sync/services/sync_queue_manager.dart';
+import 'package:thawani_pos/features/sync/services/websocket_service.dart';
+
+// ─── Connectivity Provider ─────────────────────────────────
+
+final connectivityServiceProvider = Provider<ConnectivityService>((ref) {
+  final service = ConnectivityService();
+  ref.onDispose(() => service.dispose());
+  return service;
+});
+
+final connectivityStatusProvider = StreamProvider<ConnectivityStatus>((ref) {
+  final service = ref.watch(connectivityServiceProvider);
+  service.startMonitoring();
+  return service.statusStream;
+});
+
+// ─── WebSocket Provider ────────────────────────────────────
+
+final webSocketServiceProvider = Provider<WebSocketService>((ref) {
+  final dio = ref.watch(dioClientProvider);
+  final baseUrl = dio.options.baseUrl;
+  final service = WebSocketService(baseUrl: baseUrl);
+  ref.onDispose(() => service.dispose());
+  return service;
+});
+
+final wsConnectionStateProvider = StreamProvider<WebSocketConnectionState>((ref) {
+  return ref.watch(webSocketServiceProvider).connectionState;
+});
+
+// ─── Sync Queue Provider ───────────────────────────────────
+
+final syncQueueManagerProvider = Provider<SyncQueueManager>((ref) {
+  return SyncQueueManager(storagePath: '.');
+});
+
+// ─── Sync Engine Provider ──────────────────────────────────
+
+final syncEngineProvider = Provider<SyncEngine>((ref) {
+  final engine = SyncEngine(
+    apiService: ref.watch(syncApiServiceProvider),
+    connectivity: ref.watch(connectivityServiceProvider),
+    queueManager: ref.watch(syncQueueManagerProvider),
+    webSocket: ref.watch(webSocketServiceProvider),
+    terminalId: 'default',
+  );
+  ref.onDispose(() => engine.stop());
+  return engine;
+});
+
+final syncEngineStatusProvider = StreamProvider<SyncEngineStatus>((ref) {
+  return ref.watch(syncEngineProvider).statusStream;
+});
 
 // ─── Sync Status Provider ──────────────────────────────────
 class SyncStatusNotifier extends StateNotifier<SyncStatusState> {

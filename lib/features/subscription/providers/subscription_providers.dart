@@ -108,6 +108,37 @@ class InvoicesNotifier extends StateNotifier<InvoicesState> {
   }
 }
 
+// ─── Invoice Detail Provider ─────────────────────────────────────
+
+final invoiceDetailProvider = StateNotifierProvider.family<InvoiceDetailNotifier, InvoiceDetailState, String>((ref, invoiceId) {
+  return InvoiceDetailNotifier(ref.watch(subscriptionRepositoryProvider), invoiceId);
+});
+
+class InvoiceDetailNotifier extends StateNotifier<InvoiceDetailState> {
+  final SubscriptionRepository _repository;
+  final String _invoiceId;
+
+  InvoiceDetailNotifier(this._repository, this._invoiceId) : super(const InvoiceDetailInitial());
+
+  Future<void> loadInvoice() async {
+    state = const InvoiceDetailLoading();
+    try {
+      final invoice = await _repository.getInvoice(_invoiceId);
+      state = InvoiceDetailLoaded(invoice: invoice);
+    } catch (e) {
+      state = InvoiceDetailError(message: _extractMessage(e));
+    }
+  }
+
+  Future<String?> getInvoicePdfUrl() async {
+    try {
+      return await _repository.getInvoicePdfUrl(_invoiceId);
+    } catch (e) {
+      return null;
+    }
+  }
+}
+
 // ─── Usage Provider ──────────────────────────────────────────────
 
 final usageProvider = StateNotifierProvider<UsageNotifier, UsageState>((ref) {
@@ -130,6 +161,57 @@ class UsageNotifier extends StateNotifier<UsageState> {
   }
 }
 
+// ─── Add-Ons Provider ────────────────────────────────────────────
+
+final addOnsProvider = StateNotifierProvider<AddOnsNotifier, AddOnsState>((ref) {
+  return AddOnsNotifier(ref.watch(subscriptionRepositoryProvider));
+});
+
+class AddOnsNotifier extends StateNotifier<AddOnsState> {
+  final SubscriptionRepository _repository;
+
+  AddOnsNotifier(this._repository) : super(const AddOnsInitial());
+
+  Future<void> loadAddOns() async {
+    state = const AddOnsLoading();
+    try {
+      final results = await Future.wait([_repository.listAddOns(), _repository.getStoreAddOns()]);
+      state = AddOnsLoaded(availableAddOns: results[0], storeAddOns: results[1]);
+    } catch (e) {
+      state = AddOnsError(message: _extractMessage(e));
+    }
+  }
+}
+
+// ─── Plan Comparison Provider ────────────────────────────────────
+
+final planComparisonProvider = StateNotifierProvider<PlanComparisonNotifier, PlanComparisonState>((ref) {
+  return PlanComparisonNotifier(ref.watch(subscriptionRepositoryProvider));
+});
+
+class PlanComparisonNotifier extends StateNotifier<PlanComparisonState> {
+  final SubscriptionRepository _repository;
+
+  PlanComparisonNotifier(this._repository) : super(const PlanComparisonInitial());
+
+  Future<void> loadComparison(List<String> planIds) async {
+    state = const PlanComparisonLoading();
+    try {
+      final comparison = await _repository.comparePlans(planIds);
+      state = PlanComparisonLoaded(comparison: comparison);
+    } catch (e) {
+      state = PlanComparisonError(message: _extractMessage(e));
+    }
+  }
+}
+
+// ─── Entitlements Provider ───────────────────────────────────────
+
+final entitlementsProvider = FutureProvider<Map<String, dynamic>>((ref) async {
+  final repo = ref.watch(subscriptionRepositoryProvider);
+  return repo.syncEntitlements();
+});
+
 // ─── Feature Check Provider ──────────────────────────────────────
 
 final featureEnabledProvider = FutureProvider.family<bool, String>((ref, featureKey) async {
@@ -142,6 +224,17 @@ final featureEnabledProvider = FutureProvider.family<bool, String>((ref, feature
 final limitCheckProvider = FutureProvider.family<Map<String, dynamic>, String>((ref, limitKey) async {
   final repo = ref.watch(subscriptionRepositoryProvider);
   return repo.checkLimit(limitKey);
+});
+
+// ─── Invoice PDF URL Provider ────────────────────────────────────
+
+final invoicePdfUrlProvider = FutureProvider.family<String?, String>((ref, invoiceId) async {
+  final repo = ref.watch(subscriptionRepositoryProvider);
+  try {
+    return await repo.getInvoicePdfUrl(invoiceId);
+  } catch (_) {
+    return null;
+  }
 });
 
 // ─── Helpers ─────────────────────────────────────────────────────

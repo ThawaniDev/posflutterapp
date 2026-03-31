@@ -35,8 +35,8 @@ class _CakeOrderFormPageState extends ConsumerState<CakeOrderFormPage> {
     _sizeCtrl = TextEditingController(text: o?.size ?? '');
     _flavorCtrl = TextEditingController(text: o?.flavor ?? '');
     _decorationCtrl = TextEditingController(text: o?.decorationNotes ?? '');
-    _priceCtrl = TextEditingController(text: o?.price.toStringAsFixed(3) ?? '');
-    _depositCtrl = TextEditingController(text: o?.depositPaid?.toStringAsFixed(3) ?? '');
+    _priceCtrl = TextEditingController(text: o?.price.toStringAsFixed(2) ?? '');
+    _depositCtrl = TextEditingController(text: o?.depositPaid?.toStringAsFixed(2) ?? '');
     _deliveryTimeCtrl = TextEditingController(text: o?.deliveryTime ?? '');
     if (o != null) _deliveryDate = o.deliveryDate;
   }

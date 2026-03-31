@@ -14,7 +14,7 @@ void main() {
 
     await tester.pumpWidget(const ProviderScope(child: ThawaniPosApp()));
     await tester.pumpAndSettle();
-    expect(find.text('Thawani POS'), findsOneWidget);
+    expect(find.text('Wameed POS'), findsOneWidget);
 
     FlutterError.onError = originalOnError;
   });

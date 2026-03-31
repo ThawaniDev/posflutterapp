@@ -1,7 +1,7 @@
 class AppConstants {
   AppConstants._();
 
-  static const String appName = 'Thawani POS';
+  static const String appName = 'Wameed POS';
   static const String appVersion = '1.0.0';
 
   // Supabase

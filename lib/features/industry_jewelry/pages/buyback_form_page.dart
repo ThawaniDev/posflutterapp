@@ -127,7 +127,7 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
             Align(
               alignment: AlignmentDirectional.centerEnd,
               child: Text(
-                'Total: ${_totalAmount.toStringAsFixed(3)} SAR',
+                'Total: ${_totalAmount.toStringAsFixed(2)} SAR',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
             ),

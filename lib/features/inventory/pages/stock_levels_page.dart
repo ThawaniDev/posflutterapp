@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
-import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
 import 'package:thawani_pos/features/inventory/models/stock_level.dart';
@@ -44,7 +43,7 @@ class _StockLevelsPageState extends ConsumerState<StockLevelsPage> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('Product: ${level.productId}'),
+            Text('Product: ${level.productName ?? level.productId}'),
             const SizedBox(height: AppSpacing.md),
             TextField(
               controller: reorderController,
@@ -138,106 +137,65 @@ class _StockLevelsPageState extends ConsumerState<StockLevelsPage> {
   }
 
   Widget _buildBody(StockLevelsState state) {
-    if (state is StockLevelsLoading || state is StockLevelsInitial) {
-      return const Center(child: CircularProgressIndicator());
-    }
+    final isLoading = state is StockLevelsLoading || state is StockLevelsInitial;
+    final error = state is StockLevelsError ? state.message : null;
+    final levels = state is StockLevelsLoaded ? state.levels : <StockLevel>[];
+    final loaded = state is StockLevelsLoaded ? state : null;
 
-    if (state is StockLevelsError) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
-            const SizedBox(height: AppSpacing.md),
-            Text(state.message, textAlign: TextAlign.center),
-            const SizedBox(height: AppSpacing.lg),
-            PosButton(
-              label: 'Retry',
-              onPressed: () => ref.read(stockLevelsProvider.notifier).load(),
-              variant: PosButtonVariant.outline,
-            ),
-          ],
-        ),
-      );
-    }
-
-    if (state is StockLevelsLoaded) {
-      if (state.levels.isEmpty) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.inventory_2_outlined, size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
-              const SizedBox(height: AppSpacing.md),
-              Text('No stock levels found', style: Theme.of(context).textTheme.titleMedium),
-              const SizedBox(height: AppSpacing.xs),
-              Text(
-                state.lowStockOnly
-                    ? 'No products are below reorder point.'
-                    : 'Stock levels will appear once products receive inventory.',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
-              ),
-            ],
-          ),
-        );
-      }
-
-      return Column(
-        children: [
-          Expanded(child: _buildTable(state.levels)),
-          PosTablePagination(
-            currentPage: state.currentPage,
-            totalPages: state.lastPage,
-            totalItems: state.total,
-            itemsPerPage: 25,
-            onPrevious: () => ref.read(stockLevelsProvider.notifier).previousPage(),
-            onNext: () => ref.read(stockLevelsProvider.notifier).nextPage(),
-          ),
-        ],
-      );
-    }
-
-    return const SizedBox.shrink();
-  }
-
-  Widget _buildTable(List<StockLevel> levels) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-      child: PosDataTable(
-        columns: const [
-          DataColumn(label: Text('PRODUCT')),
-          DataColumn(label: Text('QUANTITY'), numeric: true),
-          DataColumn(label: Text('RESERVED'), numeric: true),
-          DataColumn(label: Text('AVG COST'), numeric: true),
-          DataColumn(label: Text('REORDER PT'), numeric: true),
-          DataColumn(label: Text('STATUS')),
-          DataColumn(label: Text('ACTIONS')),
-        ],
-        rows: levels.map((level) {
-          final isLow = level.reorderPoint != null && level.quantity <= level.reorderPoint!;
-          return DataRow(
-            cells: [
-              DataCell(Text(level.productId, overflow: TextOverflow.ellipsis)),
-              DataCell(Text(level.quantity.toStringAsFixed(2))),
-              DataCell(Text(level.reservedQuantity?.toStringAsFixed(2) ?? '0.00')),
-              DataCell(Text(level.averageCost?.toStringAsFixed(2) ?? '-')),
-              DataCell(Text(level.reorderPoint?.toStringAsFixed(2) ?? '-')),
-              DataCell(
-                isLow
-                    ? const PosBadge(label: 'Low Stock', variant: PosBadgeVariant.warning)
-                    : const PosBadge(label: 'OK', variant: PosBadgeVariant.success),
-              ),
-              DataCell(
-                IconButton(
-                  icon: const Icon(Icons.edit_outlined, size: 20),
-                  tooltip: 'Set reorder point',
-                  onPressed: () => _showReorderPointDialog(level),
-                ),
-              ),
-            ],
-          );
-        }).toList(),
+    return PosDataTable<StockLevel>(
+      columns: const [
+        PosTableColumn(title: 'Product'),
+        PosTableColumn(title: 'Quantity', numeric: true),
+        PosTableColumn(title: 'Reserved', numeric: true),
+        PosTableColumn(title: 'Avg Cost', numeric: true),
+        PosTableColumn(title: 'Reorder Pt', numeric: true),
+        PosTableColumn(title: 'Status'),
+      ],
+      items: levels,
+      isLoading: isLoading,
+      error: error,
+      onRetry: () => ref.read(stockLevelsProvider.notifier).load(),
+      emptyConfig: PosTableEmptyConfig(
+        icon: Icons.inventory_2_outlined,
+        title: 'No stock levels found',
+        subtitle: loaded?.lowStockOnly == true
+            ? 'No products are below reorder point.'
+            : 'Stock levels will appear once products receive inventory.',
       ),
+      actions: [
+        PosTableRowAction<StockLevel>(
+          label: 'Set reorder point',
+          icon: Icons.edit_outlined,
+          onTap: (level) => _showReorderPointDialog(level),
+        ),
+      ],
+      cellBuilder: (level, colIndex, col) {
+        final isLow = level.reorderPoint != null && level.quantity <= level.reorderPoint!;
+        switch (colIndex) {
+          case 0:
+            return Text(level.productName ?? level.productId, overflow: TextOverflow.ellipsis);
+          case 1:
+            return Text(level.quantity.toStringAsFixed(2));
+          case 2:
+            return Text(level.reservedQuantity?.toStringAsFixed(2) ?? '0.00');
+          case 3:
+            return Text(level.averageCost?.toStringAsFixed(2) ?? '-');
+          case 4:
+            return Text(level.reorderPoint?.toStringAsFixed(2) ?? '-');
+          case 5:
+            return isLow
+                ? const PosBadge(label: 'Low Stock', variant: PosBadgeVariant.warning)
+                : const PosBadge(label: 'OK', variant: PosBadgeVariant.success);
+          default:
+            return const SizedBox.shrink();
+        }
+      },
+      currentPage: loaded?.currentPage,
+      totalPages: loaded?.lastPage,
+      totalItems: loaded?.total,
+      itemsPerPage: 25,
+      onPreviousPage: loaded != null ? () => ref.read(stockLevelsProvider.notifier).previousPage() : null,
+      onNextPage: loaded != null ? () => ref.read(stockLevelsProvider.notifier).nextPage() : null,
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:thawani_pos/core/network/dio_client.dart';
 import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
 import 'package:thawani_pos/features/pos_terminal/models/held_cart.dart';
 import 'package:thawani_pos/features/pos_terminal/models/pos_session.dart';
+import 'package:thawani_pos/features/pos_terminal/models/register.dart';
 import 'package:thawani_pos/features/pos_terminal/models/transaction.dart';
 
 final posTerminalApiServiceProvider = Provider<PosTerminalApiService>((ref) {
@@ -125,5 +126,52 @@ class PosTerminalApiService {
 
   Future<void> deleteHeldCart(String cartId) async {
     await _dio.delete('${ApiEndpoints.heldCarts}/$cartId');
+  }
+
+  // ─── Terminals (Registers) ────────────────────────────────────
+
+  Future<PaginatedResult<Register>> listTerminals({int page = 1, int perPage = 20, String? search}) async {
+    final response = await _dio.get(
+      ApiEndpoints.posTerminals,
+      queryParameters: {'page': page, 'per_page': perPage, if (search != null && search.isNotEmpty) 'search': search},
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final map = apiResponse.data as Map<String, dynamic>;
+    final items = (map['data'] as List).map((j) => Register.fromJson(j as Map<String, dynamic>)).toList();
+    return PaginatedResult(
+      items: items,
+      total: map['total'] as int? ?? items.length,
+      currentPage: map['current_page'] as int? ?? page,
+      lastPage: map['last_page'] as int? ?? 1,
+      perPage: map['per_page'] as int? ?? perPage,
+    );
+  }
+
+  Future<Register> createTerminal(Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.posTerminals, data: data);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Register.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<Register> getTerminal(String terminalId) async {
+    final response = await _dio.get('${ApiEndpoints.posTerminals}/$terminalId');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Register.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<Register> updateTerminal(String terminalId, Map<String, dynamic> data) async {
+    final response = await _dio.put('${ApiEndpoints.posTerminals}/$terminalId', data: data);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Register.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<void> deleteTerminal(String terminalId) async {
+    await _dio.delete('${ApiEndpoints.posTerminals}/$terminalId');
+  }
+
+  Future<Register> toggleTerminalStatus(String terminalId) async {
+    final response = await _dio.post('${ApiEndpoints.posTerminals}/$terminalId/toggle-status');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Register.fromJson(apiResponse.data as Map<String, dynamic>);
   }
 }

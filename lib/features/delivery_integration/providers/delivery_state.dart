@@ -80,7 +80,10 @@ class DeliveryOrdersLoading extends DeliveryOrdersState {
 
 class DeliveryOrdersLoaded extends DeliveryOrdersState {
   final List<Map<String, dynamic>> orders;
-  const DeliveryOrdersLoaded(this.orders);
+  final int currentPage;
+  final int lastPage;
+  final int total;
+  const DeliveryOrdersLoaded(this.orders, {this.currentPage = 1, this.lastPage = 1, this.total = 0});
 }
 
 class DeliveryOrdersError extends DeliveryOrdersState {
@@ -178,4 +181,56 @@ class DeliveryMenuSyncSuccess extends DeliveryMenuSyncState {
 class DeliveryMenuSyncError extends DeliveryMenuSyncState {
   final String message;
   const DeliveryMenuSyncError(this.message);
+}
+
+// ─── Webhook Logs State ─────────────────────────────────
+sealed class DeliveryWebhookLogsState {
+  const DeliveryWebhookLogsState();
+}
+
+class DeliveryWebhookLogsInitial extends DeliveryWebhookLogsState {
+  const DeliveryWebhookLogsInitial();
+}
+
+class DeliveryWebhookLogsLoading extends DeliveryWebhookLogsState {
+  const DeliveryWebhookLogsLoading();
+}
+
+class DeliveryWebhookLogsLoaded extends DeliveryWebhookLogsState {
+  final List<Map<String, dynamic>> logs;
+  final int currentPage;
+  final int lastPage;
+  final int total;
+  const DeliveryWebhookLogsLoaded(this.logs, {this.currentPage = 1, this.lastPage = 1, this.total = 0});
+}
+
+class DeliveryWebhookLogsError extends DeliveryWebhookLogsState {
+  final String message;
+  const DeliveryWebhookLogsError(this.message);
+}
+
+// ─── Status Push Logs State ─────────────────────────────
+sealed class DeliveryStatusPushLogsState {
+  const DeliveryStatusPushLogsState();
+}
+
+class DeliveryStatusPushLogsInitial extends DeliveryStatusPushLogsState {
+  const DeliveryStatusPushLogsInitial();
+}
+
+class DeliveryStatusPushLogsLoading extends DeliveryStatusPushLogsState {
+  const DeliveryStatusPushLogsLoading();
+}
+
+class DeliveryStatusPushLogsLoaded extends DeliveryStatusPushLogsState {
+  final List<Map<String, dynamic>> logs;
+  final int currentPage;
+  final int lastPage;
+  final int total;
+  const DeliveryStatusPushLogsLoaded(this.logs, {this.currentPage = 1, this.lastPage = 1, this.total = 0});
+}
+
+class DeliveryStatusPushLogsError extends DeliveryStatusPushLogsState {
+  final String message;
+  const DeliveryStatusPushLogsError(this.message);
 }

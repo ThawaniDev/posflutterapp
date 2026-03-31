@@ -1,5 +1,6 @@
 import 'package:thawani_pos/features/pos_terminal/models/held_cart.dart';
 import 'package:thawani_pos/features/pos_terminal/models/pos_session.dart';
+import 'package:thawani_pos/features/pos_terminal/models/register.dart';
 import 'package:thawani_pos/features/pos_terminal/models/transaction.dart';
 
 // ─── POS Sessions State ─────────────────────────────────────────
@@ -118,4 +119,59 @@ class HeldCartsLoaded extends HeldCartsState {
 class HeldCartsError extends HeldCartsState {
   final String message;
   const HeldCartsError({required this.message});
+}
+
+// ─── Terminals (Registers) State ────────────────────────────────
+
+sealed class TerminalsState {
+  const TerminalsState();
+}
+
+class TerminalsInitial extends TerminalsState {
+  const TerminalsInitial();
+}
+
+class TerminalsLoading extends TerminalsState {
+  const TerminalsLoading();
+}
+
+class TerminalsLoaded extends TerminalsState {
+  final List<Register> terminals;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
+  final String? search;
+
+  const TerminalsLoaded({
+    required this.terminals,
+    required this.total,
+    required this.currentPage,
+    required this.lastPage,
+    required this.perPage,
+    this.search,
+  });
+
+  bool get hasMore => currentPage < lastPage;
+
+  TerminalsLoaded copyWith({
+    List<Register>? terminals,
+    int? total,
+    int? currentPage,
+    int? lastPage,
+    int? perPage,
+    String? search,
+  }) => TerminalsLoaded(
+    terminals: terminals ?? this.terminals,
+    total: total ?? this.total,
+    currentPage: currentPage ?? this.currentPage,
+    lastPage: lastPage ?? this.lastPage,
+    perPage: perPage ?? this.perPage,
+    search: search ?? this.search,
+  );
+}
+
+class TerminalsError extends TerminalsState {
+  final String message;
+  const TerminalsError({required this.message});
 }

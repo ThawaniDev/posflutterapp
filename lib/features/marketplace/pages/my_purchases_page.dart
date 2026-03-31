@@ -1,0 +1,180 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_typography.dart';
+import 'package:thawani_pos/core/widgets/pos_badge.dart';
+import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/core/widgets/pos_empty_state.dart';
+import 'package:thawani_pos/core/widgets/pos_error_state.dart';
+import 'package:thawani_pos/core/widgets/pos_loading_skeleton.dart';
+import 'package:thawani_pos/features/marketplace/models/marketplace_invoice.dart';
+import 'package:thawani_pos/features/marketplace/models/template_purchase.dart';
+import 'package:thawani_pos/features/marketplace/providers/marketplace_providers.dart';
+import 'package:thawani_pos/features/marketplace/providers/marketplace_state.dart';
+
+class MyPurchasesPage extends ConsumerStatefulWidget {
+  const MyPurchasesPage({super.key});
+
+  @override
+  ConsumerState<MyPurchasesPage> createState() => _MyPurchasesPageState();
+}
+
+class _MyPurchasesPageState extends ConsumerState<MyPurchasesPage> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => ref.read(myPurchasesProvider.notifier).load());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(myPurchasesProvider);
+    final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Scaffold(
+      appBar: AppBar(title: Text(l10n.marketplaceMyPurchases)),
+      body: switch (state) {
+        MyPurchasesInitial() || MyPurchasesLoading() => PosLoadingSkeleton.list(),
+        MyPurchasesError(:final message) => PosErrorState(
+          message: message,
+          onRetry: () => ref.read(myPurchasesProvider.notifier).load(),
+        ),
+        MyPurchasesLoaded(:final purchases, :final invoices) => DefaultTabController(
+          length: 2,
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+                  border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+                ),
+                child: TabBar(
+                  tabs: [
+                    Tab(text: '${l10n.marketplacePurchases} (${purchases.length})'),
+                    Tab(text: '${l10n.marketplaceInvoices} (${invoices.length})'),
+                  ],
+                  labelStyle: AppTypography.labelSmall,
+                  indicatorColor: AppColors.primary,
+                ),
+              ),
+              Expanded(
+                child: TabBarView(
+                  children: [_buildPurchasesTab(purchases, l10n, isDark), _buildInvoicesTab(invoices, l10n, isDark)],
+                ),
+              ),
+            ],
+          ),
+        ),
+      },
+    );
+  }
+
+  Widget _buildPurchasesTab(List<TemplatePurchase> purchases, AppLocalizations l10n, bool isDark) {
+    if (purchases.isEmpty) {
+      return PosEmptyState(
+        icon: Icons.shopping_bag_outlined,
+        title: l10n.marketplaceNoPurchases,
+        subtitle: l10n.marketplaceNoPurchasesSubtitle,
+      );
+    }
+
+    return PosDataTable<TemplatePurchase>(
+      columns: [
+        PosTableColumn(title: l10n.marketplaceTemplateName, key: 'name'),
+        PosTableColumn(title: l10n.marketplacePurchaseType, key: 'type'),
+        PosTableColumn(title: l10n.marketplaceAmount, key: 'amount'),
+        PosTableColumn(title: l10n.marketplaceStatus, key: 'status'),
+        PosTableColumn(title: l10n.marketplaceExpires, key: 'expires'),
+      ],
+      items: purchases,
+      itemId: (p) => p.id,
+      cellBuilder: (purchase, colIndex, column) => switch (colIndex) {
+        0 => Text(purchase.listingName ?? '-', style: AppTypography.bodySmall),
+        1 => PosBadge(label: purchase.purchaseType, variant: PosBadgeVariant.info),
+        2 => Text(purchase.amountPaid.toStringAsFixed(2), style: AppTypography.bodySmall),
+        3 =>
+          purchase.isActive
+              ? PosBadge(label: l10n.marketplaceActive, variant: PosBadgeVariant.success)
+              : purchase.isExpired
+              ? PosBadge(label: l10n.marketplaceExpired, variant: PosBadgeVariant.error)
+              : PosBadge(label: l10n.marketplaceCancelled, variant: PosBadgeVariant.neutral),
+        4 => Text(
+          purchase.expiresAt != null ? _formatDate(purchase.expiresAt!) : '-',
+          style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+        ),
+        _ => const SizedBox.shrink(),
+      },
+      actions: [
+        PosTableRowAction<TemplatePurchase>(
+          icon: Icons.cancel_outlined,
+          label: l10n.marketplaceCancel,
+          onTap: (purchase) {
+            if (!purchase.isActive) return;
+            _showCancelDialog(purchase, l10n);
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildInvoicesTab(List<MarketplaceInvoice> invoices, AppLocalizations l10n, bool isDark) {
+    if (invoices.isEmpty) {
+      return PosEmptyState(
+        icon: Icons.receipt_long_outlined,
+        title: l10n.marketplaceNoInvoices,
+        subtitle: l10n.marketplaceNoInvoicesSubtitle,
+      );
+    }
+
+    return PosDataTable<MarketplaceInvoice>(
+      columns: [
+        PosTableColumn(title: l10n.marketplacePurchaseId, key: 'purchase'),
+        PosTableColumn(title: l10n.marketplaceAmount, key: 'amount'),
+        PosTableColumn(title: l10n.marketplaceCurrencyCol, key: 'currency'),
+        PosTableColumn(title: l10n.marketplaceStatus, key: 'status'),
+        PosTableColumn(title: l10n.marketplacePaymentMethod, key: 'method'),
+        PosTableColumn(title: l10n.marketplacePaidAt, key: 'paid'),
+      ],
+      items: invoices,
+      itemId: (inv) => inv.id,
+      cellBuilder: (invoice, colIndex, column) => switch (colIndex) {
+        0 => Text(invoice.purchaseId, style: AppTypography.bodySmall),
+        1 => Text(invoice.amount.toStringAsFixed(2), style: AppTypography.bodySmall),
+        2 => Text(invoice.currency, style: AppTypography.bodySmall),
+        3 =>
+          invoice.status == 'paid'
+              ? PosBadge(label: l10n.marketplacePaid, variant: PosBadgeVariant.success)
+              : PosBadge(label: invoice.status, variant: PosBadgeVariant.warning),
+        4 => Text(invoice.paymentMethod ?? '-', style: AppTypography.bodySmall),
+        5 => Text(invoice.paidAt != null ? _formatDate(invoice.paidAt!) : '-', style: AppTypography.bodySmall),
+        _ => const SizedBox.shrink(),
+      },
+    );
+  }
+
+  void _showCancelDialog(TemplatePurchase purchase, AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.marketplaceCancelPurchase),
+        content: Text(l10n.marketplaceCancelConfirm),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.layoutCancel)),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              ref.read(myPurchasesProvider.notifier).cancelPurchase(purchase.id);
+            },
+            child: Text(l10n.marketplaceConfirm, style: const TextStyle(color: AppColors.error)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _formatDate(DateTime dt) {
+    return '${dt.day}/${dt.month}/${dt.year}';
+  }
+}

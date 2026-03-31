@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
@@ -43,7 +44,8 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
   Widget build(BuildContext context) {
     final state = ref.watch(attendanceProvider);
     final clockState = ref.watch(clockActionProvider);
-    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     // Listen for clock action results
     ref.listen<ClockActionState>(clockActionProvider, (prev, next) {
@@ -56,17 +58,19 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
     });
 
     return Scaffold(
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('Attendance'),
+        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        title: Text(l10n.staffAttendance),
         actions: [
-          IconButton(icon: const Icon(Icons.date_range), onPressed: _pickDateRange, tooltip: 'Filter by date'),
+          IconButton(icon: const Icon(Icons.date_range), onPressed: _pickDateRange, tooltip: l10n.staffFilterByDate),
           IconButton(icon: const Icon(Icons.refresh), onPressed: _loadAttendance),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showClockDialog(context),
         icon: const Icon(Icons.access_time),
-        label: const Text('Clock In/Out'),
+        label: Text(l10n.staffClockInOut),
       ),
       body: Column(
         children: [
@@ -74,7 +78,7 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
           if (_dateRange != null || _selectedStaffId != null)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              color: colorScheme.surfaceContainerHighest,
+              color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
               child: Row(
                 children: [
                   if (_dateRange != null) ...[
@@ -93,7 +97,7 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
                   ],
                   if (_selectedStaffId != null)
                     Chip(
-                      label: const Text('Filtered by staff', style: TextStyle(fontSize: 12)),
+                      label: Text(l10n.staffFilteredByStaff, style: const TextStyle(fontSize: 12)),
                       onDeleted: () {
                         setState(() => _selectedStaffId = null);
                         _loadAttendance();
@@ -112,7 +116,7 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
               AttendanceError(message: final msg) => PosErrorState(message: msg, onRetry: _loadAttendance),
               AttendanceLoaded(records: final records) =>
                 records.isEmpty
-                    ? const PosEmptyState(title: 'No attendance records found', icon: Icons.access_time)
+                    ? const PosEmptyState(title: 'No attendance records', icon: Icons.access_time)
                     : RefreshIndicator(
                         onRefresh: () async => _loadAttendance(),
                         child: ListView.builder(
@@ -120,6 +124,8 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
                           itemCount: records.length,
                           itemBuilder: (context, index) => _AttendanceCard(
                             record: records[index],
+                            isDark: isDark,
+                            l10n: l10n,
                             timeFormat: _timeFormat,
                             dateTimeFormat: _dateTimeFormat,
                             onStartBreak: () => _startBreak(records[index]),
@@ -178,6 +184,8 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
 
 class _AttendanceCard extends StatelessWidget {
   final AttendanceRecord record;
+  final bool isDark;
+  final AppLocalizations l10n;
   final DateFormat timeFormat;
   final DateFormat dateTimeFormat;
   final VoidCallback onStartBreak;
@@ -185,6 +193,8 @@ class _AttendanceCard extends StatelessWidget {
 
   const _AttendanceCard({
     required this.record,
+    required this.isDark,
+    required this.l10n,
     required this.timeFormat,
     required this.dateTimeFormat,
     required this.onStartBreak,
@@ -193,14 +203,14 @@ class _AttendanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     final isOpen = record.clockOutAt == null;
 
     return Card(
       elevation: 0,
+      color: isDark ? AppColors.cardDark : AppColors.cardLight,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
+        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Padding(
@@ -245,13 +255,18 @@ class _AttendanceCard extends StatelessWidget {
                 ],
                 if (record.overtimeMinutes != null && record.overtimeMinutes! > 0) ...[
                   AppSpacing.gapW12,
-                  _InfoChip(icon: Icons.more_time, label: 'OT: ${record.overtimeMinutes}m', color: colorScheme.error),
+                  _InfoChip(icon: Icons.more_time, label: 'OT: ${record.overtimeMinutes}m', color: AppColors.error),
                 ],
               ],
             ),
             if (record.notes != null) ...[
               AppSpacing.gapH8,
-              Text(record.notes!, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
+              Text(
+                record.notes!,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
+              ),
             ],
             if (isOpen) ...[
               AppSpacing.gapH12,
@@ -260,13 +275,13 @@ class _AttendanceCard extends StatelessWidget {
                   OutlinedButton.icon(
                     onPressed: onStartBreak,
                     icon: const Icon(Icons.coffee, size: 16),
-                    label: const Text('Start Break'),
+                    label: Text(l10n.staffStartBreak),
                   ),
                   AppSpacing.gapW8,
                   OutlinedButton.icon(
                     onPressed: onEndBreak,
                     icon: const Icon(Icons.play_arrow, size: 16),
-                    label: const Text('End Break'),
+                    label: Text(l10n.staffEndBreak),
                   ),
                 ],
               ),
@@ -337,16 +352,17 @@ class _ClockDialogState extends ConsumerState<_ClockDialog> {
   Widget build(BuildContext context) {
     final staffState = ref.watch(staffListProvider);
     final staffList = staffState is StaffListLoaded ? staffState.staff : <StaffUser>[];
+    final l10n = AppLocalizations.of(context)!;
 
     return AlertDialog(
-      title: const Text('Clock In / Out'),
+      title: Text(l10n.staffClockInOut),
       content: SizedBox(
         width: 400,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             DropdownButtonFormField<StaffUser>(
-              decoration: const InputDecoration(labelText: 'Staff Member *', border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: '${l10n.staffMember} *', border: const OutlineInputBorder()),
               items: staffList.map((s) => DropdownMenuItem(value: s, child: Text('${s.firstName} ${s.lastName}'))).toList(),
               onChanged: (v) => setState(() => _selectedStaff = v),
             ),
@@ -362,14 +378,14 @@ class _ClockDialogState extends ConsumerState<_ClockDialog> {
             AppSpacing.gapH16,
             TextField(
               controller: _notesController,
-              decoration: const InputDecoration(labelText: 'Notes (optional)', border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.staffNotesOptional, border: const OutlineInputBorder()),
               maxLines: 2,
             ),
           ],
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text(l10n.cancel)),
         FilledButton(
           onPressed: _selectedStaff == null
               ? null

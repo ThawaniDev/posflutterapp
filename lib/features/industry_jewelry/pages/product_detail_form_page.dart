@@ -39,9 +39,9 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
     final d = widget.detail;
     _productIdCtrl = TextEditingController(text: d?.productId ?? '');
     _karatCtrl = TextEditingController(text: d?.karat ?? '');
-    _grossWeightCtrl = TextEditingController(text: d?.grossWeightG.toStringAsFixed(3) ?? '');
-    _netWeightCtrl = TextEditingController(text: d?.netWeightG.toStringAsFixed(3) ?? '');
-    _makingChargesValueCtrl = TextEditingController(text: d?.makingChargesValue.toStringAsFixed(3) ?? '');
+    _grossWeightCtrl = TextEditingController(text: d?.grossWeightG.toStringAsFixed(2) ?? '');
+    _netWeightCtrl = TextEditingController(text: d?.netWeightG.toStringAsFixed(2) ?? '');
+    _makingChargesValueCtrl = TextEditingController(text: d?.makingChargesValue.toStringAsFixed(2) ?? '');
     _stoneTypeCtrl = TextEditingController(text: d?.stoneType ?? '');
     _stoneWeightCtrl = TextEditingController(text: d?.stoneWeightCarat?.toStringAsFixed(2) ?? '');
     _stoneCountCtrl = TextEditingController(text: d?.stoneCount?.toString() ?? '');
@@ -135,7 +135,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
                   child: PosTextField(
                     controller: _grossWeightCtrl,
                     label: 'Gross Weight (g)',
-                    hint: '0.000',
+                    hint: 'e.g. 15.50',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
                 ),
@@ -144,7 +144,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
                   child: PosTextField(
                     controller: _netWeightCtrl,
                     label: 'Net Weight (g)',
-                    hint: '0.000',
+                    hint: 'e.g. 14.20',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
                 ),
@@ -164,7 +164,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
             PosTextField(
               controller: _makingChargesValueCtrl,
               label: 'Making Charges Value',
-              hint: '0.000',
+              hint: 'e.g. 150.00',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
             SizedBox(height: AppSpacing.lg),
@@ -178,13 +178,18 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
                   child: PosTextField(
                     controller: _stoneWeightCtrl,
                     label: 'Weight (carat)',
-                    hint: '0.00',
+                    hint: 'e.g. 1.50',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
                 ),
                 AppSpacing.gapW12,
                 Expanded(
-                  child: PosTextField(controller: _stoneCountCtrl, label: 'Count', hint: '0', keyboardType: TextInputType.number),
+                  child: PosTextField(
+                    controller: _stoneCountCtrl,
+                    label: 'Count',
+                    hint: 'e.g. 4',
+                    keyboardType: TextInputType.number,
+                  ),
                 ),
               ],
             ),

@@ -14,23 +14,54 @@ class OrdersNotifier extends StateNotifier<OrdersState> {
 
   OrdersNotifier(this._repo) : super(const OrdersInitial());
 
+  String? _statusFilter;
+  String? _searchQuery;
+
   Future<void> load({int page = 1, String? status, String? search}) async {
+    _statusFilter = status ?? _statusFilter;
+    _searchQuery = search ?? _searchQuery;
     state = const OrdersLoading();
     try {
-      final result = await _repo.listOrders(page: page, status: status, search: search);
+      final result = await _repo.listOrders(page: page, status: _statusFilter, search: _searchQuery);
       state = OrdersLoaded(
         orders: result.items,
         total: result.total,
         currentPage: result.currentPage,
         lastPage: result.lastPage,
         perPage: result.perPage,
-        statusFilter: status,
-        searchQuery: search,
+        statusFilter: _statusFilter,
+        searchQuery: _searchQuery,
       );
     } on DioException catch (e) {
       state = OrdersError(message: _extractError(e));
     } catch (e) {
       state = OrdersError(message: e.toString());
+    }
+  }
+
+  Future<void> filterByStatus(String? status) async {
+    _statusFilter = status;
+    await load(status: status);
+  }
+
+  Future<void> search(String? query) async {
+    _searchQuery = (query != null && query.isEmpty) ? null : query;
+    await load(search: _searchQuery);
+  }
+
+  Future<void> nextPage() async {
+    if (state is! OrdersLoaded) return;
+    final loaded = state as OrdersLoaded;
+    if (loaded.currentPage < loaded.lastPage) {
+      await load(page: loaded.currentPage + 1);
+    }
+  }
+
+  Future<void> previousPage() async {
+    if (state is! OrdersLoaded) return;
+    final loaded = state as OrdersLoaded;
+    if (loaded.currentPage > 1) {
+      await load(page: loaded.currentPage - 1);
     }
   }
 

@@ -11,4 +11,6 @@ class StorageKeys {
   static const String lastSyncTime = 'last_sync_time';
   static const String pinHash = 'pin_hash';
   static const String onboardingComplete = 'onboarding_complete';
+  static const String subscriptionEntitlements = 'subscription_entitlements';
+  static const String subscriptionLastSync = 'subscription_last_sync';
 }

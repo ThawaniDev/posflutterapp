@@ -36,8 +36,8 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
     _issueDescCtrl = TextEditingController(text: j?.issueDescription ?? '');
     _diagnosisNotesCtrl = TextEditingController(text: j?.diagnosisNotes ?? '');
     _repairNotesCtrl = TextEditingController(text: j?.repairNotes ?? '');
-    _estimatedCostCtrl = TextEditingController(text: j?.estimatedCost?.toStringAsFixed(3) ?? '');
-    _finalCostCtrl = TextEditingController(text: j?.finalCost?.toStringAsFixed(3) ?? '');
+    _estimatedCostCtrl = TextEditingController(text: j?.estimatedCost?.toStringAsFixed(2) ?? '');
+    _finalCostCtrl = TextEditingController(text: j?.finalCost?.toStringAsFixed(2) ?? '');
     _staffUserIdCtrl = TextEditingController(text: j?.staffUserId ?? '');
   }
 

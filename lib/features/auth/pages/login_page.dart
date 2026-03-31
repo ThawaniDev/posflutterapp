@@ -61,13 +61,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Logo
-                    Icon(Icons.point_of_sale_rounded, size: 64, color: AppColors.primary),
+                    // Logo posflutterapp/assets/images/wameedlogo.png
+                    // Icon(Icons.point_of_sale_rounded, size: 64, color: AppColors.primary),
+                    // const SizedBox(height: AppSpacing.md),
+                    Image.asset('assets/images/wameedlogo.png', height: 64),
                     const SizedBox(height: AppSpacing.md),
 
                     // Title
                     Text(
-                      'Thawani POS',
+                      'Wameed POS',
                       style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),

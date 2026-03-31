@@ -3,6 +3,7 @@ import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dar
 import 'package:thawani_pos/features/pos_terminal/data/remote/pos_terminal_api_service.dart';
 import 'package:thawani_pos/features/pos_terminal/models/held_cart.dart';
 import 'package:thawani_pos/features/pos_terminal/models/pos_session.dart';
+import 'package:thawani_pos/features/pos_terminal/models/register.dart';
 import 'package:thawani_pos/features/pos_terminal/models/transaction.dart';
 
 final posTerminalRepositoryProvider = Provider<PosTerminalRepository>((ref) {
@@ -46,4 +47,13 @@ class PosTerminalRepository {
   Future<HeldCart> holdCart(Map<String, dynamic> data) => _apiService.holdCart(data);
   Future<HeldCart> recallCart(String id) => _apiService.recallCart(id);
   Future<void> deleteHeldCart(String id) => _apiService.deleteHeldCart(id);
+
+  // Terminals (Registers)
+  Future<PaginatedResult<Register>> listTerminals({int page = 1, int perPage = 20, String? search}) =>
+      _apiService.listTerminals(page: page, perPage: perPage, search: search);
+  Future<Register> createTerminal(Map<String, dynamic> data) => _apiService.createTerminal(data);
+  Future<Register> getTerminal(String id) => _apiService.getTerminal(id);
+  Future<Register> updateTerminal(String id, Map<String, dynamic> data) => _apiService.updateTerminal(id, data);
+  Future<void> deleteTerminal(String id) => _apiService.deleteTerminal(id);
+  Future<Register> toggleTerminalStatus(String id) => _apiService.toggleTerminalStatus(id);
 }

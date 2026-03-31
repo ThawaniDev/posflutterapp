@@ -44,7 +44,17 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
     });
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Choose Your Plan'), centerTitle: true),
+      appBar: AppBar(
+        title: const Text('Choose Your Plan'),
+        centerTitle: true,
+        actions: [
+          TextButton.icon(
+            onPressed: () => context.go(Routes.planComparison),
+            icon: const Icon(Icons.compare_arrows, size: 18),
+            label: const Text('Compare'),
+          ),
+        ],
+      ),
       body: _buildBody(plansState, subscriptionState),
     );
   }

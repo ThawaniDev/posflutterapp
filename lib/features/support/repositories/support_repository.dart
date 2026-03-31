@@ -8,8 +8,21 @@ class SupportRepository {
 
   Future<Map<String, dynamic>> getStats() => _apiService.getStats();
 
-  Future<Map<String, dynamic>> listTickets({String? status, String? category, String? priority, int? perPage}) =>
-      _apiService.listTickets(status: status, category: category, priority: priority, perPage: perPage);
+  Future<Map<String, dynamic>> listTickets({
+    String? status,
+    String? category,
+    String? priority,
+    String? search,
+    int? page,
+    int? perPage,
+  }) => _apiService.listTickets(
+    status: status,
+    category: category,
+    priority: priority,
+    search: search,
+    page: page,
+    perPage: perPage,
+  );
 
   Future<Map<String, dynamic>> getTicket(String id) => _apiService.getTicket(id);
 
@@ -24,6 +37,11 @@ class SupportRepository {
       _apiService.addMessage(ticketId, message: message);
 
   Future<Map<String, dynamic>> closeTicket(String id) => _apiService.closeTicket(id);
+
+  Future<Map<String, dynamic>> getKbArticles({String? category, String? search}) =>
+      _apiService.getKbArticles(category: category, search: search);
+
+  Future<Map<String, dynamic>> getKbArticle(String slug) => _apiService.getKbArticle(slug);
 }
 
 final supportRepositoryProvider = Provider<SupportRepository>((ref) {

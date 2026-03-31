@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
+import 'package:thawani_pos/features/reports/widgets/report_widgets.dart';
 
 class SalesSummaryPage extends ConsumerStatefulWidget {
   const SalesSummaryPage({super.key});
@@ -20,9 +20,7 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _loadData();
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadData());
   }
 
   void _loadData() {
@@ -34,7 +32,7 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
         );
   }
 
-  Future<void> _selectDateRange() async {
+  Future<void> _pickDate() async {
     final picked = await showDateRangePicker(
       context: context,
       firstDate: DateTime(2020),
@@ -50,140 +48,140 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(salesSummaryProvider);
-    final theme = Theme.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sales Summary'),
-        actions: [
-          IconButton(icon: const Icon(Icons.date_range), onPressed: _selectDateRange),
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData),
-        ],
-      ),
+    return ReportPageScaffold(
+      title: 'Sales Summary',
+      dateRange: _dateRange,
+      onPickDate: _pickDate,
+      onClearDate: () {
+        setState(() => _dateRange = null);
+        _loadData();
+      },
+      onRefresh: _loadData,
       body: switch (state) {
         SalesSummaryInitial() || SalesSummaryLoading() => PosLoadingSkeleton.list(),
         SalesSummaryError(:final message) => PosErrorState(message: message, onRetry: _loadData),
         SalesSummaryLoaded(:final totals, :final daily) => ListView(
-          padding: AppSpacing.paddingAll16,
+          padding: const EdgeInsets.all(20),
           children: [
-            if (_dateRange != null)
-              Chip(
-                label: Text(
-                  '${DateFormat('MMM d').format(_dateRange!.start)} - ${DateFormat('MMM d, yyyy').format(_dateRange!.end)}',
+            ReportKpiGrid(
+              cards: [
+                ReportKpiCard(
+                  label: 'Total Revenue',
+                  value: formatCurrency(totals['total_revenue'] as num),
+                  icon: Icons.trending_up_rounded,
+                  color: AppColors.success,
                 ),
-                onDeleted: () {
-                  setState(() => _dateRange = null);
-                  _loadData();
-                },
+                ReportKpiCard(
+                  label: 'Net Revenue',
+                  value: formatCurrency(totals['net_revenue'] as num),
+                  icon: Icons.account_balance_wallet_rounded,
+                  color: AppColors.primary,
+                ),
+                ReportKpiCard(
+                  label: 'Transactions',
+                  value: '${totals['total_transactions']}',
+                  icon: Icons.receipt_long_rounded,
+                  color: AppColors.info,
+                ),
+                ReportKpiCard(
+                  label: 'Avg Basket',
+                  value: formatCurrency(totals['avg_basket_size'] as num),
+                  icon: Icons.shopping_basket_rounded,
+                  color: AppColors.warning,
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+
+            const ReportSectionHeader(title: 'Breakdown', icon: Icons.pie_chart_rounded),
+            ReportDataCard(
+              child: Column(
+                children: [
+                  ReportStatRow(label: 'Cost of Goods', value: formatCurrency(totals['total_cost'] as num)),
+                  ReportStatRow(
+                    label: 'Discounts',
+                    value: formatCurrency(totals['total_discount'] as num),
+                    valueColor: AppColors.warning,
+                  ),
+                  ReportStatRow(label: 'Tax Collected', value: formatCurrency(totals['total_tax'] as num)),
+                  ReportStatRow(
+                    label: 'Refunds',
+                    value: formatCurrency(totals['total_refunds'] as num),
+                    valueColor: AppColors.error,
+                  ),
+                  const Divider(height: 24),
+                  ReportStatRow(label: 'Cash Revenue', value: formatCurrency(totals['cash_revenue'] as num)),
+                  ReportStatRow(label: 'Card Revenue', value: formatCurrency(totals['card_revenue'] as num)),
+                  ReportStatRow(label: 'Other Revenue', value: formatCurrency(totals['other_revenue'] as num)),
+                  ReportStatRow(label: 'Unique Customers', value: '${totals['unique_customers']}'),
+                ],
               ),
-            AppSpacing.gapH8,
-
-            Text('Overview', style: theme.textTheme.titleLarge),
-            AppSpacing.gapH12,
-            _SummaryCard(
-              items: [
-                _SummaryItem('Total Revenue', '\$${(totals['total_revenue'] as num).toStringAsFixed(2)}'),
-                _SummaryItem('Net Revenue', '\$${(totals['net_revenue'] as num).toStringAsFixed(2)}'),
-                _SummaryItem('Transactions', '${totals['total_transactions']}'),
-                _SummaryItem('Avg Basket', '\$${(totals['avg_basket_size'] as num).toStringAsFixed(2)}'),
-              ],
-            ),
-            AppSpacing.gapH12,
-            _SummaryCard(
-              items: [
-                _SummaryItem('Cost', '\$${(totals['total_cost'] as num).toStringAsFixed(2)}'),
-                _SummaryItem('Discounts', '\$${(totals['total_discount'] as num).toStringAsFixed(2)}'),
-                _SummaryItem('Tax', '\$${(totals['total_tax'] as num).toStringAsFixed(2)}'),
-                _SummaryItem('Refunds', '\$${(totals['total_refunds'] as num).toStringAsFixed(2)}'),
-              ],
-            ),
-            AppSpacing.gapH12,
-            _SummaryCard(
-              items: [
-                _SummaryItem('Cash', '\$${(totals['cash_revenue'] as num).toStringAsFixed(2)}'),
-                _SummaryItem('Card', '\$${(totals['card_revenue'] as num).toStringAsFixed(2)}'),
-                _SummaryItem('Other', '\$${(totals['other_revenue'] as num).toStringAsFixed(2)}'),
-                _SummaryItem('Customers', '${totals['unique_customers']}'),
-              ],
             ),
 
-            AppSpacing.gapH24,
-            Text('Daily Breakdown', style: theme.textTheme.titleLarge),
-            AppSpacing.gapH8,
+            const SizedBox(height: 24),
+
+            const ReportSectionHeader(title: 'Daily Breakdown', icon: Icons.calendar_month_rounded),
             if (daily.isEmpty)
-              const PosEmptyState(title: 'No data for selected period', icon: Icons.calendar_today)
+              const ReportDataCard(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 24),
+                  child: Center(child: Text('No data for selected period')),
+                ),
+              )
             else
-              ...daily.map(
-                (d) => Card(
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppRadius.md),
-                    side: BorderSide(color: theme.dividerColor),
-                  ),
-                  child: ListTile(
-                    title: Text(d['date'] as String),
-                    subtitle: Text('${d['total_transactions']} orders'),
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          '\$${(d['total_revenue'] as num).toStringAsFixed(2)}',
-                          style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
+              ReportDataCard(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Column(
+                  children: [
+                    for (int i = 0; i < daily.length; i++) ...[
+                      if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    daily[i]['date'] as String,
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                                  ),
+                                  Text(
+                                    '${daily[i]['total_transactions']} orders',
+                                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  formatCurrency(daily[i]['total_revenue'] as num),
+                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+                                ),
+                                Text(
+                                  'Net: ${formatCurrency(daily[i]['net_revenue'] as num)}',
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.success, fontSize: 11),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        Text('Net: \$${(d['net_revenue'] as num).toStringAsFixed(2)}', style: theme.textTheme.bodySmall),
-                      ],
-                    ),
-                  ),
+                      ),
+                    ],
+                  ],
                 ),
               ),
+            const SizedBox(height: 20),
           ],
         ),
       },
-    );
-  }
-}
-
-class _SummaryItem {
-  final String label;
-  final String value;
-  const _SummaryItem(this.label, this.value);
-}
-
-class _SummaryCard extends StatelessWidget {
-  final List<_SummaryItem> items;
-  const _SummaryCard({required this.items});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: theme.dividerColor),
-      ),
-      child: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: Wrap(
-          spacing: 24,
-          runSpacing: 12,
-          children: items
-              .map(
-                (item) => SizedBox(
-                  width: 140,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(item.value, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-                      Text(item.label, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
-                    ],
-                  ),
-                ),
-              )
-              .toList(),
-        ),
-      ),
     );
   }
 }

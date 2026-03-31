@@ -95,4 +95,29 @@ class StaffRepository {
 
   Future<PaginatedResult<StaffActivityLog>> getActivityLog(String staffId, {int page = 1, int perPage = 20}) =>
       _api.getActivityLog(staffId, page: page, perPage: perPage);
+
+  // ─── Stats ────────────────────────────────────────────────
+
+  Future<Map<String, dynamic>> getStats() => _api.getStats();
+
+  // ─── Branch Assignments ───────────────────────────────────
+
+  Future<List<BranchAssignment>> listBranchAssignments(String staffId) => _api.listBranchAssignments(staffId);
+
+  Future<BranchAssignment> assignBranch(String staffId, Map<String, dynamic> data) => _api.assignBranch(staffId, data);
+
+  Future<void> unassignBranch(String staffId, String branchId) => _api.unassignBranch(staffId, branchId);
+
+  // ─── Attendance Export ────────────────────────────────────
+
+  Future<Map<String, dynamic>> exportAttendance({String? staffUserId, String? dateFrom, String? dateTo}) =>
+      _api.exportAttendance(staffUserId: staffUserId, dateFrom: dateFrom, dateTo: dateTo);
+
+  // ─── User Account Linking ─────────────────────────────────
+
+  Future<StaffUser> linkUser(String staffId, String userId) => _api.linkUser(staffId, userId);
+
+  Future<StaffUser> unlinkUser(String staffId) => _api.unlinkUser(staffId);
+
+  Future<List<Map<String, dynamic>>> getLinkableUsers() => _api.getLinkableUsers();
 }

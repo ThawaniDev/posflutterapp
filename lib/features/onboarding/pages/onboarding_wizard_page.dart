@@ -264,7 +264,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         ),
         const SizedBox(height: AppSpacing.xxl),
         Text(
-          'Welcome to Thawani POS',
+          'Welcome to Wameed POS',
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
           textAlign: TextAlign.center,
         ),

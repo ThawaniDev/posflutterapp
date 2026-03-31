@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -25,20 +26,18 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
   }
 
   Future<void> _handleDelete(Role role) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Delete Role'),
-        content: Text(
-          'Are you sure you want to delete "${role.displayName}"?\n'
-          'This cannot be undone.',
-        ),
+        title: Text(l10n.delete),
+        content: Text('${l10n.deleteConfirmation} "${role.displayName}"?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Delete'),
+            child: Text(l10n.delete),
           ),
         ],
       ),
@@ -48,7 +47,7 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
       try {
         await ref.read(rolesProvider.notifier).deleteRole(role.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Role "${role.displayName}" deleted.')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${role.displayName} ${l10n.deleted}')));
         }
       } catch (e) {
         if (mounted) {
@@ -61,10 +60,14 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
   @override
   Widget build(BuildContext context) {
     final rolesState = ref.watch(rolesProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('Roles & Permissions'),
+        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        title: Text(l10n.staffRolesPermissions),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -73,12 +76,16 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
           ),
         ],
       ),
-      floatingActionButton: PosButton(label: 'New Role', icon: Icons.add, onPressed: () => context.push(Routes.staffRoleCreate)),
-      body: _buildBody(rolesState),
+      floatingActionButton: PosButton(
+        label: l10n.staffNewRole,
+        icon: Icons.add,
+        onPressed: () => context.push(Routes.staffRoleCreate),
+      ),
+      body: _buildBody(rolesState, isDark, l10n),
     );
   }
 
-  Widget _buildBody(RolesState state) {
+  Widget _buildBody(RolesState state, bool isDark, AppLocalizations l10n) {
     if (state is RolesLoading || state is RolesInitial) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -90,10 +97,16 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
           children: [
             Icon(Icons.error_outline, size: 48, color: AppColors.error),
             const SizedBox(height: AppSpacing.md),
-            Text(state.message, style: Theme.of(context).textTheme.bodyLarge, textAlign: TextAlign.center),
+            Text(
+              state.message,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight),
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: AppSpacing.lg),
             PosButton(
-              label: 'Retry',
+              label: l10n.retry,
               onPressed: () => ref.read(rolesProvider.notifier).load(),
               variant: PosButtonVariant.outline,
             ),
@@ -108,13 +121,24 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.admin_panel_settings_outlined, size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
+              Icon(
+                Icons.admin_panel_settings_outlined,
+                size: 64,
+                color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              ),
               const SizedBox(height: AppSpacing.md),
-              Text('No roles configured yet', style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                l10n.staffNoRoles,
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight),
+              ),
               const SizedBox(height: AppSpacing.xs),
               Text(
-                'Create roles to manage staff permissions.',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                l10n.staffNoRolesDesc,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyMedium?.copyWith(color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
               ),
             ],
           ),
@@ -129,6 +153,8 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
           separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.sm),
           itemBuilder: (context, index) => _RoleCard(
             role: state.roles[index],
+            isDark: isDark,
+            l10n: l10n,
             onTap: () => context.push('${Routes.staffRoleDetail}/${state.roles[index].id}'),
             onDelete: state.roles[index].isPredefined == true ? null : () => _handleDelete(state.roles[index]),
           ),
@@ -143,10 +169,12 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
 /// Card widget for a single role in the list
 class _RoleCard extends StatelessWidget {
   final Role role;
+  final bool isDark;
+  final AppLocalizations l10n;
   final VoidCallback onTap;
   final VoidCallback? onDelete;
 
-  const _RoleCard({required this.role, required this.onTap, this.onDelete});
+  const _RoleCard({required this.role, required this.isDark, required this.l10n, required this.onTap, this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -155,9 +183,10 @@ class _RoleCard extends StatelessWidget {
 
     return Card(
       elevation: 0,
+      color: isDark ? AppColors.cardDark : AppColors.cardLight,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: AppColors.borderLight),
+        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       child: InkWell(
         onTap: onTap,
@@ -201,7 +230,7 @@ class _RoleCard extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                             decoration: BoxDecoration(color: AppColors.primary10, borderRadius: BorderRadius.circular(4)),
                             child: Text(
-                              'System',
+                              l10n.staffSystemRole,
                               style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.primary),
                             ),
                           ),
@@ -213,14 +242,16 @@ class _RoleCard extends StatelessWidget {
                       role.description ?? role.name,
                       style: Theme.of(
                         context,
-                      ).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                      ).textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '$permCount permission${permCount == 1 ? '' : 's'}',
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.textMutedLight),
+                      l10n.staffPermissionCount(permCount),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.labelSmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                     ),
                   ],
                 ),

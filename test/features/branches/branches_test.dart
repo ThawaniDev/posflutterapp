@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:thawani_pos/features/branches/enums/business_type.dart';
 import 'package:thawani_pos/features/branches/enums/register_platform.dart';
 import 'package:thawani_pos/features/branches/enums/provider_registration_status.dart';
+import 'package:thawani_pos/features/branches/models/store.dart';
 import 'package:thawani_pos/features/branches/providers/branch_state.dart';
 
 void main() {
@@ -81,13 +82,13 @@ void main() {
     });
 
     test('BranchListLoaded holds branches', () {
-      const state = BranchListLoaded([
-        {'id': '1', 'name': 'Main Branch', 'is_main_branch': true},
-        {'id': '2', 'name': 'Branch 2', 'is_main_branch': false},
+      final state = BranchListLoaded([
+        Store(id: '1', organizationId: 'org1', name: 'Main Branch', slug: 'main-branch', isMainBranch: true),
+        Store(id: '2', organizationId: 'org1', name: 'Branch 2', slug: 'branch-2', isMainBranch: false),
       ]);
       expect(state.branches.length, 2);
-      expect(state.branches.first['name'], 'Main Branch');
-      expect(state.branches.first['is_main_branch'], true);
+      expect(state.branches.first.name, 'Main Branch');
+      expect(state.branches.first.isMainBranch, true);
     });
 
     test('BranchListError holds message', () {

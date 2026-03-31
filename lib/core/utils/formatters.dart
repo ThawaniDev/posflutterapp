@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-/// Thawani POS Formatters — currency, dates, numbers, relative time.
+/// Wameed POS Formatters — currency, dates, numbers, relative time.
 ///
 /// Conventions:
 ///  - Currency: Saudi Riyal (SAR) with 3 decimal places.

@@ -40,4 +40,9 @@ class PaymentRepository {
   Future<GiftCard> issueGiftCard(Map<String, dynamic> data) => _apiService.issueGiftCard(data);
   Future<Map<String, dynamic>> checkGiftCardBalance(String code) => _apiService.checkGiftCardBalance(code);
   Future<GiftCard> redeemGiftCard(String code, double amount) => _apiService.redeemGiftCard(code, amount);
+
+  // Financial Reports
+  Future<Map<String, dynamic>> dailySummary({String? date}) => _apiService.dailySummary(date: date);
+  Future<Map<String, dynamic>> reconciliation({String? startDate, String? endDate}) =>
+      _apiService.reconciliation(startDate: startDate, endDate: endDate);
 }

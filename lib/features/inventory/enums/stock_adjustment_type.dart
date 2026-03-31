@@ -1,6 +1,7 @@
 enum StockAdjustmentType {
   increase('increase'),
-  decrease('decrease');
+  decrease('decrease'),
+  damage('damage');
 
   const StockAdjustmentType(this.value);
   final String value;

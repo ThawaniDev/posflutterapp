@@ -4,6 +4,7 @@ class GoodsReceipt {
   final String id;
   final String storeId;
   final String? supplierId;
+  final String? supplierName;
   final String? purchaseOrderId;
   final String? referenceNumber;
   final GoodsReceiptStatus? status;
@@ -17,6 +18,7 @@ class GoodsReceipt {
     required this.id,
     required this.storeId,
     this.supplierId,
+    this.supplierName,
     this.purchaseOrderId,
     this.referenceNumber,
     this.status,
@@ -32,6 +34,7 @@ class GoodsReceipt {
       id: json['id'] as String,
       storeId: json['store_id'] as String,
       supplierId: json['supplier_id'] as String?,
+      supplierName: (json['supplier'] as Map<String, dynamic>?)?['name'] as String?,
       purchaseOrderId: json['purchase_order_id'] as String?,
       referenceNumber: json['reference_number'] as String?,
       status: GoodsReceiptStatus.tryFromValue(json['status'] as String?),
@@ -63,6 +66,7 @@ class GoodsReceipt {
     String? id,
     String? storeId,
     String? supplierId,
+    String? supplierName,
     String? purchaseOrderId,
     String? referenceNumber,
     GoodsReceiptStatus? status,
@@ -76,6 +80,7 @@ class GoodsReceipt {
       id: id ?? this.id,
       storeId: storeId ?? this.storeId,
       supplierId: supplierId ?? this.supplierId,
+      supplierName: supplierName ?? this.supplierName,
       purchaseOrderId: purchaseOrderId ?? this.purchaseOrderId,
       referenceNumber: referenceNumber ?? this.referenceNumber,
       status: status ?? this.status,
@@ -88,13 +93,12 @@ class GoodsReceipt {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is GoodsReceipt && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is GoodsReceipt && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'GoodsReceipt(id: $id, storeId: $storeId, supplierId: $supplierId, purchaseOrderId: $purchaseOrderId, referenceNumber: $referenceNumber, status: $status, ...)';
+  String toString() =>
+      'GoodsReceipt(id: $id, storeId: $storeId, supplierId: $supplierId, purchaseOrderId: $purchaseOrderId, referenceNumber: $referenceNumber, status: $status, ...)';
 }

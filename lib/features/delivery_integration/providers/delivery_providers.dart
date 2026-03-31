@@ -68,6 +68,17 @@ class DeliveryConfigsNotifier extends StateNotifier<DeliveryConfigsState> {
       state = DeliveryConfigsError(e.toString());
     }
   }
+
+  Future<bool> deleteConfig(String id) async {
+    try {
+      await _repository.deleteConfig(id);
+      await load();
+      return true;
+    } catch (e) {
+      state = DeliveryConfigsError(e.toString());
+      return false;
+    }
+  }
 }
 
 final deliveryConfigsProvider = StateNotifierProvider<DeliveryConfigsNotifier, DeliveryConfigsState>((ref) {
@@ -85,15 +96,27 @@ class DeliveryOrdersNotifier extends StateNotifier<DeliveryOrdersState> {
   String? get platformFilter => _platformFilter;
   String? get statusFilter => _statusFilter;
 
-  Future<void> load({String? platform, String? status}) async {
+  Future<void> load({String? platform, String? status, int? page, String? dateFrom, String? dateTo}) async {
     _platformFilter = platform;
     _statusFilter = status;
     if (state is! DeliveryOrdersLoaded) state = const DeliveryOrdersLoading();
     try {
-      final result = await _repository.getOrders(platform: platform, status: status);
+      final result = await _repository.getOrders(
+        platform: platform,
+        status: status,
+        page: page,
+        dateFrom: dateFrom,
+        dateTo: dateTo,
+      );
       final data = result['data'] as Map<String, dynamic>? ?? {};
       final items = data['data'] as List<dynamic>? ?? [];
-      state = DeliveryOrdersLoaded(items.cast<Map<String, dynamic>>());
+      final meta = data['meta'] as Map<String, dynamic>? ?? data;
+      state = DeliveryOrdersLoaded(
+        items.cast<Map<String, dynamic>>(),
+        currentPage: (meta['current_page'] as num?)?.toInt() ?? 1,
+        lastPage: (meta['last_page'] as num?)?.toInt() ?? 1,
+        total: (meta['total'] as num?)?.toInt() ?? items.length,
+      );
     } catch (e) {
       if (state is! DeliveryOrdersLoaded) state = DeliveryOrdersError(e.toString());
     }
@@ -152,8 +175,7 @@ class DeliveryOrderDetailNotifier extends StateNotifier<DeliveryOrderDetailState
   }
 }
 
-final deliveryOrderDetailProvider =
-    StateNotifierProvider<DeliveryOrderDetailNotifier, DeliveryOrderDetailState>((ref) {
+final deliveryOrderDetailProvider = StateNotifierProvider<DeliveryOrderDetailNotifier, DeliveryOrderDetailState>((ref) {
   return DeliveryOrderDetailNotifier(ref.watch(deliveryRepositoryProvider));
 });
 
@@ -174,8 +196,7 @@ class DeliveryPlatformsNotifier extends StateNotifier<DeliveryPlatformsState> {
   }
 }
 
-final deliveryPlatformsProvider =
-    StateNotifierProvider<DeliveryPlatformsNotifier, DeliveryPlatformsState>((ref) {
+final deliveryPlatformsProvider = StateNotifierProvider<DeliveryPlatformsNotifier, DeliveryPlatformsState>((ref) {
   return DeliveryPlatformsNotifier(ref.watch(deliveryRepositoryProvider));
 });
 
@@ -202,8 +223,7 @@ class DeliveryConnectionTestNotifier extends StateNotifier<DeliveryConnectionTes
   void reset() => state = const DeliveryConnectionTestIdle();
 }
 
-final deliveryConnectionTestProvider =
-    StateNotifierProvider<DeliveryConnectionTestNotifier, DeliveryConnectionTestState>((ref) {
+final deliveryConnectionTestProvider = StateNotifierProvider<DeliveryConnectionTestNotifier, DeliveryConnectionTestState>((ref) {
   return DeliveryConnectionTestNotifier(ref.watch(deliveryRepositoryProvider));
 });
 
@@ -225,7 +245,70 @@ class DeliveryMenuSyncNotifier extends StateNotifier<DeliveryMenuSyncState> {
   void reset() => state = const DeliveryMenuSyncIdle();
 }
 
-final deliveryMenuSyncProvider =
-    StateNotifierProvider<DeliveryMenuSyncNotifier, DeliveryMenuSyncState>((ref) {
+final deliveryMenuSyncProvider = StateNotifierProvider<DeliveryMenuSyncNotifier, DeliveryMenuSyncState>((ref) {
   return DeliveryMenuSyncNotifier(ref.watch(deliveryRepositoryProvider));
+});
+
+// ─── Webhook Logs Provider ──────────────────────────────
+class DeliveryWebhookLogsNotifier extends StateNotifier<DeliveryWebhookLogsState> {
+  final DeliveryRepository _repository;
+  DeliveryWebhookLogsNotifier(this._repository) : super(const DeliveryWebhookLogsInitial());
+
+  String? _platformFilter;
+  String? get platformFilter => _platformFilter;
+
+  Future<void> load({String? platform, int? page}) async {
+    _platformFilter = platform;
+    if (state is! DeliveryWebhookLogsLoaded) state = const DeliveryWebhookLogsLoading();
+    try {
+      final result = await _repository.getWebhookLogs(platform: platform, page: page, perPage: 20);
+      final data = result['data'] as Map<String, dynamic>? ?? {};
+      final items = data['data'] as List<dynamic>? ?? [];
+      final meta = data['meta'] as Map<String, dynamic>? ?? data;
+      state = DeliveryWebhookLogsLoaded(
+        items.cast<Map<String, dynamic>>(),
+        currentPage: (meta['current_page'] as num?)?.toInt() ?? 1,
+        lastPage: (meta['last_page'] as num?)?.toInt() ?? 1,
+        total: (meta['total'] as num?)?.toInt() ?? items.length,
+      );
+    } catch (e) {
+      if (state is! DeliveryWebhookLogsLoaded) state = DeliveryWebhookLogsError(e.toString());
+    }
+  }
+}
+
+final deliveryWebhookLogsProvider = StateNotifierProvider<DeliveryWebhookLogsNotifier, DeliveryWebhookLogsState>((ref) {
+  return DeliveryWebhookLogsNotifier(ref.watch(deliveryRepositoryProvider));
+});
+
+// ─── Status Push Logs Provider ──────────────────────────
+class DeliveryStatusPushLogsNotifier extends StateNotifier<DeliveryStatusPushLogsState> {
+  final DeliveryRepository _repository;
+  DeliveryStatusPushLogsNotifier(this._repository) : super(const DeliveryStatusPushLogsInitial());
+
+  String? _platformFilter;
+  String? get platformFilter => _platformFilter;
+
+  Future<void> load({String? platform, int? page}) async {
+    _platformFilter = platform;
+    if (state is! DeliveryStatusPushLogsLoaded) state = const DeliveryStatusPushLogsLoading();
+    try {
+      final result = await _repository.getStatusPushLogs(platform: platform, page: page, perPage: 20);
+      final data = result['data'] as Map<String, dynamic>? ?? {};
+      final items = data['data'] as List<dynamic>? ?? [];
+      final meta = data['meta'] as Map<String, dynamic>? ?? data;
+      state = DeliveryStatusPushLogsLoaded(
+        items.cast<Map<String, dynamic>>(),
+        currentPage: (meta['current_page'] as num?)?.toInt() ?? 1,
+        lastPage: (meta['last_page'] as num?)?.toInt() ?? 1,
+        total: (meta['total'] as num?)?.toInt() ?? items.length,
+      );
+    } catch (e) {
+      if (state is! DeliveryStatusPushLogsLoaded) state = DeliveryStatusPushLogsError(e.toString());
+    }
+  }
+}
+
+final deliveryStatusPushLogsProvider = StateNotifierProvider<DeliveryStatusPushLogsNotifier, DeliveryStatusPushLogsState>((ref) {
+  return DeliveryStatusPushLogsNotifier(ref.watch(deliveryRepositoryProvider));
 });

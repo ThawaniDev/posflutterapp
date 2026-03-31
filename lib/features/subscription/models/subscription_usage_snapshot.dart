@@ -2,7 +2,7 @@ import 'package:thawani_pos/features/subscription/enums/subscription_resource_ty
 
 class SubscriptionUsageSnapshot {
   final String id;
-  final String storeId;
+  final String organizationId;
   final SubscriptionResourceType resourceType;
   final int currentCount;
   final int planLimit;
@@ -11,7 +11,7 @@ class SubscriptionUsageSnapshot {
 
   const SubscriptionUsageSnapshot({
     required this.id,
-    required this.storeId,
+    required this.organizationId,
     required this.resourceType,
     required this.currentCount,
     required this.planLimit,
@@ -22,7 +22,7 @@ class SubscriptionUsageSnapshot {
   factory SubscriptionUsageSnapshot.fromJson(Map<String, dynamic> json) {
     return SubscriptionUsageSnapshot(
       id: json['id'] as String,
-      storeId: json['store_id'] as String,
+      organizationId: (json['organization_id'] ?? json['store_id']) as String,
       resourceType: SubscriptionResourceType.fromValue(json['resource_type'] as String),
       currentCount: (json['current_count'] as num).toInt(),
       planLimit: (json['plan_limit'] as num).toInt(),
@@ -34,7 +34,7 @@ class SubscriptionUsageSnapshot {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'store_id': storeId,
+      'organization_id': organizationId,
       'resource_type': resourceType.value,
       'current_count': currentCount,
       'plan_limit': planLimit,
@@ -45,7 +45,7 @@ class SubscriptionUsageSnapshot {
 
   SubscriptionUsageSnapshot copyWith({
     String? id,
-    String? storeId,
+    String? organizationId,
     SubscriptionResourceType? resourceType,
     int? currentCount,
     int? planLimit,
@@ -54,7 +54,7 @@ class SubscriptionUsageSnapshot {
   }) {
     return SubscriptionUsageSnapshot(
       id: id ?? this.id,
-      storeId: storeId ?? this.storeId,
+      organizationId: organizationId ?? this.organizationId,
       resourceType: resourceType ?? this.resourceType,
       currentCount: currentCount ?? this.currentCount,
       planLimit: planLimit ?? this.planLimit,
@@ -64,13 +64,12 @@ class SubscriptionUsageSnapshot {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SubscriptionUsageSnapshot && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is SubscriptionUsageSnapshot && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'SubscriptionUsageSnapshot(id: $id, storeId: $storeId, resourceType: $resourceType, currentCount: $currentCount, planLimit: $planLimit, snapshotDate: $snapshotDate, ...)';
+  String toString() =>
+      'SubscriptionUsageSnapshot(id: $id, organizationId: $organizationId, resourceType: $resourceType, currentCount: $currentCount, planLimit: $planLimit, snapshotDate: $snapshotDate, ...)';
 }

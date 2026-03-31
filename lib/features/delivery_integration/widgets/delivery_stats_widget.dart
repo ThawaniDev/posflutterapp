@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 
@@ -24,19 +25,16 @@ class DeliveryStatsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Column(
       children: [
         Row(
           children: [
-            _StatTile(
-              label: 'Today\'s Orders',
-              value: '$todayOrders',
-              icon: Icons.receipt_long,
-              color: AppColors.info,
-            ),
+            _StatTile(label: l10n.deliveryTodayOrders, value: '$todayOrders', icon: Icons.receipt_long, color: AppColors.info),
             AppSpacing.gapW12,
             _StatTile(
-              label: 'Today\'s Revenue',
+              label: l10n.deliveryTodayRevenue,
               value: '${todayRevenue.toStringAsFixed(2)} SAR',
               icon: Icons.payments_outlined,
               color: AppColors.success,
@@ -47,14 +45,14 @@ class DeliveryStatsWidget extends StatelessWidget {
         Row(
           children: [
             _StatTile(
-              label: 'Active Orders',
+              label: l10n.deliveryActiveOrders,
               value: '$activeOrders',
               icon: Icons.local_shipping,
               color: AppColors.primary,
             ),
             AppSpacing.gapW12,
             _StatTile(
-              label: 'Pending',
+              label: l10n.deliveryPending,
               value: '$pendingOrders',
               icon: Icons.schedule,
               color: pendingOrders > 0 ? AppColors.warning : AppColors.textSecondary,
@@ -65,14 +63,14 @@ class DeliveryStatsWidget extends StatelessWidget {
         Row(
           children: [
             _StatTile(
-              label: 'Completed',
+              label: l10n.deliveryCompleted,
               value: '$completedOrders',
               icon: Icons.check_circle,
               color: AppColors.success,
             ),
             AppSpacing.gapW12,
             _StatTile(
-              label: 'Platforms',
+              label: l10n.deliveryPlatforms,
               value: '$activePlatforms/$totalPlatforms',
               icon: Icons.delivery_dining,
               color: AppColors.info,
@@ -90,12 +88,7 @@ class _StatTile extends StatelessWidget {
   final IconData icon;
   final Color color;
 
-  const _StatTile({
-    required this.label,
-    required this.value,
-    required this.icon,
-    required this.color,
-  });
+  const _StatTile({required this.label, required this.value, required this.icon, required this.color});
 
   @override
   Widget build(BuildContext context) {

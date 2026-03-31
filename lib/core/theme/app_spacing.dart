@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Thawani POS Design System — Spacing, Radius, Shadows, Sizing
+/// Wameed POS Design System — Spacing, Radius, Shadows, Sizing
 ///
 /// Based on a 4px base grid. Derived from stitch HTML prototypes.
 class AppSpacing {

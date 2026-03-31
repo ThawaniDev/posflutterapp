@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/features/catalog/models/category.dart';
 import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
 import 'package:thawani_pos/features/catalog/repositories/catalog_repository.dart';
 
@@ -73,6 +74,60 @@ class ProductsNotifier extends StateNotifier<ProductsState> {
       if (state is ProductsLoaded) {
         final loaded = state as ProductsLoaded;
         state = loaded.copyWith(products: loaded.products.where((p) => p.id != productId).toList(), total: loaded.total - 1);
+      }
+    } on DioException catch (e) {
+      throw Exception(_extractError(e));
+    }
+  }
+
+  // ─── Selection / Bulk ─────────────────────────────────────────
+
+  void toggleSelection(String productId) {
+    if (state is! ProductsLoaded) return;
+    final loaded = state as ProductsLoaded;
+    final ids = Set<String>.from(loaded.selectedIds);
+    if (ids.contains(productId)) {
+      ids.remove(productId);
+    } else {
+      ids.add(productId);
+    }
+    state = loaded.copyWith(selectedIds: ids);
+  }
+
+  void selectAll() {
+    if (state is! ProductsLoaded) return;
+    final loaded = state as ProductsLoaded;
+    if (loaded.allSelected) {
+      state = loaded.copyWith(selectedIds: {});
+    } else {
+      state = loaded.copyWith(selectedIds: loaded.products.map((p) => p.id).toSet());
+    }
+  }
+
+  void clearSelection() {
+    if (state is! ProductsLoaded) return;
+    final loaded = state as ProductsLoaded;
+    state = loaded.copyWith(selectedIds: {});
+  }
+
+  Future<void> bulkAction(String action, {String? categoryId}) async {
+    if (state is! ProductsLoaded) return;
+    final loaded = state as ProductsLoaded;
+    if (loaded.selectedIds.isEmpty) return;
+    try {
+      await _repository.bulkAction(action: action, productIds: loaded.selectedIds.toList(), categoryId: categoryId);
+      state = loaded.copyWith(selectedIds: {});
+      await load(page: loaded.currentPage);
+    } on DioException catch (e) {
+      throw Exception(_extractError(e));
+    }
+  }
+
+  Future<void> duplicateProduct(String productId) async {
+    try {
+      await _repository.duplicateProduct(productId);
+      if (state is ProductsLoaded) {
+        await load(page: (state as ProductsLoaded).currentPage);
       }
     } on DioException catch (e) {
       throw Exception(_extractError(e));
@@ -176,11 +231,46 @@ class CategoriesNotifier extends StateNotifier<CategoriesState> {
       await _repository.deleteCategory(categoryId);
       if (state is CategoriesLoaded) {
         final current = (state as CategoriesLoaded).categories;
-        state = CategoriesLoaded(categories: current.where((c) => c.id != categoryId).toList());
+        // Also remove any children
+        final idsToRemove = _collectDescendantIds(categoryId, current)..add(categoryId);
+        state = (state as CategoriesLoaded).copyWith(categories: current.where((c) => !idsToRemove.contains(c.id)).toList());
       }
     } on DioException catch (e) {
       throw Exception(_extractError(e));
     }
+  }
+
+  Set<String> _collectDescendantIds(String parentId, List<Category> all) {
+    final ids = <String>{};
+    for (final c in all.where((c) => c.parentId == parentId)) {
+      ids.add(c.id);
+      ids.addAll(_collectDescendantIds(c.id, all));
+    }
+    return ids;
+  }
+
+  void toggleExpanded(String categoryId) {
+    if (state is! CategoriesLoaded) return;
+    final loaded = state as CategoriesLoaded;
+    final ids = Set<String>.from(loaded.expandedIds);
+    if (ids.contains(categoryId)) {
+      ids.remove(categoryId);
+    } else {
+      ids.add(categoryId);
+    }
+    state = loaded.copyWith(expandedIds: ids);
+  }
+
+  void expandAll() {
+    if (state is! CategoriesLoaded) return;
+    final loaded = state as CategoriesLoaded;
+    state = loaded.copyWith(expandedIds: loaded.categories.map((c) => c.id).toSet());
+  }
+
+  void collapseAll() {
+    if (state is! CategoriesLoaded) return;
+    final loaded = state as CategoriesLoaded;
+    state = loaded.copyWith(expandedIds: {});
   }
 }
 

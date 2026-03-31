@@ -5,6 +5,8 @@ class StockTransfer {
   final String organizationId;
   final String fromStoreId;
   final String toStoreId;
+  final String? fromStoreName;
+  final String? toStoreName;
   final StockTransferStatus? status;
   final String? referenceNumber;
   final String? notes;
@@ -20,6 +22,8 @@ class StockTransfer {
     required this.organizationId,
     required this.fromStoreId,
     required this.toStoreId,
+    this.fromStoreName,
+    this.toStoreName,
     this.status,
     this.referenceNumber,
     this.notes,
@@ -37,6 +41,8 @@ class StockTransfer {
       organizationId: json['organization_id'] as String,
       fromStoreId: json['from_store_id'] as String,
       toStoreId: json['to_store_id'] as String,
+      fromStoreName: (json['from_store'] as Map<String, dynamic>?)?['name'] as String?,
+      toStoreName: (json['to_store'] as Map<String, dynamic>?)?['name'] as String?,
       status: StockTransferStatus.tryFromValue(json['status'] as String?),
       referenceNumber: json['reference_number'] as String?,
       notes: json['notes'] as String?,
@@ -72,6 +78,8 @@ class StockTransfer {
     String? organizationId,
     String? fromStoreId,
     String? toStoreId,
+    String? fromStoreName,
+    String? toStoreName,
     StockTransferStatus? status,
     String? referenceNumber,
     String? notes,
@@ -87,6 +95,8 @@ class StockTransfer {
       organizationId: organizationId ?? this.organizationId,
       fromStoreId: fromStoreId ?? this.fromStoreId,
       toStoreId: toStoreId ?? this.toStoreId,
+      fromStoreName: fromStoreName ?? this.fromStoreName,
+      toStoreName: toStoreName ?? this.toStoreName,
       status: status ?? this.status,
       referenceNumber: referenceNumber ?? this.referenceNumber,
       notes: notes ?? this.notes,
@@ -100,13 +110,12 @@ class StockTransfer {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is StockTransfer && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is StockTransfer && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'StockTransfer(id: $id, organizationId: $organizationId, fromStoreId: $fromStoreId, toStoreId: $toStoreId, status: $status, referenceNumber: $referenceNumber, ...)';
+  String toString() =>
+      'StockTransfer(id: $id, organizationId: $organizationId, fromStoreId: $fromStoreId, toStoreId: $toStoreId, status: $status, referenceNumber: $referenceNumber, ...)';
 }

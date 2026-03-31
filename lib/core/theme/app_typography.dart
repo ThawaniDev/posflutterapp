@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
-/// Thawani POS Design System — Typography
+/// Wameed POS Design System — Typography
 ///
 /// Font: Cairo (Arabic-first, supports Latin)
 /// Weight scale: ExtraLight(200), Light(300), Regular(400),
@@ -12,7 +12,7 @@ class AppTypography {
   static const String fontFamily = 'Cairo';
 
   // ─── Display (Hero text, main headings) ──────────────────
-  /// 48px Black — "Thawani POS" hero text
+  /// 48px Black — "Wameed POS" hero text
   static const TextStyle displayLarge = TextStyle(
     fontFamily: fontFamily,
     fontSize: 48,

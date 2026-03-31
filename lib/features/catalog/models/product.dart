@@ -19,6 +19,11 @@ class Product {
   final bool? isActive;
   final bool? isCombo;
   final bool? ageRestricted;
+  final double? offerPrice;
+  final DateTime? offerStart;
+  final DateTime? offerEnd;
+  final int? minOrderQty;
+  final int? maxOrderQty;
   final String? imageUrl;
   final int? syncVersion;
   final DateTime? createdAt;
@@ -44,6 +49,11 @@ class Product {
     this.isActive,
     this.isCombo,
     this.ageRestricted,
+    this.offerPrice,
+    this.offerStart,
+    this.offerEnd,
+    this.minOrderQty,
+    this.maxOrderQty,
     this.imageUrl,
     this.syncVersion,
     this.createdAt,
@@ -71,6 +81,11 @@ class Product {
       isActive: json['is_active'] as bool?,
       isCombo: json['is_combo'] as bool?,
       ageRestricted: json['age_restricted'] as bool?,
+      offerPrice: (json['offer_price'] as num?)?.toDouble(),
+      offerStart: json['offer_start'] != null ? DateTime.parse(json['offer_start'] as String) : null,
+      offerEnd: json['offer_end'] != null ? DateTime.parse(json['offer_end'] as String) : null,
+      minOrderQty: (json['min_order_qty'] as num?)?.toInt(),
+      maxOrderQty: (json['max_order_qty'] as num?)?.toInt(),
       imageUrl: json['image_url'] as String?,
       syncVersion: (json['sync_version'] as num?)?.toInt(),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
@@ -99,6 +114,11 @@ class Product {
       'is_active': isActive,
       'is_combo': isCombo,
       'age_restricted': ageRestricted,
+      'offer_price': offerPrice,
+      'offer_start': offerStart?.toIso8601String(),
+      'offer_end': offerEnd?.toIso8601String(),
+      'min_order_qty': minOrderQty,
+      'max_order_qty': maxOrderQty,
       'image_url': imageUrl,
       'sync_version': syncVersion,
       'created_at': createdAt?.toIso8601String(),
@@ -126,6 +146,11 @@ class Product {
     bool? isActive,
     bool? isCombo,
     bool? ageRestricted,
+    double? offerPrice,
+    DateTime? offerStart,
+    DateTime? offerEnd,
+    int? minOrderQty,
+    int? maxOrderQty,
     String? imageUrl,
     int? syncVersion,
     DateTime? createdAt,
@@ -151,6 +176,11 @@ class Product {
       isActive: isActive ?? this.isActive,
       isCombo: isCombo ?? this.isCombo,
       ageRestricted: ageRestricted ?? this.ageRestricted,
+      offerPrice: offerPrice ?? this.offerPrice,
+      offerStart: offerStart ?? this.offerStart,
+      offerEnd: offerEnd ?? this.offerEnd,
+      minOrderQty: minOrderQty ?? this.minOrderQty,
+      maxOrderQty: maxOrderQty ?? this.maxOrderQty,
       imageUrl: imageUrl ?? this.imageUrl,
       syncVersion: syncVersion ?? this.syncVersion,
       createdAt: createdAt ?? this.createdAt,
@@ -160,13 +190,12 @@ class Product {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Product && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is Product && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'Product(id: $id, organizationId: $organizationId, categoryId: $categoryId, name: $name, nameAr: $nameAr, description: $description, ...)';
+  String toString() =>
+      'Product(id: $id, organizationId: $organizationId, categoryId: $categoryId, name: $name, nameAr: $nameAr, description: $description, ...)';
 }

@@ -30,8 +30,8 @@ class _MetalRateFormPageState extends ConsumerState<MetalRateFormPage> {
     final r = widget.rate;
     if (r != null) _metalType = r.metalType;
     _karatCtrl = TextEditingController(text: r?.karat ?? '');
-    _ratePerGramCtrl = TextEditingController(text: r?.ratePerGram.toStringAsFixed(3) ?? '');
-    _buybackRateCtrl = TextEditingController(text: r?.buybackRatePerGram?.toStringAsFixed(3) ?? '');
+    _ratePerGramCtrl = TextEditingController(text: r?.ratePerGram.toStringAsFixed(2) ?? '');
+    _buybackRateCtrl = TextEditingController(text: r?.buybackRatePerGram?.toStringAsFixed(2) ?? '');
     if (r != null) _effectiveDate = r.effectiveDate;
   }
 

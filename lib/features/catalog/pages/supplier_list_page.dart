@@ -173,121 +173,69 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
   }
 
   Widget _buildBody(SuppliersState state) {
-    if (state is SuppliersLoading || state is SuppliersInitial) {
-      return const Center(child: CircularProgressIndicator());
-    }
+    final isLoading = state is SuppliersLoading || state is SuppliersInitial;
+    final error = state is SuppliersError ? state.message : null;
+    final suppliers = state is SuppliersLoaded ? state.suppliers : <Supplier>[];
+    final loaded = state is SuppliersLoaded ? state : null;
 
-    if (state is SuppliersError) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
-            const SizedBox(height: AppSpacing.md),
-            Text(state.message, style: Theme.of(context).textTheme.bodyLarge, textAlign: TextAlign.center),
-            const SizedBox(height: AppSpacing.lg),
-            PosButton(
-              label: 'Retry',
-              onPressed: () => ref.read(suppliersProvider.notifier).load(),
-              variant: PosButtonVariant.outline,
-            ),
-          ],
+    return PosDataTable<Supplier>(
+      columns: const [
+        PosTableColumn(title: 'Name'),
+        PosTableColumn(title: 'Phone'),
+        PosTableColumn(title: 'Email'),
+      ],
+      items: suppliers,
+      isLoading: isLoading,
+      error: error,
+      onRetry: () => ref.read(suppliersProvider.notifier).load(),
+      emptyConfig: const PosTableEmptyConfig(
+        icon: Icons.local_shipping_outlined,
+        title: 'No suppliers yet',
+        subtitle: 'Add suppliers to track your product sources.',
+      ),
+      actions: [
+        PosTableRowAction<Supplier>(
+          label: 'Edit',
+          icon: Icons.edit_outlined,
+          onTap: (s) => _showSupplierDialog(supplier: s),
         ),
-      );
-    }
-
-    if (state is SuppliersLoaded) {
-      if (state.suppliers.isEmpty) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.local_shipping_outlined, size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
-              const SizedBox(height: AppSpacing.md),
-              Text('No suppliers yet', style: Theme.of(context).textTheme.titleMedium),
-              const SizedBox(height: AppSpacing.xs),
-              Text(
-                'Add suppliers to track your product sources.',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
-              ),
-            ],
-          ),
-        );
-      }
-
-      return Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-              child: PosDataTable(
-                columns: const [
-                  DataColumn(label: Text('NAME')),
-                  DataColumn(label: Text('PHONE')),
-                  DataColumn(label: Text('EMAIL')),
-                  DataColumn(label: Text('ACTIONS')),
-                ],
-                rows: state.suppliers.map((supplier) {
-                  return DataRow(
-                    cells: [
-                      DataCell(
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Container(
-                              width: 36,
-                              height: 36,
-                              decoration: BoxDecoration(
-                                color: AppColors.info.withValues(alpha: 0.1),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Icon(Icons.local_shipping_outlined, size: 18, color: AppColors.info),
-                            ),
-                            const SizedBox(width: AppSpacing.sm),
-                            Text(
-                              supplier.name,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        ),
-                      ),
-                      DataCell(Text(supplier.phone ?? '—')),
-                      DataCell(Text(supplier.email ?? '—')),
-                      DataCell(
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.edit_outlined, size: 18),
-                              tooltip: 'Edit',
-                              onPressed: () => _showSupplierDialog(supplier: supplier),
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.delete_outline, size: 18, color: AppColors.error),
-                              tooltip: 'Delete',
-                              onPressed: () => _handleDelete(supplier),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-          PosTablePagination(
-            currentPage: state.currentPage,
-            totalPages: state.lastPage,
-            totalItems: state.total,
-            itemsPerPage: state.perPage,
-            onPrevious: () => ref.read(suppliersProvider.notifier).load(page: state.currentPage - 1),
-            onNext: () => ref.read(suppliersProvider.notifier).load(page: state.currentPage + 1),
-          ),
-        ],
-      );
-    }
-
-    return const SizedBox.shrink();
+        PosTableRowAction<Supplier>(
+          label: 'Delete',
+          icon: Icons.delete_outline,
+          isDestructive: true,
+          onTap: (s) => _handleDelete(s),
+        ),
+      ],
+      cellBuilder: (supplier, colIndex, col) {
+        switch (colIndex) {
+          case 0:
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
+                  child: Icon(Icons.local_shipping_outlined, size: 18, color: AppColors.info),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Text(supplier.name, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
+              ],
+            );
+          case 1:
+            return Text(supplier.phone ?? '—');
+          case 2:
+            return Text(supplier.email ?? '—');
+          default:
+            return const SizedBox.shrink();
+        }
+      },
+      currentPage: loaded?.currentPage,
+      totalPages: loaded?.lastPage,
+      totalItems: loaded?.total,
+      itemsPerPage: loaded?.perPage ?? 10,
+      onPreviousPage: loaded != null ? () => ref.read(suppliersProvider.notifier).load(page: loaded.currentPage - 1) : null,
+      onNextPage: loaded != null ? () => ref.read(suppliersProvider.notifier).load(page: loaded.currentPage + 1) : null,
+    );
   }
 }

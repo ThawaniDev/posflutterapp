@@ -20,19 +20,38 @@ import 'package:thawani_pos/features/inventory/pages/stock_adjustments_page.dart
 import 'package:thawani_pos/features/inventory/pages/stock_levels_page.dart';
 import 'package:thawani_pos/features/inventory/pages/stock_movements_page.dart';
 import 'package:thawani_pos/features/inventory/pages/stock_transfers_page.dart';
+import 'package:thawani_pos/features/labels/pages/label_designer_page.dart';
+import 'package:thawani_pos/features/labels/pages/label_history_page.dart';
 import 'package:thawani_pos/features/labels/pages/label_list_page.dart';
+import 'package:thawani_pos/features/labels/pages/label_print_queue_page.dart';
 import 'package:thawani_pos/features/onboarding/pages/onboarding_wizard_page.dart';
 import 'package:thawani_pos/features/onboarding/pages/store_settings_page.dart';
 import 'package:thawani_pos/features/onboarding/pages/working_hours_page.dart';
 import 'package:thawani_pos/features/orders/pages/order_list_page.dart';
 import 'package:thawani_pos/features/payments/pages/cash_sessions_page.dart';
+import 'package:thawani_pos/features/payments/pages/cash_management_page.dart';
+import 'package:thawani_pos/features/payments/pages/expenses_page.dart';
+import 'package:thawani_pos/features/payments/pages/gift_cards_page.dart';
+import 'package:thawani_pos/features/payments/pages/financial_reconciliation_page.dart';
+import 'package:thawani_pos/features/payments/pages/daily_summary_page.dart';
 import 'package:thawani_pos/features/pos_terminal/pages/pos_sessions_page.dart';
+import 'package:thawani_pos/features/pos_terminal/pages/pos_terminal_form_page.dart';
+import 'package:thawani_pos/features/pos_terminal/pages/pos_terminals_page.dart';
+import 'package:thawani_pos/features/staff/pages/attendance_page.dart';
+import 'package:thawani_pos/features/staff/pages/commission_summary_page.dart';
 import 'package:thawani_pos/features/staff/pages/role_create_page.dart';
 import 'package:thawani_pos/features/staff/pages/role_detail_page.dart';
 import 'package:thawani_pos/features/staff/pages/roles_list_page.dart';
+import 'package:thawani_pos/features/staff/pages/shift_schedule_page.dart';
+import 'package:thawani_pos/features/staff/pages/staff_detail_page.dart';
+import 'package:thawani_pos/features/staff/pages/staff_form_page.dart';
+import 'package:thawani_pos/features/staff/pages/staff_list_page.dart';
 import 'package:thawani_pos/features/subscription/pages/billing_history_page.dart';
 import 'package:thawani_pos/features/subscription/pages/plan_selection_page.dart';
 import 'package:thawani_pos/features/subscription/pages/subscription_status_page.dart';
+import 'package:thawani_pos/features/subscription/pages/invoice_detail_page.dart';
+import 'package:thawani_pos/features/subscription/pages/plan_comparison_page.dart';
+import 'package:thawani_pos/features/subscription/pages/add_ons_page.dart';
 import 'package:thawani_pos/features/dashboard/pages/owner_dashboard_page.dart';
 import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_overview_page.dart';
 import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_payment_list_page.dart';
@@ -135,6 +154,11 @@ import 'package:thawani_pos/features/security/pages/security_dashboard_page.dart
 import 'package:thawani_pos/features/backup/pages/backup_dashboard_page.dart';
 import 'package:thawani_pos/features/companion/pages/companion_dashboard_page.dart';
 import 'package:thawani_pos/features/pos_customization/pages/customization_dashboard_page.dart';
+import 'package:thawani_pos/features/layout_builder/pages/layout_template_list_page.dart';
+import 'package:thawani_pos/features/layout_builder/pages/layout_builder_canvas_page.dart';
+import 'package:thawani_pos/features/marketplace/pages/marketplace_browse_page.dart';
+import 'package:thawani_pos/features/marketplace/pages/marketplace_listing_detail_page.dart';
+import 'package:thawani_pos/features/marketplace/pages/my_purchases_page.dart';
 import 'package:thawani_pos/features/auto_update/pages/auto_update_dashboard_page.dart';
 import 'package:thawani_pos/features/accessibility/pages/accessibility_dashboard_page.dart';
 import 'package:thawani_pos/features/nice_to_have/presentation/nice_to_have_dashboard_page.dart';
@@ -146,6 +170,9 @@ import 'package:thawani_pos/features/reports/pages/product_performance_page.dart
 import 'package:thawani_pos/features/reports/pages/category_breakdown_page.dart';
 import 'package:thawani_pos/features/reports/pages/payment_methods_page.dart';
 import 'package:thawani_pos/features/reports/pages/staff_performance_page.dart';
+import 'package:thawani_pos/features/reports/pages/inventory_report_page.dart';
+import 'package:thawani_pos/features/reports/pages/financial_report_page.dart';
+import 'package:thawani_pos/features/reports/pages/customer_report_page.dart';
 // Accounting
 import 'package:thawani_pos/features/accounting/pages/accounting_settings_page.dart';
 import 'package:thawani_pos/features/accounting/pages/account_mapping_page.dart';
@@ -161,15 +188,22 @@ import 'package:thawani_pos/features/notifications/pages/notification_preference
 import 'package:thawani_pos/features/support/pages/support_dashboard_page.dart';
 import 'package:thawani_pos/features/support/pages/create_ticket_page.dart';
 import 'package:thawani_pos/features/support/pages/ticket_detail_page.dart';
+import 'package:thawani_pos/features/support/pages/knowledge_base_page.dart';
+import 'package:thawani_pos/features/support/pages/article_detail_page.dart';
 // Delivery
 import 'package:thawani_pos/features/delivery_integration/pages/delivery_dashboard_page.dart';
 import 'package:thawani_pos/features/delivery_integration/pages/delivery_config_page.dart';
 import 'package:thawani_pos/features/delivery_integration/pages/delivery_order_detail_page.dart';
 import 'package:thawani_pos/features/delivery_integration/pages/menu_sync_page.dart';
+import 'package:thawani_pos/features/delivery_integration/pages/delivery_webhook_logs_page.dart';
+import 'package:thawani_pos/features/delivery_integration/pages/delivery_status_push_logs_page.dart';
 // Thawani Pay
 import 'package:thawani_pos/features/thawani_integration/pages/thawani_dashboard_page.dart';
 // Branches
 import 'package:thawani_pos/features/branches/pages/branch_list_page.dart';
+import 'package:thawani_pos/features/branches/pages/branch_detail_page.dart';
+import 'package:thawani_pos/features/branches/pages/branch_form_page.dart';
+import 'package:thawani_pos/features/branches/models/store.dart';
 // Settings
 import 'package:thawani_pos/features/settings/pages/settings_page.dart';
 // Industry Workflows
@@ -223,7 +257,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         routes: [
           // ─── Main (protected) ─────────────────────────
           GoRoute(path: Routes.dashboard, name: 'dashboard', builder: (context, state) => const OwnerDashboardPage()),
-          GoRoute(path: Routes.pos, name: 'pos', builder: (context, state) => const PosSessionsPage()),
+          GoRoute(path: Routes.pos, name: 'pos', builder: (context, state) => const PosTerminalsPage()),
 
           // ─── Catalog ──────────────────────────────────
           GoRoute(path: Routes.products, name: 'products', builder: (context, state) => const ProductListPage()),
@@ -260,20 +294,79 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
           // ─── POS Terminal ─────────────────────────────
           GoRoute(path: Routes.posSessions, name: 'posSessions', builder: (context, state) => const PosSessionsPage()),
+          GoRoute(path: Routes.posTerminals, name: 'posTerminals', builder: (context, state) => const PosTerminalsPage()),
+          GoRoute(path: Routes.posTerminalAdd, name: 'posTerminalAdd', builder: (context, state) => const PosTerminalFormPage()),
+          GoRoute(
+            path: Routes.posTerminalEdit,
+            name: 'posTerminalEdit',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return PosTerminalFormPage(terminalId: id);
+            },
+          ),
 
           // ─── Orders ───────────────────────────────────
           GoRoute(path: Routes.orders, name: 'orders', builder: (context, state) => const OrderListPage()),
 
           // ─── Payments ─────────────────────────────────
           GoRoute(path: Routes.cashSessions, name: 'cashSessions', builder: (context, state) => const CashSessionsPage()),
+          GoRoute(path: Routes.cashManagement, name: 'cashManagement', builder: (context, state) => const CashManagementPage()),
+          GoRoute(path: Routes.expenses, name: 'expenses', builder: (context, state) => const ExpensesPage()),
+          GoRoute(path: Routes.giftCards, name: 'giftCards', builder: (context, state) => const GiftCardsPage()),
+          GoRoute(
+            path: Routes.financialReconciliation,
+            name: 'financialReconciliation',
+            builder: (context, state) => const FinancialReconciliationPage(),
+          ),
+          GoRoute(path: Routes.dailySummary, name: 'dailySummary', builder: (context, state) => const DailySummaryPage()),
 
           // ─── Customers ────────────────────────────────
           GoRoute(path: Routes.customers, name: 'customers', builder: (context, state) => const CustomerListPage()),
 
           // ─── Labels ───────────────────────────────────
           GoRoute(path: Routes.labels, name: 'labels', builder: (context, state) => const LabelListPage()),
+          GoRoute(
+            path: Routes.labelDesigner,
+            name: 'labelDesigner',
+            builder: (context, state) {
+              final id = state.uri.queryParameters['id'];
+              final duplicate = state.uri.queryParameters['duplicate'];
+              return LabelDesignerPage(templateId: id, duplicateId: duplicate);
+            },
+          ),
+          GoRoute(path: Routes.labelHistory, name: 'labelHistory', builder: (context, state) => const LabelHistoryPage()),
+          GoRoute(
+            path: Routes.labelPrintQueue,
+            name: 'labelPrintQueue',
+            builder: (context, state) {
+              final templateId = state.uri.queryParameters['templateId'];
+              return LabelPrintQueuePage(templateId: templateId);
+            },
+          ),
 
           // ─── Staff / Roles ────────────────────────────
+          GoRoute(path: Routes.staffMembers, name: 'staffMembers', builder: (context, state) => const StaffListPage()),
+          GoRoute(
+            path: Routes.staffMembersCreate,
+            name: 'staffMembersCreate',
+            builder: (context, state) => const StaffFormPage(),
+          ),
+          GoRoute(
+            path: '${Routes.staffMembers}/:id',
+            name: 'staffMemberDetail',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return StaffDetailPage(staffId: id);
+            },
+          ),
+          GoRoute(
+            path: '${Routes.staffMembers}/:id/edit',
+            name: 'staffMemberEdit',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return StaffFormPage(staffId: id);
+            },
+          ),
           GoRoute(path: Routes.staffRoles, name: 'staffRoles', builder: (context, state) => const RolesListPage()),
           GoRoute(path: Routes.staffRoleCreate, name: 'staffRoleCreate', builder: (context, state) => const RoleCreatePage()),
           GoRoute(
@@ -282,6 +375,17 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               final id = int.parse(state.pathParameters['id']!);
               return RoleDetailPage(roleId: id);
+            },
+          ),
+          GoRoute(path: Routes.staffAttendance, name: 'staffAttendance', builder: (context, state) => const AttendancePage()),
+          GoRoute(path: Routes.staffShifts, name: 'staffShifts', builder: (context, state) => const ShiftSchedulePage()),
+          GoRoute(
+            path: '${Routes.staffCommission}/:id',
+            name: 'staffCommission',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              final name = state.uri.queryParameters['name'] ?? '';
+              return CommissionSummaryPage(staffId: id, staffName: name);
             },
           ),
 
@@ -312,6 +416,16 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const SubscriptionStatusPage(),
           ),
           GoRoute(path: Routes.billingHistory, name: 'billingHistory', builder: (context, state) => const BillingHistoryPage()),
+          GoRoute(path: Routes.planComparison, name: 'planComparison', builder: (context, state) => const PlanComparisonPage()),
+          GoRoute(path: Routes.subscriptionAddOns, name: 'subscriptionAddOns', builder: (context, state) => const AddOnsPage()),
+          GoRoute(
+            path: '${Routes.invoiceDetail}/:invoiceId',
+            name: 'invoiceDetail',
+            builder: (context, state) {
+              final invoiceId = state.pathParameters['invoiceId']!;
+              return InvoiceDetailPage(invoiceId: invoiceId);
+            },
+          ),
 
           // ─── Admin Panel – P15: Financial Operations ──
           GoRoute(path: Routes.adminFinOps, name: 'adminFinOps', builder: (context, state) => const AdminFinOpsOverviewPage()),
@@ -742,6 +856,30 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const CustomizationDashboardPage(),
           ),
 
+          // ─── Layout Builder ───
+          GoRoute(
+            path: Routes.layoutTemplates,
+            name: 'layoutTemplates',
+            builder: (context, state) => const LayoutTemplateListPage(),
+          ),
+          GoRoute(
+            path: Routes.layoutBuilder,
+            name: 'layoutBuilder',
+            builder: (context, state) => const LayoutBuilderCanvasPage(),
+          ),
+
+          // ─── Marketplace ───
+          GoRoute(path: Routes.marketplace, name: 'marketplace', builder: (context, state) => const MarketplaceBrowsePage()),
+          GoRoute(
+            path: '${Routes.marketplace}/:id',
+            name: 'marketplaceDetail',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return MarketplaceListingDetailPage(listingId: id);
+            },
+          ),
+          GoRoute(path: Routes.myPurchases, name: 'myPurchases', builder: (context, state) => const MyPurchasesPage()),
+
           // ─── Auto Updates ───
           GoRoute(
             path: Routes.autoUpdateDashboard,
@@ -798,9 +936,41 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             name: 'reportsStaffPerformance',
             builder: (context, state) => const StaffPerformancePage(),
           ),
+          GoRoute(
+            path: Routes.reportsInventory,
+            name: 'reportsInventory',
+            builder: (context, state) => const InventoryReportPage(),
+          ),
+          GoRoute(
+            path: Routes.reportsFinancial,
+            name: 'reportsFinancial',
+            builder: (context, state) => const FinancialReportPage(),
+          ),
+          GoRoute(
+            path: Routes.reportsCustomers,
+            name: 'reportsCustomers',
+            builder: (context, state) => const CustomerReportPage(),
+          ),
 
           // ─── Branches ───
           GoRoute(path: Routes.branches, name: 'branches', builder: (context, state) => const BranchListPage()),
+          GoRoute(path: '${Routes.branches}/create', name: 'branchCreate', builder: (context, state) => const BranchFormPage()),
+          GoRoute(
+            path: '${Routes.branches}/:branchId',
+            name: 'branchDetail',
+            builder: (context, state) {
+              final branchId = state.pathParameters['branchId']!;
+              return BranchDetailPage(branchId: branchId);
+            },
+          ),
+          GoRoute(
+            path: '${Routes.branches}/:branchId/edit',
+            name: 'branchEdit',
+            builder: (context, state) {
+              final extra = state.extra as Store?;
+              return BranchFormPage(existingBranch: extra);
+            },
+          ),
 
           // ─── Accounting ───
           GoRoute(path: Routes.accounting, name: 'accounting', builder: (context, state) => const AccountingSettingsPage()),
@@ -834,9 +1004,27 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           // ─── Delivery Integration ───
           GoRoute(path: Routes.delivery, name: 'delivery', builder: (context, state) => const DeliveryDashboardPage()),
           GoRoute(path: Routes.deliveryConfig, name: 'deliveryConfig', builder: (context, state) => const DeliveryConfigPage()),
-          GoRoute(path: '${Routes.deliveryConfig}/:id', name: 'deliveryConfigEdit', builder: (context, state) => DeliveryConfigPage(configId: state.pathParameters['id'])),
-          GoRoute(path: '${Routes.deliveryOrderDetail}/:id', name: 'deliveryOrderDetail', builder: (context, state) => DeliveryOrderDetailPage(orderId: state.pathParameters['id']!)),
+          GoRoute(
+            path: '${Routes.deliveryConfig}/:id',
+            name: 'deliveryConfigEdit',
+            builder: (context, state) => DeliveryConfigPage(configId: state.pathParameters['id']),
+          ),
+          GoRoute(
+            path: '${Routes.deliveryOrderDetail}/:id',
+            name: 'deliveryOrderDetail',
+            builder: (context, state) => DeliveryOrderDetailPage(orderId: state.pathParameters['id']!),
+          ),
           GoRoute(path: Routes.deliveryMenuSync, name: 'deliveryMenuSync', builder: (context, state) => const MenuSyncPage()),
+          GoRoute(
+            path: Routes.deliveryWebhookLogs,
+            name: 'deliveryWebhookLogs',
+            builder: (context, state) => const DeliveryWebhookLogsPage(),
+          ),
+          GoRoute(
+            path: Routes.deliveryStatusPushLogs,
+            name: 'deliveryStatusPushLogs',
+            builder: (context, state) => const DeliveryStatusPushLogsPage(),
+          ),
 
           // ─── Notifications ───
           GoRoute(path: Routes.notifications, name: 'notifications', builder: (context, state) => const NotificationsListPage()),
@@ -853,6 +1041,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: '${Routes.support}/tickets/:id',
             name: 'supportTicketDetail',
             builder: (context, state) => TicketDetailPage(ticketId: state.pathParameters['id']!),
+          ),
+          GoRoute(path: Routes.supportKb, name: 'supportKb', builder: (context, state) => const KnowledgeBasePage()),
+          GoRoute(
+            path: '${Routes.supportKb}/:slug',
+            name: 'supportKbArticle',
+            builder: (context, state) => ArticleDetailPage(slug: state.pathParameters['slug']!),
           ),
 
           // ─── Industry Workflows ───

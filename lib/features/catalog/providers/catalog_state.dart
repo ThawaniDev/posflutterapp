@@ -24,6 +24,7 @@ class ProductsLoaded extends ProductsState {
   final int perPage;
   final String? selectedCategoryId;
   final String? searchQuery;
+  final Set<String> selectedIds;
 
   const ProductsLoaded({
     required this.products,
@@ -33,9 +34,12 @@ class ProductsLoaded extends ProductsState {
     required this.perPage,
     this.selectedCategoryId,
     this.searchQuery,
+    this.selectedIds = const {},
   });
 
   bool get hasMore => currentPage < lastPage;
+  bool get hasSelection => selectedIds.isNotEmpty;
+  bool get allSelected => products.isNotEmpty && selectedIds.length == products.length;
 
   ProductsLoaded copyWith({
     List<Product>? products,
@@ -45,6 +49,7 @@ class ProductsLoaded extends ProductsState {
     int? perPage,
     String? selectedCategoryId,
     String? searchQuery,
+    Set<String>? selectedIds,
   }) {
     return ProductsLoaded(
       products: products ?? this.products,
@@ -54,6 +59,7 @@ class ProductsLoaded extends ProductsState {
       perPage: perPage ?? this.perPage,
       selectedCategoryId: selectedCategoryId ?? this.selectedCategoryId,
       searchQuery: searchQuery ?? this.searchQuery,
+      selectedIds: selectedIds ?? this.selectedIds,
     );
   }
 }
@@ -116,10 +122,22 @@ class CategoriesLoading extends CategoriesState {
 
 class CategoriesLoaded extends CategoriesState {
   final List<Category> categories;
+  final Set<String> expandedIds;
 
-  const CategoriesLoaded({required this.categories});
+  const CategoriesLoaded({required this.categories, this.expandedIds = const {}});
 
-  CategoriesLoaded copyWith({List<Category>? categories}) => CategoriesLoaded(categories: categories ?? this.categories);
+  /// Returns root categories (no parent).
+  List<Category> get roots =>
+      categories.where((c) => c.parentId == null).toList()..sort((a, b) => (a.sortOrder ?? 0).compareTo(b.sortOrder ?? 0));
+
+  /// Returns children of the given parent.
+  List<Category> childrenOf(String parentId) =>
+      categories.where((c) => c.parentId == parentId).toList()..sort((a, b) => (a.sortOrder ?? 0).compareTo(b.sortOrder ?? 0));
+
+  bool isExpanded(String id) => expandedIds.contains(id);
+
+  CategoriesLoaded copyWith({List<Category>? categories, Set<String>? expandedIds}) =>
+      CategoriesLoaded(categories: categories ?? this.categories, expandedIds: expandedIds ?? this.expandedIds);
 }
 
 class CategoriesError extends CategoriesState {

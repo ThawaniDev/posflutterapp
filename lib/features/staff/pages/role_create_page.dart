@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
@@ -55,7 +56,8 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
             permissionIds: _selectedPermissionIds.toList(),
           );
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Role created successfully.')));
+        final l10n = AppLocalizations.of(context)!;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.staffRoleCreated)));
         Navigator.pop(context);
       }
     } catch (e) {
@@ -70,12 +72,22 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
   @override
   Widget build(BuildContext context) {
     final permState = ref.watch(permissionsCatalogProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('Create Role'),
+        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        title: Text(l10n.staffCreateRole),
         actions: [
-          PosButton(label: 'Create', icon: Icons.check, isLoading: _isSaving, onPressed: _handleCreate, size: PosButtonSize.sm),
+          PosButton(
+            label: l10n.create,
+            icon: Icons.check,
+            isLoading: _isSaving,
+            onPressed: _handleCreate,
+            size: PosButtonSize.sm,
+          ),
           const SizedBox(width: AppSpacing.sm),
         ],
       ),
@@ -85,23 +97,29 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
             // ─── Basic Info ────────────────────────────────
-            Text('Role Information', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+            Text(
+              l10n.staffRoleInfo,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+              ),
+            ),
             const SizedBox(height: AppSpacing.md),
 
             TextFormField(
               controller: _displayNameController,
-              decoration: const InputDecoration(labelText: 'Display Name *', hintText: 'e.g., Shift Supervisor'),
+              decoration: InputDecoration(labelText: '${l10n.staffDisplayName} *', hintText: l10n.staffDisplayNameHint),
               textCapitalization: TextCapitalization.words,
-              validator: (v) => (v == null || v.trim().isEmpty) ? 'Required' : null,
+              validator: (v) => (v == null || v.trim().isEmpty) ? l10n.staffRequired : null,
               onChanged: _onDisplayNameChanged,
             ),
             const SizedBox(height: AppSpacing.md),
 
             TextFormField(
               controller: _nameController,
-              decoration: const InputDecoration(labelText: 'System Name', helperText: 'Auto-generated, must be unique lowercase'),
+              decoration: InputDecoration(labelText: l10n.staffSystemName, helperText: l10n.staffSystemNameHelper),
               validator: (v) {
-                if (v == null || v.trim().isEmpty) return 'Required';
+                if (v == null || v.trim().isEmpty) return l10n.staffRequired;
                 if (!RegExp(r'^[a-z][a-z0-9_]*$').hasMatch(v.trim())) {
                   return 'Lowercase letters, numbers, underscores only';
                 }
@@ -112,7 +130,7 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
 
             TextFormField(
               controller: _descriptionController,
-              decoration: const InputDecoration(labelText: 'Description', hintText: 'What does this role do?'),
+              decoration: InputDecoration(labelText: l10n.description, hintText: l10n.staffRoleDescHint),
               maxLines: 2,
             ),
             const SizedBox(height: AppSpacing.xl),
@@ -120,7 +138,13 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
             // ─── Permissions ───────────────────────────────
             Row(
               children: [
-                Text('Permissions', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                Text(
+                  l10n.staffPermissions,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                  ),
+                ),
                 const Spacer(),
                 Text(
                   '${_selectedPermissionIds.length} selected',
@@ -146,6 +170,7 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
   }
 
   List<Widget> _buildPermissionModules(Map<String, List<Permission>> grouped) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return grouped.entries.map((entry) {
       final module = entry.key;
       final permissions = entry.value;
@@ -153,10 +178,11 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
 
       return Card(
         elevation: 0,
+        color: isDark ? AppColors.cardDark : AppColors.cardLight,
         margin: const EdgeInsets.only(bottom: AppSpacing.sm),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: AppColors.borderLight),
+          side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
         ),
         child: ExpansionTile(
           leading: Icon(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Thawani POS Design System — Color Tokens
+/// Wameed POS Design System — Color Tokens
 ///
 /// Brand: Primary Orange (#FD8209), Secondary Yellow (#FFBF0D)
 /// Derived from stitch HTML prototypes. Uses warm neutrals.
@@ -33,7 +33,7 @@ class AppColors {
 
   // ─── Background ──────────────────────────────────────────
   static const Color backgroundLight = Color(0xFFF8F7F5); // warm off-white
-  static const Color backgroundDark = Color(0xFF23190F); // deep warm brown
+  static const Color backgroundDark = Color(0xFF0F1923); // deep warm brown
 
   // ─── Surface ─────────────────────────────────────────────
   static const Color surfaceLight = Color(0xFFFFFFFF);

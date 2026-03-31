@@ -96,7 +96,7 @@ final _testPlans = [
 
 final _testSubscription = StoreSubscription(
   id: 'sub-1',
-  storeId: 'store-1',
+  organizationId: 'org-1',
   subscriptionPlanId: 'plan-pro',
   status: SubscriptionStatus.active,
   billingCycle: BillingCycle.monthly,

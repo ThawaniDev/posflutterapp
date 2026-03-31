@@ -5,6 +5,9 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
 import 'package:thawani_pos/features/inventory/models/recipe.dart';
 import 'package:thawani_pos/features/inventory/providers/inventory_providers.dart';
 import 'package:thawani_pos/features/inventory/providers/inventory_state.dart';
@@ -28,7 +31,7 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Delete Recipe'),
-        content: Text('Delete recipe for product "${recipe.productId}"?'),
+        content: Text('Delete recipe "${recipe.name ?? recipe.productName ?? recipe.productId}"?'),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
           TextButton(
@@ -75,192 +78,170 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
   }
 
   Widget _buildBody(RecipesState state) {
-    if (state is RecipesLoading || state is RecipesInitial) {
-      return const Center(child: CircularProgressIndicator());
-    }
+    final isLoading = state is RecipesLoading || state is RecipesInitial;
+    final error = state is RecipesError ? state.message : null;
+    final recipes = state is RecipesLoaded ? state.recipes : <Recipe>[];
 
-    if (state is RecipesError) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
-            const SizedBox(height: AppSpacing.md),
-            Text(state.message, textAlign: TextAlign.center),
-            const SizedBox(height: AppSpacing.lg),
-            PosButton(
-              label: 'Retry',
-              onPressed: () => ref.read(recipesProvider.notifier).load(),
-              variant: PosButtonVariant.outline,
-            ),
-          ],
-        ),
-      );
-    }
-
-    if (state is RecipesLoaded) {
-      if (state.recipes.isEmpty) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.restaurant_menu_outlined, size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
-              const SizedBox(height: AppSpacing.md),
-              Text('No recipes yet', style: Theme.of(context).textTheme.titleMedium),
-              const SizedBox(height: AppSpacing.xs),
-              Text(
-                'Recipes define ingredient lists for composite products.',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
-              ),
-            ],
-          ),
-        );
-      }
-
-      return SingleChildScrollView(padding: const EdgeInsets.all(AppSpacing.md), child: _buildTable(state.recipes));
-    }
-
-    return const SizedBox.shrink();
-  }
-
-  Widget _buildTable(List<Recipe> recipes) {
-    return PosDataTable(
+    return PosDataTable<Recipe>(
       columns: const [
-        DataColumn(label: Text('PRODUCT')),
-        DataColumn(label: Text('YIELD'), numeric: true),
-        DataColumn(label: Text('STATUS')),
-        DataColumn(label: Text('CREATED')),
-        DataColumn(label: Text('ACTIONS')),
+        PosTableColumn(title: 'Product'),
+        PosTableColumn(title: 'Yield', numeric: true),
+        PosTableColumn(title: 'Status'),
+        PosTableColumn(title: 'Created'),
       ],
-      rows: recipes.map((recipe) {
-        return DataRow(
-          cells: [
-            DataCell(Text(recipe.productId.substring(0, 8))),
-            DataCell(Text(recipe.yieldQuantity.toStringAsFixed(2))),
-            DataCell(
-              PosBadge(
-                label: (recipe.isActive ?? true) ? 'Active' : 'Inactive',
-                variant: (recipe.isActive ?? true) ? PosBadgeVariant.success : PosBadgeVariant.neutral,
-              ),
-            ),
-            DataCell(
-              Text(
-                recipe.createdAt != null ? '${recipe.createdAt!.day}/${recipe.createdAt!.month}/${recipe.createdAt!.year}' : '-',
-              ),
-            ),
-            DataCell(
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.edit_outlined, size: 20),
-                    tooltip: 'Edit',
-                    onPressed: () {
-                      // TODO: Navigate to edit page
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.delete_outline, size: 20, color: AppColors.error),
-                    tooltip: 'Delete',
-                    onPressed: () => _handleDelete(recipe),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      }).toList(),
+      items: recipes,
+      isLoading: isLoading,
+      error: error,
+      onRetry: () => ref.read(recipesProvider.notifier).load(),
+      emptyConfig: const PosTableEmptyConfig(
+        icon: Icons.restaurant_menu_outlined,
+        title: 'No recipes yet',
+        subtitle: 'Recipes define ingredient lists for composite products.',
+      ),
+      actions: [
+        PosTableRowAction<Recipe>(
+          label: 'Edit',
+          icon: Icons.edit_outlined,
+          onTap: (recipe) {
+            // TODO: Navigate to edit page
+          },
+        ),
+        PosTableRowAction<Recipe>(
+          label: 'Delete',
+          icon: Icons.delete_outline,
+          isDestructive: true,
+          onTap: (recipe) => _handleDelete(recipe),
+        ),
+      ],
+      cellBuilder: (recipe, colIndex, col) {
+        switch (colIndex) {
+          case 0:
+            return Text(recipe.name ?? recipe.productName ?? recipe.productId.substring(0, 8));
+          case 1:
+            return Text(recipe.yieldQuantity.toStringAsFixed(2));
+          case 2:
+            return PosBadge(
+              label: (recipe.isActive ?? true) ? 'Active' : 'Inactive',
+              variant: (recipe.isActive ?? true) ? PosBadgeVariant.success : PosBadgeVariant.neutral,
+            );
+          case 3:
+            return Text(
+              recipe.createdAt != null ? '${recipe.createdAt!.day}/${recipe.createdAt!.month}/${recipe.createdAt!.year}' : '-',
+            );
+          default:
+            return const SizedBox.shrink();
+        }
+      },
     );
   }
 
   Future<void> _showCreateDialog() async {
+    // Ensure products are loaded
+    if (ref.read(productsProvider) is! ProductsLoaded) {
+      await ref.read(productsProvider.notifier).load();
+    }
+
     final formKey = GlobalKey<FormState>();
-    final productIdController = TextEditingController();
     final yieldController = TextEditingController(text: '1');
-    final ingredientProductController = TextEditingController();
     final ingredientQtyController = TextEditingController();
     final wasteController = TextEditingController(text: '0');
+    String? selectedProductId;
+    String? selectedIngredientId;
 
     final result = await showDialog<Map<String, dynamic>>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('New Recipe'),
-        content: Form(
-          key: formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  controller: productIdController,
-                  decoration: const InputDecoration(labelText: 'Product ID (output)'),
-                  validator: (v) => (v == null || v.isEmpty) ? 'Required' : null,
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) {
+          final prodState = ref.read(productsProvider);
+          final productList = prodState is ProductsLoaded ? prodState.products : <Product>[];
+
+          return AlertDialog(
+            title: const Text('New Recipe'),
+            content: SizedBox(
+              width: 500,
+              child: Form(
+                key: formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      DropdownButtonFormField<String>(
+                        value: selectedProductId,
+                        decoration: const InputDecoration(labelText: 'Output Product'),
+                        isExpanded: true,
+                        items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
+                        onChanged: (v) => setDialogState(() => selectedProductId = v),
+                        validator: (v) => v == null ? 'Required' : null,
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      TextFormField(
+                        controller: yieldController,
+                        decoration: const InputDecoration(labelText: 'Yield Quantity'),
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        validator: (v) {
+                          if (v == null || v.isEmpty) return 'Required';
+                          if (double.tryParse(v) == null) return 'Invalid';
+                          return null;
+                        },
+                      ),
+                      const Divider(height: 24),
+                      const Text('Ingredient', style: TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: AppSpacing.sm),
+                      DropdownButtonFormField<String>(
+                        value: selectedIngredientId,
+                        decoration: const InputDecoration(labelText: 'Ingredient Product'),
+                        isExpanded: true,
+                        items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
+                        onChanged: (v) => setDialogState(() => selectedIngredientId = v),
+                        validator: (v) => v == null ? 'Required' : null,
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      TextFormField(
+                        controller: ingredientQtyController,
+                        decoration: const InputDecoration(labelText: 'Quantity'),
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        validator: (v) {
+                          if (v == null || v.isEmpty) return 'Required';
+                          if (double.tryParse(v) == null) return 'Invalid';
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      TextFormField(
+                        controller: wasteController,
+                        decoration: const InputDecoration(labelText: 'Waste % (0-100)'),
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      ),
+                    ],
+                  ),
                 ),
-                TextFormField(
-                  controller: yieldController,
-                  decoration: const InputDecoration(labelText: 'Yield Quantity'),
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  validator: (v) {
-                    if (v == null || v.isEmpty) return 'Required';
-                    if (double.tryParse(v) == null) return 'Invalid';
-                    return null;
-                  },
-                ),
-                const Divider(height: 24),
-                const Text('Ingredient', style: TextStyle(fontWeight: FontWeight.bold)),
-                TextFormField(
-                  controller: ingredientProductController,
-                  decoration: const InputDecoration(labelText: 'Ingredient Product ID'),
-                  validator: (v) => (v == null || v.isEmpty) ? 'Required' : null,
-                ),
-                TextFormField(
-                  controller: ingredientQtyController,
-                  decoration: const InputDecoration(labelText: 'Quantity'),
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  validator: (v) {
-                    if (v == null || v.isEmpty) return 'Required';
-                    if (double.tryParse(v) == null) return 'Invalid';
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: wasteController,
-                  decoration: const InputDecoration(labelText: 'Waste % (0-100)'),
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          TextButton(
-            onPressed: () {
-              if (formKey.currentState!.validate()) {
-                Navigator.pop(ctx, {
-                  'product_id': productIdController.text,
-                  'yield_quantity': double.parse(yieldController.text),
-                  'ingredients': [
-                    {
-                      'product_id': ingredientProductController.text,
-                      'quantity': double.parse(ingredientQtyController.text),
-                      'waste_percent': double.tryParse(wasteController.text) ?? 0,
-                    },
-                  ],
-                });
-              }
-            },
-            child: const Text('Create'),
-          ),
-        ],
+            actions: [
+              TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+              TextButton(
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    Navigator.pop(ctx, {
+                      'product_id': selectedProductId,
+                      'yield_quantity': double.parse(yieldController.text),
+                      'ingredients': [
+                        {
+                          'product_id': selectedIngredientId,
+                          'quantity': double.parse(ingredientQtyController.text),
+                          'waste_percent': double.tryParse(wasteController.text) ?? 0,
+                        },
+                      ],
+                    });
+                  }
+                },
+                child: const Text('Create'),
+              ),
+            ],
+          );
+        },
       ),
     );
-
-    productIdController.dispose();
-    yieldController.dispose();
-    ingredientProductController.dispose();
-    ingredientQtyController.dispose();
-    wasteController.dispose();
 
     if (result != null && mounted) {
       try {
@@ -274,5 +255,9 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
         }
       }
     }
+
+    yieldController.dispose();
+    ingredientQtyController.dispose();
+    wasteController.dispose();
   }
 }

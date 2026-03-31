@@ -30,7 +30,7 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
     _deviceDescCtrl = TextEditingController(text: r?.deviceDescription ?? '');
     _imeiCtrl = TextEditingController(text: r?.imei ?? '');
     _conditionGradeCtrl = TextEditingController(text: r?.conditionGrade ?? '');
-    _assessedValueCtrl = TextEditingController(text: r?.assessedValue.toStringAsFixed(3) ?? '');
+    _assessedValueCtrl = TextEditingController(text: r?.assessedValue.toStringAsFixed(2) ?? '');
     _staffUserIdCtrl = TextEditingController(text: r?.staffUserId ?? '');
   }
 

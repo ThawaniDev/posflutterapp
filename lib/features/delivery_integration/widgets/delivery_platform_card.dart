@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/delivery_integration/enums/delivery_config_platform.dart';
@@ -9,16 +10,11 @@ class DeliveryPlatformCard extends StatelessWidget {
   final VoidCallback? onTap;
   final VoidCallback? onTestConnection;
 
-  const DeliveryPlatformCard({
-    super.key,
-    required this.config,
-    this.onToggle,
-    this.onTap,
-    this.onTestConnection,
-  });
+  const DeliveryPlatformCard({super.key, required this.config, this.onToggle, this.onTap, this.onTestConnection});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final platformSlug = config['platform'] as String? ?? '';
     final platform = DeliveryConfigPlatform.tryFromValue(platformSlug);
     final isEnabled = config['is_enabled'] == true;
@@ -35,9 +31,7 @@ class DeliveryPlatformCard extends StatelessWidget {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(AppRadius.lg),
-        side: BorderSide(
-          color: isEnabled ? platformColor.withValues(alpha: 0.3) : Theme.of(context).dividerColor,
-        ),
+        side: BorderSide(color: isEnabled ? platformColor.withValues(alpha: 0.3) : Theme.of(context).dividerColor),
       ),
       child: InkWell(
         onTap: onTap,
@@ -65,11 +59,8 @@ class DeliveryPlatformCard extends StatelessWidget {
                             _StatusDot(isActive: isEnabled),
                             AppSpacing.gapW4,
                             Text(
-                              isEnabled ? status : 'Disabled',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: isEnabled ? AppColors.success : AppColors.textSecondary,
-                              ),
+                              isEnabled ? status : l10n.deliveryDisabled,
+                              style: TextStyle(fontSize: 12, color: isEnabled ? AppColors.success : AppColors.textSecondary),
                             ),
                             if (autoAccept && isEnabled) ...[
                               AppSpacing.gapW8,
@@ -79,10 +70,7 @@ class DeliveryPlatformCard extends StatelessWidget {
                                   color: AppColors.info.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(AppRadius.full),
                                 ),
-                                child: Text(
-                                  'Auto-accept',
-                                  style: TextStyle(fontSize: 10, color: AppColors.info),
-                                ),
+                                child: Text(l10n.deliveryAutoAccept, style: TextStyle(fontSize: 10, color: AppColors.info)),
                               ),
                             ],
                           ],
@@ -90,11 +78,7 @@ class DeliveryPlatformCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Switch(
-                    value: isEnabled,
-                    onChanged: onToggle != null ? (_) => onToggle!() : null,
-                    activeColor: platformColor,
-                  ),
+                  Switch(value: isEnabled, onChanged: onToggle != null ? (_) => onToggle!() : null, activeColor: platformColor),
                 ],
               ),
               if (isEnabled) ...[
@@ -104,14 +88,14 @@ class DeliveryPlatformCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _InfoChip(label: 'Today', value: '$dailyCount orders'),
+                    _InfoChip(label: l10n.deliveryToday, value: l10n.deliveryOrdersCount(dailyCount)),
                     if (lastOrderAt != null)
-                      _InfoChip(label: 'Last order', value: _formatTimeAgo(lastOrderAt)),
+                      _InfoChip(label: l10n.deliveryLastOrder, value: _formatTimeAgo(context, lastOrderAt)),
                     if (onTestConnection != null)
                       TextButton.icon(
                         onPressed: onTestConnection,
                         icon: const Icon(Icons.wifi_tethering, size: 16),
-                        label: const Text('Test', style: TextStyle(fontSize: 12)),
+                        label: Text(l10n.deliveryTestConnection, style: const TextStyle(fontSize: 12)),
                         style: TextButton.styleFrom(
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           minimumSize: Size.zero,
@@ -128,13 +112,14 @@ class DeliveryPlatformCard extends StatelessWidget {
     );
   }
 
-  String _formatTimeAgo(String dateString) {
+  String _formatTimeAgo(BuildContext context, String dateString) {
+    final l10n = AppLocalizations.of(context)!;
     try {
       final date = DateTime.parse(dateString);
       final diff = DateTime.now().difference(date);
-      if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-      if (diff.inHours < 24) return '${diff.inHours}h ago';
-      return '${diff.inDays}d ago';
+      if (diff.inMinutes < 60) return l10n.deliveryMinutesAgo(diff.inMinutes);
+      if (diff.inHours < 24) return l10n.deliveryHoursAgo(diff.inHours);
+      return l10n.deliveryDaysAgo(diff.inDays);
     } catch (_) {
       return dateString;
     }
@@ -150,10 +135,7 @@ class _StatusDot extends StatelessWidget {
     return Container(
       width: 8,
       height: 8,
-      decoration: BoxDecoration(
-        color: isActive ? AppColors.success : AppColors.textSecondary,
-        shape: BoxShape.circle,
-      ),
+      decoration: BoxDecoration(color: isActive ? AppColors.success : AppColors.textSecondary, shape: BoxShape.circle),
     );
   }
 }

@@ -20,7 +20,7 @@ class SubscriptionApiService {
   // ─── Plans ─────────────────────────────────────────────────────
 
   Future<List<SubscriptionPlan>> listPlans({bool activeOnly = true}) async {
-    final response = await _dio.get(ApiEndpoints.subscriptionPlans, queryParameters: {'active_only': activeOnly});
+    final response = await _dio.get(ApiEndpoints.subscriptionPlans, queryParameters: {'active_only': activeOnly ? 1 : 0});
 
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.data as List<dynamic>;
@@ -98,8 +98,9 @@ class SubscriptionApiService {
     final response = await _dio.get(ApiEndpoints.subscriptionUsage);
 
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    if (apiResponse.data == null) return [];
     final list = apiResponse.data as List<dynamic>;
-    return list.cast<Map<String, dynamic>>();
+    return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
   }
 
   Future<bool> checkFeature(String featureKey) async {
@@ -133,5 +134,50 @@ class SubscriptionApiService {
 
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return Invoice.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  // ─── Invoice PDF ───────────────────────────────────────────────
+
+  /// Get the PDF URL for an invoice. Returns the URL string.
+  Future<String?> getInvoicePdfUrl(String invoiceId) async {
+    final response = await _dio.get(ApiEndpoints.subscriptionInvoicePdf(invoiceId));
+
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final data = apiResponse.data as Map<String, dynamic>?;
+    return data?['pdf_url'] as String?;
+  }
+
+  // ─── Sync Entitlements ─────────────────────────────────────────
+
+  /// Fetch full entitlement snapshot for offline caching.
+  Future<Map<String, dynamic>> syncEntitlements() async {
+    final response = await _dio.get(ApiEndpoints.subscriptionSyncEntitlements);
+
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return (apiResponse.data as Map<String, dynamic>?) ?? {};
+  }
+
+  // ─── Store Add-Ons ─────────────────────────────────────────────
+
+  /// List active add-ons for the current store.
+  Future<List<Map<String, dynamic>>> getStoreAddOns() async {
+    final response = await _dio.get(ApiEndpoints.subscriptionStoreAddOns);
+
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    if (apiResponse.data == null) return [];
+    final list = apiResponse.data as List<dynamic>;
+    return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+  }
+
+  // ─── Plan Add-Ons (public) ─────────────────────────────────────
+
+  /// List available plan add-ons (public, no auth needed).
+  Future<List<Map<String, dynamic>>> listAddOns({bool activeOnly = true}) async {
+    final response = await _dio.get(ApiEndpoints.subscriptionAddOns, queryParameters: {'active_only': activeOnly ? 1 : 0});
+
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    if (apiResponse.data == null) return [];
+    final list = apiResponse.data as List<dynamic>;
+    return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
   }
 }

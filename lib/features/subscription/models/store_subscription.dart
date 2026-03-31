@@ -5,7 +5,7 @@ import 'package:thawani_pos/features/subscription/models/subscription_plan.dart'
 
 class StoreSubscription {
   final String id;
-  final String storeId;
+  final String organizationId;
   final String subscriptionPlanId;
   final SubscriptionStatus status;
   final BillingCycle? billingCycle;
@@ -21,7 +21,7 @@ class StoreSubscription {
 
   const StoreSubscription({
     required this.id,
-    required this.storeId,
+    required this.organizationId,
     required this.subscriptionPlanId,
     required this.status,
     this.billingCycle,
@@ -39,7 +39,7 @@ class StoreSubscription {
   factory StoreSubscription.fromJson(Map<String, dynamic> json) {
     return StoreSubscription(
       id: json['id'] as String,
-      storeId: json['store_id'] as String,
+      organizationId: (json['organization_id'] ?? json['store_id']) as String,
       subscriptionPlanId: json['subscription_plan_id'] as String,
       status: SubscriptionStatus.fromValue(json['status'] as String),
       billingCycle: BillingCycle.tryFromValue(json['billing_cycle'] as String?),
@@ -58,7 +58,7 @@ class StoreSubscription {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'store_id': storeId,
+      'organization_id': organizationId,
       'subscription_plan_id': subscriptionPlanId,
       'status': status.value,
       'billing_cycle': billingCycle?.value,
@@ -75,7 +75,7 @@ class StoreSubscription {
 
   StoreSubscription copyWith({
     String? id,
-    String? storeId,
+    String? organizationId,
     String? subscriptionPlanId,
     SubscriptionStatus? status,
     BillingCycle? billingCycle,
@@ -91,7 +91,7 @@ class StoreSubscription {
   }) {
     return StoreSubscription(
       id: id ?? this.id,
-      storeId: storeId ?? this.storeId,
+      organizationId: organizationId ?? this.organizationId,
       subscriptionPlanId: subscriptionPlanId ?? this.subscriptionPlanId,
       status: status ?? this.status,
       billingCycle: billingCycle ?? this.billingCycle,
@@ -117,5 +117,5 @@ class StoreSubscription {
   bool get isActive => status == SubscriptionStatus.active || status == SubscriptionStatus.trial;
 
   @override
-  String toString() => 'StoreSubscription(id: $id, storeId: $storeId, status: $status)';
+  String toString() => 'StoreSubscription(id: $id, organizationId: $organizationId, status: $status)';
 }

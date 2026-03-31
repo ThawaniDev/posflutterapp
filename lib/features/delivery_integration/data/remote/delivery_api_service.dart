@@ -20,9 +20,21 @@ class DeliveryApiService {
     return response.data as Map<String, dynamic>;
   }
 
+  /// GET /delivery/configs/{id}
+  Future<Map<String, dynamic>> getConfigDetail(String id) async {
+    final response = await _dio.get(ApiEndpoints.deliveryConfigDetail(id));
+    return response.data as Map<String, dynamic>;
+  }
+
   /// POST /delivery/configs
   Future<Map<String, dynamic>> saveConfig(Map<String, dynamic> data) async {
     final response = await _dio.post(ApiEndpoints.deliveryConfigs, data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// DELETE /delivery/configs/{id}
+  Future<Map<String, dynamic>> deleteConfig(String id) async {
+    final response = await _dio.delete(ApiEndpoints.deliveryConfigDelete(id));
     return response.data as Map<String, dynamic>;
   }
 
@@ -39,11 +51,21 @@ class DeliveryApiService {
   }
 
   /// GET /delivery/orders
-  Future<Map<String, dynamic>> getOrders({String? platform, String? status, int? perPage}) async {
+  Future<Map<String, dynamic>> getOrders({
+    String? platform,
+    String? status,
+    int? perPage,
+    int? page,
+    String? dateFrom,
+    String? dateTo,
+  }) async {
     final params = <String, dynamic>{};
     if (platform != null) params['platform'] = platform;
     if (status != null) params['status'] = status;
     if (perPage != null) params['per_page'] = perPage;
+    if (page != null) params['page'] = page;
+    if (dateFrom != null) params['date_from'] = dateFrom;
+    if (dateTo != null) params['date_to'] = dateTo;
 
     final response = await _dio.get(ApiEndpoints.deliveryOrders, queryParameters: params);
     return response.data as Map<String, dynamic>;
@@ -70,10 +92,11 @@ class DeliveryApiService {
   }
 
   /// GET /delivery/sync-logs
-  Future<Map<String, dynamic>> getSyncLogs({String? platform, int? perPage}) async {
+  Future<Map<String, dynamic>> getSyncLogs({String? platform, int? perPage, int? page}) async {
     final params = <String, dynamic>{};
     if (platform != null) params['platform'] = platform;
     if (perPage != null) params['per_page'] = perPage;
+    if (page != null) params['page'] = page;
 
     final response = await _dio.get(ApiEndpoints.deliverySyncLogs, queryParameters: params);
     return response.data as Map<String, dynamic>;
@@ -90,6 +113,28 @@ class DeliveryApiService {
   /// GET /delivery/platforms
   Future<Map<String, dynamic>> getPlatforms() async {
     final response = await _dio.get(ApiEndpoints.deliveryPlatforms);
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// GET /delivery/webhook-logs
+  Future<Map<String, dynamic>> getWebhookLogs({String? platform, int? perPage, int? page}) async {
+    final params = <String, dynamic>{};
+    if (platform != null) params['platform'] = platform;
+    if (perPage != null) params['per_page'] = perPage;
+    if (page != null) params['page'] = page;
+
+    final response = await _dio.get(ApiEndpoints.deliveryWebhookLogs, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  /// GET /delivery/status-push-logs
+  Future<Map<String, dynamic>> getStatusPushLogs({String? platform, int? perPage, int? page}) async {
+    final params = <String, dynamic>{};
+    if (platform != null) params['platform'] = platform;
+    if (perPage != null) params['per_page'] = perPage;
+    if (page != null) params['page'] = page;
+
+    final response = await _dio.get(ApiEndpoints.deliveryStatusPushLogs, queryParameters: params);
     return response.data as Map<String, dynamic>;
   }
 }

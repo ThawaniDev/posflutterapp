@@ -1,5 +1,6 @@
 enum OrderStatus {
   newValue('new'),
+  confirmed('confirmed'),
   preparing('preparing'),
   ready('ready'),
   dispatched('dispatched'),

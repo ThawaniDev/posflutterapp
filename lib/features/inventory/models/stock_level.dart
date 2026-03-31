@@ -2,6 +2,7 @@ class StockLevel {
   final String id;
   final String storeId;
   final String productId;
+  final String? productName;
   final double quantity;
   final double? reservedQuantity;
   final double? reorderPoint;
@@ -14,6 +15,7 @@ class StockLevel {
     required this.id,
     required this.storeId,
     required this.productId,
+    this.productName,
     required this.quantity,
     this.reservedQuantity,
     this.reorderPoint,
@@ -28,6 +30,7 @@ class StockLevel {
       id: json['id'] as String,
       storeId: json['store_id'] as String,
       productId: json['product_id'] as String,
+      productName: (json['product'] as Map<String, dynamic>?)?['name'] as String?,
       quantity: (json['quantity'] as num).toDouble(),
       reservedQuantity: (json['reserved_quantity'] as num?)?.toDouble(),
       reorderPoint: (json['reorder_point'] as num?)?.toDouble(),
@@ -57,6 +60,7 @@ class StockLevel {
     String? id,
     String? storeId,
     String? productId,
+    String? productName,
     double? quantity,
     double? reservedQuantity,
     double? reorderPoint,
@@ -69,6 +73,7 @@ class StockLevel {
       id: id ?? this.id,
       storeId: storeId ?? this.storeId,
       productId: productId ?? this.productId,
+      productName: productName ?? this.productName,
       quantity: quantity ?? this.quantity,
       reservedQuantity: reservedQuantity ?? this.reservedQuantity,
       reorderPoint: reorderPoint ?? this.reorderPoint,
@@ -80,13 +85,12 @@ class StockLevel {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is StockLevel && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is StockLevel && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'StockLevel(id: $id, storeId: $storeId, productId: $productId, quantity: $quantity, reservedQuantity: $reservedQuantity, reorderPoint: $reorderPoint, ...)';
+  String toString() =>
+      'StockLevel(id: $id, storeId: $storeId, productId: $productId, quantity: $quantity, reservedQuantity: $reservedQuantity, reorderPoint: $reorderPoint, ...)';
 }

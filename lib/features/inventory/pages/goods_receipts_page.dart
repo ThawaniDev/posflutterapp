@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
@@ -81,112 +80,65 @@ class _GoodsReceiptsPageState extends ConsumerState<GoodsReceiptsPage> {
   }
 
   Widget _buildBody(GoodsReceiptsState state) {
-    if (state is GoodsReceiptsLoading || state is GoodsReceiptsInitial) {
-      return const Center(child: CircularProgressIndicator());
-    }
+    final isLoading = state is GoodsReceiptsLoading || state is GoodsReceiptsInitial;
+    final error = state is GoodsReceiptsError ? state.message : null;
+    final receipts = state is GoodsReceiptsLoaded ? state.receipts : <GoodsReceipt>[];
+    final loaded = state is GoodsReceiptsLoaded ? state : null;
 
-    if (state is GoodsReceiptsError) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
-            const SizedBox(height: AppSpacing.md),
-            Text(state.message, textAlign: TextAlign.center),
-            const SizedBox(height: AppSpacing.lg),
-            PosButton(
-              label: 'Retry',
-              onPressed: () => ref.read(goodsReceiptsProvider.notifier).load(),
-              variant: PosButtonVariant.outline,
-            ),
-          ],
-        ),
-      );
-    }
-
-    if (state is GoodsReceiptsLoaded) {
-      if (state.receipts.isEmpty) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.receipt_long_outlined, size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
-              const SizedBox(height: AppSpacing.md),
-              Text('No goods receipts yet', style: Theme.of(context).textTheme.titleMedium),
-              const SizedBox(height: AppSpacing.xs),
-              Text(
-                'Create a receipt when you receive goods from suppliers.',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
-              ),
-            ],
-          ),
-        );
-      }
-
-      return Column(
-        children: [
-          Expanded(child: _buildTable(state.receipts)),
-          PosTablePagination(
-            currentPage: state.currentPage,
-            totalPages: state.lastPage,
-            totalItems: state.total,
-            itemsPerPage: 25,
-            onPrevious: () {},
-            onNext: () {},
-          ),
-        ],
-      );
-    }
-
-    return const SizedBox.shrink();
-  }
-
-  Widget _buildTable(List<GoodsReceipt> receipts) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-      child: PosDataTable(
-        columns: const [
-          DataColumn(label: Text('REFERENCE')),
-          DataColumn(label: Text('SUPPLIER')),
-          DataColumn(label: Text('STATUS')),
-          DataColumn(label: Text('TOTAL COST'), numeric: true),
-          DataColumn(label: Text('RECEIVED')),
-          DataColumn(label: Text('ACTIONS')),
-        ],
-        rows: receipts.map((receipt) {
-          final isDraft = receipt.status == GoodsReceiptStatus.draft;
-          return DataRow(
-            cells: [
-              DataCell(Text(receipt.referenceNumber ?? receipt.id.substring(0, 8))),
-              DataCell(Text(receipt.supplierId ?? '-')),
-              DataCell(
-                PosBadge(
-                  label: receipt.status?.value ?? 'draft',
-                  variant: isDraft ? PosBadgeVariant.warning : PosBadgeVariant.success,
-                ),
-              ),
-              DataCell(Text(receipt.totalCost?.toStringAsFixed(2) ?? '-')),
-              DataCell(
-                Text(
-                  receipt.receivedAt != null
-                      ? '${receipt.receivedAt!.day}/${receipt.receivedAt!.month}/${receipt.receivedAt!.year}'
-                      : '-',
-                ),
-              ),
-              DataCell(
-                isDraft
-                    ? PosButton(
-                        label: 'Confirm',
-                        variant: PosButtonVariant.outline,
-                        size: PosButtonSize.sm,
-                        onPressed: () => _handleConfirm(receipt),
-                      )
-                    : const Icon(Icons.check_circle, color: AppColors.success, size: 20),
-              ),
-            ],
-          );
-        }).toList(),
+    return PosDataTable<GoodsReceipt>(
+      columns: const [
+        PosTableColumn(title: 'Reference'),
+        PosTableColumn(title: 'Supplier'),
+        PosTableColumn(title: 'Status'),
+        PosTableColumn(title: 'Total Cost', numeric: true),
+        PosTableColumn(title: 'Received'),
+      ],
+      items: receipts,
+      isLoading: isLoading,
+      error: error,
+      onRetry: () => ref.read(goodsReceiptsProvider.notifier).load(),
+      emptyConfig: const PosTableEmptyConfig(
+        icon: Icons.receipt_long_outlined,
+        title: 'No goods receipts yet',
+        subtitle: 'Create a receipt when you receive goods from suppliers.',
       ),
+      actions: [
+        PosTableRowAction<GoodsReceipt>(
+          label: 'Confirm',
+          icon: Icons.check_circle_outline,
+          color: AppColors.success,
+          isVisible: (r) => r.status == GoodsReceiptStatus.draft,
+          onTap: (r) => _handleConfirm(r),
+        ),
+      ],
+      cellBuilder: (receipt, colIndex, col) {
+        final isDraft = receipt.status == GoodsReceiptStatus.draft;
+        switch (colIndex) {
+          case 0:
+            return Text(receipt.referenceNumber ?? receipt.id.substring(0, 8));
+          case 1:
+            return Text(receipt.supplierName ?? receipt.supplierId ?? '-');
+          case 2:
+            return PosBadge(
+              label: receipt.status?.value ?? 'draft',
+              variant: isDraft ? PosBadgeVariant.warning : PosBadgeVariant.success,
+            );
+          case 3:
+            return Text(receipt.totalCost?.toStringAsFixed(2) ?? '-');
+          case 4:
+            return Text(
+              receipt.receivedAt != null
+                  ? '${receipt.receivedAt!.day}/${receipt.receivedAt!.month}/${receipt.receivedAt!.year}'
+                  : '-',
+            );
+          default:
+            return const SizedBox.shrink();
+        }
+      },
+      currentPage: loaded?.currentPage,
+      totalPages: loaded?.lastPage,
+      totalItems: loaded?.total,
+      itemsPerPage: 25,
     );
   }
 }

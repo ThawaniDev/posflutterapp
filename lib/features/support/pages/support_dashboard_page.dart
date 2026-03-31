@@ -4,9 +4,16 @@ import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/core/theme/app_typography.dart';
+import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/pos_card.dart';
+import 'package:thawani_pos/core/widgets/pos_empty_state.dart';
+import 'package:thawani_pos/core/widgets/pos_error_state.dart';
+import 'package:thawani_pos/core/widgets/pos_input.dart';
+import 'package:thawani_pos/core/widgets/pos_loading_skeleton.dart';
 import 'package:thawani_pos/features/support/providers/support_providers.dart';
 import 'package:thawani_pos/features/support/providers/support_state.dart';
+import 'package:thawani_pos/features/support/widgets/ticket_card_widget.dart';
 
 class SupportDashboardPage extends ConsumerStatefulWidget {
   const SupportDashboardPage({super.key});
@@ -17,6 +24,7 @@ class SupportDashboardPage extends ConsumerStatefulWidget {
 
 class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
   String? _statusFilter;
+  final _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -27,9 +35,21 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
     });
   }
 
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   void _applyFilter(String? status) {
     setState(() => _statusFilter = status);
-    ref.read(ticketListProvider.notifier).load(status: status);
+    ref
+        .read(ticketListProvider.notifier)
+        .load(status: status, search: _searchController.text.trim().isNotEmpty ? _searchController.text.trim() : null);
+  }
+
+  void _onSearch(String query) {
+    ref.read(ticketListProvider.notifier).load(status: _statusFilter, search: query.trim().isNotEmpty ? query.trim() : null);
   }
 
   @override
@@ -37,113 +57,152 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
     final statsState = ref.watch(supportStatsProvider);
     final listState = ref.watch(ticketListProvider);
     final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.support),
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh),
+            icon: const Icon(Icons.menu_book_rounded),
+            tooltip: l10n.supportKnowledgeBase,
+            onPressed: () => context.push('/support/kb'),
+          ),
+          IconButton(
+            icon: const Icon(Icons.refresh_rounded),
+            tooltip: l10n.supportRefresh,
             onPressed: () {
               ref.read(supportStatsProvider.notifier).load();
-              ref.read(ticketListProvider.notifier).load(status: _statusFilter);
+              ref
+                  .read(ticketListProvider.notifier)
+                  .load(
+                    status: _statusFilter,
+                    search: _searchController.text.trim().isNotEmpty ? _searchController.text.trim() : null,
+                  );
             },
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () => context.push('/support/create'),
+      //   icon: const Icon(Icons.add),
+      //   label: Text(l10n.supportNewTicket),
+      //   backgroundColor: AppColors.primary,
+      //   foregroundColor: Colors.white,
+      // ),
+      floatingActionButton: PosButton(
+        label: l10n.supportNewTicket,
+        icon: Icons.add_rounded,
         onPressed: () => context.push('/support/create'),
-        icon: const Icon(Icons.add),
-        label: Text(l10n.supportNewTicket),
+        isLoading: false,
       ),
       body: Column(
         children: [
-          // Stats cards
-          _buildStatsSection(statsState),
-          const Divider(height: 1),
-          // Status filter
-          _buildFilterChips(),
+          // Stats KPI cards
+          _buildStatsSection(statsState, l10n, isDark),
+          // Search bar
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: PosSearchField(
+              controller: _searchController,
+              hint: l10n.supportSearchTickets,
+              onChanged: _onSearch,
+              onClear: () => _onSearch(''),
+            ),
+          ),
+          // Status filter pills
+          _buildFilterPills(l10n),
           const Divider(height: 1),
           // Ticket list
-          Expanded(child: _buildTicketList(listState)),
+          Expanded(child: _buildTicketList(listState, l10n)),
+          // Pagination bar
+          if (listState is TicketListLoaded) _buildPaginationBar(listState, isDark),
         ],
       ),
     );
   }
 
-  Widget _buildStatsSection(SupportStatsState state) {
+  Widget _buildStatsSection(SupportStatsState state, AppLocalizations l10n, bool isDark) {
     return switch (state) {
       SupportStatsInitial() || SupportStatsLoading() => const Padding(
         padding: AppSpacing.paddingAll16,
-        child: Center(child: PosLoadingSkeleton(height: 120)),
+        child: Center(child: PosLoadingSkeleton(height: 100)),
       ),
       SupportStatsError(:final message) => Padding(
         padding: AppSpacing.paddingAll16,
-        child: Text('Error: $message', style: TextStyle(color: AppColors.error)),
+        child: PosErrorState(message: message, onRetry: () => ref.read(supportStatsProvider.notifier).load()),
       ),
       SupportStatsLoaded(:final total, :final open, :final inProgress, :final resolved) => Padding(
-        padding: AppSpacing.paddingAll12,
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
         child: Row(
           children: [
-            _statCard(AppLocalizations.of(context)!.supportTotal, total, AppColors.info),
-            _statCard(AppLocalizations.of(context)!.supportOpen, open, AppColors.warning),
-            _statCard(AppLocalizations.of(context)!.supportInProgress, inProgress, AppColors.primary),
-            _statCard(AppLocalizations.of(context)!.supportResolved, resolved, AppColors.success),
+            Expanded(
+              child: PosKpiCard(
+                label: l10n.supportTotal,
+                value: '$total',
+                icon: Icons.confirmation_number_rounded,
+                iconColor: AppColors.info,
+                iconBgColor: AppColors.info.withValues(alpha: 0.1),
+              ),
+            ),
+            AppSpacing.gapW8,
+            Expanded(
+              child: PosKpiCard(
+                label: l10n.supportOpen,
+                value: '$open',
+                icon: Icons.inbox_rounded,
+                iconColor: AppColors.warning,
+                iconBgColor: AppColors.warning.withValues(alpha: 0.1),
+                onTap: () => _applyFilter('open'),
+              ),
+            ),
+            AppSpacing.gapW8,
+            Expanded(
+              child: PosKpiCard(
+                label: l10n.supportInProgress,
+                value: '$inProgress',
+                icon: Icons.autorenew_rounded,
+                iconColor: AppColors.primary,
+                iconBgColor: AppColors.primary10,
+                onTap: () => _applyFilter('in_progress'),
+              ),
+            ),
+            AppSpacing.gapW8,
+            Expanded(
+              child: PosKpiCard(
+                label: l10n.supportResolved,
+                value: '$resolved',
+                icon: Icons.check_circle_outline_rounded,
+                iconColor: AppColors.success,
+                iconBgColor: AppColors.success.withValues(alpha: 0.1),
+                onTap: () => _applyFilter('resolved'),
+              ),
+            ),
           ],
         ),
       ),
     };
   }
 
-  Widget _statCard(String label, int value, Color color) {
-    return Expanded(
-      child: Card(
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.md),
-          side: BorderSide(color: Theme.of(context).dividerColor),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-          child: Column(
-            children: [
-              Text(
-                '$value',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: color),
-              ),
-              AppSpacing.gapH4,
-              Text(label, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildFilterChips() {
-    const statuses = ['open', 'in_progress', 'resolved', 'closed'];
-    final labels = {
-      'open': AppLocalizations.of(context)!.supportOpen,
-      'in_progress': AppLocalizations.of(context)!.supportInProgress,
-      'resolved': AppLocalizations.of(context)!.supportResolved,
-      'closed': AppLocalizations.of(context)!.supportClosed,
+  Widget _buildFilterPills(AppLocalizations l10n) {
+    final filters = <String, String>{
+      'open': l10n.supportOpen,
+      'in_progress': l10n.supportInProgress,
+      'resolved': l10n.supportResolved,
+      'closed': l10n.supportClosed,
     };
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
         children: [
-          FilterChip(
-            label: Text(AppLocalizations.of(context)!.supportAll),
-            selected: _statusFilter == null,
-            onSelected: (_) => _applyFilter(null),
-          ),
+          PosButton.pill(label: l10n.supportAll, isSelected: _statusFilter == null, onPressed: () => _applyFilter(null)),
           AppSpacing.gapW8,
-          ...statuses.map(
-            (s) => Padding(
+          ...filters.entries.map(
+            (e) => Padding(
               padding: const EdgeInsets.only(right: 8),
-              child: FilterChip(label: Text(labels[s] ?? s), selected: _statusFilter == s, onSelected: (_) => _applyFilter(s)),
+              child: PosButton.pill(label: e.value, isSelected: _statusFilter == e.key, onPressed: () => _applyFilter(e.key)),
             ),
           ),
         ],
@@ -151,7 +210,7 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
     );
   }
 
-  Widget _buildTicketList(TicketListState state) {
+  Widget _buildTicketList(TicketListState state, AppLocalizations l10n) {
     return switch (state) {
       TicketListInitial() || TicketListLoading() => PosLoadingSkeleton.list(),
       TicketListError(:final message) => PosErrorState(
@@ -160,72 +219,68 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
       ),
       TicketListLoaded(:final tickets) =>
         tickets.isEmpty
-            ? PosEmptyState(title: AppLocalizations.of(context)!.supportNoTickets, icon: Icons.support_agent)
+            ? PosEmptyState(
+                title: l10n.supportNoTickets,
+                subtitle: l10n.supportTapToCreate,
+                icon: Icons.support_agent_rounded,
+                actionLabel: l10n.supportNewTicket,
+                onAction: () => context.push('/support/create'),
+              )
             : RefreshIndicator(
-                onRefresh: () => ref.read(ticketListProvider.notifier).load(status: _statusFilter),
+                onRefresh: () => ref
+                    .read(ticketListProvider.notifier)
+                    .load(
+                      status: _statusFilter,
+                      search: _searchController.text.trim().isNotEmpty ? _searchController.text.trim() : null,
+                    ),
                 child: ListView.builder(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   itemCount: tickets.length,
-                  itemBuilder: (context, index) => _ticketCard(tickets[index]),
+                  itemBuilder: (context, index) => TicketCardWidget(
+                    ticket: tickets[index],
+                    onTap: () => context.push('/support/tickets/${tickets[index].id}'),
+                  ),
                 ),
               ),
     };
   }
 
-  Widget _ticketCard(Map<String, dynamic> ticket) {
-    final status = ticket['status'] as String? ?? 'open';
-    final priority = ticket['priority'] as String? ?? 'medium';
-    final statusColor = switch (status) {
-      'open' => AppColors.warning,
-      'in_progress' => AppColors.primary,
-      'resolved' => AppColors.success,
-      'closed' => AppColors.textSecondary,
-      _ => AppColors.info,
-    };
-    final priorityColor = switch (priority) {
-      'critical' => AppColors.error,
-      'high' => AppColors.errorDark,
-      'medium' => AppColors.warning,
-      'low' => AppColors.success,
-      _ => AppColors.textSecondary,
-    };
-
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
+  Widget _buildPaginationBar(TicketListLoaded state, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
       ),
-      margin: const EdgeInsets.only(bottom: 8),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: statusColor.withValues(alpha: 0.15),
-          child: Icon(Icons.confirmation_number, color: statusColor, size: 20),
-        ),
-        title: Text(ticket['subject'] as String? ?? '', maxLines: 1, overflow: TextOverflow.ellipsis),
-        subtitle: Row(
-          children: [
-            Text(ticket['ticket_number'] as String? ?? '', style: const TextStyle(fontSize: 12)),
-            AppSpacing.gapW8,
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-              decoration: BoxDecoration(color: priorityColor.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(4)),
-              child: Text(
-                priority.toUpperCase(),
-                style: TextStyle(fontSize: 10, color: priorityColor, fontWeight: FontWeight.bold),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            '${state.total} ${AppLocalizations.of(context)!.supportTicketsCount}',
+            style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+          ),
+          Row(
+            children: [
+              PosButton(
+                label: AppLocalizations.of(context)!.supportPrevious,
+                variant: PosButtonVariant.outline,
+                size: PosButtonSize.sm,
+                icon: Icons.chevron_left_rounded,
+                onPressed: state.currentPage > 1 ? () => ref.read(ticketListProvider.notifier).previousPage() : null,
               ),
-            ),
-          ],
-        ),
-        trailing: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(8)),
-          child: Text(status.replaceAll('_', ' '), style: TextStyle(fontSize: 11, color: statusColor)),
-        ),
-        onTap: () {
-          final id = ticket['id'] as String? ?? '';
-          if (id.isNotEmpty) context.push('/support/tickets/$id');
-        },
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Text('${state.currentPage} / ${state.lastPage}', style: AppTypography.labelMedium),
+              ),
+              PosButton(
+                label: AppLocalizations.of(context)!.supportNext,
+                variant: PosButtonVariant.outline,
+                size: PosButtonSize.sm,
+                trailingIcon: Icons.chevron_right_rounded,
+                onPressed: state.hasMore ? () => ref.read(ticketListProvider.notifier).nextPage() : null,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

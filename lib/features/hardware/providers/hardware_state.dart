@@ -1,5 +1,6 @@
 import 'package:thawani_pos/features/hardware/models/hardware_configuration.dart';
 import 'package:thawani_pos/features/hardware/models/hardware_event_log.dart';
+import 'package:thawani_pos/features/hardware/services/hardware_auto_detector.dart';
 
 // ─── Hardware Config List State ────────────────────────────
 sealed class HardwareConfigListState {
@@ -95,5 +96,31 @@ final class EventLogListLoaded extends EventLogListState {
 
 final class EventLogListError extends EventLogListState {
   const EventLogListError(this.message);
+  final String message;
+}
+
+// ─── Network Scan State ────────────────────────────────────
+sealed class NetworkScanState {
+  const NetworkScanState();
+}
+
+final class NetworkScanIdle extends NetworkScanState {
+  const NetworkScanIdle();
+}
+
+final class NetworkScanRunning extends NetworkScanState {
+  const NetworkScanRunning({required this.scanned, required this.total});
+  final int scanned;
+  final int total;
+  double get progress => total > 0 ? scanned / total : 0;
+}
+
+final class NetworkScanComplete extends NetworkScanState {
+  const NetworkScanComplete({required this.devices});
+  final List<DetectedDevice> devices;
+}
+
+final class NetworkScanError extends NetworkScanState {
+  const NetworkScanError(this.message);
   final String message;
 }

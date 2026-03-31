@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
+import 'package:thawani_pos/features/reports/widgets/report_widgets.dart';
 
 class StaffPerformancePage extends ConsumerStatefulWidget {
   const StaffPerformancePage({super.key});
@@ -48,91 +48,166 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(staffPerformanceProvider);
-    final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Staff Performance'),
-        actions: [
-          IconButton(icon: const Icon(Icons.date_range), onPressed: _pickDateRange),
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData),
-        ],
-      ),
+    return ReportPageScaffold(
+      title: 'Staff Performance',
+      dateRange: _dateRange,
+      onPickDate: _pickDateRange,
+      onClearDate: () {
+        setState(() => _dateRange = null);
+        _loadData();
+      },
+      onRefresh: _loadData,
       body: switch (state) {
         StaffPerformanceInitial() || StaffPerformanceLoading() => PosLoadingSkeleton.list(),
         StaffPerformanceError(:final message) => PosErrorState(message: message, onRetry: _loadData),
         StaffPerformanceLoaded(:final staff) =>
-          staff.isEmpty
-              ? const PosEmptyState(title: 'No staff performance data', icon: Icons.people)
-              : ListView.builder(
-                  padding: AppSpacing.paddingAll16,
-                  itemCount: staff.length,
-                  itemBuilder: (context, index) {
-                    final s = staff[index];
-                    return Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppRadius.md),
-                        side: BorderSide(color: theme.dividerColor),
-                      ),
-                      child: Padding(
-                        padding: AppSpacing.paddingAll16,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: AppColors.primary10,
-                                  foregroundColor: AppColors.primary,
-                                  child: Text((s['staff_name'] as String? ?? 'U').substring(0, 1).toUpperCase()),
-                                ),
-                                AppSpacing.gapW12,
-                                Expanded(child: Text(s['staff_name'] as String? ?? '', style: theme.textTheme.titleSmall)),
-                                Text(
-                                  '\$${(s['total_revenue'] as num).toStringAsFixed(2)}',
-                                  style: theme.textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.success,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            AppSpacing.gapH12,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                _StatCol(label: 'Orders', value: '${s['total_orders']}'),
-                                _StatCol(label: 'Avg Order', value: '\$${(s['avg_order_value'] as num).toStringAsFixed(2)}'),
-                                _StatCol(
-                                  label: 'Discounts',
-                                  value: '\$${(s['total_discounts_given'] as num).toStringAsFixed(2)}',
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
+          staff.isEmpty ? const PosEmptyState(title: 'No staff performance data', icon: Icons.people) : _StaffList(staff: staff),
       },
     );
   }
 }
 
-class _StatCol extends StatelessWidget {
-  final String label;
-  final String value;
+class _StaffList extends StatelessWidget {
+  final List<Map<String, dynamic>> staff;
 
-  const _StatCol({required this.label, required this.value});
+  const _StaffList({required this.staff});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final totalRevenue = staff.fold<double>(0, (sum, s) => sum + (s['total_revenue'] as num).toDouble());
+    final totalOrders = staff.fold<int>(0, (sum, s) => sum + (s['total_orders'] as num).toInt());
+
+    return ListView(
+      padding: const EdgeInsets.all(20),
       children: [
-        Text(value, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
-        Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
+        // Top KPIs
+        ReportKpiGrid(
+          cards: [
+            ReportKpiCard(label: 'Staff Members', value: '${staff.length}', icon: Icons.people_rounded, color: AppColors.primary),
+            ReportKpiCard(
+              label: 'Total Revenue',
+              value: formatCurrency(totalRevenue),
+              icon: Icons.attach_money_rounded,
+              color: AppColors.success,
+            ),
+            ReportKpiCard(
+              label: 'Total Orders',
+              value: formatCompact(totalOrders),
+              icon: Icons.receipt_long_rounded,
+              color: AppColors.info,
+            ),
+            ReportKpiCard(
+              label: 'Avg per Staff',
+              value: staff.isNotEmpty ? formatCurrency(totalRevenue / staff.length) : '\$0',
+              icon: Icons.person_rounded,
+              color: AppColors.warning,
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 24),
+        const ReportSectionHeader(title: 'Staff Ranked by Revenue', icon: Icons.leaderboard_rounded),
+
+        ReportDataCard(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Column(
+            children: List.generate(staff.length, (i) {
+              final s = staff[i];
+              final name = s['staff_name'] as String? ?? 'Unknown';
+              final revenue = (s['total_revenue'] as num).toDouble();
+              final orders = (s['total_orders'] as num).toInt();
+              final avgOrder = (s['avg_order_value'] as num).toDouble();
+              final discounts = (s['total_discounts_given'] as num).toDouble();
+              final initials = name.isNotEmpty ? name[0].toUpperCase() : 'U';
+
+              return Column(
+                children: [
+                  if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: i < 3
+                                ? AppColors.primary.withValues(alpha: 0.1)
+                                : (isDark ? AppColors.hoverDark : AppColors.backgroundLight),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Center(
+                            child: Text(
+                              initials,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: i < 3 ? AppColors.primary : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  if (i < 3) ...[
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primary.withValues(alpha: 0.1),
+                                        borderRadius: BorderRadius.circular(6),
+                                      ),
+                                      child: Text(
+                                        '#${i + 1}',
+                                        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.primary),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 6),
+                                  ],
+                                  Expanded(
+                                    child: Text(
+                                      name,
+                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+                              Wrap(
+                                spacing: 6,
+                                children: [
+                                  ReportBadge(label: '$orders orders', color: AppColors.info),
+                                  ReportBadge(label: 'Avg ${formatCurrency(avgOrder)}', color: AppColors.primary),
+                                  if (discounts > 0)
+                                    ReportBadge(label: '-${formatCurrency(discounts)}', color: AppColors.warning),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          formatCurrency(revenue),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, color: AppColors.success),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }),
+          ),
+        ),
       ],
     );
   }

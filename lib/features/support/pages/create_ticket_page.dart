@@ -4,6 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/pos_card.dart';
+import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/features/support/providers/support_providers.dart';
 import 'package:thawani_pos/features/support/providers/support_state.dart';
 
@@ -43,10 +46,11 @@ class _CreateTicketPageState extends ConsumerState<CreateTicketPage> {
   @override
   Widget build(BuildContext context) {
     final actionState = ref.watch(ticketActionProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     ref.listen<TicketActionState>(ticketActionProvider, (prev, next) {
       if (next is TicketActionSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message)));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.success));
         ref.read(ticketActionProvider.notifier).reset();
         context.pop();
       } else if (next is TicketActionError) {
@@ -57,85 +61,84 @@ class _CreateTicketPageState extends ConsumerState<CreateTicketPage> {
     final isLoading = actionState is TicketActionLoading;
 
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.supportNewSupportTicket)),
+      appBar: AppBar(title: Text(l10n.supportNewSupportTicket)),
       body: Form(
         key: _formKey,
         child: ListView(
           padding: AppSpacing.paddingAll16,
           children: [
-            // Category
-            DropdownButtonFormField<String>(
-              value: _category,
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.supportCategory,
-                border: const OutlineInputBorder(),
+            // Category & Priority row
+            PosCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PosDropdown<String>(
+                    label: l10n.supportCategory,
+                    value: _category,
+                    items: [
+                      DropdownMenuItem(value: 'general', child: Text(l10n.supportCategoryGeneral)),
+                      DropdownMenuItem(value: 'billing', child: Text(l10n.supportCategoryBilling)),
+                      DropdownMenuItem(value: 'technical', child: Text(l10n.supportCategoryTechnical)),
+                      DropdownMenuItem(value: 'zatca', child: Text(l10n.supportCategoryZatca)),
+                      DropdownMenuItem(value: 'feature_request', child: Text(l10n.supportCategoryFeatureRequest)),
+                      DropdownMenuItem(value: 'hardware', child: Text(l10n.supportCategoryHardware)),
+                    ],
+                    onChanged: (v) => setState(() => _category = v!),
+                  ),
+                  AppSpacing.gapH16,
+                  PosDropdown<String>(
+                    label: l10n.supportPriority,
+                    value: _priority,
+                    items: [
+                      DropdownMenuItem(value: 'low', child: Text(l10n.supportPriorityLow)),
+                      DropdownMenuItem(value: 'medium', child: Text(l10n.supportPriorityMedium)),
+                      DropdownMenuItem(value: 'high', child: Text(l10n.supportPriorityHigh)),
+                      DropdownMenuItem(value: 'critical', child: Text(l10n.supportPriorityCritical)),
+                    ],
+                    onChanged: (v) => setState(() => _priority = v!),
+                  ),
+                ],
               ),
-              items: [
-                DropdownMenuItem(value: 'general', child: Text(AppLocalizations.of(context)!.supportCategoryGeneral)),
-                DropdownMenuItem(value: 'billing', child: Text(AppLocalizations.of(context)!.supportCategoryBilling)),
-                DropdownMenuItem(value: 'technical', child: Text(AppLocalizations.of(context)!.supportCategoryTechnical)),
-                DropdownMenuItem(value: 'zatca', child: Text(AppLocalizations.of(context)!.supportCategoryZatca)),
-                DropdownMenuItem(
-                  value: 'feature_request',
-                  child: Text(AppLocalizations.of(context)!.supportCategoryFeatureRequest),
-                ),
-              ],
-              onChanged: (v) => setState(() => _category = v!),
             ),
             AppSpacing.gapH16,
 
-            // Priority
-            DropdownButtonFormField<String>(
-              value: _priority,
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.supportPriority,
-                border: const OutlineInputBorder(),
+            // Subject & Description
+            PosCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    controller: _subjectController,
+                    decoration: InputDecoration(labelText: l10n.supportSubject, hintText: l10n.supportSubjectHint),
+                    validator: (v) => (v == null || v.trim().isEmpty) ? l10n.supportRequired : null,
+                    maxLength: 255,
+                    textInputAction: TextInputAction.next,
+                  ),
+                  AppSpacing.gapH16,
+                  TextFormField(
+                    controller: _descriptionController,
+                    decoration: InputDecoration(
+                      labelText: l10n.supportDescription,
+                      hintText: l10n.supportDescriptionHint,
+                      alignLabelWithHint: true,
+                    ),
+                    validator: (v) => (v == null || v.trim().isEmpty) ? l10n.supportRequired : null,
+                    maxLines: 6,
+                    maxLength: 5000,
+                  ),
+                ],
               ),
-              items: [
-                DropdownMenuItem(value: 'low', child: Text(AppLocalizations.of(context)!.supportPriorityLow)),
-                DropdownMenuItem(value: 'medium', child: Text(AppLocalizations.of(context)!.supportPriorityMedium)),
-                DropdownMenuItem(value: 'high', child: Text(AppLocalizations.of(context)!.supportPriorityHigh)),
-                DropdownMenuItem(value: 'critical', child: Text(AppLocalizations.of(context)!.supportPriorityCritical)),
-              ],
-              onChanged: (v) => setState(() => _priority = v!),
-            ),
-            AppSpacing.gapH16,
-
-            // Subject
-            TextFormField(
-              controller: _subjectController,
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.supportSubject,
-                border: const OutlineInputBorder(),
-              ),
-              validator: (v) => (v == null || v.trim().isEmpty) ? AppLocalizations.of(context)!.supportRequired : null,
-              maxLength: 255,
-            ),
-            AppSpacing.gapH16,
-
-            // Description
-            TextFormField(
-              controller: _descriptionController,
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.supportDescription,
-                border: const OutlineInputBorder(),
-                alignLabelWithHint: true,
-              ),
-              validator: (v) => (v == null || v.trim().isEmpty) ? AppLocalizations.of(context)!.supportRequired : null,
-              maxLines: 6,
-              maxLength: 5000,
             ),
             AppSpacing.gapH24,
 
             // Submit
-            FilledButton.icon(
+            PosButton(
+              label: isLoading ? l10n.supportSubmitting : l10n.supportSubmitTicket,
+              icon: Icons.send_rounded,
+              isLoading: isLoading,
+              isFullWidth: true,
+              size: PosButtonSize.lg,
               onPressed: isLoading ? null : _submit,
-              icon: isLoading
-                  ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
-                  : const Icon(Icons.send),
-              label: Text(
-                isLoading ? AppLocalizations.of(context)!.supportSubmitting : AppLocalizations.of(context)!.supportSubmitTicket,
-              ),
             ),
           ],
         ),

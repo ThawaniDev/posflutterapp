@@ -132,4 +132,21 @@ class PaymentApiService {
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return GiftCard.fromJson(apiResponse.data as Map<String, dynamic>);
   }
+
+  // ─── Financial Reports ────────────────────────────────────────
+
+  Future<Map<String, dynamic>> dailySummary({String? date}) async {
+    final response = await _dio.get(ApiEndpoints.financeDailySummary, queryParameters: {if (date != null) 'date': date});
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return apiResponse.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> reconciliation({String? startDate, String? endDate}) async {
+    final response = await _dio.get(
+      ApiEndpoints.financeReconciliation,
+      queryParameters: {if (startDate != null) 'start_date': startDate, if (endDate != null) 'end_date': endDate},
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return apiResponse.data as Map<String, dynamic>;
+  }
 }

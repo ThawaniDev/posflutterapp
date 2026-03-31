@@ -5,7 +5,8 @@ enum OrderSource {
   jahez('jahez'),
   marsool('marsool'),
   phone('phone'),
-  web('web');
+  web('web'),
+  delivery('delivery');
 
   const OrderSource(this.value);
   final String value;

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/router/route_names.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/subscription/providers/subscription_providers.dart';
 import 'package:thawani_pos/features/subscription/providers/subscription_state.dart';
 import 'package:thawani_pos/features/subscription/widgets/invoice_tile.dart';
 
-/// Page showing invoice/billing history.
+/// Page showing invoice/billing history with filtering and pagination.
 class BillingHistoryPage extends ConsumerStatefulWidget {
   const BillingHistoryPage({super.key});
 
@@ -15,6 +18,9 @@ class BillingHistoryPage extends ConsumerStatefulWidget {
 }
 
 class _BillingHistoryPageState extends ConsumerState<BillingHistoryPage> {
+  String? _statusFilter;
+  int _currentPage = 1;
+
   @override
   void initState() {
     super.initState();
@@ -29,7 +35,46 @@ class _BillingHistoryPageState extends ConsumerState<BillingHistoryPage> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Billing History'), centerTitle: true),
-      body: _buildBody(invoicesState),
+      body: Column(
+        children: [
+          // Status filter chips
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              children: [
+                _buildFilterChip('All', null),
+                const SizedBox(width: 8),
+                _buildFilterChip('Paid', 'paid'),
+                const SizedBox(width: 8),
+                _buildFilterChip('Pending', 'pending'),
+                const SizedBox(width: 8),
+                _buildFilterChip('Overdue', 'overdue'),
+                const SizedBox(width: 8),
+                _buildFilterChip('Cancelled', 'cancelled'),
+              ],
+            ),
+          ),
+          Expanded(child: _buildBody(invoicesState)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFilterChip(String label, String? value) {
+    final isSelected = _statusFilter == value;
+    return FilterChip(
+      label: Text(label),
+      selected: isSelected,
+      selectedColor: AppColors.primary20,
+      checkmarkColor: AppColors.primary,
+      onSelected: (_) {
+        setState(() {
+          _statusFilter = value;
+          _currentPage = 1;
+        });
+        ref.read(invoicesProvider.notifier).loadInvoices(page: 1);
+      },
     );
   }
 
@@ -43,22 +88,68 @@ class _BillingHistoryPageState extends ConsumerState<BillingHistoryPage> {
     }
 
     if (state is InvoicesLoaded) {
-      if (state.invoices.isEmpty) {
-        return const PosEmptyState(title: 'No invoices yet', icon: Icons.receipt_long);
+      var invoices = state.invoices;
+
+      // Client-side status filter
+      if (_statusFilter != null) {
+        invoices = invoices.where((inv) => inv.status?.name.toLowerCase() == _statusFilter).toList();
       }
 
-      return RefreshIndicator(
-        onRefresh: () async {
-          ref.read(invoicesProvider.notifier).loadInvoices();
-        },
-        child: ListView.separated(
-          padding: AppSpacing.paddingAllMd,
-          itemCount: state.invoices.length,
-          separatorBuilder: (_, __) => AppSpacing.verticalSm,
-          itemBuilder: (context, index) {
-            return InvoiceTile(invoice: state.invoices[index]);
-          },
-        ),
+      if (invoices.isEmpty) {
+        return const PosEmptyState(title: 'No invoices found', icon: Icons.receipt_long);
+      }
+
+      return Column(
+        children: [
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: () async {
+                ref.read(invoicesProvider.notifier).loadInvoices(page: _currentPage);
+              },
+              child: ListView.separated(
+                padding: AppSpacing.paddingAllMd,
+                itemCount: invoices.length,
+                separatorBuilder: (_, __) => AppSpacing.verticalSm,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () => context.go('${Routes.invoiceDetail}/${invoices[index].id}'),
+                    borderRadius: BorderRadius.circular(12),
+                    child: InvoiceTile(invoice: invoices[index]),
+                  );
+                },
+              ),
+            ),
+          ),
+          // Pagination
+          if (state.lastPage > 1)
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.chevron_left),
+                    onPressed: _currentPage > 1
+                        ? () {
+                            setState(() => _currentPage--);
+                            ref.read(invoicesProvider.notifier).loadInvoices(page: _currentPage);
+                          }
+                        : null,
+                  ),
+                  Text('Page $_currentPage of ${state.lastPage}'),
+                  IconButton(
+                    icon: const Icon(Icons.chevron_right),
+                    onPressed: _currentPage < state.lastPage
+                        ? () {
+                            setState(() => _currentPage++);
+                            ref.read(invoicesProvider.notifier).loadInvoices(page: _currentPage);
+                          }
+                        : null,
+                  ),
+                ],
+              ),
+            ),
+        ],
       );
     }
 

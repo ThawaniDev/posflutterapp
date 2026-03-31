@@ -38,7 +38,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
     _imeiCtrl = TextEditingController(text: r?.imei ?? '');
     _imei2Ctrl = TextEditingController(text: r?.imei2 ?? '');
     _serialNumberCtrl = TextEditingController(text: r?.serialNumber ?? '');
-    _purchasePriceCtrl = TextEditingController(text: r?.purchasePrice?.toStringAsFixed(3) ?? '');
+    _purchasePriceCtrl = TextEditingController(text: r?.purchasePrice?.toStringAsFixed(2) ?? '');
     _conditionGrade = r?.conditionGrade;
     _status = r?.status;
     _warrantyEndDate = r?.warrantyEndDate;

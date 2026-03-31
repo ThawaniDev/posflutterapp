@@ -7,6 +7,7 @@ import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
+import 'package:thawani_pos/features/reports/widgets/report_widgets.dart';
 
 class DashboardPage extends ConsumerStatefulWidget {
   const DashboardPage({super.key});
@@ -27,12 +28,24 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(dashboardProvider);
-    final theme = Theme.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('Dashboard'),
-        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.read(dashboardProvider.notifier).load())],
+        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        title: const Text('Reports & Analytics'),
+        actions: [
+          IconButton.filled(
+            onPressed: () => ref.read(dashboardProvider.notifier).load(),
+            icon: const Icon(Icons.refresh_rounded, size: 20),
+            style: IconButton.styleFrom(
+              backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+              foregroundColor: AppColors.primary,
+            ),
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: switch (state) {
         DashboardInitial() || DashboardLoading() => PosLoadingSkeleton.list(),
@@ -43,172 +56,113 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
         DashboardLoaded(:final today, :final yesterday, :final topProducts) => RefreshIndicator(
           onRefresh: () => ref.read(dashboardProvider.notifier).load(),
           child: ListView(
-            padding: AppSpacing.paddingAll16,
+            padding: const EdgeInsets.all(20),
             children: [
-              // Quick navigation to detailed reports
-              Text('Reports', style: theme.textTheme.titleLarge),
-              AppSpacing.gapH12,
-              SizedBox(
-                height: 80,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    _ReportTile(
-                      icon: Icons.receipt_long,
-                      label: 'Sales',
-                      color: AppColors.success,
-                      onTap: () => context.go(Routes.reportsSalesSummary),
-                    ),
-                    AppSpacing.gapW8,
-                    _ReportTile(
-                      icon: Icons.inventory_2,
-                      label: 'Products',
-                      color: AppColors.info,
-                      onTap: () => context.go(Routes.reportsProductPerformance),
-                    ),
-                    AppSpacing.gapW8,
-                    _ReportTile(
-                      icon: Icons.category,
-                      label: 'Categories',
-                      color: AppColors.warning,
-                      onTap: () => context.go(Routes.reportsCategoryBreakdown),
-                    ),
-                    AppSpacing.gapW8,
-                    _ReportTile(
-                      icon: Icons.people,
-                      label: 'Staff',
-                      color: AppColors.purple,
-                      onTap: () => context.go(Routes.reportsStaffPerformance),
-                    ),
-                    AppSpacing.gapW8,
-                    _ReportTile(
-                      icon: Icons.access_time,
-                      label: 'Hourly',
-                      color: AppColors.primary,
-                      onTap: () => context.go(Routes.reportsHourlySales),
-                    ),
-                    AppSpacing.gapW8,
-                    _ReportTile(
-                      icon: Icons.payment,
-                      label: 'Payments',
-                      color: AppColors.successDark,
-                      onTap: () => context.go(Routes.reportsPaymentMethods),
-                    ),
-                  ],
-                ),
-              ),
+              _ReportNavGrid(isDark: isDark),
+              const SizedBox(height: 28),
 
-              AppSpacing.gapH24,
-              Text('Today', style: theme.textTheme.titleLarge),
-              AppSpacing.gapH12,
-              Row(
-                children: [
-                  Expanded(
-                    child: _KpiCard(
-                      label: 'Revenue',
-                      value: '\$${(today['total_revenue'] as num? ?? 0).toStringAsFixed(2)}',
-                      icon: Icons.trending_up,
-                      color: AppColors.success,
-                    ),
+              const ReportSectionHeader(title: "Today's Overview", icon: Icons.today_rounded),
+              ReportKpiGrid(
+                cards: [
+                  ReportKpiCard(
+                    label: 'Revenue',
+                    value: formatCurrency(today['total_revenue'] as num? ?? 0),
+                    icon: Icons.trending_up_rounded,
+                    color: AppColors.success,
                   ),
-                  AppSpacing.gapW12,
-                  Expanded(
-                    child: _KpiCard(
-                      label: 'Transactions',
-                      value: '${today['total_transactions'] ?? 0}',
-                      icon: Icons.receipt_long,
-                      color: AppColors.info,
-                    ),
+                  ReportKpiCard(
+                    label: 'Transactions',
+                    value: '${today['total_transactions'] ?? 0}',
+                    icon: Icons.receipt_long_rounded,
+                    color: AppColors.info,
+                  ),
+                  ReportKpiCard(
+                    label: 'Net Revenue',
+                    value: formatCurrency(today['net_revenue'] as num? ?? 0),
+                    icon: Icons.account_balance_wallet_rounded,
+                    color: AppColors.primary,
+                  ),
+                  ReportKpiCard(
+                    label: 'Avg Basket',
+                    value: formatCurrency(today['avg_basket_size'] as num? ?? 0),
+                    icon: Icons.shopping_basket_rounded,
+                    color: AppColors.warning,
                   ),
                 ],
               ),
-              AppSpacing.gapH12,
+              const SizedBox(height: 12),
               Row(
                 children: [
                   Expanded(
-                    child: _KpiCard(
-                      label: 'Net Revenue',
-                      value: '\$${(today['net_revenue'] as num? ?? 0).toStringAsFixed(2)}',
-                      icon: Icons.account_balance_wallet,
-                      color: AppColors.successDark,
-                    ),
-                  ),
-                  AppSpacing.gapW12,
-                  Expanded(
-                    child: _KpiCard(
+                    child: ReportKpiCard(
                       label: 'Customers',
                       value: '${today['unique_customers'] ?? 0}',
-                      icon: Icons.people,
-                      color: AppColors.warning,
-                    ),
-                  ),
-                ],
-              ),
-              AppSpacing.gapH12,
-              Row(
-                children: [
-                  Expanded(
-                    child: _KpiCard(
-                      label: 'Avg Basket',
-                      value: '\$${(today['avg_basket_size'] as num? ?? 0).toStringAsFixed(2)}',
-                      icon: Icons.shopping_basket,
+                      icon: Icons.people_rounded,
                       color: AppColors.purple,
                     ),
                   ),
-                  AppSpacing.gapW12,
+                  const SizedBox(width: 12),
                   Expanded(
-                    child: _KpiCard(
+                    child: ReportKpiCard(
                       label: 'Refunds',
-                      value: '\$${(today['total_refunds'] as num? ?? 0).toStringAsFixed(2)}',
-                      icon: Icons.undo,
+                      value: formatCurrency(today['total_refunds'] as num? ?? 0),
+                      icon: Icons.undo_rounded,
                       color: AppColors.error,
                     ),
                   ),
                 ],
               ),
 
-              AppSpacing.gapH24,
-              Text('vs Yesterday', style: theme.textTheme.titleMedium),
-              AppSpacing.gapH8,
-              _ComparisonRow(
-                label: 'Revenue',
-                todayVal: (today['total_revenue'] as num? ?? 0).toDouble(),
-                yesterdayVal: (yesterday['total_revenue'] as num? ?? 0).toDouble(),
-              ),
-              _ComparisonRow(
-                label: 'Transactions',
-                todayVal: (today['total_transactions'] as num? ?? 0).toDouble(),
-                yesterdayVal: (yesterday['total_transactions'] as num? ?? 0).toDouble(),
+              const SizedBox(height: 28),
+
+              const ReportSectionHeader(title: 'vs Yesterday', icon: Icons.compare_arrows_rounded),
+              ReportDataCard(
+                child: Column(
+                  children: [
+                    ReportComparisonRow(
+                      label: 'Revenue',
+                      todayVal: (today['total_revenue'] as num? ?? 0).toDouble(),
+                      yesterdayVal: (yesterday['total_revenue'] as num? ?? 0).toDouble(),
+                    ),
+                    Divider(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                    ReportComparisonRow(
+                      label: 'Transactions',
+                      todayVal: (today['total_transactions'] as num? ?? 0).toDouble(),
+                      yesterdayVal: (yesterday['total_transactions'] as num? ?? 0).toDouble(),
+                    ),
+                  ],
+                ),
               ),
 
-              AppSpacing.gapH24,
-              Text('Top Products Today', style: theme.textTheme.titleMedium),
-              AppSpacing.gapH8,
+              const SizedBox(height: 28),
+
+              const ReportSectionHeader(title: 'Top Products Today', icon: Icons.star_rounded),
               if (topProducts.isEmpty)
-                const PosEmptyState(title: 'No sales data yet today', icon: Icons.trending_up)
+                const ReportDataCard(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 24),
+                    child: Center(child: Text('No sales data yet today')),
+                  ),
+                )
               else
-                ...topProducts.map(
-                  (p) => Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppRadius.md),
-                      side: BorderSide(color: theme.dividerColor),
-                    ),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: AppColors.primary10,
-                        foregroundColor: AppColors.primary,
-                        child: Text('${topProducts.indexOf(p) + 1}'),
-                      ),
-                      title: Text(p['product_name'] as String? ?? ''),
-                      subtitle: Text('Qty: ${(p['quantity_sold'] as num? ?? 0).toStringAsFixed(1)}'),
-                      trailing: Text(
-                        '\$${(p['revenue'] as num? ?? 0).toStringAsFixed(2)}',
-                        style: theme.textTheme.titleSmall?.copyWith(color: AppColors.success),
-                      ),
-                    ),
+                ReportDataCard(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Column(
+                    children: [
+                      for (int i = 0; i < topProducts.length; i++) ...[
+                        if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                        ReportRankedItem(
+                          rank: i + 1,
+                          title: topProducts[i]['product_name'] as String? ?? '',
+                          subtitle: 'Qty: ${(topProducts[i]['quantity_sold'] as num? ?? 0).toStringAsFixed(0)}',
+                          trailingValue: formatCurrency(topProducts[i]['revenue'] as num? ?? 0),
+                          trailingColor: AppColors.success,
+                        ),
+                      ],
+                    ],
                   ),
                 ),
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -217,104 +171,67 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
   }
 }
 
-class _KpiCard extends StatelessWidget {
-  final String label;
-  final String value;
-  final IconData icon;
-  final Color color;
-
-  const _KpiCard({required this.label, required this.value, required this.icon, required this.color});
+class _ReportNavGrid extends StatelessWidget {
+  final bool isDark;
+  const _ReportNavGrid({required this.isDark});
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
-      ),
-      child: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: color, size: 28),
-            AppSpacing.gapH8,
-            Text(value, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
-            AppSpacing.gapH4,
-            Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
-          ],
-        ),
-      ),
-    );
-  }
-}
+    final items = [
+      _NavItem('Sales', Icons.receipt_long_rounded, AppColors.success, Routes.reportsSalesSummary),
+      _NavItem('Products', Icons.inventory_2_rounded, AppColors.info, Routes.reportsProductPerformance),
+      _NavItem('Categories', Icons.category_rounded, AppColors.warning, Routes.reportsCategoryBreakdown),
+      _NavItem('Staff', Icons.badge_rounded, AppColors.purple, Routes.reportsStaffPerformance),
+      _NavItem('Hourly', Icons.schedule_rounded, AppColors.primary, Routes.reportsHourlySales),
+      _NavItem('Payments', Icons.payment_rounded, AppColors.successDark, Routes.reportsPaymentMethods),
+      _NavItem('Inventory', Icons.warehouse_rounded, const Color(0xFF6366F1), Routes.reportsInventory),
+      _NavItem('Financial', Icons.account_balance_rounded, AppColors.error, Routes.reportsFinancial),
+      _NavItem('Customers', Icons.group_rounded, const Color(0xFFEC4899), Routes.reportsCustomers),
+    ];
 
-class _ComparisonRow extends StatelessWidget {
-  final String label;
-  final double todayVal;
-  final double yesterdayVal;
-
-  const _ComparisonRow({required this.label, required this.todayVal, required this.yesterdayVal});
-
-  @override
-  Widget build(BuildContext context) {
-    final diff = yesterdayVal > 0 ? ((todayVal - yesterdayVal) / yesterdayVal * 100) : 0.0;
-    final isPositive = diff >= 0;
-    final changeColor = isPositive ? AppColors.success : AppColors.error;
-
-    return Card(
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
-      ),
-      child: ListTile(
-        title: Text(label),
-        subtitle: Text('Today: ${todayVal.toStringAsFixed(2)} | Yesterday: ${yesterdayVal.toStringAsFixed(2)}'),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(isPositive ? Icons.arrow_upward : Icons.arrow_downward, color: changeColor, size: 18),
-            Text(
-              '${diff.toStringAsFixed(1)}%',
-              style: TextStyle(color: changeColor, fontWeight: FontWeight.bold),
+    return GridView.count(
+      crossAxisCount: 3,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      mainAxisSpacing: 10,
+      crossAxisSpacing: 10,
+      childAspectRatio: 1.3,
+      children: items.map((item) {
+        return Material(
+          color: isDark ? AppColors.cardDark : Colors.white,
+          borderRadius: BorderRadius.circular(AppRadius.lg),
+          child: InkWell(
+            onTap: () => context.go(item.route),
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppRadius.lg),
+                border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(color: item.color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                    child: Icon(item.icon, color: item.color, size: 22),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(item.label, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      }).toList(),
     );
   }
 }
 
-class _ReportTile extends StatelessWidget {
-  final IconData icon;
+class _NavItem {
   final String label;
+  final IconData icon;
   final Color color;
-  final VoidCallback onTap;
-
-  const _ReportTile({required this.icon, required this.label, required this.color, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: color.withValues(alpha: 0.1),
-      borderRadius: BorderRadius.circular(AppRadius.md),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        child: SizedBox(
-          width: 88,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: color, size: 28),
-              AppSpacing.gapH4,
-              Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+  final String route;
+  const _NavItem(this.label, this.icon, this.color, this.route);
 }

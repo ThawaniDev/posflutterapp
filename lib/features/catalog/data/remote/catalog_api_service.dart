@@ -4,7 +4,12 @@ import 'package:thawani_pos/core/constants/api_endpoints.dart';
 import 'package:thawani_pos/core/network/api_response.dart';
 import 'package:thawani_pos/core/network/dio_client.dart';
 import 'package:thawani_pos/features/catalog/models/category.dart';
+import 'package:thawani_pos/features/catalog/models/modifier_group.dart';
 import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:thawani_pos/features/catalog/models/product_barcode.dart';
+import 'package:thawani_pos/features/catalog/models/product_supplier.dart';
+import 'package:thawani_pos/features/catalog/models/product_variant.dart';
+import 'package:thawani_pos/features/catalog/models/store_price.dart';
 import 'package:thawani_pos/features/catalog/models/supplier.dart';
 
 final catalogApiServiceProvider = Provider<CatalogApiService>((ref) {
@@ -91,10 +96,7 @@ class CatalogApiService {
 
   /// GET /catalog/products/changes?since=X (delta sync)
   Future<List<Product>> getChanges(int sinceVersion) async {
-    final response = await _dio.get(
-      '${ApiEndpoints.products}/changes',
-      queryParameters: {'since': sinceVersion},
-    );
+    final response = await _dio.get('${ApiEndpoints.products}/changes', queryParameters: {'since': sinceVersion});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.data as List;
     return list.map((j) => Product.fromJson(j as Map<String, dynamic>)).toList();
@@ -107,14 +109,86 @@ class CatalogApiService {
     return (apiResponse.data as Map<String, dynamic>)['barcode'] as String;
   }
 
+  /// POST /catalog/products/bulk-action
+  Future<void> bulkAction({required List<String> productIds, required String action, String? categoryId}) async {
+    await _dio.post(
+      '${ApiEndpoints.products}/bulk-action',
+      data: {'product_ids': productIds, 'action': action, if (categoryId != null) 'category_id': categoryId},
+    );
+  }
+
+  /// POST /catalog/products/:id/duplicate
+  Future<Product> duplicateProduct(String productId) async {
+    final response = await _dio.post('${ApiEndpoints.products}/$productId/duplicate');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Product.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  /// GET /catalog/products/:id/store-prices
+  Future<List<StorePrice>> getStorePrices(String productId) async {
+    final response = await _dio.get('${ApiEndpoints.products}/$productId/store-prices');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final list = apiResponse.data as List;
+    return list.map((j) => StorePrice.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  /// PUT /catalog/products/:id/store-prices
+  Future<void> syncStorePrices(String productId, List<Map<String, dynamic>> prices) async {
+    await _dio.put('${ApiEndpoints.products}/$productId/store-prices', data: {'prices': prices});
+  }
+
+  /// GET /catalog/products/:id/suppliers
+  Future<List<ProductSupplier>> getProductSuppliers(String productId) async {
+    final response = await _dio.get('${ApiEndpoints.products}/$productId/suppliers');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final list = apiResponse.data as List;
+    return list.map((j) => ProductSupplier.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  /// PUT /catalog/products/:id/suppliers
+  Future<void> syncProductSuppliers(String productId, List<Map<String, dynamic>> suppliers) async {
+    await _dio.put('${ApiEndpoints.products}/$productId/suppliers', data: {'suppliers': suppliers});
+  }
+
+  /// GET /catalog/products/:id/modifiers
+  Future<List<ModifierGroup>> getModifiers(String productId) async {
+    final response = await _dio.get('${ApiEndpoints.products}/$productId/modifiers');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final list = apiResponse.data as List;
+    return list.map((j) => ModifierGroup.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  /// POST /catalog/products/:id/modifiers (sync)
+  Future<void> syncModifiers(String productId, List<Map<String, dynamic>> groups) async {
+    await _dio.post('${ApiEndpoints.products}/$productId/modifiers', data: {'groups': groups});
+  }
+
+  /// GET /catalog/products/:id/variants
+  Future<List<ProductVariant>> getVariants(String productId) async {
+    final response = await _dio.get('${ApiEndpoints.products}/$productId/variants');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final list = apiResponse.data as List;
+    return list.map((j) => ProductVariant.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
+  /// POST /catalog/products/:id/variants (sync)
+  Future<void> syncVariants(String productId, List<Map<String, dynamic>> variants) async {
+    await _dio.post('${ApiEndpoints.products}/$productId/variants', data: {'variants': variants});
+  }
+
+  /// GET /catalog/products/:id/barcodes
+  Future<List<ProductBarcode>> getBarcodes(String productId) async {
+    final response = await _dio.get('${ApiEndpoints.products}/$productId/barcodes');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final list = apiResponse.data as List;
+    return list.map((j) => ProductBarcode.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
   // ─── Categories ───────────────────────────────────────────────
 
   /// GET /catalog/categories (tree)
   Future<List<Category>> getCategoryTree({bool activeOnly = false}) async {
-    final response = await _dio.get(
-      ApiEndpoints.categories,
-      queryParameters: {if (activeOnly) 'active_only': 1},
-    );
+    final response = await _dio.get(ApiEndpoints.categories, queryParameters: {if (activeOnly) 'active_only': 1});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.data as List;
     return list.map((j) => Category.fromJson(j as Map<String, dynamic>)).toList();
@@ -149,18 +223,10 @@ class CatalogApiService {
   // ─── Suppliers ────────────────────────────────────────────────
 
   /// GET /catalog/suppliers
-  Future<PaginatedResult<Supplier>> listSuppliers({
-    int page = 1,
-    int perPage = 25,
-    String? search,
-  }) async {
+  Future<PaginatedResult<Supplier>> listSuppliers({int page = 1, int perPage = 25, String? search}) async {
     final response = await _dio.get(
       ApiEndpoints.suppliers,
-      queryParameters: {
-        'page': page,
-        'per_page': perPage,
-        if (search != null && search.isNotEmpty) 'search': search,
-      },
+      queryParameters: {'page': page, 'per_page': perPage, if (search != null && search.isNotEmpty) 'search': search},
     );
 
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);

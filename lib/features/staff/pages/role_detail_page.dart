@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
@@ -84,7 +85,8 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
         _populateForm();
       }
       if (next is RoleDetailSaved) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Role updated successfully.')));
+        final l10n = AppLocalizations.of(context)!;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.staffRoleUpdated)));
         // Reload the detail to reflect new state
         ref.read(roleDetailProvider(widget.roleId).notifier).load();
         // Also refresh the roles list
@@ -101,10 +103,14 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
 
     final isPredefined = roleState is RoleDetailLoaded && roleState.role.isPredefined == true;
     final isSaving = roleState is RoleDetailSaving;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
+      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
-        title: Text(roleState is RoleDetailLoaded ? roleState.role.displayName : 'Role Details'),
+        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        title: Text(roleState is RoleDetailLoaded ? roleState.role.displayName : l10n.staffRoleDetails),
         actions: [
           if (!isPredefined && !_isEditing)
             IconButton(icon: const Icon(Icons.edit), tooltip: 'Edit role', onPressed: () => setState(() => _isEditing = true)),
@@ -117,19 +123,19 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
                   _hasChanges = false;
                 });
               },
-              child: const Text('Cancel'),
+              child: Text(l10n.cancel),
             ),
             const SizedBox(width: AppSpacing.xs),
-            PosButton(label: 'Save', isLoading: isSaving, onPressed: _hasChanges ? _handleSave : null, size: PosButtonSize.sm),
+            PosButton(label: l10n.save, isLoading: isSaving, onPressed: _hasChanges ? _handleSave : null, size: PosButtonSize.sm),
             const SizedBox(width: AppSpacing.sm),
           ],
         ],
       ),
-      body: _buildBody(roleState, permState),
+      body: _buildBody(roleState, permState, isDark, l10n),
     );
   }
 
-  Widget _buildBody(RoleDetailState roleState, PermissionsState permState) {
+  Widget _buildBody(RoleDetailState roleState, PermissionsState permState, bool isDark, AppLocalizations l10n) {
     if (roleState is RoleDetailLoading || roleState is RoleDetailInitial) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -141,10 +147,10 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
           children: [
             Icon(Icons.error_outline, size: 48, color: AppColors.error),
             const SizedBox(height: AppSpacing.md),
-            Text(roleState.message),
+            Text(roleState.message, style: TextStyle(color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)),
             const SizedBox(height: AppSpacing.lg),
             PosButton(
-              label: 'Retry',
+              label: l10n.retry,
               onPressed: () => ref.read(roleDetailProvider(widget.roleId).notifier).load(),
               variant: PosButtonVariant.outline,
             ),
@@ -193,8 +199,8 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
           TextFormField(
             controller: _displayNameController,
             enabled: _isEditing && !isPredefined,
-            decoration: const InputDecoration(labelText: 'Display Name', hintText: 'e.g., Branch Manager'),
-            validator: (v) => (v == null || v.trim().isEmpty) ? 'Required' : null,
+            decoration: InputDecoration(labelText: l10n.staffDisplayName, hintText: l10n.staffDisplayNameHint),
+            validator: (v) => (v == null || v.trim().isEmpty) ? l10n.staffRequired : null,
             onChanged: (_) => _markChanged(),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -203,7 +209,7 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
           TextFormField(
             controller: _nameController,
             enabled: false,
-            decoration: const InputDecoration(labelText: 'System Name', helperText: 'Cannot be changed after creation'),
+            decoration: InputDecoration(labelText: l10n.staffSystemName, helperText: l10n.staffSystemNameNoChange),
           ),
           const SizedBox(height: AppSpacing.md),
 
@@ -211,7 +217,7 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
           TextFormField(
             controller: _descriptionController,
             enabled: _isEditing,
-            decoration: const InputDecoration(labelText: 'Description', hintText: 'What does this role do?'),
+            decoration: InputDecoration(labelText: l10n.description, hintText: l10n.staffRoleDescHint),
             maxLines: 2,
             onChanged: (_) => _markChanged(),
           ),
@@ -219,7 +225,7 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
 
           // ─── Permissions Section ────────────────────────────
           _SectionHeader(
-            title: 'Permissions',
+            title: l10n.staffPermissions,
             trailing: Text(
               '${_selectedPermissionIds.length} selected',
               style: Theme.of(context).textTheme.labelMedium?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600),
@@ -242,6 +248,7 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
   }
 
   List<Widget> _buildPermissionModules(Map<String, List<Permission>> grouped) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return grouped.entries.map((entry) {
       final module = entry.key;
       final permissions = entry.value;
@@ -249,10 +256,11 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
 
       return Card(
         elevation: 0,
+        color: isDark ? AppColors.cardDark : AppColors.cardLight,
         margin: const EdgeInsets.only(bottom: AppSpacing.sm),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: AppColors.borderLight),
+          side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
         ),
         child: ExpansionTile(
           leading: Icon(

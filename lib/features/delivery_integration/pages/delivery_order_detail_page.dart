@@ -81,10 +81,7 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
         AppSpacing.gapH16,
 
         // Action buttons
-        if (status.isActionable) ...[
-          _buildActionButtons(status),
-          AppSpacing.gapH16,
-        ],
+        if (status.isActionable) ...[_buildActionButtons(status), AppSpacing.gapH16],
 
         // Customer info
         if (customerName != null || customerPhone != null || deliveryAddress != null)
@@ -112,11 +109,7 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
             if (subtotal != null) _InfoRow(label: l10n.deliverySubtotal, value: '${subtotal.toStringAsFixed(2)} SAR'),
             if (deliveryFee != null) _InfoRow(label: l10n.deliveryDeliveryFee, value: '${deliveryFee.toStringAsFixed(2)} SAR'),
             if (totalAmount != null)
-              _InfoRow(
-                label: l10n.deliveryTotal,
-                value: '${totalAmount.toStringAsFixed(2)} SAR',
-                isBold: true,
-              ),
+              _InfoRow(label: l10n.deliveryTotal, value: '${totalAmount.toStringAsFixed(2)} SAR', isBold: true),
             if (itemsCount != null) _InfoRow(label: l10n.deliveryItemsCount, value: '$itemsCount'),
           ],
         ),
@@ -144,7 +137,8 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
             children: [
               if (estimatedPrep != null) _InfoRow(label: l10n.deliveryEstimatedPrep, value: '$estimatedPrep min'),
               if (notes != null) _InfoRow(label: l10n.deliveryNotes, value: notes),
-              if (rejectionReason != null) _InfoRow(label: l10n.deliveryRejectionReason, value: rejectionReason, valueColor: AppColors.error),
+              if (rejectionReason != null)
+                _InfoRow(label: l10n.deliveryRejectionReason, value: rejectionReason, valueColor: AppColors.error),
             ],
           ),
         ],
@@ -159,7 +153,8 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
 
     return Row(
       children: transitions.map((next) {
-        final isPrimary = next == transitions.first && next != DeliveryOrderStatus.rejected && next != DeliveryOrderStatus.cancelled;
+        final isPrimary =
+            next == transitions.first && next != DeliveryOrderStatus.rejected && next != DeliveryOrderStatus.cancelled;
         return Expanded(
           child: Padding(
             padding: EdgeInsets.only(left: next == transitions.first ? 0 : 8),
@@ -168,10 +163,7 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
                     onPressed: () => _updateStatus(next.value),
                     icon: Icon(next.icon, size: 18),
                     label: Text(next.label),
-                    style: FilledButton.styleFrom(
-                      backgroundColor: next.color,
-                      padding: AppSpacing.paddingV12,
-                    ),
+                    style: FilledButton.styleFrom(backgroundColor: next.color, padding: AppSpacing.paddingV12),
                   )
                 : OutlinedButton.icon(
                     onPressed: () => _updateStatus(next.value),
@@ -195,36 +187,33 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
       if (reason == null) return;
     }
 
-    final success = await ref.read(deliveryOrderDetailProvider.notifier).updateStatus(
-      id: widget.orderId,
-      status: newStatus,
-      rejectionReason: reason,
-    );
+    final success = await ref
+        .read(deliveryOrderDetailProvider.notifier)
+        .updateStatus(id: widget.orderId, status: newStatus, rejectionReason: reason);
 
     if (mounted && success) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Order status updated to $newStatus')),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.deliveryStatusUpdated)));
     }
   }
 
   Future<String?> _showRejectDialog() {
+    final l10n = AppLocalizations.of(context)!;
     final controller = TextEditingController();
     return showDialog<String>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Reject Order'),
+        title: Text(l10n.deliveryRejectOrder),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(hintText: 'Rejection reason...', border: OutlineInputBorder()),
+          decoration: InputDecoration(hintText: l10n.deliveryEnterRejectionReason, border: const OutlineInputBorder()),
           maxLines: 3,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.deliveryCancel)),
           FilledButton(
             onPressed: () => Navigator.pop(ctx, controller.text),
             style: FilledButton.styleFrom(backgroundColor: AppColors.error),
-            child: const Text('Reject'),
+            child: Text(l10n.deliveryReject),
           ),
         ],
       ),
@@ -344,11 +333,7 @@ class _InfoRow extends StatelessWidget {
             Expanded(
               child: Text(
                 value,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: isBold ? FontWeight.w600 : FontWeight.normal,
-                  color: valueColor,
-                ),
+                style: TextStyle(fontSize: 13, fontWeight: isBold ? FontWeight.w600 : FontWeight.normal, color: valueColor),
               ),
             ),
             if (onTap != null) Icon(Icons.copy, size: 14, color: AppColors.textSecondary),
@@ -379,10 +364,7 @@ class _TimelineRow extends StatelessWidget {
           ),
           AppSpacing.gapW12,
           Expanded(child: Text(label, style: const TextStyle(fontSize: 13))),
-          Text(
-            _formatDateTime(time),
-            style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
-          ),
+          Text(_formatDateTime(time), style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
         ],
       ),
     );

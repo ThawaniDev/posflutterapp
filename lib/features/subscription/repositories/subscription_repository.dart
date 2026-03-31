@@ -136,6 +136,46 @@ class SubscriptionRepository {
     }
   }
 
+  // ─── Invoice PDF ───────────────────────────────────────────────
+
+  Future<String?> getInvoicePdfUrl(String invoiceId) async {
+    try {
+      return await _apiService.getInvoicePdfUrl(invoiceId);
+    } catch (e) {
+      throw _mapError(e);
+    }
+  }
+
+  // ─── Sync Entitlements ─────────────────────────────────────────
+
+  Future<Map<String, dynamic>> syncEntitlements() async {
+    try {
+      return await _apiService.syncEntitlements();
+    } catch (e) {
+      throw _mapError(e);
+    }
+  }
+
+  // ─── Store Add-Ons ─────────────────────────────────────────────
+
+  Future<List<Map<String, dynamic>>> getStoreAddOns() async {
+    try {
+      return await _apiService.getStoreAddOns();
+    } catch (e) {
+      throw _mapError(e);
+    }
+  }
+
+  // ─── Plan Add-Ons ─────────────────────────────────────────────
+
+  Future<List<Map<String, dynamic>>> listAddOns({bool activeOnly = true}) async {
+    try {
+      return await _apiService.listAddOns(activeOnly: activeOnly);
+    } catch (e) {
+      throw _mapError(e);
+    }
+  }
+
   // ─── Error Mapping ─────────────────────────────────────────────
 
   AppException _mapError(dynamic error) {

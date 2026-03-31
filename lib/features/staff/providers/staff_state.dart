@@ -247,3 +247,71 @@ class CommissionError extends CommissionState {
 
   const CommissionError({required this.message});
 }
+
+// ═══════════════════════════════════════════════════════════════
+// Staff Stats State
+// ═══════════════════════════════════════════════════════════════
+
+sealed class StaffStatsState {
+  const StaffStatsState();
+}
+
+class StaffStatsInitial extends StaffStatsState {
+  const StaffStatsInitial();
+}
+
+class StaffStatsLoading extends StaffStatsState {
+  const StaffStatsLoading();
+}
+
+class StaffStatsLoaded extends StaffStatsState {
+  final int totalStaff;
+  final int activeStaff;
+  final int inactiveStaff;
+  final int onLeaveStaff;
+  final int clockedInNow;
+  final int todayAttendance;
+
+  const StaffStatsLoaded({
+    required this.totalStaff,
+    required this.activeStaff,
+    required this.inactiveStaff,
+    required this.onLeaveStaff,
+    required this.clockedInNow,
+    required this.todayAttendance,
+  });
+}
+
+class StaffStatsError extends StaffStatsState {
+  final String message;
+
+  const StaffStatsError({required this.message});
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Staff Form State (Create / Update)
+// ═══════════════════════════════════════════════════════════════
+
+sealed class StaffFormState {
+  const StaffFormState();
+}
+
+class StaffFormIdle extends StaffFormState {
+  const StaffFormIdle();
+}
+
+class StaffFormSaving extends StaffFormState {
+  const StaffFormSaving();
+}
+
+class StaffFormSuccess extends StaffFormState {
+  final StaffUser staff;
+
+  const StaffFormSuccess({required this.staff});
+}
+
+class StaffFormError extends StaffFormState {
+  final String message;
+
+  const StaffFormError({required this.message});
+}

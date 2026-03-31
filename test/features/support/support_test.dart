@@ -3,6 +3,8 @@ import 'package:thawani_pos/features/support/enums/ticket_status.dart';
 import 'package:thawani_pos/features/support/enums/ticket_category.dart';
 import 'package:thawani_pos/features/support/enums/ticket_priority.dart';
 import 'package:thawani_pos/features/support/enums/ticket_sender_type.dart';
+import 'package:thawani_pos/features/support/models/support_ticket.dart';
+import 'package:thawani_pos/features/support/models/support_ticket_message.dart';
 import 'package:thawani_pos/features/support/providers/support_state.dart';
 
 void main() {
@@ -139,11 +141,19 @@ void main() {
 
   group('TicketListState', () {
     test('TicketListLoaded holds tickets', () {
-      const state = TicketListLoaded([
-        {'id': '1', 'subject': 'Test'},
-      ]);
+      final ticket = SupportTicket(
+        id: '1',
+        ticketNumber: 'TK-001',
+        organizationId: 'org-1',
+        category: TicketCategory.general,
+        priority: TicketPriority.medium,
+        status: TicketStatus.open,
+        subject: 'Test',
+        description: 'Test description',
+      );
+      final state = TicketListLoaded(tickets: [ticket], currentPage: 1, lastPage: 1, total: 1);
       expect(state.tickets.length, 1);
-      expect(state.tickets.first['subject'], 'Test');
+      expect(state.tickets.first.subject, 'Test');
     });
 
     test('TicketListError holds message', () {
@@ -154,8 +164,18 @@ void main() {
 
   group('TicketDetailState', () {
     test('TicketDetailLoaded holds ticket data', () {
-      const state = TicketDetailLoaded({'id': 'abc', 'subject': 'Help'});
-      expect(state.ticket['id'], 'abc');
+      final ticket = SupportTicket(
+        id: 'abc',
+        ticketNumber: 'TK-002',
+        organizationId: 'org-1',
+        category: TicketCategory.general,
+        priority: TicketPriority.medium,
+        status: TicketStatus.open,
+        subject: 'Help',
+        description: 'Need help',
+      );
+      final state = TicketDetailLoaded(ticket: ticket, messages: <SupportTicketMessage>[]);
+      expect(state.ticket.id, 'abc');
     });
 
     test('TicketDetailError holds message', () {

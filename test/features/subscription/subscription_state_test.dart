@@ -67,7 +67,7 @@ void main() {
     test('SubscriptionLoaded with subscription', () {
       final sub = StoreSubscription(
         id: 'sub-1',
-        storeId: 'store-1',
+        organizationId: 'org-1',
         subscriptionPlanId: 'plan-1',
         status: SubscriptionStatus.active,
         billingCycle: BillingCycle.monthly,
@@ -86,7 +86,7 @@ void main() {
     test('SubscriptionActionSuccess carries message', () {
       final sub = StoreSubscription(
         id: 'sub-1',
-        storeId: 'store-1',
+        organizationId: 'org-1',
         subscriptionPlanId: 'plan-1',
         status: SubscriptionStatus.active,
       );

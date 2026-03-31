@@ -13,11 +13,11 @@ class ThawaniPosApp extends ConsumerWidget {
     final router = ref.watch(appRouterProvider);
 
     return MaterialApp.router(
-      title: 'Thawani POS',
+      title: 'Wameed POS',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       routerConfig: router,
       localizationsDelegates: const [
         AppLocalizations.delegate,
