@@ -119,7 +119,7 @@ class PosSidebar extends StatelessWidget {
       ],
     ),
     PosSidebarItem(label: 'Orders', icon: Icons.receipt_long_rounded, route: '/orders'),
-    PosSidebarItem(label: 'Payments', icon: Icons.payments_rounded, route: '/cash-sessions'),
+    PosSidebarItem(label: 'Payments', icon: Icons.payments_rounded, route: '/cash-management'),
 
     // Catalog & Inventory
     PosSidebarItem(label: 'Products', icon: Icons.inventory_2_rounded, route: '/products'),
@@ -193,7 +193,7 @@ class PosSidebar extends StatelessWidget {
 
     // Admin Panel
     PosSidebarItem(label: 'Admin Stores', icon: Icons.store_rounded, route: '/admin/stores'),
-    PosSidebarItem(label: 'Admin Registrations', icon: Icons.app_registration_rounded, route: '/admin/registrations'),
+    // PosSidebarItem(label: 'Admin Registrations', icon: Icons.app_registration_rounded, route: '/admin/registrations'),
     PosSidebarItem(
       label: 'Support',
       icon: Icons.support_agent_rounded,

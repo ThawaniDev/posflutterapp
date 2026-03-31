@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -27,17 +28,18 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
   }
 
   Future<void> _handleDelete(Recipe recipe) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Delete Recipe'),
+        title: Text(l10n.inventoryDeleteRecipeTitle),
         content: Text('Delete recipe "${recipe.name ?? recipe.productName ?? recipe.productId}"?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonCancel)),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Delete'),
+            child: Text(l10n.commonDelete),
           ),
         ],
       ),
@@ -47,7 +49,7 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
       try {
         await ref.read(recipesProvider.notifier).deleteRecipe(recipe.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Recipe deleted.')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryRecipeDeleted)));
         }
       } catch (e) {
         if (mounted) {
@@ -59,55 +61,57 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(recipesProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Recipes'),
+        title: Text(l10n.inventoryRecipes),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(recipesProvider.notifier).load(),
           ),
         ],
       ),
-      floatingActionButton: PosButton(label: 'New Recipe', icon: Icons.add, onPressed: () => _showCreateDialog()),
+      floatingActionButton: PosButton(label: l10n.inventoryNewRecipe, icon: Icons.add, onPressed: () => _showCreateDialog()),
       body: _buildBody(state),
     );
   }
 
   Widget _buildBody(RecipesState state) {
+    final l10n = AppLocalizations.of(context)!;
     final isLoading = state is RecipesLoading || state is RecipesInitial;
     final error = state is RecipesError ? state.message : null;
     final recipes = state is RecipesLoaded ? state.recipes : <Recipe>[];
 
     return PosDataTable<Recipe>(
-      columns: const [
-        PosTableColumn(title: 'Product'),
-        PosTableColumn(title: 'Yield', numeric: true),
-        PosTableColumn(title: 'Status'),
-        PosTableColumn(title: 'Created'),
+      columns: [
+        PosTableColumn(title: l10n.inventoryProduct),
+        PosTableColumn(title: l10n.inventoryYield, numeric: true),
+        PosTableColumn(title: l10n.commonStatus),
+        PosTableColumn(title: l10n.commonDate),
       ],
       items: recipes,
       isLoading: isLoading,
       error: error,
       onRetry: () => ref.read(recipesProvider.notifier).load(),
-      emptyConfig: const PosTableEmptyConfig(
+      emptyConfig: PosTableEmptyConfig(
         icon: Icons.restaurant_menu_outlined,
-        title: 'No recipes yet',
-        subtitle: 'Recipes define ingredient lists for composite products.',
+        title: l10n.inventoryNoRecipes,
+        subtitle: l10n.inventoryNoRecipesHint,
       ),
       actions: [
         PosTableRowAction<Recipe>(
-          label: 'Edit',
+          label: l10n.commonEdit,
           icon: Icons.edit_outlined,
           onTap: (recipe) {
             // TODO: Navigate to edit page
           },
         ),
         PosTableRowAction<Recipe>(
-          label: 'Delete',
+          label: l10n.commonDelete,
           icon: Icons.delete_outline,
           isDestructive: true,
           onTap: (recipe) => _handleDelete(recipe),
@@ -121,7 +125,7 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
             return Text(recipe.yieldQuantity.toStringAsFixed(2));
           case 2:
             return PosBadge(
-              label: (recipe.isActive ?? true) ? 'Active' : 'Inactive',
+              label: (recipe.isActive ?? true) ? l10n.commonActive : l10n.commonInactive,
               variant: (recipe.isActive ?? true) ? PosBadgeVariant.success : PosBadgeVariant.neutral,
             );
           case 3:
@@ -136,6 +140,7 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
   }
 
   Future<void> _showCreateDialog() async {
+    final l10n = AppLocalizations.of(context)!;
     // Ensure products are loaded
     if (ref.read(productsProvider) is! ProductsLoaded) {
       await ref.read(productsProvider.notifier).load();
@@ -156,7 +161,7 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
           final productList = prodState is ProductsLoaded ? prodState.products : <Product>[];
 
           return AlertDialog(
-            title: const Text('New Recipe'),
+            title: Text(l10n.inventoryNewRecipe),
             content: SizedBox(
               width: 500,
               child: Form(
@@ -167,49 +172,49 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
                     children: [
                       DropdownButtonFormField<String>(
                         value: selectedProductId,
-                        decoration: const InputDecoration(labelText: 'Output Product'),
+                        decoration: InputDecoration(labelText: l10n.inventoryOutputProduct),
                         isExpanded: true,
                         items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
                         onChanged: (v) => setDialogState(() => selectedProductId = v),
-                        validator: (v) => v == null ? 'Required' : null,
+                        validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       TextFormField(
                         controller: yieldController,
-                        decoration: const InputDecoration(labelText: 'Yield Quantity'),
+                        decoration: InputDecoration(labelText: l10n.inventoryYieldQuantity),
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         validator: (v) {
-                          if (v == null || v.isEmpty) return 'Required';
-                          if (double.tryParse(v) == null) return 'Invalid';
+                          if (v == null || v.isEmpty) return l10n.commonRequired;
+                          if (double.tryParse(v) == null) return l10n.commonInvalid;
                           return null;
                         },
                       ),
                       const Divider(height: 24),
-                      const Text('Ingredient', style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(l10n.inventoryIngredient, style: const TextStyle(fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       DropdownButtonFormField<String>(
                         value: selectedIngredientId,
-                        decoration: const InputDecoration(labelText: 'Ingredient Product'),
+                        decoration: InputDecoration(labelText: l10n.inventoryIngredientProduct),
                         isExpanded: true,
                         items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
                         onChanged: (v) => setDialogState(() => selectedIngredientId = v),
-                        validator: (v) => v == null ? 'Required' : null,
+                        validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       TextFormField(
                         controller: ingredientQtyController,
-                        decoration: const InputDecoration(labelText: 'Quantity'),
+                        decoration: InputDecoration(labelText: l10n.inventoryQuantity),
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         validator: (v) {
-                          if (v == null || v.isEmpty) return 'Required';
-                          if (double.tryParse(v) == null) return 'Invalid';
+                          if (v == null || v.isEmpty) return l10n.commonRequired;
+                          if (double.tryParse(v) == null) return l10n.commonInvalid;
                           return null;
                         },
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       TextFormField(
                         controller: wasteController,
-                        decoration: const InputDecoration(labelText: 'Waste % (0-100)'),
+                        decoration: InputDecoration(labelText: l10n.inventoryWastePercent),
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
                       ),
                     ],
@@ -218,7 +223,7 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
               ),
             ),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+              TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.commonCancel)),
               TextButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
@@ -235,7 +240,7 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
                     });
                   }
                 },
-                child: const Text('Create'),
+                child: Text(l10n.commonCreate),
               ),
             ],
           );
@@ -247,7 +252,7 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
       try {
         await ref.read(recipesProvider.notifier).createRecipe(result);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Recipe created.')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryRecipeCreated)));
         }
       } catch (e) {
         if (mounted) {

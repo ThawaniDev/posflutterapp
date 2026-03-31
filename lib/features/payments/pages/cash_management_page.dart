@@ -68,7 +68,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
 
   Widget _buildActiveSessionCard(ThemeData theme, CashSessionsState state) {
     final activeSession = switch (state) {
-      CashSessionsLoaded(:final sessions) => sessions.where((s) => s.status?.value == 'active').firstOrNull,
+      CashSessionsLoaded(:final sessions) => sessions.where((s) => s.status?.value == 'open').firstOrNull,
       _ => null,
     };
 
@@ -111,13 +111,13 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   OutlinedButton.icon(
-                    onPressed: () => _showCashInOutDialog(context, 'cash_in'),
+                    onPressed: () => _showCashInOutDialog(context, 'cash_in', activeSession.id),
                     icon: const Icon(Icons.add, size: 18),
                     label: const Text('Cash In'),
                   ),
                   AppSpacing.gapW8,
                   OutlinedButton.icon(
-                    onPressed: () => _showCashInOutDialog(context, 'cash_out'),
+                    onPressed: () => _showCashInOutDialog(context, 'cash_out', activeSession.id),
                     icon: const Icon(Icons.remove, size: 18),
                     label: const Text('Cash Out'),
                   ),
@@ -261,7 +261,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
               )
             : Column(
                 children: sessions.map((session) {
-                  final isActive = session.status?.value == 'active';
+                  final isActive = session.status?.value == 'open';
                   final hasVariance = session.variance != null && session.variance!.abs() > 5;
                   return Card(
                     shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
@@ -380,7 +380,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
     );
   }
 
-  void _showCashInOutDialog(BuildContext context, String type) {
+  void _showCashInOutDialog(BuildContext context, String type, String sessionId) {
     final amountController = TextEditingController();
     final reasonController = TextEditingController();
     final notesController = TextEditingController();
@@ -420,8 +420,17 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
           TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
           FilledButton(
             onPressed: () {
-              Navigator.pop(ctx);
-              // Cash event creation is handled via API
+              final amount = double.tryParse(amountController.text);
+              if (amount != null && amount > 0 && reasonController.text.isNotEmpty) {
+                ref.read(cashSessionsProvider.notifier).createCashEvent({
+                  'cash_session_id': sessionId,
+                  'type': type,
+                  'amount': amount,
+                  'reason': reasonController.text,
+                  'notes': notesController.text.isEmpty ? null : notesController.text,
+                });
+                Navigator.pop(ctx);
+              }
             },
             child: const Text('Record'),
           ),

@@ -4,9 +4,13 @@ import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/features/branches/models/store.dart';
+import 'package:thawani_pos/features/branches/providers/branch_providers.dart';
+import 'package:thawani_pos/features/branches/providers/branch_state.dart';
 import 'package:thawani_pos/features/staff/enums/employment_type.dart';
 import 'package:thawani_pos/features/staff/enums/salary_type.dart';
 import 'package:thawani_pos/features/staff/enums/staff_status.dart';
+import 'package:thawani_pos/features/staff/enums/user_role.dart';
 import 'package:thawani_pos/features/staff/models/staff_user.dart';
 import 'package:thawani_pos/features/staff/providers/staff_providers.dart';
 import 'package:thawani_pos/features/staff/providers/staff_state.dart';
@@ -30,11 +34,15 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
   late final TextEditingController _nationalIdController;
   late final TextEditingController _hourlyRateController;
   late final TextEditingController _pinController;
+  late final TextEditingController _passwordController;
   late EmploymentType _employmentType;
   late SalaryType _salaryType;
   late StaffStatus _status;
   DateTime _hireDate = DateTime.now();
   bool _dataLoaded = false;
+  String? _selectedStoreId;
+  bool _createUserAccount = true;
+  UserRole _userRole = UserRole.cashier;
 
   bool get _isEditing => widget.staffId != null;
 
@@ -48,13 +56,17 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
     _nationalIdController = TextEditingController();
     _hourlyRateController = TextEditingController();
     _pinController = TextEditingController();
+    _passwordController = TextEditingController();
     _employmentType = EmploymentType.fullTime;
     _salaryType = SalaryType.monthly;
     _status = StaffStatus.active;
 
-    if (_isEditing) {
-      Future.microtask(() => ref.read(staffDetailProvider(widget.staffId!).notifier).load());
-    }
+    Future.microtask(() {
+      ref.read(branchListProvider.notifier).load();
+      if (_isEditing) {
+        ref.read(staffDetailProvider(widget.staffId!).notifier).load();
+      }
+    });
   }
 
   @override
@@ -66,6 +78,7 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
     _nationalIdController.dispose();
     _hourlyRateController.dispose();
     _pinController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -82,6 +95,9 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
     _salaryType = staff.salaryType;
     _status = staff.status ?? StaffStatus.active;
     _hireDate = staff.hireDate;
+    _selectedStoreId = staff.storeId;
+    // When editing, user account already exists if linked
+    _createUserAccount = staff.userId == null;
   }
 
   @override
@@ -131,6 +147,12 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
         child: ListView(
           padding: AppSpacing.paddingAll16,
           children: [
+            // Store Selection Section
+            _buildSectionTitle(context, l10n.staffStoreAssignment, Icons.store_outlined, isDark),
+            AppSpacing.gapH12,
+            _buildStoreDropdown(context, isDark, l10n),
+            AppSpacing.gapH24,
+
             // Personal Info Section
             _buildSectionTitle(context, l10n.staffPersonalInfo, Icons.person, isDark),
             AppSpacing.gapH12,
@@ -171,13 +193,19 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
             TextFormField(
               controller: _emailController,
               decoration: InputDecoration(
-                labelText: l10n.email,
+                labelText: _createUserAccount && !_isEditing ? '${l10n.email} *' : l10n.email,
                 border: const OutlineInputBorder(),
                 prefixIcon: const Icon(Icons.email_outlined),
                 filled: true,
                 fillColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
               ),
               keyboardType: TextInputType.emailAddress,
+              validator: (v) {
+                if (_createUserAccount && !_isEditing && (v == null || v.isEmpty)) {
+                  return l10n.staffRequired;
+                }
+                return null;
+              },
             ),
             AppSpacing.gapH16,
             TextFormField(
@@ -339,6 +367,12 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
                   onTap: () => _showChangePinDialog(context, l10n),
                 ),
               ),
+            AppSpacing.gapH24,
+
+            // User Account Section
+            _buildSectionTitle(context, l10n.staffUserAccount, Icons.account_circle_outlined, isDark),
+            AppSpacing.gapH12,
+            _buildUserAccountSection(context, isDark, l10n),
             AppSpacing.gapH32,
 
             // Submit button
@@ -372,10 +406,118 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
     );
   }
 
+  Widget _buildStoreDropdown(BuildContext context, bool isDark, AppLocalizations l10n) {
+    final branchState = ref.watch(branchListProvider);
+    final stores = branchState is BranchListLoaded ? branchState.branches : <Store>[];
+
+    return DropdownButtonFormField<String>(
+      value: _selectedStoreId,
+      decoration: InputDecoration(
+        labelText: '${l10n.staffSelectStore} *',
+        prefixIcon: const Icon(Icons.store_outlined),
+        border: const OutlineInputBorder(),
+        filled: true,
+        fillColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
+      ),
+      isExpanded: true,
+      items: stores
+          .map(
+            (s) => DropdownMenuItem<String>(
+              value: s.id,
+              child: Text(s.name, overflow: TextOverflow.ellipsis),
+            ),
+          )
+          .toList(),
+      validator: (v) => v == null || v.isEmpty ? l10n.staffRequired : null,
+      onChanged: (v) {
+        if (v != null) setState(() => _selectedStoreId = v);
+      },
+    );
+  }
+
+  Widget _buildUserAccountSection(BuildContext context, bool isDark, AppLocalizations l10n) {
+    // If editing and user already linked, show linked info
+    if (_isEditing) {
+      final detailState = ref.watch(staffDetailProvider(widget.staffId!));
+      if (detailState is StaffDetailLoaded && detailState.staff.userId != null) {
+        return Card(
+          elevation: 0,
+          color: isDark ? AppColors.cardDark : AppColors.cardLight,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppRadius.md),
+            side: BorderSide(color: AppColors.success.withValues(alpha: 0.3)),
+          ),
+          child: ListTile(
+            leading: const Icon(Icons.check_circle, color: AppColors.success),
+            title: Text(l10n.staffUserAccountLinked),
+            subtitle: Text(
+              detailState.staff.linkedUser?.email ?? detailState.staff.email ?? '',
+              style: TextStyle(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+            ),
+          ),
+        );
+      }
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SwitchListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 4),
+          title: Text(l10n.staffCreateUserAccount),
+          subtitle: Text(
+            l10n.staffCreateUserAccountDesc,
+            style: TextStyle(fontSize: 12, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+          ),
+          value: _createUserAccount,
+          onChanged: (v) => setState(() => _createUserAccount = v),
+        ),
+        if (_createUserAccount) ...[
+          AppSpacing.gapH12,
+          DropdownButtonFormField<UserRole>(
+            value: _userRole,
+            decoration: InputDecoration(
+              labelText: '${l10n.staffUserRole} *',
+              prefixIcon: const Icon(Icons.admin_panel_settings_outlined),
+              border: const OutlineInputBorder(),
+              filled: true,
+              fillColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
+            ),
+            items: UserRole.values.map((r) => DropdownMenuItem(value: r, child: Text(r.label))).toList(),
+            onChanged: (v) {
+              if (v != null) setState(() => _userRole = v);
+            },
+            validator: (v) => _createUserAccount && v == null ? l10n.staffRequired : null,
+          ),
+          AppSpacing.gapH16,
+          TextFormField(
+            controller: _passwordController,
+            decoration: InputDecoration(
+              labelText: '${l10n.staffPassword} *',
+              helperText: l10n.staffPasswordHelper,
+              border: const OutlineInputBorder(),
+              prefixIcon: const Icon(Icons.lock_outline),
+              filled: true,
+              fillColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
+            ),
+            obscureText: true,
+            validator: (v) {
+              if (!_createUserAccount) return null;
+              if (v == null || v.isEmpty) return l10n.staffRequired;
+              if (v.length < 8) return l10n.staffPasswordMinLength;
+              return null;
+            },
+          ),
+        ],
+      ],
+    );
+  }
+
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
 
     final data = {
+      'store_id': _selectedStoreId,
       'first_name': _firstNameController.text.trim(),
       'last_name': _lastNameController.text.trim(),
       if (_emailController.text.isNotEmpty) 'email': _emailController.text.trim(),
@@ -387,6 +529,12 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
       'hire_date': DateFormat('yyyy-MM-dd').format(_hireDate),
       if (_hourlyRateController.text.isNotEmpty) 'hourly_rate': double.tryParse(_hourlyRateController.text),
       if (_pinController.text.isNotEmpty) 'pin': _pinController.text,
+      // User account creation fields
+      if (!_isEditing && _createUserAccount) ...{
+        'create_user_account': true,
+        'password': _passwordController.text,
+        'user_role': _userRole.value,
+      },
     };
 
     if (_isEditing) {

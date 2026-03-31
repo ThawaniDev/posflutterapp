@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
@@ -12,8 +13,9 @@ class InventoryPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: const Text('Inventory Management')),
+      appBar: AppBar(title: Text(l10n.inventoryManagement)),
       body: GridView.count(
         crossAxisCount: MediaQuery.of(context).size.width > 800 ? 3 : 2,
         padding: const EdgeInsets.all(AppSpacing.lg),
@@ -23,44 +25,44 @@ class InventoryPage extends ConsumerWidget {
         children: [
           _InventoryTile(
             icon: Icons.inventory_2_outlined,
-            title: 'Stock Levels',
-            subtitle: 'View current stock and set reorder points',
+            title: l10n.inventoryStockLevels,
+            subtitle: l10n.inventoryStockLevelsSubtitle,
             onTap: () => context.push(Routes.stockLevels),
           ),
           _InventoryTile(
             icon: Icons.history,
-            title: 'Stock Movements',
-            subtitle: 'Track all stock changes',
+            title: l10n.inventoryStockMovements,
+            subtitle: l10n.inventoryStockMovementsSubtitle,
             onTap: () => context.push(Routes.stockMovements),
           ),
           _InventoryTile(
             icon: Icons.receipt_long_outlined,
-            title: 'Goods Receipts',
-            subtitle: 'Receive goods from suppliers',
+            title: l10n.inventoryGoodsReceipts,
+            subtitle: l10n.inventoryGoodsReceiptsSubtitle,
             onTap: () => context.push(Routes.goodsReceipts),
           ),
           _InventoryTile(
             icon: Icons.tune,
-            title: 'Stock Adjustments',
-            subtitle: 'Manually adjust stock quantities',
+            title: l10n.inventoryStockAdjustments,
+            subtitle: l10n.inventoryStockAdjustmentsSubtitle,
             onTap: () => context.push(Routes.stockAdjustments),
           ),
           _InventoryTile(
             icon: Icons.swap_horiz,
-            title: 'Stock Transfers',
-            subtitle: 'Transfer stock between stores',
+            title: l10n.inventoryStockTransfers,
+            subtitle: l10n.inventoryStockTransfersSubtitle,
             onTap: () => context.push(Routes.stockTransfers),
           ),
           _InventoryTile(
             icon: Icons.shopping_cart_outlined,
-            title: 'Purchase Orders',
-            subtitle: 'Manage supplier purchase orders',
+            title: l10n.inventoryPurchaseOrders,
+            subtitle: l10n.inventoryPurchaseOrdersSubtitle,
             onTap: () => context.push(Routes.purchaseOrders),
           ),
           _InventoryTile(
             icon: Icons.restaurant_menu,
-            title: 'Recipes',
-            subtitle: 'Define ingredient lists for products',
+            title: l10n.inventoryRecipes,
+            subtitle: l10n.inventoryRecipesSubtitle,
             onTap: () => context.push(Routes.recipes),
           ),
         ],

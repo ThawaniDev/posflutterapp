@@ -30,9 +30,9 @@ class PosLayoutTemplate {
   factory PosLayoutTemplate.fromJson(Map<String, dynamic> json) {
     return PosLayoutTemplate(
       id: json['id'] as String,
-      businessTypeId: json['business_type_id'] as String,
-      layoutKey: json['layout_key'] as String,
-      name: json['name'] as String,
+      businessTypeId: json['business_type_id'] as String? ?? '',
+      layoutKey: json['layout_key'] as String? ?? '',
+      name: json['name'] as String? ?? '',
       nameAr: json['name_ar'] as String? ?? '',
       description: json['description'] as String?,
       previewImageUrl: json['preview_image_url'] as String?,

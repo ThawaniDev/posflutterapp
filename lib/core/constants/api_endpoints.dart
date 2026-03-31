@@ -24,6 +24,7 @@ class ApiEndpoints {
   static const String recipes = '/inventory/recipes';
 
   // POS
+  static const String posBase = '/pos';
   static const String posSessions = '/pos/sessions';
   static const String transactions = '/pos/transactions';
   static const String heldCarts = '/pos/held-carts';

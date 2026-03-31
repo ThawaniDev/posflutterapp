@@ -1334,7 +1334,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deliveryResponsePayload => 'Response Payload';
 
   @override
-  String get thawaniPay => 'Thawani Pay';
+  String get thawaniPay => 'Thawani Integration';
 
   @override
   String get thawaniOverview => 'Overview';
@@ -2155,6 +2155,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get staffSaveChanges => 'Save Changes';
+
+  @override
+  String get staffStoreAssignment => 'Store Assignment';
+
+  @override
+  String get staffSelectStore => 'Select Store';
+
+  @override
+  String get staffAllStores => 'All Stores';
+
+  @override
+  String get staffUserAccount => 'User Account';
+
+  @override
+  String get staffCreateUserAccount => 'Create User Account';
+
+  @override
+  String get staffCreateUserAccountDesc =>
+      'Create a login account for this staff member to access the POS system';
+
+  @override
+  String get staffUserAccountLinked => 'User Account Linked';
+
+  @override
+  String get staffUserRole => 'User Role';
+
+  @override
+  String get staffPassword => 'Password';
+
+  @override
+  String get staffPasswordHelper => 'Minimum 8 characters';
+
+  @override
+  String get staffPasswordMinLength => 'Password must be at least 8 characters';
 
   @override
   String get staffOverview => 'Overview';
@@ -3861,4 +3895,267 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get clearFilters => 'Clear';
+
+  @override
+  String get posCashierTitle => 'POS Terminal';
+
+  @override
+  String get posStartShift => 'Start Your Shift';
+
+  @override
+  String get posStartShiftDesc =>
+      'Open a cash session to start processing transactions';
+
+  @override
+  String get posOpenShift => 'Open Shift';
+
+  @override
+  String get posCloseShift => 'Close Shift';
+
+  @override
+  String get posEndShift => 'End Shift';
+
+  @override
+  String get posOpeningCash => 'Opening Cash';
+
+  @override
+  String get posClosingCash => 'Closing Cash Count';
+
+  @override
+  String get posSelectRegister => 'Select register';
+
+  @override
+  String get posNoRegisters => 'No registers found. Please add one first.';
+
+  @override
+  String get posCountOpeningCash => 'Count your opening cash to begin';
+
+  @override
+  String get posReviewSummary => 'Review your session summary';
+
+  @override
+  String get posSessionSummary => 'Session Summary (Z-Report)';
+
+  @override
+  String get posCashSales => 'Cash Sales';
+
+  @override
+  String get posCardSales => 'Card Sales';
+
+  @override
+  String get posOtherSales => 'Other Sales';
+
+  @override
+  String get posRefunds => 'Refunds';
+
+  @override
+  String get posVoids => 'Voids';
+
+  @override
+  String get posExpectedCash => 'Expected Cash';
+
+  @override
+  String get posTransactions => 'Transactions';
+
+  @override
+  String get posDifference => 'Difference';
+
+  @override
+  String get posShiftClosedSuccess => 'Shift closed successfully';
+
+  @override
+  String get posCart => 'Cart';
+
+  @override
+  String get posWalkinCustomer => 'Walk-in Customer';
+
+  @override
+  String get posNoItems => 'No items';
+
+  @override
+  String get posSubtotal => 'Subtotal';
+
+  @override
+  String get posDiscount => 'Discount';
+
+  @override
+  String get posTax => 'Tax';
+
+  @override
+  String get posTotal => 'Total';
+
+  @override
+  String get posHold => 'Hold';
+
+  @override
+  String get posPay => 'Pay';
+
+  @override
+  String get posClearCart => 'Clear Cart';
+
+  @override
+  String get posClearCartConfirm => 'All items will be removed.';
+
+  @override
+  String get posSearchProducts => 'Search products or scan barcode';
+
+  @override
+  String get posNoProducts => 'No products found';
+
+  @override
+  String get posNoProductsHint =>
+      'Try a different search or check your catalog.';
+
+  @override
+  String posProductAdded(Object name) {
+    return '$name added';
+  }
+
+  @override
+  String get posProductNotFound => 'Product not found';
+
+  @override
+  String get posReturnRefund => 'Return / Refund';
+
+  @override
+  String get posReceiptNumber => 'Receipt / Transaction number';
+
+  @override
+  String get posSelectItemsToReturn => 'Select items to return';
+
+  @override
+  String get posRefundTo => 'Refund to:';
+
+  @override
+  String get posRefundAmount => 'Refund Amount';
+
+  @override
+  String get posProcessReturn => 'Process Return';
+
+  @override
+  String posReturnProcessed(Object number) {
+    return 'Return processed: #$number';
+  }
+
+  @override
+  String get posFindTransaction =>
+      'Enter a receipt number to find the transaction';
+
+  @override
+  String get posTransactionNotFound => 'Transaction not found';
+
+  @override
+  String get posPayment => 'Payment';
+
+  @override
+  String posPaymentTotal(Object amount) {
+    return 'Total: SAR $amount';
+  }
+
+  @override
+  String get posSplitPayment => 'Split Payment';
+
+  @override
+  String get posCashTendered => 'Cash Tendered';
+
+  @override
+  String get posChange => 'Change';
+
+  @override
+  String get posRemaining => 'Remaining';
+
+  @override
+  String get posCompletePayment => 'Complete Payment';
+
+  @override
+  String get posPaymentSuccessful => 'Payment Successful';
+
+  @override
+  String posTransactionNumber(Object number) {
+    return 'Transaction #$number';
+  }
+
+  @override
+  String get posDone => 'Done';
+
+  @override
+  String get posHeldCarts => 'Held Carts';
+
+  @override
+  String get posNoHeldCarts => 'No held carts';
+
+  @override
+  String get posRecall => 'Recall';
+
+  @override
+  String posCartRestored(Object label) {
+    return 'Cart restored: $label';
+  }
+
+  @override
+  String get posDeleteHeldCart => 'Delete Held Cart?';
+
+  @override
+  String posDeleteHeldCartConfirm(Object label) {
+    return 'This will permanently remove \"$label\".';
+  }
+
+  @override
+  String get posHoldCart => 'Hold Cart';
+
+  @override
+  String get posHoldCartLabel => 'Label (optional)';
+
+  @override
+  String get posHoldCartHint => 'e.g. Table 5, Mr. Ahmed';
+
+  @override
+  String get posCartHeld => 'Cart held';
+
+  @override
+  String get posFindCustomer => 'Find Customer';
+
+  @override
+  String get posSearchCustomer => 'Search by name, phone, loyalty code...';
+
+  @override
+  String get posSearchForCustomer => 'Search for a customer';
+
+  @override
+  String get posNoCustomers => 'No customers found';
+
+  @override
+  String posCustomerSelected(Object name) {
+    return 'Customer: $name';
+  }
+
+  @override
+  String get posReturn => 'Return';
+
+  @override
+  String get posHeldF9 => 'Held (F9)';
+
+  @override
+  String get posHoldF8 => 'Hold (F8)';
+
+  @override
+  String get posPayF4 => 'Pay (F4)';
+
+  @override
+  String get posSearchF2 => 'Search (F2)';
+
+  @override
+  String get posReset => 'Reset';
+
+  @override
+  String get posCancel => 'Cancel';
+
+  @override
+  String get posClose => 'Close';
+
+  @override
+  String get posDelete => 'Delete';
+
+  @override
+  String get posConfirm => 'Confirm';
 }

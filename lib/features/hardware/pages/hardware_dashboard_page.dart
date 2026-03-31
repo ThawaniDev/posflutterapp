@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -28,13 +29,14 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final configState = ref.watch(hardwareConfigListProvider);
     final modelsState = ref.watch(supportedModelsProvider);
     final logsState = ref.watch(eventLogListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Hardware Management')),
+      appBar: AppBar(title: Text(l10n.hardwareManagement)),
       body: RefreshIndicator(
         onRefresh: () async {
           await ref.read(hardwareConfigListProvider.notifier).load();
@@ -47,7 +49,7 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // ── Configured Devices ──
-              Text('Configured Devices', style: theme.textTheme.titleMedium),
+              Text(l10n.hardwareConfiguredDevices, style: theme.textTheme.titleMedium),
               AppSpacing.gapH12,
               _buildConfigList(configState),
 
@@ -59,14 +61,14 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
               AppSpacing.gapH24,
 
               // ── Certified Hardware ──
-              Text('Supported Hardware', style: theme.textTheme.titleMedium),
+              Text(l10n.hardwareSupportedHardware, style: theme.textTheme.titleMedium),
               AppSpacing.gapH12,
               _buildSupportedModels(modelsState),
 
               AppSpacing.gapH24,
 
               // ── Event Logs ──
-              Text('Recent Events', style: theme.textTheme.titleMedium),
+              Text(l10n.hardwareRecentEvents, style: theme.textTheme.titleMedium),
               AppSpacing.gapH12,
               _buildEventLogs(logsState),
             ],
@@ -86,7 +88,7 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
                   padding: AppSpacing.paddingAll24,
                   child: Center(
                     child: Text(
-                      'No devices configured',
+                      AppLocalizations.of(context)!.hardwareNoDevicesConfigured,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).hintColor),
                     ),
                   ),
@@ -124,14 +126,14 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
             children: [
               const Icon(Icons.science, size: 20),
               AppSpacing.gapW8,
-              const Expanded(child: Text('Select a device above to test')),
+              Expanded(child: Text(AppLocalizations.of(context)!.hardwareSelectDeviceToTest)),
             ],
           ),
-          DeviceTestRunning() => const Row(
+          DeviceTestRunning() => Row(
             children: [
-              SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)),
-              SizedBox(width: 8),
-              Text('Testing device...'),
+              const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)),
+              const SizedBox(width: 8),
+              Text(AppLocalizations.of(context)!.hardwareTestingDevice),
             ],
           ),
           DeviceTestSuccess(:final success, :final message) => Row(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -41,16 +42,17 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> w
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Security'),
+        title: Text(l10n.securityTitle),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Policy'),
-            Tab(text: 'Audit Logs'),
-            Tab(text: 'Devices'),
-            Tab(text: 'Logins'),
+          tabs: [
+            Tab(text: l10n.securityPolicy),
+            Tab(text: l10n.securityAuditLogs),
+            Tab(text: l10n.securityDevices),
+            Tab(text: l10n.securityLogins),
           ],
         ),
       ),
@@ -101,8 +103,9 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> w
   }
 
   Widget _buildLoginList(List attempts) {
+    final l10n = AppLocalizations.of(context)!;
     if (attempts.isEmpty) {
-      return const Center(child: Text('No login attempts.'));
+      return Center(child: Text(l10n.securityNoLoginAttempts));
     }
     return ListView.builder(
       itemCount: attempts.length,
@@ -114,7 +117,7 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> w
           title: Text(a.userIdentifier),
           subtitle: Text('${a.attemptType.value} • ${a.ipAddress ?? 'N/A'}'),
           trailing: Text(
-            a.isSuccessful ? 'Success' : 'Failed',
+            a.isSuccessful ? l10n.securityLoginSuccess : l10n.securityLoginFailed,
             style: TextStyle(color: color, fontWeight: FontWeight.w600),
           ),
         );

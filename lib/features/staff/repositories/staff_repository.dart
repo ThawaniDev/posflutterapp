@@ -25,7 +25,15 @@ class StaffRepository {
     String? search,
     String? status,
     String? employmentType,
-  }) => _api.listStaff(page: page, perPage: perPage, search: search, status: status, employmentType: employmentType);
+    String? storeId,
+  }) => _api.listStaff(
+    page: page,
+    perPage: perPage,
+    search: search,
+    status: status,
+    employmentType: employmentType,
+    storeId: storeId,
+  );
 
   Future<StaffUser> getStaff(String id) => _api.getStaff(id);
 

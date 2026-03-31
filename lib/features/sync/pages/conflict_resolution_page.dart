@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -23,18 +24,19 @@ class _ConflictResolutionPageState extends ConsumerState<ConflictResolutionPage>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final state = ref.watch(syncConflictListProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Conflict Resolution'),
+        title: Text(l10n.syncConflictResolution),
         actions: [
           SegmentedButton<String>(
-            segments: const [
-              ButtonSegment(value: 'unresolved', label: Text('Open')),
-              ButtonSegment(value: 'resolved', label: Text('Resolved')),
-              ButtonSegment(value: 'all', label: Text('All')),
+            segments: [
+              ButtonSegment(value: 'unresolved', label: Text(l10n.syncOpen)),
+              ButtonSegment(value: 'resolved', label: Text(l10n.syncResolved)),
+              ButtonSegment(value: 'all', label: Text(l10n.syncAll)),
             ],
             selected: {_filter},
             onSelectionChanged: (v) {
@@ -57,7 +59,7 @@ class _ConflictResolutionPageState extends ConsumerState<ConflictResolutionPage>
               AppSpacing.gapH12,
               FilledButton(
                 onPressed: () => ref.read(syncConflictListProvider.notifier).load(status: _filter),
-                child: const Text('Retry'),
+                child: Text(l10n.commonRetry),
               ),
             ],
           ),
@@ -70,7 +72,7 @@ class _ConflictResolutionPageState extends ConsumerState<ConflictResolutionPage>
                     children: [
                       Icon(Icons.check_circle_outline, size: 64, color: AppColors.success),
                       AppSpacing.gapH12,
-                      Text('No conflicts', style: theme.textTheme.titleSmall),
+                      Text(l10n.syncNoConflicts, style: theme.textTheme.titleSmall),
                     ],
                   ),
                 )
@@ -129,11 +131,15 @@ class _ConflictResolutionPageState extends ConsumerState<ConflictResolutionPage>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Expanded(
-                                  child: _DataPanel(title: 'Local Data', data: conflict.localData, color: AppColors.info),
+                                  child: _DataPanel(title: l10n.syncLocalData, data: conflict.localData, color: AppColors.info),
                                 ),
                                 AppSpacing.gapW12,
                                 Expanded(
-                                  child: _DataPanel(title: 'Cloud Data', data: conflict.cloudData, color: AppColors.primary),
+                                  child: _DataPanel(
+                                    title: l10n.syncCloudData,
+                                    data: conflict.cloudData,
+                                    color: AppColors.primary,
+                                  ),
                                 ),
                               ],
                             ),
@@ -150,7 +156,7 @@ class _ConflictResolutionPageState extends ConsumerState<ConflictResolutionPage>
                                           .read(syncConflictListProvider.notifier)
                                           .resolveConflict(conflictId: conflict.id, resolution: 'local_wins');
                                     },
-                                    child: const Text('Use Local'),
+                                    child: Text(l10n.syncUseLocal),
                                   ),
                                   AppSpacing.gapW8,
                                   FilledButton(
@@ -159,7 +165,7 @@ class _ConflictResolutionPageState extends ConsumerState<ConflictResolutionPage>
                                           .read(syncConflictListProvider.notifier)
                                           .resolveConflict(conflictId: conflict.id, resolution: 'cloud_wins');
                                     },
-                                    child: const Text('Use Cloud'),
+                                    child: Text(l10n.syncUseCloud),
                                   ),
                                 ],
                               ),

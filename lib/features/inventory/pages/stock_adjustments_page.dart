@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -29,41 +30,47 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(stockAdjustmentsProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Stock Adjustments'),
+        title: Text(l10n.inventoryStockAdjustments),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(stockAdjustmentsProvider.notifier).load(),
           ),
         ],
       ),
-      floatingActionButton: PosButton(label: 'New Adjustment', icon: Icons.add, onPressed: () => _showAdjustmentDialog()),
+      floatingActionButton: PosButton(
+        label: l10n.inventoryNewAdjustment,
+        icon: Icons.add,
+        onPressed: () => _showAdjustmentDialog(),
+      ),
       body: _buildBody(state),
     );
   }
 
   Widget _buildBody(StockAdjustmentsState state) {
+    final l10n = AppLocalizations.of(context)!;
     final isLoading = state is StockAdjustmentsLoading || state is StockAdjustmentsInitial;
     final error = state is StockAdjustmentsError ? state.message : null;
     final adjustments = state is StockAdjustmentsLoaded ? state.adjustments : <StockAdjustment>[];
 
     return PosDataTable<StockAdjustment>(
-      columns: const [
-        PosTableColumn(title: 'Date'),
-        PosTableColumn(title: 'Type'),
-        PosTableColumn(title: 'Reason'),
-        PosTableColumn(title: 'Notes'),
+      columns: [
+        PosTableColumn(title: l10n.commonDate),
+        PosTableColumn(title: l10n.commonType),
+        PosTableColumn(title: l10n.reason),
+        PosTableColumn(title: l10n.commonNotes),
       ],
       items: adjustments,
       isLoading: isLoading,
       error: error,
       onRetry: () => ref.read(stockAdjustmentsProvider.notifier).load(),
-      emptyConfig: const PosTableEmptyConfig(icon: Icons.tune_outlined, title: 'No stock adjustments yet'),
+      emptyConfig: PosTableEmptyConfig(icon: Icons.tune_outlined, title: l10n.inventoryNoAdjustments),
       cellBuilder: (adj, colIndex, col) {
         final isIncrease = adj.type == StockAdjustmentType.increase;
         switch (colIndex) {
@@ -71,7 +78,7 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
             return Text(adj.createdAt != null ? '${adj.createdAt!.day}/${adj.createdAt!.month}/${adj.createdAt!.year}' : '-');
           case 1:
             return PosBadge(
-              label: isIncrease ? 'Increase' : 'Decrease',
+              label: isIncrease ? l10n.inventoryIncrease : l10n.inventoryDecrease,
               variant: isIncrease ? PosBadgeVariant.success : PosBadgeVariant.error,
             );
           case 2:
@@ -105,11 +112,12 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) {
+          final l10n = AppLocalizations.of(ctx)!;
           final products = ref.read(productsProvider);
           final productList = products is ProductsLoaded ? products.products : <Product>[];
 
           return AlertDialog(
-            title: const Text('New Stock Adjustment'),
+            title: Text(l10n.inventoryNewStockAdjustment),
             content: SizedBox(
               width: 500,
               child: Form(
@@ -119,10 +127,10 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SegmentedButton<StockAdjustmentType>(
-                        segments: const [
-                          ButtonSegment(value: StockAdjustmentType.increase, label: Text('Increase')),
-                          ButtonSegment(value: StockAdjustmentType.decrease, label: Text('Decrease')),
-                          ButtonSegment(value: StockAdjustmentType.damage, label: Text('Damage')),
+                        segments: [
+                          ButtonSegment(value: StockAdjustmentType.increase, label: Text(l10n.inventoryIncrease)),
+                          ButtonSegment(value: StockAdjustmentType.decrease, label: Text(l10n.inventoryDecrease)),
+                          ButtonSegment(value: StockAdjustmentType.damage, label: Text(l10n.inventoryDamage)),
                         ],
                         selected: {adjustmentType},
                         onSelectionChanged: (value) {
@@ -132,38 +140,38 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
                       const SizedBox(height: AppSpacing.md),
                       DropdownButtonFormField<String>(
                         value: selectedProductId,
-                        decoration: const InputDecoration(labelText: 'Product'),
+                        decoration: InputDecoration(labelText: l10n.inventoryProduct),
                         isExpanded: true,
                         items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
                         onChanged: (v) => setDialogState(() => selectedProductId = v),
-                        validator: (v) => v == null ? 'Required' : null,
+                        validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       TextFormField(
                         controller: quantityController,
-                        decoration: const InputDecoration(labelText: 'Quantity'),
+                        decoration: InputDecoration(labelText: l10n.inventoryQuantity),
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         validator: (v) {
-                          if (v == null || v.isEmpty) return 'Required';
-                          if (double.tryParse(v) == null) return 'Invalid number';
+                          if (v == null || v.isEmpty) return l10n.commonRequired;
+                          if (double.tryParse(v) == null) return l10n.inventoryInvalidNumber;
                           return null;
                         },
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       DropdownButtonFormField<String>(
                         value: selectedReason,
-                        decoration: const InputDecoration(labelText: 'Reason'),
+                        decoration: InputDecoration(labelText: l10n.reason),
                         isExpanded: true,
                         items: reasonOptions
                             .map((r) => DropdownMenuItem(value: r, child: Text(r[0].toUpperCase() + r.substring(1))))
                             .toList(),
                         onChanged: (v) => setDialogState(() => selectedReason = v),
-                        validator: (v) => v == null ? 'Required' : null,
+                        validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       TextFormField(
                         controller: notesController,
-                        decoration: const InputDecoration(labelText: 'Notes (optional)'),
+                        decoration: InputDecoration(labelText: l10n.commonNotesOptional),
                       ),
                     ],
                   ),
@@ -171,7 +179,7 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
               ),
             ),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+              TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.commonCancel)),
               TextButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
@@ -185,7 +193,7 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
                     });
                   }
                 },
-                child: const Text('Create'),
+                child: Text(l10n.create),
               ),
             ],
           );
@@ -197,7 +205,7 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
       try {
         await ref.read(stockAdjustmentsProvider.notifier).createAdjustment(result);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Stock adjustment created.')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryAdjustmentCreated)));
         }
       } catch (e) {
         if (mounted) {

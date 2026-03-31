@@ -75,7 +75,7 @@ class _PinLoginPageState extends ConsumerState<PinLoginPage> {
   Widget build(BuildContext context) {
     ref.listen<AuthState>(authProvider, (prev, next) {
       if (next is AuthAuthenticated) {
-        context.go(Routes.dashboard);
+        context.go(Routes.homeForRole(next.user.role));
       } else if (next is AuthError) {
         setState(() {
           _errorMessage = next.message;

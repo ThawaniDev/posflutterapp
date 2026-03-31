@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -66,6 +67,7 @@ class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
 
   Future<void> _handleSave() async {
     if (!_formKey.currentState!.validate()) return;
+    final l10n = AppLocalizations.of(context)!;
 
     setState(() => _isSaving = true);
 
@@ -79,7 +81,7 @@ class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
     try {
       await ref.read(goodsReceiptsProvider.notifier).createReceipt(data);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Goods receipt created as draft.')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryDraftReceiptCreated)));
         Navigator.pop(context);
       }
     } catch (e) {
@@ -93,13 +95,14 @@ class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final suppState = ref.watch(suppliersProvider);
     final supplierList = suppState is SuppliersLoaded ? suppState.suppliers : <Supplier>[];
     final prodState = ref.watch(productsProvider);
     final productList = prodState is ProductsLoaded ? prodState.products : <Product>[];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('New Goods Receipt')),
+      appBar: AppBar(title: Text(l10n.inventoryNewGoodsReceipt)),
       body: Form(
         key: _formKey,
         child: ListView(
@@ -107,17 +110,21 @@ class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
           children: [
             DropdownButtonFormField<String>(
               value: _supplierId,
-              decoration: const InputDecoration(labelText: 'Supplier'),
+              decoration: InputDecoration(labelText: l10n.inventorySupplier),
               isExpanded: true,
               items: supplierList.map((s) => DropdownMenuItem(value: s.id, child: Text(s.name))).toList(),
               onChanged: (v) => setState(() => _supplierId = v),
             ),
             const SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _refController, label: 'Reference Number', hint: 'Optional reference / PO number'),
+            PosTextField(
+              controller: _refController,
+              label: l10n.inventoryReferenceNumber,
+              hint: l10n.inventoryReferenceNumberHint,
+            ),
             const SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _notesController, label: 'Notes', hint: 'Optional notes', maxLines: 2),
+            PosTextField(controller: _notesController, label: l10n.commonNotes, hint: l10n.inventoryNotesHint, maxLines: 2),
             const SizedBox(height: AppSpacing.lg),
-            Text('Line Items', style: Theme.of(context).textTheme.titleMedium),
+            Text(l10n.inventoryLineItems, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: AppSpacing.sm),
             ..._items.asMap().entries.map((entry) {
               final index = entry.key;
@@ -130,7 +137,7 @@ class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
                     children: [
                       Row(
                         children: [
-                          Text('Item ${index + 1}', style: Theme.of(context).textTheme.titleSmall),
+                          Text(l10n.inventoryItemLabel(index + 1), style: Theme.of(context).textTheme.titleSmall),
                           const Spacer(),
                           if (_items.length > 1)
                             IconButton(icon: const Icon(Icons.delete_outline, size: 20), onPressed: () => _removeItem(index)),
@@ -139,7 +146,7 @@ class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
                       const SizedBox(height: AppSpacing.sm),
                       DropdownButtonFormField<String>(
                         value: item.productId,
-                        decoration: const InputDecoration(labelText: 'Product'),
+                        decoration: InputDecoration(labelText: l10n.inventoryProduct),
                         isExpanded: true,
                         items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
                         onChanged: (v) => setState(() => item.productId = v),
@@ -150,7 +157,7 @@ class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
                           Expanded(
                             child: PosTextField(
                               controller: item.quantityController,
-                              label: 'Quantity',
+                              label: l10n.inventoryQuantity,
                               hint: '0',
                               keyboardType: const TextInputType.numberWithOptions(decimal: true),
                             ),
@@ -159,7 +166,7 @@ class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
                           Expanded(
                             child: PosTextField(
                               controller: item.unitCostController,
-                              label: 'Unit Cost',
+                              label: l10n.inventoryUnitCostLabel,
                               hint: '0.00',
                               keyboardType: const TextInputType.numberWithOptions(decimal: true),
                             ),
@@ -171,9 +178,12 @@ class _GoodsReceiptFormPageState extends ConsumerState<GoodsReceiptFormPage> {
                 ),
               );
             }),
-            PosButton(label: 'Add Item', icon: Icons.add, variant: PosButtonVariant.outline, onPressed: _addItem),
+            PosButton(label: l10n.inventoryAddItemLabel, icon: Icons.add, variant: PosButtonVariant.outline, onPressed: _addItem),
             const SizedBox(height: AppSpacing.xl),
-            PosButton(label: _isSaving ? 'Saving...' : 'Create Receipt', onPressed: _isSaving ? null : _handleSave),
+            PosButton(
+              label: _isSaving ? l10n.inventorySaving : l10n.inventoryCreateReceipt,
+              onPressed: _isSaving ? null : _handleSave,
+            ),
           ],
         ),
       ),

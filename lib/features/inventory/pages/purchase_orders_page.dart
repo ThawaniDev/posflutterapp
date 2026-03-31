@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -49,7 +50,8 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
     try {
       await ref.read(purchaseOrdersProvider.notifier).sendOrder(order.id);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Purchase order sent.')));
+        final l10n = AppLocalizations.of(context)!;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryPOSent)));
       }
     } catch (e) {
       if (mounted) {
@@ -59,17 +61,18 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
   }
 
   Future<void> _handleCancel(PurchaseOrder order) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Cancel Purchase Order'),
+        title: Text(l10n.inventoryCancelPOTitle),
         content: Text('Cancel order "${order.referenceNumber ?? order.id}"?'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('No')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonNo)),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Cancel Order'),
+            child: Text(l10n.inventoryCancelOrder),
           ),
         ],
       ),
@@ -79,7 +82,7 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
       try {
         await ref.read(purchaseOrdersProvider.notifier).cancelOrder(order.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Purchase order cancelled.')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryPOCancelled)));
         }
       } catch (e) {
         if (mounted) {
@@ -91,67 +94,69 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(purchaseOrdersProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Purchase Orders'),
+        title: Text(l10n.inventoryPurchaseOrders),
         actions: [
           PopupMenuButton<String?>(
             icon: const Icon(Icons.filter_list),
-            tooltip: 'Filter by status',
+            tooltip: l10n.inventoryFilterByStatus,
             onSelected: (value) {
               ref.read(purchaseOrdersProvider.notifier).filterByStatus(value);
             },
             itemBuilder: (ctx) => [
-              const PopupMenuItem(value: null, child: Text('All')),
-              const PopupMenuItem(value: 'draft', child: Text('Draft')),
-              const PopupMenuItem(value: 'sent', child: Text('Sent')),
-              const PopupMenuItem(value: 'partially_received', child: Text('Partially Received')),
-              const PopupMenuItem(value: 'fully_received', child: Text('Fully Received')),
-              const PopupMenuItem(value: 'cancelled', child: Text('Cancelled')),
+              PopupMenuItem(value: null, child: Text(l10n.inventoryAll)),
+              PopupMenuItem(value: 'draft', child: Text(l10n.inventoryDraft)),
+              PopupMenuItem(value: 'sent', child: Text(l10n.inventorySent)),
+              PopupMenuItem(value: 'partially_received', child: Text(l10n.inventoryPartiallyReceived)),
+              PopupMenuItem(value: 'fully_received', child: Text(l10n.inventoryFullyReceived)),
+              PopupMenuItem(value: 'cancelled', child: Text(l10n.inventoryCancelled)),
             ],
           ),
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(purchaseOrdersProvider.notifier).load(),
           ),
         ],
       ),
-      floatingActionButton: PosButton(label: 'New PO', icon: Icons.add, onPressed: () => _showCreateDialog()),
+      floatingActionButton: PosButton(label: l10n.inventoryNewPO, icon: Icons.add, onPressed: () => _showCreateDialog()),
       body: _buildBody(state),
     );
   }
 
   Widget _buildBody(PurchaseOrdersState state) {
+    final l10n = AppLocalizations.of(context)!;
     final isLoading = state is PurchaseOrdersLoading || state is PurchaseOrdersInitial;
     final error = state is PurchaseOrdersError ? state.message : null;
     final orders = state is PurchaseOrdersLoaded ? state.orders : <PurchaseOrder>[];
 
     return PosDataTable<PurchaseOrder>(
-      columns: const [
-        PosTableColumn(title: 'Ref'),
-        PosTableColumn(title: 'Supplier'),
-        PosTableColumn(title: 'Status'),
-        PosTableColumn(title: 'Total', numeric: true),
-        PosTableColumn(title: 'Expected'),
+      columns: [
+        PosTableColumn(title: l10n.inventoryRef),
+        PosTableColumn(title: l10n.inventorySupplier),
+        PosTableColumn(title: l10n.commonStatus),
+        PosTableColumn(title: l10n.inventoryTotal, numeric: true),
+        PosTableColumn(title: l10n.inventoryExpected),
       ],
       items: orders,
       isLoading: isLoading,
       error: error,
       onRetry: () => ref.read(purchaseOrdersProvider.notifier).load(),
-      emptyConfig: const PosTableEmptyConfig(icon: Icons.shopping_cart_outlined, title: 'No purchase orders yet'),
+      emptyConfig: PosTableEmptyConfig(icon: Icons.shopping_cart_outlined, title: l10n.inventoryNoPOs),
       actions: [
         PosTableRowAction<PurchaseOrder>(
-          label: 'Send',
+          label: l10n.inventorySendAction,
           icon: Icons.send_outlined,
           color: AppColors.info,
           isVisible: (po) => po.status == PurchaseOrderStatus.draft,
           onTap: (po) => _handleSend(po),
         ),
         PosTableRowAction<PurchaseOrder>(
-          label: 'Receive',
+          label: l10n.inventoryReceiveAction,
           icon: Icons.archive_outlined,
           color: AppColors.success,
           isVisible: (po) => po.status == PurchaseOrderStatus.sent,
@@ -160,7 +165,7 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
           },
         ),
         PosTableRowAction<PurchaseOrder>(
-          label: 'Cancel',
+          label: l10n.commonCancel,
           icon: Icons.cancel_outlined,
           isDestructive: true,
           isVisible: (po) => po.status == PurchaseOrderStatus.draft || po.status == PurchaseOrderStatus.sent,
@@ -189,6 +194,7 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
   }
 
   Future<void> _showCreateDialog() async {
+    final l10n = AppLocalizations.of(context)!;
     // Ensure suppliers and products are loaded
     if (ref.read(suppliersProvider) is! SuppliersLoaded) {
       await ref.read(suppliersProvider.notifier).load();
@@ -214,7 +220,7 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
           final productList = prodState is ProductsLoaded ? prodState.products : <Product>[];
 
           return AlertDialog(
-            title: const Text('New Purchase Order'),
+            title: Text(l10n.inventoryNewPO),
             content: SizedBox(
               width: 500,
               child: Form(
@@ -225,47 +231,47 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
                     children: [
                       DropdownButtonFormField<String>(
                         value: selectedSupplierId,
-                        decoration: const InputDecoration(labelText: 'Supplier'),
+                        decoration: InputDecoration(labelText: l10n.inventorySupplier),
                         isExpanded: true,
                         items: supplierList.map((s) => DropdownMenuItem(value: s.id, child: Text(s.name))).toList(),
                         onChanged: (v) => setDialogState(() => selectedSupplierId = v),
-                        validator: (v) => v == null ? 'Required' : null,
+                        validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       TextFormField(
                         controller: refController,
-                        decoration: const InputDecoration(labelText: 'Reference (optional)'),
+                        decoration: InputDecoration(labelText: l10n.inventoryReferenceOptional),
                       ),
                       const Divider(height: 24),
-                      const Text('Item', style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(l10n.inventoryProduct, style: const TextStyle(fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       DropdownButtonFormField<String>(
                         value: selectedProductId,
-                        decoration: const InputDecoration(labelText: 'Product'),
+                        decoration: InputDecoration(labelText: l10n.inventoryProduct),
                         isExpanded: true,
                         items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
                         onChanged: (v) => setDialogState(() => selectedProductId = v),
-                        validator: (v) => v == null ? 'Required' : null,
+                        validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       TextFormField(
                         controller: quantityController,
-                        decoration: const InputDecoration(labelText: 'Quantity'),
+                        decoration: InputDecoration(labelText: l10n.inventoryQuantity),
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         validator: (v) {
-                          if (v == null || v.isEmpty) return 'Required';
-                          if (double.tryParse(v) == null) return 'Invalid';
+                          if (v == null || v.isEmpty) return l10n.commonRequired;
+                          if (double.tryParse(v) == null) return l10n.commonInvalid;
                           return null;
                         },
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       TextFormField(
                         controller: unitCostController,
-                        decoration: const InputDecoration(labelText: 'Unit Cost'),
+                        decoration: InputDecoration(labelText: l10n.inventoryUnitCostLabel),
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         validator: (v) {
-                          if (v == null || v.isEmpty) return 'Required';
-                          if (double.tryParse(v) == null) return 'Invalid';
+                          if (v == null || v.isEmpty) return l10n.commonRequired;
+                          if (double.tryParse(v) == null) return l10n.commonInvalid;
                           return null;
                         },
                       ),
@@ -275,7 +281,7 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
               ),
             ),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+              TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.commonCancel)),
               TextButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
@@ -292,7 +298,7 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
                     });
                   }
                 },
-                child: const Text('Create'),
+                child: Text(l10n.commonCreate),
               ),
             ],
           );
@@ -304,7 +310,7 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
       try {
         await ref.read(purchaseOrdersProvider.notifier).createOrder(result);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Purchase order created.')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryPOCreatedMsg)));
         }
       } catch (e) {
         if (mounted) {

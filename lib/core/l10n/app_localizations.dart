@@ -2699,7 +2699,7 @@ abstract class AppLocalizations {
   /// No description provided for @thawaniPay.
   ///
   /// In en, this message translates to:
-  /// **'Thawani Pay'**
+  /// **'Thawani Integration'**
   String get thawaniPay;
 
   /// No description provided for @thawaniOverview.
@@ -4327,6 +4327,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save Changes'**
   String get staffSaveChanges;
+
+  /// No description provided for @staffStoreAssignment.
+  ///
+  /// In en, this message translates to:
+  /// **'Store Assignment'**
+  String get staffStoreAssignment;
+
+  /// No description provided for @staffSelectStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Store'**
+  String get staffSelectStore;
+
+  /// No description provided for @staffAllStores.
+  ///
+  /// In en, this message translates to:
+  /// **'All Stores'**
+  String get staffAllStores;
+
+  /// No description provided for @staffUserAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'User Account'**
+  String get staffUserAccount;
+
+  /// No description provided for @staffCreateUserAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create User Account'**
+  String get staffCreateUserAccount;
+
+  /// No description provided for @staffCreateUserAccountDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a login account for this staff member to access the POS system'**
+  String get staffCreateUserAccountDesc;
+
+  /// No description provided for @staffUserAccountLinked.
+  ///
+  /// In en, this message translates to:
+  /// **'User Account Linked'**
+  String get staffUserAccountLinked;
+
+  /// No description provided for @staffUserRole.
+  ///
+  /// In en, this message translates to:
+  /// **'User Role'**
+  String get staffUserRole;
+
+  /// No description provided for @staffPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get staffPassword;
+
+  /// No description provided for @staffPasswordHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum 8 characters'**
+  String get staffPasswordHelper;
+
+  /// No description provided for @staffPasswordMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get staffPasswordMinLength;
 
   /// No description provided for @staffOverview.
   ///
@@ -7583,6 +7649,498 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Clear'**
   String get clearFilters;
+
+  /// No description provided for @posCashierTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'POS Terminal'**
+  String get posCashierTitle;
+
+  /// No description provided for @posStartShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Your Shift'**
+  String get posStartShift;
+
+  /// No description provided for @posStartShiftDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Open a cash session to start processing transactions'**
+  String get posStartShiftDesc;
+
+  /// No description provided for @posOpenShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Shift'**
+  String get posOpenShift;
+
+  /// No description provided for @posCloseShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Close Shift'**
+  String get posCloseShift;
+
+  /// No description provided for @posEndShift.
+  ///
+  /// In en, this message translates to:
+  /// **'End Shift'**
+  String get posEndShift;
+
+  /// No description provided for @posOpeningCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening Cash'**
+  String get posOpeningCash;
+
+  /// No description provided for @posClosingCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Closing Cash Count'**
+  String get posClosingCash;
+
+  /// No description provided for @posSelectRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Select register'**
+  String get posSelectRegister;
+
+  /// No description provided for @posNoRegisters.
+  ///
+  /// In en, this message translates to:
+  /// **'No registers found. Please add one first.'**
+  String get posNoRegisters;
+
+  /// No description provided for @posCountOpeningCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Count your opening cash to begin'**
+  String get posCountOpeningCash;
+
+  /// No description provided for @posReviewSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Review your session summary'**
+  String get posReviewSummary;
+
+  /// No description provided for @posSessionSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Session Summary (Z-Report)'**
+  String get posSessionSummary;
+
+  /// No description provided for @posCashSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash Sales'**
+  String get posCashSales;
+
+  /// No description provided for @posCardSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Card Sales'**
+  String get posCardSales;
+
+  /// No description provided for @posOtherSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Other Sales'**
+  String get posOtherSales;
+
+  /// No description provided for @posRefunds.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunds'**
+  String get posRefunds;
+
+  /// No description provided for @posVoids.
+  ///
+  /// In en, this message translates to:
+  /// **'Voids'**
+  String get posVoids;
+
+  /// No description provided for @posExpectedCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected Cash'**
+  String get posExpectedCash;
+
+  /// No description provided for @posTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get posTransactions;
+
+  /// No description provided for @posDifference.
+  ///
+  /// In en, this message translates to:
+  /// **'Difference'**
+  String get posDifference;
+
+  /// No description provided for @posShiftClosedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift closed successfully'**
+  String get posShiftClosedSuccess;
+
+  /// No description provided for @posCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Cart'**
+  String get posCart;
+
+  /// No description provided for @posWalkinCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk-in Customer'**
+  String get posWalkinCustomer;
+
+  /// No description provided for @posNoItems.
+  ///
+  /// In en, this message translates to:
+  /// **'No items'**
+  String get posNoItems;
+
+  /// No description provided for @posSubtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get posSubtotal;
+
+  /// No description provided for @posDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get posDiscount;
+
+  /// No description provided for @posTax.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get posTax;
+
+  /// No description provided for @posTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get posTotal;
+
+  /// No description provided for @posHold.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold'**
+  String get posHold;
+
+  /// No description provided for @posPay.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay'**
+  String get posPay;
+
+  /// No description provided for @posClearCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Cart'**
+  String get posClearCart;
+
+  /// No description provided for @posClearCartConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'All items will be removed.'**
+  String get posClearCartConfirm;
+
+  /// No description provided for @posSearchProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Search products or scan barcode'**
+  String get posSearchProducts;
+
+  /// No description provided for @posNoProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'No products found'**
+  String get posNoProducts;
+
+  /// No description provided for @posNoProductsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different search or check your catalog.'**
+  String get posNoProductsHint;
+
+  /// No description provided for @posProductAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} added'**
+  String posProductAdded(Object name);
+
+  /// No description provided for @posProductNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Product not found'**
+  String get posProductNotFound;
+
+  /// No description provided for @posReturnRefund.
+  ///
+  /// In en, this message translates to:
+  /// **'Return / Refund'**
+  String get posReturnRefund;
+
+  /// No description provided for @posReceiptNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt / Transaction number'**
+  String get posReceiptNumber;
+
+  /// No description provided for @posSelectItemsToReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Select items to return'**
+  String get posSelectItemsToReturn;
+
+  /// No description provided for @posRefundTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund to:'**
+  String get posRefundTo;
+
+  /// No description provided for @posRefundAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund Amount'**
+  String get posRefundAmount;
+
+  /// No description provided for @posProcessReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Process Return'**
+  String get posProcessReturn;
+
+  /// No description provided for @posReturnProcessed.
+  ///
+  /// In en, this message translates to:
+  /// **'Return processed: #{number}'**
+  String posReturnProcessed(Object number);
+
+  /// No description provided for @posFindTransaction.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a receipt number to find the transaction'**
+  String get posFindTransaction;
+
+  /// No description provided for @posTransactionNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction not found'**
+  String get posTransactionNotFound;
+
+  /// No description provided for @posPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get posPayment;
+
+  /// No description provided for @posPaymentTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total: SAR {amount}'**
+  String posPaymentTotal(Object amount);
+
+  /// No description provided for @posSplitPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Split Payment'**
+  String get posSplitPayment;
+
+  /// No description provided for @posCashTendered.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash Tendered'**
+  String get posCashTendered;
+
+  /// No description provided for @posChange.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get posChange;
+
+  /// No description provided for @posRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining'**
+  String get posRemaining;
+
+  /// No description provided for @posCompletePayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Payment'**
+  String get posCompletePayment;
+
+  /// No description provided for @posPaymentSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Successful'**
+  String get posPaymentSuccessful;
+
+  /// No description provided for @posTransactionNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction #{number}'**
+  String posTransactionNumber(Object number);
+
+  /// No description provided for @posDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get posDone;
+
+  /// No description provided for @posHeldCarts.
+  ///
+  /// In en, this message translates to:
+  /// **'Held Carts'**
+  String get posHeldCarts;
+
+  /// No description provided for @posNoHeldCarts.
+  ///
+  /// In en, this message translates to:
+  /// **'No held carts'**
+  String get posNoHeldCarts;
+
+  /// No description provided for @posRecall.
+  ///
+  /// In en, this message translates to:
+  /// **'Recall'**
+  String get posRecall;
+
+  /// No description provided for @posCartRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Cart restored: {label}'**
+  String posCartRestored(Object label);
+
+  /// No description provided for @posDeleteHeldCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Held Cart?'**
+  String get posDeleteHeldCart;
+
+  /// No description provided for @posDeleteHeldCartConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This will permanently remove \"{label}\".'**
+  String posDeleteHeldCartConfirm(Object label);
+
+  /// No description provided for @posHoldCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold Cart'**
+  String get posHoldCart;
+
+  /// No description provided for @posHoldCartLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Label (optional)'**
+  String get posHoldCartLabel;
+
+  /// No description provided for @posHoldCartHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Table 5, Mr. Ahmed'**
+  String get posHoldCartHint;
+
+  /// No description provided for @posCartHeld.
+  ///
+  /// In en, this message translates to:
+  /// **'Cart held'**
+  String get posCartHeld;
+
+  /// No description provided for @posFindCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Find Customer'**
+  String get posFindCustomer;
+
+  /// No description provided for @posSearchCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name, phone, loyalty code...'**
+  String get posSearchCustomer;
+
+  /// No description provided for @posSearchForCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for a customer'**
+  String get posSearchForCustomer;
+
+  /// No description provided for @posNoCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'No customers found'**
+  String get posNoCustomers;
+
+  /// No description provided for @posCustomerSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer: {name}'**
+  String posCustomerSelected(Object name);
+
+  /// No description provided for @posReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Return'**
+  String get posReturn;
+
+  /// No description provided for @posHeldF9.
+  ///
+  /// In en, this message translates to:
+  /// **'Held (F9)'**
+  String get posHeldF9;
+
+  /// No description provided for @posHoldF8.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold (F8)'**
+  String get posHoldF8;
+
+  /// No description provided for @posPayF4.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay (F4)'**
+  String get posPayF4;
+
+  /// No description provided for @posSearchF2.
+  ///
+  /// In en, this message translates to:
+  /// **'Search (F2)'**
+  String get posSearchF2;
+
+  /// No description provided for @posReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get posReset;
+
+  /// No description provided for @posCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get posCancel;
+
+  /// No description provided for @posClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get posClose;
+
+  /// No description provided for @posDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get posDelete;
+
+  /// No description provided for @posConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get posConfirm;
 }
 
 class _AppLocalizationsDelegate

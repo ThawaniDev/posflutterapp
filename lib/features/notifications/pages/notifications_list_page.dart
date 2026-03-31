@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -32,6 +33,7 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final listState = ref.watch(notificationListProvider);
     final unreadState = ref.watch(unreadCountProvider);
     final actionState = ref.watch(notificationActionProvider);
@@ -48,21 +50,24 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notifications'),
+        title: Text(l10n.notificationsTitle),
         actions: [
           // Unread badge
           if (unreadState is UnreadCountLoaded && unreadState.count > 0)
             Padding(
               padding: const EdgeInsets.only(right: 8),
               child: Chip(
-                label: Text('${unreadState.count} unread', style: const TextStyle(color: Colors.white, fontSize: 12)),
+                label: Text(
+                  l10n.notificationsUnread(unreadState.count),
+                  style: const TextStyle(color: Colors.white, fontSize: 12),
+                ),
                 backgroundColor: AppColors.error,
               ),
             ),
           // Mark all as read
           IconButton(
             icon: const Icon(Icons.done_all),
-            tooltip: 'Mark all as read',
+            tooltip: l10n.notificationsMarkAllAsRead,
             onPressed: actionState is NotificationActionLoading
                 ? null
                 : () => ref.read(notificationActionProvider.notifier).markAllAsRead(),
@@ -82,6 +87,7 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
   }
 
   Widget _buildCategoryFilter() {
+    final l10n = AppLocalizations.of(context)!;
     const categories = ['order', 'inventory', 'promotion', 'system', 'payment', 'staff'];
 
     return SingleChildScrollView(
@@ -89,7 +95,11 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
         children: [
-          FilterChip(label: const Text('All'), selected: _selectedCategory == null, onSelected: (_) => _filterByCategory(null)),
+          FilterChip(
+            label: Text(l10n.ordersAll),
+            selected: _selectedCategory == null,
+            onSelected: (_) => _filterByCategory(null),
+          ),
           AppSpacing.gapW8,
           ...categories.map(
             (cat) => Padding(
@@ -115,7 +125,7 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
       ),
       NotificationListLoaded(:final notifications) =>
         notifications.isEmpty
-            ? const PosEmptyState(title: 'No notifications', icon: Icons.notifications_none)
+            ? PosEmptyState(title: l10n.notificationsNoNotifications, icon: Icons.notifications_none)
             : RefreshIndicator(
                 onRefresh: () => ref.read(notificationListProvider.notifier).load(category: _selectedCategory),
                 child: ListView.separated(
@@ -164,7 +174,7 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
         trailing: !isRead
             ? IconButton(
                 icon: const Icon(Icons.circle, size: 12, color: AppColors.info),
-                tooltip: 'Mark as read',
+                tooltip: l10n.notificationsMarkRead,
                 onPressed: () => ref.read(notificationActionProvider.notifier).markAsRead(id),
               )
             : null,

@@ -2,6 +2,7 @@ import 'package:thawani_pos/features/orders/enums/external_order_type.dart';
 import 'package:thawani_pos/features/thawani_integration/enums/sync_status.dart';
 import 'package:thawani_pos/features/pos_terminal/enums/transaction_status.dart';
 import 'package:thawani_pos/features/pos_terminal/enums/transaction_type.dart';
+import 'package:thawani_pos/features/pos_terminal/models/transaction_item.dart';
 import 'package:thawani_pos/features/zatca/enums/zatca_compliance_status.dart';
 
 class Transaction {
@@ -33,6 +34,7 @@ class Transaction {
   final int? syncVersion;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final List<TransactionItem>? items;
   final DateTime? deletedAt;
 
   const Transaction({
@@ -62,6 +64,7 @@ class Transaction {
     this.zatcaStatus,
     this.syncStatus,
     this.syncVersion,
+    this.items,
     this.createdAt,
     this.updatedAt,
     this.deletedAt,
@@ -95,6 +98,9 @@ class Transaction {
       zatcaStatus: ZatcaComplianceStatus.tryFromValue(json['zatca_status'] as String?),
       syncStatus: SyncStatus.tryFromValue(json['sync_status'] as String?),
       syncVersion: (json['sync_version'] as num?)?.toInt(),
+      items: json['items'] != null
+          ? (json['items'] as List).map((j) => TransactionItem.fromJson(j as Map<String, dynamic>)).toList()
+          : null,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
       deletedAt: json['deleted_at'] != null ? DateTime.parse(json['deleted_at'] as String) : null,
@@ -129,6 +135,7 @@ class Transaction {
       'zatca_status': zatcaStatus?.value,
       'sync_status': syncStatus?.value,
       'sync_version': syncVersion,
+      if (items != null) 'items': items!.map((i) => i.toJson()).toList(),
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
       'deleted_at': deletedAt?.toIso8601String(),
@@ -162,6 +169,7 @@ class Transaction {
     ZatcaComplianceStatus? zatcaStatus,
     SyncStatus? syncStatus,
     int? syncVersion,
+    List<TransactionItem>? items,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? deletedAt,
@@ -193,6 +201,7 @@ class Transaction {
       zatcaStatus: zatcaStatus ?? this.zatcaStatus,
       syncStatus: syncStatus ?? this.syncStatus,
       syncVersion: syncVersion ?? this.syncVersion,
+      items: items ?? this.items,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       deletedAt: deletedAt ?? this.deletedAt,
@@ -200,13 +209,12 @@ class Transaction {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Transaction && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is Transaction && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'Transaction(id: $id, organizationId: $organizationId, storeId: $storeId, registerId: $registerId, posSessionId: $posSessionId, cashierId: $cashierId, ...)';
+  String toString() =>
+      'Transaction(id: $id, organizationId: $organizationId, storeId: $storeId, registerId: $registerId, posSessionId: $posSessionId, cashierId: $cashierId, ...)';
 }

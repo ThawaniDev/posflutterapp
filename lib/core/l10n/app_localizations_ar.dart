@@ -2153,6 +2153,41 @@ class AppLocalizationsAr extends AppLocalizations {
   String get staffSaveChanges => 'حفظ التغييرات';
 
   @override
+  String get staffStoreAssignment => 'تعيين المتجر';
+
+  @override
+  String get staffSelectStore => 'اختر المتجر';
+
+  @override
+  String get staffAllStores => 'جميع المتاجر';
+
+  @override
+  String get staffUserAccount => 'حساب المستخدم';
+
+  @override
+  String get staffCreateUserAccount => 'إنشاء حساب مستخدم';
+
+  @override
+  String get staffCreateUserAccountDesc =>
+      'إنشاء حساب تسجيل دخول لهذا الموظف للوصول إلى نظام نقاط البيع';
+
+  @override
+  String get staffUserAccountLinked => 'حساب المستخدم مرتبط';
+
+  @override
+  String get staffUserRole => 'دور المستخدم';
+
+  @override
+  String get staffPassword => 'كلمة المرور';
+
+  @override
+  String get staffPasswordHelper => '8 أحرف على الأقل';
+
+  @override
+  String get staffPasswordMinLength =>
+      'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
+
+  @override
   String get staffOverview => 'نظرة عامة';
 
   @override
@@ -3848,4 +3883,265 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get clearFilters => 'مسح';
+
+  @override
+  String get posCashierTitle => 'نقطة البيع';
+
+  @override
+  String get posStartShift => 'ابدأ الوردية';
+
+  @override
+  String get posStartShiftDesc => 'افتح جلسة نقدية لبدء معالجة المعاملات';
+
+  @override
+  String get posOpenShift => 'فتح الوردية';
+
+  @override
+  String get posCloseShift => 'إغلاق الوردية';
+
+  @override
+  String get posEndShift => 'إنهاء الوردية';
+
+  @override
+  String get posOpeningCash => 'النقد الافتتاحي';
+
+  @override
+  String get posClosingCash => 'عد النقد الختامي';
+
+  @override
+  String get posSelectRegister => 'اختر الصندوق';
+
+  @override
+  String get posNoRegisters =>
+      'لم يتم العثور على صناديق. يرجى إضافة واحد أولاً.';
+
+  @override
+  String get posCountOpeningCash => 'عد النقد الافتتاحي للبدء';
+
+  @override
+  String get posReviewSummary => 'مراجعة ملخص الجلسة';
+
+  @override
+  String get posSessionSummary => 'ملخص الجلسة (تقرير Z)';
+
+  @override
+  String get posCashSales => 'مبيعات نقدية';
+
+  @override
+  String get posCardSales => 'مبيعات بطاقة';
+
+  @override
+  String get posOtherSales => 'مبيعات أخرى';
+
+  @override
+  String get posRefunds => 'مرتجعات';
+
+  @override
+  String get posVoids => 'ملغيات';
+
+  @override
+  String get posExpectedCash => 'النقد المتوقع';
+
+  @override
+  String get posTransactions => 'المعاملات';
+
+  @override
+  String get posDifference => 'الفرق';
+
+  @override
+  String get posShiftClosedSuccess => 'تم إغلاق الوردية بنجاح';
+
+  @override
+  String get posCart => 'السلة';
+
+  @override
+  String get posWalkinCustomer => 'عميل عابر';
+
+  @override
+  String get posNoItems => 'لا توجد عناصر';
+
+  @override
+  String get posSubtotal => 'المجموع الفرعي';
+
+  @override
+  String get posDiscount => 'الخصم';
+
+  @override
+  String get posTax => 'الضريبة';
+
+  @override
+  String get posTotal => 'الإجمالي';
+
+  @override
+  String get posHold => 'تعليق';
+
+  @override
+  String get posPay => 'دفع';
+
+  @override
+  String get posClearCart => 'مسح السلة';
+
+  @override
+  String get posClearCartConfirm => 'سيتم إزالة جميع العناصر.';
+
+  @override
+  String get posSearchProducts => 'ابحث عن المنتجات أو امسح الباركود';
+
+  @override
+  String get posNoProducts => 'لم يتم العثور على منتجات';
+
+  @override
+  String get posNoProductsHint => 'جرب بحثاً مختلفاً أو تحقق من الكتالوج.';
+
+  @override
+  String posProductAdded(Object name) {
+    return 'تمت إضافة $name';
+  }
+
+  @override
+  String get posProductNotFound => 'المنتج غير موجود';
+
+  @override
+  String get posReturnRefund => 'مرتجع / استرداد';
+
+  @override
+  String get posReceiptNumber => 'رقم الإيصال / المعاملة';
+
+  @override
+  String get posSelectItemsToReturn => 'اختر العناصر للإرجاع';
+
+  @override
+  String get posRefundTo => 'استرداد إلى:';
+
+  @override
+  String get posRefundAmount => 'مبلغ الاسترداد';
+
+  @override
+  String get posProcessReturn => 'معالجة المرتجع';
+
+  @override
+  String posReturnProcessed(Object number) {
+    return 'تمت معالجة المرتجع: #$number';
+  }
+
+  @override
+  String get posFindTransaction => 'أدخل رقم الإيصال للبحث عن المعاملة';
+
+  @override
+  String get posTransactionNotFound => 'المعاملة غير موجودة';
+
+  @override
+  String get posPayment => 'الدفع';
+
+  @override
+  String posPaymentTotal(Object amount) {
+    return 'الإجمالي: ر.س $amount';
+  }
+
+  @override
+  String get posSplitPayment => 'تقسيم الدفع';
+
+  @override
+  String get posCashTendered => 'النقد المقدم';
+
+  @override
+  String get posChange => 'الباقي';
+
+  @override
+  String get posRemaining => 'المتبقي';
+
+  @override
+  String get posCompletePayment => 'إتمام الدفع';
+
+  @override
+  String get posPaymentSuccessful => 'تم الدفع بنجاح';
+
+  @override
+  String posTransactionNumber(Object number) {
+    return 'معاملة #$number';
+  }
+
+  @override
+  String get posDone => 'تم';
+
+  @override
+  String get posHeldCarts => 'السلات المعلقة';
+
+  @override
+  String get posNoHeldCarts => 'لا توجد سلات معلقة';
+
+  @override
+  String get posRecall => 'استرجاع';
+
+  @override
+  String posCartRestored(Object label) {
+    return 'تم استرجاع السلة: $label';
+  }
+
+  @override
+  String get posDeleteHeldCart => 'حذف السلة المعلقة؟';
+
+  @override
+  String posDeleteHeldCartConfirm(Object label) {
+    return 'سيتم حذف \"$label\" نهائياً.';
+  }
+
+  @override
+  String get posHoldCart => 'تعليق السلة';
+
+  @override
+  String get posHoldCartLabel => 'التسمية (اختياري)';
+
+  @override
+  String get posHoldCartHint => 'مثال: طاولة 5، السيد أحمد';
+
+  @override
+  String get posCartHeld => 'تم تعليق السلة';
+
+  @override
+  String get posFindCustomer => 'البحث عن عميل';
+
+  @override
+  String get posSearchCustomer => 'البحث بالاسم أو الهاتف أو رمز الولاء...';
+
+  @override
+  String get posSearchForCustomer => 'ابحث عن عميل';
+
+  @override
+  String get posNoCustomers => 'لم يتم العثور على عملاء';
+
+  @override
+  String posCustomerSelected(Object name) {
+    return 'العميل: $name';
+  }
+
+  @override
+  String get posReturn => 'مرتجع';
+
+  @override
+  String get posHeldF9 => 'المعلقة (F9)';
+
+  @override
+  String get posHoldF8 => 'تعليق (F8)';
+
+  @override
+  String get posPayF4 => 'دفع (F4)';
+
+  @override
+  String get posSearchF2 => 'بحث (F2)';
+
+  @override
+  String get posReset => 'إعادة تعيين';
+
+  @override
+  String get posCancel => 'إلغاء';
+
+  @override
+  String get posClose => 'إغلاق';
+
+  @override
+  String get posDelete => 'حذف';
+
+  @override
+  String get posConfirm => 'تأكيد';
 }

@@ -88,12 +88,13 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
               style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
             AppSpacing.gapH12,
-            if (state is SyncOperationRunning) LinearProgressIndicator(semanticsLabel: 'Sync ${state.operation} in progress'),
+            if (state is SyncOperationRunning)
+              LinearProgressIndicator(semanticsLabel: AppLocalizations.of(context)!.syncSyncProgress(state.operation)),
             if (state is SyncOperationSuccess)
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: Text(
-                  '${state.recordsSynced} records synced',
+                  AppLocalizations.of(context)!.syncRecordsSynced(state.recordsSynced),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.success),
                 ),
               ),
@@ -142,13 +143,16 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Unresolved Conflicts ($total)',
+            AppLocalizations.of(context)!.syncUnresolvedConflicts(total),
             style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
           ),
           AppSpacing.gapH8,
           if (conflicts.isEmpty)
-            const Card(
-              child: Padding(padding: EdgeInsets.all(16), child: Text('No unresolved conflicts')),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(AppLocalizations.of(context)!.syncNoUnresolvedConflicts),
+              ),
             )
           else
             ...conflicts.map(
@@ -195,7 +199,7 @@ class _ErrorCard extends StatelessWidget {
           children: [
             Text(message, style: const TextStyle(color: AppColors.error)),
             AppSpacing.gapH8,
-            TextButton(onPressed: onRetry, child: const Text('Retry')),
+            TextButton(onPressed: onRetry, child: Text(AppLocalizations.of(context)!.commonRetry)),
           ],
         ),
       ),

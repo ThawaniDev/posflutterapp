@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
@@ -30,15 +31,16 @@ class _StockMovementsPageState extends ConsumerState<StockMovementsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(stockMovementsProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Stock Movements'),
+        title: Text(l10n.inventoryStockMovements),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(stockMovementsProvider.notifier).load(productId: widget.productId),
           ),
         ],
@@ -48,25 +50,26 @@ class _StockMovementsPageState extends ConsumerState<StockMovementsPage> {
   }
 
   Widget _buildBody(StockMovementsState state) {
+    final l10n = AppLocalizations.of(context)!;
     final isLoading = state is StockMovementsLoading || state is StockMovementsInitial;
     final error = state is StockMovementsError ? state.message : null;
     final movements = state is StockMovementsLoaded ? state.movements : <StockMovement>[];
     final loaded = state is StockMovementsLoaded ? state : null;
 
     return PosDataTable<StockMovement>(
-      columns: const [
-        PosTableColumn(title: 'Date'),
-        PosTableColumn(title: 'Type'),
-        PosTableColumn(title: 'Product'),
-        PosTableColumn(title: 'Quantity', numeric: true),
-        PosTableColumn(title: 'Unit Cost', numeric: true),
-        PosTableColumn(title: 'Reason'),
+      columns: [
+        PosTableColumn(title: l10n.commonDate),
+        PosTableColumn(title: l10n.commonType),
+        PosTableColumn(title: l10n.inventoryProduct),
+        PosTableColumn(title: l10n.inventoryQuantity, numeric: true),
+        PosTableColumn(title: l10n.inventoryUnitCostLabel, numeric: true),
+        PosTableColumn(title: l10n.reason),
       ],
       items: movements,
       isLoading: isLoading,
       error: error,
       onRetry: () => ref.read(stockMovementsProvider.notifier).load(productId: widget.productId),
-      emptyConfig: const PosTableEmptyConfig(icon: Icons.history_outlined, title: 'No stock movements yet'),
+      emptyConfig: PosTableEmptyConfig(icon: Icons.history_outlined, title: l10n.inventoryNoMovements),
       cellBuilder: (m, colIndex, col) {
         final typeLabel = m.type.value;
         switch (colIndex) {

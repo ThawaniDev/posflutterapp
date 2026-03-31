@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
@@ -55,6 +56,7 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(notificationPreferencesProvider);
 
     if (state is NotificationPreferencesLoaded) {
@@ -63,12 +65,12 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notification Preferences'),
+        title: Text(l10n.notificationsPreferences),
         actions: [
           if (_hasChanges)
             TextButton(
               onPressed: _save,
-              child: const Text('Save', style: TextStyle(fontWeight: FontWeight.bold)),
+              child: Text(l10n.notificationsSave, style: const TextStyle(fontWeight: FontWeight.bold)),
             ),
         ],
       ),
@@ -84,29 +86,50 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
   }
 
   Widget _buildPreferences() {
+    final l10n = AppLocalizations.of(context)!;
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
         // ─── Notification Categories ──────────────
-        const Text('Notification Categories', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Text(l10n.notificationsCategories, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
-        _buildCategorySection('order_updates', 'Order Updates', 'New orders, status changes, cancellations', Icons.receipt_long),
-        _buildCategorySection('promotions', 'Promotions', 'Deals, special offers, campaign alerts', Icons.local_offer),
-        _buildCategorySection('inventory_alerts', 'Inventory Alerts', 'Low stock warnings, reorder reminders', Icons.inventory_2),
-        _buildCategorySection('system_updates', 'System Updates', 'App updates, maintenance notices', Icons.settings),
+        _buildCategorySection(
+          'order_updates',
+          l10n.notificationsOrderUpdates,
+          l10n.notificationsOrderUpdatesSubtitle,
+          Icons.receipt_long,
+        ),
+        _buildCategorySection(
+          'promotions',
+          l10n.notificationsPromotions,
+          l10n.notificationsPromotionsSubtitle,
+          Icons.local_offer,
+        ),
+        _buildCategorySection(
+          'inventory_alerts',
+          l10n.notificationsInventoryAlerts,
+          l10n.notificationsInventoryAlertsSubtitle,
+          Icons.inventory_2,
+        ),
+        _buildCategorySection(
+          'system_updates',
+          l10n.notificationsSystemUpdates,
+          l10n.notificationsSystemUpdatesSubtitle,
+          Icons.settings,
+        ),
 
         const SizedBox(height: 24),
 
         // ─── Quiet Hours ──────────────────────────
-        const Text('Quiet Hours', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Text(l10n.notificationsQuietHours, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 4),
-        Text('Mute push notifications during these hours', style: TextStyle(color: AppColors.textSecondary)),
+        Text(l10n.notificationsQuietHoursSubtitle, style: TextStyle(color: AppColors.textSecondary)),
         const SizedBox(height: 12),
         Row(
           children: [
             Expanded(
               child: _buildTimePicker(
-                label: 'Start',
+                label: l10n.notificationsQuietStart,
                 value: _quietStart,
                 onChanged: (t) => setState(() {
                   _quietStart = t;
@@ -120,7 +143,7 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
             ),
             Expanded(
               child: _buildTimePicker(
-                label: 'End',
+                label: l10n.notificationsQuietEnd,
                 value: _quietEnd,
                 onChanged: (t) => setState(() {
                   _quietEnd = t;
@@ -139,7 +162,7 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
               _hasChanges = true;
             }),
             icon: const Icon(Icons.clear, size: 18),
-            label: const Text('Clear quiet hours'),
+            label: Text(AppLocalizations.of(context)!.notificationsClearQuietHours),
           ),
         ],
       ],
@@ -176,11 +199,11 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
             const SizedBox(height: 8),
             Row(
               children: [
-                _buildChannelToggle('In-App', inApp, (v) {
+                _buildChannelToggle(AppLocalizations.of(context)!.notificationsInApp, inApp, (v) {
                   _updateCategoryPref(key, 'in_app', v);
                 }),
                 const SizedBox(width: 16),
-                _buildChannelToggle('Push', push, (v) {
+                _buildChannelToggle(AppLocalizations.of(context)!.notificationsPush, push, (v) {
                   _updateCategoryPref(key, 'push', v);
                 }),
               ],
@@ -212,6 +235,7 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
   }
 
   Widget _buildTimePicker({required String label, required TimeOfDay? value, required ValueChanged<TimeOfDay> onChanged}) {
+    final l10n = AppLocalizations.of(context)!;
     return InkWell(
       onTap: () async {
         final picked = await showTimePicker(context: context, initialTime: value ?? const TimeOfDay(hour: 22, minute: 0));
@@ -224,7 +248,7 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
           suffixIcon: const Icon(Icons.access_time),
         ),
         child: Text(
-          value != null ? value.format(context) : 'Not set',
+          value != null ? value.format(context) : l10n.notificationsNotSet,
           style: TextStyle(color: value != null ? null : AppColors.textSecondary),
         ),
       ),

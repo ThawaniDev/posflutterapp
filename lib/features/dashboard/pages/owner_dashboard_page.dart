@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -30,6 +31,7 @@ class _OwnerDashboardPageState extends ConsumerState<OwnerDashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(ownerDashboardProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -54,7 +56,7 @@ class _OwnerDashboardPageState extends ConsumerState<OwnerDashboardPage> {
               FilledButton.icon(
                 onPressed: () => ref.read(ownerDashboardProvider.notifier).load(),
                 icon: const Icon(Icons.refresh),
-                label: const Text('Retry'),
+                label: Text(l10n.commonRetry),
               ),
             ],
           ),

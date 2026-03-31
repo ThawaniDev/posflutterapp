@@ -37,6 +37,7 @@ import 'package:thawani_pos/features/payments/pages/daily_summary_page.dart';
 import 'package:thawani_pos/features/pos_terminal/pages/pos_sessions_page.dart';
 import 'package:thawani_pos/features/pos_terminal/pages/pos_terminal_form_page.dart';
 import 'package:thawani_pos/features/pos_terminal/pages/pos_terminals_page.dart';
+import 'package:thawani_pos/features/pos_terminal/pages/pos_cashier_page.dart';
 import 'package:thawani_pos/features/staff/pages/attendance_page.dart';
 import 'package:thawani_pos/features/staff/pages/commission_summary_page.dart';
 import 'package:thawani_pos/features/staff/pages/role_create_page.dart';
@@ -238,9 +239,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         return Routes.login;
       }
 
-      // Authenticated → redirect away from auth pages to dashboard
-      if (isAuthenticated && isPublicRoute) {
-        return Routes.dashboard;
+      // Authenticated → redirect away from auth pages based on role
+      if (authState is AuthAuthenticated && isPublicRoute) {
+        return Routes.homeForRole(authState.user.role);
       }
 
       return null;
@@ -1078,6 +1079,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
         ], // end ShellRoute routes
       ), // end ShellRoute
+      // ─── POS Cashier (full-screen, no sidebar) ──
+      GoRoute(path: Routes.posCheckout, name: 'posCheckout', builder: (context, state) => const PosCashierPage()),
     ],
   );
 });

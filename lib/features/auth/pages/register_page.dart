@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
@@ -60,6 +61,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final authState = ref.watch(authProvider);
     final isLoading = authState is AuthLoading;
 
@@ -72,7 +74,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     });
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Create Account'), centerTitle: true),
+      appBar: AppBar(title: Text(l10n.authCreateAccount), centerTitle: true),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -86,19 +88,19 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                   children: [
                     // Section: Personal Info
                     Text(
-                      'Personal Information',
+                      l10n.authPersonalInformation,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: AppSpacing.md),
 
                     TextFormField(
                       controller: _nameController,
-                      decoration: const InputDecoration(
-                        labelText: 'Full Name',
-                        hintText: 'Enter your full name',
-                        prefixIcon: Icon(Icons.person_outline),
+                      decoration: InputDecoration(
+                        labelText: l10n.authFullName,
+                        hintText: l10n.authFullNameHint,
+                        prefixIcon: const Icon(Icons.person_outline),
                       ),
-                      validator: (v) => Validators.required(v, 'Name'),
+                      validator: (v) => Validators.required(v, l10n.authFullName),
                       textInputAction: TextInputAction.next,
                       enabled: !isLoading,
                     ),
@@ -106,10 +108,10 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
                     TextFormField(
                       controller: _emailController,
-                      decoration: const InputDecoration(
-                        labelText: 'Email',
-                        hintText: 'Enter your email',
-                        prefixIcon: Icon(Icons.email_outlined),
+                      decoration: InputDecoration(
+                        labelText: l10n.authEmail,
+                        hintText: l10n.authEmailHint,
+                        prefixIcon: const Icon(Icons.email_outlined),
                       ),
                       keyboardType: TextInputType.emailAddress,
                       validator: Validators.email,
@@ -120,10 +122,10 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
                     TextFormField(
                       controller: _phoneController,
-                      decoration: const InputDecoration(
-                        labelText: 'Phone (optional)',
+                      decoration: InputDecoration(
+                        labelText: l10n.authPhoneOptional,
                         hintText: '+968 XXXX XXXX',
-                        prefixIcon: Icon(Icons.phone_outlined),
+                        prefixIcon: const Icon(Icons.phone_outlined),
                       ),
                       keyboardType: TextInputType.phone,
                       textInputAction: TextInputAction.next,
@@ -133,17 +135,17 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
                     // Section: Business Info
                     Text(
-                      'Business Information',
+                      l10n.authBusinessInformation,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: AppSpacing.md),
 
                     TextFormField(
                       controller: _orgNameController,
-                      decoration: const InputDecoration(
-                        labelText: 'Business Name (optional)',
-                        hintText: 'Your company or business name',
-                        prefixIcon: Icon(Icons.business_outlined),
+                      decoration: InputDecoration(
+                        labelText: l10n.authBusinessNameOptional,
+                        hintText: l10n.authBusinessNameHint,
+                        prefixIcon: const Icon(Icons.business_outlined),
                       ),
                       textInputAction: TextInputAction.next,
                       enabled: !isLoading,
@@ -152,10 +154,10 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
                     TextFormField(
                       controller: _storeNameController,
-                      decoration: const InputDecoration(
-                        labelText: 'Store Name (optional)',
-                        hintText: 'Main branch name',
-                        prefixIcon: Icon(Icons.store_outlined),
+                      decoration: InputDecoration(
+                        labelText: l10n.authStoreNameOptional,
+                        hintText: l10n.authStoreNameHint,
+                        prefixIcon: const Icon(Icons.store_outlined),
                       ),
                       textInputAction: TextInputAction.next,
                       enabled: !isLoading,
@@ -166,27 +168,30 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                     DropdownButtonFormField<String>(
                       value: _selectedCountry,
                       decoration: InputDecoration(
-                        labelText: 'Country',
+                        labelText: l10n.authCountry,
                         prefixIcon: const Icon(Icons.flag_outlined),
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                       ),
-                      items: const [
-                        DropdownMenuItem(value: 'OM', child: Text('Oman')),
-                        DropdownMenuItem(value: 'SA', child: Text('Saudi Arabia')),
+                      items: [
+                        DropdownMenuItem(value: 'OM', child: Text(l10n.authCountryOman)),
+                        DropdownMenuItem(value: 'SA', child: Text(l10n.authCountrySaudiArabia)),
                       ],
                       onChanged: isLoading ? null : (v) => setState(() => _selectedCountry = v ?? 'SA'),
                     ),
                     const SizedBox(height: AppSpacing.xl),
 
                     // Section: Security
-                    Text('Security', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                    Text(
+                      l10n.authSecurity,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                    ),
                     const SizedBox(height: AppSpacing.md),
 
                     TextFormField(
                       controller: _passwordController,
                       decoration: InputDecoration(
-                        labelText: 'Password',
-                        hintText: 'At least 8 characters',
+                        labelText: l10n.authPassword,
+                        hintText: l10n.authPasswordHintMinChars,
                         prefixIcon: const Icon(Icons.lock_outline),
                         suffixIcon: IconButton(
                           icon: Icon(_obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined),
@@ -196,7 +201,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                         ),
                       ),
                       obscureText: _obscurePassword,
-                      validator: (v) => Validators.minLength(v, 8, 'Password'),
+                      validator: (v) => Validators.minLength(v, 8, l10n.authPassword),
                       textInputAction: TextInputAction.next,
                       enabled: !isLoading,
                     ),
@@ -205,8 +210,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                     TextFormField(
                       controller: _confirmPasswordController,
                       decoration: InputDecoration(
-                        labelText: 'Confirm Password',
-                        hintText: 'Re-enter your password',
+                        labelText: l10n.authConfirmPassword,
+                        hintText: l10n.authConfirmPasswordHint,
                         prefixIcon: const Icon(Icons.lock_outline),
                         suffixIcon: IconButton(
                           icon: Icon(_obscureConfirm ? Icons.visibility_off_outlined : Icons.visibility_outlined),
@@ -218,7 +223,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                       obscureText: _obscureConfirm,
                       validator: (v) {
                         if (v != _passwordController.text) {
-                          return 'Passwords do not match';
+                          return l10n.authPasswordsDoNotMatch;
                         }
                         return null;
                       },
@@ -230,7 +235,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
                     // Register Button
                     PosButton(
-                      label: isLoading ? 'Creating Account...' : 'Create Account',
+                      label: isLoading ? l10n.authCreatingAccount : l10n.authCreateAccount,
                       onPressed: isLoading ? null : _handleRegister,
                       isLoading: isLoading,
                     ),
@@ -240,11 +245,11 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Already have an account? ', style: Theme.of(context).textTheme.bodyMedium),
+                        Text(l10n.authAlreadyHaveAccount, style: Theme.of(context).textTheme.bodyMedium),
                         TextButton(
                           onPressed: isLoading ? null : () => context.pop(),
                           child: Text(
-                            'Sign In',
+                            l10n.authSignIn,
                             style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
                           ),
                         ),

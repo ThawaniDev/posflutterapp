@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/constants/api_endpoints.dart';
 import 'package:thawani_pos/core/network/api_response.dart';
 import 'package:thawani_pos/core/network/dio_client.dart';
 import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:thawani_pos/features/customers/models/customer.dart';
 import 'package:thawani_pos/features/pos_terminal/models/held_cart.dart';
 import 'package:thawani_pos/features/pos_terminal/models/pos_session.dart';
 import 'package:thawani_pos/features/pos_terminal/models/register.dart';
@@ -101,6 +103,68 @@ class PosTerminalApiService {
     final response = await _dio.put('${ApiEndpoints.transactions}/$transactionId/void');
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return Transaction.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<Transaction> getTransactionByNumber(String number) async {
+    final response = await _dio.get('${ApiEndpoints.transactions}/by-number/$number');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Transaction.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<Transaction> returnTransaction(Map<String, dynamic> data) async {
+    final response = await _dio.post('${ApiEndpoints.transactions}/return', data: data);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Transaction.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  // ─── POS Products ────────────────────────────────────────────
+
+  Future<PaginatedResult<Product>> listPosProducts({
+    int page = 1,
+    int perPage = 50,
+    String? search,
+    String? categoryId,
+    String? barcode,
+  }) async {
+    final response = await _dio.get(
+      '${ApiEndpoints.posBase}/products',
+      queryParameters: {
+        'page': page,
+        'per_page': perPage,
+        if (search != null && search.isNotEmpty) 'search': search,
+        if (categoryId != null) 'category_id': categoryId,
+        if (barcode != null && barcode.isNotEmpty) 'barcode': barcode,
+      },
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final map = apiResponse.data as Map<String, dynamic>;
+    final items = (map['data'] as List).map((j) => Product.fromJson(j as Map<String, dynamic>)).toList();
+    return PaginatedResult(
+      items: items,
+      total: map['total'] as int? ?? items.length,
+      currentPage: map['current_page'] as int? ?? page,
+      lastPage: map['last_page'] as int? ?? 1,
+      perPage: map['per_page'] as int? ?? perPage,
+    );
+  }
+
+  // ─── POS Customers ───────────────────────────────────────────
+
+  Future<PaginatedResult<Customer>> listPosCustomers({int page = 1, int perPage = 20, String? search}) async {
+    final response = await _dio.get(
+      '${ApiEndpoints.posBase}/customers',
+      queryParameters: {'page': page, 'per_page': perPage, if (search != null && search.isNotEmpty) 'search': search},
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final map = apiResponse.data as Map<String, dynamic>;
+    final items = (map['data'] as List).map((j) => Customer.fromJson(j as Map<String, dynamic>)).toList();
+    return PaginatedResult(
+      items: items,
+      total: map['total'] as int? ?? items.length,
+      currentPage: map['current_page'] as int? ?? page,
+      lastPage: map['last_page'] as int? ?? 1,
+      perPage: map['per_page'] as int? ?? perPage,
+    );
   }
 
   // ─── Held Carts ───────────────────────────────────────────────

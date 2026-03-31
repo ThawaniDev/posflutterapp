@@ -16,10 +16,10 @@ class StaffListNotifier extends StateNotifier<StaffListState> {
 
   StaffListNotifier(this._repo) : super(const StaffListInitial());
 
-  Future<void> load({String? search, String? status, String? employmentType}) async {
+  Future<void> load({String? search, String? status, String? employmentType, String? storeId}) async {
     state = const StaffListLoading();
     try {
-      final result = await _repo.listStaff(search: search, status: status, employmentType: employmentType);
+      final result = await _repo.listStaff(search: search, status: status, employmentType: employmentType, storeId: storeId);
       state = StaffListLoaded(
         staff: result.items,
         total: result.total,
@@ -32,7 +32,7 @@ class StaffListNotifier extends StateNotifier<StaffListState> {
     }
   }
 
-  Future<void> loadMore({String? search, String? status, String? employmentType}) async {
+  Future<void> loadMore({String? search, String? status, String? employmentType, String? storeId}) async {
     final current = state;
     if (current is! StaffListLoaded || !current.hasMore) return;
 
@@ -42,6 +42,7 @@ class StaffListNotifier extends StateNotifier<StaffListState> {
         search: search,
         status: status,
         employmentType: employmentType,
+        storeId: storeId,
       );
       state = current.copyWith(
         staff: [...current.staff, ...result.items],

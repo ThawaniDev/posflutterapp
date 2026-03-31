@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -46,6 +47,7 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
   }
 
   Future<void> _handleAction(StockTransfer transfer, String action) async {
+    final l10n = AppLocalizations.of(context)!;
     final msg = action == 'approve'
         ? 'Approve this transfer? This will deduct stock from the source store.'
         : action == 'receive'
@@ -58,7 +60,7 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
         title: Text('${action[0].toUpperCase()}${action.substring(1)} Transfer'),
         content: Text(msg),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonCancel)),
           TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(action[0].toUpperCase() + action.substring(1))),
         ],
       ),
@@ -87,59 +89,65 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(stockTransfersProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Stock Transfers'),
+        title: Text(l10n.inventoryStockTransfers),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(stockTransfersProvider.notifier).load(),
           ),
         ],
       ),
-      floatingActionButton: PosButton(label: 'New Transfer', icon: Icons.add, onPressed: () => _showCreateTransferDialog()),
+      floatingActionButton: PosButton(
+        label: l10n.inventoryNewTransfer,
+        icon: Icons.add,
+        onPressed: () => _showCreateTransferDialog(),
+      ),
       body: _buildBody(state),
     );
   }
 
   Widget _buildBody(StockTransfersState state) {
+    final l10n = AppLocalizations.of(context)!;
     final isLoading = state is StockTransfersLoading || state is StockTransfersInitial;
     final error = state is StockTransfersError ? state.message : null;
     final transfers = state is StockTransfersLoaded ? state.transfers : <StockTransfer>[];
 
     return PosDataTable<StockTransfer>(
-      columns: const [
-        PosTableColumn(title: 'Ref'),
-        PosTableColumn(title: 'From'),
-        PosTableColumn(title: 'To'),
-        PosTableColumn(title: 'Status'),
-        PosTableColumn(title: 'Created'),
+      columns: [
+        PosTableColumn(title: l10n.inventoryRef),
+        PosTableColumn(title: l10n.inventoryFromStore),
+        PosTableColumn(title: l10n.inventoryToStore),
+        PosTableColumn(title: l10n.commonStatus),
+        PosTableColumn(title: l10n.commonDate),
       ],
       items: transfers,
       isLoading: isLoading,
       error: error,
       onRetry: () => ref.read(stockTransfersProvider.notifier).load(),
-      emptyConfig: const PosTableEmptyConfig(icon: Icons.swap_horiz_outlined, title: 'No stock transfers yet'),
+      emptyConfig: PosTableEmptyConfig(icon: Icons.swap_horiz_outlined, title: l10n.inventoryNoTransfers),
       actions: [
         PosTableRowAction<StockTransfer>(
-          label: 'Approve',
+          label: l10n.inventoryApprove,
           icon: Icons.check_circle_outline,
           color: AppColors.success,
           isVisible: (t) => t.status == StockTransferStatus.pending,
           onTap: (t) => _handleAction(t, 'approve'),
         ),
         PosTableRowAction<StockTransfer>(
-          label: 'Cancel',
+          label: l10n.commonCancel,
           icon: Icons.cancel_outlined,
           isDestructive: true,
           isVisible: (t) => t.status == StockTransferStatus.pending,
           onTap: (t) => _handleAction(t, 'cancel'),
         ),
         PosTableRowAction<StockTransfer>(
-          label: 'Receive',
+          label: l10n.inventoryReceiveAction,
           icon: Icons.archive_outlined,
           color: AppColors.info,
           isVisible: (t) => t.status == StockTransferStatus.inTransit,
@@ -166,6 +174,7 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
   }
 
   Future<void> _showCreateTransferDialog() async {
+    final l10n = AppLocalizations.of(context)!;
     // Ensure branches and products are loaded
     if (ref.read(branchListProvider) is! BranchListLoaded) {
       await ref.read(branchListProvider.notifier).load();
@@ -185,13 +194,14 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) {
+          final l10n = AppLocalizations.of(ctx)!;
           final branchState = ref.read(branchListProvider);
           final branches = branchState is BranchListLoaded ? branchState.branches : <Store>[];
           final productsState = ref.read(productsProvider);
           final productList = productsState is ProductsLoaded ? productsState.products : <Product>[];
 
           return AlertDialog(
-            title: const Text('New Stock Transfer'),
+            title: Text(l10n.inventoryNewTransfer),
             content: SizedBox(
               width: 500,
               child: Form(
@@ -202,45 +212,45 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
                     children: [
                       DropdownButtonFormField<String>(
                         value: selectedFromStoreId,
-                        decoration: const InputDecoration(labelText: 'From Store'),
+                        decoration: InputDecoration(labelText: l10n.inventoryFromStore),
                         isExpanded: true,
                         items: branches.map((b) => DropdownMenuItem(value: b.id, child: Text(b.name))).toList(),
                         onChanged: (v) => setDialogState(() => selectedFromStoreId = v),
-                        validator: (v) => v == null ? 'Required' : null,
+                        validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       DropdownButtonFormField<String>(
                         value: selectedToStoreId,
-                        decoration: const InputDecoration(labelText: 'To Store'),
+                        decoration: InputDecoration(labelText: l10n.inventoryToStore),
                         isExpanded: true,
                         items: branches.map((b) => DropdownMenuItem(value: b.id, child: Text(b.name))).toList(),
                         onChanged: (v) => setDialogState(() => selectedToStoreId = v),
-                        validator: (v) => v == null ? 'Required' : null,
+                        validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       DropdownButtonFormField<String>(
                         value: selectedProductId,
-                        decoration: const InputDecoration(labelText: 'Product'),
+                        decoration: InputDecoration(labelText: l10n.inventoryProduct),
                         isExpanded: true,
                         items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
                         onChanged: (v) => setDialogState(() => selectedProductId = v),
-                        validator: (v) => v == null ? 'Required' : null,
+                        validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       TextFormField(
                         controller: quantityController,
-                        decoration: const InputDecoration(labelText: 'Quantity'),
+                        decoration: InputDecoration(labelText: l10n.inventoryQuantity),
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         validator: (v) {
-                          if (v == null || v.isEmpty) return 'Required';
-                          if (double.tryParse(v) == null) return 'Invalid';
+                          if (v == null || v.isEmpty) return l10n.commonRequired;
+                          if (double.tryParse(v) == null) return l10n.commonInvalid;
                           return null;
                         },
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       TextFormField(
                         controller: notesController,
-                        decoration: const InputDecoration(labelText: 'Notes (optional)'),
+                        decoration: InputDecoration(labelText: l10n.commonNotesOptional),
                       ),
                     ],
                   ),
@@ -248,7 +258,7 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
               ),
             ),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+              TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.commonCancel)),
               TextButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
@@ -262,7 +272,7 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
                     });
                   }
                 },
-                child: const Text('Create'),
+                child: Text(l10n.commonCreate),
               ),
             ],
           );
@@ -274,7 +284,7 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
       try {
         await ref.read(stockTransfersProvider.notifier).createTransfer(result);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Transfer created.')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryTransferCreated)));
         }
       } catch (e) {
         if (mounted) {

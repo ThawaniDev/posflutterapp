@@ -654,6 +654,7 @@ class _LinkedUserSectionState extends ConsumerState<_LinkedUserSection> {
     showDialog(
       context: context,
       barrierDismissible: false,
+      useRootNavigator: false,
       builder: (_) => const Center(child: CircularProgressIndicator()),
     );
 
@@ -679,6 +680,7 @@ class _LinkedUserSectionState extends ConsumerState<_LinkedUserSection> {
     // Show user selection dialog
     final selectedUserId = await showDialog<String>(
       context: context,
+      useRootNavigator: false,
       builder: (ctx) => _LinkableUsersDialog(users: users, isDark: widget.isDark, l10n: widget.l10n),
     );
 
@@ -705,6 +707,7 @@ class _LinkedUserSectionState extends ConsumerState<_LinkedUserSection> {
   Future<void> _unlinkUser() async {
     final confirmed = await showDialog<bool>(
       context: context,
+      useRootNavigator: false,
       builder: (ctx) => AlertDialog(
         title: Text(widget.l10n.staffUnlinkTitle),
         content: Text(widget.l10n.staffUnlinkConfirm),

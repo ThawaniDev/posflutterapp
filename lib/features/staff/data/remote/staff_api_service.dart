@@ -50,6 +50,7 @@ class StaffApiService {
     String? search,
     String? status,
     String? employmentType,
+    String? storeId,
   }) async {
     final response = await _dio.get(
       ApiEndpoints.staffMembers,
@@ -59,6 +60,7 @@ class StaffApiService {
         if (search != null && search.isNotEmpty) 'search': search,
         if (status != null) 'status': status,
         if (employmentType != null) 'employment_type': employmentType,
+        if (storeId != null) 'store_id': storeId,
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);

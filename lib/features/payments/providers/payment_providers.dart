@@ -88,6 +88,15 @@ class CashSessionsNotifier extends StateNotifier<CashSessionsState> {
       state = CashSessionsError(message: _extractError(e));
     }
   }
+
+  Future<void> createCashEvent(Map<String, dynamic> data) async {
+    try {
+      await _repo.createCashEvent(data);
+      await load(); // Refresh sessions to reflect updated expected_cash
+    } on DioException catch (e) {
+      state = CashSessionsError(message: _extractError(e));
+    }
+  }
 }
 
 // ─── Expenses Provider ──────────────────────────────────────────

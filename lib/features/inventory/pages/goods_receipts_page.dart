@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
@@ -26,17 +27,18 @@ class _GoodsReceiptsPageState extends ConsumerState<GoodsReceiptsPage> {
   }
 
   Future<void> _handleConfirm(GoodsReceipt receipt) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Confirm Receipt'),
+        title: Text(l10n.inventoryConfirmReceiptTitle),
         content: Text(
           'Are you sure you want to confirm receipt "${receipt.referenceNumber ?? receipt.id}"?\n\n'
           'This will update stock levels and cannot be undone.',
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Confirm')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonCancel)),
+          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(l10n.inventoryConfirmReceiptTitle)),
         ],
       ),
     );
@@ -45,7 +47,7 @@ class _GoodsReceiptsPageState extends ConsumerState<GoodsReceiptsPage> {
       try {
         await ref.read(goodsReceiptsProvider.notifier).confirmReceipt(receipt.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Goods receipt confirmed. Stock updated.')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryReceiptConfirmedMsg)));
         }
       } catch (e) {
         if (mounted) {
@@ -57,21 +59,22 @@ class _GoodsReceiptsPageState extends ConsumerState<GoodsReceiptsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(goodsReceiptsProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Goods Receipts'),
+        title: Text(l10n.inventoryGoodsReceipts),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(goodsReceiptsProvider.notifier).load(),
           ),
         ],
       ),
       floatingActionButton: PosButton(
-        label: 'New Receipt',
+        label: l10n.inventoryNewReceipt,
         icon: Icons.add,
         onPressed: () => context.push(Routes.goodsReceiptsAdd),
       ),
@@ -80,31 +83,32 @@ class _GoodsReceiptsPageState extends ConsumerState<GoodsReceiptsPage> {
   }
 
   Widget _buildBody(GoodsReceiptsState state) {
+    final l10n = AppLocalizations.of(context)!;
     final isLoading = state is GoodsReceiptsLoading || state is GoodsReceiptsInitial;
     final error = state is GoodsReceiptsError ? state.message : null;
     final receipts = state is GoodsReceiptsLoaded ? state.receipts : <GoodsReceipt>[];
     final loaded = state is GoodsReceiptsLoaded ? state : null;
 
     return PosDataTable<GoodsReceipt>(
-      columns: const [
-        PosTableColumn(title: 'Reference'),
-        PosTableColumn(title: 'Supplier'),
-        PosTableColumn(title: 'Status'),
-        PosTableColumn(title: 'Total Cost', numeric: true),
-        PosTableColumn(title: 'Received'),
+      columns: [
+        PosTableColumn(title: l10n.inventoryReference),
+        PosTableColumn(title: l10n.inventorySupplier),
+        PosTableColumn(title: l10n.commonStatus),
+        PosTableColumn(title: l10n.inventoryTotalCost, numeric: true),
+        PosTableColumn(title: l10n.inventoryReceived),
       ],
       items: receipts,
       isLoading: isLoading,
       error: error,
       onRetry: () => ref.read(goodsReceiptsProvider.notifier).load(),
-      emptyConfig: const PosTableEmptyConfig(
+      emptyConfig: PosTableEmptyConfig(
         icon: Icons.receipt_long_outlined,
-        title: 'No goods receipts yet',
-        subtitle: 'Create a receipt when you receive goods from suppliers.',
+        title: l10n.inventoryNoGoodsReceipts,
+        subtitle: l10n.inventoryNoGoodsReceiptsHint,
       ),
       actions: [
         PosTableRowAction<GoodsReceipt>(
-          label: 'Confirm',
+          label: l10n.inventoryConfirmReceiptTitle,
           icon: Icons.check_circle_outline,
           color: AppColors.success,
           isVisible: (r) => r.status == GoodsReceiptStatus.draft,

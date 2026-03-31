@@ -42,7 +42,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
     ref.listen<AuthState>(authProvider, (prev, next) {
       if (next is AuthAuthenticated) {
-        context.go(Routes.dashboard);
+        context.go(Routes.homeForRole(next.user.role));
       } else if (next is AuthError) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
       }
@@ -138,6 +138,42 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           child: Text(
                             'Register',
                             style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    // Quick-fill dev buttons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton.icon(
+                          onPressed: isLoading
+                              ? null
+                              : () {
+                                  _emailController.text = 'owner@ostora.sa';
+                                  _passwordController.text = 'Owner@2026';
+                                },
+                          icon: const Icon(Icons.admin_panel_settings, size: 16),
+                          label: const Text('Admin'),
+                          style: TextButton.styleFrom(
+                            foregroundColor: AppColors.primary,
+                            textStyle: const TextStyle(fontSize: 12),
+                          ),
+                        ),
+                        const SizedBox(width: AppSpacing.sm),
+                        TextButton.icon(
+                          onPressed: isLoading
+                              ? null
+                              : () {
+                                  _emailController.text = 'kamal@gmail.com';
+                                  _passwordController.text = 'Test@123';
+                                },
+                          icon: const Icon(Icons.point_of_sale, size: 16),
+                          label: const Text('Cashier'),
+                          style: TextButton.styleFrom(
+                            foregroundColor: AppColors.primary,
+                            textStyle: const TextStyle(fontSize: 12),
                           ),
                         ),
                       ],

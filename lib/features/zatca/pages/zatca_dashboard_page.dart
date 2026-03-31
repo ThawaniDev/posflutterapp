@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
@@ -38,7 +39,7 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: const PosAppBar(title: 'ZATCA E-Invoicing'),
+      appBar: PosAppBar(title: AppLocalizations.of(context)!.zatcaEInvoicing),
       body: RefreshIndicator(
         onRefresh: _refresh,
         child: LayoutBuilder(
@@ -134,10 +135,11 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
   }
 
   Widget _buildInvoiceSection(ZatcaInvoiceListState state, ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Recent Invoices', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+        Text(l10n.zatcaRecentInvoices, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
         AppSpacing.gapH12,
         switch (state) {
           ZatcaInvoiceListInitial() || ZatcaInvoiceListLoading() => const Center(child: CircularProgressIndicator()),
@@ -151,7 +153,7 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
                     onPressed: () {
                       // Navigate to full invoice list
                     },
-                    child: Text('View all $total invoices'),
+                    child: Text(l10n.zatcaViewAll(total)),
                   ),
                 ),
             ],
@@ -197,7 +199,11 @@ class _ErrorCard extends StatelessWidget {
           AppSpacing.gapH8,
           Text(message, style: theme.textTheme.bodyMedium),
           AppSpacing.gapH12,
-          OutlinedButton.icon(onPressed: onRetry, icon: const Icon(Icons.refresh), label: const Text('Retry')),
+          OutlinedButton.icon(
+            onPressed: onRetry,
+            icon: const Icon(Icons.refresh),
+            label: Text(AppLocalizations.of(context)!.commonRetry),
+          ),
         ],
       ),
     );

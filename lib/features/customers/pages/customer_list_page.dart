@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/features/customers/providers/customer_providers.dart';
@@ -20,10 +21,11 @@ class _CustomerListPageState extends ConsumerState<CustomerListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(customersProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Customers')),
+      appBar: AppBar(title: Text(l10n.customers)),
       body: switch (state) {
         CustomersInitial() || CustomersLoading() => const Center(child: CircularProgressIndicator()),
         CustomersError(:final message) => Center(
@@ -32,13 +34,13 @@ class _CustomerListPageState extends ConsumerState<CustomerListPage> {
             children: [
               Text(message, style: const TextStyle(color: AppColors.error)),
               const SizedBox(height: 16),
-              ElevatedButton(onPressed: () => ref.read(customersProvider.notifier).load(), child: const Text('Retry')),
+              ElevatedButton(onPressed: () => ref.read(customersProvider.notifier).load(), child: Text(l10n.commonRetry)),
             ],
           ),
         ),
         CustomersLoaded(:final customers) =>
           customers.isEmpty
-              ? const Center(child: Text('No customers found'))
+              ? Center(child: Text(l10n.customersNoCustomersFound))
               : ListView.builder(
                   itemCount: customers.length,
                   itemBuilder: (context, index) {
@@ -46,7 +48,7 @@ class _CustomerListPageState extends ConsumerState<CustomerListPage> {
                     return ListTile(
                       title: Text(customer.name),
                       subtitle: Text(customer.email ?? customer.phone),
-                      trailing: customer.loyaltyPoints != null ? Text('${customer.loyaltyPoints} pts') : null,
+                      trailing: customer.loyaltyPoints != null ? Text(l10n.customersPoints(customer.loyaltyPoints!)) : null,
                     );
                   },
                 ),

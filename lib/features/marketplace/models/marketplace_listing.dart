@@ -2,7 +2,7 @@ class MarketplaceListing {
   final String id;
   final String name;
   final String? description;
-  final String categoryId;
+  final String? categoryId;
   final String? categoryName;
   final String status;
   final String pricingType;
@@ -24,7 +24,7 @@ class MarketplaceListing {
     required this.id,
     required this.name,
     this.description,
-    required this.categoryId,
+    this.categoryId,
     this.categoryName,
     required this.status,
     required this.pricingType,
@@ -51,7 +51,7 @@ class MarketplaceListing {
       id: json['id'] as String,
       name: json['name'] as String,
       description: json['description'] as String?,
-      categoryId: json['category_id'] as String,
+      categoryId: json['category_id'] as String?,
       categoryName: json['category_name'] as String?,
       status: json['status'] as String? ?? 'draft',
       pricingType: json['pricing_type'] as String? ?? 'free',

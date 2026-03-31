@@ -1,6 +1,7 @@
 enum CartDisplayMode {
   compact('compact'),
-  detailed('detailed');
+  detailed('detailed'),
+  list('list');
 
   const CartDisplayMode(this.value);
   final String value;

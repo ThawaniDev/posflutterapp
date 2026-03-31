@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:thawani_pos/features/customers/models/customer.dart';
 import 'package:thawani_pos/features/pos_terminal/data/remote/pos_terminal_api_service.dart';
 import 'package:thawani_pos/features/pos_terminal/models/held_cart.dart';
 import 'package:thawani_pos/features/pos_terminal/models/pos_session.dart';
@@ -41,6 +43,21 @@ class PosTerminalRepository {
   Future<Transaction> createTransaction(Map<String, dynamic> data) => _apiService.createTransaction(data);
   Future<Transaction> getTransaction(String id) => _apiService.getTransaction(id);
   Future<Transaction> voidTransaction(String id) => _apiService.voidTransaction(id);
+  Future<Transaction> getTransactionByNumber(String number) => _apiService.getTransactionByNumber(number);
+  Future<Transaction> returnTransaction(Map<String, dynamic> data) => _apiService.returnTransaction(data);
+
+  // POS Products
+  Future<PaginatedResult<Product>> listPosProducts({
+    int page = 1,
+    int perPage = 50,
+    String? search,
+    String? categoryId,
+    String? barcode,
+  }) => _apiService.listPosProducts(page: page, perPage: perPage, search: search, categoryId: categoryId, barcode: barcode);
+
+  // POS Customers
+  Future<PaginatedResult<Customer>> listPosCustomers({int page = 1, int perPage = 20, String? search}) =>
+      _apiService.listPosCustomers(page: page, perPage: perPage, search: search);
 
   // Held Carts
   Future<List<HeldCart>> listHeldCarts() => _apiService.listHeldCarts();

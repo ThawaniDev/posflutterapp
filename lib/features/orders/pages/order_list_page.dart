@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -55,42 +56,44 @@ class _OrderListPageState extends ConsumerState<OrderListPage> {
   }
 
   String _statusLabel(OrderStatus status) {
+    final l10n = AppLocalizations.of(context)!;
     switch (status) {
       case OrderStatus.newValue:
-        return 'New';
+        return l10n.ordersNew;
       case OrderStatus.confirmed:
-        return 'Confirmed';
+        return l10n.ordersConfirmed;
       case OrderStatus.preparing:
-        return 'Preparing';
+        return l10n.ordersPreparing;
       case OrderStatus.ready:
-        return 'Ready';
+        return l10n.ordersReady;
       case OrderStatus.dispatched:
-        return 'Dispatched';
+        return l10n.ordersDispatched;
       case OrderStatus.delivered:
-        return 'Delivered';
+        return l10n.ordersDelivered;
       case OrderStatus.pickedUp:
-        return 'Picked Up';
+        return l10n.ordersPickedUp;
       case OrderStatus.completed:
-        return 'Completed';
+        return l10n.ordersCompleted;
       case OrderStatus.cancelled:
-        return 'Cancelled';
+        return l10n.ordersCancelled;
       case OrderStatus.voided:
-        return 'Voided';
+        return l10n.ordersVoided;
     }
   }
 
   Future<void> _handleVoid(Order order) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Void Order'),
-        content: Text('Void order "${order.orderNumber}"? This cannot be undone.'),
+        title: Text(l10n.ordersVoidOrder),
+        content: Text(l10n.ordersVoidConfirm(order.orderNumber)),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Void'),
+            child: Text(l10n.ordersVoid),
           ),
         ],
       ),
@@ -100,7 +103,7 @@ class _OrderListPageState extends ConsumerState<OrderListPage> {
       try {
         await ref.read(ordersProvider.notifier).voidOrder(order.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Order voided.')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.ordersVoided2)));
         }
       } catch (e) {
         if (mounted) {
@@ -112,32 +115,33 @@ class _OrderListPageState extends ConsumerState<OrderListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(ordersProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Orders'),
+        title: Text(l10n.orders),
         actions: [
           PopupMenuButton<String?>(
             icon: const Icon(Icons.filter_list),
-            tooltip: 'Filter by status',
+            tooltip: l10n.ordersFilterByStatus,
             onSelected: (value) {
               ref.read(ordersProvider.notifier).filterByStatus(value);
             },
             itemBuilder: (ctx) => [
-              const PopupMenuItem(value: null, child: Text('All')),
-              const PopupMenuItem(value: 'new', child: Text('New')),
-              const PopupMenuItem(value: 'confirmed', child: Text('Confirmed')),
-              const PopupMenuItem(value: 'preparing', child: Text('Preparing')),
-              const PopupMenuItem(value: 'ready', child: Text('Ready')),
-              const PopupMenuItem(value: 'completed', child: Text('Completed')),
-              const PopupMenuItem(value: 'cancelled', child: Text('Cancelled')),
-              const PopupMenuItem(value: 'voided', child: Text('Voided')),
+              PopupMenuItem(value: null, child: Text(l10n.ordersAll)),
+              PopupMenuItem(value: 'new', child: Text(l10n.ordersNew)),
+              PopupMenuItem(value: 'confirmed', child: Text(l10n.ordersConfirmed)),
+              PopupMenuItem(value: 'preparing', child: Text(l10n.ordersPreparing)),
+              PopupMenuItem(value: 'ready', child: Text(l10n.ordersReady)),
+              PopupMenuItem(value: 'completed', child: Text(l10n.ordersCompleted)),
+              PopupMenuItem(value: 'cancelled', child: Text(l10n.ordersCancelled)),
+              PopupMenuItem(value: 'voided', child: Text(l10n.ordersVoided)),
             ],
           ),
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(ordersProvider.notifier).load(),
           ),
         ],
@@ -148,7 +152,7 @@ class _OrderListPageState extends ConsumerState<OrderListPage> {
             padding: const EdgeInsets.all(AppSpacing.md),
             child: PosTextField(
               controller: _searchController,
-              hint: 'Search by order number...',
+              hint: l10n.ordersSearchByNumber,
               prefixIcon: Icons.search,
               onSubmitted: (value) => ref.read(ordersProvider.notifier).search(value),
             ),
@@ -160,33 +164,34 @@ class _OrderListPageState extends ConsumerState<OrderListPage> {
   }
 
   Widget _buildBody(OrdersState state) {
+    final l10n = AppLocalizations.of(context)!;
     final isLoading = state is OrdersLoading || state is OrdersInitial;
     final error = state is OrdersError ? state.message : null;
     final orders = state is OrdersLoaded ? state.orders : <Order>[];
     final loaded = state is OrdersLoaded ? state : null;
 
     return PosDataTable<Order>(
-      columns: const [
-        PosTableColumn(title: 'Order #'),
-        PosTableColumn(title: 'Source'),
-        PosTableColumn(title: 'Status'),
-        PosTableColumn(title: 'Subtotal', numeric: true),
-        PosTableColumn(title: 'Tax', numeric: true),
-        PosTableColumn(title: 'Total', numeric: true),
-        PosTableColumn(title: 'Date'),
+      columns: [
+        PosTableColumn(title: l10n.ordersOrderNumberCol),
+        PosTableColumn(title: l10n.ordersSource),
+        PosTableColumn(title: l10n.ordersStatus),
+        PosTableColumn(title: l10n.ordersSubtotal, numeric: true),
+        PosTableColumn(title: l10n.ordersTax, numeric: true),
+        PosTableColumn(title: l10n.ordersTotal, numeric: true),
+        PosTableColumn(title: l10n.ordersDate),
       ],
       items: orders,
       isLoading: isLoading,
       error: error,
       onRetry: () => ref.read(ordersProvider.notifier).load(),
-      emptyConfig: const PosTableEmptyConfig(
+      emptyConfig: PosTableEmptyConfig(
         icon: Icons.receipt_long_outlined,
-        title: 'No orders found',
-        subtitle: 'Orders will appear here once transactions are made.',
+        title: l10n.ordersNoOrders,
+        subtitle: l10n.ordersNoOrdersSubtitle,
       ),
       actions: [
         PosTableRowAction<Order>(
-          label: 'Void',
+          label: l10n.ordersVoid,
           icon: Icons.block_outlined,
           isDestructive: true,
           isVisible: (o) => o.status != OrderStatus.voided && o.status != OrderStatus.cancelled,

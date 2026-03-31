@@ -61,7 +61,7 @@ class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> with 
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: _onFabPressed, child: const Icon(Icons.add)),
+      floatingActionButton: PosButton(onPressed: _onFabPressed, label: 'Add'),
       body: switch (state) {
         BakeryInitial() || BakeryLoading() => PosLoadingSkeleton.list(),
         BakeryError(:final message) => PosErrorState(message: message, onRetry: () => ref.read(bakeryProvider.notifier).load()),

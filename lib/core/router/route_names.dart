@@ -1,3 +1,5 @@
+import 'package:thawani_pos/features/auth/enums/user_role.dart';
+
 class Routes {
   Routes._();
 
@@ -310,4 +312,17 @@ class Routes {
   static const String industryFlorist = '/industry/florist';
   static const String industryBakery = '/industry/bakery';
   static const String industryRestaurant = '/industry/restaurant';
+
+  // ─── Role-Based Home Route ──────────────────────────────
+  /// Returns the appropriate landing route for a given user role.
+  /// Cashiers and kitchen staff go to POS checkout; everyone else to dashboard.
+  static String homeForRole(UserRole? role) {
+    switch (role) {
+      case UserRole.cashier:
+      case UserRole.kitchenStaff:
+        return posCheckout;
+      default:
+        return dashboard;
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/features/promotions/providers/promotion_providers.dart';
@@ -21,11 +22,12 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(promotionAnalyticsProvider(widget.promotionId));
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Promotion Analytics')),
+      appBar: AppBar(title: Text(l10n.promotionsAnalytics)),
       body: switch (state) {
         PromotionAnalyticsInitial() || PromotionAnalyticsLoading() => const Center(child: CircularProgressIndicator()),
         PromotionAnalyticsError(:final message) => Center(
@@ -39,7 +41,7 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
               FilledButton.icon(
                 onPressed: () => ref.read(promotionAnalyticsProvider(widget.promotionId).notifier).load(),
                 icon: const Icon(Icons.refresh),
-                label: const Text('Retry'),
+                label: Text(l10n.commonRetry),
               ),
             ],
           ),
@@ -50,6 +52,7 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
   }
 
   Widget _buildAnalytics(BuildContext context, Map<String, dynamic> data) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     return ListView(
@@ -60,7 +63,7 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
           children: [
             Expanded(
               child: _StatCard(
-                label: 'Total Uses',
+                label: l10n.promotionsTotalUses,
                 value: '${data['usage_count'] ?? 0}',
                 icon: Icons.receipt_long,
                 color: theme.colorScheme.primary,
@@ -69,7 +72,7 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
             const SizedBox(width: 12),
             Expanded(
               child: _StatCard(
-                label: 'Total Discount',
+                label: l10n.promotionsTotalDiscount,
                 value: '${(data['total_discount_given'] as num?)?.toStringAsFixed(2) ?? '0.00'}',
                 icon: Icons.discount,
                 color: theme.colorScheme.tertiary,
@@ -82,7 +85,7 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
           children: [
             Expanded(
               child: _StatCard(
-                label: 'Unique Customers',
+                label: l10n.promotionsUniqueCustomers,
                 value: '${data['unique_customers'] ?? 0}',
                 icon: Icons.people,
                 color: theme.colorScheme.secondary,
@@ -91,7 +94,7 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
             const SizedBox(width: 12),
             Expanded(
               child: _StatCard(
-                label: 'Active Coupons',
+                label: l10n.promotionsActiveCoupons,
                 value: '${data['active_coupons'] ?? 0}',
                 icon: Icons.confirmation_number,
                 color: AppColors.success,
@@ -104,7 +107,7 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
           children: [
             Expanded(
               child: _StatCard(
-                label: 'Total Coupons',
+                label: l10n.promotionsTotalCoupons,
                 value: '${data['total_coupons'] ?? 0}',
                 icon: Icons.inventory_2,
                 color: AppColors.warning,
@@ -115,7 +118,7 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
           ],
         ),
         const SizedBox(height: 24),
-        Text('Performance', style: theme.textTheme.titleMedium),
+        Text(l10n.promotionsPerformance, style: theme.textTheme.titleMedium),
         const SizedBox(height: 8),
         Card(
           child: Padding(
@@ -123,9 +126,9 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _InfoRow(label: 'Avg Discount / Use', value: _avgDiscount(data)),
+                _InfoRow(label: l10n.promotionsAvgDiscountPerUse, value: _avgDiscount(data)),
                 const Divider(),
-                _InfoRow(label: 'Coupon Redemption Rate', value: _redemptionRate(data)),
+                _InfoRow(label: l10n.promotionsCouponRedemptionRate, value: _redemptionRate(data)),
               ],
             ),
           ),

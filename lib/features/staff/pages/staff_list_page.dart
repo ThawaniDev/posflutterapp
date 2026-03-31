@@ -6,6 +6,9 @@ import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/branches/models/store.dart';
+import 'package:thawani_pos/features/branches/providers/branch_providers.dart';
+import 'package:thawani_pos/features/branches/providers/branch_state.dart';
 import 'package:thawani_pos/features/staff/enums/employment_type.dart';
 import 'package:thawani_pos/features/staff/enums/staff_status.dart';
 import 'package:thawani_pos/features/staff/models/staff_user.dart';
@@ -23,11 +26,15 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
   final _searchController = TextEditingController();
   String? _statusFilter;
   String? _employmentTypeFilter;
+  String? _selectedStoreId;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => _loadStaff());
+    Future.microtask(() {
+      ref.read(branchListProvider.notifier).load();
+      _loadStaff();
+    });
   }
 
   @override
@@ -43,6 +50,7 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
           search: _searchController.text.isNotEmpty ? _searchController.text : null,
           status: _statusFilter,
           employmentType: _employmentTypeFilter,
+          storeId: _selectedStoreId,
         );
   }
 
@@ -66,6 +74,8 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
       ),
       body: Column(
         children: [
+          // Store selector
+          _buildStoreSelector(context, isDark, l10n),
           // Search bar
           Padding(
             padding: AppSpacing.paddingAll16,
@@ -163,6 +173,40 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
             },
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildStoreSelector(BuildContext context, bool isDark, AppLocalizations l10n) {
+    final branchState = ref.watch(branchListProvider);
+    final stores = branchState is BranchListLoaded ? branchState.branches : <Store>[];
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      child: DropdownButtonFormField<String?>(
+        value: _selectedStoreId,
+        decoration: InputDecoration(
+          labelText: l10n.staffSelectStore,
+          prefixIcon: const Icon(Icons.store_outlined),
+          border: const OutlineInputBorder(),
+          filled: true,
+          fillColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        ),
+        isExpanded: true,
+        items: [
+          DropdownMenuItem<String?>(value: null, child: Text(l10n.staffAllStores)),
+          ...stores.map(
+            (s) => DropdownMenuItem<String?>(
+              value: s.id,
+              child: Text(s.name, overflow: TextOverflow.ellipsis),
+            ),
+          ),
+        ],
+        onChanged: (value) {
+          setState(() => _selectedStoreId = value);
+          _loadStaff();
+        },
       ),
     );
   }

@@ -56,10 +56,10 @@ class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
           IconButton(icon: const Icon(Icons.refresh), onPressed: _loadShifts),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: PosButton(
         onPressed: () => _showCreateShiftDialog(context, state),
-        icon: const Icon(Icons.add),
-        label: Text(l10n.staffAddShift),
+        // icon: const Icon(Icons.add),
+        label: l10n.staffAddShift,
       ),
       body: Column(
         children: [

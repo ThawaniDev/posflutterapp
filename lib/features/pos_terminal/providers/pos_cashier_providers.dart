@@ -1,0 +1,326 @@
+import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:thawani_pos/features/customers/models/customer.dart';
+import 'package:thawani_pos/features/pos_terminal/models/cart_item.dart';
+import 'package:thawani_pos/features/pos_terminal/models/pos_session.dart';
+import 'package:thawani_pos/features/pos_terminal/providers/pos_cashier_state.dart';
+import 'package:thawani_pos/features/pos_terminal/repositories/pos_terminal_repository.dart';
+
+// ─── Cart Provider ──────────────────────────────────────────────
+
+final cartProvider = StateNotifierProvider<CartNotifier, CartState>((ref) {
+  return CartNotifier();
+});
+
+class CartNotifier extends StateNotifier<CartState> {
+  CartNotifier() : super(const CartState());
+
+  void addProduct(Product product, {double qty = 1}) {
+    final existing = state.items.indexWhere((i) => i.product.id == product.id);
+    if (existing >= 0) {
+      final updated = List<CartItem>.from(state.items);
+      updated[existing] = updated[existing].copyWith(quantity: updated[existing].quantity + qty);
+      state = state.copyWith(items: updated);
+    } else {
+      final price =
+          product.offerPrice != null &&
+              product.offerStart != null &&
+              product.offerEnd != null &&
+              DateTime.now().isAfter(product.offerStart!) &&
+              DateTime.now().isBefore(product.offerEnd!)
+          ? product.offerPrice!
+          : product.sellPrice;
+      state = state.copyWith(
+        items: [
+          ...state.items,
+          CartItem(product: product, quantity: qty, unitPrice: price),
+        ],
+      );
+    }
+  }
+
+  void updateQuantity(int index, double qty) {
+    if (index < 0 || index >= state.items.length) return;
+    if (qty <= 0) {
+      removeItem(index);
+      return;
+    }
+    final updated = List<CartItem>.from(state.items);
+    updated[index] = updated[index].copyWith(quantity: qty);
+    state = state.copyWith(items: updated);
+  }
+
+  void removeItem(int index) {
+    if (index < 0 || index >= state.items.length) return;
+    final updated = List<CartItem>.from(state.items);
+    updated.removeAt(index);
+    state = state.copyWith(items: updated);
+  }
+
+  void setItemDiscount(int index, double amount) {
+    if (index < 0 || index >= state.items.length) return;
+    final updated = List<CartItem>.from(state.items);
+    updated[index] = updated[index].copyWith(discountAmount: amount);
+    state = state.copyWith(items: updated);
+  }
+
+  void setItemNotes(int index, String notes) {
+    if (index < 0 || index >= state.items.length) return;
+    final updated = List<CartItem>.from(state.items);
+    updated[index] = updated[index].copyWith(notes: notes);
+    state = state.copyWith(items: updated);
+  }
+
+  void setCustomer(Customer? customer) {
+    state = state.copyWith(customer: customer, clearCustomer: customer == null);
+  }
+
+  void setNotes(String? notes) {
+    state = state.copyWith(notes: notes);
+  }
+
+  void setManualDiscount(double? discount) {
+    state = state.copyWith(manualDiscount: discount);
+  }
+
+  void clear() {
+    state = const CartState();
+  }
+
+  void restoreFromHeldCart(Map<String, dynamic> cartData, List<Product> products) {
+    final rawItems = cartData['items'] as List? ?? [];
+    final items = <CartItem>[];
+    for (final raw in rawItems) {
+      final map = raw as Map<String, dynamic>;
+      final productId = map['product_id'] as String;
+      final product = products.where((p) => p.id == productId).firstOrNull;
+      if (product != null) {
+        items.add(
+          CartItem(
+            product: product,
+            quantity: (map['quantity'] as num).toDouble(),
+            unitPrice: (map['unit_price'] as num).toDouble(),
+            discountAmount: (map['discount_amount'] as num?)?.toDouble(),
+            notes: map['notes'] as String?,
+          ),
+        );
+      }
+    }
+    state = CartState(
+      items: items,
+      notes: cartData['notes'] as String?,
+      manualDiscount: (cartData['manual_discount'] as num?)?.toDouble(),
+    );
+  }
+}
+
+// ─── Active Session Provider ────────────────────────────────────
+
+final activeSessionProvider = StateNotifierProvider<ActiveSessionNotifier, ActiveSessionState>((ref) {
+  return ActiveSessionNotifier(ref.watch(posTerminalRepositoryProvider));
+});
+
+class ActiveSessionNotifier extends StateNotifier<ActiveSessionState> {
+  final PosTerminalRepository _repo;
+
+  ActiveSessionNotifier(this._repo) : super(const ActiveSessionNone());
+
+  Future<void> openSession({required double openingCash, required String registerId}) async {
+    state = const ActiveSessionLoading();
+    try {
+      final session = await _repo.openSession({'opening_cash': openingCash, 'register_id': registerId});
+      state = ActiveSessionLoaded(session: session);
+    } on DioException catch (e) {
+      state = ActiveSessionError(message: _extractError(e));
+    } catch (e) {
+      state = ActiveSessionError(message: e.toString());
+    }
+  }
+
+  Future<bool> closeSession({required double closingCash}) async {
+    final current = state;
+    if (current is! ActiveSessionLoaded) return false;
+    state = const ActiveSessionLoading();
+    try {
+      await _repo.closeSession(current.session.id, {'closing_cash': closingCash});
+      state = const ActiveSessionNone();
+      return true;
+    } on DioException catch (e) {
+      state = ActiveSessionError(message: _extractError(e));
+      return false;
+    } catch (e) {
+      state = ActiveSessionError(message: e.toString());
+      return false;
+    }
+  }
+
+  Future<void> refreshSession() async {
+    final current = state;
+    if (current is! ActiveSessionLoaded) return;
+    try {
+      final session = await _repo.getSession(current.session.id);
+      state = ActiveSessionLoaded(session: session);
+    } catch (_) {}
+  }
+
+  void setSession(PosSession session) {
+    state = ActiveSessionLoaded(session: session);
+  }
+
+  void clearSession() {
+    state = const ActiveSessionNone();
+  }
+}
+
+// ─── POS Products Provider ──────────────────────────────────────
+
+final posProductsProvider = StateNotifierProvider<PosProductsNotifier, PosProductsState>((ref) {
+  return PosProductsNotifier(ref.watch(posTerminalRepositoryProvider));
+});
+
+class PosProductsNotifier extends StateNotifier<PosProductsState> {
+  final PosTerminalRepository _repo;
+
+  PosProductsNotifier(this._repo) : super(const PosProductsInitial());
+
+  Future<void> load({String? search, String? categoryId, String? barcode}) async {
+    state = const PosProductsLoading();
+    try {
+      final result = await _repo.listPosProducts(search: search, categoryId: categoryId, barcode: barcode, perPage: 100);
+      state = PosProductsLoaded(
+        products: result.items,
+        total: result.total,
+        currentPage: result.currentPage,
+        lastPage: result.lastPage,
+        search: search,
+        categoryId: categoryId,
+      );
+    } on DioException catch (e) {
+      state = PosProductsError(message: _extractError(e));
+    } catch (e) {
+      state = PosProductsError(message: e.toString());
+    }
+  }
+
+  Future<Product?> findByBarcode(String barcode) async {
+    try {
+      final result = await _repo.listPosProducts(barcode: barcode, perPage: 1);
+      return result.items.isNotEmpty ? result.items.first : null;
+    } catch (_) {
+      return null;
+    }
+  }
+}
+
+// ─── POS Customers Provider ─────────────────────────────────────
+
+final posCustomersProvider = StateNotifierProvider<PosCustomersNotifier, PosCustomersState>((ref) {
+  return PosCustomersNotifier(ref.watch(posTerminalRepositoryProvider));
+});
+
+class PosCustomersNotifier extends StateNotifier<PosCustomersState> {
+  final PosTerminalRepository _repo;
+
+  PosCustomersNotifier(this._repo) : super(const PosCustomersInitial());
+
+  Future<void> search(String query) async {
+    if (query.isEmpty) {
+      state = const PosCustomersInitial();
+      return;
+    }
+    state = const PosCustomersLoading();
+    try {
+      final result = await _repo.listPosCustomers(search: query, perPage: 20);
+      state = PosCustomersLoaded(customers: result.items);
+    } on DioException catch (e) {
+      state = PosCustomersError(message: _extractError(e));
+    } catch (e) {
+      state = PosCustomersError(message: e.toString());
+    }
+  }
+}
+
+// ─── Sale Provider (checkout flow) ──────────────────────────────
+
+final saleProvider = StateNotifierProvider<SaleNotifier, SaleState>((ref) {
+  return SaleNotifier(ref.watch(posTerminalRepositoryProvider));
+});
+
+class SaleNotifier extends StateNotifier<SaleState> {
+  final PosTerminalRepository _repo;
+
+  SaleNotifier(this._repo) : super(const SaleIdle());
+
+  Future<bool> completeSale({
+    required String sessionId,
+    required CartState cart,
+    required List<Map<String, dynamic>> payments,
+  }) async {
+    state = const SaleProcessing();
+    try {
+      final data = {
+        'type': 'sale',
+        'pos_session_id': sessionId,
+        'subtotal': cart.subtotal,
+        'discount_amount': cart.discountTotal > 0 ? cart.discountTotal : null,
+        'tax_amount': cart.taxAmount,
+        'total_amount': cart.totalAmount,
+        'items': cart.items.map((i) => i.toTransactionItemJson()).toList(),
+        'payments': payments,
+        if (cart.customer != null) 'customer_id': cart.customer!.id,
+        if (cart.notes != null) 'notes': cart.notes,
+      };
+      final transaction = await _repo.createTransaction(data);
+      final change = payments
+          .where((p) => p['method'] == 'cash' && p['change_given'] != null)
+          .fold<double>(0, (sum, p) => sum + (p['change_given'] as num).toDouble());
+      state = SaleCompleted(
+        transactionNumber: transaction.transactionNumber,
+        totalAmount: transaction.totalAmount,
+        changeGiven: change > 0 ? change : null,
+      );
+      return true;
+    } on DioException catch (e) {
+      state = SaleError(message: _extractError(e));
+      return false;
+    } catch (e) {
+      state = SaleError(message: e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> processReturn({
+    required String returnTransactionId,
+    required List<Map<String, dynamic>> items,
+    required List<Map<String, dynamic>> payments,
+  }) async {
+    state = const SaleProcessing();
+    try {
+      final data = {'return_transaction_id': returnTransactionId, 'items': items, 'payments': payments};
+      final transaction = await _repo.returnTransaction(data);
+      state = SaleCompleted(transactionNumber: transaction.transactionNumber, totalAmount: transaction.totalAmount);
+      return true;
+    } on DioException catch (e) {
+      state = SaleError(message: _extractError(e));
+      return false;
+    } catch (e) {
+      state = SaleError(message: e.toString());
+      return false;
+    }
+  }
+
+  void reset() {
+    state = const SaleIdle();
+  }
+}
+
+// ─── Helper ─────────────────────────────────────────────────────
+
+String _extractError(DioException e) {
+  final data = e.response?.data;
+  if (data is Map<String, dynamic>) {
+    return data['message'] as String? ?? e.message ?? 'Unknown error';
+  }
+  return e.message ?? 'Unknown error';
+}
