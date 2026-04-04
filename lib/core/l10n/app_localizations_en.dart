@@ -498,7 +498,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminSecurity => 'Security Center';
 
   @override
-  String get securityOverview => 'Security Overview';
+  String get securityOverview => 'Overview';
 
   @override
   String get securityAlerts => 'Security Alerts';
@@ -1467,6 +1467,314 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsAboutDesc => 'App version & legal information';
 
   @override
+  String get settingsPosBehavior => 'POS Behavior';
+
+  @override
+  String get settingsPosBehaviorDesc =>
+      'Sales, returns, inventory & loyalty settings';
+
+  @override
+  String get settingsSaved => 'Settings saved';
+
+  @override
+  String get settingsErrorLoading => 'Failed to load settings';
+
+  @override
+  String get settingsErrorSaving => 'Failed to save settings';
+
+  @override
+  String get settingsTaxLabel => 'Tax Label';
+
+  @override
+  String get settingsTaxLabelHint => 'e.g. VAT, GST, Sales Tax';
+
+  @override
+  String get settingsTaxRate => 'Tax Rate (%)';
+
+  @override
+  String get settingsTaxRateHint => 'e.g. 5.0';
+
+  @override
+  String get settingsTaxNumber => 'Tax Registration Number';
+
+  @override
+  String get settingsTaxNumberHint => 'Your tax identification number';
+
+  @override
+  String get settingsTaxPricesIncludeTax => 'Prices Include Tax';
+
+  @override
+  String get settingsPricesIncludeTax => 'Prices Include Tax';
+
+  @override
+  String get settingsPricesIncludeTaxDesc =>
+      'Product prices already include tax';
+
+  @override
+  String get settingsTaxConfig => 'Tax Configuration';
+
+  @override
+  String get settingsReceiptContent => 'Content';
+
+  @override
+  String get settingsReceiptHeader => 'Receipt Header';
+
+  @override
+  String get settingsReceiptHeaderHint => 'Text at the top of receipt';
+
+  @override
+  String get settingsReceiptFooter => 'Receipt Footer';
+
+  @override
+  String get settingsReceiptFooterHint => 'Text at the bottom of receipt';
+
+  @override
+  String get settingsReceiptDisplay => 'Display Options';
+
+  @override
+  String get settingsReceiptShowLogo => 'Show Logo';
+
+  @override
+  String get settingsReceiptShowTax => 'Show Tax Breakdown';
+
+  @override
+  String get settingsReceiptShowAddress => 'Show Store Address';
+
+  @override
+  String get settingsReceiptShowPhone => 'Show Phone Number';
+
+  @override
+  String get settingsReceiptShowDate => 'Show Date & Time';
+
+  @override
+  String get settingsReceiptShowCashier => 'Show Cashier Name';
+
+  @override
+  String get settingsReceiptShowBarcode => 'Show Barcode';
+
+  @override
+  String get settingsReceiptFormat => 'Format';
+
+  @override
+  String get settingsReceiptPaperSize => 'Paper Size';
+
+  @override
+  String get settingsReceiptFontSize => 'Font Size';
+
+  @override
+  String get settingsReceiptLanguage => 'Receipt Language';
+
+  @override
+  String get settingsFontSmall => 'Small';
+
+  @override
+  String get settingsFontNormal => 'Normal';
+
+  @override
+  String get settingsFontLarge => 'Large';
+
+  @override
+  String get settingsLangArabic => 'Arabic';
+
+  @override
+  String get settingsLangEnglish => 'English';
+
+  @override
+  String get settingsLangBoth => 'Both';
+
+  @override
+  String get settingsPosSales => 'Sales';
+
+  @override
+  String get settingsPosDefaultSaleType => 'Default Sale Type';
+
+  @override
+  String get settingsPosDineIn => 'Dine-in';
+
+  @override
+  String get settingsPosTakeaway => 'Takeaway';
+
+  @override
+  String get settingsPosDelivery => 'Delivery';
+
+  @override
+  String get settingsPosRequireCustomer => 'Require Customer for Sale';
+
+  @override
+  String get settingsPosAutoPrint => 'Auto-print Receipt';
+
+  @override
+  String get settingsPosEnableTips => 'Enable Tips';
+
+  @override
+  String get settingsPosHoldOrders => 'Allow Hold Orders';
+
+  @override
+  String get settingsPosOpenPriceItems => 'Allow Open Price Items';
+
+  @override
+  String get settingsPosQuickAdd => 'Quick-add Mode';
+
+  @override
+  String get settingsPosBarcodeSound => 'Barcode Scan Sound';
+
+  @override
+  String get settingsPosKitchenDisplay => 'Send to Kitchen Display';
+
+  @override
+  String get settingsPosReturns => 'Returns & Refunds';
+
+  @override
+  String get settingsPosEnableRefunds => 'Enable Refunds';
+
+  @override
+  String get settingsPosEnableExchanges => 'Enable Exchanges';
+
+  @override
+  String get settingsPosManagerRefund => 'Manager Approval for Refunds';
+
+  @override
+  String get settingsPosManagerRefundDesc =>
+      'Require manager PIN for refund transactions';
+
+  @override
+  String get settingsPosManagerDiscount => 'Manager Approval for Discounts';
+
+  @override
+  String get settingsPosManagerDiscountDesc =>
+      'Require manager PIN when applying discounts';
+
+  @override
+  String get settingsPosLimits => 'Limits';
+
+  @override
+  String get settingsPosMaxDiscount => 'Max Discount (%)';
+
+  @override
+  String get settingsPosSessionTimeout => 'Session Timeout (minutes)';
+
+  @override
+  String get settingsPosInventory => 'Inventory';
+
+  @override
+  String get settingsPosTrackInventory => 'Track Inventory';
+
+  @override
+  String get settingsPosAllowNegStock => 'Allow Negative Stock';
+
+  @override
+  String get settingsPosBatchTracking => 'Batch Tracking';
+
+  @override
+  String get settingsPosExpiryTracking => 'Expiry Date Tracking';
+
+  @override
+  String get settingsPosAutoDeductIngredients => 'Auto-deduct Ingredients';
+
+  @override
+  String get settingsPosLowStockAlert => 'Low Stock Alert';
+
+  @override
+  String get settingsPosLowStockThreshold => 'Low Stock Threshold';
+
+  @override
+  String get settingsPosLoyalty => 'Loyalty Program';
+
+  @override
+  String get settingsPosEnableLoyalty => 'Enable Loyalty Points';
+
+  @override
+  String get settingsPosLoyaltyPointsPerCurrency => 'Points per Currency Unit';
+
+  @override
+  String get settingsPosLoyaltyRedemptionValue => 'Point Redemption Value';
+
+  @override
+  String get settingsPosCustomerDisplay => 'Customer Display';
+
+  @override
+  String get settingsPosEnableCustomerDisplay => 'Enable Customer Display';
+
+  @override
+  String get settingsPosCustomerDisplayMessage => 'Welcome Message';
+
+  @override
+  String get settingsPosTheme => 'Display Theme';
+
+  @override
+  String get settingsPosThemeLight => 'Light';
+
+  @override
+  String get settingsPosThemeDark => 'Dark';
+
+  @override
+  String get settingsPosThemeSystem => 'System';
+
+  @override
+  String get settingsWorkingOpen => 'Open';
+
+  @override
+  String get settingsWorkingClose => 'Close';
+
+  @override
+  String get settingsWorkingBreakStart => 'Break Start';
+
+  @override
+  String get settingsWorkingBreakEnd => 'Break End';
+
+  @override
+  String get settingsProfileCurrency => 'Currency';
+
+  @override
+  String get settingsProfileCurrencyCode => 'Currency Code';
+
+  @override
+  String get settingsProfileCurrencyCodeHint => 'e.g. OMR, SAR, USD';
+
+  @override
+  String get settingsProfileCurrencySymbol => 'Currency Symbol';
+
+  @override
+  String get settingsProfileCurrencySymbolHint => 'e.g. ر.ع, ﷼, \$';
+
+  @override
+  String get settingsProfileFormatting => 'Number Formatting';
+
+  @override
+  String get settingsProfileDecimalPlaces => 'Decimal Places';
+
+  @override
+  String get settingsProfileThousandSep => 'Thousand Separator';
+
+  @override
+  String get settingsProfileDecimalSep => 'Decimal Separator';
+
+  @override
+  String settingsAboutVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get settingsAboutTerms => 'Terms of Service';
+
+  @override
+  String get settingsAboutPrivacy => 'Privacy Policy';
+
+  @override
+  String get settingsAboutLicenses => 'Open Source Licenses';
+
+  @override
+  String get settingsAboutSupport => 'Support';
+
+  @override
+  String get settingsAboutSupportDesc => 'Need help? Contact our support team';
+
+  @override
+  String settingsAboutCopyright(String year) {
+    return '© $year Thawani. All rights reserved.';
+  }
+
+  @override
   String get sidebarSync => 'Sync';
 
   @override
@@ -1600,6 +1908,316 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accessibilityScreenReader => 'Screen Reader Support';
+
+  @override
+  String get accessibilityScreenReaderDesc =>
+      'Optimize for screen reader software';
+
+  @override
+  String get accessibilityVisual => 'Visual';
+
+  @override
+  String get accessibilityHighContrastDesc =>
+      'Increase contrast for better visibility';
+
+  @override
+  String get accessibilityColorBlind => 'Color Blind Mode';
+
+  @override
+  String get accessibilityReducedMotion => 'Reduced Motion';
+
+  @override
+  String get accessibilityReducedMotionDesc =>
+      'Minimize animations and transitions';
+
+  @override
+  String get accessibilityAudio => 'Audio';
+
+  @override
+  String get accessibilityAudioFeedback => 'Audio Feedback';
+
+  @override
+  String get accessibilityVolume => 'Volume';
+
+  @override
+  String get accessibilityLargeTouchTargets => 'Large Touch Targets';
+
+  @override
+  String get accessibilityLargeTouchTargetsDesc =>
+      'Increase button and control sizes';
+
+  @override
+  String get accessibilityVisibleFocus => 'Visible Focus Indicators';
+
+  @override
+  String get accessibilityVisibleFocusDesc =>
+      'Show clear focus outlines on controls';
+
+  @override
+  String get accessibilityShortcutsPOS => 'POS';
+
+  @override
+  String get accessibilityShortcutsGlobal => 'Global';
+
+  @override
+  String get accessibilityShortcutsNavigation => 'Navigation';
+
+  @override
+  String get accessibilityNavScreens => 'Alt + 1-9 — Switch screens';
+
+  @override
+  String get accessibilityNavTab => 'Tab / Shift+Tab — Move focus';
+
+  @override
+  String get accessibilityNavCancel => 'Esc — Cancel / Close';
+
+  @override
+  String get accessibilityNavConfirm => 'Enter — Confirm';
+
+  @override
+  String get companionNoActiveSessions => 'No active companion sessions';
+
+  @override
+  String get companionConnectionGuide => 'Connection Guide';
+
+  @override
+  String get companionConnectionGuideDesc =>
+      'Open the companion app on your mobile device and scan the QR code or enter the session ID to connect.';
+
+  @override
+  String get companionSessionActive => 'Session Active';
+
+  @override
+  String get companionSessionId => 'Session ID';
+
+  @override
+  String get companionSessionStarted => 'Started';
+
+  @override
+  String get companionTodayRevenue => 'Today\'s Revenue';
+
+  @override
+  String get companionOrders => 'Orders';
+
+  @override
+  String get companionTransactions => 'Transactions';
+
+  @override
+  String get companionPendingOrders => 'Pending Orders';
+
+  @override
+  String get companionActiveStaff => 'Active Staff';
+
+  @override
+  String get companionLowStock => 'Low Stock Items';
+
+  @override
+  String get companionLastSync => 'Last Sync';
+
+  @override
+  String get companionDashboard => 'Dashboard';
+
+  @override
+  String get companionSales => 'Sales';
+
+  @override
+  String get companionActiveOrdersTitle => 'Active Orders';
+
+  @override
+  String get companionInventory => 'Inventory';
+
+  @override
+  String get companionStaff => 'Staff';
+
+  @override
+  String get companionStoreStatus => 'Store Status';
+
+  @override
+  String get companionStoreOpen => 'Store is Open';
+
+  @override
+  String get companionStoreClosed => 'Store is Closed';
+
+  @override
+  String get companionRevenue => 'Revenue';
+
+  @override
+  String get companionToday => 'Today';
+
+  @override
+  String get companionYesterday => 'Yesterday';
+
+  @override
+  String get companionThisWeek => 'This Week';
+
+  @override
+  String get companionThisMonth => 'This Month';
+
+  @override
+  String get companionSalesPeriod => 'Sales Period';
+
+  @override
+  String get companionTotalRevenue => 'Total Revenue';
+
+  @override
+  String get companionTotalOrders => 'Total Orders';
+
+  @override
+  String get companionAvgOrderValue => 'Avg. Order Value';
+
+  @override
+  String get companionDailyBreakdown => 'Daily Breakdown';
+
+  @override
+  String get companionNoActiveOrders => 'No active orders';
+
+  @override
+  String get companionCustomer => 'Customer';
+
+  @override
+  String get companionItems => 'Items';
+
+  @override
+  String get companionRetry => 'Retry';
+
+  @override
+  String get companionOutOfStock => 'Out of Stock';
+
+  @override
+  String get companionNoAlerts => 'No inventory alerts';
+
+  @override
+  String get companionStock => 'Stock';
+
+  @override
+  String get companionMinStock => 'Min';
+
+  @override
+  String get companionNoActiveStaff => 'No active staff';
+
+  @override
+  String get companionClockedIn => 'Clocked in';
+
+  @override
+  String get autoUpdateSettings => 'Update Settings';
+
+  @override
+  String get autoUpdateEnable => 'Auto Update';
+
+  @override
+  String get autoUpdateEnableDesc =>
+      'Automatically download and install updates';
+
+  @override
+  String get autoUpdateMaintenanceWindow => 'Maintenance Window';
+
+  @override
+  String get autoUpdateWindowStart => 'Start Hour';
+
+  @override
+  String get autoUpdateWindowEnd => 'End Hour';
+
+  @override
+  String get autoUpdateWindowDesc =>
+      'Updates will be installed during this window';
+
+  @override
+  String get autoUpdateChannel => 'Update Channel';
+
+  @override
+  String get autoUpdateChannelStable => 'Stable';
+
+  @override
+  String get autoUpdateChannelBeta => 'Beta';
+
+  @override
+  String get autoUpdateChannelAlpha => 'Alpha';
+
+  @override
+  String get autoUpdateRequired => 'Required Update';
+
+  @override
+  String get autoUpdateForceDesc =>
+      'This update is required and must be installed to continue.';
+
+  @override
+  String get autoUpdateWhatsNew => 'What\'s New';
+
+  @override
+  String get autoUpdateRemindLater => 'Remind Later';
+
+  @override
+  String get autoUpdateSchedule => 'Schedule';
+
+  @override
+  String get autoUpdateInstallNow => 'Install Now';
+
+  @override
+  String get autoUpdateFailed => 'Update Failed';
+
+  @override
+  String get autoUpdateComplete => 'Update Complete';
+
+  @override
+  String get autoUpdateInstalling => 'Installing Update';
+
+  @override
+  String get autoUpdateRestart => 'Restart Now';
+
+  @override
+  String get autoUpdateStepBackup => 'Backup';
+
+  @override
+  String get autoUpdateStepDownload => 'Download';
+
+  @override
+  String get autoUpdateStepVerify => 'Verify';
+
+  @override
+  String get autoUpdateStepInstall => 'Install';
+
+  @override
+  String get autoUpdateStepMigrate => 'Migrate';
+
+  @override
+  String get autoUpdateStepComplete => 'Complete';
+
+  @override
+  String get autoUpdateProgress => 'Update Progress';
+
+  @override
+  String autoUpdateNewVersion(String version) {
+    return 'New version available: $version';
+  }
+
+  @override
+  String get accessibilityShortcutReference => 'Shortcut Reference';
+
+  @override
+  String get accessibilityShortcutHint => 'Press Ctrl+/ to show shortcuts';
+
+  @override
+  String get accessibilityReassignShortcut => 'Reassign Shortcut';
+
+  @override
+  String get accessibilityReassignDesc => 'Press the new key combination';
+
+  @override
+  String get accessibilityPressKey => 'Press a key combination...';
+
+  @override
+  String get accessibilityCurrentShortcut => 'Current';
+
+  @override
+  String get accessibilityShortcutReserved => 'This shortcut is reserved';
+
+  @override
+  String accessibilityShortcutConflict(String name) {
+    return 'Conflicts with: $name';
+  }
+
+  @override
+  String get close => 'Close';
 
   @override
   String get niceToHaveTitle => 'Nice-to-Have Features';
@@ -3089,7 +3707,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get marketplacePage => 'Page';
 
   @override
-  String get marketplaceCurrency => 'OMR';
+  String get marketplaceCurrency => 'SAR';
 
   @override
   String get marketplaceListingDetail => 'Template Detail';
@@ -3919,7 +4537,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posOpeningCash => 'Opening Cash';
 
   @override
-  String get posClosingCash => 'Closing Cash Count';
+  String get posClosingCash => 'Closing Cash';
 
   @override
   String get posSelectRegister => 'Select register';
@@ -3994,7 +4612,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posClearCart => 'Clear Cart';
 
   @override
-  String get posClearCartConfirm => 'All items will be removed.';
+  String get posClearCartConfirm => 'Clear Cart?';
 
   @override
   String get posSearchProducts => 'Search products or scan barcode';
@@ -4158,4 +4776,2789 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get posConfirm => 'Confirm';
+
+  @override
+  String get posLabelOptional => 'Label (optional)';
+
+  @override
+  String get posLabelHint => 'e.g. Table 5, Mr. Ahmed';
+
+  @override
+  String get posHeldCart => 'Held Cart';
+
+  @override
+  String get posVoidLastItem => 'Void Last Item?';
+
+  @override
+  String posRemoveItemFromCart(Object name) {
+    return 'Remove \"$name\" from cart?';
+  }
+
+  @override
+  String get posRemove => 'Remove';
+
+  @override
+  String get posStartYourShift => 'Start Your Shift';
+
+  @override
+  String get posOpenShiftDescription =>
+      'Open a cash session to start processing transactions';
+
+  @override
+  String get posNotes => 'Notes';
+
+  @override
+  String get posVoidLast => 'Void Last';
+
+  @override
+  String posSessionNumber(Object id) {
+    return 'Session #$id';
+  }
+
+  @override
+  String get posSearchProductsHint => 'Search products or scan barcode (F2)';
+
+  @override
+  String get posNoProductsFound => 'No products found';
+
+  @override
+  String get posNoProductsSubtitle =>
+      'Try a different search or check your catalog.';
+
+  @override
+  String get posTapProductsToAdd => 'Tap products to add them';
+
+  @override
+  String get posTax15 => 'Tax (15%)';
+
+  @override
+  String get posClearCartMessage => 'All items will be removed.';
+
+  @override
+  String get posClear => 'Clear';
+
+  @override
+  String get posWalkInCustomer => 'Walk-in Customer';
+
+  @override
+  String get posCartDiscount => 'Cart Discount';
+
+  @override
+  String posSubtotalAmount(Object amount) {
+    return 'Subtotal: SAR $amount';
+  }
+
+  @override
+  String get posDiscountAmountSar => 'Discount Amount (SAR)';
+
+  @override
+  String get posApply => 'Apply';
+
+  @override
+  String get posOrderNotes => 'Order Notes';
+
+  @override
+  String get posNotesHint => 'Add notes for this order...';
+
+  @override
+  String get posSave => 'Save';
+
+  @override
+  String get posCashier => 'Cashier';
+
+  @override
+  String get posReviewSessionSummary => 'Review your session summary';
+
+  @override
+  String get posSessionSummaryZReport => 'Session Summary (Z-Report)';
+
+  @override
+  String get posClosingCashCount => 'Closing Cash Count';
+
+  @override
+  String get posInvalidClosingCash =>
+      'Please enter a valid closing cash amount';
+
+  @override
+  String get posSearchCustomerHint => 'Search by name, phone, loyalty code...';
+
+  @override
+  String get posNoCustomersFound => 'No customers found';
+
+  @override
+  String posDeleteHeldCartMessage(Object label) {
+    return 'This will permanently remove \"$label\".';
+  }
+
+  @override
+  String get posItems => 'items';
+
+  @override
+  String get posJustNow => 'Just now';
+
+  @override
+  String posMinutesAgo(Object count) {
+    return '${count}m ago';
+  }
+
+  @override
+  String posHoursAgo(Object count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String posDaysAgo(Object count) {
+    return '${count}d ago';
+  }
+
+  @override
+  String get posOpenShiftDialog => 'Open Shift';
+
+  @override
+  String get posRegister => 'Register';
+
+  @override
+  String get posPleaseSelectRegister => 'Please select a register';
+
+  @override
+  String get posNoRegistersFound => 'No registers found. Please add one first.';
+
+  @override
+  String posChangeGiven(Object amount) {
+    return 'Change: SAR $amount';
+  }
+
+  @override
+  String posTotalAmountSar(Object amount) {
+    return 'Total: SAR $amount';
+  }
+
+  @override
+  String get posTotalNotCovered =>
+      'Total paid does not cover the outstanding amount';
+
+  @override
+  String get posReceiptTransactionNumber => 'Receipt / Transaction number';
+
+  @override
+  String get posFind => 'Find';
+
+  @override
+  String get posCustomerReturn => 'Customer return';
+
+  @override
+  String get posEnterTransactionNumber => 'Enter a transaction/receipt number';
+
+  @override
+  String posFailedToFindTransaction(Object error) {
+    return 'Failed to find transaction: $error';
+  }
+
+  @override
+  String posReturnFailed(Object error) {
+    return 'Return failed: $error';
+  }
+
+  @override
+  String get posEnterReceiptNumber =>
+      'Enter a receipt number to find the transaction';
+
+  @override
+  String get posOpenPosSession => 'Open POS Session';
+
+  @override
+  String get posOpenPosSessionSubtitle =>
+      'Enter the opening cash amount for this session.';
+
+  @override
+  String get posOpeningCashLabel => 'Opening Cash';
+
+  @override
+  String get posOpenSession => 'Open Session';
+
+  @override
+  String get posPosSessionOpened => 'POS session opened.';
+
+  @override
+  String get posCloseSession => 'Close Session';
+
+  @override
+  String get posCloseSessionSubtitle =>
+      'Enter the closing cash amount to close this session.';
+
+  @override
+  String get posSessionClosed => 'Session closed.';
+
+  @override
+  String get posSessions => 'POS Sessions';
+
+  @override
+  String get posSessionHistory => 'Session history';
+
+  @override
+  String get posStatus => 'Status';
+
+  @override
+  String get posOpenedAt => 'Opened At';
+
+  @override
+  String get posClosedAt => 'Closed At';
+
+  @override
+  String get posOpeningFloat => 'Opening Float';
+
+  @override
+  String get posClosingCashCol => 'Closing Cash';
+
+  @override
+  String get posVariance => 'Variance';
+
+  @override
+  String get posActions => 'Actions';
+
+  @override
+  String get posOpen => 'Open';
+
+  @override
+  String get posClosed => 'Closed';
+
+  @override
+  String get posNoSessionsFound => 'No sessions found';
+
+  @override
+  String get posOpenSessionSubtitle =>
+      'Open a POS session to start processing transactions.';
+
+  @override
+  String get posEditTerminal => 'Edit Terminal';
+
+  @override
+  String get posAddTerminal => 'Add Terminal';
+
+  @override
+  String get posLoadingTerminal => 'Loading terminal...';
+
+  @override
+  String get posTerminalInformation => 'Terminal Information';
+
+  @override
+  String get posBasicRegisterDetails => 'Basic register details';
+
+  @override
+  String get posTerminalName => 'Terminal Name';
+
+  @override
+  String get posTerminalNameHint => 'e.g. Cashier 1, Front Desk';
+
+  @override
+  String get posDeviceId => 'Device ID';
+
+  @override
+  String get posDeviceIdHint => 'Unique identifier for this device';
+
+  @override
+  String get posPlatform => 'Platform';
+
+  @override
+  String get posSelectPlatform => 'Select platform';
+
+  @override
+  String get posAppVersion => 'App Version (optional)';
+
+  @override
+  String get posAppVersionHint => 'e.g. 1.0.0';
+
+  @override
+  String get posSaveChanges => 'Save Changes';
+
+  @override
+  String get posCreateTerminal => 'Create Terminal';
+
+  @override
+  String get posPlatformWindows => 'Windows';
+
+  @override
+  String get posPlatformMacOS => 'macOS';
+
+  @override
+  String get posPlatformIOS => 'iOS';
+
+  @override
+  String get posPlatformAndroid => 'Android';
+
+  @override
+  String get posDeleteTerminal => 'Delete Terminal?';
+
+  @override
+  String posDeleteTerminalMessage(Object name) {
+    return 'Deleting \"$name\" cannot be undone.';
+  }
+
+  @override
+  String get posDeactivateTerminal => 'Deactivate Terminal?';
+
+  @override
+  String get posActivateTerminal => 'Activate Terminal?';
+
+  @override
+  String posDeactivateActivateMessage(Object action, Object name) {
+    return '$action \"$name\"?';
+  }
+
+  @override
+  String get posDeactivate => 'Deactivate';
+
+  @override
+  String get posActivate => 'Activate';
+
+  @override
+  String posTerminalDeleted(Object name) {
+    return 'Terminal \"$name\" deleted.';
+  }
+
+  @override
+  String get posFailedDeleteTerminal => 'Failed to delete terminal.';
+
+  @override
+  String posTerminalStatusChanged(Object name, Object status) {
+    return 'Terminal \"$name\" $status.';
+  }
+
+  @override
+  String get posFailedUpdateTerminalStatus =>
+      'Failed to update terminal status.';
+
+  @override
+  String get posActivated => 'activated';
+
+  @override
+  String get posDeactivated => 'deactivated';
+
+  @override
+  String get posTerminals => 'Terminals';
+
+  @override
+  String get posManageTerminals => 'Manage POS terminal registers';
+
+  @override
+  String get posSearchTerminals => 'Search terminals...';
+
+  @override
+  String get posName => 'Name';
+
+  @override
+  String get posDeviceIdCol => 'Device ID';
+
+  @override
+  String get posPlatformCol => 'Platform';
+
+  @override
+  String get posVersionCol => 'Version';
+
+  @override
+  String get posStatusCol => 'Status';
+
+  @override
+  String get posLastSeen => 'Last Seen';
+
+  @override
+  String get posActionsCol => 'Actions';
+
+  @override
+  String get posEdit => 'Edit';
+
+  @override
+  String get posToggleStatus => 'Toggle Status';
+
+  @override
+  String get posNoTerminalsFound => 'No terminals found';
+
+  @override
+  String get posNoTerminalsSubtitle =>
+      'Add your first POS terminal to get started.';
+
+  @override
+  String get posOff => 'Off';
+
+  @override
+  String get posOn => 'On';
+
+  @override
+  String get posActive => 'Active';
+
+  @override
+  String get posInactive => 'Inactive';
+
+  @override
+  String get posPlatformUnknown => 'Unknown';
+
+  @override
+  String get posCashManagement => 'Cash Management';
+
+  @override
+  String get posCashCount => 'Cash Count';
+
+  @override
+  String get posSessionHistoryTab => 'Session History';
+
+  @override
+  String get posActiveSession => 'Active Session';
+
+  @override
+  String posOpened(Object time) {
+    return 'Opened: $time';
+  }
+
+  @override
+  String get posTerminal => 'Terminal';
+
+  @override
+  String get posCashIn => 'Cash In';
+
+  @override
+  String get posCashOut => 'Cash Out';
+
+  @override
+  String get posNoActiveCashSession => 'No Active Cash Session';
+
+  @override
+  String get posOpenCashSessionDescription =>
+      'Open a session to start accepting cash payments';
+
+  @override
+  String get posOpenCashSession => 'Open Cash Session';
+
+  @override
+  String get posTotalCount => 'Total Count';
+
+  @override
+  String get posNoSessionsYet => 'No sessions yet';
+
+  @override
+  String get posOpenCashSessionDialog => 'Open Cash Session';
+
+  @override
+  String get posOpeningFloatSar => 'Opening Float (SAR)';
+
+  @override
+  String get posCloseCashSession => 'Close Cash Session';
+
+  @override
+  String posCountedCash(Object amount) {
+    return 'Counted Cash: $amount SAR';
+  }
+
+  @override
+  String get posNotesOptional => 'Notes (optional)';
+
+  @override
+  String get posAmountSar => 'Amount (SAR)';
+
+  @override
+  String get posReason => 'Reason';
+
+  @override
+  String get posReasonPettyCash => 'Petty Cash';
+
+  @override
+  String get posReasonSupplierPayment => 'Supplier Payment';
+
+  @override
+  String get posReasonBankDeposit => 'Bank Deposit';
+
+  @override
+  String get posReasonTips => 'Tips';
+
+  @override
+  String get posReasonChangeReplenish => 'Change Replenish';
+
+  @override
+  String get posReasonOther => 'Other';
+
+  @override
+  String get posRecord => 'Record';
+
+  @override
+  String posQuickAmountPlus(Object amount) {
+    return '+$amount';
+  }
+
+  @override
+  String get loginTitle => 'Wameed POS';
+
+  @override
+  String get loginSubtitle => 'Sign in to your account';
+
+  @override
+  String get loginEmail => 'Email';
+
+  @override
+  String get loginEmailHint => 'Enter your email';
+
+  @override
+  String get loginPassword => 'Password';
+
+  @override
+  String get loginPasswordHint => 'Enter your password';
+
+  @override
+  String get loginSigningIn => 'Signing in...';
+
+  @override
+  String get loginSignIn => 'Sign In';
+
+  @override
+  String get loginNoAccount => 'Don\'t have an account? ';
+
+  @override
+  String get loginRegister => 'Register';
+
+  @override
+  String get loginAdmin => 'Admin';
+
+  @override
+  String get loginCashier => 'Cashier';
+
+  @override
+  String get pinLoginEnterPin => 'Enter PIN';
+
+  @override
+  String get pinLoginSubtitle => 'Quick switch — enter your 4-digit PIN';
+
+  @override
+  String get pinLoginNoStoreSession =>
+      'No store session found. Please sign in with email.';
+
+  @override
+  String get pinLoginSignInWithEmail => 'Sign in with email instead';
+
+  @override
+  String securityError(String message) {
+    return 'Security error: $message';
+  }
+
+  @override
+  String get securityNA => 'N/A';
+
+  @override
+  String conflictMoreFields(Object count) {
+    return '+ $count more fields';
+  }
+
+  @override
+  String get notifCategoryOrder => 'Order';
+
+  @override
+  String get notifCategoryInventory => 'Inventory';
+
+  @override
+  String get notifCategoryPromotion => 'Promotion';
+
+  @override
+  String get notifCategorySystem => 'System';
+
+  @override
+  String get notifCategoryPayment => 'Payment';
+
+  @override
+  String get notifCategoryStaff => 'Staff';
+
+  @override
+  String get stockReorderPointHint => 'e.g. 10';
+
+  @override
+  String get stockMaxLevelHint => 'e.g. 100';
+
+  @override
+  String get stockNoLowStockProducts => 'No products are below reorder point.';
+
+  @override
+  String get stockLevelsEmptySubtitle =>
+      'Stock levels will appear once products receive inventory.';
+
+  @override
+  String get stockAdjustReasonDamaged => 'Damaged';
+
+  @override
+  String get stockAdjustReasonExpired => 'Expired';
+
+  @override
+  String get stockAdjustReasonLost => 'Lost';
+
+  @override
+  String get stockAdjustReasonCorrection => 'Correction';
+
+  @override
+  String get stockAdjustReasonReturned => 'Returned';
+
+  @override
+  String get stockAdjustReasonMiscounted => 'Miscounted';
+
+  @override
+  String get stockAdjustReasonTheft => 'Theft';
+
+  @override
+  String get stockAdjustReasonOther => 'Other';
+
+  @override
+  String get stockTransferApproveConfirm =>
+      'Approve this transfer? This will deduct stock from the source store.';
+
+  @override
+  String get stockTransferReceiveConfirm =>
+      'Mark this transfer as received? Stock will be added to the destination store.';
+
+  @override
+  String get stockTransferCancelConfirm => 'Cancel this transfer?';
+
+  @override
+  String stockTransferActionTitle(Object action) {
+    return '$action Transfer';
+  }
+
+  @override
+  String stockTransferActionSuccess(Object action) {
+    return 'Transfer ${action}d successfully.';
+  }
+
+  @override
+  String purchaseOrderCancelConfirm(Object reference) {
+    return 'Cancel order \"$reference\"?';
+  }
+
+  @override
+  String goodsReceiptConfirm(Object reference) {
+    return 'Are you sure you want to confirm receipt \"$reference\"?\n\nThis will update stock levels and cannot be undone.';
+  }
+
+  @override
+  String recipeDeleteConfirm(Object name) {
+    return 'Delete recipe \"$name\"?';
+  }
+
+  @override
+  String get sarCurrency => 'SAR';
+
+  @override
+  String amountWithSar(Object amount) {
+    return 'SAR $amount';
+  }
+
+  @override
+  String get authAlreadyHaveAccount => 'Already have an account?';
+
+  @override
+  String get authBusinessInformation => 'Business Information';
+
+  @override
+  String get authBusinessNameHint => 'e.g. My Company';
+
+  @override
+  String get authBusinessNameOptional => 'Business Name (optional)';
+
+  @override
+  String get authConfirmPassword => 'Confirm Password';
+
+  @override
+  String get authConfirmPasswordHint => 'Re-enter your password';
+
+  @override
+  String get authCountry => 'Country';
+
+  @override
+  String get authCountryOman => 'Oman';
+
+  @override
+  String get authCountrySaudiArabia => 'Saudi Arabia';
+
+  @override
+  String get authCreateAccount => 'Create Account';
+
+  @override
+  String get authCreatingAccount => 'Creating Account...';
+
+  @override
+  String get authEmail => 'Email';
+
+  @override
+  String get authEmailHint => 'Enter your email';
+
+  @override
+  String get authFullName => 'Full Name';
+
+  @override
+  String get authFullNameHint => 'e.g. Ahmed Al-Said';
+
+  @override
+  String get authPassword => 'Password';
+
+  @override
+  String get authPasswordHintMinChars => 'Minimum 8 characters';
+
+  @override
+  String get authPasswordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get authPersonalInformation => 'Personal Information';
+
+  @override
+  String get authPhoneOptional => 'Phone (optional)';
+
+  @override
+  String get authSecurity => 'Security';
+
+  @override
+  String get authSignIn => 'Sign In';
+
+  @override
+  String get authStoreNameHint => 'e.g. Main Branch';
+
+  @override
+  String get authStoreNameOptional => 'Store Name (optional)';
+
+  @override
+  String get cashMgmtActiveSession => 'Active Session';
+
+  @override
+  String get cashMgmtAmountSar => 'Amount (SAR)';
+
+  @override
+  String get cashMgmtCashCount => 'Cash Count';
+
+  @override
+  String get cashMgmtCashIn => 'Cash In';
+
+  @override
+  String get cashMgmtCashOut => 'Cash Out';
+
+  @override
+  String get cashMgmtCloseCashSession => 'Close Cash Session';
+
+  @override
+  String get cashMgmtCloseSession => 'Close Session';
+
+  @override
+  String get cashMgmtCountedCash => 'Counted Cash';
+
+  @override
+  String get cashMgmtExpectedCash => 'Expected Cash';
+
+  @override
+  String get cashMgmtNA => 'N/A';
+
+  @override
+  String get cashMgmtNoActiveSession => 'No Active Session';
+
+  @override
+  String get cashMgmtNoActiveSessionSubtitle =>
+      'Open a cash session to start processing transactions';
+
+  @override
+  String get cashMgmtNoSessions => 'No sessions';
+
+  @override
+  String get cashMgmtNotesOptional => 'Notes (optional)';
+
+  @override
+  String get cashMgmtOpenCashSession => 'Open Cash Session';
+
+  @override
+  String get cashMgmtOpenSession => 'Open Session';
+
+  @override
+  String get cashMgmtOpened => 'Opened';
+
+  @override
+  String get cashMgmtOpeningFloat => 'Opening Float';
+
+  @override
+  String get cashMgmtOpeningFloatSar => 'Opening Float (SAR)';
+
+  @override
+  String get cashMgmtReason => 'Reason';
+
+  @override
+  String get cashMgmtRecord => 'Record';
+
+  @override
+  String get cashMgmtSessionHistory => 'Session History';
+
+  @override
+  String get cashMgmtTerminal => 'Terminal';
+
+  @override
+  String get cashMgmtTitle => 'Cash Management';
+
+  @override
+  String get cashMgmtTotalCount => 'Total Count';
+
+  @override
+  String get commonActive => 'Active';
+
+  @override
+  String get commonCancel => 'Cancel';
+
+  @override
+  String get commonCreate => 'Create';
+
+  @override
+  String get commonDate => 'Date';
+
+  @override
+  String get commonDelete => 'Delete';
+
+  @override
+  String get commonEdit => 'Edit';
+
+  @override
+  String get commonInactive => 'Inactive';
+
+  @override
+  String get commonInvalid => 'Invalid';
+
+  @override
+  String get commonNo => 'No';
+
+  @override
+  String get commonNotes => 'Notes';
+
+  @override
+  String get commonNotesOptional => 'Notes (optional)';
+
+  @override
+  String get commonOk => 'OK';
+
+  @override
+  String get commonRefresh => 'Refresh';
+
+  @override
+  String get commonRequired => 'Required';
+
+  @override
+  String get commonRetry => 'Retry';
+
+  @override
+  String get commonSave => 'Save';
+
+  @override
+  String get commonStatus => 'Status';
+
+  @override
+  String get commonType => 'Type';
+
+  @override
+  String get customersNoCustomersFound => 'No customers found';
+
+  @override
+  String customersPoints(int points) {
+    return '$points pts';
+  }
+
+  @override
+  String get hardwareConfiguredDevices => 'Configured Devices';
+
+  @override
+  String get hardwareManagement => 'Hardware Management';
+
+  @override
+  String get hardwareNoDevicesConfigured => 'No devices configured';
+
+  @override
+  String get hardwareRecentEvents => 'Recent Events';
+
+  @override
+  String get hardwareSelectDeviceToTest => 'Select a device to test';
+
+  @override
+  String get hardwareSupportedHardware => 'Supported Hardware';
+
+  @override
+  String get hardwareTestingDevice => 'Testing device...';
+
+  @override
+  String get inventoryAddItemLabel => 'Add Item';
+
+  @override
+  String get inventoryAdjustmentCreated => 'Stock adjustment created';
+
+  @override
+  String get inventoryAll => 'All';
+
+  @override
+  String get inventoryApprove => 'Approve';
+
+  @override
+  String get inventoryAvgCost => 'Avg. Cost';
+
+  @override
+  String get inventoryCancelOrder => 'Cancel Order';
+
+  @override
+  String get inventoryCancelPOTitle => 'Cancel Purchase Order?';
+
+  @override
+  String get inventoryCancelled => 'Cancelled';
+
+  @override
+  String get inventoryConfirmReceiptTitle => 'Confirm Receipt';
+
+  @override
+  String get inventoryCreateReceipt => 'Create Receipt';
+
+  @override
+  String get inventoryDamage => 'Damage';
+
+  @override
+  String get inventoryDecrease => 'Decrease';
+
+  @override
+  String get inventoryDeleteRecipeTitle => 'Delete Recipe?';
+
+  @override
+  String get inventoryDraft => 'Draft';
+
+  @override
+  String get inventoryDraftReceiptCreated => 'Draft receipt created';
+
+  @override
+  String get inventoryExpected => 'Expected';
+
+  @override
+  String get inventoryFilterByStatus => 'Filter by status';
+
+  @override
+  String get inventoryFromStore => 'From Store';
+
+  @override
+  String get inventoryFullyReceived => 'Fully Received';
+
+  @override
+  String get inventoryGoodsReceipts => 'Goods Receipts';
+
+  @override
+  String get inventoryGoodsReceiptsSubtitle =>
+      'Receive and verify incoming stock shipments';
+
+  @override
+  String get inventoryIncrease => 'Increase';
+
+  @override
+  String get inventoryIngredient => 'Ingredient';
+
+  @override
+  String get inventoryIngredientProduct => 'Ingredient Product';
+
+  @override
+  String get inventoryInvalidNumber => 'Invalid number';
+
+  @override
+  String inventoryItemLabel(int index) {
+    return 'Item $index';
+  }
+
+  @override
+  String get inventoryLineItems => 'Line Items';
+
+  @override
+  String get inventoryLowStock => 'Low Stock';
+
+  @override
+  String get inventoryManagement => 'Inventory Management';
+
+  @override
+  String get inventoryMaxStockLevelOptional => 'Max Stock Level (optional)';
+
+  @override
+  String get inventoryNewAdjustment => 'New Adjustment';
+
+  @override
+  String get inventoryNewGoodsReceipt => 'New Goods Receipt';
+
+  @override
+  String get inventoryNewPO => 'New PO';
+
+  @override
+  String get inventoryNewReceipt => 'New Receipt';
+
+  @override
+  String get inventoryNewRecipe => 'New Recipe';
+
+  @override
+  String get inventoryNewStockAdjustment => 'New Stock Adjustment';
+
+  @override
+  String get inventoryNewTransfer => 'New Transfer';
+
+  @override
+  String get inventoryNoAdjustments => 'No adjustments';
+
+  @override
+  String get inventoryNoGoodsReceipts => 'No goods receipts';
+
+  @override
+  String get inventoryNoGoodsReceiptsHint =>
+      'Create a goods receipt to track incoming stock.';
+
+  @override
+  String get inventoryNoMovements => 'No movements';
+
+  @override
+  String get inventoryNoPOs => 'No purchase orders';
+
+  @override
+  String get inventoryNoRecipes => 'No recipes';
+
+  @override
+  String get inventoryNoRecipesHint =>
+      'Create a recipe to track product ingredients.';
+
+  @override
+  String get inventoryNoStockLevels => 'No stock levels';
+
+  @override
+  String get inventoryNoTransfers => 'No transfers';
+
+  @override
+  String get inventoryNotesHint => 'Add notes...';
+
+  @override
+  String get inventoryOutputProduct => 'Output Product';
+
+  @override
+  String get inventoryPOCancelled => 'Purchase order cancelled';
+
+  @override
+  String get inventoryPOCreatedMsg => 'Purchase order created';
+
+  @override
+  String get inventoryPOSent => 'Purchase order sent';
+
+  @override
+  String get inventoryPartiallyReceived => 'Partially Received';
+
+  @override
+  String get inventoryProduct => 'Product';
+
+  @override
+  String get inventoryPurchaseOrders => 'Purchase Orders';
+
+  @override
+  String get inventoryPurchaseOrdersSubtitle =>
+      'Create and manage supplier purchase orders';
+
+  @override
+  String get inventoryQuantity => 'Quantity';
+
+  @override
+  String get inventoryReceiptConfirmedMsg => 'Receipt confirmed';
+
+  @override
+  String get inventoryReceive => 'Receive';
+
+  @override
+  String get inventoryReceiveAction => 'Receive';
+
+  @override
+  String get inventoryReceived => 'Received';
+
+  @override
+  String get inventoryRecipeCreated => 'Recipe created';
+
+  @override
+  String get inventoryRecipeDeleted => 'Recipe deleted';
+
+  @override
+  String get inventoryRecipes => 'Recipes';
+
+  @override
+  String get inventoryRecipesSubtitle =>
+      'Define product ingredients and yields';
+
+  @override
+  String get inventoryRef => 'Ref';
+
+  @override
+  String get inventoryReference => 'Reference';
+
+  @override
+  String get inventoryReferenceNumber => 'Reference Number';
+
+  @override
+  String get inventoryReferenceNumberHint => 'e.g. GR-001';
+
+  @override
+  String get inventoryReferenceOptional => 'Reference (optional)';
+
+  @override
+  String get inventoryReorderPoint => 'Reorder Point';
+
+  @override
+  String get inventoryReorderPointSaved => 'Reorder point saved';
+
+  @override
+  String get inventoryReorderPt => 'Reorder Pt.';
+
+  @override
+  String get inventoryReserved => 'Reserved';
+
+  @override
+  String get inventorySaving => 'Saving...';
+
+  @override
+  String get inventorySearchByProduct => 'Search by product...';
+
+  @override
+  String get inventorySendAction => 'Send';
+
+  @override
+  String get inventorySent => 'Sent';
+
+  @override
+  String get inventorySetReorderPoint => 'Set Reorder Point';
+
+  @override
+  String get inventoryStockAdjustments => 'Stock Adjustments';
+
+  @override
+  String get inventoryStockAdjustmentsSubtitle =>
+      'Record inventory corrections and write-offs';
+
+  @override
+  String get inventoryStockLevels => 'Stock Levels';
+
+  @override
+  String get inventoryStockLevelsSubtitle =>
+      'Monitor current inventory across all products';
+
+  @override
+  String get inventoryStockMovements => 'Stock Movements';
+
+  @override
+  String get inventoryStockMovementsSubtitle =>
+      'Track all inventory ins and outs';
+
+  @override
+  String get inventoryStockTransfers => 'Stock Transfers';
+
+  @override
+  String get inventoryStockTransfersSubtitle =>
+      'Move stock between stores or warehouses';
+
+  @override
+  String get inventorySupplier => 'Supplier';
+
+  @override
+  String get inventoryToStore => 'To Store';
+
+  @override
+  String get inventoryTotal => 'Total';
+
+  @override
+  String get inventoryTotalCost => 'Total Cost';
+
+  @override
+  String get inventoryTransferCreated => 'Transfer created';
+
+  @override
+  String get inventoryUnitCostLabel => 'Unit Cost';
+
+  @override
+  String get inventoryWastePercent => 'Waste %';
+
+  @override
+  String get inventoryYield => 'Yield';
+
+  @override
+  String get inventoryYieldQuantity => 'Yield Quantity';
+
+  @override
+  String get notificationsCategories => 'Notification Categories';
+
+  @override
+  String get notificationsClearQuietHours => 'Clear Quiet Hours';
+
+  @override
+  String get notificationsInApp => 'In-App';
+
+  @override
+  String get notificationsInventoryAlerts => 'Inventory Alerts';
+
+  @override
+  String get notificationsInventoryAlertsSubtitle =>
+      'Low stock and reorder notifications';
+
+  @override
+  String get notificationsMarkAllAsRead => 'Mark all as read';
+
+  @override
+  String get notificationsMarkRead => 'Mark as read';
+
+  @override
+  String get notificationsNoNotifications => 'No notifications';
+
+  @override
+  String get notificationsNotSet => 'Not set';
+
+  @override
+  String get notificationsOrderUpdates => 'Order Updates';
+
+  @override
+  String get notificationsOrderUpdatesSubtitle =>
+      'Receive alerts for new orders and status changes';
+
+  @override
+  String get notificationsPreferences => 'Notification Preferences';
+
+  @override
+  String get notificationsPromotions => 'Promotions';
+
+  @override
+  String get notificationsPromotionsSubtitle =>
+      'Promotion activity and coupon usage alerts';
+
+  @override
+  String get notificationsPush => 'Push';
+
+  @override
+  String get notificationsQuietEnd => 'End';
+
+  @override
+  String get notificationsQuietHours => 'Quiet Hours';
+
+  @override
+  String get notificationsQuietHoursSubtitle =>
+      'Pause notifications during these hours';
+
+  @override
+  String get notificationsQuietStart => 'Start';
+
+  @override
+  String get notificationsSave => 'Save';
+
+  @override
+  String get notificationsSystemUpdates => 'System Updates';
+
+  @override
+  String get notificationsSystemUpdatesSubtitle =>
+      'App updates and maintenance notices';
+
+  @override
+  String get notificationsTitle => 'Notifications';
+
+  @override
+  String notificationsUnread(int count) {
+    return '$count unread';
+  }
+
+  @override
+  String notificationsSelected(int count) {
+    return '$count selected';
+  }
+
+  @override
+  String get notificationsBulkDelete => 'Delete Selected';
+
+  @override
+  String get notificationsPriority => 'Priority:';
+
+  @override
+  String get notifPriorityUrgent => 'Urgent';
+
+  @override
+  String get notifPriorityHigh => 'High';
+
+  @override
+  String get notifPriorityNormal => 'Normal';
+
+  @override
+  String get notifPriorityLow => 'Low';
+
+  @override
+  String get notificationsGeneralSettings => 'General Settings';
+
+  @override
+  String get notificationsSoundEnabled => 'Sound Enabled';
+
+  @override
+  String get notificationsSoundEnabledSubtitle =>
+      'Play sounds for incoming notifications';
+
+  @override
+  String get notificationsEmailDigest => 'Email Digest';
+
+  @override
+  String get notificationsEmailDigestSubtitle =>
+      'Receive a summary of notifications by email';
+
+  @override
+  String get notificationsDigestNone => 'None';
+
+  @override
+  String get notificationsDigestDaily => 'Daily';
+
+  @override
+  String get notificationsDigestWeekly => 'Weekly';
+
+  @override
+  String get notifSchedulesTitle => 'Scheduled Notifications';
+
+  @override
+  String get notifSchedulesEmpty => 'No scheduled notifications';
+
+  @override
+  String get notifScheduleCreate => 'Create Schedule';
+
+  @override
+  String get notifScheduleTitle => 'Title';
+
+  @override
+  String get notifScheduleMessage => 'Message';
+
+  @override
+  String get notifScheduleCategory => 'Category';
+
+  @override
+  String get notifSchedulePriority => 'Priority';
+
+  @override
+  String get notifScheduleChannel => 'Channel';
+
+  @override
+  String get notifScheduleDateTime => 'Scheduled Date & Time';
+
+  @override
+  String get notifScheduleCancel => 'Cancel';
+
+  @override
+  String get notifScheduleCreateBtn => 'Create';
+
+  @override
+  String get notifScheduleCancelBtn => 'Cancel Schedule';
+
+  @override
+  String get notifScheduleCancelled => 'Cancelled';
+
+  @override
+  String get notifScheduleSent => 'Sent';
+
+  @override
+  String get notifSchedulePending => 'Pending';
+
+  @override
+  String get notifSoundConfigsTitle => 'Sound Settings';
+
+  @override
+  String get notifSoundConfigsEmpty => 'No sound configurations';
+
+  @override
+  String get notifSoundConfigDefault => 'Default sound';
+
+  @override
+  String get notifDeliveryLogsTitle => 'Delivery Logs';
+
+  @override
+  String get notifDeliveryLogsEmpty => 'No delivery logs';
+
+  @override
+  String get notifDeliveryLogsChannel => 'Channel:';
+
+  @override
+  String get notifDeliveryLogsStatus => 'Status:';
+
+  @override
+  String get notifDeliveryLogsNotifId => 'Notification';
+
+  @override
+  String get notifDeliveryLogsRetries => 'Retries';
+
+  @override
+  String get notifStatsTotal => 'Total';
+
+  @override
+  String get notifStatsUnread => 'Unread';
+
+  @override
+  String get notifStatsRead => 'Read';
+
+  @override
+  String get notifStatsDeliveryRate => 'Delivery Rate';
+
+  @override
+  String get notifStatsByCategory => 'By Category';
+
+  @override
+  String get notifStatsByChannel => 'By Channel';
+
+  @override
+  String get ordersAll => 'All';
+
+  @override
+  String get ordersCancelled => 'Cancelled';
+
+  @override
+  String get ordersCompleted => 'Completed';
+
+  @override
+  String get ordersConfirmed => 'Confirmed';
+
+  @override
+  String get ordersDate => 'Date';
+
+  @override
+  String get ordersDelivered => 'Delivered';
+
+  @override
+  String get ordersDispatched => 'Dispatched';
+
+  @override
+  String get ordersFilterByStatus => 'Filter by status';
+
+  @override
+  String get ordersNew => 'New';
+
+  @override
+  String get ordersNoOrders => 'No orders';
+
+  @override
+  String get ordersNoOrdersSubtitle =>
+      'Orders will appear here once transactions are made.';
+
+  @override
+  String get ordersOrderNumberCol => 'Order #';
+
+  @override
+  String get ordersPickedUp => 'Picked Up';
+
+  @override
+  String get ordersPreparing => 'Preparing';
+
+  @override
+  String get ordersReady => 'Ready';
+
+  @override
+  String get ordersSearchByNumber => 'Search by order number...';
+
+  @override
+  String get ordersSource => 'Source';
+
+  @override
+  String get ordersStatus => 'Status';
+
+  @override
+  String get ordersSubtotal => 'Subtotal';
+
+  @override
+  String get ordersTax => 'Tax';
+
+  @override
+  String get ordersTotal => 'Total';
+
+  @override
+  String get ordersVoid => 'Void';
+
+  @override
+  String ordersVoidConfirm(String orderNumber) {
+    return 'Are you sure you want to void order $orderNumber?';
+  }
+
+  @override
+  String get ordersVoidOrder => 'Void Order';
+
+  @override
+  String get ordersVoided => 'Voided';
+
+  @override
+  String get ordersVoided2 => 'Order voided';
+
+  @override
+  String posChangeAmount(String amount) {
+    return 'Change: SAR $amount';
+  }
+
+  @override
+  String get posEnterReceiptNumberHint =>
+      'Enter a receipt number to find the transaction';
+
+  @override
+  String get posHeldCartFallback => 'Held Cart';
+
+  @override
+  String posHeldCartItemCount(int count, String time) {
+    return '$count items • $time';
+  }
+
+  @override
+  String get posPaymentNotCover => 'Payment does not cover the total amount';
+
+  @override
+  String get posSelectRegisterError => 'Please select a register';
+
+  @override
+  String posTotalAmount(String amount) {
+    return 'Total: SAR $amount';
+  }
+
+  @override
+  String posTransactionLookupFailed(String error) {
+    return 'Transaction lookup failed: $error';
+  }
+
+  @override
+  String get promotionsActiveCoupons => 'Active Coupons';
+
+  @override
+  String get promotionsAnalytics => 'Promotion Analytics';
+
+  @override
+  String get promotionsAvgDiscountPerUse => 'Avg. Discount Per Use';
+
+  @override
+  String get promotionsCouponRedemptionRate => 'Coupon Redemption Rate';
+
+  @override
+  String get promotionsPerformance => 'Performance';
+
+  @override
+  String get promotionsTotalCoupons => 'Total Coupons';
+
+  @override
+  String get promotionsTotalDiscount => 'Total Discount';
+
+  @override
+  String get promotionsTotalUses => 'Total Uses';
+
+  @override
+  String get promotionsUniqueCustomers => 'Unique Customers';
+
+  @override
+  String get securityAuditLogs => 'Audit Logs';
+
+  @override
+  String get securityDevices => 'Devices';
+
+  @override
+  String get securityLoginFailed => 'Failed';
+
+  @override
+  String get securityLoginSuccess => 'Success';
+
+  @override
+  String get securityLogins => 'Logins';
+
+  @override
+  String get securityNoLoginAttempts => 'No login attempts';
+
+  @override
+  String get securityPolicy => 'Policy';
+
+  @override
+  String get securityTitle => 'Security';
+
+  @override
+  String get securitySessions => 'Sessions';
+
+  @override
+  String get securityIncidents => 'Incidents';
+
+  @override
+  String get securityActive => 'Active';
+
+  @override
+  String get securityInactive => 'Inactive';
+
+  @override
+  String get securityEnded => 'Ended';
+
+  @override
+  String get securityResolved => 'Resolved';
+
+  @override
+  String get securityUnresolved => 'Unresolved';
+
+  @override
+  String get securityNoDevices => 'No devices registered';
+
+  @override
+  String get securityNoSessions => 'No sessions';
+
+  @override
+  String get securityNoIncidents => 'No incidents';
+
+  @override
+  String get securityEndSession => 'End Session';
+
+  @override
+  String get securityEndAllSessions => 'End All Sessions';
+
+  @override
+  String get securityStarted => 'Started';
+
+  @override
+  String get securityLastActivity => 'Last Activity';
+
+  @override
+  String get securityResolve => 'Resolve';
+
+  @override
+  String get securityResolveIncident => 'Resolve Incident';
+
+  @override
+  String get securityResolutionNotes => 'Resolution Notes';
+
+  @override
+  String get securityType => 'Type';
+
+  @override
+  String get securityIP => 'IP';
+
+  @override
+  String get securityHardware => 'Hardware';
+
+  @override
+  String get securityOS => 'OS';
+
+  @override
+  String get securityApp => 'App';
+
+  @override
+  String get securityDeviceType => 'Device Type';
+
+  @override
+  String get securityRemoteWipeRequested => 'Remote wipe requested';
+
+  @override
+  String get securityDeactivate => 'Deactivate';
+
+  @override
+  String get securityRemoteWipe => 'Remote Wipe';
+
+  @override
+  String get securityRecentActivity => 'Recent Activity';
+
+  @override
+  String get securityActiveDevices => 'Active Devices';
+
+  @override
+  String get securityActiveSessions => 'Active Sessions';
+
+  @override
+  String get securityUnresolvedIncidents => 'Unresolved Incidents';
+
+  @override
+  String get securityFailedLoginsToday => 'Failed Logins Today';
+
+  @override
+  String get securityTotalAuditLogs => 'Audit Logs';
+
+  @override
+  String get securityLockedOutUsers => 'Locked Out';
+
+  @override
+  String get securityPinAuth => 'PIN & Authentication';
+
+  @override
+  String get securityLockoutSessions => 'Lockout & Sessions';
+
+  @override
+  String get securityPinOverrides => 'PIN Overrides';
+
+  @override
+  String get securityPasswordDevice => 'Password & Device';
+
+  @override
+  String get securityIpRestrictions => 'IP Restrictions';
+
+  @override
+  String get securityPinLength => 'PIN Length';
+
+  @override
+  String get securityDigits => 'digits';
+
+  @override
+  String get securityDays => 'days';
+
+  @override
+  String get securityMinutes => 'min';
+
+  @override
+  String get securityPinExpiryDays => 'PIN Expiry';
+
+  @override
+  String get securityRequireUniquePins => 'Require Unique PINs';
+
+  @override
+  String get securityBiometricEnabled => 'Biometric Enabled';
+
+  @override
+  String get securityRequire2fa => 'Require 2FA for Owner';
+
+  @override
+  String get securityAutoLock => 'Auto-lock';
+
+  @override
+  String get securityMaxFailedAttempts => 'Max Failed Attempts';
+
+  @override
+  String get securityLockoutDuration => 'Lockout Duration';
+
+  @override
+  String get securitySessionMaxHours => 'Session Max Hours';
+
+  @override
+  String get securityForceLogoutOnRoleChange => 'Force Logout on Role Change';
+
+  @override
+  String get securityPinOverrideVoid => 'PIN Override: Void';
+
+  @override
+  String get securityPinOverrideReturn => 'PIN Override: Return';
+
+  @override
+  String get securityPinOverrideDiscount => 'PIN Override: Discount';
+
+  @override
+  String get securityDiscountThreshold => 'Discount Override Threshold';
+
+  @override
+  String get securityPasswordExpiryDays => 'Password Expiry';
+
+  @override
+  String get securityRequireStrongPassword => 'Require Strong Password';
+
+  @override
+  String get securityMaxDevices => 'Max Devices';
+
+  @override
+  String get securityAuditRetentionDays => 'Audit Retention';
+
+  @override
+  String get securityIpRestrictionEnabled => 'IP Restriction Enabled';
+
+  @override
+  String get securityAllowedIpRanges => 'Allowed IP Ranges:';
+
+  @override
+  String get sessionsCloseSession => 'Close Session';
+
+  @override
+  String get sessionsCloseSessionDescription =>
+      'Enter the closing cash amount to close this session.';
+
+  @override
+  String get sessionsClosingCash => 'Closing Cash';
+
+  @override
+  String get sessionsColCashier => 'Cashier';
+
+  @override
+  String get sessionsColOpenedAt => 'Opened At';
+
+  @override
+  String get sessionsColOpeningCash => 'Opening Cash';
+
+  @override
+  String get sessionsColRegister => 'Register';
+
+  @override
+  String get sessionsColSessionId => 'Session ID';
+
+  @override
+  String get sessionsColStatus => 'Status';
+
+  @override
+  String get sessionsColTotalSales => 'Total Sales';
+
+  @override
+  String get sessionsColTransactions => 'Transactions';
+
+  @override
+  String get sessionsHistory => 'Session history';
+
+  @override
+  String get sessionsNoSessions => 'No sessions found';
+
+  @override
+  String get sessionsNoSessionsSubtitle =>
+      'Open a POS session to start processing transactions.';
+
+  @override
+  String get sessionsOpenPosSession => 'Open POS Session';
+
+  @override
+  String get sessionsOpenSession => 'Open Session';
+
+  @override
+  String get sessionsOpenSessionDescription =>
+      'Enter the opening cash amount for this session.';
+
+  @override
+  String get sessionsOpeningCash => 'Opening Cash';
+
+  @override
+  String get sessionsSessionClosed => 'Session closed.';
+
+  @override
+  String get sessionsSessionOpened => 'POS session opened.';
+
+  @override
+  String get sessionsSessionPlural => 'sessions';
+
+  @override
+  String get sessionsSessionSingular => 'session';
+
+  @override
+  String get sessionsStatusClosed => 'Closed';
+
+  @override
+  String get sessionsStatusOpen => 'Open';
+
+  @override
+  String get sessionsTitle => 'POS Sessions';
+
+  @override
+  String get syncAll => 'All';
+
+  @override
+  String get syncCloudData => 'Cloud Data';
+
+  @override
+  String get syncConflictResolution => 'Conflict Resolution';
+
+  @override
+  String get syncLocalData => 'Local Data';
+
+  @override
+  String get syncNoConflicts => 'No conflicts';
+
+  @override
+  String get syncNoUnresolvedConflicts => 'No unresolved conflicts';
+
+  @override
+  String get syncOpen => 'Open';
+
+  @override
+  String syncRecordsSynced(int count) {
+    return '$count records synced';
+  }
+
+  @override
+  String get syncResolved => 'Resolved';
+
+  @override
+  String syncSyncProgress(String operation) {
+    return 'Syncing $operation...';
+  }
+
+  @override
+  String syncUnresolvedConflicts(int total) {
+    return 'Unresolved Conflicts ($total)';
+  }
+
+  @override
+  String get syncUseCloud => 'Use Cloud';
+
+  @override
+  String get syncUseLocal => 'Use Local';
+
+  @override
+  String get termFormAddTitle => 'Add Terminal';
+
+  @override
+  String get termFormCreate => 'Create Terminal';
+
+  @override
+  String get termFormCreateFailed => 'Failed to create terminal';
+
+  @override
+  String get termFormCreated => 'Terminal created successfully';
+
+  @override
+  String get termFormDeviceIdHint => 'Unique identifier for this device';
+
+  @override
+  String get termFormDeviceIdLabel => 'Device ID';
+
+  @override
+  String get termFormDeviceIdRequired => 'Device ID is required';
+
+  @override
+  String get termFormEditTitle => 'Edit Terminal';
+
+  @override
+  String get termFormLoading => 'Loading terminal...';
+
+  @override
+  String get termFormNameHint => 'e.g. Cashier 1, Front Desk';
+
+  @override
+  String get termFormNameLabel => 'Terminal Name';
+
+  @override
+  String get termFormNameRequired => 'Terminal name is required';
+
+  @override
+  String get termFormPlatformHint => 'Select platform';
+
+  @override
+  String get termFormPlatformLabel => 'Platform';
+
+  @override
+  String get termFormPlatformRequired => 'Platform is required';
+
+  @override
+  String get termFormSaveChanges => 'Save Changes';
+
+  @override
+  String get termFormSectionSubtitle => 'Basic register details';
+
+  @override
+  String get termFormSectionTitle => 'Terminal Information';
+
+  @override
+  String get termFormUpdateFailed => 'Failed to update terminal';
+
+  @override
+  String get termFormUpdated => 'Terminal updated successfully';
+
+  @override
+  String get termFormVersionHint => 'e.g. 1.0.0';
+
+  @override
+  String get termFormVersionLabel => 'App Version (optional)';
+
+  @override
+  String get terminalsActivate => 'Activate';
+
+  @override
+  String get terminalsActivatedLower => 'activated';
+
+  @override
+  String get terminalsActive => 'Active';
+
+  @override
+  String get terminalsAdd => 'Add Terminal';
+
+  @override
+  String get terminalsColDeviceId => 'Device ID';
+
+  @override
+  String get terminalsColLastSync => 'Last Sync';
+
+  @override
+  String get terminalsColName => 'Name';
+
+  @override
+  String get terminalsColOnline => 'Online';
+
+  @override
+  String get terminalsColPlatform => 'Platform';
+
+  @override
+  String get terminalsColSoftpos => 'SoftPOS';
+
+  @override
+  String get terminalsColStatus => 'Status';
+
+  @override
+  String get terminalsColVersion => 'Version';
+
+  @override
+  String get terminalsDeactivate => 'Deactivate';
+
+  @override
+  String get terminalsDeactivatedLower => 'deactivated';
+
+  @override
+  String get terminalsDeleteFailed => 'Failed to delete terminal.';
+
+  @override
+  String terminalsDeleteMessage(String name) {
+    return 'Deleting \"$name\" will remove all its data. This cannot be undone.';
+  }
+
+  @override
+  String get terminalsDeleteTitle => 'Delete Terminal?';
+
+  @override
+  String terminalsDeleted(String name) {
+    return 'Terminal \"$name\" deleted.';
+  }
+
+  @override
+  String get terminalsEdit => 'Edit';
+
+  @override
+  String get terminalsInactive => 'Inactive';
+
+  @override
+  String get terminalsNever => 'Never';
+
+  @override
+  String get terminalsNoTerminals => 'No terminals found';
+
+  @override
+  String get terminalsNoTerminalsSubtitle =>
+      'Add your first POS terminal to get started.';
+
+  @override
+  String get terminalsOff => 'Off';
+
+  @override
+  String get terminalsOn => 'On';
+
+  @override
+  String get terminalsSearch => 'Search terminals...';
+
+  @override
+  String get terminalsSubtitle => 'Manage POS terminal registers';
+
+  @override
+  String get terminalsTitle => 'Terminals';
+
+  @override
+  String get terminalsToggleFailed => 'Failed to update terminal status.';
+
+  @override
+  String terminalsToggleMessage(String action, String name) {
+    return '$action terminal \"$name\"?';
+  }
+
+  @override
+  String get terminalsToggleStatus => 'Toggle Status';
+
+  @override
+  String terminalsToggleTitle(String action) {
+    return '$action Terminal?';
+  }
+
+  @override
+  String terminalsToggled(String name, String actionPast) {
+    return 'Terminal \"$name\" $actionPast.';
+  }
+
+  @override
+  String get zatcaEInvoicing => 'ZATCA e-Invoicing';
+
+  @override
+  String get zatcaRecentInvoices => 'Recent Invoices';
+
+  @override
+  String zatcaViewAll(int total) {
+    return 'View all ($total)';
+  }
+
+  @override
+  String get appBarLanguage => 'Language';
+
+  @override
+  String get appBarTheme => 'Theme';
+
+  @override
+  String get appBarDarkMode => 'Dark Mode';
+
+  @override
+  String get appBarLightMode => 'Light Mode';
+
+  @override
+  String get appBarSystemTheme => 'System';
+
+  @override
+  String get logoutConfirm => 'Are you sure you want to logout?';
+
+  @override
+  String get logoutTitle => 'Logout';
+
+  @override
+  String get sidebarDashboard => 'Dashboard';
+
+  @override
+  String get sidebarPosTerminal => 'POS Terminal';
+
+  @override
+  String get sidebarTerminals => 'Terminals';
+
+  @override
+  String get sidebarSessions => 'Sessions';
+
+  @override
+  String get sidebarOrders => 'Orders';
+
+  @override
+  String get sidebarPayments => 'Payments';
+
+  @override
+  String get sidebarProducts => 'Products';
+
+  @override
+  String get sidebarCategories => 'Categories';
+
+  @override
+  String get sidebarSuppliers => 'Suppliers';
+
+  @override
+  String get sidebarInventory => 'Inventory';
+
+  @override
+  String get sidebarLabels => 'Labels';
+
+  @override
+  String get sidebarCustomers => 'Customers';
+
+  @override
+  String get sidebarStaffMembers => 'Staff Members';
+
+  @override
+  String get sidebarRolesPermissions => 'Roles & Permissions';
+
+  @override
+  String get sidebarAttendance => 'Attendance';
+
+  @override
+  String get sidebarShiftSchedule => 'Shift Schedule';
+
+  @override
+  String get sidebarBranches => 'Branches';
+
+  @override
+  String get sidebarAccounting => 'Accounting';
+
+  @override
+  String get sidebarReports => 'Reports';
+
+  @override
+  String get sidebarSalesSummary => 'Sales Summary';
+
+  @override
+  String get sidebarHourlySales => 'Hourly Sales';
+
+  @override
+  String get sidebarProductPerformance => 'Product Performance';
+
+  @override
+  String get sidebarCategoryBreakdown => 'Category Breakdown';
+
+  @override
+  String get sidebarPaymentMethods => 'Payment Methods';
+
+  @override
+  String get sidebarStaffPerformance => 'Staff Performance';
+
+  @override
+  String get sidebarInventoryReports => 'Inventory Reports';
+
+  @override
+  String get sidebarFinancialReports => 'Financial Reports';
+
+  @override
+  String get sidebarCustomerReports => 'Customer Reports';
+
+  @override
+  String get sidebarPromotions => 'Promotions';
+
+  @override
+  String get sidebarThawaniPay => 'Thawani Pay';
+
+  @override
+  String get sidebarDelivery => 'Delivery';
+
+  @override
+  String get sidebarZatca => 'ZATCA';
+
+  @override
+  String get sidebarHardware => 'Hardware';
+
+  @override
+  String get sidebarRestaurant => 'Restaurant';
+
+  @override
+  String get sidebarBakery => 'Bakery';
+
+  @override
+  String get sidebarPharmacy => 'Pharmacy';
+
+  @override
+  String get sidebarElectronics => 'Electronics';
+
+  @override
+  String get sidebarFlorist => 'Florist';
+
+  @override
+  String get sidebarJewelry => 'Jewelry';
+
+  @override
+  String get sidebarPosCustomize => 'POS Customize';
+
+  @override
+  String get sidebarLayoutBuilder => 'Layout Builder';
+
+  @override
+  String get sidebarMarketplace => 'Marketplace';
+
+  @override
+  String get sidebarReceiptTemplates => 'Receipt Templates';
+
+  @override
+  String get sidebarCfdThemes => 'CFD Themes';
+
+  @override
+  String get sidebarNotifications => 'Notifications';
+
+  @override
+  String get sidebarSecurity => 'Security';
+
+  @override
+  String get sidebarSettings => 'Settings';
+
+  @override
+  String get sidebarSubscription => 'Subscription';
+
+  @override
+  String get sidebarOnboarding => 'Onboarding';
+
+  @override
+  String get sidebarAdminStores => 'Admin Stores';
+
+  @override
+  String get sidebarSupport => 'Support';
+
+  @override
+  String get sidebarTickets => 'Tickets';
+
+  @override
+  String get sidebarKnowledgeBase => 'Knowledge Base';
+
+  @override
+  String get sidebarStoreName => 'Store Name';
+
+  @override
+  String get dailySummaryTitle => 'Daily Summary';
+
+  @override
+  String get dailySummaryPrint => 'Print';
+
+  @override
+  String get dailySummaryGrossRevenue => 'Gross Revenue';
+
+  @override
+  String get dailySummaryExpenses => 'Expenses';
+
+  @override
+  String get dailySummaryNetRevenue => 'Net Revenue';
+
+  @override
+  String get dailySummaryTransactions => 'Transactions';
+
+  @override
+  String get dailySummaryRevenueByMethod => 'Revenue by Payment Method';
+
+  @override
+  String get dailySummaryNoPayments => 'No payments today';
+
+  @override
+  String get dailySummaryCashVariance => 'Cash Variance';
+
+  @override
+  String get dailySummaryWithinTolerance => 'Within tolerance';
+
+  @override
+  String get dailySummaryNeedsReview => 'Needs review';
+
+  @override
+  String dailySummarySessions(int count) {
+    return 'Sessions: $count';
+  }
+
+  @override
+  String get dailySummaryHourlyActivity => 'Hourly Activity';
+
+  @override
+  String get dailySummarySessionDetails => 'Session Details';
+
+  @override
+  String get dailySummaryNoSessions => 'No sessions';
+
+  @override
+  String dailySummaryFloat(String amount) {
+    return 'Float: $amount SAR';
+  }
+
+  @override
+  String dailySummaryTerminal(String id) {
+    return 'Terminal: $id';
+  }
+
+  @override
+  String get finReconTitle => 'Financial Reconciliation';
+
+  @override
+  String get finReconRevenueSummary => 'Revenue Summary';
+
+  @override
+  String get finReconTotalRevenue => 'Total Revenue';
+
+  @override
+  String get finReconTransactions => 'Transactions';
+
+  @override
+  String get finReconAvgTransaction => 'Avg Transaction';
+
+  @override
+  String get finReconPaymentMethods => 'Payment Methods';
+
+  @override
+  String get finReconNoPayments => 'No payments recorded';
+
+  @override
+  String get finReconCashRecon => 'Cash Reconciliation';
+
+  @override
+  String get finReconExpectedCash => 'Expected Cash';
+
+  @override
+  String get finReconActualCash => 'Actual Cash';
+
+  @override
+  String get finReconVariance => 'Variance';
+
+  @override
+  String finReconSessionsClosed(int count) {
+    return 'Sessions: $count closed';
+  }
+
+  @override
+  String get finReconExpenses => 'Expenses';
+
+  @override
+  String get finReconNoExpenses => 'No expenses';
+
+  @override
+  String get finReconPhysicalCashCount => 'Physical Cash Count';
+
+  @override
+  String get finReconCountedTotal => 'Counted Total';
+
+  @override
+  String get finReconPrintReport => 'Print Report';
+
+  @override
+  String get finReconExportPdf => 'Export PDF';
+
+  @override
+  String get finReconConfirmRecon => 'Confirm Reconciliation';
+
+  @override
+  String get finReconConfirmMessage =>
+      'This will finalize the reconciliation for today. All cash sessions will be marked as reconciled.';
+
+  @override
+  String get finReconConfirmed => 'Reconciliation confirmed';
+
+  @override
+  String get commonConfirm => 'Confirm';
+
+  @override
+  String get customerReportsTitle => 'Customer Reports';
+
+  @override
+  String get customerReportsTopCustomers => 'Top Customers';
+
+  @override
+  String get customerReportsRetention => 'Retention';
+
+  @override
+  String get receiptTemplatesTitle => 'Receipt Templates';
+
+  @override
+  String get receiptTemplatesEmpty => 'No Receipt Templates';
+
+  @override
+  String get receiptTemplatesEmptySubtitle =>
+      'No receipt layout templates are available for your plan.';
+
+  @override
+  String get receiptTemplateDetail => 'Receipt Template Details';
+
+  @override
+  String get receiptTemplateBilingual => 'Bilingual';
+
+  @override
+  String get receiptTemplateActive => 'Active';
+
+  @override
+  String get receiptTemplateHeaderConfig => 'Header Configuration';
+
+  @override
+  String get receiptTemplateBodyConfig => 'Body Configuration';
+
+  @override
+  String get receiptTemplateFooterConfig => 'Footer Configuration';
+
+  @override
+  String get cfdThemesTitle => 'Customer Facing Display Themes';
+
+  @override
+  String get cfdThemesEmpty => 'No CFD Themes';
+
+  @override
+  String get cfdThemesEmptySubtitle =>
+      'No customer facing display themes are available for your plan.';
+
+  @override
+  String get cfdThemeDetail => 'CFD Theme Details';
+
+  @override
+  String get cfdThemeActive => 'Active';
+
+  @override
+  String get cfdThemeColorPalette => 'Color Palette';
+
+  @override
+  String get cfdThemeDisplaySettings => 'Display Settings';
+
+  @override
+  String get cfdThemeCartLayout => 'Cart Layout';
+
+  @override
+  String get cfdThemeIdleLayout => 'Idle Layout';
+
+  @override
+  String get cfdThemeFontFamily => 'Font Family';
+
+  @override
+  String get cfdThemeAnimation => 'Animation Style';
+
+  @override
+  String get cfdThemeTransition => 'Transition Duration';
+
+  @override
+  String get cfdThemeThankYou => 'Thank You Animation';
+
+  @override
+  String get cfdThemeShowLogo => 'Show Store Logo';
+
+  @override
+  String get cfdThemeShowTotal => 'Show Running Total';
+
+  @override
+  String get cfdThemeBackground => 'Background';
+
+  @override
+  String get cfdThemeText => 'Text';
+
+  @override
+  String get cfdThemeAccent => 'Accent';
+
+  @override
+  String get cfdThemePreviewTitle => 'Theme Preview';
+
+  @override
+  String get cfdThemePreviewButton => 'Sample Button';
+
+  @override
+  String get cfdThemeYes => 'Yes';
+
+  @override
+  String get cfdThemeNo => 'No';
+
+  @override
+  String get templatePreviewButton => 'Preview';
+
+  @override
+  String get templatePreviewTitle => 'Preview';
+
+  @override
+  String get templatePreviewRefresh => 'Refresh Preview';
+
+  @override
+  String get labelLayoutTemplatesTitle => 'Label Layout Templates';
+
+  @override
+  String get labelLayoutTemplatesEmpty => 'No Label Templates';
+
+  @override
+  String get labelLayoutTemplatesEmptySubtitle =>
+      'Label layout templates will appear here once created by admin';
+
+  @override
+  String get labelLayoutTemplateDetail => 'Label Template Detail';
+
+  @override
+  String get labelLayoutTemplateActive => 'Active';
+
+  @override
+  String get labelLayoutTemplateBordered => 'Bordered';
+
+  @override
+  String get labelLayoutTemplateDimensions => 'Dimensions & Font';
+
+  @override
+  String get labelLayoutTemplateWidth => 'Width';
+
+  @override
+  String get labelLayoutTemplateHeight => 'Height';
+
+  @override
+  String get labelLayoutTemplateFontFamily => 'Font Family';
+
+  @override
+  String get labelLayoutTemplateFontSize => 'Font Size';
+
+  @override
+  String get labelLayoutTemplateBackground => 'Background';
+
+  @override
+  String get labelLayoutTemplateBarcodeSettings => 'Barcode Settings';
+
+  @override
+  String get labelLayoutTemplateBarcodeType => 'Barcode Type';
+
+  @override
+  String get labelLayoutTemplateShowNumber => 'Show Number';
+
+  @override
+  String get labelLayoutTemplateYes => 'Yes';
+
+  @override
+  String get labelLayoutTemplateNo => 'No';
+
+  @override
+  String get labelLayoutTemplateFieldLayout => 'Field Layout';
+
+  @override
+  String get labelLayoutTemplateSimpleLayout => 'Simple stacked layout';
+
+  @override
+  String get labelLayoutTemplateNoFields => 'No fields configured';
+
+  @override
+  String get sidebarLabelLayoutTemplates => 'Label Templates';
+
+  @override
+  String get commonUpdate => 'Update';
+
+  @override
+  String get commonClose => 'Close';
+
+  @override
+  String get supplierTitle => 'Suppliers';
+
+  @override
+  String get supplierNew => 'New Supplier';
+
+  @override
+  String get supplierEdit => 'Edit Supplier';
+
+  @override
+  String get supplierName => 'Name';
+
+  @override
+  String get supplierNameHint => 'Enter supplier name';
+
+  @override
+  String get supplierPhone => 'Phone';
+
+  @override
+  String get supplierEmail => 'Email';
+
+  @override
+  String get supplierWebsite => 'Website';
+
+  @override
+  String get supplierAddress => 'Address';
+
+  @override
+  String get supplierAddressLine => 'Address';
+
+  @override
+  String get supplierAddressHint => 'Enter address';
+
+  @override
+  String get supplierCity => 'City';
+
+  @override
+  String get supplierCountry => 'Country';
+
+  @override
+  String get supplierPostalCode => 'Postal Code';
+
+  @override
+  String get supplierContactPerson => 'Contact Person';
+
+  @override
+  String get supplierContactPersonHint => 'Primary contact name';
+
+  @override
+  String get supplierCategory => 'Category';
+
+  @override
+  String get supplierCategoryHint => 'e.g. Raw Materials, Packaging';
+
+  @override
+  String get supplierTaxNumber => 'Tax Number';
+
+  @override
+  String get supplierPaymentTerms => 'Payment Terms';
+
+  @override
+  String get supplierPaymentTermsHint => 'e.g. Net 30';
+
+  @override
+  String get supplierCreditLimit => 'Credit Limit';
+
+  @override
+  String get supplierOutstandingBalance => 'Outstanding Balance';
+
+  @override
+  String get supplierRating => 'Rating';
+
+  @override
+  String get supplierBankName => 'Bank Name';
+
+  @override
+  String get supplierBankAccount => 'Bank Account';
+
+  @override
+  String get supplierIban => 'IBAN';
+
+  @override
+  String get supplierBasicInfo => 'Basic Information';
+
+  @override
+  String get supplierContactInfo => 'Contact Information';
+
+  @override
+  String get supplierBankingInfo => 'Banking Information';
+
+  @override
+  String get supplierBusinessInfo => 'Business Information';
+
+  @override
+  String get supplierNotesHint => 'Any additional notes';
+
+  @override
+  String get supplierSearchHint => 'Search suppliers...';
+
+  @override
+  String get supplierNoSuppliers => 'No suppliers yet';
+
+  @override
+  String get supplierNoSuppliersHint =>
+      'Add suppliers to track your product sources.';
+
+  @override
+  String get supplierStatistics => 'Statistics';
+
+  @override
+  String get supplierCreated => 'Supplier created.';
+
+  @override
+  String get supplierUpdated => 'Supplier updated.';
+
+  @override
+  String get supplierDeleteTitle => 'Delete Supplier';
+
+  @override
+  String supplierDeleteConfirm(String name) {
+    return 'Are you sure you want to delete \"$name\"?';
+  }
+
+  @override
+  String supplierDeleted(String name) {
+    return 'Supplier \"$name\" deleted.';
+  }
+
+  @override
+  String get supplierReturnsTitle => 'Supplier Returns';
+
+  @override
+  String get supplierReturnsSubtitle => 'Manage product returns to suppliers';
+
+  @override
+  String get supplierReturnNew => 'New Return';
+
+  @override
+  String get supplierReturnDetail => 'Return Detail';
+
+  @override
+  String get supplierReturnReason => 'Reason';
+
+  @override
+  String get supplierReturnReasonHint => 'e.g. Defective items, Wrong shipment';
+
+  @override
+  String get supplierReturnRefHint => 'e.g. SR-001';
+
+  @override
+  String get supplierReturnSearchHint => 'Search returns...';
+
+  @override
+  String get supplierReturnNoReturns => 'No supplier returns';
+
+  @override
+  String get supplierReturnNoReturnsHint =>
+      'Create a return to send products back to a supplier.';
+
+  @override
+  String get supplierReturnNoItems => 'No items in this return';
+
+  @override
+  String get supplierReturnSelectSupplier => 'Please select a supplier';
+
+  @override
+  String get supplierReturnSelectProduct => 'Please select a product';
+
+  @override
+  String get supplierReturnItemReason => 'Item Reason';
+
+  @override
+  String get supplierReturnItemReasonHint => 'Reason for returning this item';
+
+  @override
+  String get supplierReturnBatchNumber => 'Batch Number';
+
+  @override
+  String get supplierReturnBatchHint => 'e.g. BATCH-001';
+
+  @override
+  String get supplierReturnCreateBtn => 'Create Return';
+
+  @override
+  String get supplierReturnCreated => 'Supplier return created as draft.';
+
+  @override
+  String get supplierReturnSubmitAction => 'Submit';
+
+  @override
+  String get supplierReturnSubmitted => 'Submitted';
+
+  @override
+  String get supplierReturnCompleteAction => 'Complete';
+
+  @override
+  String get supplierReturnCompleted => 'Completed';
+
+  @override
+  String get supplierReturnCreatedBy => 'Created By';
+
+  @override
+  String get supplierReturnApprovedBy => 'Approved By';
+
+  @override
+  String get supplierReturnApprovedAt => 'Approved At';
+
+  @override
+  String get supplierReturnCompletedAt => 'Completed At';
+
+  @override
+  String get supplierReturnCreatedAt => 'Created At';
+
+  @override
+  String supplierReturnActionConfirm(String action, String reference) {
+    return '$action return \"$reference\"?';
+  }
+
+  @override
+  String supplierReturnActionSuccess(String action) {
+    return 'Return $action successfully.';
+  }
 }

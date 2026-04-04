@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
@@ -32,57 +34,192 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
   }
 
   Future<void> _showSupplierDialog({Supplier? supplier}) async {
+    final l10n = AppLocalizations.of(context)!;
     final nameController = TextEditingController(text: supplier?.name ?? '');
     final phoneController = TextEditingController(text: supplier?.phone ?? '');
     final emailController = TextEditingController(text: supplier?.email ?? '');
+    final websiteController = TextEditingController(text: supplier?.website ?? '');
     final addressController = TextEditingController(text: supplier?.address ?? '');
+    final cityController = TextEditingController(text: supplier?.city ?? '');
+    final countryController = TextEditingController(text: supplier?.country ?? '');
+    final postalCodeController = TextEditingController(text: supplier?.postalCode ?? '');
+    final contactPersonController = TextEditingController(text: supplier?.contactPerson ?? '');
+    final taxNumberController = TextEditingController(text: supplier?.taxNumber ?? '');
+    final paymentTermsController = TextEditingController(text: supplier?.paymentTerms ?? '');
+    final bankNameController = TextEditingController(text: supplier?.bankName ?? '');
+    final bankAccountController = TextEditingController(text: supplier?.bankAccount ?? '');
+    final ibanController = TextEditingController(text: supplier?.iban ?? '');
+    final creditLimitController = TextEditingController(text: supplier?.creditLimit?.toString() ?? '');
+    final categoryController = TextEditingController(text: supplier?.category ?? '');
     final notesController = TextEditingController(text: supplier?.notes ?? '');
     final isEditing = supplier != null;
 
     final result = await showDialog<Map<String, dynamic>>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(isEditing ? 'Edit Supplier' : 'New Supplier'),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              PosTextField(controller: nameController, label: 'Supplier Name *', hint: 'Enter supplier name'),
-              const SizedBox(height: AppSpacing.md),
-              PosTextField(
-                controller: phoneController,
-                label: 'Phone',
-                hint: '+968 XXXX XXXX',
-                keyboardType: TextInputType.phone,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              PosTextField(
-                controller: emailController,
-                label: 'Email',
-                hint: 'supplier@example.com',
-                keyboardType: TextInputType.emailAddress,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              PosTextField(controller: addressController, label: 'Address', hint: 'Enter address', maxLines: 2),
-              const SizedBox(height: AppSpacing.md),
-              PosTextField(controller: notesController, label: 'Notes', hint: 'Any additional notes', maxLines: 2),
-            ],
+        title: Text(isEditing ? l10n.supplierEdit : l10n.supplierNew),
+        content: SizedBox(
+          width: 500,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l10n.supplierBasicInfo, style: Theme.of(context).textTheme.titleSmall),
+                const SizedBox(height: AppSpacing.sm),
+                PosTextField(controller: nameController, label: '${l10n.supplierName} *', hint: l10n.supplierNameHint),
+                const SizedBox(height: AppSpacing.sm),
+                Row(
+                  children: [
+                    Expanded(
+                      child: PosTextField(
+                        controller: contactPersonController,
+                        label: l10n.supplierContactPerson,
+                        hint: l10n.supplierContactPersonHint,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: PosTextField(
+                        controller: categoryController,
+                        label: l10n.supplierCategory,
+                        hint: l10n.supplierCategoryHint,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Text(l10n.supplierContactInfo, style: Theme.of(context).textTheme.titleSmall),
+                const SizedBox(height: AppSpacing.sm),
+                Row(
+                  children: [
+                    Expanded(
+                      child: PosTextField(
+                        controller: phoneController,
+                        label: l10n.supplierPhone,
+                        hint: '+966 XXXX XXXX',
+                        keyboardType: TextInputType.phone,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: PosTextField(
+                        controller: emailController,
+                        label: l10n.supplierEmail,
+                        hint: 'supplier@example.com',
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                PosTextField(
+                  controller: websiteController,
+                  label: l10n.supplierWebsite,
+                  hint: 'https://...',
+                  keyboardType: TextInputType.url,
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Text(l10n.supplierAddress, style: Theme.of(context).textTheme.titleSmall),
+                const SizedBox(height: AppSpacing.sm),
+                PosTextField(
+                  controller: addressController,
+                  label: l10n.supplierAddressLine,
+                  hint: l10n.supplierAddressHint,
+                  maxLines: 2,
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Row(
+                  children: [
+                    Expanded(
+                      child: PosTextField(controller: cityController, label: l10n.supplierCity),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: PosTextField(controller: countryController, label: l10n.supplierCountry),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: PosTextField(controller: postalCodeController, label: l10n.supplierPostalCode),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.md),
+                Text(l10n.supplierBankingInfo, style: Theme.of(context).textTheme.titleSmall),
+                const SizedBox(height: AppSpacing.sm),
+                Row(
+                  children: [
+                    Expanded(
+                      child: PosTextField(controller: bankNameController, label: l10n.supplierBankName),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: PosTextField(controller: bankAccountController, label: l10n.supplierBankAccount),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                PosTextField(controller: ibanController, label: l10n.supplierIban, hint: 'SA...'),
+                const SizedBox(height: AppSpacing.md),
+                Text(l10n.supplierBusinessInfo, style: Theme.of(context).textTheme.titleSmall),
+                const SizedBox(height: AppSpacing.sm),
+                Row(
+                  children: [
+                    Expanded(
+                      child: PosTextField(controller: taxNumberController, label: l10n.supplierTaxNumber),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: PosTextField(
+                        controller: paymentTermsController,
+                        label: l10n.supplierPaymentTerms,
+                        hint: l10n.supplierPaymentTermsHint,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: PosTextField(
+                        controller: creditLimitController,
+                        label: l10n.supplierCreditLimit,
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                PosTextField(controller: notesController, label: l10n.commonNotes, hint: l10n.supplierNotesHint, maxLines: 2),
+              ],
+            ),
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.commonCancel)),
           TextButton(
             onPressed: () {
               if (nameController.text.trim().isEmpty) return;
-              Navigator.pop(ctx, {
+              final data = <String, dynamic>{
                 'name': nameController.text.trim(),
                 if (phoneController.text.trim().isNotEmpty) 'phone': phoneController.text.trim(),
                 if (emailController.text.trim().isNotEmpty) 'email': emailController.text.trim(),
+                if (websiteController.text.trim().isNotEmpty) 'website': websiteController.text.trim(),
                 if (addressController.text.trim().isNotEmpty) 'address': addressController.text.trim(),
+                if (cityController.text.trim().isNotEmpty) 'city': cityController.text.trim(),
+                if (countryController.text.trim().isNotEmpty) 'country': countryController.text.trim(),
+                if (postalCodeController.text.trim().isNotEmpty) 'postal_code': postalCodeController.text.trim(),
+                if (contactPersonController.text.trim().isNotEmpty) 'contact_person': contactPersonController.text.trim(),
+                if (taxNumberController.text.trim().isNotEmpty) 'tax_number': taxNumberController.text.trim(),
+                if (paymentTermsController.text.trim().isNotEmpty) 'payment_terms': paymentTermsController.text.trim(),
+                if (bankNameController.text.trim().isNotEmpty) 'bank_name': bankNameController.text.trim(),
+                if (bankAccountController.text.trim().isNotEmpty) 'bank_account': bankAccountController.text.trim(),
+                if (ibanController.text.trim().isNotEmpty) 'iban': ibanController.text.trim(),
+                if (creditLimitController.text.trim().isNotEmpty)
+                  'credit_limit': double.tryParse(creditLimitController.text.trim()),
+                if (categoryController.text.trim().isNotEmpty) 'category': categoryController.text.trim(),
                 if (notesController.text.trim().isNotEmpty) 'notes': notesController.text.trim(),
-              });
+              };
+              Navigator.pop(ctx, data);
             },
-            child: Text(isEditing ? 'Update' : 'Create'),
+            child: Text(isEditing ? l10n.commonUpdate : l10n.commonCreate),
           ),
         ],
       ),
@@ -92,10 +229,10 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
       try {
         if (isEditing) {
           await ref.read(suppliersProvider.notifier).updateSupplier(supplier.id, result);
-          if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Supplier updated.')));
+          if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.supplierUpdated)));
         } else {
           await ref.read(suppliersProvider.notifier).createSupplier(result);
-          if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Supplier created.')));
+          if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.supplierCreated)));
         }
       } catch (e) {
         if (mounted) {
@@ -106,17 +243,18 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
   }
 
   Future<void> _handleDelete(Supplier supplier) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Delete Supplier'),
-        content: Text('Are you sure you want to delete "${supplier.name}"?'),
+        title: Text(l10n.supplierDeleteTitle),
+        content: Text(l10n.supplierDeleteConfirm(supplier.name)),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonCancel)),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Delete'),
+            child: Text(l10n.commonDelete),
           ),
         ],
       ),
@@ -126,7 +264,7 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
       try {
         await ref.read(suppliersProvider.notifier).deleteSupplier(supplier.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Supplier "${supplier.name}" deleted.')));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.supplierDeleted(supplier.name))));
         }
       } catch (e) {
         if (mounted) {
@@ -138,27 +276,28 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final suppliersState = ref.watch(suppliersProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Suppliers'),
+        title: Text(l10n.supplierTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(suppliersProvider.notifier).load(),
           ),
         ],
       ),
-      floatingActionButton: PosButton(label: 'New Supplier', icon: Icons.add, onPressed: () => _showSupplierDialog()),
+      floatingActionButton: PosButton(label: l10n.supplierNew, icon: Icons.add, onPressed: () => _showSupplierDialog()),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
             child: PosTextField(
               controller: _searchController,
-              hint: 'Search suppliers...',
+              hint: l10n.supplierSearchHint,
               prefixIcon: Icons.search,
               onSubmitted: (value) => ref.read(suppliersProvider.notifier).search(value),
               onChanged: (value) {
@@ -172,35 +311,112 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
     );
   }
 
+  void _showSupplierDetail(Supplier supplier) {
+    final l10n = AppLocalizations.of(context)!;
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(supplier.name),
+        content: SizedBox(
+          width: 480,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (supplier.category != null) PosBadge(label: supplier.category!, variant: PosBadgeVariant.info),
+                const SizedBox(height: AppSpacing.sm),
+                if (supplier.contactPerson != null) _infoRow(l10n.supplierContactPerson, supplier.contactPerson!),
+                if (supplier.phone != null) _infoRow(l10n.supplierPhone, supplier.phone!),
+                if (supplier.email != null) _infoRow(l10n.supplierEmail, supplier.email!),
+                if (supplier.website != null) _infoRow(l10n.supplierWebsite, supplier.website!),
+                if (supplier.address != null) _infoRow(l10n.supplierAddressLine, supplier.address!),
+                if (supplier.city != null || supplier.country != null)
+                  _infoRow(l10n.supplierCity, [supplier.city, supplier.country].where((s) => s != null).join(', ')),
+                if (supplier.taxNumber != null) _infoRow(l10n.supplierTaxNumber, supplier.taxNumber!),
+                if (supplier.paymentTerms != null) _infoRow(l10n.supplierPaymentTerms, supplier.paymentTerms!),
+                if (supplier.bankName != null) _infoRow(l10n.supplierBankName, supplier.bankName!),
+                if (supplier.iban != null) _infoRow(l10n.supplierIban, supplier.iban!),
+                if (supplier.creditLimit != null)
+                  _infoRow(l10n.supplierCreditLimit, '${supplier.creditLimit!.toStringAsFixed(2)} SAR'),
+                if (supplier.outstandingBalance != null)
+                  _infoRow(l10n.supplierOutstandingBalance, '${supplier.outstandingBalance!.toStringAsFixed(2)} SAR'),
+                if (supplier.rating != null)
+                  _infoRow(l10n.supplierRating, '${'★' * supplier.rating!}${'☆' * (5 - supplier.rating!)}'),
+                if (supplier.notes != null) _infoRow(l10n.commonNotes, supplier.notes!),
+                if (supplier.returnsCount != null ||
+                    supplier.purchaseOrdersCount != null ||
+                    supplier.goodsReceiptsCount != null) ...[
+                  const Divider(),
+                  Text(l10n.supplierStatistics, style: Theme.of(context).textTheme.titleSmall),
+                  const SizedBox(height: AppSpacing.xs),
+                  if (supplier.purchaseOrdersCount != null)
+                    _infoRow(l10n.inventoryPurchaseOrders, '${supplier.purchaseOrdersCount}'),
+                  if (supplier.goodsReceiptsCount != null)
+                    _infoRow(l10n.inventoryGoodsReceipts, '${supplier.goodsReceiptsCount}'),
+                  if (supplier.returnsCount != null) _infoRow(l10n.supplierReturnsTitle, '${supplier.returnsCount}'),
+                ],
+              ],
+            ),
+          ),
+        ),
+        actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.commonClose))],
+      ),
+    );
+  }
+
+  Widget _infoRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 130,
+            child: Text(
+              label,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+            ),
+          ),
+          Expanded(child: Text(value)),
+        ],
+      ),
+    );
+  }
+
   Widget _buildBody(SuppliersState state) {
+    final l10n = AppLocalizations.of(context)!;
     final isLoading = state is SuppliersLoading || state is SuppliersInitial;
     final error = state is SuppliersError ? state.message : null;
     final suppliers = state is SuppliersLoaded ? state.suppliers : <Supplier>[];
     final loaded = state is SuppliersLoaded ? state : null;
 
     return PosDataTable<Supplier>(
-      columns: const [
-        PosTableColumn(title: 'Name'),
-        PosTableColumn(title: 'Phone'),
-        PosTableColumn(title: 'Email'),
+      columns: [
+        PosTableColumn(title: l10n.supplierName),
+        PosTableColumn(title: l10n.supplierContactPerson),
+        PosTableColumn(title: l10n.supplierPhone),
+        PosTableColumn(title: l10n.supplierEmail),
+        PosTableColumn(title: l10n.supplierCategory),
       ],
       items: suppliers,
       isLoading: isLoading,
       error: error,
       onRetry: () => ref.read(suppliersProvider.notifier).load(),
-      emptyConfig: const PosTableEmptyConfig(
+      onRowTap: (s) => _showSupplierDetail(s),
+      emptyConfig: PosTableEmptyConfig(
         icon: Icons.local_shipping_outlined,
-        title: 'No suppliers yet',
-        subtitle: 'Add suppliers to track your product sources.',
+        title: l10n.supplierNoSuppliers,
+        subtitle: l10n.supplierNoSuppliersHint,
       ),
       actions: [
         PosTableRowAction<Supplier>(
-          label: 'Edit',
+          label: l10n.commonEdit,
           icon: Icons.edit_outlined,
           onTap: (s) => _showSupplierDialog(supplier: s),
         ),
         PosTableRowAction<Supplier>(
-          label: 'Delete',
+          label: l10n.commonDelete,
           icon: Icons.delete_outline,
           isDestructive: true,
           onTap: (s) => _handleDelete(s),
@@ -223,9 +439,15 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
               ],
             );
           case 1:
-            return Text(supplier.phone ?? '—');
+            return Text(supplier.contactPerson ?? '—');
           case 2:
+            return Text(supplier.phone ?? '—');
+          case 3:
             return Text(supplier.email ?? '—');
+          case 4:
+            return supplier.category != null
+                ? PosBadge(label: supplier.category!, variant: PosBadgeVariant.info)
+                : const Text('—');
           default:
             return const SizedBox.shrink();
         }

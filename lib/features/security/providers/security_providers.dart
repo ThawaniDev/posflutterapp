@@ -2,9 +2,34 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/security/models/device_registration.dart';
 import 'package:thawani_pos/features/security/models/login_attempt.dart';
 import 'package:thawani_pos/features/security/models/security_audit_log.dart';
+import 'package:thawani_pos/features/security/models/security_incident.dart';
 import 'package:thawani_pos/features/security/models/security_policy.dart';
+import 'package:thawani_pos/features/security/models/security_session.dart';
 import 'package:thawani_pos/features/security/providers/security_state.dart';
 import 'package:thawani_pos/features/security/repositories/security_repository.dart';
+
+// ─── Security Overview Provider ─────────────────────────────
+
+final securityOverviewProvider = StateNotifierProvider<SecurityOverviewNotifier, SecurityOverviewState>(
+  (ref) => SecurityOverviewNotifier(ref.watch(securityRepositoryProvider)),
+);
+
+class SecurityOverviewNotifier extends StateNotifier<SecurityOverviewState> {
+  final SecurityRepository _repo;
+
+  SecurityOverviewNotifier(this._repo) : super(const SecurityOverviewInitial());
+
+  Future<void> load(String storeId) async {
+    state = const SecurityOverviewLoading();
+    try {
+      final res = await _repo.getOverview(storeId: storeId);
+      final data = res['data'] as Map<String, dynamic>? ?? {};
+      state = SecurityOverviewLoaded(data);
+    } catch (e) {
+      state = SecurityOverviewError(e.toString());
+    }
+  }
+}
 
 // ─── Security Policy Provider ───────────────────────────────
 
@@ -109,4 +134,115 @@ class LoginAttemptsNotifier extends StateNotifier<LoginAttemptsState> {
       state = LoginAttemptsError(e.toString());
     }
   }
+}
+
+// ─── Sessions Provider ─────────────────────────────────────
+
+final sessionListProvider = StateNotifierProvider<SessionListNotifier, SessionListState>(
+  (ref) => SessionListNotifier(ref.watch(securityRepositoryProvider)),
+);
+
+class SessionListNotifier extends StateNotifier<SessionListState> {
+  final SecurityRepository _repo;
+
+  SessionListNotifier(this._repo) : super(const SessionListInitial());
+
+  Future<void> loadSessions(String storeId, {String? status}) async {
+    state = const SessionListLoading();
+    try {
+      final res = await _repo.listSessions(storeId: storeId, status: status);
+      final items = (res['data'] as List?)?.map((e) => SecuritySession.fromJson(e as Map<String, dynamic>)).toList() ?? [];
+      state = SessionListLoaded(items);
+    } catch (e) {
+      state = SessionListError(e.toString());
+    }
+  }
+}
+
+// ─── Incidents Provider ────────────────────────────────────
+
+final incidentListProvider = StateNotifierProvider<IncidentListNotifier, IncidentListState>(
+  (ref) => IncidentListNotifier(ref.watch(securityRepositoryProvider)),
+);
+
+class IncidentListNotifier extends StateNotifier<IncidentListState> {
+  final SecurityRepository _repo;
+
+  IncidentListNotifier(this._repo) : super(const IncidentListInitial());
+
+  Future<void> loadIncidents(String storeId, {String? severity, bool? isResolved}) async {
+    state = const IncidentListLoading();
+    try {
+      final res = await _repo.listIncidents(storeId: storeId, severity: severity, isResolved: isResolved);
+      final raw = res['data'] as Map<String, dynamic>;
+      final items = (raw['data'] as List?)?.map((e) => SecurityIncident.fromJson(e as Map<String, dynamic>)).toList() ?? [];
+      state = IncidentListLoaded(items);
+    } catch (e) {
+      state = IncidentListError(e.toString());
+    }
+  }
+}
+
+// ─── Security Action Provider ──────────────────────────────
+
+final securityActionProvider = StateNotifierProvider<SecurityActionNotifier, SecurityActionState>(
+  (ref) => SecurityActionNotifier(ref.watch(securityRepositoryProvider)),
+);
+
+class SecurityActionNotifier extends StateNotifier<SecurityActionState> {
+  final SecurityRepository _repo;
+
+  SecurityActionNotifier(this._repo) : super(const SecurityActionInitial());
+
+  Future<void> deactivateDevice(String deviceId) async {
+    state = const SecurityActionLoading();
+    try {
+      await _repo.deactivateDevice(deviceId: deviceId);
+      state = const SecurityActionSuccess('Device deactivated');
+    } catch (e) {
+      state = SecurityActionError(e.toString());
+    }
+  }
+
+  Future<void> requestRemoteWipe(String deviceId) async {
+    state = const SecurityActionLoading();
+    try {
+      await _repo.requestRemoteWipe(deviceId: deviceId);
+      state = const SecurityActionSuccess('Remote wipe requested');
+    } catch (e) {
+      state = SecurityActionError(e.toString());
+    }
+  }
+
+  Future<void> endSession(String sessionId) async {
+    state = const SecurityActionLoading();
+    try {
+      await _repo.endSession(sessionId: sessionId);
+      state = const SecurityActionSuccess('Session ended');
+    } catch (e) {
+      state = SecurityActionError(e.toString());
+    }
+  }
+
+  Future<void> endAllSessions(String storeId) async {
+    state = const SecurityActionLoading();
+    try {
+      await _repo.endAllSessions(storeId: storeId);
+      state = const SecurityActionSuccess('All sessions ended');
+    } catch (e) {
+      state = SecurityActionError(e.toString());
+    }
+  }
+
+  Future<void> resolveIncident(String incidentId, {String? resolutionNotes}) async {
+    state = const SecurityActionLoading();
+    try {
+      await _repo.resolveIncident(incidentId: incidentId, resolutionNotes: resolutionNotes);
+      state = const SecurityActionSuccess('Incident resolved');
+    } catch (e) {
+      state = SecurityActionError(e.toString());
+    }
+  }
+
+  void reset() => state = const SecurityActionInitial();
 }

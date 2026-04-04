@@ -49,19 +49,25 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
   Future<void> _handleAction(StockTransfer transfer, String action) async {
     final l10n = AppLocalizations.of(context)!;
     final msg = action == 'approve'
-        ? 'Approve this transfer? This will deduct stock from the source store.'
+        ? l10n.stockTransferApproveConfirm
         : action == 'receive'
-        ? 'Mark this transfer as received? Stock will be added to the destination store.'
-        : 'Cancel this transfer?';
+        ? l10n.stockTransferReceiveConfirm
+        : l10n.stockTransferCancelConfirm;
+
+    final actionLabel = action == 'approve'
+        ? l10n.inventoryApprove
+        : action == 'receive'
+        ? l10n.inventoryReceive
+        : l10n.commonCancel;
 
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('${action[0].toUpperCase()}${action.substring(1)} Transfer'),
+        title: Text(l10n.stockTransferActionTitle(actionLabel)),
         content: Text(msg),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonCancel)),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(action[0].toUpperCase() + action.substring(1))),
+          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(actionLabel)),
         ],
       ),
     );
@@ -78,7 +84,7 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
         await notifier.cancelTransfer(transfer.id);
       }
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Transfer ${action}d successfully.')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.stockTransferActionSuccess(action))));
       }
     } catch (e) {
       if (mounted) {

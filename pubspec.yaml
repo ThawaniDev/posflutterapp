@@ -27,6 +27,10 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   shared_preferences: ^2.5.3
   path_provider: ^2.1.5
+  crypto: ^3.0.6
+
+  # Audio
+  audioplayers: ^6.1.0
 
   # UI & Theming
   cupertino_icons: ^1.0.8
@@ -50,6 +54,9 @@ dependencies:
 
   # Monitoring
   sentry_flutter: ^8.14.2
+  webview_flutter: ^4.13.1
+  webview_win_floating: ^3.0.2
+  web: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +76,7 @@ flutter:
     - assets/images/
     - assets/fonts/
     - assets/icons/
+    - assets/audio/
 
   fonts:
     - family: Cairo

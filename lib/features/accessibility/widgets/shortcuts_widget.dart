@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/accessibility/providers/accessibility_providers.dart';
 import 'package:thawani_pos/features/accessibility/providers/accessibility_state.dart';
+import 'package:thawani_pos/features/accessibility/services/keyboard_shortcut_service.dart';
 
 class ShortcutsWidget extends ConsumerWidget {
   const ShortcutsWidget({super.key});
@@ -11,9 +13,10 @@ class ShortcutsWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(shortcutsProvider);
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return switch (state) {
-      ShortcutsInitial() => const Center(child: Text('Loading shortcuts...')),
+      ShortcutsInitial() => Center(child: Text(l10n.accessibilityShortcuts)),
       ShortcutsLoading() => const Center(child: CircularProgressIndicator()),
       ShortcutsError(:final message) => Center(
         child: Text(message, style: TextStyle(color: theme.colorScheme.error)),
@@ -21,22 +24,52 @@ class ShortcutsWidget extends ConsumerWidget {
       ShortcutsLoaded(:final shortcuts) => ListView(
         padding: AppSpacing.paddingAll16,
         children: [
+          // ─── POS Shortcuts ─────────────
+          _ShortcutGroup(title: l10n.accessibilityShortcutsPOS, shortcuts: _filterByContext(shortcuts, 'pos'), theme: theme),
+          AppSpacing.gapH16,
+          // ─── Global Shortcuts ─────────────
+          _ShortcutGroup(
+            title: l10n.accessibilityShortcutsGlobal,
+            shortcuts: _filterByContext(shortcuts, 'global'),
+            theme: theme,
+          ),
+          AppSpacing.gapH16,
+          // ─── Navigation Shortcuts ─────────────
           Card(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: AppSpacing.paddingAll16,
-                  child: Text('Keyboard Shortcuts', style: theme.textTheme.titleMedium),
+                  child: Text(l10n.accessibilityShortcutsNavigation, style: theme.textTheme.titleMedium),
                 ),
                 const Divider(height: 1),
-                ...shortcuts.entries.map(
-                  (e) => ListTile(
-                    leading: const Icon(Icons.keyboard),
-                    title: Text(_formatLabel(e.key)),
-                    trailing: Chip(
-                      label: Text(e.value.toString(), style: theme.textTheme.labelLarge?.copyWith(fontFamily: 'monospace')),
-                    ),
+                ListTile(
+                  leading: const Icon(Icons.keyboard),
+                  title: Text(l10n.accessibilityNavScreens),
+                  trailing: Chip(
+                    label: Text('Alt+1-9', style: theme.textTheme.labelLarge?.copyWith(fontFamily: 'monospace')),
+                  ),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.keyboard),
+                  title: Text(l10n.accessibilityNavTab),
+                  trailing: Chip(
+                    label: Text('Tab / Shift+Tab', style: theme.textTheme.labelLarge?.copyWith(fontFamily: 'monospace')),
+                  ),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.keyboard),
+                  title: Text(l10n.accessibilityNavCancel),
+                  trailing: Chip(
+                    label: Text('Esc', style: theme.textTheme.labelLarge?.copyWith(fontFamily: 'monospace')),
+                  ),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.keyboard),
+                  title: Text(l10n.accessibilityNavConfirm),
+                  trailing: Chip(
+                    label: Text('Enter', style: theme.textTheme.labelLarge?.copyWith(fontFamily: 'monospace')),
                   ),
                 ),
               ],
@@ -45,6 +78,51 @@ class ShortcutsWidget extends ConsumerWidget {
         ],
       ),
     };
+  }
+
+  Map<String, dynamic> _filterByContext(Map<String, dynamic> shortcuts, String context) {
+    // Match shortcuts to defaults to get context
+    final result = <String, dynamic>{};
+    for (final entry in shortcuts.entries) {
+      final defaultBinding = kDefaultShortcuts[entry.key];
+      if (defaultBinding != null && defaultBinding.context == context) {
+        result[entry.key] = entry.value;
+      }
+    }
+    return result;
+  }
+}
+
+class _ShortcutGroup extends StatelessWidget {
+  const _ShortcutGroup({required this.title, required this.shortcuts, required this.theme});
+
+  final String title;
+  final Map<String, dynamic> shortcuts;
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: AppSpacing.paddingAll16,
+            child: Text(title, style: theme.textTheme.titleMedium),
+          ),
+          const Divider(height: 1),
+          ...shortcuts.entries.map(
+            (e) => ListTile(
+              leading: const Icon(Icons.keyboard),
+              title: Text(_formatLabel(e.key)),
+              trailing: Chip(
+                label: Text(e.value.toString(), style: theme.textTheme.labelLarge?.copyWith(fontFamily: 'monospace')),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   String _formatLabel(String key) {

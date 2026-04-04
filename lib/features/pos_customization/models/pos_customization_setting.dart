@@ -46,7 +46,7 @@ class PosCustomizationSetting {
       primaryColor: json['primary_color'] as String?,
       secondaryColor: json['secondary_color'] as String?,
       accentColor: json['accent_color'] as String?,
-      fontScale: (json['font_scale'] as num?)?.toDouble(),
+      fontScale: json['font_scale'] != null ? double.tryParse(json['font_scale'].toString()) : null,
       handedness: Handedness.tryFromValue(json['handedness'] as String?),
       gridColumns: (json['grid_columns'] as num?)?.toInt(),
       showProductImages: json['show_product_images'] as bool?,
@@ -115,13 +115,12 @@ class PosCustomizationSetting {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is PosCustomizationSetting && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is PosCustomizationSetting && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'PosCustomizationSetting(id: $id, storeId: $storeId, theme: $theme, primaryColor: $primaryColor, secondaryColor: $secondaryColor, accentColor: $accentColor, ...)';
+  String toString() =>
+      'PosCustomizationSetting(id: $id, storeId: $storeId, theme: $theme, primaryColor: $primaryColor, secondaryColor: $secondaryColor, accentColor: $accentColor, ...)';
 }

@@ -32,10 +32,7 @@ class _GoodsReceiptsPageState extends ConsumerState<GoodsReceiptsPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l10n.inventoryConfirmReceiptTitle),
-        content: Text(
-          'Are you sure you want to confirm receipt "${receipt.referenceNumber ?? receipt.id}"?\n\n'
-          'This will update stock levels and cannot be undone.',
-        ),
+        content: Text(l10n.goodsReceiptConfirm(receipt.referenceNumber ?? receipt.id)),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonCancel)),
           TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(l10n.inventoryConfirmReceiptTitle)),

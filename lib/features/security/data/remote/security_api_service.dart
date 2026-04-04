@@ -12,6 +12,13 @@ class SecurityApiService {
 
   SecurityApiService(this._dio);
 
+  // ─── Overview ─────────────────────────────────────────────
+
+  Future<Map<String, dynamic>> getOverview({required String storeId}) async {
+    final res = await _dio.get(ApiEndpoints.securityOverviewEndpoint, queryParameters: {'store_id': storeId});
+    return res.data as Map<String, dynamic>;
+  }
+
   // ─── Policies ─────────────────────────────────────────────
 
   Future<Map<String, dynamic>> getPolicy({required String storeId}) async {
@@ -51,6 +58,11 @@ class SecurityApiService {
     return res.data as Map<String, dynamic>;
   }
 
+  Future<Map<String, dynamic>> getAuditStats({required String storeId}) async {
+    final res = await _dio.get(ApiEndpoints.securityAuditStats, queryParameters: {'store_id': storeId});
+    return res.data as Map<String, dynamic>;
+  }
+
   // ─── Devices ──────────────────────────────────────────────
 
   Future<Map<String, dynamic>> listDevices({required String storeId, bool? activeOnly}) async {
@@ -66,6 +78,11 @@ class SecurityApiService {
     return res.data as Map<String, dynamic>;
   }
 
+  Future<Map<String, dynamic>> getDevice({required String deviceId}) async {
+    final res = await _dio.get(ApiEndpoints.securityDeviceById(deviceId));
+    return res.data as Map<String, dynamic>;
+  }
+
   Future<Map<String, dynamic>> deactivateDevice({required String deviceId}) async {
     final res = await _dio.put(ApiEndpoints.securityDeviceDeactivate(deviceId));
     return res.data as Map<String, dynamic>;
@@ -73,6 +90,11 @@ class SecurityApiService {
 
   Future<Map<String, dynamic>> requestRemoteWipe({required String deviceId}) async {
     final res = await _dio.put(ApiEndpoints.securityDeviceRemoteWipe(deviceId));
+    return res.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> deviceHeartbeat({required String deviceId, Map<String, dynamic>? data}) async {
+    final res = await _dio.put(ApiEndpoints.securityDeviceHeartbeat(deviceId), data: data ?? {});
     return res.data as Map<String, dynamic>;
   }
 
@@ -113,6 +135,76 @@ class SecurityApiService {
         'user_identifier': userIdentifier,
         if (windowMinutes != null) 'window_minutes': windowMinutes,
       },
+    );
+    return res.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> isLockedOut({required String storeId, required String userIdentifier}) async {
+    final res = await _dio.get(
+      ApiEndpoints.securityLoginAttemptsIsLockedOut,
+      queryParameters: {'store_id': storeId, 'user_identifier': userIdentifier},
+    );
+    return res.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> loginAttemptsStats({required String storeId}) async {
+    final res = await _dio.get(ApiEndpoints.securityLoginAttemptsStats, queryParameters: {'store_id': storeId});
+    return res.data as Map<String, dynamic>;
+  }
+
+  // ─── Sessions ─────────────────────────────────────────────
+
+  Future<Map<String, dynamic>> listSessions({required String storeId, String? status}) async {
+    final res = await _dio.get(
+      ApiEndpoints.securitySessions,
+      queryParameters: {'store_id': storeId, if (status != null) 'status': status},
+    );
+    return res.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> startSession({required Map<String, dynamic> data}) async {
+    final res = await _dio.post(ApiEndpoints.securitySessions, data: data);
+    return res.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> endSession({required String sessionId}) async {
+    final res = await _dio.put(ApiEndpoints.securitySessionEnd(sessionId));
+    return res.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> sessionHeartbeat({required String sessionId}) async {
+    final res = await _dio.put(ApiEndpoints.securitySessionHeartbeat(sessionId));
+    return res.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> endAllSessions({required String storeId}) async {
+    final res = await _dio.post(ApiEndpoints.securitySessionsEndAll, data: {'store_id': storeId});
+    return res.data as Map<String, dynamic>;
+  }
+
+  // ─── Incidents ────────────────────────────────────────────
+
+  Future<Map<String, dynamic>> listIncidents({required String storeId, String? severity, bool? isResolved}) async {
+    final res = await _dio.get(
+      ApiEndpoints.securityIncidents,
+      queryParameters: {
+        'store_id': storeId,
+        if (severity != null) 'severity': severity,
+        if (isResolved != null) 'is_resolved': isResolved,
+      },
+    );
+    return res.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> createIncident({required Map<String, dynamic> data}) async {
+    final res = await _dio.post(ApiEndpoints.securityIncidents, data: data);
+    return res.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> resolveIncident({required String incidentId, String? resolutionNotes}) async {
+    final res = await _dio.put(
+      ApiEndpoints.securityIncidentResolve(incidentId),
+      data: {if (resolutionNotes != null) 'resolution_notes': resolutionNotes},
     );
     return res.data as Map<String, dynamic>;
   }

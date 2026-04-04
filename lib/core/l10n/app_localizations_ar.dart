@@ -500,7 +500,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adminSecurity => 'مركز الأمان';
 
   @override
-  String get securityOverview => 'نظرة عامة على الأمان';
+  String get securityOverview => 'نظرة عامة';
 
   @override
   String get securityAlerts => 'تنبيهات الأمان';
@@ -1463,6 +1463,314 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsAboutDesc => 'إصدار التطبيق والمعلومات القانونية';
 
   @override
+  String get settingsPosBehavior => 'سلوك نقطة البيع';
+
+  @override
+  String get settingsPosBehaviorDesc =>
+      'إعدادات المبيعات والمرتجعات والمخزون والولاء';
+
+  @override
+  String get settingsSaved => 'تم حفظ الإعدادات';
+
+  @override
+  String get settingsErrorLoading => 'فشل تحميل الإعدادات';
+
+  @override
+  String get settingsErrorSaving => 'فشل حفظ الإعدادات';
+
+  @override
+  String get settingsTaxLabel => 'مسمى الضريبة';
+
+  @override
+  String get settingsTaxLabelHint => 'مثال: ضريبة القيمة المضافة';
+
+  @override
+  String get settingsTaxRate => 'نسبة الضريبة (%)';
+
+  @override
+  String get settingsTaxRateHint => 'مثال: 5.0';
+
+  @override
+  String get settingsTaxNumber => 'رقم التسجيل الضريبي';
+
+  @override
+  String get settingsTaxNumberHint => 'رقم التعريف الضريبي الخاص بك';
+
+  @override
+  String get settingsTaxPricesIncludeTax => 'الأسعار شاملة الضريبة';
+
+  @override
+  String get settingsPricesIncludeTax => 'الأسعار شاملة الضريبة';
+
+  @override
+  String get settingsPricesIncludeTaxDesc =>
+      'أسعار المنتجات تشمل الضريبة بالفعل';
+
+  @override
+  String get settingsTaxConfig => 'إعدادات الضريبة';
+
+  @override
+  String get settingsReceiptContent => 'المحتوى';
+
+  @override
+  String get settingsReceiptHeader => 'رأس الإيصال';
+
+  @override
+  String get settingsReceiptHeaderHint => 'النص في أعلى الإيصال';
+
+  @override
+  String get settingsReceiptFooter => 'تذييل الإيصال';
+
+  @override
+  String get settingsReceiptFooterHint => 'النص في أسفل الإيصال';
+
+  @override
+  String get settingsReceiptDisplay => 'خيارات العرض';
+
+  @override
+  String get settingsReceiptShowLogo => 'عرض الشعار';
+
+  @override
+  String get settingsReceiptShowTax => 'عرض تفاصيل الضريبة';
+
+  @override
+  String get settingsReceiptShowAddress => 'عرض عنوان المتجر';
+
+  @override
+  String get settingsReceiptShowPhone => 'عرض رقم الهاتف';
+
+  @override
+  String get settingsReceiptShowDate => 'عرض التاريخ والوقت';
+
+  @override
+  String get settingsReceiptShowCashier => 'عرض اسم الكاشير';
+
+  @override
+  String get settingsReceiptShowBarcode => 'عرض الباركود';
+
+  @override
+  String get settingsReceiptFormat => 'التنسيق';
+
+  @override
+  String get settingsReceiptPaperSize => 'حجم الورق';
+
+  @override
+  String get settingsReceiptFontSize => 'حجم الخط';
+
+  @override
+  String get settingsReceiptLanguage => 'لغة الإيصال';
+
+  @override
+  String get settingsFontSmall => 'صغير';
+
+  @override
+  String get settingsFontNormal => 'عادي';
+
+  @override
+  String get settingsFontLarge => 'كبير';
+
+  @override
+  String get settingsLangArabic => 'العربية';
+
+  @override
+  String get settingsLangEnglish => 'الإنجليزية';
+
+  @override
+  String get settingsLangBoth => 'كلاهما';
+
+  @override
+  String get settingsPosSales => 'المبيعات';
+
+  @override
+  String get settingsPosDefaultSaleType => 'نوع البيع الافتراضي';
+
+  @override
+  String get settingsPosDineIn => 'داخل المطعم';
+
+  @override
+  String get settingsPosTakeaway => 'سفري';
+
+  @override
+  String get settingsPosDelivery => 'توصيل';
+
+  @override
+  String get settingsPosRequireCustomer => 'طلب بيانات العميل للبيع';
+
+  @override
+  String get settingsPosAutoPrint => 'طباعة الإيصال تلقائياً';
+
+  @override
+  String get settingsPosEnableTips => 'تفعيل البقشيش';
+
+  @override
+  String get settingsPosHoldOrders => 'السماح بتعليق الطلبات';
+
+  @override
+  String get settingsPosOpenPriceItems => 'السماح بأصناف السعر المفتوح';
+
+  @override
+  String get settingsPosQuickAdd => 'وضع الإضافة السريعة';
+
+  @override
+  String get settingsPosBarcodeSound => 'صوت مسح الباركود';
+
+  @override
+  String get settingsPosKitchenDisplay => 'إرسال إلى شاشة المطبخ';
+
+  @override
+  String get settingsPosReturns => 'المرتجعات والاسترداد';
+
+  @override
+  String get settingsPosEnableRefunds => 'تفعيل الاسترداد';
+
+  @override
+  String get settingsPosEnableExchanges => 'تفعيل الاستبدال';
+
+  @override
+  String get settingsPosManagerRefund => 'موافقة المدير على الاسترداد';
+
+  @override
+  String get settingsPosManagerRefundDesc =>
+      'طلب رمز المدير لمعاملات الاسترداد';
+
+  @override
+  String get settingsPosManagerDiscount => 'موافقة المدير على الخصومات';
+
+  @override
+  String get settingsPosManagerDiscountDesc =>
+      'طلب رمز المدير عند تطبيق الخصومات';
+
+  @override
+  String get settingsPosLimits => 'الحدود';
+
+  @override
+  String get settingsPosMaxDiscount => 'أقصى خصم (%)';
+
+  @override
+  String get settingsPosSessionTimeout => 'مهلة الجلسة (دقائق)';
+
+  @override
+  String get settingsPosInventory => 'المخزون';
+
+  @override
+  String get settingsPosTrackInventory => 'تتبع المخزون';
+
+  @override
+  String get settingsPosAllowNegStock => 'السماح بالمخزون السالب';
+
+  @override
+  String get settingsPosBatchTracking => 'تتبع الدفعات';
+
+  @override
+  String get settingsPosExpiryTracking => 'تتبع تاريخ الانتهاء';
+
+  @override
+  String get settingsPosAutoDeductIngredients => 'خصم المكونات تلقائياً';
+
+  @override
+  String get settingsPosLowStockAlert => 'تنبيه انخفاض المخزون';
+
+  @override
+  String get settingsPosLowStockThreshold => 'حد انخفاض المخزون';
+
+  @override
+  String get settingsPosLoyalty => 'برنامج الولاء';
+
+  @override
+  String get settingsPosEnableLoyalty => 'تفعيل نقاط الولاء';
+
+  @override
+  String get settingsPosLoyaltyPointsPerCurrency => 'النقاط لكل وحدة عملة';
+
+  @override
+  String get settingsPosLoyaltyRedemptionValue => 'قيمة استرداد النقطة';
+
+  @override
+  String get settingsPosCustomerDisplay => 'شاشة العميل';
+
+  @override
+  String get settingsPosEnableCustomerDisplay => 'تفعيل شاشة العميل';
+
+  @override
+  String get settingsPosCustomerDisplayMessage => 'رسالة الترحيب';
+
+  @override
+  String get settingsPosTheme => 'مظهر الشاشة';
+
+  @override
+  String get settingsPosThemeLight => 'فاتح';
+
+  @override
+  String get settingsPosThemeDark => 'داكن';
+
+  @override
+  String get settingsPosThemeSystem => 'النظام';
+
+  @override
+  String get settingsWorkingOpen => 'فتح';
+
+  @override
+  String get settingsWorkingClose => 'إغلاق';
+
+  @override
+  String get settingsWorkingBreakStart => 'بداية الاستراحة';
+
+  @override
+  String get settingsWorkingBreakEnd => 'نهاية الاستراحة';
+
+  @override
+  String get settingsProfileCurrency => 'العملة';
+
+  @override
+  String get settingsProfileCurrencyCode => 'رمز العملة';
+
+  @override
+  String get settingsProfileCurrencyCodeHint => 'مثال: OMR, SAR, USD';
+
+  @override
+  String get settingsProfileCurrencySymbol => 'رمز العملة';
+
+  @override
+  String get settingsProfileCurrencySymbolHint => 'مثال: ر.ع, ﷼, \$';
+
+  @override
+  String get settingsProfileFormatting => 'تنسيق الأرقام';
+
+  @override
+  String get settingsProfileDecimalPlaces => 'الخانات العشرية';
+
+  @override
+  String get settingsProfileThousandSep => 'فاصل الآلاف';
+
+  @override
+  String get settingsProfileDecimalSep => 'الفاصل العشري';
+
+  @override
+  String settingsAboutVersion(String version) {
+    return 'الإصدار $version';
+  }
+
+  @override
+  String get settingsAboutTerms => 'شروط الخدمة';
+
+  @override
+  String get settingsAboutPrivacy => 'سياسة الخصوصية';
+
+  @override
+  String get settingsAboutLicenses => 'تراخيص المصادر المفتوحة';
+
+  @override
+  String get settingsAboutSupport => 'الدعم';
+
+  @override
+  String get settingsAboutSupportDesc => 'تحتاج مساعدة؟ تواصل مع فريق الدعم';
+
+  @override
+  String settingsAboutCopyright(String year) {
+    return '© $year ثواني. جميع الحقوق محفوظة.';
+  }
+
+  @override
   String get sidebarSync => 'المزامنة';
 
   @override
@@ -1596,6 +1904,312 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get accessibilityScreenReader => 'دعم قارئ الشاشة';
+
+  @override
+  String get accessibilityScreenReaderDesc =>
+      'تحسين التوافق مع برامج قراءة الشاشة';
+
+  @override
+  String get accessibilityVisual => 'مرئي';
+
+  @override
+  String get accessibilityHighContrastDesc => 'زيادة التباين لرؤية أفضل';
+
+  @override
+  String get accessibilityColorBlind => 'وضع عمى الألوان';
+
+  @override
+  String get accessibilityReducedMotion => 'تقليل الحركة';
+
+  @override
+  String get accessibilityReducedMotionDesc =>
+      'تقليل الرسوم المتحركة والانتقالات';
+
+  @override
+  String get accessibilityAudio => 'الصوت';
+
+  @override
+  String get accessibilityAudioFeedback => 'التغذية الصوتية';
+
+  @override
+  String get accessibilityVolume => 'مستوى الصوت';
+
+  @override
+  String get accessibilityLargeTouchTargets => 'أهداف لمس كبيرة';
+
+  @override
+  String get accessibilityLargeTouchTargetsDesc =>
+      'تكبير حجم الأزرار وعناصر التحكم';
+
+  @override
+  String get accessibilityVisibleFocus => 'مؤشرات التركيز المرئية';
+
+  @override
+  String get accessibilityVisibleFocusDesc =>
+      'إظهار حدود تركيز واضحة على عناصر التحكم';
+
+  @override
+  String get accessibilityShortcutsPOS => 'نقطة البيع';
+
+  @override
+  String get accessibilityShortcutsGlobal => 'عام';
+
+  @override
+  String get accessibilityShortcutsNavigation => 'التنقل';
+
+  @override
+  String get accessibilityNavScreens => 'Alt + 1-9 — تبديل الشاشات';
+
+  @override
+  String get accessibilityNavTab => 'Tab / Shift+Tab — نقل التركيز';
+
+  @override
+  String get accessibilityNavCancel => 'Esc — إلغاء / إغلاق';
+
+  @override
+  String get accessibilityNavConfirm => 'Enter — تأكيد';
+
+  @override
+  String get companionNoActiveSessions => 'لا توجد جلسات مرافق نشطة';
+
+  @override
+  String get companionConnectionGuide => 'دليل الاتصال';
+
+  @override
+  String get companionConnectionGuideDesc =>
+      'افتح تطبيق المرافق على جهازك المحمول وامسح رمز QR أو أدخل معرف الجلسة للاتصال.';
+
+  @override
+  String get companionSessionActive => 'الجلسة نشطة';
+
+  @override
+  String get companionSessionId => 'معرف الجلسة';
+
+  @override
+  String get companionSessionStarted => 'بدأت';
+
+  @override
+  String get companionTodayRevenue => 'إيرادات اليوم';
+
+  @override
+  String get companionOrders => 'الطلبات';
+
+  @override
+  String get companionTransactions => 'المعاملات';
+
+  @override
+  String get companionPendingOrders => 'الطلبات المعلقة';
+
+  @override
+  String get companionActiveStaff => 'الموظفون النشطون';
+
+  @override
+  String get companionLowStock => 'عناصر منخفضة المخزون';
+
+  @override
+  String get companionLastSync => 'آخر مزامنة';
+
+  @override
+  String get companionDashboard => 'لوحة التحكم';
+
+  @override
+  String get companionSales => 'المبيعات';
+
+  @override
+  String get companionActiveOrdersTitle => 'الطلبات النشطة';
+
+  @override
+  String get companionInventory => 'المخزون';
+
+  @override
+  String get companionStaff => 'الموظفون';
+
+  @override
+  String get companionStoreStatus => 'حالة المتجر';
+
+  @override
+  String get companionStoreOpen => 'المتجر مفتوح';
+
+  @override
+  String get companionStoreClosed => 'المتجر مغلق';
+
+  @override
+  String get companionRevenue => 'الإيرادات';
+
+  @override
+  String get companionToday => 'اليوم';
+
+  @override
+  String get companionYesterday => 'أمس';
+
+  @override
+  String get companionThisWeek => 'هذا الأسبوع';
+
+  @override
+  String get companionThisMonth => 'هذا الشهر';
+
+  @override
+  String get companionSalesPeriod => 'فترة المبيعات';
+
+  @override
+  String get companionTotalRevenue => 'إجمالي الإيرادات';
+
+  @override
+  String get companionTotalOrders => 'إجمالي الطلبات';
+
+  @override
+  String get companionAvgOrderValue => 'متوسط قيمة الطلب';
+
+  @override
+  String get companionDailyBreakdown => 'التفصيل اليومي';
+
+  @override
+  String get companionNoActiveOrders => 'لا توجد طلبات نشطة';
+
+  @override
+  String get companionCustomer => 'العميل';
+
+  @override
+  String get companionItems => 'العناصر';
+
+  @override
+  String get companionRetry => 'إعادة المحاولة';
+
+  @override
+  String get companionOutOfStock => 'نفد المخزون';
+
+  @override
+  String get companionNoAlerts => 'لا توجد تنبيهات مخزون';
+
+  @override
+  String get companionStock => 'المخزون';
+
+  @override
+  String get companionMinStock => 'الحد الأدنى';
+
+  @override
+  String get companionNoActiveStaff => 'لا يوجد موظفون نشطون';
+
+  @override
+  String get companionClockedIn => 'وقت الحضور';
+
+  @override
+  String get autoUpdateSettings => 'إعدادات التحديث';
+
+  @override
+  String get autoUpdateEnable => 'التحديث التلقائي';
+
+  @override
+  String get autoUpdateEnableDesc => 'تنزيل وتثبيت التحديثات تلقائياً';
+
+  @override
+  String get autoUpdateMaintenanceWindow => 'نافذة الصيانة';
+
+  @override
+  String get autoUpdateWindowStart => 'ساعة البدء';
+
+  @override
+  String get autoUpdateWindowEnd => 'ساعة الانتهاء';
+
+  @override
+  String get autoUpdateWindowDesc => 'سيتم تثبيت التحديثات خلال هذه الفترة';
+
+  @override
+  String get autoUpdateChannel => 'قناة التحديث';
+
+  @override
+  String get autoUpdateChannelStable => 'مستقر';
+
+  @override
+  String get autoUpdateChannelBeta => 'تجريبي';
+
+  @override
+  String get autoUpdateChannelAlpha => 'ألفا';
+
+  @override
+  String get autoUpdateRequired => 'تحديث مطلوب';
+
+  @override
+  String get autoUpdateForceDesc => 'هذا التحديث مطلوب ويجب تثبيته للمتابعة.';
+
+  @override
+  String get autoUpdateWhatsNew => 'ما الجديد';
+
+  @override
+  String get autoUpdateRemindLater => 'تذكير لاحقاً';
+
+  @override
+  String get autoUpdateSchedule => 'جدولة';
+
+  @override
+  String get autoUpdateInstallNow => 'تثبيت الآن';
+
+  @override
+  String get autoUpdateFailed => 'فشل التحديث';
+
+  @override
+  String get autoUpdateComplete => 'اكتمل التحديث';
+
+  @override
+  String get autoUpdateInstalling => 'جاري تثبيت التحديث';
+
+  @override
+  String get autoUpdateRestart => 'إعادة التشغيل الآن';
+
+  @override
+  String get autoUpdateStepBackup => 'نسخ احتياطي';
+
+  @override
+  String get autoUpdateStepDownload => 'تنزيل';
+
+  @override
+  String get autoUpdateStepVerify => 'تحقق';
+
+  @override
+  String get autoUpdateStepInstall => 'تثبيت';
+
+  @override
+  String get autoUpdateStepMigrate => 'ترحيل';
+
+  @override
+  String get autoUpdateStepComplete => 'اكتمال';
+
+  @override
+  String get autoUpdateProgress => 'تقدم التحديث';
+
+  @override
+  String autoUpdateNewVersion(String version) {
+    return 'إصدار جديد متاح: $version';
+  }
+
+  @override
+  String get accessibilityShortcutReference => 'مرجع الاختصارات';
+
+  @override
+  String get accessibilityShortcutHint => 'اضغط Ctrl+/ لإظهار الاختصارات';
+
+  @override
+  String get accessibilityReassignShortcut => 'إعادة تعيين الاختصار';
+
+  @override
+  String get accessibilityReassignDesc => 'اضغط مجموعة المفاتيح الجديدة';
+
+  @override
+  String get accessibilityPressKey => 'اضغط مجموعة مفاتيح...';
+
+  @override
+  String get accessibilityCurrentShortcut => 'الحالي';
+
+  @override
+  String get accessibilityShortcutReserved => 'هذا الاختصار محجوز';
+
+  @override
+  String accessibilityShortcutConflict(String name) {
+    return 'يتعارض مع: $name';
+  }
+
+  @override
+  String get close => 'إغلاق';
 
   @override
   String get niceToHaveTitle => 'ميزات إضافية';
@@ -3082,7 +3696,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get marketplacePage => 'صفحة';
 
   @override
-  String get marketplaceCurrency => 'ر.ع.';
+  String get marketplaceCurrency => 'ر.س.';
 
   @override
   String get marketplaceListingDetail => 'تفاصيل القالب';
@@ -3906,17 +4520,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posOpeningCash => 'النقد الافتتاحي';
 
   @override
-  String get posClosingCash => 'عد النقد الختامي';
+  String get posClosingCash => 'النقد الختامي';
 
   @override
-  String get posSelectRegister => 'اختر الصندوق';
+  String get posSelectRegister => 'اختر السجل';
 
   @override
   String get posNoRegisters =>
       'لم يتم العثور على صناديق. يرجى إضافة واحد أولاً.';
 
   @override
-  String get posCountOpeningCash => 'عد النقد الافتتاحي للبدء';
+  String get posCountOpeningCash => 'عدّ النقد الافتتاحي للبدء';
 
   @override
   String get posReviewSummary => 'مراجعة ملخص الجلسة';
@@ -3928,7 +4542,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posCashSales => 'مبيعات نقدية';
 
   @override
-  String get posCardSales => 'مبيعات بطاقة';
+  String get posCardSales => 'مبيعات بالبطاقة';
 
   @override
   String get posOtherSales => 'مبيعات أخرى';
@@ -3958,13 +4572,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posWalkinCustomer => 'عميل عابر';
 
   @override
-  String get posNoItems => 'لا توجد عناصر';
+  String get posNoItems => 'لا توجد أصناف';
 
   @override
   String get posSubtotal => 'المجموع الفرعي';
 
   @override
-  String get posDiscount => 'الخصم';
+  String get posDiscount => 'خصم';
 
   @override
   String get posTax => 'الضريبة';
@@ -3982,7 +4596,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posClearCart => 'مسح السلة';
 
   @override
-  String get posClearCartConfirm => 'سيتم إزالة جميع العناصر.';
+  String get posClearCartConfirm => 'مسح السلة؟';
 
   @override
   String get posSearchProducts => 'ابحث عن المنتجات أو امسح الباركود';
@@ -3995,7 +4609,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String posProductAdded(Object name) {
-    return 'تمت إضافة $name';
+    return 'تم إضافة $name';
   }
 
   @override
@@ -4008,7 +4622,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posReceiptNumber => 'رقم الإيصال / المعاملة';
 
   @override
-  String get posSelectItemsToReturn => 'اختر العناصر للإرجاع';
+  String get posSelectItemsToReturn => 'اختر الأصناف المراد إرجاعها';
 
   @override
   String get posRefundTo => 'استرداد إلى:';
@@ -4017,7 +4631,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posRefundAmount => 'مبلغ الاسترداد';
 
   @override
-  String get posProcessReturn => 'معالجة المرتجع';
+  String get posProcessReturn => 'معالجة الإرجاع';
 
   @override
   String posReturnProcessed(Object number) {
@@ -4042,7 +4656,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posSplitPayment => 'تقسيم الدفع';
 
   @override
-  String get posCashTendered => 'النقد المقدم';
+  String get posCashTendered => 'المبلغ المدفوع';
 
   @override
   String get posChange => 'الباقي';
@@ -4054,7 +4668,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posCompletePayment => 'إتمام الدفع';
 
   @override
-  String get posPaymentSuccessful => 'تم الدفع بنجاح';
+  String get posPaymentSuccessful => 'تمت عملية الدفع بنجاح';
 
   @override
   String posTransactionNumber(Object number) {
@@ -4071,7 +4685,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posNoHeldCarts => 'لا توجد سلات معلقة';
 
   @override
-  String get posRecall => 'استرجاع';
+  String get posRecall => 'استدعاء';
 
   @override
   String posCartRestored(Object label) {
@@ -4144,4 +4758,2781 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get posConfirm => 'تأكيد';
+
+  @override
+  String get posLabelOptional => 'التسمية (اختياري)';
+
+  @override
+  String get posLabelHint => 'مثال: طاولة 5، السيد أحمد';
+
+  @override
+  String get posHeldCart => 'سلة معلقة';
+
+  @override
+  String get posVoidLastItem => 'إلغاء آخر صنف؟';
+
+  @override
+  String posRemoveItemFromCart(Object name) {
+    return 'إزالة \"$name\" من السلة؟';
+  }
+
+  @override
+  String get posRemove => 'إزالة';
+
+  @override
+  String get posStartYourShift => 'ابدأ وردية العمل';
+
+  @override
+  String get posOpenShiftDescription => 'افتح جلسة نقدية لبدء معالجة المعاملات';
+
+  @override
+  String get posNotes => 'ملاحظات';
+
+  @override
+  String get posVoidLast => 'إلغاء الأخير';
+
+  @override
+  String posSessionNumber(Object id) {
+    return 'جلسة #$id';
+  }
+
+  @override
+  String get posSearchProductsHint => 'البحث عن المنتجات أو مسح الباركود (F2)';
+
+  @override
+  String get posNoProductsFound => 'لم يتم العثور على منتجات';
+
+  @override
+  String get posNoProductsSubtitle => 'جرب بحثاً مختلفاً أو تحقق من الكتالوج.';
+
+  @override
+  String get posTapProductsToAdd => 'انقر على المنتجات لإضافتها';
+
+  @override
+  String get posTax15 => 'الضريبة (15%)';
+
+  @override
+  String get posClearCartMessage => 'سيتم إزالة جميع الأصناف.';
+
+  @override
+  String get posClear => 'مسح';
+
+  @override
+  String get posWalkInCustomer => 'عميل زائر';
+
+  @override
+  String get posCartDiscount => 'خصم السلة';
+
+  @override
+  String posSubtotalAmount(Object amount) {
+    return 'المجموع الفرعي: ر.س $amount';
+  }
+
+  @override
+  String get posDiscountAmountSar => 'مبلغ الخصم (ر.س)';
+
+  @override
+  String get posApply => 'تطبيق';
+
+  @override
+  String get posOrderNotes => 'ملاحظات الطلب';
+
+  @override
+  String get posNotesHint => 'أضف ملاحظات لهذا الطلب...';
+
+  @override
+  String get posSave => 'حفظ';
+
+  @override
+  String get posCashier => 'كاشير';
+
+  @override
+  String get posReviewSessionSummary => 'راجع ملخص جلستك';
+
+  @override
+  String get posSessionSummaryZReport => 'ملخص الجلسة (تقرير Z)';
+
+  @override
+  String get posClosingCashCount => 'عد النقد الختامي';
+
+  @override
+  String get posInvalidClosingCash => 'الرجاء إدخال مبلغ نقدي ختامي صالح';
+
+  @override
+  String get posSearchCustomerHint => 'البحث بالاسم أو الهاتف أو رمز الولاء...';
+
+  @override
+  String get posNoCustomersFound => 'لم يتم العثور على عملاء';
+
+  @override
+  String posDeleteHeldCartMessage(Object label) {
+    return 'سيتم حذف \"$label\" نهائياً.';
+  }
+
+  @override
+  String get posItems => 'أصناف';
+
+  @override
+  String get posJustNow => 'الآن';
+
+  @override
+  String posMinutesAgo(Object count) {
+    return 'منذ $count د';
+  }
+
+  @override
+  String posHoursAgo(Object count) {
+    return 'منذ $count س';
+  }
+
+  @override
+  String posDaysAgo(Object count) {
+    return 'منذ $count ي';
+  }
+
+  @override
+  String get posOpenShiftDialog => 'فتح الوردية';
+
+  @override
+  String get posRegister => 'السجل';
+
+  @override
+  String get posPleaseSelectRegister => 'الرجاء اختيار سجل';
+
+  @override
+  String get posNoRegistersFound =>
+      'لم يتم العثور على سجلات. الرجاء إضافة واحد أولاً.';
+
+  @override
+  String posChangeGiven(Object amount) {
+    return 'الباقي: ر.س $amount';
+  }
+
+  @override
+  String posTotalAmountSar(Object amount) {
+    return 'الإجمالي: ر.س $amount';
+  }
+
+  @override
+  String get posTotalNotCovered => 'المبلغ المدفوع لا يغطي المبلغ المستحق';
+
+  @override
+  String get posReceiptTransactionNumber => 'رقم الإيصال / المعاملة';
+
+  @override
+  String get posFind => 'بحث';
+
+  @override
+  String get posCustomerReturn => 'إرجاع العميل';
+
+  @override
+  String get posEnterTransactionNumber => 'أدخل رقم المعاملة / الإيصال';
+
+  @override
+  String posFailedToFindTransaction(Object error) {
+    return 'فشل في العثور على المعاملة: $error';
+  }
+
+  @override
+  String posReturnFailed(Object error) {
+    return 'فشل الإرجاع: $error';
+  }
+
+  @override
+  String get posEnterReceiptNumber => 'أدخل رقم الإيصال للعثور على المعاملة';
+
+  @override
+  String get posOpenPosSession => 'فتح جلسة نقاط البيع';
+
+  @override
+  String get posOpenPosSessionSubtitle =>
+      'أدخل مبلغ النقد الافتتاحي لهذه الجلسة.';
+
+  @override
+  String get posOpeningCashLabel => 'النقد الافتتاحي';
+
+  @override
+  String get posOpenSession => 'فتح الجلسة';
+
+  @override
+  String get posPosSessionOpened => 'تم فتح جلسة نقاط البيع.';
+
+  @override
+  String get posCloseSession => 'إغلاق الجلسة';
+
+  @override
+  String get posCloseSessionSubtitle =>
+      'أدخل مبلغ النقد الختامي لإغلاق هذه الجلسة.';
+
+  @override
+  String get posSessionClosed => 'تم إغلاق الجلسة.';
+
+  @override
+  String get posSessions => 'جلسات نقاط البيع';
+
+  @override
+  String get posSessionHistory => 'سجل الجلسات';
+
+  @override
+  String get posStatus => 'الحالة';
+
+  @override
+  String get posOpenedAt => 'وقت الفتح';
+
+  @override
+  String get posClosedAt => 'وقت الإغلاق';
+
+  @override
+  String get posOpeningFloat => 'النقد الافتتاحي';
+
+  @override
+  String get posClosingCashCol => 'النقد الختامي';
+
+  @override
+  String get posVariance => 'الفرق';
+
+  @override
+  String get posActions => 'الإجراءات';
+
+  @override
+  String get posOpen => 'مفتوح';
+
+  @override
+  String get posClosed => 'مغلق';
+
+  @override
+  String get posNoSessionsFound => 'لم يتم العثور على جلسات';
+
+  @override
+  String get posOpenSessionSubtitle =>
+      'افتح جلسة نقاط البيع لبدء معالجة المعاملات.';
+
+  @override
+  String get posEditTerminal => 'تعديل الجهاز';
+
+  @override
+  String get posAddTerminal => 'إضافة جهاز';
+
+  @override
+  String get posLoadingTerminal => 'جارٍ تحميل الجهاز...';
+
+  @override
+  String get posTerminalInformation => 'معلومات الجهاز';
+
+  @override
+  String get posBasicRegisterDetails => 'التفاصيل الأساسية للسجل';
+
+  @override
+  String get posTerminalName => 'اسم الجهاز';
+
+  @override
+  String get posTerminalNameHint => 'مثال: كاشير 1، مكتب الاستقبال';
+
+  @override
+  String get posDeviceId => 'معرف الجهاز';
+
+  @override
+  String get posDeviceIdHint => 'معرف فريد لهذا الجهاز';
+
+  @override
+  String get posPlatform => 'المنصة';
+
+  @override
+  String get posSelectPlatform => 'اختر المنصة';
+
+  @override
+  String get posAppVersion => 'إصدار التطبيق (اختياري)';
+
+  @override
+  String get posAppVersionHint => 'مثال: 1.0.0';
+
+  @override
+  String get posSaveChanges => 'حفظ التغييرات';
+
+  @override
+  String get posCreateTerminal => 'إنشاء جهاز';
+
+  @override
+  String get posPlatformWindows => 'ويندوز';
+
+  @override
+  String get posPlatformMacOS => 'ماك أو إس';
+
+  @override
+  String get posPlatformIOS => 'آي أو إس';
+
+  @override
+  String get posPlatformAndroid => 'أندرويد';
+
+  @override
+  String get posDeleteTerminal => 'حذف الجهاز؟';
+
+  @override
+  String posDeleteTerminalMessage(Object name) {
+    return 'حذف \"$name\" لا يمكن التراجع عنه.';
+  }
+
+  @override
+  String get posDeactivateTerminal => 'تعطيل الجهاز؟';
+
+  @override
+  String get posActivateTerminal => 'تفعيل الجهاز؟';
+
+  @override
+  String posDeactivateActivateMessage(Object action, Object name) {
+    return '$action \"$name\"؟';
+  }
+
+  @override
+  String get posDeactivate => 'تعطيل';
+
+  @override
+  String get posActivate => 'تفعيل';
+
+  @override
+  String posTerminalDeleted(Object name) {
+    return 'تم حذف الجهاز \"$name\".';
+  }
+
+  @override
+  String get posFailedDeleteTerminal => 'فشل في حذف الجهاز.';
+
+  @override
+  String posTerminalStatusChanged(Object name, Object status) {
+    return 'الجهاز \"$name\" تم $status.';
+  }
+
+  @override
+  String get posFailedUpdateTerminalStatus => 'فشل في تحديث حالة الجهاز.';
+
+  @override
+  String get posActivated => 'تفعيله';
+
+  @override
+  String get posDeactivated => 'تعطيله';
+
+  @override
+  String get posTerminals => 'الأجهزة';
+
+  @override
+  String get posManageTerminals => 'إدارة أجهزة نقاط البيع';
+
+  @override
+  String get posSearchTerminals => 'البحث في الأجهزة...';
+
+  @override
+  String get posName => 'الاسم';
+
+  @override
+  String get posDeviceIdCol => 'معرف الجهاز';
+
+  @override
+  String get posPlatformCol => 'المنصة';
+
+  @override
+  String get posVersionCol => 'الإصدار';
+
+  @override
+  String get posStatusCol => 'الحالة';
+
+  @override
+  String get posLastSeen => 'آخر ظهور';
+
+  @override
+  String get posActionsCol => 'الإجراءات';
+
+  @override
+  String get posEdit => 'تعديل';
+
+  @override
+  String get posToggleStatus => 'تغيير الحالة';
+
+  @override
+  String get posNoTerminalsFound => 'لم يتم العثور على أجهزة';
+
+  @override
+  String get posNoTerminalsSubtitle => 'أضف أول جهاز نقاط بيع للبدء.';
+
+  @override
+  String get posOff => 'معطل';
+
+  @override
+  String get posOn => 'مفعل';
+
+  @override
+  String get posActive => 'نشط';
+
+  @override
+  String get posInactive => 'غير نشط';
+
+  @override
+  String get posPlatformUnknown => 'غير معروف';
+
+  @override
+  String get posCashManagement => 'إدارة النقد';
+
+  @override
+  String get posCashCount => 'عد النقد';
+
+  @override
+  String get posSessionHistoryTab => 'سجل الجلسات';
+
+  @override
+  String get posActiveSession => 'الجلسة النشطة';
+
+  @override
+  String posOpened(Object time) {
+    return 'فتحت: $time';
+  }
+
+  @override
+  String get posTerminal => 'الجهاز';
+
+  @override
+  String get posCashIn => 'إيداع نقدي';
+
+  @override
+  String get posCashOut => 'سحب نقدي';
+
+  @override
+  String get posNoActiveCashSession => 'لا توجد جلسة نقدية نشطة';
+
+  @override
+  String get posOpenCashSessionDescription =>
+      'افتح جلسة لبدء قبول المدفوعات النقدية';
+
+  @override
+  String get posOpenCashSession => 'فتح جلسة نقدية';
+
+  @override
+  String get posTotalCount => 'إجمالي العد';
+
+  @override
+  String get posNoSessionsYet => 'لا توجد جلسات بعد';
+
+  @override
+  String get posOpenCashSessionDialog => 'فتح جلسة نقدية';
+
+  @override
+  String get posOpeningFloatSar => 'النقد الافتتاحي (ر.س)';
+
+  @override
+  String get posCloseCashSession => 'إغلاق الجلسة النقدية';
+
+  @override
+  String posCountedCash(Object amount) {
+    return 'النقد المعدود: $amount ر.س';
+  }
+
+  @override
+  String get posNotesOptional => 'ملاحظات (اختياري)';
+
+  @override
+  String get posAmountSar => 'المبلغ (ر.س)';
+
+  @override
+  String get posReason => 'السبب';
+
+  @override
+  String get posReasonPettyCash => 'مصروفات نثرية';
+
+  @override
+  String get posReasonSupplierPayment => 'دفع مورد';
+
+  @override
+  String get posReasonBankDeposit => 'إيداع بنكي';
+
+  @override
+  String get posReasonTips => 'بقشيش';
+
+  @override
+  String get posReasonChangeReplenish => 'تعبئة فكة';
+
+  @override
+  String get posReasonOther => 'أخرى';
+
+  @override
+  String get posRecord => 'تسجيل';
+
+  @override
+  String posQuickAmountPlus(Object amount) {
+    return '+$amount';
+  }
+
+  @override
+  String get loginTitle => 'وامض نقاط البيع';
+
+  @override
+  String get loginSubtitle => 'سجل الدخول إلى حسابك';
+
+  @override
+  String get loginEmail => 'البريد الإلكتروني';
+
+  @override
+  String get loginEmailHint => 'أدخل بريدك الإلكتروني';
+
+  @override
+  String get loginPassword => 'كلمة المرور';
+
+  @override
+  String get loginPasswordHint => 'أدخل كلمة المرور';
+
+  @override
+  String get loginSigningIn => 'جارٍ تسجيل الدخول...';
+
+  @override
+  String get loginSignIn => 'تسجيل الدخول';
+
+  @override
+  String get loginNoAccount => 'ليس لديك حساب؟ ';
+
+  @override
+  String get loginRegister => 'سجل الآن';
+
+  @override
+  String get loginAdmin => 'مدير';
+
+  @override
+  String get loginCashier => 'كاشير';
+
+  @override
+  String get pinLoginEnterPin => 'أدخل الرقم السري';
+
+  @override
+  String get pinLoginSubtitle =>
+      'تبديل سريع — أدخل رقمك السري المكون من 4 أرقام';
+
+  @override
+  String get pinLoginNoStoreSession =>
+      'لم يتم العثور على جلسة متجر. الرجاء تسجيل الدخول بالبريد الإلكتروني.';
+
+  @override
+  String get pinLoginSignInWithEmail =>
+      'تسجيل الدخول بالبريد الإلكتروني بدلاً من ذلك';
+
+  @override
+  String securityError(String message) {
+    return 'خطأ أمني: $message';
+  }
+
+  @override
+  String get securityNA => 'غير متوفر';
+
+  @override
+  String conflictMoreFields(Object count) {
+    return '+ $count حقول إضافية';
+  }
+
+  @override
+  String get notifCategoryOrder => 'طلب';
+
+  @override
+  String get notifCategoryInventory => 'المخزون';
+
+  @override
+  String get notifCategoryPromotion => 'عرض ترويجي';
+
+  @override
+  String get notifCategorySystem => 'النظام';
+
+  @override
+  String get notifCategoryPayment => 'الدفع';
+
+  @override
+  String get notifCategoryStaff => 'الموظفين';
+
+  @override
+  String get stockReorderPointHint => 'مثال: 10';
+
+  @override
+  String get stockMaxLevelHint => 'مثال: 100';
+
+  @override
+  String get stockNoLowStockProducts =>
+      'لا توجد منتجات أقل من نقطة إعادة الطلب.';
+
+  @override
+  String get stockLevelsEmptySubtitle =>
+      'ستظهر مستويات المخزون بمجرد استلام المنتجات.';
+
+  @override
+  String get stockAdjustReasonDamaged => 'تالف';
+
+  @override
+  String get stockAdjustReasonExpired => 'منتهي الصلاحية';
+
+  @override
+  String get stockAdjustReasonLost => 'مفقود';
+
+  @override
+  String get stockAdjustReasonCorrection => 'تصحيح';
+
+  @override
+  String get stockAdjustReasonReturned => 'مرتجع';
+
+  @override
+  String get stockAdjustReasonMiscounted => 'خطأ في العد';
+
+  @override
+  String get stockAdjustReasonTheft => 'سرقة';
+
+  @override
+  String get stockAdjustReasonOther => 'أخرى';
+
+  @override
+  String get stockTransferApproveConfirm =>
+      'هل تريد الموافقة على هذا التحويل؟ سيتم خصم المخزون من المتجر المصدر.';
+
+  @override
+  String get stockTransferReceiveConfirm =>
+      'هل تريد تأكيد استلام هذا التحويل؟ سيتم إضافة المخزون إلى المتجر الوجهة.';
+
+  @override
+  String get stockTransferCancelConfirm => 'هل تريد إلغاء هذا التحويل؟';
+
+  @override
+  String stockTransferActionTitle(Object action) {
+    return '$action التحويل';
+  }
+
+  @override
+  String stockTransferActionSuccess(Object action) {
+    return 'تم $action التحويل بنجاح.';
+  }
+
+  @override
+  String purchaseOrderCancelConfirm(Object reference) {
+    return 'هل تريد إلغاء الطلب \"$reference\"؟';
+  }
+
+  @override
+  String goodsReceiptConfirm(Object reference) {
+    return 'هل تريد تأكيد الاستلام \"$reference\"؟\n\nسيتم تحديث مستويات المخزون ولا يمكن التراجع عن ذلك.';
+  }
+
+  @override
+  String recipeDeleteConfirm(Object name) {
+    return 'هل تريد حذف الوصفة \"$name\"؟';
+  }
+
+  @override
+  String get sarCurrency => 'ر.س';
+
+  @override
+  String amountWithSar(Object amount) {
+    return 'ر.س $amount';
+  }
+
+  @override
+  String get authAlreadyHaveAccount => 'هل لديك حساب بالفعل؟';
+
+  @override
+  String get authBusinessInformation => 'معلومات العمل';
+
+  @override
+  String get authBusinessNameHint => 'مثلاً شركتي';
+
+  @override
+  String get authBusinessNameOptional => 'اسم الشركة (اختياري)';
+
+  @override
+  String get authConfirmPassword => 'تأكيد كلمة المرور';
+
+  @override
+  String get authConfirmPasswordHint => 'أعد إدخال كلمة المرور';
+
+  @override
+  String get authCountry => 'الدولة';
+
+  @override
+  String get authCountryOman => 'عُمان';
+
+  @override
+  String get authCountrySaudiArabia => 'المملكة العربية السعودية';
+
+  @override
+  String get authCreateAccount => 'إنشاء حساب';
+
+  @override
+  String get authCreatingAccount => 'جاري إنشاء الحساب...';
+
+  @override
+  String get authEmail => 'البريد الإلكتروني';
+
+  @override
+  String get authEmailHint => 'أدخل بريدك الإلكتروني';
+
+  @override
+  String get authFullName => 'الاسم الكامل';
+
+  @override
+  String get authFullNameHint => 'مثلاً أحمد السعيد';
+
+  @override
+  String get authPassword => 'كلمة المرور';
+
+  @override
+  String get authPasswordHintMinChars => '٨ أحرف على الأقل';
+
+  @override
+  String get authPasswordsDoNotMatch => 'كلمتا المرور غير متطابقتين';
+
+  @override
+  String get authPersonalInformation => 'المعلومات الشخصية';
+
+  @override
+  String get authPhoneOptional => 'الهاتف (اختياري)';
+
+  @override
+  String get authSecurity => 'الأمان';
+
+  @override
+  String get authSignIn => 'تسجيل الدخول';
+
+  @override
+  String get authStoreNameHint => 'مثلاً الفرع الرئيسي';
+
+  @override
+  String get authStoreNameOptional => 'اسم المتجر (اختياري)';
+
+  @override
+  String get cashMgmtActiveSession => 'الجلسة النشطة';
+
+  @override
+  String get cashMgmtAmountSar => 'المبلغ (ر.س.)';
+
+  @override
+  String get cashMgmtCashCount => 'عد النقد';
+
+  @override
+  String get cashMgmtCashIn => 'إيداع نقدي';
+
+  @override
+  String get cashMgmtCashOut => 'سحب نقدي';
+
+  @override
+  String get cashMgmtCloseCashSession => 'إغلاق جلسة النقد';
+
+  @override
+  String get cashMgmtCloseSession => 'إغلاق الجلسة';
+
+  @override
+  String get cashMgmtCountedCash => 'النقد المعدود';
+
+  @override
+  String get cashMgmtExpectedCash => 'النقد المتوقع';
+
+  @override
+  String get cashMgmtNA => 'غ/م';
+
+  @override
+  String get cashMgmtNoActiveSession => 'لا توجد جلسة نشطة';
+
+  @override
+  String get cashMgmtNoActiveSessionSubtitle =>
+      'افتح جلسة نقدية لبدء معالجة المعاملات';
+
+  @override
+  String get cashMgmtNoSessions => 'لا توجد جلسات';
+
+  @override
+  String get cashMgmtNotesOptional => 'ملاحظات (اختياري)';
+
+  @override
+  String get cashMgmtOpenCashSession => 'فتح جلسة نقدية';
+
+  @override
+  String get cashMgmtOpenSession => 'فتح الجلسة';
+
+  @override
+  String get cashMgmtOpened => 'مفتوحة';
+
+  @override
+  String get cashMgmtOpeningFloat => 'الرصيد الافتتاحي';
+
+  @override
+  String get cashMgmtOpeningFloatSar => 'الرصيد الافتتاحي (ر.س.)';
+
+  @override
+  String get cashMgmtReason => 'السبب';
+
+  @override
+  String get cashMgmtRecord => 'تسجيل';
+
+  @override
+  String get cashMgmtSessionHistory => 'سجل الجلسات';
+
+  @override
+  String get cashMgmtTerminal => 'الجهاز';
+
+  @override
+  String get cashMgmtTitle => 'إدارة النقد';
+
+  @override
+  String get cashMgmtTotalCount => 'إجمالي العد';
+
+  @override
+  String get commonActive => 'نشط';
+
+  @override
+  String get commonCancel => 'إلغاء';
+
+  @override
+  String get commonCreate => 'إنشاء';
+
+  @override
+  String get commonDate => 'التاريخ';
+
+  @override
+  String get commonDelete => 'حذف';
+
+  @override
+  String get commonEdit => 'تعديل';
+
+  @override
+  String get commonInactive => 'غير نشط';
+
+  @override
+  String get commonInvalid => 'غير صالح';
+
+  @override
+  String get commonNo => 'لا';
+
+  @override
+  String get commonNotes => 'ملاحظات';
+
+  @override
+  String get commonNotesOptional => 'ملاحظات (اختياري)';
+
+  @override
+  String get commonOk => 'موافق';
+
+  @override
+  String get commonRefresh => 'تحديث';
+
+  @override
+  String get commonRequired => 'مطلوب';
+
+  @override
+  String get commonRetry => 'إعادة المحاولة';
+
+  @override
+  String get commonSave => 'حفظ';
+
+  @override
+  String get commonStatus => 'الحالة';
+
+  @override
+  String get commonType => 'النوع';
+
+  @override
+  String get customersNoCustomersFound => 'لم يتم العثور على عملاء';
+
+  @override
+  String customersPoints(int points) {
+    return '$points نقطة';
+  }
+
+  @override
+  String get hardwareConfiguredDevices => 'الأجهزة المهيأة';
+
+  @override
+  String get hardwareManagement => 'إدارة الأجهزة';
+
+  @override
+  String get hardwareNoDevicesConfigured => 'لا توجد أجهزة مهيأة';
+
+  @override
+  String get hardwareRecentEvents => 'الأحداث الأخيرة';
+
+  @override
+  String get hardwareSelectDeviceToTest => 'اختر جهازاً للاختبار';
+
+  @override
+  String get hardwareSupportedHardware => 'الأجهزة المدعومة';
+
+  @override
+  String get hardwareTestingDevice => 'جاري اختبار الجهاز...';
+
+  @override
+  String get inventoryAddItemLabel => 'إضافة عنصر';
+
+  @override
+  String get inventoryAdjustmentCreated => 'تم إنشاء تعديل المخزون';
+
+  @override
+  String get inventoryAll => 'الكل';
+
+  @override
+  String get inventoryApprove => 'موافقة';
+
+  @override
+  String get inventoryAvgCost => 'متوسط التكلفة';
+
+  @override
+  String get inventoryCancelOrder => 'إلغاء الطلب';
+
+  @override
+  String get inventoryCancelPOTitle => 'إلغاء أمر الشراء؟';
+
+  @override
+  String get inventoryCancelled => 'ملغى';
+
+  @override
+  String get inventoryConfirmReceiptTitle => 'تأكيد الاستلام';
+
+  @override
+  String get inventoryCreateReceipt => 'إنشاء إيصال استلام';
+
+  @override
+  String get inventoryDamage => 'تلف';
+
+  @override
+  String get inventoryDecrease => 'نقص';
+
+  @override
+  String get inventoryDeleteRecipeTitle => 'حذف الوصفة؟';
+
+  @override
+  String get inventoryDraft => 'مسودة';
+
+  @override
+  String get inventoryDraftReceiptCreated => 'تم إنشاء مسودة الإيصال';
+
+  @override
+  String get inventoryExpected => 'المتوقع';
+
+  @override
+  String get inventoryFilterByStatus => 'تصفية حسب الحالة';
+
+  @override
+  String get inventoryFromStore => 'من المتجر';
+
+  @override
+  String get inventoryFullyReceived => 'مستلم بالكامل';
+
+  @override
+  String get inventoryGoodsReceipts => 'إيصالات الاستلام';
+
+  @override
+  String get inventoryGoodsReceiptsSubtitle =>
+      'استلام والتحقق من شحنات المخزون الواردة';
+
+  @override
+  String get inventoryIncrease => 'زيادة';
+
+  @override
+  String get inventoryIngredient => 'المكون';
+
+  @override
+  String get inventoryIngredientProduct => 'منتج المكون';
+
+  @override
+  String get inventoryInvalidNumber => 'رقم غير صالح';
+
+  @override
+  String inventoryItemLabel(int index) {
+    return 'العنصر $index';
+  }
+
+  @override
+  String get inventoryLineItems => 'عناصر الفاتورة';
+
+  @override
+  String get inventoryLowStock => 'مخزون منخفض';
+
+  @override
+  String get inventoryManagement => 'إدارة المخزون';
+
+  @override
+  String get inventoryMaxStockLevelOptional => 'الحد الأقصى للمخزون (اختياري)';
+
+  @override
+  String get inventoryNewAdjustment => 'تعديل جديد';
+
+  @override
+  String get inventoryNewGoodsReceipt => 'إيصال استلام جديد';
+
+  @override
+  String get inventoryNewPO => 'أمر شراء جديد';
+
+  @override
+  String get inventoryNewReceipt => 'إيصال جديد';
+
+  @override
+  String get inventoryNewRecipe => 'وصفة جديدة';
+
+  @override
+  String get inventoryNewStockAdjustment => 'تعديل مخزون جديد';
+
+  @override
+  String get inventoryNewTransfer => 'نقل جديد';
+
+  @override
+  String get inventoryNoAdjustments => 'لا توجد تعديلات';
+
+  @override
+  String get inventoryNoGoodsReceipts => 'لا توجد إيصالات استلام';
+
+  @override
+  String get inventoryNoGoodsReceiptsHint =>
+      'أنشئ إيصال استلام لتتبع المخزون الوارد.';
+
+  @override
+  String get inventoryNoMovements => 'لا توجد حركات';
+
+  @override
+  String get inventoryNoPOs => 'لا توجد أوامر شراء';
+
+  @override
+  String get inventoryNoRecipes => 'لا توجد وصفات';
+
+  @override
+  String get inventoryNoRecipesHint => 'أنشئ وصفة لتتبع مكونات المنتج.';
+
+  @override
+  String get inventoryNoStockLevels => 'لا توجد مستويات مخزون';
+
+  @override
+  String get inventoryNoTransfers => 'لا توجد عمليات نقل';
+
+  @override
+  String get inventoryNotesHint => 'أضف ملاحظات...';
+
+  @override
+  String get inventoryOutputProduct => 'المنتج الناتج';
+
+  @override
+  String get inventoryPOCancelled => 'تم إلغاء أمر الشراء';
+
+  @override
+  String get inventoryPOCreatedMsg => 'تم إنشاء أمر الشراء';
+
+  @override
+  String get inventoryPOSent => 'تم إرسال أمر الشراء';
+
+  @override
+  String get inventoryPartiallyReceived => 'مستلم جزئياً';
+
+  @override
+  String get inventoryProduct => 'المنتج';
+
+  @override
+  String get inventoryPurchaseOrders => 'أوامر الشراء';
+
+  @override
+  String get inventoryPurchaseOrdersSubtitle =>
+      'إنشاء وإدارة أوامر شراء الموردين';
+
+  @override
+  String get inventoryQuantity => 'الكمية';
+
+  @override
+  String get inventoryReceiptConfirmedMsg => 'تم تأكيد الإيصال';
+
+  @override
+  String get inventoryReceive => 'استلام';
+
+  @override
+  String get inventoryReceiveAction => 'استلام';
+
+  @override
+  String get inventoryReceived => 'مستلم';
+
+  @override
+  String get inventoryRecipeCreated => 'تم إنشاء الوصفة';
+
+  @override
+  String get inventoryRecipeDeleted => 'تم حذف الوصفة';
+
+  @override
+  String get inventoryRecipes => 'الوصفات';
+
+  @override
+  String get inventoryRecipesSubtitle => 'تحديد مكونات المنتجات والعوائد';
+
+  @override
+  String get inventoryRef => 'المرجع';
+
+  @override
+  String get inventoryReference => 'المرجع';
+
+  @override
+  String get inventoryReferenceNumber => 'رقم المرجع';
+
+  @override
+  String get inventoryReferenceNumberHint => 'مثلاً GR-001';
+
+  @override
+  String get inventoryReferenceOptional => 'المرجع (اختياري)';
+
+  @override
+  String get inventoryReorderPoint => 'نقطة إعادة الطلب';
+
+  @override
+  String get inventoryReorderPointSaved => 'تم حفظ نقطة إعادة الطلب';
+
+  @override
+  String get inventoryReorderPt => 'نقطة الطلب';
+
+  @override
+  String get inventoryReserved => 'محجوز';
+
+  @override
+  String get inventorySaving => 'جاري الحفظ...';
+
+  @override
+  String get inventorySearchByProduct => 'بحث حسب المنتج...';
+
+  @override
+  String get inventorySendAction => 'إرسال';
+
+  @override
+  String get inventorySent => 'مرسل';
+
+  @override
+  String get inventorySetReorderPoint => 'تعيين نقطة إعادة الطلب';
+
+  @override
+  String get inventoryStockAdjustments => 'تعديلات المخزون';
+
+  @override
+  String get inventoryStockAdjustmentsSubtitle => 'تسجيل تصحيحات وشطب المخزون';
+
+  @override
+  String get inventoryStockLevels => 'مستويات المخزون';
+
+  @override
+  String get inventoryStockLevelsSubtitle =>
+      'مراقبة المخزون الحالي لجميع المنتجات';
+
+  @override
+  String get inventoryStockMovements => 'حركات المخزون';
+
+  @override
+  String get inventoryStockMovementsSubtitle =>
+      'تتبع جميع حركات المخزون الواردة والصادرة';
+
+  @override
+  String get inventoryStockTransfers => 'عمليات نقل المخزون';
+
+  @override
+  String get inventoryStockTransfersSubtitle =>
+      'نقل المخزون بين المتاجر أو المستودعات';
+
+  @override
+  String get inventorySupplier => 'المورد';
+
+  @override
+  String get inventoryToStore => 'إلى المتجر';
+
+  @override
+  String get inventoryTotal => 'الإجمالي';
+
+  @override
+  String get inventoryTotalCost => 'التكلفة الإجمالية';
+
+  @override
+  String get inventoryTransferCreated => 'تم إنشاء عملية النقل';
+
+  @override
+  String get inventoryUnitCostLabel => 'تكلفة الوحدة';
+
+  @override
+  String get inventoryWastePercent => 'نسبة الهدر %';
+
+  @override
+  String get inventoryYield => 'العائد';
+
+  @override
+  String get inventoryYieldQuantity => 'كمية العائد';
+
+  @override
+  String get notificationsCategories => 'فئات الإشعارات';
+
+  @override
+  String get notificationsClearQuietHours => 'مسح أوقات الهدوء';
+
+  @override
+  String get notificationsInApp => 'داخل التطبيق';
+
+  @override
+  String get notificationsInventoryAlerts => 'تنبيهات المخزون';
+
+  @override
+  String get notificationsInventoryAlertsSubtitle =>
+      'إشعارات انخفاض المخزون وإعادة الطلب';
+
+  @override
+  String get notificationsMarkAllAsRead => 'تعليم الكل كمقروء';
+
+  @override
+  String get notificationsMarkRead => 'تعليم كمقروء';
+
+  @override
+  String get notificationsNoNotifications => 'لا توجد إشعارات';
+
+  @override
+  String get notificationsNotSet => 'غير محدد';
+
+  @override
+  String get notificationsOrderUpdates => 'تحديثات الطلبات';
+
+  @override
+  String get notificationsOrderUpdatesSubtitle =>
+      'استلام تنبيهات للطلبات الجديدة وتغييرات الحالة';
+
+  @override
+  String get notificationsPreferences => 'تفضيلات الإشعارات';
+
+  @override
+  String get notificationsPromotions => 'العروض';
+
+  @override
+  String get notificationsPromotionsSubtitle =>
+      'تنبيهات نشاط العروض واستخدام القسائم';
+
+  @override
+  String get notificationsPush => 'إشعارات فورية';
+
+  @override
+  String get notificationsQuietEnd => 'النهاية';
+
+  @override
+  String get notificationsQuietHours => 'أوقات الهدوء';
+
+  @override
+  String get notificationsQuietHoursSubtitle =>
+      'إيقاف الإشعارات خلال هذه الساعات';
+
+  @override
+  String get notificationsQuietStart => 'البداية';
+
+  @override
+  String get notificationsSave => 'حفظ';
+
+  @override
+  String get notificationsSystemUpdates => 'تحديثات النظام';
+
+  @override
+  String get notificationsSystemUpdatesSubtitle =>
+      'تحديثات التطبيق وإشعارات الصيانة';
+
+  @override
+  String get notificationsTitle => 'الإشعارات';
+
+  @override
+  String notificationsUnread(int count) {
+    return '$count غير مقروء';
+  }
+
+  @override
+  String notificationsSelected(int count) {
+    return '$count محدد';
+  }
+
+  @override
+  String get notificationsBulkDelete => 'حذف المحدد';
+
+  @override
+  String get notificationsPriority => 'الأولوية:';
+
+  @override
+  String get notifPriorityUrgent => 'عاجل';
+
+  @override
+  String get notifPriorityHigh => 'عالي';
+
+  @override
+  String get notifPriorityNormal => 'عادي';
+
+  @override
+  String get notifPriorityLow => 'منخفض';
+
+  @override
+  String get notificationsGeneralSettings => 'الإعدادات العامة';
+
+  @override
+  String get notificationsSoundEnabled => 'تفعيل الصوت';
+
+  @override
+  String get notificationsSoundEnabledSubtitle =>
+      'تشغيل أصوات للإشعارات الواردة';
+
+  @override
+  String get notificationsEmailDigest => 'ملخص البريد';
+
+  @override
+  String get notificationsEmailDigestSubtitle =>
+      'استلم ملخص الإشعارات عبر البريد الإلكتروني';
+
+  @override
+  String get notificationsDigestNone => 'بلا';
+
+  @override
+  String get notificationsDigestDaily => 'يومي';
+
+  @override
+  String get notificationsDigestWeekly => 'أسبوعي';
+
+  @override
+  String get notifSchedulesTitle => 'الإشعارات المجدولة';
+
+  @override
+  String get notifSchedulesEmpty => 'لا توجد إشعارات مجدولة';
+
+  @override
+  String get notifScheduleCreate => 'إنشاء جدولة';
+
+  @override
+  String get notifScheduleTitle => 'العنوان';
+
+  @override
+  String get notifScheduleMessage => 'الرسالة';
+
+  @override
+  String get notifScheduleCategory => 'الفئة';
+
+  @override
+  String get notifSchedulePriority => 'الأولوية';
+
+  @override
+  String get notifScheduleChannel => 'القناة';
+
+  @override
+  String get notifScheduleDateTime => 'التاريخ والوقت المحدد';
+
+  @override
+  String get notifScheduleCancel => 'إلغاء';
+
+  @override
+  String get notifScheduleCreateBtn => 'إنشاء';
+
+  @override
+  String get notifScheduleCancelBtn => 'إلغاء الجدولة';
+
+  @override
+  String get notifScheduleCancelled => 'ملغى';
+
+  @override
+  String get notifScheduleSent => 'مرسل';
+
+  @override
+  String get notifSchedulePending => 'قيد الانتظار';
+
+  @override
+  String get notifSoundConfigsTitle => 'إعدادات الصوت';
+
+  @override
+  String get notifSoundConfigsEmpty => 'لا توجد إعدادات صوت';
+
+  @override
+  String get notifSoundConfigDefault => 'صوت افتراضي';
+
+  @override
+  String get notifDeliveryLogsTitle => 'سجلات التوصيل';
+
+  @override
+  String get notifDeliveryLogsEmpty => 'لا توجد سجلات توصيل';
+
+  @override
+  String get notifDeliveryLogsChannel => 'القناة:';
+
+  @override
+  String get notifDeliveryLogsStatus => 'الحالة:';
+
+  @override
+  String get notifDeliveryLogsNotifId => 'الإشعار';
+
+  @override
+  String get notifDeliveryLogsRetries => 'المحاولات';
+
+  @override
+  String get notifStatsTotal => 'الإجمالي';
+
+  @override
+  String get notifStatsUnread => 'غير مقروء';
+
+  @override
+  String get notifStatsRead => 'مقروء';
+
+  @override
+  String get notifStatsDeliveryRate => 'معدل التوصيل';
+
+  @override
+  String get notifStatsByCategory => 'حسب الفئة';
+
+  @override
+  String get notifStatsByChannel => 'حسب القناة';
+
+  @override
+  String get ordersAll => 'الكل';
+
+  @override
+  String get ordersCancelled => 'ملغى';
+
+  @override
+  String get ordersCompleted => 'مكتمل';
+
+  @override
+  String get ordersConfirmed => 'مؤكد';
+
+  @override
+  String get ordersDate => 'التاريخ';
+
+  @override
+  String get ordersDelivered => 'تم التوصيل';
+
+  @override
+  String get ordersDispatched => 'تم الإرسال';
+
+  @override
+  String get ordersFilterByStatus => 'تصفية حسب الحالة';
+
+  @override
+  String get ordersNew => 'جديد';
+
+  @override
+  String get ordersNoOrders => 'لا توجد طلبات';
+
+  @override
+  String get ordersNoOrdersSubtitle => 'ستظهر الطلبات هنا بعد إجراء المعاملات.';
+
+  @override
+  String get ordersOrderNumberCol => 'رقم الطلب';
+
+  @override
+  String get ordersPickedUp => 'تم الاستلام';
+
+  @override
+  String get ordersPreparing => 'قيد التحضير';
+
+  @override
+  String get ordersReady => 'جاهز';
+
+  @override
+  String get ordersSearchByNumber => 'بحث حسب رقم الطلب...';
+
+  @override
+  String get ordersSource => 'المصدر';
+
+  @override
+  String get ordersStatus => 'الحالة';
+
+  @override
+  String get ordersSubtotal => 'المجموع الفرعي';
+
+  @override
+  String get ordersTax => 'الضريبة';
+
+  @override
+  String get ordersTotal => 'الإجمالي';
+
+  @override
+  String get ordersVoid => 'إلغاء';
+
+  @override
+  String ordersVoidConfirm(String orderNumber) {
+    return 'هل أنت متأكد من إلغاء الطلب $orderNumber؟';
+  }
+
+  @override
+  String get ordersVoidOrder => 'إلغاء الطلب';
+
+  @override
+  String get ordersVoided => 'ملغى';
+
+  @override
+  String get ordersVoided2 => 'تم إلغاء الطلب';
+
+  @override
+  String posChangeAmount(String amount) {
+    return 'الباقي: ر.س. $amount';
+  }
+
+  @override
+  String get posEnterReceiptNumberHint =>
+      'أدخل رقم الإيصال للعثور على المعاملة';
+
+  @override
+  String get posHeldCartFallback => 'سلة محتفظة';
+
+  @override
+  String posHeldCartItemCount(int count, String time) {
+    return '$count عناصر • $time';
+  }
+
+  @override
+  String get posPaymentNotCover => 'الدفع لا يغطي المبلغ الإجمالي';
+
+  @override
+  String get posSelectRegisterError => 'يرجى اختيار سجل';
+
+  @override
+  String posTotalAmount(String amount) {
+    return 'الإجمالي: ر.س. $amount';
+  }
+
+  @override
+  String posTransactionLookupFailed(String error) {
+    return 'فشل البحث عن المعاملة: $error';
+  }
+
+  @override
+  String get promotionsActiveCoupons => 'القسائم النشطة';
+
+  @override
+  String get promotionsAnalytics => 'تحليلات العروض';
+
+  @override
+  String get promotionsAvgDiscountPerUse => 'متوسط الخصم لكل استخدام';
+
+  @override
+  String get promotionsCouponRedemptionRate => 'معدل استخدام القسائم';
+
+  @override
+  String get promotionsPerformance => 'الأداء';
+
+  @override
+  String get promotionsTotalCoupons => 'إجمالي القسائم';
+
+  @override
+  String get promotionsTotalDiscount => 'إجمالي الخصم';
+
+  @override
+  String get promotionsTotalUses => 'إجمالي الاستخدامات';
+
+  @override
+  String get promotionsUniqueCustomers => 'عملاء فريدون';
+
+  @override
+  String get securityAuditLogs => 'سجلات المراجعة';
+
+  @override
+  String get securityDevices => 'الأجهزة';
+
+  @override
+  String get securityLoginFailed => 'فشل';
+
+  @override
+  String get securityLoginSuccess => 'نجاح';
+
+  @override
+  String get securityLogins => 'تسجيلات الدخول';
+
+  @override
+  String get securityNoLoginAttempts => 'لا توجد محاولات تسجيل دخول';
+
+  @override
+  String get securityPolicy => 'السياسة';
+
+  @override
+  String get securityTitle => 'الأمان';
+
+  @override
+  String get securitySessions => 'الجلسات';
+
+  @override
+  String get securityIncidents => 'الحوادث';
+
+  @override
+  String get securityActive => 'نشط';
+
+  @override
+  String get securityInactive => 'غير نشط';
+
+  @override
+  String get securityEnded => 'منتهي';
+
+  @override
+  String get securityResolved => 'تم الحل';
+
+  @override
+  String get securityUnresolved => 'لم يتم الحل';
+
+  @override
+  String get securityNoDevices => 'لا توجد أجهزة مسجلة';
+
+  @override
+  String get securityNoSessions => 'لا توجد جلسات';
+
+  @override
+  String get securityNoIncidents => 'لا توجد حوادث';
+
+  @override
+  String get securityEndSession => 'إنهاء الجلسة';
+
+  @override
+  String get securityEndAllSessions => 'إنهاء جميع الجلسات';
+
+  @override
+  String get securityStarted => 'بدأت';
+
+  @override
+  String get securityLastActivity => 'آخر نشاط';
+
+  @override
+  String get securityResolve => 'حل';
+
+  @override
+  String get securityResolveIncident => 'حل الحادثة';
+
+  @override
+  String get securityResolutionNotes => 'ملاحظات الحل';
+
+  @override
+  String get securityType => 'النوع';
+
+  @override
+  String get securityIP => 'عنوان IP';
+
+  @override
+  String get securityHardware => 'العتاد';
+
+  @override
+  String get securityOS => 'نظام التشغيل';
+
+  @override
+  String get securityApp => 'التطبيق';
+
+  @override
+  String get securityDeviceType => 'نوع الجهاز';
+
+  @override
+  String get securityRemoteWipeRequested => 'تم طلب المسح عن بعد';
+
+  @override
+  String get securityDeactivate => 'إلغاء التفعيل';
+
+  @override
+  String get securityRemoteWipe => 'مسح عن بعد';
+
+  @override
+  String get securityRecentActivity => 'النشاط الأخير';
+
+  @override
+  String get securityActiveDevices => 'الأجهزة النشطة';
+
+  @override
+  String get securityActiveSessions => 'الجلسات النشطة';
+
+  @override
+  String get securityUnresolvedIncidents => 'حوادث لم تُحل';
+
+  @override
+  String get securityFailedLoginsToday => 'محاولات فاشلة اليوم';
+
+  @override
+  String get securityTotalAuditLogs => 'سجلات المراجعة';
+
+  @override
+  String get securityLockedOutUsers => 'مستخدمون مقفلون';
+
+  @override
+  String get securityPinAuth => 'الرقم السري والمصادقة';
+
+  @override
+  String get securityLockoutSessions => 'القفل والجلسات';
+
+  @override
+  String get securityPinOverrides => 'تجاوز الرقم السري';
+
+  @override
+  String get securityPasswordDevice => 'كلمة المرور والجهاز';
+
+  @override
+  String get securityIpRestrictions => 'قيود IP';
+
+  @override
+  String get securityPinLength => 'طول الرقم السري';
+
+  @override
+  String get securityDigits => 'أرقام';
+
+  @override
+  String get securityDays => 'أيام';
+
+  @override
+  String get securityMinutes => 'دقيقة';
+
+  @override
+  String get securityPinExpiryDays => 'انتهاء صلاحية الرقم السري';
+
+  @override
+  String get securityRequireUniquePins => 'طلب أرقام سرية فريدة';
+
+  @override
+  String get securityBiometricEnabled => 'البصمة مفعلة';
+
+  @override
+  String get securityRequire2fa => 'طلب المصادقة الثنائية للمالك';
+
+  @override
+  String get securityAutoLock => 'القفل التلقائي';
+
+  @override
+  String get securityMaxFailedAttempts => 'الحد الأقصى للمحاولات الفاشلة';
+
+  @override
+  String get securityLockoutDuration => 'مدة القفل';
+
+  @override
+  String get securitySessionMaxHours => 'الحد الأقصى لساعات الجلسة';
+
+  @override
+  String get securityForceLogoutOnRoleChange =>
+      'تسجيل خروج إجباري عند تغيير الدور';
+
+  @override
+  String get securityPinOverrideVoid => 'تجاوز الرقم السري: إلغاء';
+
+  @override
+  String get securityPinOverrideReturn => 'تجاوز الرقم السري: إرجاع';
+
+  @override
+  String get securityPinOverrideDiscount => 'تجاوز الرقم السري: خصم';
+
+  @override
+  String get securityDiscountThreshold => 'حد تجاوز الخصم';
+
+  @override
+  String get securityPasswordExpiryDays => 'انتهاء صلاحية كلمة المرور';
+
+  @override
+  String get securityRequireStrongPassword => 'طلب كلمة مرور قوية';
+
+  @override
+  String get securityMaxDevices => 'الحد الأقصى للأجهزة';
+
+  @override
+  String get securityAuditRetentionDays => 'مدة الاحتفاظ بالسجلات';
+
+  @override
+  String get securityIpRestrictionEnabled => 'قيود IP مفعلة';
+
+  @override
+  String get securityAllowedIpRanges => 'نطاقات IP المسموحة:';
+
+  @override
+  String get sessionsCloseSession => 'إغلاق الجلسة';
+
+  @override
+  String get sessionsCloseSessionDescription =>
+      'أدخل مبلغ النقد الختامي لإغلاق هذه الجلسة.';
+
+  @override
+  String get sessionsClosingCash => 'النقد الختامي';
+
+  @override
+  String get sessionsColCashier => 'الكاشير';
+
+  @override
+  String get sessionsColOpenedAt => 'وقت الفتح';
+
+  @override
+  String get sessionsColOpeningCash => 'النقد الافتتاحي';
+
+  @override
+  String get sessionsColRegister => 'السجل';
+
+  @override
+  String get sessionsColSessionId => 'معرف الجلسة';
+
+  @override
+  String get sessionsColStatus => 'الحالة';
+
+  @override
+  String get sessionsColTotalSales => 'إجمالي المبيعات';
+
+  @override
+  String get sessionsColTransactions => 'المعاملات';
+
+  @override
+  String get sessionsHistory => 'سجل الجلسات';
+
+  @override
+  String get sessionsNoSessions => 'لم يتم العثور على جلسات';
+
+  @override
+  String get sessionsNoSessionsSubtitle =>
+      'افتح جلسة نقاط بيع لبدء معالجة المعاملات.';
+
+  @override
+  String get sessionsOpenPosSession => 'فتح جلسة نقاط بيع';
+
+  @override
+  String get sessionsOpenSession => 'فتح الجلسة';
+
+  @override
+  String get sessionsOpenSessionDescription =>
+      'أدخل مبلغ النقد الافتتاحي لهذه الجلسة.';
+
+  @override
+  String get sessionsOpeningCash => 'النقد الافتتاحي';
+
+  @override
+  String get sessionsSessionClosed => 'تم إغلاق الجلسة.';
+
+  @override
+  String get sessionsSessionOpened => 'تم فتح جلسة نقاط البيع.';
+
+  @override
+  String get sessionsSessionPlural => 'جلسات';
+
+  @override
+  String get sessionsSessionSingular => 'جلسة';
+
+  @override
+  String get sessionsStatusClosed => 'مغلق';
+
+  @override
+  String get sessionsStatusOpen => 'مفتوح';
+
+  @override
+  String get sessionsTitle => 'جلسات نقاط البيع';
+
+  @override
+  String get syncAll => 'الكل';
+
+  @override
+  String get syncCloudData => 'بيانات السحابة';
+
+  @override
+  String get syncConflictResolution => 'حل التعارضات';
+
+  @override
+  String get syncLocalData => 'البيانات المحلية';
+
+  @override
+  String get syncNoConflicts => 'لا توجد تعارضات';
+
+  @override
+  String get syncNoUnresolvedConflicts => 'لا توجد تعارضات غير محلولة';
+
+  @override
+  String get syncOpen => 'مفتوح';
+
+  @override
+  String syncRecordsSynced(int count) {
+    return 'تم مزامنة $count سجل';
+  }
+
+  @override
+  String get syncResolved => 'محلول';
+
+  @override
+  String syncSyncProgress(String operation) {
+    return 'جاري مزامنة $operation...';
+  }
+
+  @override
+  String syncUnresolvedConflicts(int total) {
+    return 'تعارضات غير محلولة ($total)';
+  }
+
+  @override
+  String get syncUseCloud => 'استخدام السحابة';
+
+  @override
+  String get syncUseLocal => 'استخدام المحلي';
+
+  @override
+  String get termFormAddTitle => 'إضافة جهاز';
+
+  @override
+  String get termFormCreate => 'إنشاء جهاز';
+
+  @override
+  String get termFormCreateFailed => 'فشل إنشاء الجهاز';
+
+  @override
+  String get termFormCreated => 'تم إنشاء الجهاز بنجاح';
+
+  @override
+  String get termFormDeviceIdHint => 'معرف فريد لهذا الجهاز';
+
+  @override
+  String get termFormDeviceIdLabel => 'معرف الجهاز';
+
+  @override
+  String get termFormDeviceIdRequired => 'معرف الجهاز مطلوب';
+
+  @override
+  String get termFormEditTitle => 'تعديل الجهاز';
+
+  @override
+  String get termFormLoading => 'جاري تحميل الجهاز...';
+
+  @override
+  String get termFormNameHint => 'مثلاً كاشير ١، مكتب الاستقبال';
+
+  @override
+  String get termFormNameLabel => 'اسم الجهاز';
+
+  @override
+  String get termFormNameRequired => 'اسم الجهاز مطلوب';
+
+  @override
+  String get termFormPlatformHint => 'اختر المنصة';
+
+  @override
+  String get termFormPlatformLabel => 'المنصة';
+
+  @override
+  String get termFormPlatformRequired => 'المنصة مطلوبة';
+
+  @override
+  String get termFormSaveChanges => 'حفظ التغييرات';
+
+  @override
+  String get termFormSectionSubtitle => 'تفاصيل السجل الأساسية';
+
+  @override
+  String get termFormSectionTitle => 'معلومات الجهاز';
+
+  @override
+  String get termFormUpdateFailed => 'فشل تحديث الجهاز';
+
+  @override
+  String get termFormUpdated => 'تم تحديث الجهاز بنجاح';
+
+  @override
+  String get termFormVersionHint => 'مثلاً 1.0.0';
+
+  @override
+  String get termFormVersionLabel => 'إصدار التطبيق (اختياري)';
+
+  @override
+  String get terminalsActivate => 'تفعيل';
+
+  @override
+  String get terminalsActivatedLower => 'مفعّل';
+
+  @override
+  String get terminalsActive => 'نشط';
+
+  @override
+  String get terminalsAdd => 'إضافة جهاز';
+
+  @override
+  String get terminalsColDeviceId => 'معرف الجهاز';
+
+  @override
+  String get terminalsColLastSync => 'آخر مزامنة';
+
+  @override
+  String get terminalsColName => 'الاسم';
+
+  @override
+  String get terminalsColOnline => 'متصل';
+
+  @override
+  String get terminalsColPlatform => 'المنصة';
+
+  @override
+  String get terminalsColSoftpos => 'SoftPOS';
+
+  @override
+  String get terminalsColStatus => 'الحالة';
+
+  @override
+  String get terminalsColVersion => 'الإصدار';
+
+  @override
+  String get terminalsDeactivate => 'تعطيل';
+
+  @override
+  String get terminalsDeactivatedLower => 'معطّل';
+
+  @override
+  String get terminalsDeleteFailed => 'فشل حذف الجهاز.';
+
+  @override
+  String terminalsDeleteMessage(String name) {
+    return 'حذف \"$name\" سيزيل جميع بياناته. لا يمكن التراجع.';
+  }
+
+  @override
+  String get terminalsDeleteTitle => 'حذف الجهاز؟';
+
+  @override
+  String terminalsDeleted(String name) {
+    return 'تم حذف الجهاز \"$name\".';
+  }
+
+  @override
+  String get terminalsEdit => 'تعديل';
+
+  @override
+  String get terminalsInactive => 'غير نشط';
+
+  @override
+  String get terminalsNever => 'أبداً';
+
+  @override
+  String get terminalsNoTerminals => 'لم يتم العثور على أجهزة';
+
+  @override
+  String get terminalsNoTerminalsSubtitle => 'أضف أول جهاز نقاط بيع للبدء.';
+
+  @override
+  String get terminalsOff => 'مطفأ';
+
+  @override
+  String get terminalsOn => 'مفعّل';
+
+  @override
+  String get terminalsSearch => 'بحث عن أجهزة...';
+
+  @override
+  String get terminalsSubtitle => 'إدارة أجهزة نقاط البيع';
+
+  @override
+  String get terminalsTitle => 'الأجهزة';
+
+  @override
+  String get terminalsToggleFailed => 'فشل تحديث حالة الجهاز.';
+
+  @override
+  String terminalsToggleMessage(String action, String name) {
+    return '$action الجهاز \"$name\"؟';
+  }
+
+  @override
+  String get terminalsToggleStatus => 'تغيير الحالة';
+
+  @override
+  String terminalsToggleTitle(String action) {
+    return '$action الجهاز؟';
+  }
+
+  @override
+  String terminalsToggled(String name, String actionPast) {
+    return 'تم تغيير حالة الجهاز \"$name\" إلى $actionPast.';
+  }
+
+  @override
+  String get zatcaEInvoicing => 'الفوترة الإلكترونية - زاتكا';
+
+  @override
+  String get zatcaRecentInvoices => 'الفواتير الأخيرة';
+
+  @override
+  String zatcaViewAll(int total) {
+    return 'عرض الكل ($total)';
+  }
+
+  @override
+  String get appBarLanguage => 'اللغة';
+
+  @override
+  String get appBarTheme => 'المظهر';
+
+  @override
+  String get appBarDarkMode => 'الوضع الداكن';
+
+  @override
+  String get appBarLightMode => 'الوضع الفاتح';
+
+  @override
+  String get appBarSystemTheme => 'النظام';
+
+  @override
+  String get logoutConfirm => 'هل أنت متأكد من تسجيل الخروج؟';
+
+  @override
+  String get logoutTitle => 'تسجيل الخروج';
+
+  @override
+  String get sidebarDashboard => 'لوحة التحكم';
+
+  @override
+  String get sidebarPosTerminal => 'نقطة البيع';
+
+  @override
+  String get sidebarTerminals => 'الأجهزة';
+
+  @override
+  String get sidebarSessions => 'الجلسات';
+
+  @override
+  String get sidebarOrders => 'الطلبات';
+
+  @override
+  String get sidebarPayments => 'المدفوعات';
+
+  @override
+  String get sidebarProducts => 'المنتجات';
+
+  @override
+  String get sidebarCategories => 'الفئات';
+
+  @override
+  String get sidebarSuppliers => 'الموردون';
+
+  @override
+  String get sidebarInventory => 'المخزون';
+
+  @override
+  String get sidebarLabels => 'التصنيفات';
+
+  @override
+  String get sidebarCustomers => 'العملاء';
+
+  @override
+  String get sidebarStaffMembers => 'الموظفون';
+
+  @override
+  String get sidebarRolesPermissions => 'الأدوار والصلاحيات';
+
+  @override
+  String get sidebarAttendance => 'الحضور';
+
+  @override
+  String get sidebarShiftSchedule => 'جدول المناوبات';
+
+  @override
+  String get sidebarBranches => 'الفروع';
+
+  @override
+  String get sidebarAccounting => 'المحاسبة';
+
+  @override
+  String get sidebarReports => 'التقارير';
+
+  @override
+  String get sidebarSalesSummary => 'ملخص المبيعات';
+
+  @override
+  String get sidebarHourlySales => 'المبيعات بالساعة';
+
+  @override
+  String get sidebarProductPerformance => 'أداء المنتجات';
+
+  @override
+  String get sidebarCategoryBreakdown => 'تحليل الفئات';
+
+  @override
+  String get sidebarPaymentMethods => 'طرق الدفع';
+
+  @override
+  String get sidebarStaffPerformance => 'أداء الموظفين';
+
+  @override
+  String get sidebarInventoryReports => 'تقارير المخزون';
+
+  @override
+  String get sidebarFinancialReports => 'التقارير المالية';
+
+  @override
+  String get sidebarCustomerReports => 'تقارير العملاء';
+
+  @override
+  String get sidebarPromotions => 'العروض';
+
+  @override
+  String get sidebarThawaniPay => 'ثواني باي';
+
+  @override
+  String get sidebarDelivery => 'التوصيل';
+
+  @override
+  String get sidebarZatca => 'زاتكا';
+
+  @override
+  String get sidebarHardware => 'الأجهزة';
+
+  @override
+  String get sidebarRestaurant => 'مطعم';
+
+  @override
+  String get sidebarBakery => 'مخبز';
+
+  @override
+  String get sidebarPharmacy => 'صيدلية';
+
+  @override
+  String get sidebarElectronics => 'إلكترونيات';
+
+  @override
+  String get sidebarFlorist => 'زهور';
+
+  @override
+  String get sidebarJewelry => 'مجوهرات';
+
+  @override
+  String get sidebarPosCustomize => 'تخصيص نقطة البيع';
+
+  @override
+  String get sidebarLayoutBuilder => 'منشئ التخطيط';
+
+  @override
+  String get sidebarMarketplace => 'المتجر';
+
+  @override
+  String get sidebarReceiptTemplates => 'قوالب الإيصالات';
+
+  @override
+  String get sidebarCfdThemes => 'سمات شاشة العميل';
+
+  @override
+  String get sidebarNotifications => 'الإشعارات';
+
+  @override
+  String get sidebarSecurity => 'الأمان';
+
+  @override
+  String get sidebarSettings => 'الإعدادات';
+
+  @override
+  String get sidebarSubscription => 'الاشتراك';
+
+  @override
+  String get sidebarOnboarding => 'الإعداد الأولي';
+
+  @override
+  String get sidebarAdminStores => 'إدارة المتاجر';
+
+  @override
+  String get sidebarSupport => 'الدعم';
+
+  @override
+  String get sidebarTickets => 'التذاكر';
+
+  @override
+  String get sidebarKnowledgeBase => 'قاعدة المعارف';
+
+  @override
+  String get sidebarStoreName => 'اسم المتجر';
+
+  @override
+  String get dailySummaryTitle => 'الملخص اليومي';
+
+  @override
+  String get dailySummaryPrint => 'طباعة';
+
+  @override
+  String get dailySummaryGrossRevenue => 'إجمالي الإيرادات';
+
+  @override
+  String get dailySummaryExpenses => 'المصروفات';
+
+  @override
+  String get dailySummaryNetRevenue => 'صافي الإيرادات';
+
+  @override
+  String get dailySummaryTransactions => 'المعاملات';
+
+  @override
+  String get dailySummaryRevenueByMethod => 'الإيرادات حسب طريقة الدفع';
+
+  @override
+  String get dailySummaryNoPayments => 'لا توجد مدفوعات اليوم';
+
+  @override
+  String get dailySummaryCashVariance => 'فارق النقدية';
+
+  @override
+  String get dailySummaryWithinTolerance => 'ضمن الحد المقبول';
+
+  @override
+  String get dailySummaryNeedsReview => 'يحتاج مراجعة';
+
+  @override
+  String dailySummarySessions(int count) {
+    return 'الجلسات: $count';
+  }
+
+  @override
+  String get dailySummaryHourlyActivity => 'النشاط بالساعة';
+
+  @override
+  String get dailySummarySessionDetails => 'تفاصيل الجلسات';
+
+  @override
+  String get dailySummaryNoSessions => 'لا توجد جلسات';
+
+  @override
+  String dailySummaryFloat(String amount) {
+    return 'المبلغ الافتتاحي: $amount ر.س';
+  }
+
+  @override
+  String dailySummaryTerminal(String id) {
+    return 'الجهاز: $id';
+  }
+
+  @override
+  String get finReconTitle => 'التسوية المالية';
+
+  @override
+  String get finReconRevenueSummary => 'ملخص الإيرادات';
+
+  @override
+  String get finReconTotalRevenue => 'إجمالي الإيرادات';
+
+  @override
+  String get finReconTransactions => 'المعاملات';
+
+  @override
+  String get finReconAvgTransaction => 'متوسط المعاملة';
+
+  @override
+  String get finReconPaymentMethods => 'طرق الدفع';
+
+  @override
+  String get finReconNoPayments => 'لم يتم تسجيل مدفوعات';
+
+  @override
+  String get finReconCashRecon => 'تسوية النقدية';
+
+  @override
+  String get finReconExpectedCash => 'النقدية المتوقعة';
+
+  @override
+  String get finReconActualCash => 'النقدية الفعلية';
+
+  @override
+  String get finReconVariance => 'الفارق';
+
+  @override
+  String finReconSessionsClosed(int count) {
+    return 'الجلسات: $count مغلقة';
+  }
+
+  @override
+  String get finReconExpenses => 'المصروفات';
+
+  @override
+  String get finReconNoExpenses => 'لا توجد مصروفات';
+
+  @override
+  String get finReconPhysicalCashCount => 'عد النقدية الفعلي';
+
+  @override
+  String get finReconCountedTotal => 'إجمالي العد';
+
+  @override
+  String get finReconPrintReport => 'طباعة التقرير';
+
+  @override
+  String get finReconExportPdf => 'تصدير PDF';
+
+  @override
+  String get finReconConfirmRecon => 'تأكيد التسوية';
+
+  @override
+  String get finReconConfirmMessage =>
+      'سيتم إنهاء التسوية لهذا اليوم. سيتم تحديد جميع جلسات النقدية كمُسوّاة.';
+
+  @override
+  String get finReconConfirmed => 'تم تأكيد التسوية';
+
+  @override
+  String get commonConfirm => 'تأكيد';
+
+  @override
+  String get customerReportsTitle => 'تقارير العملاء';
+
+  @override
+  String get customerReportsTopCustomers => 'أفضل العملاء';
+
+  @override
+  String get customerReportsRetention => 'الاحتفاظ';
+
+  @override
+  String get receiptTemplatesTitle => 'قوالب الإيصالات';
+
+  @override
+  String get receiptTemplatesEmpty => 'لا توجد قوالب إيصالات';
+
+  @override
+  String get receiptTemplatesEmptySubtitle =>
+      'لا توجد قوالب تخطيط إيصالات متاحة لخطتك.';
+
+  @override
+  String get receiptTemplateDetail => 'تفاصيل قالب الإيصال';
+
+  @override
+  String get receiptTemplateBilingual => 'ثنائي اللغة';
+
+  @override
+  String get receiptTemplateActive => 'نشط';
+
+  @override
+  String get receiptTemplateHeaderConfig => 'إعدادات الرأس';
+
+  @override
+  String get receiptTemplateBodyConfig => 'إعدادات المحتوى';
+
+  @override
+  String get receiptTemplateFooterConfig => 'إعدادات التذييل';
+
+  @override
+  String get cfdThemesTitle => 'سمات شاشة العرض للعميل';
+
+  @override
+  String get cfdThemesEmpty => 'لا توجد سمات';
+
+  @override
+  String get cfdThemesEmptySubtitle =>
+      'لا توجد سمات شاشة عرض العميل متاحة لخطتك.';
+
+  @override
+  String get cfdThemeDetail => 'تفاصيل سمة شاشة العميل';
+
+  @override
+  String get cfdThemeActive => 'نشط';
+
+  @override
+  String get cfdThemeColorPalette => 'لوحة الألوان';
+
+  @override
+  String get cfdThemeDisplaySettings => 'إعدادات العرض';
+
+  @override
+  String get cfdThemeCartLayout => 'تخطيط السلة';
+
+  @override
+  String get cfdThemeIdleLayout => 'تخطيط الخمول';
+
+  @override
+  String get cfdThemeFontFamily => 'نوع الخط';
+
+  @override
+  String get cfdThemeAnimation => 'نمط الحركة';
+
+  @override
+  String get cfdThemeTransition => 'مدة الانتقال';
+
+  @override
+  String get cfdThemeThankYou => 'حركة الشكر';
+
+  @override
+  String get cfdThemeShowLogo => 'إظهار شعار المتجر';
+
+  @override
+  String get cfdThemeShowTotal => 'إظهار المجموع';
+
+  @override
+  String get cfdThemeBackground => 'الخلفية';
+
+  @override
+  String get cfdThemeText => 'النص';
+
+  @override
+  String get cfdThemeAccent => 'اللون المميز';
+
+  @override
+  String get cfdThemePreviewTitle => 'معاينة السمة';
+
+  @override
+  String get cfdThemePreviewButton => 'زر عينة';
+
+  @override
+  String get cfdThemeYes => 'نعم';
+
+  @override
+  String get cfdThemeNo => 'لا';
+
+  @override
+  String get templatePreviewButton => 'معاينة';
+
+  @override
+  String get templatePreviewTitle => 'معاينة';
+
+  @override
+  String get templatePreviewRefresh => 'تحديث المعاينة';
+
+  @override
+  String get labelLayoutTemplatesTitle => 'قوالب تخطيط الملصقات';
+
+  @override
+  String get labelLayoutTemplatesEmpty => 'لا توجد قوالب ملصقات';
+
+  @override
+  String get labelLayoutTemplatesEmptySubtitle =>
+      'ستظهر قوالب تخطيط الملصقات هنا بمجرد إنشائها بواسطة المسؤول';
+
+  @override
+  String get labelLayoutTemplateDetail => 'تفاصيل قالب الملصق';
+
+  @override
+  String get labelLayoutTemplateActive => 'نشط';
+
+  @override
+  String get labelLayoutTemplateBordered => 'بإطار';
+
+  @override
+  String get labelLayoutTemplateDimensions => 'الأبعاد والخط';
+
+  @override
+  String get labelLayoutTemplateWidth => 'العرض';
+
+  @override
+  String get labelLayoutTemplateHeight => 'الارتفاع';
+
+  @override
+  String get labelLayoutTemplateFontFamily => 'عائلة الخط';
+
+  @override
+  String get labelLayoutTemplateFontSize => 'حجم الخط';
+
+  @override
+  String get labelLayoutTemplateBackground => 'الخلفية';
+
+  @override
+  String get labelLayoutTemplateBarcodeSettings => 'إعدادات الباركود';
+
+  @override
+  String get labelLayoutTemplateBarcodeType => 'نوع الباركود';
+
+  @override
+  String get labelLayoutTemplateShowNumber => 'إظهار الرقم';
+
+  @override
+  String get labelLayoutTemplateYes => 'نعم';
+
+  @override
+  String get labelLayoutTemplateNo => 'لا';
+
+  @override
+  String get labelLayoutTemplateFieldLayout => 'تخطيط الحقول';
+
+  @override
+  String get labelLayoutTemplateSimpleLayout => 'تخطيط بسيط متراص';
+
+  @override
+  String get labelLayoutTemplateNoFields => 'لم يتم تكوين حقول';
+
+  @override
+  String get sidebarLabelLayoutTemplates => 'قوالب الملصقات';
+
+  @override
+  String get commonUpdate => 'تحديث';
+
+  @override
+  String get commonClose => 'إغلاق';
+
+  @override
+  String get supplierTitle => 'الموردون';
+
+  @override
+  String get supplierNew => 'مورد جديد';
+
+  @override
+  String get supplierEdit => 'تعديل المورد';
+
+  @override
+  String get supplierName => 'الاسم';
+
+  @override
+  String get supplierNameHint => 'أدخل اسم المورد';
+
+  @override
+  String get supplierPhone => 'الهاتف';
+
+  @override
+  String get supplierEmail => 'البريد الإلكتروني';
+
+  @override
+  String get supplierWebsite => 'الموقع الإلكتروني';
+
+  @override
+  String get supplierAddress => 'العنوان';
+
+  @override
+  String get supplierAddressLine => 'العنوان';
+
+  @override
+  String get supplierAddressHint => 'أدخل العنوان';
+
+  @override
+  String get supplierCity => 'المدينة';
+
+  @override
+  String get supplierCountry => 'الدولة';
+
+  @override
+  String get supplierPostalCode => 'الرمز البريدي';
+
+  @override
+  String get supplierContactPerson => 'جهة الاتصال';
+
+  @override
+  String get supplierContactPersonHint => 'اسم جهة الاتصال الرئيسية';
+
+  @override
+  String get supplierCategory => 'الفئة';
+
+  @override
+  String get supplierCategoryHint => 'مثل: مواد خام، تغليف';
+
+  @override
+  String get supplierTaxNumber => 'الرقم الضريبي';
+
+  @override
+  String get supplierPaymentTerms => 'شروط الدفع';
+
+  @override
+  String get supplierPaymentTermsHint => 'مثل: صافي 30 يوم';
+
+  @override
+  String get supplierCreditLimit => 'حد الائتمان';
+
+  @override
+  String get supplierOutstandingBalance => 'الرصيد المستحق';
+
+  @override
+  String get supplierRating => 'التقييم';
+
+  @override
+  String get supplierBankName => 'اسم البنك';
+
+  @override
+  String get supplierBankAccount => 'رقم الحساب البنكي';
+
+  @override
+  String get supplierIban => 'رقم الآيبان';
+
+  @override
+  String get supplierBasicInfo => 'المعلومات الأساسية';
+
+  @override
+  String get supplierContactInfo => 'معلومات الاتصال';
+
+  @override
+  String get supplierBankingInfo => 'المعلومات البنكية';
+
+  @override
+  String get supplierBusinessInfo => 'المعلومات التجارية';
+
+  @override
+  String get supplierNotesHint => 'أي ملاحظات إضافية';
+
+  @override
+  String get supplierSearchHint => 'البحث في الموردين...';
+
+  @override
+  String get supplierNoSuppliers => 'لا يوجد موردون بعد';
+
+  @override
+  String get supplierNoSuppliersHint => 'أضف موردين لتتبع مصادر منتجاتك.';
+
+  @override
+  String get supplierStatistics => 'الإحصائيات';
+
+  @override
+  String get supplierCreated => 'تم إنشاء المورد.';
+
+  @override
+  String get supplierUpdated => 'تم تحديث المورد.';
+
+  @override
+  String get supplierDeleteTitle => 'حذف المورد';
+
+  @override
+  String supplierDeleteConfirm(String name) {
+    return 'هل أنت متأكد من حذف \"$name\"؟';
+  }
+
+  @override
+  String supplierDeleted(String name) {
+    return 'تم حذف المورد \"$name\".';
+  }
+
+  @override
+  String get supplierReturnsTitle => 'مرتجعات الموردين';
+
+  @override
+  String get supplierReturnsSubtitle => 'إدارة مرتجعات المنتجات للموردين';
+
+  @override
+  String get supplierReturnNew => 'مرتجع جديد';
+
+  @override
+  String get supplierReturnDetail => 'تفاصيل المرتجع';
+
+  @override
+  String get supplierReturnReason => 'السبب';
+
+  @override
+  String get supplierReturnReasonHint => 'مثل: منتجات معيبة، شحنة خاطئة';
+
+  @override
+  String get supplierReturnRefHint => 'مثل: SR-001';
+
+  @override
+  String get supplierReturnSearchHint => 'البحث في المرتجعات...';
+
+  @override
+  String get supplierReturnNoReturns => 'لا توجد مرتجعات';
+
+  @override
+  String get supplierReturnNoReturnsHint =>
+      'أنشئ مرتجع لإرسال منتجات إلى المورد.';
+
+  @override
+  String get supplierReturnNoItems => 'لا توجد أصناف في هذا المرتجع';
+
+  @override
+  String get supplierReturnSelectSupplier => 'يرجى اختيار مورد';
+
+  @override
+  String get supplierReturnSelectProduct => 'يرجى اختيار منتج';
+
+  @override
+  String get supplierReturnItemReason => 'سبب الصنف';
+
+  @override
+  String get supplierReturnItemReasonHint => 'سبب إرجاع هذا الصنف';
+
+  @override
+  String get supplierReturnBatchNumber => 'رقم الدفعة';
+
+  @override
+  String get supplierReturnBatchHint => 'مثل: BATCH-001';
+
+  @override
+  String get supplierReturnCreateBtn => 'إنشاء المرتجع';
+
+  @override
+  String get supplierReturnCreated => 'تم إنشاء مرتجع المورد كمسودة.';
+
+  @override
+  String get supplierReturnSubmitAction => 'إرسال';
+
+  @override
+  String get supplierReturnSubmitted => 'مُرسل';
+
+  @override
+  String get supplierReturnCompleteAction => 'إكمال';
+
+  @override
+  String get supplierReturnCompleted => 'مكتمل';
+
+  @override
+  String get supplierReturnCreatedBy => 'أنشأه';
+
+  @override
+  String get supplierReturnApprovedBy => 'اعتمده';
+
+  @override
+  String get supplierReturnApprovedAt => 'تاريخ الاعتماد';
+
+  @override
+  String get supplierReturnCompletedAt => 'تاريخ الإكمال';
+
+  @override
+  String get supplierReturnCreatedAt => 'تاريخ الإنشاء';
+
+  @override
+  String supplierReturnActionConfirm(String action, String reference) {
+    return '$action المرتجع \"$reference\"؟';
+  }
+
+  @override
+  String supplierReturnActionSuccess(String action) {
+    return 'تم $action المرتجع بنجاح.';
+  }
 }

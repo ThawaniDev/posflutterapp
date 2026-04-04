@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
@@ -92,7 +93,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     final cartData = cart.toHoldCartJson();
     await ref.read(heldCartsProvider.notifier).holdCart({...cartData, 'label': label});
     ref.read(cartProvider.notifier).clear();
-    if (mounted) showPosSuccessSnackbar(context, 'Cart held');
+    if (mounted) showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posCartHeld);
   }
 
   Future<String?> _showLabelDialog() async {
@@ -107,27 +108,36 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Hold Cart', style: AppTypography.headlineSmall),
+                Text(AppLocalizations.of(ctx)!.posHoldCart, style: AppTypography.headlineSmall),
                 AppSpacing.gapH16,
                 PosTextField(
                   controller: controller,
-                  label: 'Label (optional)',
-                  hint: 'e.g. Table 5, Mr. Ahmed',
+                  label: AppLocalizations.of(ctx)!.posLabelOptional,
+                  hint: AppLocalizations.of(ctx)!.posLabelHint,
                   autofocus: true,
-                  onSubmitted: (_) => Navigator.pop(ctx, controller.text.trim().isEmpty ? 'Held Cart' : controller.text.trim()),
+                  onSubmitted: (_) => Navigator.pop(
+                    ctx,
+                    controller.text.trim().isEmpty ? AppLocalizations.of(ctx)!.posHeldCart : controller.text.trim(),
+                  ),
                 ),
                 AppSpacing.gapH16,
                 Row(
                   children: [
                     Expanded(
-                      child: PosButton(label: 'Cancel', variant: PosButtonVariant.outline, onPressed: () => Navigator.pop(ctx)),
+                      child: PosButton(
+                        label: AppLocalizations.of(ctx)!.posCancel,
+                        variant: PosButtonVariant.outline,
+                        onPressed: () => Navigator.pop(ctx),
+                      ),
                     ),
                     AppSpacing.gapW12,
                     Expanded(
                       child: PosButton(
-                        label: 'Hold',
-                        onPressed: () =>
-                            Navigator.pop(ctx, controller.text.trim().isEmpty ? 'Held Cart' : controller.text.trim()),
+                        label: AppLocalizations.of(ctx)!.posHold,
+                        onPressed: () => Navigator.pop(
+                          ctx,
+                          controller.text.trim().isEmpty ? AppLocalizations.of(ctx)!.posHeldCart : controller.text.trim(),
+                        ),
                       ),
                     ),
                   ],
@@ -165,9 +175,9 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     if (product != null) {
       ref.read(cartProvider.notifier).addProduct(product);
       _searchController.clear();
-      if (mounted) showPosSuccessSnackbar(context, '${product.name} added');
+      if (mounted) showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posProductAdded(product.name));
     } else {
-      if (mounted) showPosErrorSnackbar(context, 'Product not found');
+      if (mounted) showPosErrorSnackbar(context, AppLocalizations.of(context)!.posProductNotFound);
     }
   }
 
@@ -186,16 +196,16 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Cart Discount', style: AppTypography.headlineSmall),
+                Text(AppLocalizations.of(ctx)!.posCartDiscount, style: AppTypography.headlineSmall),
                 AppSpacing.gapH8,
                 Text(
-                  'Subtotal: SAR ${cart.subtotal.toStringAsFixed(2)}',
+                  AppLocalizations.of(ctx)!.posSubtotalAmount(cart.subtotal.toStringAsFixed(2)),
                   style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight),
                 ),
                 AppSpacing.gapH16,
                 PosTextField(
                   controller: controller,
-                  label: 'Discount Amount (SAR)',
+                  label: AppLocalizations.of(ctx)!.posDiscountAmountSar,
                   hint: '0.00',
                   autofocus: true,
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -209,7 +219,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                   children: [
                     Expanded(
                       child: PosButton(
-                        label: 'Remove',
+                        label: AppLocalizations.of(ctx)!.posRemove,
                         variant: PosButtonVariant.outline,
                         onPressed: () => Navigator.pop(ctx, 0.0),
                       ),
@@ -217,7 +227,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                     AppSpacing.gapW12,
                     Expanded(
                       child: PosButton(
-                        label: 'Apply',
+                        label: AppLocalizations.of(ctx)!.posApply,
                         onPressed: () {
                           final val = double.tryParse(controller.text.trim());
                           Navigator.pop(ctx, val);
@@ -250,12 +260,12 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Order Notes', style: AppTypography.headlineSmall),
+                Text(AppLocalizations.of(ctx)!.posOrderNotes, style: AppTypography.headlineSmall),
                 AppSpacing.gapH16,
                 PosTextField(
                   controller: controller,
-                  label: 'Notes',
-                  hint: 'Add notes for this order...',
+                  label: AppLocalizations.of(ctx)!.posNotes,
+                  hint: AppLocalizations.of(ctx)!.posNotesHint,
                   autofocus: true,
                   maxLines: 3,
                   onSubmitted: (_) => Navigator.pop(ctx, controller.text.trim()),
@@ -265,14 +275,17 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                   children: [
                     Expanded(
                       child: PosButton(
-                        label: 'Clear',
+                        label: AppLocalizations.of(ctx)!.posClear,
                         variant: PosButtonVariant.outline,
                         onPressed: () => Navigator.pop(ctx, ''),
                       ),
                     ),
                     AppSpacing.gapW12,
                     Expanded(
-                      child: PosButton(label: 'Save', onPressed: () => Navigator.pop(ctx, controller.text.trim())),
+                      child: PosButton(
+                        label: AppLocalizations.of(ctx)!.posSave,
+                        onPressed: () => Navigator.pop(ctx, controller.text.trim()),
+                      ),
                     ),
                   ],
                 ),
@@ -293,9 +306,9 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     final lastItem = cart.items.last;
     showPosConfirmDialog(
       context,
-      title: 'Void Last Item?',
-      message: 'Remove "${lastItem.product.name}" from cart?',
-      confirmLabel: 'Remove',
+      title: AppLocalizations.of(context)!.posVoidLastItem,
+      message: AppLocalizations.of(context)!.posRemoveItemFromCart(lastItem.product.name),
+      confirmLabel: AppLocalizations.of(context)!.posRemove,
       isDanger: true,
     ).then((confirmed) {
       if (confirmed == true) {
@@ -359,10 +372,10 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                   child: const Icon(Icons.point_of_sale_rounded, size: 40, color: AppColors.primary),
                 ),
                 AppSpacing.gapH24,
-                Text('Start Your Shift', style: AppTypography.headlineLarge),
+                Text(AppLocalizations.of(context)!.posStartYourShift, style: AppTypography.headlineLarge),
                 AppSpacing.gapH8,
                 Text(
-                  'Open a cash session to start processing transactions',
+                  AppLocalizations.of(context)!.posOpenShiftDescription,
                   style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                   textAlign: TextAlign.center,
                 ),
@@ -390,7 +403,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                   )
                 else
                   PosButton(
-                    label: 'Open Shift',
+                    label: AppLocalizations.of(context)!.posOpenShift,
                     icon: Icons.login_rounded,
                     size: PosButtonSize.lg,
                     isFullWidth: true,
@@ -423,9 +436,9 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(user?.name ?? 'Cashier', style: AppTypography.titleMedium),
+              Text(user?.name ?? AppLocalizations.of(context)!.posCashier, style: AppTypography.titleMedium),
               Text(
-                'Session #${session.id.substring(0, 8)}',
+                AppLocalizations.of(context)!.posSessionNumber(session.id.substring(0, 8)),
                 style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
               ),
             ],
@@ -433,7 +446,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
           const Spacer(),
           // Action buttons — touch-friendly md size
           PosButton(
-            label: 'Discount',
+            label: AppLocalizations.of(context)!.posDiscount,
             icon: Icons.discount_outlined,
             variant: cart.isNotEmpty ? PosButtonVariant.soft : PosButtonVariant.outline,
             size: PosButtonSize.md,
@@ -441,7 +454,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
           ),
           AppSpacing.gapW8,
           PosButton(
-            label: 'Notes',
+            label: AppLocalizations.of(context)!.posNotes,
             icon: Icons.note_alt_outlined,
             variant: PosButtonVariant.outline,
             size: PosButtonSize.md,
@@ -449,7 +462,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
           ),
           AppSpacing.gapW8,
           PosButton(
-            label: 'Void Last',
+            label: AppLocalizations.of(context)!.posVoidLast,
             icon: Icons.backspace_outlined,
             variant: PosButtonVariant.outline,
             size: PosButtonSize.md,
@@ -459,7 +472,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
           Container(width: 1, height: 32, color: isDark ? AppColors.borderDark : AppColors.borderLight),
           AppSpacing.gapW12,
           PosButton(
-            label: 'Return',
+            label: AppLocalizations.of(context)!.posReturn,
             icon: Icons.assignment_return_outlined,
             variant: PosButtonVariant.outline,
             size: PosButtonSize.md,
@@ -467,7 +480,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
           ),
           AppSpacing.gapW8,
           PosButton(
-            label: 'Held (F9)',
+            label: AppLocalizations.of(context)!.posHeldF9,
             icon: Icons.pause_circle_outline,
             variant: PosButtonVariant.outline,
             size: PosButtonSize.md,
@@ -475,7 +488,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
           ),
           AppSpacing.gapW8,
           PosButton(
-            label: 'End Shift',
+            label: AppLocalizations.of(context)!.posEndShift,
             icon: Icons.logout_rounded,
             variant: PosButtonVariant.danger,
             size: PosButtonSize.md,
@@ -500,7 +513,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
           Expanded(
             child: PosSearchField(
               controller: _searchController,
-              hint: 'Search products or scan barcode (F2)',
+              hint: AppLocalizations.of(context)!.posSearchProductsHint,
               onChanged: _handleProductSearch,
               onSubmitted: (val) {
                 if (val.isNotEmpty && RegExp(r'^\d{4,}$').hasMatch(val)) {
@@ -537,12 +550,12 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             Icon(Icons.inventory_2_outlined, size: 48, color: isDark ? AppColors.textDisabledDark : AppColors.textDisabledLight),
             AppSpacing.gapH8,
             Text(
-              'No products found',
+              AppLocalizations.of(context)!.posNoProductsFound,
               style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
             ),
             AppSpacing.gapH4,
             Text(
-              'Try a different search or check your catalog.',
+              AppLocalizations.of(context)!.posNoProductsSubtitle,
               style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
             ),
           ],
@@ -589,7 +602,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
               children: [
                 const Icon(Icons.shopping_cart_outlined, size: 24, color: AppColors.primary),
                 AppSpacing.gapW8,
-                Text('Cart', style: AppTypography.headlineSmall),
+                Text(AppLocalizations.of(context)!.posCart, style: AppTypography.headlineSmall),
                 const Spacer(),
                 if (cart.notes != null && cart.notes!.isNotEmpty)
                   Padding(
@@ -622,14 +635,14 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                         ),
                         AppSpacing.gapH8,
                         Text(
-                          'No items',
+                          AppLocalizations.of(context)!.posNoItems,
                           style: AppTypography.bodyMedium.copyWith(
                             color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                           ),
                         ),
                         AppSpacing.gapH4,
                         Text(
-                          'Tap products to add them',
+                          AppLocalizations.of(context)!.posTapProductsToAdd,
                           style: AppTypography.bodySmall.copyWith(
                             color: isDark ? AppColors.textDisabledDark : AppColors.textDisabledLight,
                           ),
@@ -667,7 +680,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             AppSpacing.gapW8,
             Expanded(
               child: Text(
-                cart.customer?.name ?? 'Walk-in Customer',
+                cart.customer?.name ?? AppLocalizations.of(context)!.posWalkInCustomer,
                 style: AppTypography.bodyMedium.copyWith(
                   color: cart.customer != null
                       ? (isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight)
@@ -699,9 +712,10 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           // Subtotal
-          _buildTotalRow('Subtotal', cart.subtotal, isDark),
-          if (cart.discountTotal > 0) _buildTotalRow('Discount', -cart.discountTotal, isDark, color: AppColors.error),
-          _buildTotalRow('Tax (15%)', cart.taxAmount, isDark),
+          _buildTotalRow(AppLocalizations.of(context)!.posSubtotal, cart.subtotal, isDark),
+          if (cart.discountTotal > 0)
+            _buildTotalRow(AppLocalizations.of(context)!.posDiscount, -cart.discountTotal, isDark, color: AppColors.error),
+          _buildTotalRow(AppLocalizations.of(context)!.posTax15, cart.taxAmount, isDark),
           AppSpacing.gapH12,
           Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
           AppSpacing.gapH12,
@@ -709,9 +723,9 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Total', style: AppTypography.headlineLarge),
+              Text(AppLocalizations.of(context)!.posTotal, style: AppTypography.headlineLarge),
               Text(
-                'SAR ${cart.totalAmount.toStringAsFixed(2)}',
+                AppLocalizations.of(context)!.amountWithSar(cart.totalAmount.toStringAsFixed(2)),
                 style: AppTypography.headlineLarge.copyWith(color: AppColors.primary),
               ),
             ],
@@ -723,7 +737,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
               // Hold
               Expanded(
                 child: PosButton(
-                  label: 'Hold (F8)',
+                  label: AppLocalizations.of(context)!.posHoldF8,
                   icon: Icons.pause_rounded,
                   variant: PosButtonVariant.outline,
                   size: PosButtonSize.xl,
@@ -735,7 +749,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
               Expanded(
                 flex: 2,
                 child: PosButton(
-                  label: 'Pay (F4)',
+                  label: AppLocalizations.of(context)!.posPayF4,
                   icon: Icons.payment_rounded,
                   size: PosButtonSize.xl,
                   isLoading: saleState is SaleProcessing,
@@ -747,16 +761,16 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
           if (cart.isNotEmpty) ...[
             AppSpacing.gapH8,
             PosButton(
-              label: 'Clear Cart',
+              label: AppLocalizations.of(context)!.posClearCart,
               variant: PosButtonVariant.ghost,
               size: PosButtonSize.md,
               isFullWidth: true,
               onPressed: () async {
                 final confirmed = await showPosConfirmDialog(
                   context,
-                  title: 'Clear Cart?',
-                  message: 'All items will be removed.',
-                  confirmLabel: 'Clear',
+                  title: AppLocalizations.of(context)!.posClearCartConfirm,
+                  message: AppLocalizations.of(context)!.posClearCartMessage,
+                  confirmLabel: AppLocalizations.of(context)!.posClear,
                   isDanger: true,
                 );
                 if (confirmed == true) ref.read(cartProvider.notifier).clear();
@@ -779,7 +793,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             style: AppTypography.titleSmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
           ),
           Text(
-            '${amount < 0 ? '-' : ''}SAR ${amount.abs().toStringAsFixed(2)}',
+            '${amount < 0 ? '-' : ''}${AppLocalizations.of(context)!.amountWithSar(amount.abs().toStringAsFixed(2))}',
             style: AppTypography.titleSmall.copyWith(color: color),
           ),
         ],

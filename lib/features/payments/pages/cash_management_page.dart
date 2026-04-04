@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/payments/providers/payment_providers.dart';
@@ -38,7 +39,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
     final sessionsState = ref.watch(cashSessionsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Cash Management')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.cashMgmtTitle)),
       body: SingleChildScrollView(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -50,14 +51,14 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
             AppSpacing.gapH24,
 
             // ── Denomination Counter ──
-            Text('Cash Count', style: theme.textTheme.titleMedium),
+            Text(AppLocalizations.of(context)!.cashMgmtCashCount, style: theme.textTheme.titleMedium),
             AppSpacing.gapH12,
             _buildDenominationCounter(theme),
 
             AppSpacing.gapH24,
 
             // ── Session History ──
-            Text('Session History', style: theme.textTheme.titleMedium),
+            Text(AppLocalizations.of(context)!.cashMgmtSessionHistory, style: theme.textTheme.titleMedium),
             AppSpacing.gapH12,
             _buildSessionHistory(sessionsState),
           ],
@@ -88,10 +89,10 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                     decoration: const BoxDecoration(color: AppColors.success, shape: BoxShape.circle),
                   ),
                   AppSpacing.gapW8,
-                  Text('Active Session', style: theme.textTheme.titleSmall),
+                  Text(AppLocalizations.of(context)!.cashMgmtActiveSession, style: theme.textTheme.titleSmall),
                   const Spacer(),
                   Text(
-                    'Opened: ${_formatTime(activeSession.openedAt)}',
+                    '${AppLocalizations.of(context)!.cashMgmtOpened}: ${_formatTime(activeSession.openedAt)}',
                     style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
                   ),
                 ],
@@ -99,11 +100,23 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
               AppSpacing.gapH16,
               Row(
                 children: [
-                  _infoTile(theme, 'Opening Float', '${activeSession.openingFloat.toStringAsFixed(2)} SAR'),
+                  _infoTile(
+                    theme,
+                    AppLocalizations.of(context)!.cashMgmtOpeningFloat,
+                    '${activeSession.openingFloat.toStringAsFixed(2)} ${AppLocalizations.of(context)!.sarCurrency}',
+                  ),
                   AppSpacing.gapW16,
-                  _infoTile(theme, 'Expected Cash', '${(activeSession.expectedCash ?? 0).toStringAsFixed(2)} SAR'),
+                  _infoTile(
+                    theme,
+                    AppLocalizations.of(context)!.cashMgmtExpectedCash,
+                    '${(activeSession.expectedCash ?? 0).toStringAsFixed(2)} ${AppLocalizations.of(context)!.sarCurrency}',
+                  ),
                   AppSpacing.gapW16,
-                  _infoTile(theme, 'Terminal', activeSession.terminalId ?? 'N/A'),
+                  _infoTile(
+                    theme,
+                    AppLocalizations.of(context)!.cashMgmtTerminal,
+                    activeSession.terminalId ?? AppLocalizations.of(context)!.cashMgmtNA,
+                  ),
                 ],
               ),
               AppSpacing.gapH16,
@@ -113,19 +126,19 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                   OutlinedButton.icon(
                     onPressed: () => _showCashInOutDialog(context, 'cash_in', activeSession.id),
                     icon: const Icon(Icons.add, size: 18),
-                    label: const Text('Cash In'),
+                    label: Text(AppLocalizations.of(context)!.cashMgmtCashIn),
                   ),
                   AppSpacing.gapW8,
                   OutlinedButton.icon(
                     onPressed: () => _showCashInOutDialog(context, 'cash_out', activeSession.id),
                     icon: const Icon(Icons.remove, size: 18),
-                    label: const Text('Cash Out'),
+                    label: Text(AppLocalizations.of(context)!.cashMgmtCashOut),
                   ),
                   AppSpacing.gapW8,
                   FilledButton.icon(
                     onPressed: () => _showCloseSessionDialog(context, activeSession.id),
                     icon: const Icon(Icons.lock, size: 18),
-                    label: const Text('Close Session'),
+                    label: Text(AppLocalizations.of(context)!.cashMgmtCloseSession),
                     style: FilledButton.styleFrom(backgroundColor: AppColors.warning),
                   ),
                 ],
@@ -145,17 +158,17 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
           children: [
             Icon(Icons.point_of_sale, size: 48, color: theme.hintColor),
             AppSpacing.gapH12,
-            Text('No Active Cash Session', style: theme.textTheme.titleSmall),
+            Text(AppLocalizations.of(context)!.cashMgmtNoActiveSession, style: theme.textTheme.titleSmall),
             AppSpacing.gapH8,
             Text(
-              'Open a session to start accepting cash payments',
+              AppLocalizations.of(context)!.cashMgmtNoActiveSessionSubtitle,
               style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
             ),
             AppSpacing.gapH16,
             FilledButton.icon(
               onPressed: () => _showOpenSessionDialog(context),
               icon: const Icon(Icons.lock_open, size: 18),
-              label: const Text('Open Cash Session'),
+              label: Text(AppLocalizations.of(context)!.cashMgmtOpenCashSession),
             ),
           ],
         ),
@@ -226,7 +239,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Total Count', style: theme.textTheme.titleMedium),
+                Text(AppLocalizations.of(context)!.cashMgmtTotalCount, style: theme.textTheme.titleMedium),
                 Text(
                   '${total.toStringAsFixed(2)} SAR',
                   style: theme.textTheme.titleMedium?.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
@@ -255,7 +268,10 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                 child: Padding(
                   padding: AppSpacing.paddingAll24,
                   child: Center(
-                    child: Text('No sessions yet', style: TextStyle(color: Theme.of(context).hintColor)),
+                    child: Text(
+                      AppLocalizations.of(context)!.cashMgmtNoSessions,
+                      style: TextStyle(color: Theme.of(context).hintColor),
+                    ),
                   ),
                 ),
               )
@@ -317,15 +333,18 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Open Cash Session'),
+        title: Text(AppLocalizations.of(ctx)!.cashMgmtOpenCashSession),
         content: TextField(
           controller: _openingFloatController,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          decoration: const InputDecoration(labelText: 'Opening Float (SAR)', border: OutlineInputBorder()),
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(ctx)!.cashMgmtOpeningFloatSar,
+            border: const OutlineInputBorder(),
+          ),
           autofocus: true,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(AppLocalizations.of(ctx)!.posCancel)),
           FilledButton(
             onPressed: () {
               final amount = double.tryParse(_openingFloatController.text);
@@ -335,7 +354,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                 _openingFloatController.clear();
               }
             },
-            child: const Text('Open Session'),
+            child: Text(AppLocalizations.of(ctx)!.cashMgmtOpenSession),
           ),
         ],
       ),
@@ -347,22 +366,27 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Close Cash Session'),
+        title: Text(AppLocalizations.of(ctx)!.cashMgmtCloseCashSession),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Counted Cash: ${totalCount.toStringAsFixed(2)} SAR'),
+            Text(
+              '${AppLocalizations.of(ctx)!.cashMgmtCountedCash}: ${totalCount.toStringAsFixed(2)} ${AppLocalizations.of(ctx)!.sarCurrency}',
+            ),
             AppSpacing.gapH12,
             TextField(
               controller: _closeNotesController,
               maxLines: 3,
-              decoration: const InputDecoration(labelText: 'Notes (optional)', border: OutlineInputBorder()),
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(ctx)!.cashMgmtNotesOptional,
+                border: const OutlineInputBorder(),
+              ),
             ),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(AppLocalizations.of(ctx)!.posCancel)),
           FilledButton(
             onPressed: () {
               ref.read(cashSessionsProvider.notifier).closeSession(sessionId, {
@@ -373,7 +397,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
               _closeNotesController.clear();
             },
             style: FilledButton.styleFrom(backgroundColor: AppColors.warning),
-            child: const Text('Close Session'),
+            child: Text(AppLocalizations.of(ctx)!.cashMgmtCloseSession),
           ),
         ],
       ),
@@ -388,19 +412,25 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text(type == 'cash_in' ? 'Cash In' : 'Cash Out'),
+        title: Text(type == 'cash_in' ? AppLocalizations.of(ctx)!.cashMgmtCashIn : AppLocalizations.of(ctx)!.cashMgmtCashOut),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: amountController,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              decoration: const InputDecoration(labelText: 'Amount (SAR)', border: OutlineInputBorder()),
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(ctx)!.cashMgmtAmountSar,
+                border: const OutlineInputBorder(),
+              ),
               autofocus: true,
             ),
             AppSpacing.gapH12,
             DropdownButtonFormField<String>(
-              decoration: const InputDecoration(labelText: 'Reason', border: OutlineInputBorder()),
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(ctx)!.cashMgmtReason,
+                border: const OutlineInputBorder(),
+              ),
               items:
                   (type == 'cash_out'
                           ? ['petty_cash', 'supplier_payment', 'bank_deposit', 'other']
@@ -412,12 +442,15 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
             AppSpacing.gapH12,
             TextField(
               controller: notesController,
-              decoration: const InputDecoration(labelText: 'Notes (optional)', border: OutlineInputBorder()),
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(ctx)!.cashMgmtNotesOptional,
+                border: const OutlineInputBorder(),
+              ),
             ),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(AppLocalizations.of(ctx)!.posCancel)),
           FilledButton(
             onPressed: () {
               final amount = double.tryParse(amountController.text);
@@ -432,7 +465,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                 Navigator.pop(ctx);
               }
             },
-            child: const Text('Record'),
+            child: Text(AppLocalizations.of(ctx)!.cashMgmtRecord),
           ),
         ],
       ),

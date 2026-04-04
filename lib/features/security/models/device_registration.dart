@@ -9,6 +9,10 @@ class DeviceRegistration {
   final bool isActive;
   final bool remoteWipeRequested;
   final DateTime? registeredAt;
+  final String? ipAddress;
+  final String? screenResolution;
+  final Map<String, dynamic>? lastKnownLocation;
+  final String? deviceType;
 
   const DeviceRegistration({
     required this.id,
@@ -21,6 +25,10 @@ class DeviceRegistration {
     this.isActive = true,
     this.remoteWipeRequested = false,
     this.registeredAt,
+    this.ipAddress,
+    this.screenResolution,
+    this.lastKnownLocation,
+    this.deviceType,
   });
 
   factory DeviceRegistration.fromJson(Map<String, dynamic> json) {
@@ -35,6 +43,12 @@ class DeviceRegistration {
       isActive: json['is_active'] as bool? ?? true,
       remoteWipeRequested: json['remote_wipe_requested'] as bool? ?? false,
       registeredAt: json['registered_at'] != null ? DateTime.parse(json['registered_at'] as String) : null,
+      ipAddress: json['ip_address'] as String?,
+      screenResolution: json['screen_resolution'] as String?,
+      lastKnownLocation: json['last_known_location'] != null
+          ? Map<String, dynamic>.from(json['last_known_location'] as Map)
+          : null,
+      deviceType: json['device_type'] as String?,
     );
   }
 
@@ -50,6 +64,10 @@ class DeviceRegistration {
       'is_active': isActive,
       'remote_wipe_requested': remoteWipeRequested,
       'registered_at': registeredAt?.toIso8601String(),
+      'ip_address': ipAddress,
+      'screen_resolution': screenResolution,
+      'last_known_location': lastKnownLocation,
+      'device_type': deviceType,
     };
   }
 
@@ -64,6 +82,10 @@ class DeviceRegistration {
     bool? isActive,
     bool? remoteWipeRequested,
     DateTime? registeredAt,
+    String? ipAddress,
+    String? screenResolution,
+    Map<String, dynamic>? lastKnownLocation,
+    String? deviceType,
   }) {
     return DeviceRegistration(
       id: id ?? this.id,
@@ -76,6 +98,10 @@ class DeviceRegistration {
       isActive: isActive ?? this.isActive,
       remoteWipeRequested: remoteWipeRequested ?? this.remoteWipeRequested,
       registeredAt: registeredAt ?? this.registeredAt,
+      ipAddress: ipAddress ?? this.ipAddress,
+      screenResolution: screenResolution ?? this.screenResolution,
+      lastKnownLocation: lastKnownLocation ?? this.lastKnownLocation,
+      deviceType: deviceType ?? this.deviceType,
     );
   }
 

@@ -51,4 +51,34 @@ class AutoUpdateApiService {
         .get(ApiEndpoints.autoUpdateCurrentVersion, queryParameters: {'platform': platform});
     return Map<String, dynamic>.from(res.data as Map);
   }
+
+  /// GET /auto-update/manifest/{version}
+  Future<Map<String, dynamic>> getManifest({required String version, String? platform, String? channel}) async {
+    final params = <String, dynamic>{};
+    if (platform != null) params['platform'] = platform;
+    if (channel != null) params['channel'] = channel;
+
+    final res = await _ref.read(dioClientProvider).get(ApiEndpoints.autoUpdateManifest(version), queryParameters: params);
+    return Map<String, dynamic>.from(res.data as Map);
+  }
+
+  /// GET /auto-update/download/{version}
+  Future<Map<String, dynamic>> getDownloadInfo({required String version, String? platform, String? channel}) async {
+    final params = <String, dynamic>{};
+    if (platform != null) params['platform'] = platform;
+    if (channel != null) params['channel'] = channel;
+
+    final res = await _ref.read(dioClientProvider).get(ApiEndpoints.autoUpdateDownload(version), queryParameters: params);
+    return Map<String, dynamic>.from(res.data as Map);
+  }
+
+  /// GET /auto-update/rollout-status
+  Future<Map<String, dynamic>> getRolloutStatus({String? platform, String? channel}) async {
+    final params = <String, dynamic>{};
+    if (platform != null) params['platform'] = platform;
+    if (channel != null) params['channel'] = channel;
+
+    final res = await _ref.read(dioClientProvider).get(ApiEndpoints.autoUpdateRolloutStatus, queryParameters: params);
+    return Map<String, dynamic>.from(res.data as Map);
+  }
 }

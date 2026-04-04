@@ -91,7 +91,7 @@ class _SettlementsTab extends ConsumerWidget {
                 backgroundColor: const Color(0xFF059669).withValues(alpha: 0.1),
                 child: const Icon(Icons.account_balance, color: Color(0xFF059669), size: 20),
               ),
-              title: Text('ر.ع. ${amount.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.bold)),
+              title: Text('ر.س. ${amount.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(
                 'Date: ${item['settlement_date'] ?? item['created_at'] ?? ''}',
                 style: const TextStyle(fontSize: 12),
@@ -154,7 +154,7 @@ class _OrdersTab extends ConsumerWidget {
               backgroundColor: const Color(0xFF2563EB).withValues(alpha: 0.1),
               child: const Icon(Icons.receipt_long, color: Color(0xFF2563EB), size: 20),
             ),
-            title: Text('ر.ع. ${amount.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.bold)),
+            title: Text('ر.س. ${amount.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Text(
               'Ref: ${item['thawani_reference'] ?? item['reference_id'] ?? 'N/A'}',
               style: const TextStyle(fontSize: 12),

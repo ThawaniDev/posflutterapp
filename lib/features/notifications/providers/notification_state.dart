@@ -1,3 +1,7 @@
+import 'package:thawani_pos/features/notifications/models/notification_delivery_log.dart';
+import 'package:thawani_pos/features/notifications/models/notification_schedule.dart';
+import 'package:thawani_pos/features/notifications/models/notification_sound_config.dart';
+
 // ─── Notification List State ─────────────────────────────
 sealed class NotificationListState {
   const NotificationListState();
@@ -36,7 +40,8 @@ class UnreadCountLoading extends UnreadCountState {
 
 class UnreadCountLoaded extends UnreadCountState {
   final int count;
-  const UnreadCountLoaded(this.count);
+  final Map<String, int>? byCategory;
+  const UnreadCountLoaded(this.count, {this.byCategory});
 }
 
 class UnreadCountError extends UnreadCountState {
@@ -84,7 +89,15 @@ class NotificationPreferencesLoaded extends NotificationPreferencesState {
   final Map<String, dynamic> preferences;
   final String? quietHoursStart;
   final String? quietHoursEnd;
-  const NotificationPreferencesLoaded({required this.preferences, this.quietHoursStart, this.quietHoursEnd});
+  final bool? soundEnabled;
+  final String? emailDigest;
+  const NotificationPreferencesLoaded({
+    required this.preferences,
+    this.quietHoursStart,
+    this.quietHoursEnd,
+    this.soundEnabled,
+    this.emailDigest,
+  });
 }
 
 class NotificationPreferencesError extends NotificationPreferencesState {
@@ -118,4 +131,96 @@ class FcmTokenRemoved extends FcmTokenState {
 class FcmTokenError extends FcmTokenState {
   final String message;
   const FcmTokenError(this.message);
+}
+
+// ─── Delivery Logs State ────────────────────────────────
+sealed class DeliveryLogsState {
+  const DeliveryLogsState();
+}
+
+class DeliveryLogsInitial extends DeliveryLogsState {
+  const DeliveryLogsInitial();
+}
+
+class DeliveryLogsLoading extends DeliveryLogsState {
+  const DeliveryLogsLoading();
+}
+
+class DeliveryLogsLoaded extends DeliveryLogsState {
+  final List<NotificationDeliveryLog> logs;
+  const DeliveryLogsLoaded(this.logs);
+}
+
+class DeliveryLogsError extends DeliveryLogsState {
+  final String message;
+  const DeliveryLogsError(this.message);
+}
+
+// ─── Sound Configs State ────────────────────────────────
+sealed class SoundConfigsState {
+  const SoundConfigsState();
+}
+
+class SoundConfigsInitial extends SoundConfigsState {
+  const SoundConfigsInitial();
+}
+
+class SoundConfigsLoading extends SoundConfigsState {
+  const SoundConfigsLoading();
+}
+
+class SoundConfigsLoaded extends SoundConfigsState {
+  final List<NotificationSoundConfig> configs;
+  const SoundConfigsLoaded(this.configs);
+}
+
+class SoundConfigsError extends SoundConfigsState {
+  final String message;
+  const SoundConfigsError(this.message);
+}
+
+// ─── Schedules State ────────────────────────────────────
+sealed class SchedulesState {
+  const SchedulesState();
+}
+
+class SchedulesInitial extends SchedulesState {
+  const SchedulesInitial();
+}
+
+class SchedulesLoading extends SchedulesState {
+  const SchedulesLoading();
+}
+
+class SchedulesLoaded extends SchedulesState {
+  final List<NotificationSchedule> schedules;
+  const SchedulesLoaded(this.schedules);
+}
+
+class SchedulesError extends SchedulesState {
+  final String message;
+  const SchedulesError(this.message);
+}
+
+// ─── Notification Stats State ───────────────────────────
+sealed class NotificationStatsState {
+  const NotificationStatsState();
+}
+
+class NotificationStatsInitial extends NotificationStatsState {
+  const NotificationStatsInitial();
+}
+
+class NotificationStatsLoading extends NotificationStatsState {
+  const NotificationStatsLoading();
+}
+
+class NotificationStatsLoaded extends NotificationStatsState {
+  final Map<String, dynamic> stats;
+  const NotificationStatsLoaded(this.stats);
+}
+
+class NotificationStatsError extends NotificationStatsState {
+  final String message;
+  const NotificationStatsError(this.message);
 }

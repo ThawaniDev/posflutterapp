@@ -41,8 +41,15 @@ class SyncApiService {
     return response.data['data'] as Map<String, dynamic>;
   }
 
-  Future<Map<String, dynamic>> resolveConflict({required String conflictId, required String resolution}) async {
-    final response = await _dio.post(ApiEndpoints.syncResolveConflict(conflictId), data: {'resolution': resolution});
+  Future<Map<String, dynamic>> resolveConflict({
+    required String conflictId,
+    required String resolution,
+    Map<String, dynamic>? mergedData,
+  }) async {
+    final response = await _dio.post(
+      ApiEndpoints.syncResolveConflict(conflictId),
+      data: {'resolution': resolution, if (mergedData != null) 'merged_data': mergedData},
+    );
     return response.data['data'] as Map<String, dynamic>;
   }
 

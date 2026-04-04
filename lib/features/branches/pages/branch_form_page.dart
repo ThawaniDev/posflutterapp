@@ -368,7 +368,7 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> with SingleTick
           _field(l10n.branchesDescriptionAr, _descriptionArCtrl, maxLines: 3),
           _dropdown(l10n.branchesBusinessType),
           _field(l10n.branchesTimezone, _timezoneCtrl, hint: 'Asia/Muscat'),
-          _field(l10n.branchesCurrency, _currencyCtrl, hint: 'OMR'),
+          _field(l10n.branchesCurrency, _currencyCtrl, hint: 'SAR'),
           _field(l10n.branchesLocale, _localeCtrl, hint: 'ar'),
           AppSpacing.gapH16,
           _sectionLabel(l10n.branchesFlags),

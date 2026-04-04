@@ -49,13 +49,13 @@ class _StockLevelsPageState extends ConsumerState<StockLevelsPage> {
             const SizedBox(height: AppSpacing.md),
             TextField(
               controller: reorderController,
-              decoration: InputDecoration(labelText: l10n.inventoryReorderPoint, hintText: 'e.g. 10'),
+              decoration: InputDecoration(labelText: l10n.inventoryReorderPoint, hintText: l10n.stockReorderPointHint),
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: maxController,
-              decoration: InputDecoration(labelText: l10n.inventoryMaxStockLevelOptional, hintText: 'e.g. 100'),
+              decoration: InputDecoration(labelText: l10n.inventoryMaxStockLevelOptional, hintText: l10n.stockMaxLevelHint),
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
           ],
@@ -162,9 +162,7 @@ class _StockLevelsPageState extends ConsumerState<StockLevelsPage> {
       emptyConfig: PosTableEmptyConfig(
         icon: Icons.inventory_2_outlined,
         title: l10n.inventoryNoStockLevels,
-        subtitle: loaded?.lowStockOnly == true
-            ? 'No products are below reorder point.'
-            : 'Stock levels will appear once products receive inventory.',
+        subtitle: loaded?.lowStockOnly == true ? l10n.stockNoLowStockProducts : l10n.stockLevelsEmptySubtitle,
       ),
       actions: [
         PosTableRowAction<StockLevel>(

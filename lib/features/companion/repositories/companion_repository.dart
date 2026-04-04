@@ -34,4 +34,21 @@ class CompanionRepository {
 
   Future<Map<String, dynamic>> logEvent({required String eventType, Map<String, dynamic>? eventData}) =>
       _api.logEvent(eventType: eventType, eventData: eventData);
+
+  // ─── New Companion Methods ────────────────────────────
+
+  Future<Map<String, dynamic>> getDashboard() => _api.getDashboard();
+
+  Future<Map<String, dynamic>> getBranches() => _api.getBranches();
+
+  Future<Map<String, dynamic>> getSalesSummary({String? period, String? storeId}) =>
+      _api.getSalesSummary(period: period, storeId: storeId);
+
+  Future<Map<String, dynamic>> getActiveOrders({String? storeId}) => _api.getActiveOrders(storeId: storeId);
+
+  Future<Map<String, dynamic>> getInventoryAlerts({String? storeId}) => _api.getInventoryAlerts(storeId: storeId);
+
+  Future<Map<String, dynamic>> getActiveStaff({String? storeId}) => _api.getActiveStaff(storeId: storeId);
+
+  Future<Map<String, dynamic>> toggleStoreAvailability({required bool isOpen}) => _api.toggleStoreAvailability(isOpen: isOpen);
 }

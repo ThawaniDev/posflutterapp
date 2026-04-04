@@ -1,7 +1,9 @@
 import 'package:thawani_pos/features/security/models/device_registration.dart';
 import 'package:thawani_pos/features/security/models/login_attempt.dart';
 import 'package:thawani_pos/features/security/models/security_audit_log.dart';
+import 'package:thawani_pos/features/security/models/security_incident.dart';
 import 'package:thawani_pos/features/security/models/security_policy.dart';
+import 'package:thawani_pos/features/security/models/security_session.dart';
 
 // ─── SecurityPolicy State ───────────────────────────────────
 
@@ -97,4 +99,100 @@ final class LoginAttemptsLoaded extends LoginAttemptsState {
 final class LoginAttemptsError extends LoginAttemptsState {
   final String message;
   const LoginAttemptsError(this.message);
+}
+
+// ─── Security Overview State ────────────────────────────────
+
+sealed class SecurityOverviewState {
+  const SecurityOverviewState();
+}
+
+final class SecurityOverviewInitial extends SecurityOverviewState {
+  const SecurityOverviewInitial();
+}
+
+final class SecurityOverviewLoading extends SecurityOverviewState {
+  const SecurityOverviewLoading();
+}
+
+final class SecurityOverviewLoaded extends SecurityOverviewState {
+  final Map<String, dynamic> overview;
+  const SecurityOverviewLoaded(this.overview);
+}
+
+final class SecurityOverviewError extends SecurityOverviewState {
+  final String message;
+  const SecurityOverviewError(this.message);
+}
+
+// ─── Sessions State ─────────────────────────────────────────
+
+sealed class SessionListState {
+  const SessionListState();
+}
+
+final class SessionListInitial extends SessionListState {
+  const SessionListInitial();
+}
+
+final class SessionListLoading extends SessionListState {
+  const SessionListLoading();
+}
+
+final class SessionListLoaded extends SessionListState {
+  final List<SecuritySession> sessions;
+  const SessionListLoaded(this.sessions);
+}
+
+final class SessionListError extends SessionListState {
+  final String message;
+  const SessionListError(this.message);
+}
+
+// ─── Incidents State ────────────────────────────────────────
+
+sealed class IncidentListState {
+  const IncidentListState();
+}
+
+final class IncidentListInitial extends IncidentListState {
+  const IncidentListInitial();
+}
+
+final class IncidentListLoading extends IncidentListState {
+  const IncidentListLoading();
+}
+
+final class IncidentListLoaded extends IncidentListState {
+  final List<SecurityIncident> incidents;
+  const IncidentListLoaded(this.incidents);
+}
+
+final class IncidentListError extends IncidentListState {
+  final String message;
+  const IncidentListError(this.message);
+}
+
+// ─── Security Action State ──────────────────────────────────
+
+sealed class SecurityActionState {
+  const SecurityActionState();
+}
+
+final class SecurityActionInitial extends SecurityActionState {
+  const SecurityActionInitial();
+}
+
+final class SecurityActionLoading extends SecurityActionState {
+  const SecurityActionLoading();
+}
+
+final class SecurityActionSuccess extends SecurityActionState {
+  final String message;
+  const SecurityActionSuccess(this.message);
+}
+
+final class SecurityActionError extends SecurityActionState {
+  final String message;
+  const SecurityActionError(this.message);
 }

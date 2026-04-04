@@ -102,12 +102,12 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
       mainAxisSpacing: AppSpacing.sm,
       childAspectRatio: 1.8,
       children: [
-        _kpiCard('Payments', '${payments['total'] ?? 0}', 'ر.ع. ${_fmt(payments['total_amount'])}', AppColors.primary),
+        _kpiCard('Payments', '${payments['total'] ?? 0}', 'ر.س. ${_fmt(payments['total_amount'])}', AppColors.primary),
         _kpiCard('Refunds', '${refunds['total'] ?? 0}', '${refunds['pending'] ?? 0} pending', AppColors.warning),
         _kpiCard('Cash Sessions', '${cashSessions['total'] ?? 0}', '${cashSessions['open'] ?? 0} open', AppColors.info),
-        _kpiCard('Expenses', '${expenses['total'] ?? 0}', 'ر.ع. ${_fmt(expenses['total_amount'])}', AppColors.error),
+        _kpiCard('Expenses', '${expenses['total'] ?? 0}', 'ر.س. ${_fmt(expenses['total_amount'])}', AppColors.error),
         _kpiCard('Gift Cards', '${giftCards['total'] ?? 0}', '${giftCards['active'] ?? 0} active', AppColors.success),
-        _kpiCard('Thawani Net', '${thawani['total'] ?? 0}', 'ر.ع. ${_fmt(thawani['total_net'])}', const Color(0xFF6366F1)),
+        _kpiCard('Thawani Net', '${thawani['total'] ?? 0}', 'ر.س. ${_fmt(thawani['total_net'])}', const Color(0xFF6366F1)),
       ],
     );
   }

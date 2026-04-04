@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/payments/providers/payment_providers.dart';
@@ -31,13 +32,14 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final paymentsState = ref.watch(paymentsProvider);
     final sessionsState = ref.watch(cashSessionsProvider);
     final expensesState = ref.watch(expensesProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Financial Reconciliation'),
+        title: Text(l10n.finReconTitle),
         actions: [
           TextButton.icon(
             onPressed: () => _pickDate(context),
@@ -53,43 +55,47 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ── Revenue Summary ──
-            _buildRevenueSection(theme, paymentsState),
+            _buildRevenueSection(theme, paymentsState, l10n),
             AppSpacing.gapH24,
 
             // ── Payment Method Breakdown ──
-            _buildPaymentBreakdown(theme, paymentsState),
+            _buildPaymentBreakdown(theme, paymentsState, l10n),
             AppSpacing.gapH24,
 
             // ── Cash Reconciliation ──
-            _buildCashReconciliation(theme, sessionsState),
+            _buildCashReconciliation(theme, sessionsState, l10n),
             AppSpacing.gapH24,
 
             // ── Expenses Summary ──
-            _buildExpensesSummary(theme, expensesState),
+            _buildExpensesSummary(theme, expensesState, l10n),
             AppSpacing.gapH24,
 
             // ── Denomination Count ──
-            Text('Physical Cash Count', style: theme.textTheme.titleMedium),
+            Text(l10n.finReconPhysicalCashCount, style: theme.textTheme.titleMedium),
             AppSpacing.gapH12,
-            _buildCompactDenominations(theme),
+            _buildCompactDenominations(theme, l10n),
             AppSpacing.gapH24,
 
             // ── Actions ──
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                OutlinedButton.icon(onPressed: () {}, icon: const Icon(Icons.print, size: 18), label: const Text('Print Report')),
+                OutlinedButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.print, size: 18),
+                  label: Text(l10n.finReconPrintReport),
+                ),
                 AppSpacing.gapW8,
                 OutlinedButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.download, size: 18),
-                  label: const Text('Export PDF'),
+                  label: Text(l10n.finReconExportPdf),
                 ),
                 AppSpacing.gapW8,
                 FilledButton.icon(
                   onPressed: () => _confirmReconciliation(context),
                   icon: const Icon(Icons.check_circle_outline, size: 18),
-                  label: const Text('Confirm Reconciliation'),
+                  label: Text(l10n.finReconConfirmRecon),
                 ),
               ],
             ),
@@ -99,7 +105,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     );
   }
 
-  Widget _buildRevenueSection(ThemeData theme, PaymentsState state) {
+  Widget _buildRevenueSection(ThemeData theme, PaymentsState state, AppLocalizations l10n) {
     final payments = switch (state) {
       PaymentsLoaded(:final payments) => payments,
       _ => <dynamic>[],
@@ -115,23 +121,23 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Revenue Summary', style: theme.textTheme.titleMedium),
+            Text(l10n.finReconRevenueSummary, style: theme.textTheme.titleMedium),
             AppSpacing.gapH16,
             Row(
               children: [
                 _summaryTile(
                   theme,
-                  'Total Revenue',
+                  l10n.finReconTotalRevenue,
                   '${totalRevenue.toStringAsFixed(2)} SAR',
                   Icons.trending_up,
                   AppColors.success,
                 ),
                 AppSpacing.gapW16,
-                _summaryTile(theme, 'Transactions', '$txCount', Icons.receipt_long, AppColors.info),
+                _summaryTile(theme, l10n.finReconTransactions, '$txCount', Icons.receipt_long, AppColors.info),
                 AppSpacing.gapW16,
                 _summaryTile(
                   theme,
-                  'Avg Transaction',
+                  l10n.finReconAvgTransaction,
                   txCount > 0 ? '${(totalRevenue / txCount).toStringAsFixed(2)} SAR' : '0.00 SAR',
                   Icons.analytics,
                   AppColors.primary,
@@ -144,7 +150,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     );
   }
 
-  Widget _buildPaymentBreakdown(ThemeData theme, PaymentsState state) {
+  Widget _buildPaymentBreakdown(ThemeData theme, PaymentsState state, AppLocalizations l10n) {
     final payments = switch (state) {
       PaymentsLoaded(:final payments) => payments,
       _ => <dynamic>[],
@@ -166,10 +172,10 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Payment Methods', style: theme.textTheme.titleMedium),
+            Text(l10n.finReconPaymentMethods, style: theme.textTheme.titleMedium),
             AppSpacing.gapH16,
             if (byMethod.isEmpty)
-              Text('No payments recorded', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor))
+              Text(l10n.finReconNoPayments, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor))
             else
               ...byMethod.entries.map((entry) {
                 final pct = total > 0 ? (entry.value / total * 100) : 0;
@@ -206,7 +212,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     );
   }
 
-  Widget _buildCashReconciliation(ThemeData theme, CashSessionsState state) {
+  Widget _buildCashReconciliation(ThemeData theme, CashSessionsState state, AppLocalizations l10n) {
     final sessions = switch (state) {
       CashSessionsLoaded(:final sessions) => sessions,
       _ => <dynamic>[],
@@ -224,17 +230,29 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Cash Reconciliation', style: theme.textTheme.titleMedium),
+            Text(l10n.finReconCashRecon, style: theme.textTheme.titleMedium),
             AppSpacing.gapH16,
             Row(
               children: [
-                _summaryTile(theme, 'Expected Cash', '${totalExpected.toStringAsFixed(2)} SAR', Icons.calculate, AppColors.info),
-                AppSpacing.gapW16,
-                _summaryTile(theme, 'Actual Cash', '${totalActual.toStringAsFixed(2)} SAR', Icons.payments, AppColors.primary),
+                _summaryTile(
+                  theme,
+                  l10n.finReconExpectedCash,
+                  '${totalExpected.toStringAsFixed(2)} SAR',
+                  Icons.calculate,
+                  AppColors.info,
+                ),
                 AppSpacing.gapW16,
                 _summaryTile(
                   theme,
-                  'Variance',
+                  l10n.finReconActualCash,
+                  '${totalActual.toStringAsFixed(2)} SAR',
+                  Icons.payments,
+                  AppColors.primary,
+                ),
+                AppSpacing.gapW16,
+                _summaryTile(
+                  theme,
+                  l10n.finReconVariance,
                   '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} SAR',
                   Icons.compare_arrows,
                   totalVariance.abs() > 5 ? AppColors.error : AppColors.success,
@@ -244,7 +262,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
             if (closedSessions.isNotEmpty) ...[
               AppSpacing.gapH16,
               Text(
-                'Sessions: ${closedSessions.length} closed',
+                l10n.finReconSessionsClosed(closedSessions.length),
                 style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
               ),
             ],
@@ -254,7 +272,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     );
   }
 
-  Widget _buildExpensesSummary(ThemeData theme, ExpensesState state) {
+  Widget _buildExpensesSummary(ThemeData theme, ExpensesState state, AppLocalizations l10n) {
     final expenses = switch (state) {
       ExpensesLoaded(:final expenses) => expenses,
       _ => <dynamic>[],
@@ -279,7 +297,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Expenses', style: theme.textTheme.titleMedium),
+                Text(l10n.finReconExpenses, style: theme.textTheme.titleMedium),
                 Text(
                   '${totalExpenses.toStringAsFixed(2)} SAR',
                   style: theme.textTheme.titleMedium?.copyWith(color: AppColors.error, fontWeight: FontWeight.bold),
@@ -288,7 +306,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
             ),
             AppSpacing.gapH12,
             if (byCategory.isEmpty)
-              Text('No expenses', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor))
+              Text(l10n.finReconNoExpenses, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor))
             else
               Wrap(
                 spacing: 8,
@@ -307,7 +325,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     );
   }
 
-  Widget _buildCompactDenominations(ThemeData theme) {
+  Widget _buildCompactDenominations(ThemeData theme, AppLocalizations l10n) {
     final total = PaymentCalculationService.calculateDenominationTotal(_denominationCounts);
     return Card(
       shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
@@ -346,7 +364,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Counted Total', style: theme.textTheme.titleSmall),
+                Text(l10n.finReconCountedTotal, style: theme.textTheme.titleSmall),
                 Text(
                   '${total.toStringAsFixed(2)} SAR',
                   style: theme.textTheme.titleSmall?.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
@@ -398,22 +416,20 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
   }
 
   void _confirmReconciliation(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Confirm Reconciliation'),
-        content: const Text(
-          'This will finalize the reconciliation for today. '
-          'All cash sessions will be marked as reconciled.',
-        ),
+        title: Text(l10n.finReconConfirmRecon),
+        content: Text(l10n.finReconConfirmMessage),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(MaterialLocalizations.of(ctx).cancelButtonLabel)),
           FilledButton(
             onPressed: () {
               Navigator.pop(ctx);
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Reconciliation confirmed')));
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.finReconConfirmed)));
             },
-            child: const Text('Confirm'),
+            child: Text(l10n.commonConfirm),
           ),
         ],
       ),

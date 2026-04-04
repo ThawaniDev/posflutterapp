@@ -1,0 +1,255 @@
+import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/router/route_names.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/pos_badge.dart';
+import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/pos_input.dart';
+import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/features/inventory/enums/supplier_return_status.dart';
+import 'package:thawani_pos/features/inventory/models/supplier_return.dart';
+import 'package:thawani_pos/features/inventory/providers/inventory_providers.dart';
+import 'package:thawani_pos/features/inventory/providers/inventory_state.dart';
+
+class SupplierReturnsPage extends ConsumerStatefulWidget {
+  const SupplierReturnsPage({super.key});
+
+  @override
+  ConsumerState<SupplierReturnsPage> createState() => _SupplierReturnsPageState();
+}
+
+class _SupplierReturnsPageState extends ConsumerState<SupplierReturnsPage> {
+  final _searchController = TextEditingController();
+  String? _selectedStatus;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => ref.read(supplierReturnsProvider.notifier).load());
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  PosBadgeVariant _badgeVariant(SupplierReturnStatus? status) {
+    return switch (status) {
+      SupplierReturnStatus.draft => PosBadgeVariant.neutral,
+      SupplierReturnStatus.submitted => PosBadgeVariant.info,
+      SupplierReturnStatus.approved => PosBadgeVariant.warning,
+      SupplierReturnStatus.completed => PosBadgeVariant.success,
+      SupplierReturnStatus.cancelled => PosBadgeVariant.error,
+      null => PosBadgeVariant.neutral,
+    };
+  }
+
+  String _statusLabel(SupplierReturnStatus? status, AppLocalizations l10n) {
+    return switch (status) {
+      SupplierReturnStatus.draft => l10n.inventoryDraft,
+      SupplierReturnStatus.submitted => l10n.supplierReturnSubmitted,
+      SupplierReturnStatus.approved => l10n.inventoryApprove,
+      SupplierReturnStatus.completed => l10n.supplierReturnCompleted,
+      SupplierReturnStatus.cancelled => l10n.inventoryCancelled,
+      null => l10n.inventoryDraft,
+    };
+  }
+
+  Future<void> _handleAction(String action, SupplierReturn ret) async {
+    final l10n = AppLocalizations.of(context)!;
+    final notifier = ref.read(supplierReturnsProvider.notifier);
+    final label = ret.referenceNumber ?? ret.id.substring(0, 8);
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('$action "$label"?'),
+        content: Text(l10n.supplierReturnActionConfirm(action, label)),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonCancel)),
+          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(action)),
+        ],
+      ),
+    );
+
+    if (confirmed != true || !mounted) return;
+
+    try {
+      switch (action) {
+        case 'Submit':
+          await notifier.submitReturn(ret.id);
+        case 'Approve':
+          await notifier.approveReturn(ret.id);
+        case 'Complete':
+          await notifier.completeReturn(ret.id);
+        case 'Cancel':
+          await notifier.cancelReturn(ret.id);
+        case 'Delete':
+          await notifier.deleteReturn(ret.id);
+      }
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.supplierReturnActionSuccess(action))));
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final state = ref.watch(supplierReturnsProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(l10n.supplierReturnsTitle),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: l10n.commonRefresh,
+            onPressed: () => ref.read(supplierReturnsProvider.notifier).load(),
+          ),
+        ],
+      ),
+      floatingActionButton: PosButton(
+        label: l10n.supplierReturnNew,
+        icon: Icons.add,
+        onPressed: () async {
+          final created = await context.push<bool>(Routes.supplierReturnsAdd);
+          if (created == true) ref.read(supplierReturnsProvider.notifier).load();
+        },
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Row(
+              children: [
+                Expanded(
+                  child: PosTextField(
+                    controller: _searchController,
+                    hint: l10n.supplierReturnSearchHint,
+                    prefixIcon: Icons.search,
+                    onSubmitted: (v) => ref.read(supplierReturnsProvider.notifier).searchReturns(v),
+                    onChanged: (v) {
+                      if (v.isEmpty) ref.read(supplierReturnsProvider.notifier).searchReturns(null);
+                    },
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                DropdownButton<String?>(
+                  value: _selectedStatus,
+                  hint: Text(l10n.inventoryFilterByStatus),
+                  items: [
+                    DropdownMenuItem<String?>(value: null, child: Text(l10n.inventoryAll)),
+                    ...SupplierReturnStatus.values.map(
+                      (s) => DropdownMenuItem(value: s.value, child: Text(_statusLabel(s, l10n))),
+                    ),
+                  ],
+                  onChanged: (v) {
+                    setState(() => _selectedStatus = v);
+                    ref.read(supplierReturnsProvider.notifier).filterByStatus(v);
+                  },
+                ),
+              ],
+            ),
+          ),
+          Expanded(child: _buildBody(state)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBody(SupplierReturnsState state) {
+    final l10n = AppLocalizations.of(context)!;
+    final isLoading = state is SupplierReturnsLoading || state is SupplierReturnsInitial;
+    final error = state is SupplierReturnsError ? state.message : null;
+    final returns = state is SupplierReturnsLoaded ? state.returns : <SupplierReturn>[];
+    final loaded = state is SupplierReturnsLoaded ? state : null;
+
+    return PosDataTable<SupplierReturn>(
+      columns: [
+        PosTableColumn(title: l10n.inventoryReference),
+        PosTableColumn(title: l10n.inventorySupplier),
+        PosTableColumn(title: l10n.commonStatus),
+        PosTableColumn(title: l10n.supplierReturnReason),
+        PosTableColumn(title: l10n.inventoryTotalCost, numeric: true),
+      ],
+      items: returns,
+      isLoading: isLoading,
+      error: error,
+      onRetry: () => ref.read(supplierReturnsProvider.notifier).load(),
+      emptyConfig: PosTableEmptyConfig(
+        icon: Icons.assignment_return_outlined,
+        title: l10n.supplierReturnNoReturns,
+        subtitle: l10n.supplierReturnNoReturnsHint,
+      ),
+      onRowTap: (ret) => context.push('${Routes.supplierReturnDetail}?id=${ret.id}'),
+      actions: [
+        PosTableRowAction<SupplierReturn>(
+          label: l10n.supplierReturnSubmitAction,
+          icon: Icons.send_outlined,
+          color: AppColors.info,
+          isVisible: (r) => r.status == SupplierReturnStatus.draft,
+          onTap: (r) => _handleAction('Submit', r),
+        ),
+        PosTableRowAction<SupplierReturn>(
+          label: l10n.inventoryApprove,
+          icon: Icons.check_circle_outline,
+          color: AppColors.success,
+          isVisible: (r) => r.status == SupplierReturnStatus.submitted,
+          onTap: (r) => _handleAction('Approve', r),
+        ),
+        PosTableRowAction<SupplierReturn>(
+          label: l10n.supplierReturnCompleteAction,
+          icon: Icons.done_all,
+          color: AppColors.success,
+          isVisible: (r) => r.status == SupplierReturnStatus.approved,
+          onTap: (r) => _handleAction('Complete', r),
+        ),
+        PosTableRowAction<SupplierReturn>(
+          label: l10n.commonCancel,
+          icon: Icons.cancel_outlined,
+          color: AppColors.warning,
+          isVisible: (r) => r.status == SupplierReturnStatus.draft || r.status == SupplierReturnStatus.submitted,
+          onTap: (r) => _handleAction('Cancel', r),
+        ),
+        PosTableRowAction<SupplierReturn>(
+          label: l10n.commonDelete,
+          icon: Icons.delete_outline,
+          isDestructive: true,
+          isVisible: (r) => r.status == SupplierReturnStatus.draft,
+          onTap: (r) => _handleAction('Delete', r),
+        ),
+      ],
+      cellBuilder: (ret, colIndex, col) {
+        switch (colIndex) {
+          case 0:
+            return Text(ret.referenceNumber ?? ret.id.substring(0, 8));
+          case 1:
+            return Text(ret.supplierName ?? '-');
+          case 2:
+            return PosBadge(label: _statusLabel(ret.status, l10n), variant: _badgeVariant(ret.status));
+          case 3:
+            return Text(ret.reason ?? '-', maxLines: 1, overflow: TextOverflow.ellipsis);
+          case 4:
+            return Text(ret.totalAmount.toStringAsFixed(2));
+          default:
+            return const SizedBox.shrink();
+        }
+      },
+      currentPage: loaded?.currentPage,
+      totalPages: loaded?.lastPage,
+      totalItems: loaded?.total,
+      itemsPerPage: loaded?.perPage ?? 25,
+      onPreviousPage: loaded != null ? () => ref.read(supplierReturnsProvider.notifier).load(page: loaded.currentPage - 1) : null,
+      onNextPage: loaded != null ? () => ref.read(supplierReturnsProvider.notifier).load(page: loaded.currentPage + 1) : null,
+    );
+  }
+}

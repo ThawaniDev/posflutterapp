@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -8,6 +9,7 @@ import 'package:thawani_pos/core/utils/validators.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/features/auth/providers/auth_providers.dart';
 import 'package:thawani_pos/features/auth/providers/auth_state.dart';
+import 'package:thawani_pos/features/security/repositories/security_repository.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -42,6 +44,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
     ref.listen<AuthState>(authProvider, (prev, next) {
       if (next is AuthAuthenticated) {
+        // Fire-and-forget: create a security session for audit tracking
+        if (next.user.storeId != null) {
+          ref
+              .read(securityRepositoryProvider)
+              .startSession(data: {'store_id': next.user.storeId})
+              .catchError((_) => <String, dynamic>{});
+        }
         context.go(Routes.homeForRole(next.user.role));
       } else if (next is AuthError) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
@@ -69,13 +78,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
                     // Title
                     Text(
-                      'Wameed POS',
+                      AppLocalizations.of(context)!.loginTitle,
                       style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: AppSpacing.xs),
                     Text(
-                      'Sign in to your account',
+                      AppLocalizations.of(context)!.loginSubtitle,
                       style: Theme.of(
                         context,
                       ).textTheme.bodyLarge?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
@@ -86,9 +95,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     // Email
                     TextFormField(
                       controller: _emailController,
-                      decoration: const InputDecoration(
-                        labelText: 'Email',
-                        hintText: 'Enter your email',
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)!.loginEmail,
+                        hintText: AppLocalizations.of(context)!.loginEmailHint,
                         prefixIcon: Icon(Icons.email_outlined),
                       ),
                       keyboardType: TextInputType.emailAddress,
@@ -102,8 +111,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     TextFormField(
                       controller: _passwordController,
                       decoration: InputDecoration(
-                        labelText: 'Password',
-                        hintText: 'Enter your password',
+                        labelText: AppLocalizations.of(context)!.loginPassword,
+                        hintText: AppLocalizations.of(context)!.loginPasswordHint,
                         prefixIcon: const Icon(Icons.lock_outline),
                         suffixIcon: IconButton(
                           icon: Icon(_obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined),
@@ -122,7 +131,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
                     // Login Button
                     PosButton(
-                      label: isLoading ? 'Signing in...' : 'Sign In',
+                      label: isLoading ? AppLocalizations.of(context)!.loginSigningIn : AppLocalizations.of(context)!.loginSignIn,
                       onPressed: isLoading ? null : _handleLogin,
                       isLoading: isLoading,
                     ),
@@ -132,11 +141,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't have an account? ", style: Theme.of(context).textTheme.bodyMedium),
+                        Text(AppLocalizations.of(context)!.loginNoAccount, style: Theme.of(context).textTheme.bodyMedium),
                         TextButton(
                           onPressed: isLoading ? null : () => context.push(Routes.register),
                           child: Text(
-                            'Register',
+                            AppLocalizations.of(context)!.loginRegister,
                             style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -155,7 +164,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                   _passwordController.text = 'Owner@2026';
                                 },
                           icon: const Icon(Icons.admin_panel_settings, size: 16),
-                          label: const Text('Admin'),
+                          label: Text(AppLocalizations.of(context)!.loginAdmin),
                           style: TextButton.styleFrom(
                             foregroundColor: AppColors.primary,
                             textStyle: const TextStyle(fontSize: 12),
@@ -170,7 +179,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                   _passwordController.text = 'Test@123';
                                 },
                           icon: const Icon(Icons.point_of_sale, size: 16),
-                          label: const Text('Cashier'),
+                          label: Text(AppLocalizations.of(context)!.loginCashier),
                           style: TextButton.styleFrom(
                             foregroundColor: AppColors.primary,
                             textStyle: const TextStyle(fontSize: 12),

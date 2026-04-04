@@ -65,32 +65,59 @@ class _CustomizationDashboardPageState extends ConsumerState<CustomizationDashbo
               color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
               border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
             ),
-            child: Row(
-              children: [
-                _featureLink(
-                  icon: Icons.dashboard_customize_rounded,
-                  label: l10n.layoutBuilder,
-                  subtitle: l10n.layoutBuilderSubtitle,
-                  onTap: () => context.push(Routes.layoutTemplates),
-                  isDark: isDark,
-                ),
-                AppSpacing.gapW16,
-                _featureLink(
-                  icon: Icons.storefront_rounded,
-                  label: l10n.marketplaceTitle,
-                  subtitle: l10n.marketplaceSubtitle,
-                  onTap: () => context.push(Routes.marketplace),
-                  isDark: isDark,
-                ),
-                AppSpacing.gapW16,
-                _featureLink(
-                  icon: Icons.label_rounded,
-                  label: l10n.labelsTemplates,
-                  subtitle: l10n.labelTemplatesSubtitle,
-                  onTap: () => context.push(Routes.labels),
-                  isDark: isDark,
-                ),
-              ],
+            child: SizedBox(
+              height: 200,
+              child: Row(
+                children: [
+                  _featureLink(
+                    icon: Icons.dashboard_customize_rounded,
+                    label: l10n.layoutBuilder,
+                    subtitle: l10n.layoutBuilderSubtitle,
+                    onTap: () => context.push(Routes.layoutTemplates),
+                    isDark: isDark,
+                  ),
+                  AppSpacing.gapW16,
+                  _featureLink(
+                    icon: Icons.storefront_rounded,
+                    label: l10n.marketplaceTitle,
+                    subtitle: l10n.marketplaceSubtitle,
+                    onTap: () => context.push(Routes.marketplace),
+                    isDark: isDark,
+                  ),
+                  AppSpacing.gapW16,
+                  _featureLink(
+                    icon: Icons.label_rounded,
+                    label: l10n.labelsTemplates,
+                    subtitle: l10n.labelTemplatesSubtitle,
+                    onTap: () => context.push(Routes.labels),
+                    isDark: isDark,
+                  ),
+                  AppSpacing.gapW16,
+                  _featureLink(
+                    icon: Icons.receipt_long_rounded,
+                    label: l10n.receiptTemplatesTitle,
+                    subtitle: l10n.receiptTemplatesEmptySubtitle,
+                    onTap: () => context.push(Routes.receiptTemplates),
+                    isDark: isDark,
+                  ),
+                  AppSpacing.gapW16,
+                  _featureLink(
+                    icon: Icons.tv_rounded,
+                    label: l10n.cfdThemesTitle,
+                    subtitle: l10n.cfdThemesEmptySubtitle,
+                    onTap: () => context.push(Routes.cfdThemes),
+                    isDark: isDark,
+                  ),
+                  AppSpacing.gapW16,
+                  _featureLink(
+                    icon: Icons.label_rounded,
+                    label: l10n.labelLayoutTemplatesTitle,
+                    subtitle: l10n.labelLayoutTemplatesEmptySubtitle,
+                    onTap: () => context.push(Routes.labelLayoutTemplates),
+                    isDark: isDark,
+                  ),
+                ],
+              ),
             ),
           ),
           // Existing tabs
@@ -117,30 +144,34 @@ class _CustomizationDashboardPageState extends ConsumerState<CustomizationDashbo
         onTap: onTap,
         child: PosCard(
           padding: const EdgeInsets.all(12),
-          child: Row(
+          child: Column(
             children: [
               Container(
-                width: 40,
-                height: 40,
+                width: 80,
+                height: 80,
                 decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.borderSm),
-                child: Icon(icon, color: AppColors.primary, size: 20),
+                child: Icon(icon, color: AppColors.primary, size: 40),
               ),
-              AppSpacing.gapW12,
+              AppSpacing.gapH12,
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(label, style: AppTypography.labelSmall),
+                    Text(label, style: AppTypography.titleMedium),
                     Text(
                       subtitle,
-                      style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
               ),
-              Icon(Icons.chevron_right_rounded, size: 18, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              Icon(
+                Icons.keyboard_arrow_down_rounded,
+                size: 18,
+                color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+              ),
             ],
           ),
         ),

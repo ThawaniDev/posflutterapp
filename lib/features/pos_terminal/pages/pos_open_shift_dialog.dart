@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
@@ -43,7 +44,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
 
   Future<void> _submit() async {
     if (_selectedRegisterId == null) {
-      setState(() => _error = 'Please select a register');
+      setState(() => _error = AppLocalizations.of(context)!.posSelectRegisterError);
       return;
     }
 
@@ -93,9 +94,9 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Open Shift', style: AppTypography.headlineSmall),
+                        Text(AppLocalizations.of(context)!.posOpenShift, style: AppTypography.headlineSmall),
                         Text(
-                          'Count your opening cash to begin',
+                          AppLocalizations.of(context)!.posOpenShiftDescription,
                           style: AppTypography.bodySmall.copyWith(
                             color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                           ),
@@ -109,13 +110,19 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
               AppSpacing.gapH24,
 
               // Register selection
-              Text('Register', style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600)),
+              Text(
+                AppLocalizations.of(context)!.posRegister,
+                style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+              ),
               AppSpacing.gapH4,
               _buildRegisterDropdown(terminalsState, isDark),
               AppSpacing.gapH16,
 
               // Opening cash
-              Text('Opening Cash', style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600)),
+              Text(
+                AppLocalizations.of(context)!.posOpeningCash,
+                style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+              ),
               AppSpacing.gapH4,
               PosTextField(
                 controller: _amountController,
@@ -148,7 +155,10 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () => _amountController.text = '0.00',
-                  child: Text('Reset', style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
+                  child: Text(
+                    AppLocalizations.of(context)!.posReset,
+                    style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight),
+                  ),
                 ),
               ),
 
@@ -175,12 +185,16 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
               Row(
                 children: [
                   Expanded(
-                    child: PosButton(label: 'Cancel', variant: PosButtonVariant.outline, onPressed: () => Navigator.pop(context)),
+                    child: PosButton(
+                      label: AppLocalizations.of(context)!.posCancel,
+                      variant: PosButtonVariant.outline,
+                      onPressed: () => Navigator.pop(context),
+                    ),
                   ),
                   AppSpacing.gapW12,
                   Expanded(
                     child: PosButton(
-                      label: 'Open Shift',
+                      label: AppLocalizations.of(context)!.posOpenShift,
                       icon: Icons.login_rounded,
                       isLoading: _isLoading,
                       onPressed: _isLoading ? null : _submit,
@@ -214,7 +228,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
           children: [
             const Icon(Icons.warning_amber_rounded, color: AppColors.warning, size: 18),
             AppSpacing.gapW8,
-            Expanded(child: Text('No registers found. Please add one first.', style: AppTypography.bodySmall)),
+            Expanded(child: Text(AppLocalizations.of(context)!.posNoRegistersFound, style: AppTypography.bodySmall)),
           ],
         ),
       );
@@ -223,7 +237,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
     return DropdownButtonFormField<String>(
       value: _selectedRegisterId,
       decoration: const InputDecoration(contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10), isDense: true),
-      hint: const Text('Select register'),
+      hint: Text(AppLocalizations.of(context)!.posSelectRegister),
       items: terminals.map((t) {
         return DropdownMenuItem<String>(value: t.id, child: Text(t.name));
       }).toList(),

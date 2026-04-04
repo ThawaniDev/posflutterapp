@@ -15,7 +15,7 @@ class Promotion {
   final int? minItemQuantity;
   final DateTime? validFrom;
   final DateTime? validTo;
-  final Map<String, dynamic>? activeDays;
+  final List<String> activeDays;
   final String? activeTimeFrom;
   final String? activeTimeTo;
   final int? maxUses;
@@ -43,7 +43,7 @@ class Promotion {
     this.minItemQuantity,
     this.validFrom,
     this.validTo,
-    this.activeDays,
+    this.activeDays = const [],
     this.activeTimeFrom,
     this.activeTimeTo,
     this.maxUses,
@@ -73,7 +73,7 @@ class Promotion {
       minItemQuantity: (json['min_item_quantity'] as num?)?.toInt(),
       validFrom: json['valid_from'] != null ? DateTime.parse(json['valid_from'] as String) : null,
       validTo: json['valid_to'] != null ? DateTime.parse(json['valid_to'] as String) : null,
-      activeDays: json['active_days'] != null ? Map<String, dynamic>.from(json['active_days'] as Map) : null,
+      activeDays: json['active_days'] != null ? List<String>.from(json['active_days'] as List) : const [],
       activeTimeFrom: json['active_time_from'] as String?,
       activeTimeTo: json['active_time_to'] as String?,
       maxUses: (json['max_uses'] as num?)?.toInt(),
@@ -134,7 +134,7 @@ class Promotion {
     int? minItemQuantity,
     DateTime? validFrom,
     DateTime? validTo,
-    Map<String, dynamic>? activeDays,
+    List<String>? activeDays,
     String? activeTimeFrom,
     String? activeTimeTo,
     int? maxUses,
@@ -178,13 +178,12 @@ class Promotion {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Promotion && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is Promotion && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'Promotion(id: $id, organizationId: $organizationId, name: $name, description: $description, type: $type, discountValue: $discountValue, ...)';
+  String toString() =>
+      'Promotion(id: $id, organizationId: $organizationId, name: $name, description: $description, type: $type, discountValue: $discountValue, ...)';
 }

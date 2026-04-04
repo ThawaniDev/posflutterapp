@@ -17,6 +17,8 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
   TimeOfDay? _quietStart;
   TimeOfDay? _quietEnd;
   Map<String, dynamic> _preferences = {};
+  bool _soundEnabled = true;
+  String _emailDigest = 'none';
   bool _hasChanges = false;
 
   @override
@@ -32,6 +34,8 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
       _preferences = Map<String, dynamic>.from(state.preferences);
       _quietStart = _parseTime(state.quietHoursStart);
       _quietEnd = _parseTime(state.quietHoursEnd);
+      _soundEnabled = state.soundEnabled ?? true;
+      _emailDigest = state.emailDigest ?? 'none';
     }
   }
 
@@ -50,7 +54,13 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
   void _save() {
     ref
         .read(notificationPreferencesProvider.notifier)
-        .update(preferences: _preferences, quietHoursStart: _formatTime(_quietStart), quietHoursEnd: _formatTime(_quietEnd));
+        .update(
+          preferences: _preferences,
+          quietHoursStart: _formatTime(_quietStart),
+          quietHoursEnd: _formatTime(_quietEnd),
+          soundEnabled: _soundEnabled,
+          emailDigest: _emailDigest,
+        );
     _hasChanges = false;
   }
 
@@ -116,6 +126,50 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
           l10n.notificationsSystemUpdates,
           l10n.notificationsSystemUpdatesSubtitle,
           Icons.settings,
+        ),
+
+        const SizedBox(height: 24),
+
+        // ─── Sound & Email ────────────────────────
+        Text(l10n.notificationsGeneralSettings, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              children: [
+                SwitchListTile(
+                  title: Text(l10n.notificationsSoundEnabled),
+                  subtitle: Text(l10n.notificationsSoundEnabledSubtitle),
+                  secondary: const Icon(Icons.volume_up),
+                  value: _soundEnabled,
+                  onChanged: (v) => setState(() {
+                    _soundEnabled = v;
+                    _hasChanges = true;
+                  }),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: const Icon(Icons.email_outlined),
+                  title: Text(l10n.notificationsEmailDigest),
+                  subtitle: Text(l10n.notificationsEmailDigestSubtitle),
+                  trailing: DropdownButton<String>(
+                    value: _emailDigest,
+                    underline: const SizedBox.shrink(),
+                    items: [
+                      DropdownMenuItem(value: 'none', child: Text(l10n.notificationsDigestNone)),
+                      DropdownMenuItem(value: 'daily', child: Text(l10n.notificationsDigestDaily)),
+                      DropdownMenuItem(value: 'weekly', child: Text(l10n.notificationsDigestWeekly)),
+                    ],
+                    onChanged: (v) => setState(() {
+                      _emailDigest = v ?? 'none';
+                      _hasChanges = true;
+                    }),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
 
         const SizedBox(height: 24),

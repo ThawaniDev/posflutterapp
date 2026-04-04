@@ -275,7 +275,7 @@ class _MarketplaceBrowsePageState extends ConsumerState<MarketplaceBrowsePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Name
-                    Text(listing.name, style: AppTypography.titleSmall, maxLines: 2, overflow: TextOverflow.ellipsis),
+                    Text(listing.title, style: AppTypography.titleSmall, maxLines: 2, overflow: TextOverflow.ellipsis),
                     AppSpacing.gapH4,
                     // Category
                     if (listing.categoryName != null)
@@ -324,8 +324,8 @@ class _MarketplaceBrowsePageState extends ConsumerState<MarketplaceBrowsePage> {
       return PosBadge(label: l10n.marketplaceFree, variant: PosBadgeVariant.success);
     }
     if (listing.isSubscription) {
-      return PosBadge(label: '${listing.subscriptionPrice}/${listing.subscriptionInterval}', variant: PosBadgeVariant.info);
+      return PosBadge(label: '${listing.priceAmount}/${listing.subscriptionInterval}', variant: PosBadgeVariant.info);
     }
-    return PosBadge(label: '${listing.price} ${l10n.marketplaceCurrency}', variant: PosBadgeVariant.primary);
+    return PosBadge(label: '${listing.priceAmount} ${l10n.marketplaceCurrency}', variant: PosBadgeVariant.primary);
   }
 }

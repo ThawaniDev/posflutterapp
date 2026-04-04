@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
@@ -51,7 +52,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
   Future<void> _lookupTransaction() async {
     final number = _receiptController.text.trim();
     if (number.isEmpty) {
-      setState(() => _error = 'Enter a transaction/receipt number');
+      setState(() => _error = AppLocalizations.of(context)!.posEnterReceiptNumber);
       return;
     }
 
@@ -73,7 +74,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
         }
       });
     } catch (e) {
-      setState(() => _error = 'Failed to find transaction: $e');
+      setState(() => _error = AppLocalizations.of(context)!.posTransactionLookupFailed(e.toString()));
     } finally {
       setState(() => _isSearching = false);
     }
@@ -97,7 +98,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
             'product_id': item.productId,
             'quantity': entry.value,
             'unit_price': item.unitPrice,
-            'reason': 'Customer return',
+            'reason': AppLocalizations.of(context)!.posCustomerReturn,
           });
         }
       }
@@ -113,14 +114,14 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
       final saleState = ref.read(saleProvider);
       if (saleState is SaleCompleted) {
         if (mounted) {
-          showPosSuccessSnackbar(context, 'Return processed: #${saleState.transactionNumber}');
+          showPosSuccessSnackbar(context, AppLocalizations.of(context)!.posReturnProcessed(saleState.transactionNumber));
           Navigator.pop(context);
         }
       } else if (saleState is SaleError) {
         setState(() => _error = saleState.message);
       }
     } catch (e) {
-      setState(() => _error = 'Return failed: $e');
+      setState(() => _error = AppLocalizations.of(context)!.posReturnFailed(e.toString()));
     } finally {
       if (mounted) setState(() => _isProcessing = false);
     }
@@ -151,7 +152,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
                     child: const Icon(Icons.assignment_return_outlined, color: AppColors.warning, size: 22),
                   ),
                   AppSpacing.gapW12,
-                  Expanded(child: Text('Return / Refund', style: AppTypography.headlineSmall)),
+                  Expanded(child: Text(AppLocalizations.of(context)!.posReturnRefund, style: AppTypography.headlineSmall)),
                   IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close_rounded)),
                 ],
               ),
@@ -163,7 +164,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
                   Expanded(
                     child: PosTextField(
                       controller: _receiptController,
-                      hint: 'Receipt / Transaction number',
+                      hint: AppLocalizations.of(context)!.posReceiptNumber,
                       prefixIcon: Icons.receipt_long_outlined,
                       autofocus: true,
                       onSubmitted: (_) => _lookupTransaction(),
@@ -171,7 +172,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
                   ),
                   AppSpacing.gapW8,
                   PosButton(
-                    label: 'Find',
+                    label: AppLocalizations.of(context)!.posFind,
                     icon: Icons.search_rounded,
                     size: PosButtonSize.sm,
                     isLoading: _isSearching,
@@ -183,7 +184,10 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
 
               // Transaction items
               if (_transaction != null && _transaction!.items != null) ...[
-                Text('Select items to return', style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600)),
+                Text(
+                  AppLocalizations.of(context)!.posSelectItemsToReturn,
+                  style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                ),
                 AppSpacing.gapH8,
                 Expanded(
                   child: ListView.separated(
@@ -205,7 +209,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
                 // Refund method
                 Row(
                   children: [
-                    Text('Refund to:', style: AppTypography.labelSmall),
+                    Text(AppLocalizations.of(context)!.posRefundTo, style: AppTypography.labelSmall),
                     AppSpacing.gapW12,
                     Expanded(
                       child: DropdownButtonFormField<PaymentMethod>(
@@ -234,9 +238,9 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Refund Amount', style: AppTypography.labelSmall),
+                      Text(AppLocalizations.of(context)!.posRefundAmount, style: AppTypography.labelSmall),
                       Text(
-                        'SAR ${_refundTotal.toStringAsFixed(2)}',
+                        AppLocalizations.of(context)!.amountWithSar(_refundTotal.toStringAsFixed(2)),
                         style: AppTypography.headlineSmall.copyWith(color: AppColors.error),
                       ),
                     ],
@@ -255,7 +259,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
                         ),
                         AppSpacing.gapH8,
                         Text(
-                          'Enter a receipt number to find the transaction',
+                          AppLocalizations.of(context)!.posEnterReceiptNumberHint,
                           style: AppTypography.bodySmall.copyWith(color: mutedColor),
                         ),
                       ],
@@ -284,14 +288,18 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
               Row(
                 children: [
                   Expanded(
-                    child: PosButton(label: 'Cancel', variant: PosButtonVariant.outline, onPressed: () => Navigator.pop(context)),
+                    child: PosButton(
+                      label: AppLocalizations.of(context)!.posCancel,
+                      variant: PosButtonVariant.outline,
+                      onPressed: () => Navigator.pop(context),
+                    ),
                   ),
                   if (_transaction != null) ...[
                     AppSpacing.gapW12,
                     Expanded(
                       flex: 2,
                       child: PosButton(
-                        label: 'Process Return',
+                        label: AppLocalizations.of(context)!.posProcessReturn,
                         icon: Icons.assignment_return_rounded,
                         variant: PosButtonVariant.danger,
                         isLoading: _isProcessing,

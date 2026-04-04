@@ -93,6 +93,7 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
   }
 
   Future<void> _showAdjustmentDialog() async {
+    final l10n = AppLocalizations.of(context)!;
     // Ensure products are loaded for the dropdown
     final productsState = ref.read(productsProvider);
     if (productsState is! ProductsLoaded) {
@@ -163,7 +164,7 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
                         decoration: InputDecoration(labelText: l10n.reason),
                         isExpanded: true,
                         items: reasonOptions
-                            .map((r) => DropdownMenuItem(value: r, child: Text(r[0].toUpperCase() + r.substring(1))))
+                            .map((r) => DropdownMenuItem(value: r, child: Text(_localizedReason(l10n, r))))
                             .toList(),
                         onChanged: (v) => setDialogState(() => selectedReason = v),
                         validator: (v) => v == null ? l10n.commonRequired : null,
@@ -216,5 +217,28 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
 
     quantityController.dispose();
     notesController.dispose();
+  }
+
+  String _localizedReason(AppLocalizations l10n, String reason) {
+    switch (reason) {
+      case 'damaged':
+        return l10n.stockAdjustReasonDamaged;
+      case 'expired':
+        return l10n.stockAdjustReasonExpired;
+      case 'lost':
+        return l10n.stockAdjustReasonLost;
+      case 'correction':
+        return l10n.stockAdjustReasonCorrection;
+      case 'returned':
+        return l10n.stockAdjustReasonReturned;
+      case 'miscounted':
+        return l10n.stockAdjustReasonMiscounted;
+      case 'theft':
+        return l10n.stockAdjustReasonTheft;
+      case 'other':
+        return l10n.stockAdjustReasonOther;
+      default:
+        return reason;
+    }
   }
 }

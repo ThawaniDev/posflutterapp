@@ -66,7 +66,7 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l10n.inventoryCancelPOTitle),
-        content: Text('Cancel order "${order.referenceNumber ?? order.id}"?'),
+        content: Text(l10n.purchaseOrderCancelConfirm(order.referenceNumber ?? order.id)),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonNo)),
           TextButton(

@@ -33,7 +33,7 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l10n.inventoryDeleteRecipeTitle),
-        content: Text('Delete recipe "${recipe.name ?? recipe.productName ?? recipe.productId}"?'),
+        content: Text(l10n.recipeDeleteConfirm(recipe.name ?? recipe.productName ?? recipe.productId)),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonCancel)),
           TextButton(

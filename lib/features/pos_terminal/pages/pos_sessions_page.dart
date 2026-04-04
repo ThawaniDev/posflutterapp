@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
@@ -42,18 +43,18 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Open POS Session', style: AppTypography.headlineSmall),
+        title: Text(AppLocalizations.of(ctx)!.sessionsOpenPosSession, style: AppTypography.headlineSmall),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Enter the opening cash amount for this session.',
+              AppLocalizations.of(ctx)!.sessionsOpenSessionDescription,
               style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondaryLight),
             ),
             AppSpacing.gapH16,
             PosTextField(
               controller: openingCashController,
-              label: 'Opening Cash',
+              label: AppLocalizations.of(ctx)!.sessionsOpeningCash,
               hint: '0.000',
               prefixIcon: Icons.attach_money_rounded,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -62,8 +63,8 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Open Session')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(AppLocalizations.of(ctx)!.posCancel)),
+          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(AppLocalizations.of(ctx)!.sessionsOpenSession)),
         ],
       ),
     );
@@ -71,7 +72,7 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
     if (confirmed == true && mounted) {
       final amount = double.tryParse(openingCashController.text) ?? 0.0;
       await ref.read(posSessionsProvider.notifier).openSession({'opening_cash': amount});
-      if (mounted) showPosSuccessSnackbar(context, 'POS session opened.');
+      if (mounted) showPosSuccessSnackbar(context, AppLocalizations.of(context)!.sessionsSessionOpened);
     }
   }
 
@@ -84,18 +85,18 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('Close Session', style: AppTypography.headlineSmall),
+        title: Text(AppLocalizations.of(ctx)!.sessionsCloseSession, style: AppTypography.headlineSmall),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Enter the closing cash amount to close this session.',
+              AppLocalizations.of(ctx)!.sessionsCloseSessionDescription,
               style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondaryLight),
             ),
             AppSpacing.gapH16,
             PosTextField(
               controller: closingCashController,
-              label: 'Closing Cash',
+              label: AppLocalizations.of(ctx)!.sessionsClosingCash,
               hint: '0.000',
               prefixIcon: Icons.attach_money_rounded,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -104,11 +105,11 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(AppLocalizations.of(ctx)!.posCancel)),
           TextButton(
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
             onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Close Session'),
+            child: Text(AppLocalizations.of(ctx)!.sessionsCloseSession),
           ),
         ],
       ),
@@ -117,7 +118,7 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
     if (confirmed == true && mounted) {
       final amount = double.tryParse(closingCashController.text) ?? 0.0;
       await ref.read(posSessionsProvider.notifier).closeSession(session.id, {'closing_cash': amount});
-      if (mounted) showPosSuccessSnackbar(context, 'Session closed.');
+      if (mounted) showPosSuccessSnackbar(context, AppLocalizations.of(context)!.sessionsSessionClosed);
     }
   }
 
@@ -155,9 +156,11 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('POS Sessions', style: AppTypography.headlineMedium),
+              Text(AppLocalizations.of(context)!.sessionsTitle, style: AppTypography.headlineMedium),
               Text(
-                isLoaded ? '${state.total} session${state.total == 1 ? '' : 's'}' : 'Session history',
+                isLoaded
+                    ? '${state.total} ${state.total == 1 ? AppLocalizations.of(context)!.sessionsSessionSingular : AppLocalizations.of(context)!.sessionsSessionPlural}'
+                    : AppLocalizations.of(context)!.sessionsHistory,
                 style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
               ),
             ],
@@ -165,7 +168,11 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
           const Spacer(),
 
           // Open session button
-          PosButton(label: 'Open Session', icon: Icons.play_circle_outline_rounded, onPressed: _handleOpenSession),
+          PosButton(
+            label: AppLocalizations.of(context)!.sessionsOpenSession,
+            icon: Icons.play_circle_outline_rounded,
+            onPressed: _handleOpenSession,
+          ),
         ],
       ),
     );
@@ -182,15 +189,15 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
     final loaded = state is PosSessionsLoaded ? state : null;
 
     return PosDataTable<PosSession>(
-      columns: const [
-        PosTableColumn(title: 'Session ID', width: 200),
-        PosTableColumn(title: 'Register', flex: 1),
-        PosTableColumn(title: 'Cashier', flex: 1),
-        PosTableColumn(title: 'Status', width: 100),
-        PosTableColumn(title: 'Opening Cash', width: 130, numeric: true),
-        PosTableColumn(title: 'Total Sales', width: 120, numeric: true),
-        PosTableColumn(title: 'Transactions', width: 110, numeric: true),
-        PosTableColumn(title: 'Opened At', width: 150),
+      columns: [
+        PosTableColumn(title: AppLocalizations.of(context)!.sessionsColSessionId, width: 200),
+        PosTableColumn(title: AppLocalizations.of(context)!.sessionsColRegister, flex: 1),
+        PosTableColumn(title: AppLocalizations.of(context)!.sessionsColCashier, flex: 1),
+        PosTableColumn(title: AppLocalizations.of(context)!.sessionsColStatus, width: 100),
+        PosTableColumn(title: AppLocalizations.of(context)!.sessionsColOpeningCash, width: 130, numeric: true),
+        PosTableColumn(title: AppLocalizations.of(context)!.sessionsColTotalSales, width: 120, numeric: true),
+        PosTableColumn(title: AppLocalizations.of(context)!.sessionsColTransactions, width: 110, numeric: true),
+        PosTableColumn(title: AppLocalizations.of(context)!.sessionsColOpenedAt, width: 150),
       ],
       items: items,
       cellBuilder: _buildCell,
@@ -202,7 +209,7 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
       }),
       actions: [
         PosTableRowAction<PosSession>(
-          label: 'Close Session',
+          label: AppLocalizations.of(context)!.sessionsCloseSession,
           icon: Icons.stop_circle_outlined,
           isDestructive: true,
           isVisible: (s) => s.status == SessionStatus.open,
@@ -222,10 +229,10 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
       isLoading: isLoading,
       error: error,
       onRetry: () => ref.read(posSessionsProvider.notifier).load(),
-      emptyConfig: const PosTableEmptyConfig(
+      emptyConfig: PosTableEmptyConfig(
         icon: Icons.receipt_long_outlined,
-        title: 'No sessions found',
-        subtitle: 'Open a POS session to start processing transactions.',
+        title: AppLocalizations.of(context)!.sessionsNoSessions,
+        subtitle: AppLocalizations.of(context)!.sessionsNoSessionsSubtitle,
       ),
     );
   }
@@ -255,14 +262,16 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
         );
       case 3: // Status
         return PosBadge(
-          label: session.status.value == 'open' ? 'Open' : 'Closed',
+          label: session.status.value == 'open'
+              ? AppLocalizations.of(context)!.sessionsStatusOpen
+              : AppLocalizations.of(context)!.sessionsStatusClosed,
           variant: session.status == SessionStatus.open ? PosBadgeVariant.success : PosBadgeVariant.neutral,
         );
       case 4: // Opening Cash
-        return Text('${session.openingCash.toStringAsFixed(3)} OMR', style: AppTypography.bodySmall, textAlign: TextAlign.right);
+        return Text('${session.openingCash.toStringAsFixed(3)} SAR', style: AppTypography.bodySmall, textAlign: TextAlign.right);
       case 5: // Total Sales
         final total = (session.totalCashSales ?? 0) + (session.totalCardSales ?? 0) + (session.totalOtherSales ?? 0);
-        return Text('${total.toStringAsFixed(3)} OMR', style: AppTypography.bodySmall, textAlign: TextAlign.right);
+        return Text('${total.toStringAsFixed(3)} SAR', style: AppTypography.bodySmall, textAlign: TextAlign.right);
       case 6: // Transactions
         return Text('${session.transactionCount ?? 0}', style: AppTypography.bodySmall, textAlign: TextAlign.right);
       case 7: // Opened At
@@ -275,9 +284,9 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
   String _formatDate(DateTime dt) {
     final now = DateTime.now();
     final diff = now.difference(dt);
-    if (diff.inMinutes < 1) return 'Just now';
-    if (diff.inHours < 1) return '${diff.inMinutes}m ago';
-    if (diff.inDays < 1) return '${diff.inHours}h ago';
+    if (diff.inMinutes < 1) return AppLocalizations.of(context)!.posJustNow;
+    if (diff.inHours < 1) return AppLocalizations.of(context)!.posMinutesAgo(diff.inMinutes);
+    if (diff.inDays < 1) return AppLocalizations.of(context)!.posHoursAgo(diff.inHours);
     return '${dt.year}-${_pad(dt.month)}-${_pad(dt.day)} ${_pad(dt.hour)}:${_pad(dt.minute)}';
   }
 

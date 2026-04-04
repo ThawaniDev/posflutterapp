@@ -21,4 +21,13 @@ class AutoUpdateRepository {
   Future<Map<String, dynamic>> getUpdateHistory() => _api.getUpdateHistory();
 
   Future<Map<String, dynamic>> getCurrentVersion({required String platform}) => _api.getCurrentVersion(platform: platform);
+
+  Future<Map<String, dynamic>> getManifest({required String version, String? platform, String? channel}) =>
+      _api.getManifest(version: version, platform: platform, channel: channel);
+
+  Future<Map<String, dynamic>> getDownloadInfo({required String version, String? platform, String? channel}) =>
+      _api.getDownloadInfo(version: version, platform: platform, channel: channel);
+
+  Future<Map<String, dynamic>> getRolloutStatus({String? platform, String? channel}) =>
+      _api.getRolloutStatus(platform: platform, channel: channel);
 }

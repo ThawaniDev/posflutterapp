@@ -28,13 +28,13 @@ class SettingsPage extends ConsumerWidget {
                 icon: Icons.store,
                 title: l10n.settingsStoreProfile,
                 subtitle: l10n.settingsStoreProfileDesc,
-                onTap: () {},
+                onTap: () => context.go(Routes.settingsStoreProfile),
               ),
               _SettingsItem(
                 icon: Icons.schedule,
                 title: l10n.settingsWorkingHours,
                 subtitle: l10n.settingsWorkingHoursDesc,
-                onTap: () {},
+                onTap: () => context.go(Routes.settingsWorkingHours),
               ),
             ],
           ),
@@ -42,8 +42,24 @@ class SettingsPage extends ConsumerWidget {
           _SettingsSection(
             title: l10n.settingsBusiness,
             items: [
-              _SettingsItem(icon: Icons.receipt_long, title: l10n.settingsTax, subtitle: l10n.settingsTaxDesc, onTap: () {}),
-              _SettingsItem(icon: Icons.print, title: l10n.settingsReceipt, subtitle: l10n.settingsReceiptDesc, onTap: () {}),
+              _SettingsItem(
+                icon: Icons.receipt_long,
+                title: l10n.settingsTax,
+                subtitle: l10n.settingsTaxDesc,
+                onTap: () => context.go(Routes.settingsTax),
+              ),
+              _SettingsItem(
+                icon: Icons.print,
+                title: l10n.settingsReceipt,
+                subtitle: l10n.settingsReceiptDesc,
+                onTap: () => context.go(Routes.settingsReceipt),
+              ),
+              _SettingsItem(
+                icon: Icons.tune,
+                title: l10n.settingsPosBehavior,
+                subtitle: l10n.settingsPosBehaviorDesc,
+                onTap: () => context.go(Routes.settingsPosBehavior),
+              ),
               _SettingsItem(
                 icon: Icons.payment,
                 title: l10n.settingsPaymentMethods,
@@ -68,7 +84,12 @@ class SettingsPage extends ConsumerWidget {
                 subtitle: l10n.settingsSecurityDesc,
                 onTap: () {},
               ),
-              _SettingsItem(icon: Icons.info_outline, title: l10n.settingsAbout, subtitle: l10n.settingsAboutDesc, onTap: () {}),
+              _SettingsItem(
+                icon: Icons.info_outline,
+                title: l10n.settingsAbout,
+                subtitle: l10n.settingsAboutDesc,
+                onTap: () => context.go(Routes.settingsAbout),
+              ),
             ],
           ),
         ],

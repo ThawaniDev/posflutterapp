@@ -16,6 +16,11 @@ class SecurityAuditLog {
   final String? ipAddress;
   final String? deviceId;
   final DateTime? createdAt;
+  final String? requestMethod;
+  final String? requestUrl;
+  final int? responseCode;
+  final int? durationMs;
+  final String? userAgent;
 
   const SecurityAuditLog({
     required this.id,
@@ -30,6 +35,11 @@ class SecurityAuditLog {
     this.ipAddress,
     this.deviceId,
     this.createdAt,
+    this.requestMethod,
+    this.requestUrl,
+    this.responseCode,
+    this.durationMs,
+    this.userAgent,
   });
 
   factory SecurityAuditLog.fromJson(Map<String, dynamic> json) {
@@ -46,6 +56,11 @@ class SecurityAuditLog {
       ipAddress: json['ip_address'] as String?,
       deviceId: json['device_id'] as String?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
+      requestMethod: json['request_method'] as String?,
+      requestUrl: json['request_url'] as String?,
+      responseCode: (json['response_code'] as num?)?.toInt(),
+      durationMs: (json['duration_ms'] as num?)?.toInt(),
+      userAgent: json['user_agent'] as String?,
     );
   }
 
@@ -63,6 +78,11 @@ class SecurityAuditLog {
       'ip_address': ipAddress,
       'device_id': deviceId,
       'created_at': createdAt?.toIso8601String(),
+      'request_method': requestMethod,
+      'request_url': requestUrl,
+      'response_code': responseCode,
+      'duration_ms': durationMs,
+      'user_agent': userAgent,
     };
   }
 
@@ -79,6 +99,11 @@ class SecurityAuditLog {
     String? ipAddress,
     String? deviceId,
     DateTime? createdAt,
+    String? requestMethod,
+    String? requestUrl,
+    int? responseCode,
+    int? durationMs,
+    String? userAgent,
   }) {
     return SecurityAuditLog(
       id: id ?? this.id,
@@ -93,17 +118,21 @@ class SecurityAuditLog {
       ipAddress: ipAddress ?? this.ipAddress,
       deviceId: deviceId ?? this.deviceId,
       createdAt: createdAt ?? this.createdAt,
+      requestMethod: requestMethod ?? this.requestMethod,
+      requestUrl: requestUrl ?? this.requestUrl,
+      responseCode: responseCode ?? this.responseCode,
+      durationMs: durationMs ?? this.durationMs,
+      userAgent: userAgent ?? this.userAgent,
     );
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SecurityAuditLog && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is SecurityAuditLog && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'SecurityAuditLog(id: $id, storeId: $storeId, userId: $userId, userType: $userType, action: $action, resourceType: $resourceType, ...)';
+  String toString() =>
+      'SecurityAuditLog(id: $id, storeId: $storeId, userId: $userId, userType: $userType, action: $action, resourceType: $resourceType, ...)';
 }

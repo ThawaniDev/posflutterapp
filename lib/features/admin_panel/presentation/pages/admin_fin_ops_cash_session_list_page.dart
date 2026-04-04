@@ -107,10 +107,10 @@ class _State extends ConsumerState<AdminFinOpsCashSessionListPage> {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Float: ر.ع. ${_fmt(item['opening_float'])}', style: const TextStyle(fontSize: 12)),
+                  Text('Float: ر.س. ${_fmt(item['opening_float'])}', style: const TextStyle(fontSize: 12)),
                   if (variance != 0)
                     Text(
-                      'Variance: ر.ع. ${variance.toStringAsFixed(2)}',
+                      'Variance: ر.س. ${variance.toStringAsFixed(2)}',
                       style: TextStyle(fontSize: 12, color: variance < 0 ? AppColors.error : AppColors.success),
                     ),
                 ],

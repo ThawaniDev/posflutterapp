@@ -29,7 +29,6 @@
   "retry": "إعادة المحاولة",
   "offline": "أنت غير متصل",
   "syncInProgress": "جاري المزامنة...",
-
   "adminFinOps": "العمليات المالية",
   "adminFinOpsPayments": "المدفوعات",
   "adminFinOpsRefunds": "المبالغ المستردة",
@@ -73,7 +72,6 @@
   "allMethods": "جميع الطرق",
   "allStatuses": "جميع الحالات",
   "status": "الحالة",
-
   "adminInfrastructure": "البنية التحتية",
   "adminInfraFailedJobs": "المهام الفاشلة",
   "adminInfraBackups": "النسخ الاحتياطية",
@@ -84,7 +82,6 @@
   "providerBackups": "نسخ المزود",
   "allQueues": "جميع الطوابير",
   "queue": "الطابور",
-
   "adminProviderRoles": "أدوار المزود",
   "adminProviderPermissions": "صلاحيات المزود",
   "adminProviderRoleTemplates": "قوالب الأدوار",
@@ -97,7 +94,6 @@
   "noPermissionsAssigned": "لا توجد صلاحيات معينة",
   "slug": "المعرّف",
   "description": "الوصف",
-
   "adminProviderManagement": "إدارة المزودين",
   "adminStores": "المتاجر",
   "adminStoreDetail": "تفاصيل المتجر",
@@ -106,7 +102,6 @@
   "suspend": "تعليق",
   "activate": "تفعيل",
   "limitOverrides": "تجاوزات الحدود",
-
   "adminPlatformRoles": "أدوار المنصة",
   "roles": "الأدوار",
   "roleDetail": "تفاصيل الدور",
@@ -115,7 +110,6 @@
   "teamUserDetail": "تفاصيل عضو الفريق",
   "activityLog": "سجل النشاط",
   "permissions": "الصلاحيات",
-
   "adminPackageSubscription": "الباقات والاشتراكات",
   "plans": "الخطط",
   "planDetail": "تفاصيل الخطة",
@@ -126,14 +120,12 @@
   "invoices": "الفواتير",
   "invoiceDetail": "تفاصيل الفاتورة",
   "revenueDashboard": "لوحة الإيرادات",
-
   "adminUserManagement": "إدارة المستخدمين",
   "providerUsers": "مستخدمو المزود",
   "adminUsers": "المشرفون",
   "userDetail": "تفاصيل المستخدم",
   "resetPassword": "إعادة تعيين كلمة المرور",
   "userActivity": "نشاط المستخدم",
-
   "adminBillingFinance": "الفوترة والمالية",
   "billingInvoices": "فواتير الفوترة",
   "createInvoice": "إنشاء فاتورة",
@@ -142,7 +134,6 @@
   "gateways": "بوابات الدفع",
   "hardwareSales": "مبيعات الأجهزة",
   "implementationFees": "رسوم التنفيذ",
-
   "adminAnalytics": "التحليلات والتقارير",
   "analyticsDashboard": "لوحة التحليلات",
   "analyticsRevenue": "تحليلات الإيرادات",
@@ -150,42 +141,33 @@
   "analyticsSubscriptions": "تحليلات الاشتراكات",
   "analyticsFeatures": "استخدام الميزات",
   "analyticsSystemHealth": "صحة النظام",
-
   "adminSupportTickets": "تذاكر الدعم",
   "cannedResponses": "الردود الجاهزة",
-
   "adminFeatureFlags": "أعلام الميزات",
   "featureFlagDetail": "تفاصيل علم الميزة",
-
   "adminNotificationTemplates": "قوالب الإشعارات",
   "notificationLogs": "سجلات الإشعارات",
-
   "adminABTests": "اختبارات A/B",
   "abTestDetail": "تفاصيل اختبار A/B",
   "abTestResults": "نتائج اختبار A/B",
   "platformEvents": "أحداث المنصة",
-
   "adminContent": "المحتوى والتأهيل",
   "cmsPages": "صفحات المحتوى",
   "cmsPageDetail": "تفاصيل الصفحة",
   "articles": "المقالات",
   "announcements": "الإعلانات",
-
   "adminMarketplace": "السوق",
   "marketplaceStores": "متاجر السوق",
   "marketplaceSettlements": "تسويات السوق",
-
   "adminDeployment": "النشر",
   "deploymentOverview": "نظرة عامة على النشر",
   "releases": "الإصدارات",
-
   "adminSecurity": "مركز الأمان",
   "securityOverview": "نظرة عامة على الأمان",
   "securityAlerts": "تنبيهات الأمان",
   "dataManagement": "إدارة البيانات",
   "databaseBackupsList": "نسخ قاعدة البيانات",
   "healthDashboard": "لوحة الصحة",
-
   "support": "الدعم",
   "supportDashboard": "لوحة الدعم",
   "supportNewTicket": "تذكرة جديدة",
@@ -241,7 +223,6 @@
   "supportKbDelivery": "التوصيل",
   "supportKbBilling": "الفوترة",
   "supportKbTroubleshooting": "استكشاف الأخطاء",
-
   "branches": "الفروع",
   "branchesNoBranches": "لم يتم العثور على فروع",
   "branchesMain": "رئيسي",
@@ -327,9 +308,21 @@
   "branchesTotalStaff": "إجمالي الموظفين",
   "branchesTotalRegisters": "إجمالي الكاشيرات",
   "branchesStaff": "{count} موظف",
-  "@branchesStaff": { "placeholders": { "count": { "type": "int" } } },
+  "@branchesStaff": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "branchesRegisters": "{count} كاشير",
-  "@branchesRegisters": { "placeholders": { "count": { "type": "int" } } },
+  "@branchesRegisters": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "branchesFilterByCity": "تصفية حسب المدينة",
   "branchesFilterByStatus": "تصفية حسب الحالة",
   "branchesSortBy": "ترتيب حسب",
@@ -349,7 +342,6 @@
   "branchesSocialInfo": "التواصل الاجتماعي والوسائط",
   "branchesCannotDeleteMain": "لا يمكن حذف الفرع الرئيسي",
   "branchesCannotDeleteWithTransactions": "لا يمكن حذف فرع يحتوي على معاملات",
-
   "deliveryIntegration": "التكامل مع التوصيل",
   "deliveryOverview": "نظرة عامة",
   "deliveryPlatforms": "المنصات",
@@ -424,32 +416,42 @@
   "deliveryOrdersCount": "{count} طلبات",
   "@deliveryOrdersCount": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "deliveryLastOrder": "آخر طلب",
   "deliveryMinutesAgo": "منذ {minutes} دقيقة",
   "@deliveryMinutesAgo": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "deliveryHoursAgo": "منذ {hours} ساعة",
   "@deliveryHoursAgo": {
     "placeholders": {
-      "hours": { "type": "int" }
+      "hours": {
+        "type": "int"
+      }
     }
   },
   "deliveryDaysAgo": "منذ {days} يوم",
   "@deliveryDaysAgo": {
     "placeholders": {
-      "days": { "type": "int" }
+      "days": {
+        "type": "int"
+      }
     }
   },
   "deliveryItemsCountValue": "{count} عناصر",
   "@deliveryItemsCountValue": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "deliveryTriggeredBy": "بواسطة:",
@@ -480,7 +482,6 @@
   "deliveryAttempt": "المحاولة",
   "deliveryRequestPayload": "بيانات الطلب",
   "deliveryResponsePayload": "بيانات الاستجابة",
-
   "thawaniPay": "ثواني باي",
   "thawaniOverview": "نظرة عامة",
   "thawaniSettings": "الإعدادات",
@@ -502,7 +503,6 @@
   "thawaniDisconnect": "قطع الاتصال بثواني",
   "thawaniOrdersPlaceholder": "طلبات ثواني",
   "thawaniOrdersDesc": "ستظهر الطلبات من سوق ثواني هنا",
-
   "settingsGeneral": "عام",
   "settingsLocalization": "التعريب",
   "settingsLocalizationDesc": "اللغات والترجمات والإعدادات الإقليمية",
@@ -524,7 +524,118 @@
   "settingsSecurityDesc": "إعدادات الرمز وكلمة المرور والوصول",
   "settingsAbout": "حول",
   "settingsAboutDesc": "إصدار التطبيق والمعلومات القانونية",
-
+  "settingsPosBehavior": "سلوك نقطة البيع",
+  "settingsPosBehaviorDesc": "إعدادات المبيعات والمرتجعات والمخزون والولاء",
+  "settingsSaved": "تم حفظ الإعدادات بنجاح",
+  "settingsErrorLoading": "فشل تحميل الإعدادات",
+  "settingsErrorSaving": "فشل حفظ الإعدادات",
+  "save": "حفظ",
+  "retry": "إعادة المحاولة",
+  "settingsTaxLabel": "مسمى الضريبة",
+  "settingsTaxLabelHint": "مثال: ضريبة القيمة المضافة",
+  "settingsTaxRate": "نسبة الضريبة (%)",
+  "settingsTaxRateHint": "مثال: 5.0",
+  "settingsTaxNumber": "رقم التسجيل الضريبي",
+  "settingsTaxNumberHint": "رقم التعريف الضريبي الخاص بك",
+  "settingsTaxPricesIncludeTax": "الأسعار شاملة الضريبة",
+  "settingsPricesIncludeTax": "الأسعار شاملة الضريبة",
+  "settingsPricesIncludeTaxDesc": "أسعار المنتجات تشمل الضريبة بالفعل",
+  "settingsTaxConfig": "إعدادات الضريبة",
+  "settingsReceiptContent": "المحتوى",
+  "settingsReceiptHeader": "رأس الإيصال",
+  "settingsReceiptHeaderHint": "النص في أعلى الإيصال",
+  "settingsReceiptFooter": "تذييل الإيصال",
+  "settingsReceiptFooterHint": "النص في أسفل الإيصال",
+  "settingsReceiptDisplay": "خيارات العرض",
+  "settingsReceiptShowLogo": "عرض الشعار",
+  "settingsReceiptShowTax": "عرض تفاصيل الضريبة",
+  "settingsReceiptShowAddress": "عرض عنوان المتجر",
+  "settingsReceiptShowPhone": "عرض رقم الهاتف",
+  "settingsReceiptShowDate": "عرض التاريخ والوقت",
+  "settingsReceiptShowCashier": "عرض اسم الكاشير",
+  "settingsReceiptShowBarcode": "عرض الباركود",
+  "settingsReceiptFormat": "التنسيق",
+  "settingsReceiptPaperSize": "حجم الورق",
+  "settingsReceiptFontSize": "حجم الخط",
+  "settingsReceiptLanguage": "لغة الإيصال",
+  "settingsFontSmall": "صغير",
+  "settingsFontNormal": "عادي",
+  "settingsFontLarge": "كبير",
+  "settingsLangArabic": "العربية",
+  "settingsLangEnglish": "الإنجليزية",
+  "settingsLangBoth": "كلاهما",
+  "settingsPosSales": "المبيعات",
+  "settingsPosDefaultSaleType": "نوع البيع الافتراضي",
+  "settingsPosDineIn": "داخل المطعم",
+  "settingsPosTakeaway": "سفري",
+  "settingsPosDelivery": "توصيل",
+  "settingsPosRequireCustomer": "طلب بيانات العميل للبيع",
+  "settingsPosAutoPrint": "طباعة الإيصال تلقائياً",
+  "settingsPosEnableTips": "تفعيل البقشيش",
+  "settingsPosHoldOrders": "السماح بتعليق الطلبات",
+  "settingsPosOpenPriceItems": "السماح بأصناف السعر المفتوح",
+  "settingsPosQuickAdd": "وضع الإضافة السريعة",
+  "settingsPosBarcodeSound": "صوت مسح الباركود",
+  "settingsPosKitchenDisplay": "إرسال إلى شاشة المطبخ",
+  "settingsPosReturns": "المرتجعات والاسترداد",
+  "settingsPosEnableRefunds": "تفعيل الاسترداد",
+  "settingsPosEnableExchanges": "تفعيل الاستبدال",
+  "settingsPosManagerRefund": "موافقة المدير على الاسترداد",
+  "settingsPosManagerRefundDesc": "طلب رمز المدير لمعاملات الاسترداد",
+  "settingsPosManagerDiscount": "موافقة المدير على الخصومات",
+  "settingsPosManagerDiscountDesc": "طلب رمز المدير عند تطبيق الخصومات",
+  "settingsPosLimits": "الحدود",
+  "settingsPosMaxDiscount": "أقصى خصم (%)",
+  "settingsPosSessionTimeout": "مهلة الجلسة (دقائق)",
+  "settingsPosInventory": "المخزون",
+  "settingsPosTrackInventory": "تتبع المخزون",
+  "settingsPosAllowNegStock": "السماح بالمخزون السالب",
+  "settingsPosBatchTracking": "تتبع الدفعات",
+  "settingsPosExpiryTracking": "تتبع تاريخ الانتهاء",
+  "settingsPosAutoDeductIngredients": "خصم المكونات تلقائياً",
+  "settingsPosLowStockAlert": "تنبيه انخفاض المخزون",
+  "settingsPosLowStockThreshold": "حد انخفاض المخزون",
+  "settingsPosLoyalty": "برنامج الولاء",
+  "settingsPosEnableLoyalty": "تفعيل نقاط الولاء",
+  "settingsPosLoyaltyPointsPerCurrency": "النقاط لكل وحدة عملة",
+  "settingsPosLoyaltyRedemptionValue": "قيمة استرداد النقطة",
+  "settingsPosCustomerDisplay": "شاشة العميل",
+  "settingsPosEnableCustomerDisplay": "تفعيل شاشة العميل",
+  "settingsPosCustomerDisplayMessage": "رسالة الترحيب",
+  "settingsPosTheme": "مظهر الشاشة",
+  "settingsPosThemeLight": "فاتح",
+  "settingsPosThemeDark": "داكن",
+  "settingsPosThemeSystem": "النظام",
+  "settingsWorkingOpen": "فتح",
+  "settingsWorkingClose": "إغلاق",
+  "settingsWorkingBreakStart": "بداية الاستراحة",
+  "settingsWorkingBreakEnd": "نهاية الاستراحة",
+  "settingsProfileCurrency": "العملة",
+  "settingsProfileCurrencyCode": "رمز العملة",
+  "settingsProfileCurrencyCodeHint": "مثال: OMR, SAR, USD",
+  "settingsProfileCurrencySymbol": "رمز العملة",
+  "settingsProfileCurrencySymbolHint": "مثال: ر.ع, ﷼, $",
+  "settingsProfileFormatting": "تنسيق الأرقام",
+  "settingsProfileDecimalPlaces": "الخانات العشرية",
+  "settingsProfileThousandSep": "فاصل الآلاف",
+  "settingsProfileDecimalSep": "الفاصل العشري",
+  "settingsAboutVersion": "الإصدار {version}",
+  "@settingsAboutVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+  "settingsAboutTerms": "شروط الخدمة",
+  "settingsAboutPrivacy": "سياسة الخصوصية",
+  "settingsAboutLicenses": "تراخيص المصادر المفتوحة",
+  "settingsAboutSupport": "الدعم",
+  "settingsAboutSupportDesc": "تحتاج مساعدة؟ تواصل مع فريق الدعم",
+  "settingsAboutCopyright": "© {year} ثواني. جميع الحقوق محفوظة.",
+  "@settingsAboutCopyright": {
+    "placeholders": {
+      "year": {"type": "String"}
+    }
+  },
   "sidebarSync": "المزامنة",
   "sidebarBackup": "النسخ الاحتياطي",
   "sidebarCompanionApp": "تطبيق المرافق",
@@ -532,7 +643,6 @@
   "sidebarAccessibility": "إمكانية الوصول",
   "sidebarNiceToHave": "ميزات إضافية",
   "sidebarLocalization": "التوطين",
-
   "syncTitle": "مزامنة البيانات",
   "syncPush": "دفع التغييرات",
   "syncPull": "سحب التغييرات",
@@ -542,7 +652,6 @@
   "syncResolve": "حل التعارض",
   "syncLastSynced": "آخر مزامنة",
   "syncPending": "تغييرات معلقة",
-
   "backupTitle": "النسخ الاحتياطي والاستعادة",
   "backupCreate": "إنشاء نسخة احتياطية",
   "backupRestore": "استعادة نسخة احتياطية",
@@ -552,14 +661,12 @@
   "backupVerify": "التحقق من النسخة",
   "backupDelete": "حذف النسخة",
   "backupHistory": "سجل النسخ الاحتياطي",
-
   "companionTitle": "تطبيق المرافق",
   "companionQuickStats": "إحصائيات سريعة",
   "companionSessions": "الجلسات النشطة",
   "companionPreferences": "التفضيلات",
   "companionQuickActions": "الإجراءات السريعة",
   "companionSummary": "ملخص الهاتف",
-
   "autoUpdateTitle": "التحديث التلقائي",
   "autoUpdateCheck": "التحقق من التحديثات",
   "autoUpdateChangelog": "سجل التغييرات",
@@ -567,7 +674,6 @@
   "autoUpdateCurrentVersion": "الإصدار الحالي",
   "autoUpdateAvailable": "تحديث متاح",
   "autoUpdateUpToDate": "أنت محدّث",
-
   "accessibilityTitle": "إمكانية الوصول",
   "accessibilityPreferences": "التفضيلات",
   "accessibilityShortcuts": "اختصارات لوحة المفاتيح",
@@ -575,7 +681,122 @@
   "accessibilityFontSize": "حجم الخط",
   "accessibilityHighContrast": "تباين عالي",
   "accessibilityScreenReader": "دعم قارئ الشاشة",
+  "accessibilityScreenReaderDesc": "تحسين التوافق مع برامج قراءة الشاشة",
+  "accessibilityVisual": "مرئي",
+  "accessibilityHighContrastDesc": "زيادة التباين لرؤية أفضل",
+  "accessibilityColorBlind": "وضع عمى الألوان",
+  "accessibilityReducedMotion": "تقليل الحركة",
+  "accessibilityReducedMotionDesc": "تقليل الرسوم المتحركة والانتقالات",
+  "accessibilityAudio": "الصوت",
+  "accessibilityAudioFeedback": "التغذية الصوتية",
+  "accessibilityVolume": "مستوى الصوت",
+  "accessibilityLargeTouchTargets": "أهداف لمس كبيرة",
+  "accessibilityLargeTouchTargetsDesc": "تكبير حجم الأزرار وعناصر التحكم",
+  "accessibilityVisibleFocus": "مؤشرات التركيز المرئية",
+  "accessibilityVisibleFocusDesc": "إظهار حدود تركيز واضحة على عناصر التحكم",
+  "accessibilityShortcutsPOS": "نقطة البيع",
+  "accessibilityShortcutsGlobal": "عام",
+  "accessibilityShortcutsNavigation": "التنقل",
+  "accessibilityNavScreens": "Alt + 1-9 — تبديل الشاشات",
+  "accessibilityNavTab": "Tab / Shift+Tab — نقل التركيز",
+  "accessibilityNavCancel": "Esc — إلغاء / إغلاق",
+  "accessibilityNavConfirm": "Enter — تأكيد",
+  "companionNoActiveSessions": "لا توجد جلسات مرافق نشطة",
+  "companionConnectionGuide": "دليل الاتصال",
+  "companionConnectionGuideDesc": "افتح تطبيق المرافق على جهازك المحمول وامسح رمز QR أو أدخل معرف الجلسة للاتصال.",
+  "companionSessionActive": "الجلسة نشطة",
+  "companionSessionId": "معرف الجلسة",
+  "companionSessionStarted": "بدأت",
+  "companionTodayRevenue": "إيرادات اليوم",
+  "companionOrders": "الطلبات",
+  "companionTransactions": "المعاملات",
+  "companionPendingOrders": "الطلبات المعلقة",
+  "companionActiveStaff": "الموظفون النشطون",
+  "companionLowStock": "عناصر منخفضة المخزون",
+  "companionLastSync": "آخر مزامنة",
 
+  "companionDashboard": "لوحة التحكم",
+  "companionSales": "المبيعات",
+  "companionActiveOrdersTitle": "الطلبات النشطة",
+  "companionInventory": "المخزون",
+  "companionStaff": "الموظفون",
+  "companionStoreStatus": "حالة المتجر",
+  "companionStoreOpen": "المتجر مفتوح",
+  "companionStoreClosed": "المتجر مغلق",
+  "companionRevenue": "الإيرادات",
+  "companionToday": "اليوم",
+  "companionYesterday": "أمس",
+  "companionThisWeek": "هذا الأسبوع",
+  "companionThisMonth": "هذا الشهر",
+  "companionSalesPeriod": "فترة المبيعات",
+  "companionTotalRevenue": "إجمالي الإيرادات",
+  "companionTotalOrders": "إجمالي الطلبات",
+  "companionAvgOrderValue": "متوسط قيمة الطلب",
+  "companionDailyBreakdown": "التفصيل اليومي",
+  "companionNoActiveOrders": "لا توجد طلبات نشطة",
+  "companionCustomer": "العميل",
+  "companionItems": "العناصر",
+  "companionRetry": "إعادة المحاولة",
+  "companionOutOfStock": "نفد المخزون",
+  "companionNoAlerts": "لا توجد تنبيهات مخزون",
+  "companionStock": "المخزون",
+  "companionMinStock": "الحد الأدنى",
+  "companionNoActiveStaff": "لا يوجد موظفون نشطون",
+  "companionClockedIn": "وقت الحضور",
+
+  "autoUpdateSettings": "إعدادات التحديث",
+  "autoUpdateEnable": "التحديث التلقائي",
+  "autoUpdateEnableDesc": "تنزيل وتثبيت التحديثات تلقائياً",
+  "autoUpdateMaintenanceWindow": "نافذة الصيانة",
+  "autoUpdateWindowStart": "ساعة البدء",
+  "autoUpdateWindowEnd": "ساعة الانتهاء",
+  "autoUpdateWindowDesc": "سيتم تثبيت التحديثات خلال هذه الفترة",
+  "autoUpdateChannel": "قناة التحديث",
+  "autoUpdateChannelStable": "مستقر",
+  "autoUpdateChannelBeta": "تجريبي",
+  "autoUpdateChannelAlpha": "ألفا",
+  "autoUpdateRequired": "تحديث مطلوب",
+  "autoUpdateForceDesc": "هذا التحديث مطلوب ويجب تثبيته للمتابعة.",
+  "autoUpdateWhatsNew": "ما الجديد",
+  "autoUpdateRemindLater": "تذكير لاحقاً",
+  "autoUpdateSchedule": "جدولة",
+  "autoUpdateInstallNow": "تثبيت الآن",
+  "autoUpdateFailed": "فشل التحديث",
+  "autoUpdateComplete": "اكتمل التحديث",
+  "autoUpdateInstalling": "جاري تثبيت التحديث",
+  "autoUpdateRestart": "إعادة التشغيل الآن",
+  "autoUpdateStepBackup": "نسخ احتياطي",
+  "autoUpdateStepDownload": "تنزيل",
+  "autoUpdateStepVerify": "تحقق",
+  "autoUpdateStepInstall": "تثبيت",
+  "autoUpdateStepMigrate": "ترحيل",
+  "autoUpdateStepComplete": "اكتمال",
+  "autoUpdateProgress": "تقدم التحديث",
+  "autoUpdateNewVersion": "إصدار جديد متاح: {version}",
+  "@autoUpdateNewVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+
+  "accessibilityShortcutReference": "مرجع الاختصارات",
+  "accessibilityShortcutHint": "اضغط Ctrl+/ لإظهار الاختصارات",
+  "accessibilityReassignShortcut": "إعادة تعيين الاختصار",
+  "accessibilityReassignDesc": "اضغط مجموعة المفاتيح الجديدة",
+  "accessibilityPressKey": "اضغط مجموعة مفاتيح...",
+  "accessibilityCurrentShortcut": "الحالي",
+  "accessibilityShortcutReserved": "هذا الاختصار محجوز",
+  "accessibilityShortcutConflict": "يتعارض مع: {name}",
+  "@accessibilityShortcutConflict": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+
+  "settingsSaved": "تم حفظ الإعدادات",
+  "close": "إغلاق",
+  "cancel": "إلغاء",
+  "save": "حفظ",
   "niceToHaveTitle": "ميزات إضافية",
   "niceToHaveWishlist": "قائمة الأمنيات",
   "niceToHaveAppointments": "المواعيد",
@@ -583,14 +804,12 @@
   "niceToHaveGiftRegistry": "سجل الهدايا",
   "niceToHaveSignage": "اللافتات الرقمية",
   "niceToHaveGamification": "التلعيب",
-
   "localizationTitle": "التوطين",
   "localizationLanguage": "اللغة",
   "localizationTranslations": "الترجمات",
   "localizationOverrides": "تجاوزات الترجمة",
   "localizationExport": "تصدير الترجمات",
   "localizationImport": "استيراد الترجمات",
-
   "zatcaTitle": "الامتثال للفاتورة الإلكترونية",
   "zatcaInvoices": "فواتير زاتكا",
   "zatcaCertificates": "الشهادات",
@@ -603,7 +822,6 @@
   "zatcaQrCode": "رمز QR",
   "zatcaInvoiceHash": "هاش الفاتورة",
   "zatcaBatchSubmit": "إرسال دفعة",
-
   "hardwareTitle": "الأجهزة",
   "hardwareConfigurations": "إعدادات الأجهزة",
   "hardwareEventLog": "سجل الأحداث",
@@ -618,7 +836,6 @@
   "hardwareCustomerDisplay": "شاشة العميل",
   "hardwareConnected": "متصل",
   "hardwareDisconnected": "غير متصل",
-
   "posCustomizationTitle": "تخصيص نقطة البيع",
   "posCustomizationLayout": "إعدادات التخطيط",
   "posCustomizationReceipt": "قوالب الإيصالات",
@@ -630,7 +847,6 @@
   "posCustomizationShowPrices": "عرض الأسعار",
   "posCustomizationReceiptHeader": "رأس الإيصال",
   "posCustomizationReceiptFooter": "تذييل الإيصال",
-
   "bakeryTitle": "المخبز",
   "bakeryRecipes": "الوصفات",
   "bakeryCustomCakeOrders": "طلبات الكيك المخصص",
@@ -642,7 +858,6 @@
   "bakeryCakeShape": "شكل الكيك",
   "bakeryDecorations": "الزخارف",
   "bakeryPickupDate": "تاريخ الاستلام",
-
   "electronicsTitle": "الإلكترونيات",
   "electronicsImeiRecords": "سجلات IMEI",
   "electronicsRepairJobs": "أعمال الإصلاح",
@@ -653,7 +868,6 @@
   "electronicsConditionGrade": "درجة الحالة",
   "electronicsWarrantyStatus": "حالة الضمان",
   "electronicsSerialNumber": "الرقم التسلسلي",
-
   "floristTitle": "بائع الزهور",
   "floristArrangements": "التنسيقات",
   "floristFreshnessTracking": "تتبع النضارة",
@@ -665,7 +879,6 @@
   "floristDisposeDate": "تاريخ التخلص",
   "floristDeliveryDay": "يوم التوصيل",
   "floristFrequency": "التكرار",
-
   "jewelryTitle": "المجوهرات",
   "jewelryProductDetails": "تفاصيل المنتج",
   "jewelryMetalRates": "أسعار المعادن",
@@ -678,7 +891,6 @@
   "jewelryMakingCharges": "رسوم التصنيع",
   "jewelryStoneCarat": "وزن الحجر (قيراط)",
   "jewelryCertificateNumber": "رقم الشهادة",
-
   "pharmacyTitle": "الصيدلية",
   "pharmacyDrugSchedules": "جداول الأدوية",
   "pharmacyPrescriptions": "الوصفات الطبية",
@@ -690,7 +902,6 @@
   "pharmacyRequiresPrescription": "يتطلب وصفة طبية",
   "pharmacyActiveIngredient": "المادة الفعالة",
   "pharmacyDosageForm": "شكل الجرعة",
-
   "restaurantTitle": "المطعم",
   "restaurantTables": "الطاولات",
   "restaurantReservations": "الحجوزات",
@@ -704,7 +915,6 @@
   "restaurantPartySize": "عدد الأشخاص",
   "restaurantFireTicket": "إطلاق التذكرة",
   "restaurantCompleteTicket": "إكمال التذكرة",
-
   "accountingTitle": "تكامل المحاسبة",
   "accountingConnect": "ربط المزود",
   "accountingDisconnect": "قطع الاتصال",
@@ -714,7 +924,6 @@
   "accountingProvider": "المزود",
   "accountingLastSync": "آخر مزامنة",
   "accountingExportHistory": "سجل التصدير",
-
   "labelsTitle": "الملصقات",
   "labelsTemplates": "قوالب الملصقات",
   "labelsPrint": "طباعة الملصقات",
@@ -722,11 +931,9 @@
   "labelsSelectProducts": "اختيار المنتجات",
   "labelsPreview": "معاينة",
   "labelsQuantity": "الكمية",
-
   "create": "إنشاء",
   "deleteConfirmation": "هل أنت متأكد من حذف",
   "deleted": "تم الحذف",
-
   "staffMembers": "أعضاء الفريق",
   "staffMember": "عضو الفريق",
   "staffAddMember": "إضافة عضو",
@@ -810,7 +1017,13 @@
   "staffPermissions": "الصلاحيات",
   "staffSystemRole": "نظام",
   "staffPermissionCount": "{count} {count, plural, =1{صلاحية} other{صلاحيات}}",
-  "@staffPermissionCount": { "placeholders": { "count": { "type": "int" } } },
+  "@staffPermissionCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "staffRoleCreated": "تم إنشاء الدور بنجاح",
   "staffRoleUpdated": "تم تحديث الدور بنجاح",
   "staffNoRoles": "لا توجد أدوار مُعدّة",
@@ -840,7 +1053,6 @@
   "staffOrdersWithCommission": "الطلبات مع العمولة",
   "staffAveragePerOrder": "المتوسط لكل طلب",
   "staffEffectiveRate": "النسبة الفعلية",
-
   "subscriptionMySubscription": "اشتراكي",
   "subscriptionCurrentPlan": "الباقة الحالية",
   "subscriptionPlanUsage": "استخدام الباقة",
@@ -871,15 +1083,23 @@
   "subscriptionSubscribeTo": "الاشتراك في {planName}؟",
   "@subscriptionSubscribeTo": {
     "placeholders": {
-      "planName": {"type": "String"}
+      "planName": {
+        "type": "String"
+      }
     }
   },
   "subscriptionSubscribeConfirm": "سيتم اشتراكك في {planName} على أساس {billingCycle}.\n\nالسعر: {price} ر.س/{billingCycle}",
   "@subscriptionSubscribeConfirm": {
     "placeholders": {
-      "planName": {"type": "String"},
-      "billingCycle": {"type": "String"},
-      "price": {"type": "String"}
+      "planName": {
+        "type": "String"
+      },
+      "billingCycle": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
     }
   },
   "subscriptionSubscribe": "اشتراك",
@@ -887,39 +1107,53 @@
   "subscriptionFreeTrialDays": "تجربة مجانية لمدة {days} يوم",
   "@subscriptionFreeTrialDays": {
     "placeholders": {
-      "days": {"type": "int"}
+      "days": {
+        "type": "int"
+      }
     }
   },
   "subscriptionBilling": "الفوترة: {cycle}",
   "@subscriptionBilling": {
     "placeholders": {
-      "cycle": {"type": "String"}
+      "cycle": {
+        "type": "String"
+      }
     }
   },
   "subscriptionPeriod": "الفترة: {start} — {end}",
   "@subscriptionPeriod": {
     "placeholders": {
-      "start": {"type": "String"},
-      "end": {"type": "String"}
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
     }
   },
   "subscriptionTrialEnds": "تنتهي التجربة: {date}",
   "@subscriptionTrialEnds": {
     "placeholders": {
-      "date": {"type": "String"}
+      "date": {
+        "type": "String"
+      }
     }
   },
   "subscriptionGracePeriodEnds": "تنتهي فترة السماح: {date}",
   "@subscriptionGracePeriodEnds": {
     "placeholders": {
-      "date": {"type": "String"}
+      "date": {
+        "type": "String"
+      }
     }
   },
   "subscriptionGracePeriodActive": "فترة السماح نشطة",
   "subscriptionGracePeriodDaysLeft": "متبقي {days} يوم في فترة السماح. جدد لتجنب فقدان الوصول.",
   "@subscriptionGracePeriodDaysLeft": {
     "placeholders": {
-      "days": {"type": "int"}
+      "days": {
+        "type": "int"
+      }
     }
   },
   "subscriptionGracePeriodEndsToday": "تنتهي فترة السماح اليوم. جدد فوراً.",
@@ -947,8 +1181,12 @@
   "subscriptionPageOf": "صفحة {current} من {total}",
   "@subscriptionPageOf": {
     "placeholders": {
-      "current": {"type": "int"},
-      "total": {"type": "int"}
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "subscriptionAll": "الكل",
@@ -971,27 +1209,39 @@
   "subscriptionAddAddon": "إضافة {name}؟",
   "@subscriptionAddAddon": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "subscriptionAddAddonConfirm": "سيتم إضافة {name} إلى اشتراكك.\n\nالتكلفة: {price} ر.س/{cycle}",
   "@subscriptionAddAddonConfirm": {
     "placeholders": {
-      "name": {"type": "String"},
-      "price": {"type": "String"},
-      "cycle": {"type": "String"}
+      "name": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "cycle": {
+        "type": "String"
+      }
     }
   },
   "subscriptionRemoveAddon": "إزالة {name}؟",
   "@subscriptionRemoveAddon": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "subscriptionRemoveAddonConfirm": "هل أنت متأكد من إزالة {name} من اشتراكك؟",
   "@subscriptionRemoveAddonConfirm": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "subscriptionKeep": "الإبقاء",
@@ -1001,7 +1251,9 @@
   "subscriptionRenews": "يتجدد: {date}",
   "@subscriptionRenews": {
     "placeholders": {
-      "date": {"type": "String"}
+      "date": {
+        "type": "String"
+      }
     }
   },
   "subscriptionComingSoon": "الميزة قريباً",
@@ -1011,20 +1263,25 @@
   "subscriptionLimitReachedMessage": "لقد وصلت إلى حد {limit} في باقتك الحالية.",
   "@subscriptionLimitReachedMessage": {
     "placeholders": {
-      "limit": {"type": "String"}
+      "limit": {
+        "type": "String"
+      }
     }
   },
   "subscriptionUpgrade": "ترقية الباقة",
   "subscriptionUsageOf": "{current} من {max}",
   "@subscriptionUsageOf": {
     "placeholders": {
-      "current": {"type": "int"},
-      "max": {"type": "int"}
+      "current": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
     }
   },
   "subscriptionSyncFailed": "فشل مزامنة بيانات الاشتراك",
   "subscriptionEntitlementsCached": "يتم استخدام بيانات الاشتراك المحفوظة",
-
   "reportsInventory": "تقارير المخزون",
   "reportsFinancial": "التقارير المالية",
   "reportsCustomers": "تقارير العملاء",
@@ -1041,7 +1298,6 @@
   "reportsProductMargin": "هامش المنتج",
   "reportsExport": "تصدير التقرير",
   "reportsScheduled": "التقارير المجدولة",
-
   "staffLinkedAccount": "حساب المستخدم المرتبط",
   "staffLinkUser": "ربط حساب مستخدم",
   "staffUnlink": "إلغاء الربط",
@@ -1053,7 +1309,6 @@
   "staffLinkNoUsers": "لا يوجد مستخدمون متاحون للربط",
   "staffLinkSelectUser": "اختر حساب مستخدم",
   "staffLinkName": "الاسم",
-
   "layoutBuilder": "منشئ التخطيط",
   "layoutBuilderSubtitle": "صمم تخطيطات شاشة نقاط البيع المخصصة",
   "layoutTemplates": "قوالب التخطيط",
@@ -1091,7 +1346,6 @@
   "layoutCloneNameHint": "مثال: نسخة من التخطيط الرئيسي",
   "layoutCancel": "إلغاء",
   "layoutCreate": "إنشاء",
-
   "customizationTitle": "تخصيص نقاط البيع",
   "customizationTheme": "المظهر",
   "customizationReceipt": "الإيصال",
@@ -1154,7 +1408,6 @@
   "labelPrintSuccess": "تم إرسال الملصقات إلى الطابعة بنجاح",
   "labelNoHistory": "لا يوجد سجل طباعة",
   "labelNoHistorySubtitle": "سيظهر سجل الطباعة هنا بعد طباعة الملصقات",
-
   "marketplaceTitle": "سوق القوالب",
   "marketplaceSubtitle": "تصفح وتثبيت قوالب المجتمع",
   "marketplaceMyPurchases": "مشترياتي",
@@ -1166,7 +1419,7 @@
   "marketplaceNoListings": "لم يتم العثور على قوالب",
   "marketplaceNoListingsSubtitle": "حاول تعديل البحث أو الفلاتر.",
   "marketplacePage": "صفحة",
-  "marketplaceCurrency": "ر.ع.",
+  "marketplaceCurrency": "ر.س.",
   "marketplaceListingDetail": "تفاصيل القالب",
   "marketplaceDescription": "الوصف",
   "marketplaceOwned": "مملوك",
@@ -1208,7 +1461,6 @@
   "marketplacePaymentMethod": "طريقة الدفع",
   "marketplacePaidAt": "تاريخ الدفع",
   "marketplacePaid": "مدفوع",
-
   "hwDeviceSetup": "إعداد الجهاز",
   "hwEditDevice": "تعديل الجهاز",
   "hwAddDevice": "إضافة جهاز",
@@ -1244,7 +1496,6 @@
   "hwAutoDetect": "اكتشاف تلقائي",
   "hwNetworkScan": "فحص الشبكة",
   "hwUpdate": "تحديث",
-
   "cashManagement": "إدارة النقد",
   "cashCount": "عد النقد",
   "sessionHistory": "سجل الجلسات",
@@ -1267,7 +1518,6 @@
   "amountSar": "المبلغ (ر.س)",
   "reason": "السبب",
   "record": "تسجيل",
-
   "expenses": "المصروفات",
   "newExpense": "مصروف جديد",
   "noExpensesRecorded": "لا توجد مصروفات مسجلة",
@@ -1275,7 +1525,6 @@
   "recordExpense": "تسجيل مصروف",
   "category": "الفئة",
   "descriptionOptional": "الوصف (اختياري)",
-
   "giftCards": "بطاقات الهدايا",
   "issue": "إصدار",
   "checkBalance": "التحقق من الرصيد",
@@ -1296,12 +1545,10 @@
   "initial": "المبدئي",
   "balance": "الرصيد",
   "recipient": "المستلم",
-  "active": "نشط",
   "redeemed": "مسترد",
   "expired": "منتهي",
-  "deactivated": "معطل",
+  "deactivated": "غير مفعّل",
   "unknown": "غير معروف",
-
   "financialReconciliation": "التسوية المالية",
   "printReport": "طباعة التقرير",
   "exportPdf": "تصدير PDF",
@@ -1321,7 +1568,6 @@
   "confirmReconciliationTitle": "تأكيد التسوية",
   "confirmReconciliationMessage": "سيتم إنهاء التسوية لهذا اليوم. سيتم تمييز جميع جلسات النقد على أنها تمت تسويتها.",
   "reconciliationConfirmed": "تم تأكيد التسوية",
-
   "dailySummary": "الملخص اليومي",
   "print": "طباعة",
   "grossRevenue": "إجمالي الإيرادات",
@@ -1335,7 +1581,6 @@
   "sessionDetails": "تفاصيل الجلسات",
   "noSessions": "لا توجد جلسات",
   "na": "غ/م",
-
   "paymentCash": "نقدي",
   "paymentMada": "مدى",
   "paymentVisa": "فيزا",
@@ -1343,7 +1588,6 @@
   "paymentStoreCredit": "رصيد المتجر",
   "paymentGiftCard": "بطاقة هدية",
   "paymentMobilePayment": "دفع عبر الجوال",
-
   "offlineChangesSynced": "غير متصل — سيتم مزامنة التغييرات عند الاتصال",
   "syncing": "جاري المزامنة...",
   "syncError": "خطأ في المزامنة — ستتم إعادة المحاولة",
@@ -1351,10 +1595,11 @@
   "pendingCount": "{count} معلق",
   "@pendingCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
-
   "conflictResolution": "حل التعارضات",
   "open": "مفتوح",
   "resolved": "محلول",
@@ -1367,10 +1612,11 @@
   "moreFields": "+ {count} حقول إضافية",
   "@moreFields": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
-
   "connectingToServer": "جاري الاتصال بالخادم...",
   "checkingConnectivity": "جاري فحص الاتصال...",
   "noInternetPrompt": "لا يوجد اتصال بالإنترنت. يرجى الاتصال والمحاولة مرة أخرى.",
@@ -1379,7 +1625,9 @@
   "syncCompleteRecords": "اكتملت المزامنة — تم تحميل {count} سجل",
   "@syncCompleteRecords": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "syncFailed": "فشلت المزامنة",
@@ -1387,7 +1635,6 @@
   "settingUp": "جاري الإعداد",
   "skipOffline": "تخطي (بدون اتصال)",
   "initialSync": "المزامنة الأولية",
-
   "adminTerminals": "إدارة — الأجهزة",
   "adminTerminalsSubtitle": "إدارة جميع أجهزة نقاط البيع وإعدادات SoftPOS",
   "addTerminal": "إضافة جهاز",
@@ -1400,7 +1647,6 @@
   "toggleStatusTitle": "تغيير الحالة",
   "terminalStatusUpdated": "تم تحديث حالة الجهاز.",
   "searchTerminals": "بحث في الأجهزة...",
-
   "softpos": "سوفت بوس",
   "softposEnabled": "SoftPOS مفعّل",
   "softposOff": "SoftPOS معطّل",
@@ -1420,20 +1666,17 @@
   "softposDeactivated": "تم إلغاء تفعيل SoftPOS.",
   "softposActivationFailed": "فشل التفعيل. تأكد من إعداد TID والمعالج.",
   "softposActive": "SoftPOS نشط",
-
   "acquirerHala": "هلا",
   "acquirerRajhi": "بنك الراجحي",
   "acquirerSnb": "البنك الأهلي",
   "acquirerGeidea": "جيديا",
   "acquirerOther": "أخرى",
-
   "deviceHardware": "تفاصيل الجهاز",
   "deviceHardwareSubtitle": "تفاصيل الجهاز المادي",
   "deviceModel": "موديل الجهاز",
   "osVersion": "إصدار النظام",
   "nfcCapable": "يدعم NFC",
   "serialNumber": "الرقم التسلسلي",
-
   "feeConfiguration": "إعداد الرسوم",
   "feeConfigSubtitle": "نسب رسوم المعاملات لهذا الجهاز",
   "feeProfile": "ملف الرسوم",
@@ -1445,16 +1688,13 @@
   "feeFlatPerTxn": "رسوم ثابتة / معاملة",
   "wameedMargin": "هامش وميض %",
   "feesUpdated": "تم تحديث الرسوم.",
-
   "settlementDetails": "تفاصيل التسوية",
   "settlementSubtitle": "إعداد البنك ودورة التسوية",
   "settlementCycle": "دورة التسوية",
   "settlementBankName": "اسم البنك",
   "settlementIban": "رقم الآيبان",
-
   "adminNotes": "ملاحظات الإدارة",
   "adminNotesSubtitle": "ملاحظات داخلية (غير مرئية للمزودين)",
-
   "terminalInformation": "معلومات الجهاز",
   "storeId": "معرّف المتجر",
   "allSoftpos": "كل SoftPOS",
@@ -1462,9 +1702,7 @@
   "allAcquirers": "كل المعالجات",
   "pending": "قيد الانتظار",
   "suspended": "معلّق",
-  "deactivated": "غير مفعّل",
   "clearFilters": "مسح",
-
   "posCashierTitle": "نقطة البيع",
   "posStartShift": "ابدأ الوردية",
   "posStartShiftDesc": "افتح جلسة نقدية لبدء معالجة المعاملات",
@@ -1472,14 +1710,14 @@
   "posCloseShift": "إغلاق الوردية",
   "posEndShift": "إنهاء الوردية",
   "posOpeningCash": "النقد الافتتاحي",
-  "posClosingCash": "عد النقد الختامي",
-  "posSelectRegister": "اختر الصندوق",
+  "posClosingCash": "النقد الختامي",
+  "posSelectRegister": "اختر السجل",
   "posNoRegisters": "لم يتم العثور على صناديق. يرجى إضافة واحد أولاً.",
-  "posCountOpeningCash": "عد النقد الافتتاحي للبدء",
+  "posCountOpeningCash": "عدّ النقد الافتتاحي للبدء",
   "posReviewSummary": "مراجعة ملخص الجلسة",
   "posSessionSummary": "ملخص الجلسة (تقرير Z)",
   "posCashSales": "مبيعات نقدية",
-  "posCardSales": "مبيعات بطاقة",
+  "posCardSales": "مبيعات بالبطاقة",
   "posOtherSales": "مبيعات أخرى",
   "posRefunds": "مرتجعات",
   "posVoids": "ملغيات",
@@ -1489,42 +1727,42 @@
   "posShiftClosedSuccess": "تم إغلاق الوردية بنجاح",
   "posCart": "السلة",
   "posWalkinCustomer": "عميل عابر",
-  "posNoItems": "لا توجد عناصر",
+  "posNoItems": "لا توجد أصناف",
   "posSubtotal": "المجموع الفرعي",
-  "posDiscount": "الخصم",
+  "posDiscount": "خصم",
   "posTax": "الضريبة",
   "posTotal": "الإجمالي",
   "posHold": "تعليق",
   "posPay": "دفع",
   "posClearCart": "مسح السلة",
-  "posClearCartConfirm": "سيتم إزالة جميع العناصر.",
+  "posClearCartConfirm": "مسح السلة؟",
   "posSearchProducts": "ابحث عن المنتجات أو امسح الباركود",
   "posNoProducts": "لم يتم العثور على منتجات",
   "posNoProductsHint": "جرب بحثاً مختلفاً أو تحقق من الكتالوج.",
-  "posProductAdded": "تمت إضافة {name}",
+  "posProductAdded": "تم إضافة {name}",
   "posProductNotFound": "المنتج غير موجود",
   "posReturnRefund": "مرتجع / استرداد",
   "posReceiptNumber": "رقم الإيصال / المعاملة",
-  "posSelectItemsToReturn": "اختر العناصر للإرجاع",
+  "posSelectItemsToReturn": "اختر الأصناف المراد إرجاعها",
   "posRefundTo": "استرداد إلى:",
   "posRefundAmount": "مبلغ الاسترداد",
-  "posProcessReturn": "معالجة المرتجع",
+  "posProcessReturn": "معالجة الإرجاع",
   "posReturnProcessed": "تمت معالجة المرتجع: #{number}",
   "posFindTransaction": "أدخل رقم الإيصال للبحث عن المعاملة",
   "posTransactionNotFound": "المعاملة غير موجودة",
   "posPayment": "الدفع",
   "posPaymentTotal": "الإجمالي: ر.س {amount}",
   "posSplitPayment": "تقسيم الدفع",
-  "posCashTendered": "النقد المقدم",
+  "posCashTendered": "المبلغ المدفوع",
   "posChange": "الباقي",
   "posRemaining": "المتبقي",
   "posCompletePayment": "إتمام الدفع",
-  "posPaymentSuccessful": "تم الدفع بنجاح",
+  "posPaymentSuccessful": "تمت عملية الدفع بنجاح",
   "posTransactionNumber": "معاملة #{number}",
   "posDone": "تم",
   "posHeldCarts": "السلات المعلقة",
   "posNoHeldCarts": "لا توجد سلات معلقة",
-  "posRecall": "استرجاع",
+  "posRecall": "استدعاء",
   "posCartRestored": "تم استرجاع السلة: {label}",
   "posDeleteHeldCart": "حذف السلة المعلقة؟",
   "posDeleteHeldCartConfirm": "سيتم حذف \"{label}\" نهائياً.",
@@ -1546,5 +1784,1085 @@
   "posCancel": "إلغاء",
   "posClose": "إغلاق",
   "posDelete": "حذف",
-  "posConfirm": "تأكيد"
+  "posConfirm": "تأكيد",
+  "posLabelOptional": "التسمية (اختياري)",
+  "posLabelHint": "مثال: طاولة 5، السيد أحمد",
+  "posHeldCart": "سلة معلقة",
+  "posVoidLastItem": "إلغاء آخر صنف؟",
+  "posRemoveItemFromCart": "إزالة \"{name}\" من السلة؟",
+  "posRemove": "إزالة",
+  "posStartYourShift": "ابدأ وردية العمل",
+  "posOpenShiftDescription": "افتح جلسة نقدية لبدء معالجة المعاملات",
+  "posNotes": "ملاحظات",
+  "posVoidLast": "إلغاء الأخير",
+  "posSessionNumber": "جلسة #{id}",
+  "posSearchProductsHint": "البحث عن المنتجات أو مسح الباركود (F2)",
+  "posNoProductsFound": "لم يتم العثور على منتجات",
+  "posNoProductsSubtitle": "جرب بحثاً مختلفاً أو تحقق من الكتالوج.",
+  "posTapProductsToAdd": "انقر على المنتجات لإضافتها",
+  "posTax15": "الضريبة (15%)",
+  "posClearCartMessage": "سيتم إزالة جميع الأصناف.",
+  "posClear": "مسح",
+  "posWalkInCustomer": "عميل زائر",
+  "posCartDiscount": "خصم السلة",
+  "posSubtotalAmount": "المجموع الفرعي: ر.س {amount}",
+  "posDiscountAmountSar": "مبلغ الخصم (ر.س)",
+  "posApply": "تطبيق",
+  "posOrderNotes": "ملاحظات الطلب",
+  "posNotesHint": "أضف ملاحظات لهذا الطلب...",
+  "posSave": "حفظ",
+  "posCashier": "كاشير",
+  "posReviewSessionSummary": "راجع ملخص جلستك",
+  "posSessionSummaryZReport": "ملخص الجلسة (تقرير Z)",
+  "posClosingCashCount": "عد النقد الختامي",
+  "posInvalidClosingCash": "الرجاء إدخال مبلغ نقدي ختامي صالح",
+  "posSearchCustomerHint": "البحث بالاسم أو الهاتف أو رمز الولاء...",
+  "posNoCustomersFound": "لم يتم العثور على عملاء",
+  "posDeleteHeldCartMessage": "سيتم حذف \"{label}\" نهائياً.",
+  "posItems": "أصناف",
+  "posJustNow": "الآن",
+  "posMinutesAgo": "منذ {count} د",
+  "posHoursAgo": "منذ {count} س",
+  "posDaysAgo": "منذ {count} ي",
+  "posOpenShiftDialog": "فتح الوردية",
+  "posRegister": "السجل",
+  "posPleaseSelectRegister": "الرجاء اختيار سجل",
+  "posNoRegistersFound": "لم يتم العثور على سجلات. الرجاء إضافة واحد أولاً.",
+  "posChangeGiven": "الباقي: ر.س {amount}",
+  "posTotalAmountSar": "الإجمالي: ر.س {amount}",
+  "posTotalNotCovered": "المبلغ المدفوع لا يغطي المبلغ المستحق",
+  "posReceiptTransactionNumber": "رقم الإيصال / المعاملة",
+  "posFind": "بحث",
+  "posCustomerReturn": "إرجاع العميل",
+  "posEnterTransactionNumber": "أدخل رقم المعاملة / الإيصال",
+  "posFailedToFindTransaction": "فشل في العثور على المعاملة: {error}",
+  "posReturnFailed": "فشل الإرجاع: {error}",
+  "posEnterReceiptNumber": "أدخل رقم الإيصال للعثور على المعاملة",
+  "posOpenPosSession": "فتح جلسة نقاط البيع",
+  "posOpenPosSessionSubtitle": "أدخل مبلغ النقد الافتتاحي لهذه الجلسة.",
+  "posOpeningCashLabel": "النقد الافتتاحي",
+  "posOpenSession": "فتح الجلسة",
+  "posPosSessionOpened": "تم فتح جلسة نقاط البيع.",
+  "posCloseSession": "إغلاق الجلسة",
+  "posCloseSessionSubtitle": "أدخل مبلغ النقد الختامي لإغلاق هذه الجلسة.",
+  "posSessionClosed": "تم إغلاق الجلسة.",
+  "posSessions": "جلسات نقاط البيع",
+  "posSessionHistory": "سجل الجلسات",
+  "posStatus": "الحالة",
+  "posOpenedAt": "وقت الفتح",
+  "posClosedAt": "وقت الإغلاق",
+  "posOpeningFloat": "النقد الافتتاحي",
+  "posClosingCashCol": "النقد الختامي",
+  "posVariance": "الفرق",
+  "posActions": "الإجراءات",
+  "posOpen": "مفتوح",
+  "posClosed": "مغلق",
+  "posNoSessionsFound": "لم يتم العثور على جلسات",
+  "posOpenSessionSubtitle": "افتح جلسة نقاط البيع لبدء معالجة المعاملات.",
+  "posEditTerminal": "تعديل الجهاز",
+  "posAddTerminal": "إضافة جهاز",
+  "posLoadingTerminal": "جارٍ تحميل الجهاز...",
+  "posTerminalInformation": "معلومات الجهاز",
+  "posBasicRegisterDetails": "التفاصيل الأساسية للسجل",
+  "posTerminalName": "اسم الجهاز",
+  "posTerminalNameHint": "مثال: كاشير 1، مكتب الاستقبال",
+  "posDeviceId": "معرف الجهاز",
+  "posDeviceIdHint": "معرف فريد لهذا الجهاز",
+  "posPlatform": "المنصة",
+  "posSelectPlatform": "اختر المنصة",
+  "posAppVersion": "إصدار التطبيق (اختياري)",
+  "posAppVersionHint": "مثال: 1.0.0",
+  "posSaveChanges": "حفظ التغييرات",
+  "posCreateTerminal": "إنشاء جهاز",
+  "posPlatformWindows": "ويندوز",
+  "posPlatformMacOS": "ماك أو إس",
+  "posPlatformIOS": "آي أو إس",
+  "posPlatformAndroid": "أندرويد",
+  "posDeleteTerminal": "حذف الجهاز؟",
+  "posDeleteTerminalMessage": "حذف \"{name}\" لا يمكن التراجع عنه.",
+  "posDeactivateTerminal": "تعطيل الجهاز؟",
+  "posActivateTerminal": "تفعيل الجهاز؟",
+  "posDeactivateActivateMessage": "{action} \"{name}\"؟",
+  "posDeactivate": "تعطيل",
+  "posActivate": "تفعيل",
+  "posTerminalDeleted": "تم حذف الجهاز \"{name}\".",
+  "posFailedDeleteTerminal": "فشل في حذف الجهاز.",
+  "posTerminalStatusChanged": "الجهاز \"{name}\" تم {status}.",
+  "posFailedUpdateTerminalStatus": "فشل في تحديث حالة الجهاز.",
+  "posActivated": "تفعيله",
+  "posDeactivated": "تعطيله",
+  "posTerminals": "الأجهزة",
+  "posManageTerminals": "إدارة أجهزة نقاط البيع",
+  "posSearchTerminals": "البحث في الأجهزة...",
+  "posName": "الاسم",
+  "posDeviceIdCol": "معرف الجهاز",
+  "posPlatformCol": "المنصة",
+  "posVersionCol": "الإصدار",
+  "posStatusCol": "الحالة",
+  "posLastSeen": "آخر ظهور",
+  "posActionsCol": "الإجراءات",
+  "posEdit": "تعديل",
+  "posToggleStatus": "تغيير الحالة",
+  "posNoTerminalsFound": "لم يتم العثور على أجهزة",
+  "posNoTerminalsSubtitle": "أضف أول جهاز نقاط بيع للبدء.",
+  "posOff": "معطل",
+  "posOn": "مفعل",
+  "posActive": "نشط",
+  "posInactive": "غير نشط",
+  "posPlatformUnknown": "غير معروف",
+  "posCashManagement": "إدارة النقد",
+  "posCashCount": "عد النقد",
+  "posSessionHistoryTab": "سجل الجلسات",
+  "posActiveSession": "الجلسة النشطة",
+  "posOpened": "فتحت: {time}",
+  "posTerminal": "الجهاز",
+  "posCashIn": "إيداع نقدي",
+  "posCashOut": "سحب نقدي",
+  "posNoActiveCashSession": "لا توجد جلسة نقدية نشطة",
+  "posOpenCashSessionDescription": "افتح جلسة لبدء قبول المدفوعات النقدية",
+  "posOpenCashSession": "فتح جلسة نقدية",
+  "posTotalCount": "إجمالي العد",
+  "posNoSessionsYet": "لا توجد جلسات بعد",
+  "posOpenCashSessionDialog": "فتح جلسة نقدية",
+  "posOpeningFloatSar": "النقد الافتتاحي (ر.س)",
+  "posCloseCashSession": "إغلاق الجلسة النقدية",
+  "posCountedCash": "النقد المعدود: {amount} ر.س",
+  "posNotesOptional": "ملاحظات (اختياري)",
+  "posAmountSar": "المبلغ (ر.س)",
+  "posReason": "السبب",
+  "posReasonPettyCash": "مصروفات نثرية",
+  "posReasonSupplierPayment": "دفع مورد",
+  "posReasonBankDeposit": "إيداع بنكي",
+  "posReasonTips": "بقشيش",
+  "posReasonChangeReplenish": "تعبئة فكة",
+  "posReasonOther": "أخرى",
+  "posRecord": "تسجيل",
+  "posQuickAmountPlus": "+{amount}",
+  "loginTitle": "وامض نقاط البيع",
+  "loginSubtitle": "سجل الدخول إلى حسابك",
+  "loginEmail": "البريد الإلكتروني",
+  "loginEmailHint": "أدخل بريدك الإلكتروني",
+  "loginPassword": "كلمة المرور",
+  "loginPasswordHint": "أدخل كلمة المرور",
+  "loginSigningIn": "جارٍ تسجيل الدخول...",
+  "loginSignIn": "تسجيل الدخول",
+  "loginNoAccount": "ليس لديك حساب؟ ",
+  "loginRegister": "سجل الآن",
+  "loginAdmin": "مدير",
+  "loginCashier": "كاشير",
+  "pinLoginEnterPin": "أدخل الرقم السري",
+  "pinLoginSubtitle": "تبديل سريع — أدخل رقمك السري المكون من 4 أرقام",
+  "pinLoginNoStoreSession": "لم يتم العثور على جلسة متجر. الرجاء تسجيل الدخول بالبريد الإلكتروني.",
+  "pinLoginSignInWithEmail": "تسجيل الدخول بالبريد الإلكتروني بدلاً من ذلك",
+  "securityError": "خطأ: {message}",
+  "securityNA": "غير متوفر",
+  "conflictMoreFields": "+ {count} حقول إضافية",
+  "notifCategoryOrder": "طلب",
+  "notifCategoryInventory": "المخزون",
+  "notifCategoryPromotion": "عرض ترويجي",
+  "notifCategorySystem": "النظام",
+  "notifCategoryPayment": "الدفع",
+  "notifCategoryStaff": "الموظفين",
+  "stockReorderPointHint": "مثال: 10",
+  "stockMaxLevelHint": "مثال: 100",
+  "stockNoLowStockProducts": "لا توجد منتجات أقل من نقطة إعادة الطلب.",
+  "stockLevelsEmptySubtitle": "ستظهر مستويات المخزون بمجرد استلام المنتجات.",
+  "stockAdjustReasonDamaged": "تالف",
+  "stockAdjustReasonExpired": "منتهي الصلاحية",
+  "stockAdjustReasonLost": "مفقود",
+  "stockAdjustReasonCorrection": "تصحيح",
+  "stockAdjustReasonReturned": "مرتجع",
+  "stockAdjustReasonMiscounted": "خطأ في العد",
+  "stockAdjustReasonTheft": "سرقة",
+  "stockAdjustReasonOther": "أخرى",
+  "stockTransferApproveConfirm": "هل تريد الموافقة على هذا التحويل؟ سيتم خصم المخزون من المتجر المصدر.",
+  "stockTransferReceiveConfirm": "هل تريد تأكيد استلام هذا التحويل؟ سيتم إضافة المخزون إلى المتجر الوجهة.",
+  "stockTransferCancelConfirm": "هل تريد إلغاء هذا التحويل؟",
+  "stockTransferActionTitle": "{action} التحويل",
+  "stockTransferActionSuccess": "تم {action} التحويل بنجاح.",
+  "purchaseOrderCancelConfirm": "هل تريد إلغاء الطلب \"{reference}\"؟",
+  "goodsReceiptConfirm": "هل تريد تأكيد الاستلام \"{reference}\"؟\n\nسيتم تحديث مستويات المخزون ولا يمكن التراجع عن ذلك.",
+  "recipeDeleteConfirm": "هل تريد حذف الوصفة \"{name}\"؟",
+  "sarCurrency": "ر.س",
+  "amountWithSar": "ر.س {amount}",
+  "authAlreadyHaveAccount": "هل لديك حساب بالفعل؟",
+  "authBusinessInformation": "معلومات العمل",
+  "authBusinessNameHint": "مثلاً شركتي",
+  "authBusinessNameOptional": "اسم الشركة (اختياري)",
+  "authConfirmPassword": "تأكيد كلمة المرور",
+  "authConfirmPasswordHint": "أعد إدخال كلمة المرور",
+  "authCountry": "الدولة",
+  "authCountryOman": "عُمان",
+  "authCountrySaudiArabia": "المملكة العربية السعودية",
+  "authCreateAccount": "إنشاء حساب",
+  "authCreatingAccount": "جاري إنشاء الحساب...",
+  "authEmail": "البريد الإلكتروني",
+  "authEmailHint": "أدخل بريدك الإلكتروني",
+  "authFullName": "الاسم الكامل",
+  "authFullNameHint": "مثلاً أحمد السعيد",
+  "authPassword": "كلمة المرور",
+  "authPasswordHintMinChars": "٨ أحرف على الأقل",
+  "authPasswordsDoNotMatch": "كلمتا المرور غير متطابقتين",
+  "authPersonalInformation": "المعلومات الشخصية",
+  "authPhoneOptional": "الهاتف (اختياري)",
+  "authSecurity": "الأمان",
+  "authSignIn": "تسجيل الدخول",
+  "authStoreNameHint": "مثلاً الفرع الرئيسي",
+  "authStoreNameOptional": "اسم المتجر (اختياري)",
+  "cashMgmtActiveSession": "الجلسة النشطة",
+  "cashMgmtAmountSar": "المبلغ (ر.س.)",
+  "cashMgmtCashCount": "عد النقد",
+  "cashMgmtCashIn": "إيداع نقدي",
+  "cashMgmtCashOut": "سحب نقدي",
+  "cashMgmtCloseCashSession": "إغلاق جلسة النقد",
+  "cashMgmtCloseSession": "إغلاق الجلسة",
+  "cashMgmtCountedCash": "النقد المعدود",
+  "cashMgmtExpectedCash": "النقد المتوقع",
+  "cashMgmtNA": "غ/م",
+  "cashMgmtNoActiveSession": "لا توجد جلسة نشطة",
+  "cashMgmtNoActiveSessionSubtitle": "افتح جلسة نقدية لبدء معالجة المعاملات",
+  "cashMgmtNoSessions": "لا توجد جلسات",
+  "cashMgmtNotesOptional": "ملاحظات (اختياري)",
+  "cashMgmtOpenCashSession": "فتح جلسة نقدية",
+  "cashMgmtOpenSession": "فتح الجلسة",
+  "cashMgmtOpened": "مفتوحة",
+  "cashMgmtOpeningFloat": "الرصيد الافتتاحي",
+  "cashMgmtOpeningFloatSar": "الرصيد الافتتاحي (ر.س.)",
+  "cashMgmtReason": "السبب",
+  "cashMgmtRecord": "تسجيل",
+  "cashMgmtSessionHistory": "سجل الجلسات",
+  "cashMgmtTerminal": "الجهاز",
+  "cashMgmtTitle": "إدارة النقد",
+  "cashMgmtTotalCount": "إجمالي العد",
+  "commonActive": "نشط",
+  "commonCancel": "إلغاء",
+  "commonCreate": "إنشاء",
+  "commonDate": "التاريخ",
+  "commonDelete": "حذف",
+  "commonEdit": "تعديل",
+  "commonInactive": "غير نشط",
+  "commonInvalid": "غير صالح",
+  "commonNo": "لا",
+  "commonNotes": "ملاحظات",
+  "commonNotesOptional": "ملاحظات (اختياري)",
+  "commonOk": "موافق",
+  "commonRefresh": "تحديث",
+  "commonRequired": "مطلوب",
+  "commonRetry": "إعادة المحاولة",
+  "commonSave": "حفظ",
+  "commonStatus": "الحالة",
+  "commonType": "النوع",
+  "customersNoCustomersFound": "لم يتم العثور على عملاء",
+  "customersPoints": "{points} نقطة",
+  "@customersPoints": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "hardwareConfiguredDevices": "الأجهزة المهيأة",
+  "hardwareManagement": "إدارة الأجهزة",
+  "hardwareNoDevicesConfigured": "لا توجد أجهزة مهيأة",
+  "hardwareRecentEvents": "الأحداث الأخيرة",
+  "hardwareSelectDeviceToTest": "اختر جهازاً للاختبار",
+  "hardwareSupportedHardware": "الأجهزة المدعومة",
+  "hardwareTestingDevice": "جاري اختبار الجهاز...",
+  "inventoryAddItemLabel": "إضافة عنصر",
+  "inventoryAdjustmentCreated": "تم إنشاء تعديل المخزون",
+  "inventoryAll": "الكل",
+  "inventoryApprove": "موافقة",
+  "inventoryAvgCost": "متوسط التكلفة",
+  "inventoryCancelOrder": "إلغاء الطلب",
+  "inventoryCancelPOTitle": "إلغاء أمر الشراء؟",
+  "inventoryCancelled": "ملغى",
+  "inventoryConfirmReceiptTitle": "تأكيد الاستلام",
+  "inventoryCreateReceipt": "إنشاء إيصال استلام",
+  "inventoryDamage": "تلف",
+  "inventoryDecrease": "نقص",
+  "inventoryDeleteRecipeTitle": "حذف الوصفة؟",
+  "inventoryDraft": "مسودة",
+  "inventoryDraftReceiptCreated": "تم إنشاء مسودة الإيصال",
+  "inventoryExpected": "المتوقع",
+  "inventoryFilterByStatus": "تصفية حسب الحالة",
+  "inventoryFromStore": "من المتجر",
+  "inventoryFullyReceived": "مستلم بالكامل",
+  "inventoryGoodsReceipts": "إيصالات الاستلام",
+  "inventoryGoodsReceiptsSubtitle": "استلام والتحقق من شحنات المخزون الواردة",
+  "inventoryIncrease": "زيادة",
+  "inventoryIngredient": "المكون",
+  "inventoryIngredientProduct": "منتج المكون",
+  "inventoryInvalidNumber": "رقم غير صالح",
+  "inventoryItemLabel": "العنصر {index}",
+  "@inventoryItemLabel": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "inventoryLineItems": "عناصر الفاتورة",
+  "inventoryLowStock": "مخزون منخفض",
+  "inventoryManagement": "إدارة المخزون",
+  "inventoryMaxStockLevelOptional": "الحد الأقصى للمخزون (اختياري)",
+  "inventoryNewAdjustment": "تعديل جديد",
+  "inventoryNewGoodsReceipt": "إيصال استلام جديد",
+  "inventoryNewPO": "أمر شراء جديد",
+  "inventoryNewReceipt": "إيصال جديد",
+  "inventoryNewRecipe": "وصفة جديدة",
+  "inventoryNewStockAdjustment": "تعديل مخزون جديد",
+  "inventoryNewTransfer": "نقل جديد",
+  "inventoryNoAdjustments": "لا توجد تعديلات",
+  "inventoryNoGoodsReceipts": "لا توجد إيصالات استلام",
+  "inventoryNoGoodsReceiptsHint": "أنشئ إيصال استلام لتتبع المخزون الوارد.",
+  "inventoryNoMovements": "لا توجد حركات",
+  "inventoryNoPOs": "لا توجد أوامر شراء",
+  "inventoryNoRecipes": "لا توجد وصفات",
+  "inventoryNoRecipesHint": "أنشئ وصفة لتتبع مكونات المنتج.",
+  "inventoryNoStockLevels": "لا توجد مستويات مخزون",
+  "inventoryNoTransfers": "لا توجد عمليات نقل",
+  "inventoryNotesHint": "أضف ملاحظات...",
+  "inventoryOutputProduct": "المنتج الناتج",
+  "inventoryPOCancelled": "تم إلغاء أمر الشراء",
+  "inventoryPOCreatedMsg": "تم إنشاء أمر الشراء",
+  "inventoryPOSent": "تم إرسال أمر الشراء",
+  "inventoryPartiallyReceived": "مستلم جزئياً",
+  "inventoryProduct": "المنتج",
+  "inventoryPurchaseOrders": "أوامر الشراء",
+  "inventoryPurchaseOrdersSubtitle": "إنشاء وإدارة أوامر شراء الموردين",
+  "inventoryQuantity": "الكمية",
+  "inventoryReceiptConfirmedMsg": "تم تأكيد الإيصال",
+  "inventoryReceive": "استلام",
+  "inventoryReceiveAction": "استلام",
+  "inventoryReceived": "مستلم",
+  "inventoryRecipeCreated": "تم إنشاء الوصفة",
+  "inventoryRecipeDeleted": "تم حذف الوصفة",
+  "inventoryRecipes": "الوصفات",
+  "inventoryRecipesSubtitle": "تحديد مكونات المنتجات والعوائد",
+  "inventoryRef": "المرجع",
+  "inventoryReference": "المرجع",
+  "inventoryReferenceNumber": "رقم المرجع",
+  "inventoryReferenceNumberHint": "مثلاً GR-001",
+  "inventoryReferenceOptional": "المرجع (اختياري)",
+  "inventoryReorderPoint": "نقطة إعادة الطلب",
+  "inventoryReorderPointSaved": "تم حفظ نقطة إعادة الطلب",
+  "inventoryReorderPt": "نقطة الطلب",
+  "inventoryReserved": "محجوز",
+  "inventorySaving": "جاري الحفظ...",
+  "inventorySearchByProduct": "بحث حسب المنتج...",
+  "inventorySendAction": "إرسال",
+  "inventorySent": "مرسل",
+  "inventorySetReorderPoint": "تعيين نقطة إعادة الطلب",
+  "inventoryStockAdjustments": "تعديلات المخزون",
+  "inventoryStockAdjustmentsSubtitle": "تسجيل تصحيحات وشطب المخزون",
+  "inventoryStockLevels": "مستويات المخزون",
+  "inventoryStockLevelsSubtitle": "مراقبة المخزون الحالي لجميع المنتجات",
+  "inventoryStockMovements": "حركات المخزون",
+  "inventoryStockMovementsSubtitle": "تتبع جميع حركات المخزون الواردة والصادرة",
+  "inventoryStockTransfers": "عمليات نقل المخزون",
+  "inventoryStockTransfersSubtitle": "نقل المخزون بين المتاجر أو المستودعات",
+  "inventorySupplier": "المورد",
+  "inventoryToStore": "إلى المتجر",
+  "inventoryTotal": "الإجمالي",
+  "inventoryTotalCost": "التكلفة الإجمالية",
+  "inventoryTransferCreated": "تم إنشاء عملية النقل",
+  "inventoryUnitCostLabel": "تكلفة الوحدة",
+  "inventoryWastePercent": "نسبة الهدر %",
+  "inventoryYield": "العائد",
+  "inventoryYieldQuantity": "كمية العائد",
+  "notificationsCategories": "فئات الإشعارات",
+  "notificationsClearQuietHours": "مسح أوقات الهدوء",
+  "notificationsInApp": "داخل التطبيق",
+  "notificationsInventoryAlerts": "تنبيهات المخزون",
+  "notificationsInventoryAlertsSubtitle": "إشعارات انخفاض المخزون وإعادة الطلب",
+  "notificationsMarkAllAsRead": "تعليم الكل كمقروء",
+  "notificationsMarkRead": "تعليم كمقروء",
+  "notificationsNoNotifications": "لا توجد إشعارات",
+  "notificationsNotSet": "غير محدد",
+  "notificationsOrderUpdates": "تحديثات الطلبات",
+  "notificationsOrderUpdatesSubtitle": "استلام تنبيهات للطلبات الجديدة وتغييرات الحالة",
+  "notificationsPreferences": "تفضيلات الإشعارات",
+  "notificationsPromotions": "العروض",
+  "notificationsPromotionsSubtitle": "تنبيهات نشاط العروض واستخدام القسائم",
+  "notificationsPush": "إشعارات فورية",
+  "notificationsQuietEnd": "النهاية",
+  "notificationsQuietHours": "أوقات الهدوء",
+  "notificationsQuietHoursSubtitle": "إيقاف الإشعارات خلال هذه الساعات",
+  "notificationsQuietStart": "البداية",
+  "notificationsSave": "حفظ",
+  "notificationsSystemUpdates": "تحديثات النظام",
+  "notificationsSystemUpdatesSubtitle": "تحديثات التطبيق وإشعارات الصيانة",
+  "notificationsTitle": "الإشعارات",
+  "notificationsUnread": "{count} غير مقروء",
+  "@notificationsUnread": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationsSelected": "{count} محدد",
+  "@notificationsSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationsBulkDelete": "حذف المحدد",
+  "notificationsPriority": "الأولوية:",
+  "notifPriorityUrgent": "عاجل",
+  "notifPriorityHigh": "عالي",
+  "notifPriorityNormal": "عادي",
+  "notifPriorityLow": "منخفض",
+  "notificationsGeneralSettings": "الإعدادات العامة",
+  "notificationsSoundEnabled": "تفعيل الصوت",
+  "notificationsSoundEnabledSubtitle": "تشغيل أصوات للإشعارات الواردة",
+  "notificationsEmailDigest": "ملخص البريد",
+  "notificationsEmailDigestSubtitle": "استلم ملخص الإشعارات عبر البريد الإلكتروني",
+  "notificationsDigestNone": "بلا",
+  "notificationsDigestDaily": "يومي",
+  "notificationsDigestWeekly": "أسبوعي",
+  "notifSchedulesTitle": "الإشعارات المجدولة",
+  "notifSchedulesEmpty": "لا توجد إشعارات مجدولة",
+  "notifScheduleCreate": "إنشاء جدولة",
+  "notifScheduleTitle": "العنوان",
+  "notifScheduleMessage": "الرسالة",
+  "notifScheduleCategory": "الفئة",
+  "notifSchedulePriority": "الأولوية",
+  "notifScheduleChannel": "القناة",
+  "notifScheduleDateTime": "التاريخ والوقت المحدد",
+  "notifScheduleCancel": "إلغاء",
+  "notifScheduleCreateBtn": "إنشاء",
+  "notifScheduleCancelBtn": "إلغاء الجدولة",
+  "notifScheduleCancelled": "ملغى",
+  "notifScheduleSent": "مرسل",
+  "notifSchedulePending": "قيد الانتظار",
+  "notifSoundConfigsTitle": "إعدادات الصوت",
+  "notifSoundConfigsEmpty": "لا توجد إعدادات صوت",
+  "notifSoundConfigDefault": "صوت افتراضي",
+  "notifDeliveryLogsTitle": "سجلات التوصيل",
+  "notifDeliveryLogsEmpty": "لا توجد سجلات توصيل",
+  "notifDeliveryLogsChannel": "القناة:",
+  "notifDeliveryLogsStatus": "الحالة:",
+  "notifDeliveryLogsNotifId": "الإشعار",
+  "notifDeliveryLogsRetries": "المحاولات",
+  "notifStatsTotal": "الإجمالي",
+  "notifStatsUnread": "غير مقروء",
+  "notifStatsRead": "مقروء",
+  "notifStatsDeliveryRate": "معدل التوصيل",
+  "notifStatsByCategory": "حسب الفئة",
+  "notifStatsByChannel": "حسب القناة",
+  "ordersAll": "الكل",
+  "ordersCancelled": "ملغى",
+  "ordersCompleted": "مكتمل",
+  "ordersConfirmed": "مؤكد",
+  "ordersDate": "التاريخ",
+  "ordersDelivered": "تم التوصيل",
+  "ordersDispatched": "تم الإرسال",
+  "ordersFilterByStatus": "تصفية حسب الحالة",
+  "ordersNew": "جديد",
+  "ordersNoOrders": "لا توجد طلبات",
+  "ordersNoOrdersSubtitle": "ستظهر الطلبات هنا بعد إجراء المعاملات.",
+  "ordersOrderNumberCol": "رقم الطلب",
+  "ordersPickedUp": "تم الاستلام",
+  "ordersPreparing": "قيد التحضير",
+  "ordersReady": "جاهز",
+  "ordersSearchByNumber": "بحث حسب رقم الطلب...",
+  "ordersSource": "المصدر",
+  "ordersStatus": "الحالة",
+  "ordersSubtotal": "المجموع الفرعي",
+  "ordersTax": "الضريبة",
+  "ordersTotal": "الإجمالي",
+  "ordersVoid": "إلغاء",
+  "ordersVoidConfirm": "هل أنت متأكد من إلغاء الطلب {orderNumber}؟",
+  "@ordersVoidConfirm": {
+    "placeholders": {
+      "orderNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "ordersVoidOrder": "إلغاء الطلب",
+  "ordersVoided": "ملغى",
+  "ordersVoided2": "تم إلغاء الطلب",
+  "posChangeAmount": "الباقي: ر.س. {amount}",
+  "@posChangeAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "posEnterReceiptNumberHint": "أدخل رقم الإيصال للعثور على المعاملة",
+  "posHeldCartFallback": "سلة محتفظة",
+  "posHeldCartItemCount": "{count} عناصر • {time}",
+  "@posHeldCartItemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "posPaymentNotCover": "الدفع لا يغطي المبلغ الإجمالي",
+  "posSelectRegisterError": "يرجى اختيار سجل",
+  "posTotalAmount": "الإجمالي: ر.س. {amount}",
+  "@posTotalAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "posTransactionLookupFailed": "فشل البحث عن المعاملة: {error}",
+  "@posTransactionLookupFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "promotionsActiveCoupons": "القسائم النشطة",
+  "promotionsAnalytics": "تحليلات العروض",
+  "promotionsAvgDiscountPerUse": "متوسط الخصم لكل استخدام",
+  "promotionsCouponRedemptionRate": "معدل استخدام القسائم",
+  "promotionsPerformance": "الأداء",
+  "promotionsTotalCoupons": "إجمالي القسائم",
+  "promotionsTotalDiscount": "إجمالي الخصم",
+  "promotionsTotalUses": "إجمالي الاستخدامات",
+  "promotionsUniqueCustomers": "عملاء فريدون",
+  "securityAuditLogs": "سجلات المراجعة",
+  "securityDevices": "الأجهزة",
+  "securityLoginFailed": "فشل",
+  "securityLoginSuccess": "نجاح",
+  "securityLogins": "تسجيلات الدخول",
+  "securityNoLoginAttempts": "لا توجد محاولات تسجيل دخول",
+  "securityPolicy": "السياسة",
+  "securityTitle": "الأمان",
+  "securityError": "خطأ أمني: {message}",
+  "@securityError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "securityNA": "غير متوفر",
+  "securityOverview": "نظرة عامة",
+  "securitySessions": "الجلسات",
+  "securityIncidents": "الحوادث",
+  "securityActive": "نشط",
+  "securityInactive": "غير نشط",
+  "securityEnded": "منتهي",
+  "securityResolved": "تم الحل",
+  "securityUnresolved": "لم يتم الحل",
+  "securityNoDevices": "لا توجد أجهزة مسجلة",
+  "securityNoSessions": "لا توجد جلسات",
+  "securityNoIncidents": "لا توجد حوادث",
+  "securityEndSession": "إنهاء الجلسة",
+  "securityEndAllSessions": "إنهاء جميع الجلسات",
+  "securityStarted": "بدأت",
+  "securityLastActivity": "آخر نشاط",
+  "securityResolve": "حل",
+  "securityResolveIncident": "حل الحادثة",
+  "securityResolutionNotes": "ملاحظات الحل",
+  "securityType": "النوع",
+  "securityIP": "عنوان IP",
+  "securityHardware": "العتاد",
+  "securityOS": "نظام التشغيل",
+  "securityApp": "التطبيق",
+  "securityDeviceType": "نوع الجهاز",
+  "securityRemoteWipeRequested": "تم طلب المسح عن بعد",
+  "securityDeactivate": "إلغاء التفعيل",
+  "securityRemoteWipe": "مسح عن بعد",
+  "securityRecentActivity": "النشاط الأخير",
+  "securityActiveDevices": "الأجهزة النشطة",
+  "securityActiveSessions": "الجلسات النشطة",
+  "securityUnresolvedIncidents": "حوادث لم تُحل",
+  "securityFailedLoginsToday": "محاولات فاشلة اليوم",
+  "securityTotalAuditLogs": "سجلات المراجعة",
+  "securityLockedOutUsers": "مستخدمون مقفلون",
+  "securityPinAuth": "الرقم السري والمصادقة",
+  "securityLockoutSessions": "القفل والجلسات",
+  "securityPinOverrides": "تجاوز الرقم السري",
+  "securityPasswordDevice": "كلمة المرور والجهاز",
+  "securityIpRestrictions": "قيود IP",
+  "securityPinLength": "طول الرقم السري",
+  "securityDigits": "أرقام",
+  "securityDays": "أيام",
+  "securityMinutes": "دقيقة",
+  "securityPinExpiryDays": "انتهاء صلاحية الرقم السري",
+  "securityRequireUniquePins": "طلب أرقام سرية فريدة",
+  "securityBiometricEnabled": "البصمة مفعلة",
+  "securityRequire2fa": "طلب المصادقة الثنائية للمالك",
+  "securityAutoLock": "القفل التلقائي",
+  "securityMaxFailedAttempts": "الحد الأقصى للمحاولات الفاشلة",
+  "securityLockoutDuration": "مدة القفل",
+  "securitySessionMaxHours": "الحد الأقصى لساعات الجلسة",
+  "securityForceLogoutOnRoleChange": "تسجيل خروج إجباري عند تغيير الدور",
+  "securityPinOverrideVoid": "تجاوز الرقم السري: إلغاء",
+  "securityPinOverrideReturn": "تجاوز الرقم السري: إرجاع",
+  "securityPinOverrideDiscount": "تجاوز الرقم السري: خصم",
+  "securityDiscountThreshold": "حد تجاوز الخصم",
+  "securityPasswordExpiryDays": "انتهاء صلاحية كلمة المرور",
+  "securityRequireStrongPassword": "طلب كلمة مرور قوية",
+  "securityMaxDevices": "الحد الأقصى للأجهزة",
+  "securityAuditRetentionDays": "مدة الاحتفاظ بالسجلات",
+  "securityIpRestrictionEnabled": "قيود IP مفعلة",
+  "securityAllowedIpRanges": "نطاقات IP المسموحة:",
+  "sessionsCloseSession": "إغلاق الجلسة",
+  "sessionsCloseSessionDescription": "أدخل مبلغ النقد الختامي لإغلاق هذه الجلسة.",
+  "sessionsClosingCash": "النقد الختامي",
+  "sessionsColCashier": "الكاشير",
+  "sessionsColOpenedAt": "وقت الفتح",
+  "sessionsColOpeningCash": "النقد الافتتاحي",
+  "sessionsColRegister": "السجل",
+  "sessionsColSessionId": "معرف الجلسة",
+  "sessionsColStatus": "الحالة",
+  "sessionsColTotalSales": "إجمالي المبيعات",
+  "sessionsColTransactions": "المعاملات",
+  "sessionsHistory": "سجل الجلسات",
+  "sessionsNoSessions": "لم يتم العثور على جلسات",
+  "sessionsNoSessionsSubtitle": "افتح جلسة نقاط بيع لبدء معالجة المعاملات.",
+  "sessionsOpenPosSession": "فتح جلسة نقاط بيع",
+  "sessionsOpenSession": "فتح الجلسة",
+  "sessionsOpenSessionDescription": "أدخل مبلغ النقد الافتتاحي لهذه الجلسة.",
+  "sessionsOpeningCash": "النقد الافتتاحي",
+  "sessionsSessionClosed": "تم إغلاق الجلسة.",
+  "sessionsSessionOpened": "تم فتح جلسة نقاط البيع.",
+  "sessionsSessionPlural": "جلسات",
+  "sessionsSessionSingular": "جلسة",
+  "sessionsStatusClosed": "مغلق",
+  "sessionsStatusOpen": "مفتوح",
+  "sessionsTitle": "جلسات نقاط البيع",
+  "syncAll": "الكل",
+  "syncCloudData": "بيانات السحابة",
+  "syncConflictResolution": "حل التعارضات",
+  "syncLocalData": "البيانات المحلية",
+  "syncNoConflicts": "لا توجد تعارضات",
+  "syncNoUnresolvedConflicts": "لا توجد تعارضات غير محلولة",
+  "syncOpen": "مفتوح",
+  "syncRecordsSynced": "تم مزامنة {count} سجل",
+  "@syncRecordsSynced": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "syncResolved": "محلول",
+  "syncSyncProgress": "جاري مزامنة {operation}...",
+  "@syncSyncProgress": {
+    "placeholders": {
+      "operation": {
+        "type": "String"
+      }
+    }
+  },
+  "syncUnresolvedConflicts": "تعارضات غير محلولة ({total})",
+  "@syncUnresolvedConflicts": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "syncUseCloud": "استخدام السحابة",
+  "syncUseLocal": "استخدام المحلي",
+  "termFormAddTitle": "إضافة جهاز",
+  "termFormCreate": "إنشاء جهاز",
+  "termFormCreateFailed": "فشل إنشاء الجهاز",
+  "termFormCreated": "تم إنشاء الجهاز بنجاح",
+  "termFormDeviceIdHint": "معرف فريد لهذا الجهاز",
+  "termFormDeviceIdLabel": "معرف الجهاز",
+  "termFormDeviceIdRequired": "معرف الجهاز مطلوب",
+  "termFormEditTitle": "تعديل الجهاز",
+  "termFormLoading": "جاري تحميل الجهاز...",
+  "termFormNameHint": "مثلاً كاشير ١، مكتب الاستقبال",
+  "termFormNameLabel": "اسم الجهاز",
+  "termFormNameRequired": "اسم الجهاز مطلوب",
+  "termFormPlatformHint": "اختر المنصة",
+  "termFormPlatformLabel": "المنصة",
+  "termFormPlatformRequired": "المنصة مطلوبة",
+  "termFormSaveChanges": "حفظ التغييرات",
+  "termFormSectionSubtitle": "تفاصيل السجل الأساسية",
+  "termFormSectionTitle": "معلومات الجهاز",
+  "termFormUpdateFailed": "فشل تحديث الجهاز",
+  "termFormUpdated": "تم تحديث الجهاز بنجاح",
+  "termFormVersionHint": "مثلاً 1.0.0",
+  "termFormVersionLabel": "إصدار التطبيق (اختياري)",
+  "terminalsActivate": "تفعيل",
+  "terminalsActivatedLower": "مفعّل",
+  "terminalsActive": "نشط",
+  "terminalsAdd": "إضافة جهاز",
+  "terminalsColDeviceId": "معرف الجهاز",
+  "terminalsColLastSync": "آخر مزامنة",
+  "terminalsColName": "الاسم",
+  "terminalsColOnline": "متصل",
+  "terminalsColPlatform": "المنصة",
+  "terminalsColSoftpos": "SoftPOS",
+  "terminalsColStatus": "الحالة",
+  "terminalsColVersion": "الإصدار",
+  "terminalsDeactivate": "تعطيل",
+  "terminalsDeactivatedLower": "معطّل",
+  "terminalsDeleteFailed": "فشل حذف الجهاز.",
+  "terminalsDeleteMessage": "حذف \"{name}\" سيزيل جميع بياناته. لا يمكن التراجع.",
+  "@terminalsDeleteMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "terminalsDeleteTitle": "حذف الجهاز؟",
+  "terminalsDeleted": "تم حذف الجهاز \"{name}\".",
+  "@terminalsDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "terminalsEdit": "تعديل",
+  "terminalsInactive": "غير نشط",
+  "terminalsNever": "أبداً",
+  "terminalsNoTerminals": "لم يتم العثور على أجهزة",
+  "terminalsNoTerminalsSubtitle": "أضف أول جهاز نقاط بيع للبدء.",
+  "terminalsOff": "مطفأ",
+  "terminalsOn": "مفعّل",
+  "terminalsSearch": "بحث عن أجهزة...",
+  "terminalsSubtitle": "إدارة أجهزة نقاط البيع",
+  "terminalsTitle": "الأجهزة",
+  "terminalsToggleFailed": "فشل تحديث حالة الجهاز.",
+  "terminalsToggleMessage": "{action} الجهاز \"{name}\"؟",
+  "@terminalsToggleMessage": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "terminalsToggleStatus": "تغيير الحالة",
+  "terminalsToggleTitle": "{action} الجهاز؟",
+  "@terminalsToggleTitle": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "terminalsToggled": "تم تغيير حالة الجهاز \"{name}\" إلى {actionPast}.",
+  "@terminalsToggled": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "actionPast": {
+        "type": "String"
+      }
+    }
+  },
+  "zatcaEInvoicing": "الفوترة الإلكترونية - زاتكا",
+  "zatcaRecentInvoices": "الفواتير الأخيرة",
+  "zatcaViewAll": "عرض الكل ({total})",
+  "@zatcaViewAll": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "appBarLanguage": "اللغة",
+  "appBarTheme": "المظهر",
+  "appBarDarkMode": "الوضع الداكن",
+  "appBarLightMode": "الوضع الفاتح",
+  "appBarSystemTheme": "النظام",
+  "logoutConfirm": "هل أنت متأكد من تسجيل الخروج؟",
+  "logoutTitle": "تسجيل الخروج",
+  "sidebarDashboard": "لوحة التحكم",
+  "sidebarPosTerminal": "نقطة البيع",
+  "sidebarTerminals": "الأجهزة",
+  "sidebarSessions": "الجلسات",
+  "sidebarOrders": "الطلبات",
+  "sidebarPayments": "المدفوعات",
+  "sidebarProducts": "المنتجات",
+  "sidebarCategories": "الفئات",
+  "sidebarSuppliers": "الموردون",
+  "sidebarInventory": "المخزون",
+  "sidebarLabels": "التصنيفات",
+  "sidebarCustomers": "العملاء",
+  "sidebarStaffMembers": "الموظفون",
+  "sidebarRolesPermissions": "الأدوار والصلاحيات",
+  "sidebarAttendance": "الحضور",
+  "sidebarShiftSchedule": "جدول المناوبات",
+  "sidebarBranches": "الفروع",
+  "sidebarAccounting": "المحاسبة",
+  "sidebarReports": "التقارير",
+  "sidebarSalesSummary": "ملخص المبيعات",
+  "sidebarHourlySales": "المبيعات بالساعة",
+  "sidebarProductPerformance": "أداء المنتجات",
+  "sidebarCategoryBreakdown": "تحليل الفئات",
+  "sidebarPaymentMethods": "طرق الدفع",
+  "sidebarStaffPerformance": "أداء الموظفين",
+  "sidebarInventoryReports": "تقارير المخزون",
+  "sidebarFinancialReports": "التقارير المالية",
+  "sidebarCustomerReports": "تقارير العملاء",
+  "sidebarPromotions": "العروض",
+  "sidebarThawaniPay": "ثواني باي",
+  "sidebarDelivery": "التوصيل",
+  "sidebarZatca": "زاتكا",
+  "sidebarHardware": "الأجهزة",
+  "sidebarRestaurant": "مطعم",
+  "sidebarBakery": "مخبز",
+  "sidebarPharmacy": "صيدلية",
+  "sidebarElectronics": "إلكترونيات",
+  "sidebarFlorist": "زهور",
+  "sidebarJewelry": "مجوهرات",
+  "sidebarPosCustomize": "تخصيص نقطة البيع",
+  "sidebarLayoutBuilder": "منشئ التخطيط",
+  "sidebarMarketplace": "المتجر",
+  "sidebarReceiptTemplates": "قوالب الإيصالات",
+  "sidebarCfdThemes": "سمات شاشة العميل",
+  "sidebarNotifications": "الإشعارات",
+  "sidebarSecurity": "الأمان",
+  "sidebarSettings": "الإعدادات",
+  "sidebarSubscription": "الاشتراك",
+  "sidebarOnboarding": "الإعداد الأولي",
+  "sidebarAdminStores": "إدارة المتاجر",
+  "sidebarSupport": "الدعم",
+  "sidebarTickets": "التذاكر",
+  "sidebarKnowledgeBase": "قاعدة المعارف",
+  "sidebarStoreName": "اسم المتجر",
+  "dailySummaryTitle": "الملخص اليومي",
+  "dailySummaryPrint": "طباعة",
+  "dailySummaryGrossRevenue": "إجمالي الإيرادات",
+  "dailySummaryExpenses": "المصروفات",
+  "dailySummaryNetRevenue": "صافي الإيرادات",
+  "dailySummaryTransactions": "المعاملات",
+  "dailySummaryRevenueByMethod": "الإيرادات حسب طريقة الدفع",
+  "dailySummaryNoPayments": "لا توجد مدفوعات اليوم",
+  "dailySummaryCashVariance": "فارق النقدية",
+  "dailySummaryWithinTolerance": "ضمن الحد المقبول",
+  "dailySummaryNeedsReview": "يحتاج مراجعة",
+  "dailySummarySessions": "الجلسات: {count}",
+  "@dailySummarySessions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dailySummaryHourlyActivity": "النشاط بالساعة",
+  "dailySummarySessionDetails": "تفاصيل الجلسات",
+  "dailySummaryNoSessions": "لا توجد جلسات",
+  "dailySummaryFloat": "المبلغ الافتتاحي: {amount} ر.س",
+  "@dailySummaryFloat": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dailySummaryTerminal": "الجهاز: {id}",
+  "@dailySummaryTerminal": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "finReconTitle": "التسوية المالية",
+  "finReconRevenueSummary": "ملخص الإيرادات",
+  "finReconTotalRevenue": "إجمالي الإيرادات",
+  "finReconTransactions": "المعاملات",
+  "finReconAvgTransaction": "متوسط المعاملة",
+  "finReconPaymentMethods": "طرق الدفع",
+  "finReconNoPayments": "لم يتم تسجيل مدفوعات",
+  "finReconCashRecon": "تسوية النقدية",
+  "finReconExpectedCash": "النقدية المتوقعة",
+  "finReconActualCash": "النقدية الفعلية",
+  "finReconVariance": "الفارق",
+  "finReconSessionsClosed": "الجلسات: {count} مغلقة",
+  "@finReconSessionsClosed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "finReconExpenses": "المصروفات",
+  "finReconNoExpenses": "لا توجد مصروفات",
+  "finReconPhysicalCashCount": "عد النقدية الفعلي",
+  "finReconCountedTotal": "إجمالي العد",
+  "finReconPrintReport": "طباعة التقرير",
+  "finReconExportPdf": "تصدير PDF",
+  "finReconConfirmRecon": "تأكيد التسوية",
+  "finReconConfirmMessage": "سيتم إنهاء التسوية لهذا اليوم. سيتم تحديد جميع جلسات النقدية كمُسوّاة.",
+  "finReconConfirmed": "تم تأكيد التسوية",
+  "commonConfirm": "تأكيد",
+  "customerReportsTitle": "تقارير العملاء",
+  "customerReportsTopCustomers": "أفضل العملاء",
+  "customerReportsRetention": "الاحتفاظ",
+
+  "receiptTemplatesTitle": "قوالب الإيصالات",
+  "receiptTemplatesEmpty": "لا توجد قوالب إيصالات",
+  "receiptTemplatesEmptySubtitle": "لا توجد قوالب تخطيط إيصالات متاحة لخطتك.",
+  "receiptTemplateDetail": "تفاصيل قالب الإيصال",
+  "receiptTemplateBilingual": "ثنائي اللغة",
+  "receiptTemplateActive": "نشط",
+  "receiptTemplateHeaderConfig": "إعدادات الرأس",
+  "receiptTemplateBodyConfig": "إعدادات المحتوى",
+  "receiptTemplateFooterConfig": "إعدادات التذييل",
+
+  "cfdThemesTitle": "سمات شاشة العرض للعميل",
+  "cfdThemesEmpty": "لا توجد سمات",
+  "cfdThemesEmptySubtitle": "لا توجد سمات شاشة عرض العميل متاحة لخطتك.",
+  "cfdThemeDetail": "تفاصيل سمة شاشة العميل",
+  "cfdThemeActive": "نشط",
+  "cfdThemeColorPalette": "لوحة الألوان",
+  "cfdThemeDisplaySettings": "إعدادات العرض",
+  "cfdThemeCartLayout": "تخطيط السلة",
+  "cfdThemeIdleLayout": "تخطيط الخمول",
+  "cfdThemeFontFamily": "نوع الخط",
+  "cfdThemeAnimation": "نمط الحركة",
+  "cfdThemeTransition": "مدة الانتقال",
+  "cfdThemeThankYou": "حركة الشكر",
+  "cfdThemeShowLogo": "إظهار شعار المتجر",
+  "cfdThemeShowTotal": "إظهار المجموع",
+  "cfdThemeBackground": "الخلفية",
+  "cfdThemeText": "النص",
+  "cfdThemeAccent": "اللون المميز",
+  "cfdThemePreviewTitle": "معاينة السمة",
+  "cfdThemePreviewButton": "زر عينة",
+  "cfdThemeYes": "نعم",
+  "cfdThemeNo": "لا",
+
+  "templatePreviewButton": "معاينة",
+  "templatePreviewTitle": "معاينة",
+  "templatePreviewRefresh": "تحديث المعاينة",
+
+  "labelLayoutTemplatesTitle": "قوالب تخطيط الملصقات",
+  "labelLayoutTemplatesEmpty": "لا توجد قوالب ملصقات",
+  "labelLayoutTemplatesEmptySubtitle": "ستظهر قوالب تخطيط الملصقات هنا بمجرد إنشائها بواسطة المسؤول",
+  "labelLayoutTemplateDetail": "تفاصيل قالب الملصق",
+  "labelLayoutTemplateActive": "نشط",
+  "labelLayoutTemplateBordered": "بإطار",
+  "labelLayoutTemplateDimensions": "الأبعاد والخط",
+  "labelLayoutTemplateWidth": "العرض",
+  "labelLayoutTemplateHeight": "الارتفاع",
+  "labelLayoutTemplateFontFamily": "عائلة الخط",
+  "labelLayoutTemplateFontSize": "حجم الخط",
+  "labelLayoutTemplateBackground": "الخلفية",
+  "labelLayoutTemplateBarcodeSettings": "إعدادات الباركود",
+  "labelLayoutTemplateBarcodeType": "نوع الباركود",
+  "labelLayoutTemplateShowNumber": "إظهار الرقم",
+  "labelLayoutTemplateYes": "نعم",
+  "labelLayoutTemplateNo": "لا",
+  "labelLayoutTemplateFieldLayout": "تخطيط الحقول",
+  "labelLayoutTemplateSimpleLayout": "تخطيط بسيط متراص",
+  "labelLayoutTemplateNoFields": "لم يتم تكوين حقول",
+  "sidebarLabelLayoutTemplates": "قوالب الملصقات",
+
+  "commonUpdate": "تحديث",
+  "commonClose": "إغلاق",
+
+  "supplierTitle": "الموردون",
+  "supplierNew": "مورد جديد",
+  "supplierEdit": "تعديل المورد",
+  "supplierName": "الاسم",
+  "supplierNameHint": "أدخل اسم المورد",
+  "supplierPhone": "الهاتف",
+  "supplierEmail": "البريد الإلكتروني",
+  "supplierWebsite": "الموقع الإلكتروني",
+  "supplierAddress": "العنوان",
+  "supplierAddressLine": "العنوان",
+  "supplierAddressHint": "أدخل العنوان",
+  "supplierCity": "المدينة",
+  "supplierCountry": "الدولة",
+  "supplierPostalCode": "الرمز البريدي",
+  "supplierContactPerson": "جهة الاتصال",
+  "supplierContactPersonHint": "اسم جهة الاتصال الرئيسية",
+  "supplierCategory": "الفئة",
+  "supplierCategoryHint": "مثل: مواد خام، تغليف",
+  "supplierTaxNumber": "الرقم الضريبي",
+  "supplierPaymentTerms": "شروط الدفع",
+  "supplierPaymentTermsHint": "مثل: صافي 30 يوم",
+  "supplierCreditLimit": "حد الائتمان",
+  "supplierOutstandingBalance": "الرصيد المستحق",
+  "supplierRating": "التقييم",
+  "supplierBankName": "اسم البنك",
+  "supplierBankAccount": "رقم الحساب البنكي",
+  "supplierIban": "رقم الآيبان",
+  "supplierBasicInfo": "المعلومات الأساسية",
+  "supplierContactInfo": "معلومات الاتصال",
+  "supplierBankingInfo": "المعلومات البنكية",
+  "supplierBusinessInfo": "المعلومات التجارية",
+  "supplierNotesHint": "أي ملاحظات إضافية",
+  "supplierSearchHint": "البحث في الموردين...",
+  "supplierNoSuppliers": "لا يوجد موردون بعد",
+  "supplierNoSuppliersHint": "أضف موردين لتتبع مصادر منتجاتك.",
+  "supplierStatistics": "الإحصائيات",
+  "supplierCreated": "تم إنشاء المورد.",
+  "supplierUpdated": "تم تحديث المورد.",
+  "supplierDeleteTitle": "حذف المورد",
+  "supplierDeleteConfirm": "هل أنت متأكد من حذف \"{name}\"؟",
+  "@supplierDeleteConfirm": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "supplierDeleted": "تم حذف المورد \"{name}\".",
+  "@supplierDeleted": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+
+  "supplierReturnsTitle": "مرتجعات الموردين",
+  "supplierReturnsSubtitle": "إدارة مرتجعات المنتجات للموردين",
+  "supplierReturnNew": "مرتجع جديد",
+  "supplierReturnDetail": "تفاصيل المرتجع",
+  "supplierReturnReason": "السبب",
+  "supplierReturnReasonHint": "مثل: منتجات معيبة، شحنة خاطئة",
+  "supplierReturnRefHint": "مثل: SR-001",
+  "supplierReturnSearchHint": "البحث في المرتجعات...",
+  "supplierReturnNoReturns": "لا توجد مرتجعات",
+  "supplierReturnNoReturnsHint": "أنشئ مرتجع لإرسال منتجات إلى المورد.",
+  "supplierReturnNoItems": "لا توجد أصناف في هذا المرتجع",
+  "supplierReturnSelectSupplier": "يرجى اختيار مورد",
+  "supplierReturnSelectProduct": "يرجى اختيار منتج",
+  "supplierReturnItemReason": "سبب الصنف",
+  "supplierReturnItemReasonHint": "سبب إرجاع هذا الصنف",
+  "supplierReturnBatchNumber": "رقم الدفعة",
+  "supplierReturnBatchHint": "مثل: BATCH-001",
+  "supplierReturnCreateBtn": "إنشاء المرتجع",
+  "supplierReturnCreated": "تم إنشاء مرتجع المورد كمسودة.",
+  "supplierReturnSubmitAction": "إرسال",
+  "supplierReturnSubmitted": "مُرسل",
+  "supplierReturnCompleteAction": "إكمال",
+  "supplierReturnCompleted": "مكتمل",
+  "supplierReturnCreatedBy": "أنشأه",
+  "supplierReturnApprovedBy": "اعتمده",
+  "supplierReturnApprovedAt": "تاريخ الاعتماد",
+  "supplierReturnCompletedAt": "تاريخ الإكمال",
+  "supplierReturnCreatedAt": "تاريخ الإنشاء",
+  "supplierReturnActionConfirm": "{action} المرتجع \"{reference}\"؟",
+  "@supplierReturnActionConfirm": {
+    "placeholders": {
+      "action": {"type": "String"},
+      "reference": {"type": "String"}
+    }
+  },
+  "supplierReturnActionSuccess": "تم {action} المرتجع بنجاح.",
+  "@supplierReturnActionSuccess": {
+    "placeholders": {
+      "action": {"type": "String"}
+    }
+  }
 }

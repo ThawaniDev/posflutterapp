@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -39,18 +40,18 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
   Future<void> _handleDelete(Register terminal) async {
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Delete Terminal?',
-      message: 'Deleting "${terminal.name}" cannot be undone.',
-      confirmLabel: 'Delete',
+      title: AppLocalizations.of(context)!.terminalsDeleteTitle,
+      message: AppLocalizations.of(context)!.terminalsDeleteMessage(terminal.name),
+      confirmLabel: AppLocalizations.of(context)!.posDelete,
       isDanger: true,
     );
     if (confirmed == true && mounted) {
       final ok = await ref.read(terminalsProvider.notifier).deleteTerminal(terminal.id);
       if (mounted) {
         if (ok) {
-          showPosSuccessSnackbar(context, 'Terminal "${terminal.name}" deleted.');
+          showPosSuccessSnackbar(context, AppLocalizations.of(context)!.terminalsDeleted(terminal.name));
         } else {
-          showPosErrorSnackbar(context, 'Failed to delete terminal.');
+          showPosErrorSnackbar(context, AppLocalizations.of(context)!.terminalsDeleteFailed);
         }
       }
     }
@@ -61,11 +62,13 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
   // ──────────────────────────────────────────────────────────
 
   Future<void> _handleToggleStatus(Register terminal) async {
-    final action = terminal.isActive ? 'Deactivate' : 'Activate';
+    final action = terminal.isActive
+        ? AppLocalizations.of(context)!.terminalsDeactivate
+        : AppLocalizations.of(context)!.terminalsActivate;
     final confirmed = await showPosConfirmDialog(
       context,
-      title: '$action Terminal?',
-      message: '${terminal.isActive ? 'Deactivate' : 'Activate'} "${terminal.name}"?',
+      title: AppLocalizations.of(context)!.terminalsToggleTitle(action),
+      message: AppLocalizations.of(context)!.terminalsToggleMessage(action, terminal.name),
       confirmLabel: action,
       isDanger: terminal.isActive,
     );
@@ -73,9 +76,17 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
       final ok = await ref.read(terminalsProvider.notifier).toggleTerminalStatus(terminal.id);
       if (mounted) {
         if (ok) {
-          showPosSuccessSnackbar(context, 'Terminal "${terminal.name}" ${terminal.isActive ? 'deactivated' : 'activated'}.');
+          showPosSuccessSnackbar(
+            context,
+            AppLocalizations.of(context)!.terminalsToggled(
+              terminal.name,
+              terminal.isActive
+                  ? AppLocalizations.of(context)!.terminalsDeactivatedLower
+                  : AppLocalizations.of(context)!.terminalsActivatedLower,
+            ),
+          );
         } else {
-          showPosErrorSnackbar(context, 'Failed to update terminal status.');
+          showPosErrorSnackbar(context, AppLocalizations.of(context)!.terminalsToggleFailed);
         }
       }
     }
@@ -115,9 +126,9 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Terminals', style: AppTypography.headlineMedium),
+              Text(AppLocalizations.of(context)!.terminalsTitle, style: AppTypography.headlineMedium),
               Text(
-                'Manage POS terminal registers',
+                AppLocalizations.of(context)!.terminalsSubtitle,
                 style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
               ),
             ],
@@ -129,14 +140,18 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
             width: 280,
             child: PosSearchField(
               controller: _searchController,
-              hint: 'Search terminals...',
+              hint: AppLocalizations.of(context)!.terminalsSearch,
               onChanged: (q) => ref.read(terminalsProvider.notifier).search(q),
             ),
           ),
           AppSpacing.gapW12,
 
           // Add button
-          PosButton(label: 'Add Terminal', icon: Icons.add_rounded, onPressed: () => context.push(Routes.posTerminalAdd)),
+          PosButton(
+            label: AppLocalizations.of(context)!.terminalsAdd,
+            icon: Icons.add_rounded,
+            onPressed: () => context.push(Routes.posTerminalAdd),
+          ),
         ],
       ),
     );
@@ -154,26 +169,35 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
     final loaded = state is TerminalsLoaded ? state : null;
 
     return PosDataTable<Register>(
-      columns: const [
-        PosTableColumn(title: 'Name', flex: 2, sortable: false),
-        PosTableColumn(title: 'Device ID', flex: 2),
-        PosTableColumn(title: 'Platform', width: 110),
-        PosTableColumn(title: 'SoftPOS', width: 100),
-        PosTableColumn(title: 'Version', width: 100),
-        PosTableColumn(title: 'Last Sync', width: 150),
-        PosTableColumn(title: 'Online', width: 80, numeric: true),
-        PosTableColumn(title: 'Status', width: 100),
+      columns: [
+        PosTableColumn(title: AppLocalizations.of(context)!.terminalsColName, flex: 2, sortable: false),
+        PosTableColumn(title: AppLocalizations.of(context)!.terminalsColDeviceId, flex: 2),
+        PosTableColumn(title: AppLocalizations.of(context)!.terminalsColPlatform, width: 110),
+        PosTableColumn(title: AppLocalizations.of(context)!.terminalsColSoftpos, width: 100),
+        PosTableColumn(title: AppLocalizations.of(context)!.terminalsColVersion, width: 100),
+        PosTableColumn(title: AppLocalizations.of(context)!.terminalsColLastSync, width: 150),
+        PosTableColumn(title: AppLocalizations.of(context)!.terminalsColOnline, width: 80, numeric: true),
+        PosTableColumn(title: AppLocalizations.of(context)!.terminalsColStatus, width: 100),
       ],
       items: items,
       cellBuilder: _buildCell,
       actions: [
         PosTableRowAction<Register>(
-          label: 'Edit',
+          label: AppLocalizations.of(context)!.terminalsEdit,
           icon: Icons.edit_outlined,
           onTap: (terminal) => context.push(Routes.posTerminalEdit.replaceFirst(':id', terminal.id)),
         ),
-        PosTableRowAction<Register>(label: 'Toggle Status', icon: Icons.toggle_on_outlined, onTap: _handleToggleStatus),
-        PosTableRowAction<Register>(label: 'Delete', icon: Icons.delete_outline, isDestructive: true, onTap: _handleDelete),
+        PosTableRowAction<Register>(
+          label: AppLocalizations.of(context)!.terminalsToggleStatus,
+          icon: Icons.toggle_on_outlined,
+          onTap: _handleToggleStatus,
+        ),
+        PosTableRowAction<Register>(
+          label: AppLocalizations.of(context)!.posDelete,
+          icon: Icons.delete_outline,
+          isDestructive: true,
+          onTap: _handleDelete,
+        ),
       ],
       // Pagination
       currentPage: loaded?.currentPage,
@@ -190,9 +214,9 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
       onRetry: () => ref.read(terminalsProvider.notifier).load(),
       emptyConfig: PosTableEmptyConfig(
         icon: Icons.point_of_sale_outlined,
-        title: 'No terminals found',
-        subtitle: 'Add your first POS terminal to get started.',
-        actionLabel: 'Add Terminal',
+        title: AppLocalizations.of(context)!.terminalsNoTerminals,
+        subtitle: AppLocalizations.of(context)!.terminalsNoTerminalsSubtitle,
+        actionLabel: AppLocalizations.of(context)!.terminalsAdd,
         action: () => context.push(Routes.posTerminalAdd),
       ),
     );
@@ -229,10 +253,10 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
         return _PlatformChip(platform: terminal.platform);
       case 3: // SoftPOS
         if (!terminal.softposEnabled) {
-          return const PosBadge(label: 'Off', variant: PosBadgeVariant.neutral);
+          return PosBadge(label: AppLocalizations.of(context)!.terminalsOff, variant: PosBadgeVariant.neutral);
         }
         return PosBadge(
-          label: terminal.softposStatusLabel.isNotEmpty ? terminal.softposStatusLabel : 'On',
+          label: terminal.softposStatusLabel.isNotEmpty ? terminal.softposStatusLabel : AppLocalizations.of(context)!.terminalsOn,
           variant: terminal.softposStatus == 'active'
               ? PosBadgeVariant.success
               : terminal.softposStatus == 'suspended'
@@ -242,7 +266,10 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
       case 4: // App Version
         return Text(terminal.appVersion ?? '—', style: AppTypography.bodySmall);
       case 5: // Last Sync
-        return Text(terminal.lastSyncAt != null ? _formatDate(terminal.lastSyncAt!) : 'Never', style: AppTypography.bodySmall);
+        return Text(
+          terminal.lastSyncAt != null ? _formatDate(terminal.lastSyncAt!) : AppLocalizations.of(context)!.terminalsNever,
+          style: AppTypography.bodySmall,
+        );
       case 6: // Online
         return Center(
           child: Container(
@@ -256,7 +283,9 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
         );
       case 7: // Status
         return PosBadge(
-          label: terminal.isActive ? 'Active' : 'Inactive',
+          label: terminal.isActive
+              ? AppLocalizations.of(context)!.terminalsActive
+              : AppLocalizations.of(context)!.terminalsInactive,
           variant: terminal.isActive ? PosBadgeVariant.success : PosBadgeVariant.neutral,
         );
       default:
@@ -267,9 +296,9 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
   String _formatDate(DateTime dt) {
     final now = DateTime.now();
     final diff = now.difference(dt);
-    if (diff.inMinutes < 1) return 'Just now';
-    if (diff.inHours < 1) return '${diff.inMinutes}m ago';
-    if (diff.inDays < 1) return '${diff.inHours}h ago';
+    if (diff.inMinutes < 1) return AppLocalizations.of(context)!.posJustNow;
+    if (diff.inHours < 1) return AppLocalizations.of(context)!.posMinutesAgo(diff.inMinutes);
+    if (diff.inDays < 1) return AppLocalizations.of(context)!.posHoursAgo(diff.inHours);
     return '${dt.year}-${_pad(dt.month)}-${_pad(dt.day)}';
   }
 

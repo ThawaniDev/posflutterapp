@@ -17,7 +17,7 @@ class AccessibilityPrefsNotifier extends StateNotifier<AccessibilityPrefsState> 
       final res = await _repo.getPreferences();
       final d = res['data'] as Map<String, dynamic>? ?? res;
       state = PrefsLoaded(
-        fontScale: (d['font_scale'] as num?)?.toDouble() ?? 1.0,
+        fontScale: double.tryParse(d['font_scale'] as String? ?? '') ?? 1.0,
         highContrast: d['high_contrast'] == true,
         colorBlindMode: d['color_blind_mode']?.toString() ?? 'none',
         reducedMotion: d['reduced_motion'] == true,
@@ -40,7 +40,7 @@ class AccessibilityPrefsNotifier extends StateNotifier<AccessibilityPrefsState> 
       final res = await _repo.updatePreferences(data);
       final d = res['data'] as Map<String, dynamic>? ?? res;
       state = PrefsLoaded(
-        fontScale: (d['font_scale'] as num?)?.toDouble() ?? 1.0,
+        fontScale: double.tryParse(d['font_scale'] as String? ?? '') ?? 1.0,
         highContrast: d['high_contrast'] == true,
         colorBlindMode: d['color_blind_mode']?.toString() ?? 'none',
         reducedMotion: d['reduced_motion'] == true,
@@ -63,7 +63,7 @@ class AccessibilityPrefsNotifier extends StateNotifier<AccessibilityPrefsState> 
       final res = await _repo.resetPreferences();
       final d = res['data'] as Map<String, dynamic>? ?? res;
       state = PrefsLoaded(
-        fontScale: (d['font_scale'] as num?)?.toDouble() ?? 1.0,
+        fontScale: double.tryParse(d['font_scale'] as String? ?? '') ?? 1.0,
         highContrast: d['high_contrast'] == true,
         colorBlindMode: d['color_blind_mode']?.toString() ?? 'none',
         reducedMotion: d['reduced_motion'] == true,

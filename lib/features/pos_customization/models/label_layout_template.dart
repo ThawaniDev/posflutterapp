@@ -14,7 +14,7 @@ class LabelLayoutTemplate {
   final BarcodeType? barcodeType;
   final Map<String, dynamic>? barcodePosition;
   final bool? showBarcodeNumber;
-  final Map<String, dynamic> fieldLayout;
+  final List<dynamic> fieldLayout;
   final String? fontFamily;
   final FontSize? defaultFontSize;
   final bool? showBorder;
@@ -60,7 +60,7 @@ class LabelLayoutTemplate {
       barcodeType: BarcodeType.tryFromValue(json['barcode_type'] as String?),
       barcodePosition: json['barcode_position'] != null ? Map<String, dynamic>.from(json['barcode_position'] as Map) : null,
       showBarcodeNumber: json['show_barcode_number'] as bool?,
-      fieldLayout: Map<String, dynamic>.from(json['field_layout'] as Map),
+      fieldLayout: json['field_layout'] is List ? List<dynamic>.from(json['field_layout'] as List) : [],
       fontFamily: json['font_family'] as String?,
       defaultFontSize: FontSize.tryFromValue(json['default_font_size'] as String?),
       showBorder: json['show_border'] as bool?,
@@ -109,7 +109,7 @@ class LabelLayoutTemplate {
     BarcodeType? barcodeType,
     Map<String, dynamic>? barcodePosition,
     bool? showBarcodeNumber,
-    Map<String, dynamic>? fieldLayout,
+    List<dynamic>? fieldLayout,
     String? fontFamily,
     FontSize? defaultFontSize,
     bool? showBorder,
@@ -145,13 +145,12 @@ class LabelLayoutTemplate {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is LabelLayoutTemplate && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is LabelLayoutTemplate && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'LabelLayoutTemplate(id: $id, name: $name, nameAr: $nameAr, slug: $slug, labelType: $labelType, labelWidthMm: $labelWidthMm, ...)';
+  String toString() =>
+      'LabelLayoutTemplate(id: $id, name: $name, nameAr: $nameAr, slug: $slug, labelType: $labelType, labelWidthMm: $labelWidthMm, ...)';
 }

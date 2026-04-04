@@ -10,11 +10,16 @@ class SecurityRepository {
 
   SecurityRepository(this._api);
 
+  // Overview
+  Future<Map<String, dynamic>> getOverview({required String storeId}) => _api.getOverview(storeId: storeId);
+
+  // Policy
   Future<Map<String, dynamic>> getPolicy({required String storeId}) => _api.getPolicy(storeId: storeId);
 
   Future<Map<String, dynamic>> updatePolicy({required String storeId, required Map<String, dynamic> data}) =>
       _api.updatePolicy(storeId: storeId, data: data);
 
+  // Audit Logs
   Future<Map<String, dynamic>> listAuditLogs({
     required String storeId,
     String? action,
@@ -25,15 +30,24 @@ class SecurityRepository {
 
   Future<Map<String, dynamic>> recordAudit({required Map<String, dynamic> data}) => _api.recordAudit(data: data);
 
+  Future<Map<String, dynamic>> getAuditStats({required String storeId}) => _api.getAuditStats(storeId: storeId);
+
+  // Devices
   Future<Map<String, dynamic>> listDevices({required String storeId, bool? activeOnly}) =>
       _api.listDevices(storeId: storeId, activeOnly: activeOnly);
 
   Future<Map<String, dynamic>> registerDevice({required Map<String, dynamic> data}) => _api.registerDevice(data: data);
 
+  Future<Map<String, dynamic>> getDevice({required String deviceId}) => _api.getDevice(deviceId: deviceId);
+
   Future<Map<String, dynamic>> deactivateDevice({required String deviceId}) => _api.deactivateDevice(deviceId: deviceId);
 
   Future<Map<String, dynamic>> requestRemoteWipe({required String deviceId}) => _api.requestRemoteWipe(deviceId: deviceId);
 
+  Future<Map<String, dynamic>> deviceHeartbeat({required String deviceId, Map<String, dynamic>? data}) =>
+      _api.deviceHeartbeat(deviceId: deviceId, data: data);
+
+  // Login Attempts
   Future<Map<String, dynamic>> listLoginAttempts({
     required String storeId,
     String? attemptType,
@@ -48,4 +62,30 @@ class SecurityRepository {
     required String userIdentifier,
     int? windowMinutes,
   }) => _api.failedAttemptCount(storeId: storeId, userIdentifier: userIdentifier, windowMinutes: windowMinutes);
+
+  Future<Map<String, dynamic>> isLockedOut({required String storeId, required String userIdentifier}) =>
+      _api.isLockedOut(storeId: storeId, userIdentifier: userIdentifier);
+
+  Future<Map<String, dynamic>> loginAttemptsStats({required String storeId}) => _api.loginAttemptsStats(storeId: storeId);
+
+  // Sessions
+  Future<Map<String, dynamic>> listSessions({required String storeId, String? status}) =>
+      _api.listSessions(storeId: storeId, status: status);
+
+  Future<Map<String, dynamic>> startSession({required Map<String, dynamic> data}) => _api.startSession(data: data);
+
+  Future<Map<String, dynamic>> endSession({required String sessionId}) => _api.endSession(sessionId: sessionId);
+
+  Future<Map<String, dynamic>> sessionHeartbeat({required String sessionId}) => _api.sessionHeartbeat(sessionId: sessionId);
+
+  Future<Map<String, dynamic>> endAllSessions({required String storeId}) => _api.endAllSessions(storeId: storeId);
+
+  // Incidents
+  Future<Map<String, dynamic>> listIncidents({required String storeId, String? severity, bool? isResolved}) =>
+      _api.listIncidents(storeId: storeId, severity: severity, isResolved: isResolved);
+
+  Future<Map<String, dynamic>> createIncident({required Map<String, dynamic> data}) => _api.createIncident(data: data);
+
+  Future<Map<String, dynamic>> resolveIncident({required String incidentId, String? resolutionNotes}) =>
+      _api.resolveIncident(incidentId: incidentId, resolutionNotes: resolutionNotes);
 }

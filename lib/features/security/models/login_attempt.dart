@@ -9,6 +9,10 @@ class LoginAttempt {
   final String? ipAddress;
   final String? deviceId;
   final DateTime? attemptedAt;
+  final String? userAgent;
+  final String? failureReason;
+  final Map<String, dynamic>? geoLocation;
+  final String? deviceName;
 
   const LoginAttempt({
     required this.id,
@@ -19,6 +23,10 @@ class LoginAttempt {
     this.ipAddress,
     this.deviceId,
     this.attemptedAt,
+    this.userAgent,
+    this.failureReason,
+    this.geoLocation,
+    this.deviceName,
   });
 
   factory LoginAttempt.fromJson(Map<String, dynamic> json) {
@@ -31,6 +39,10 @@ class LoginAttempt {
       ipAddress: json['ip_address'] as String?,
       deviceId: json['device_id'] as String?,
       attemptedAt: json['attempted_at'] != null ? DateTime.parse(json['attempted_at'] as String) : null,
+      userAgent: json['user_agent'] as String?,
+      failureReason: json['failure_reason'] as String?,
+      geoLocation: json['geo_location'] != null ? Map<String, dynamic>.from(json['geo_location'] as Map) : null,
+      deviceName: json['device_name'] as String?,
     );
   }
 
@@ -44,6 +56,10 @@ class LoginAttempt {
       'ip_address': ipAddress,
       'device_id': deviceId,
       'attempted_at': attemptedAt?.toIso8601String(),
+      'user_agent': userAgent,
+      'failure_reason': failureReason,
+      'geo_location': geoLocation,
+      'device_name': deviceName,
     };
   }
 
@@ -56,6 +72,10 @@ class LoginAttempt {
     String? ipAddress,
     String? deviceId,
     DateTime? attemptedAt,
+    String? userAgent,
+    String? failureReason,
+    Map<String, dynamic>? geoLocation,
+    String? deviceName,
   }) {
     return LoginAttempt(
       id: id ?? this.id,
@@ -66,6 +86,10 @@ class LoginAttempt {
       ipAddress: ipAddress ?? this.ipAddress,
       deviceId: deviceId ?? this.deviceId,
       attemptedAt: attemptedAt ?? this.attemptedAt,
+      userAgent: userAgent ?? this.userAgent,
+      failureReason: failureReason ?? this.failureReason,
+      geoLocation: geoLocation ?? this.geoLocation,
+      deviceName: deviceName ?? this.deviceName,
     );
   }
 

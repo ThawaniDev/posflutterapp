@@ -3,11 +3,16 @@ import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/auth/data/local/auth_local_storage.dart';
 import 'package:thawani_pos/features/security/providers/security_providers.dart';
 import 'package:thawani_pos/features/security/providers/security_state.dart';
 import 'package:thawani_pos/features/security/widgets/audit_log_list_widget.dart';
 import 'package:thawani_pos/features/security/widgets/device_list_widget.dart';
+import 'package:thawani_pos/features/security/widgets/security_overview_widget.dart';
 import 'package:thawani_pos/features/security/widgets/security_policy_editor.dart';
+import 'package:thawani_pos/features/security/widgets/session_list_widget.dart';
+import 'package:thawani_pos/features/security/widgets/incident_list_widget.dart';
 
 class SecurityDashboardPage extends ConsumerStatefulWidget {
   const SecurityDashboardPage({super.key});
@@ -18,19 +23,23 @@ class SecurityDashboardPage extends ConsumerStatefulWidget {
 
 class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-
-  // Replace with actual store ID from auth/session
-  final _storeId = 'current-store-id';
+  String? _storeId;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-    Future.microtask(() {
-      ref.read(securityPolicyProvider.notifier).loadPolicy(_storeId);
-      ref.read(auditLogListProvider.notifier).loadLogs(_storeId);
-      ref.read(deviceListProvider.notifier).loadDevices(_storeId);
-      ref.read(loginAttemptsProvider.notifier).loadAttempts(_storeId);
+    _tabController = TabController(length: 7, vsync: this);
+    Future.microtask(() async {
+      final storeId = await ref.read(authLocalStorageProvider).getStoreId();
+      if (storeId == null || !mounted) return;
+      setState(() => _storeId = storeId);
+      ref.read(securityOverviewProvider.notifier).load(storeId);
+      ref.read(securityPolicyProvider.notifier).loadPolicy(storeId);
+      ref.read(auditLogListProvider.notifier).loadLogs(storeId);
+      ref.read(deviceListProvider.notifier).loadDevices(storeId);
+      ref.read(loginAttemptsProvider.notifier).loadAttempts(storeId);
+      ref.read(sessionListProvider.notifier).loadSessions(storeId);
+      ref.read(incidentListProvider.notifier).loadIncidents(storeId);
     });
   }
 
@@ -43,69 +52,171 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> w
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+
+    ref.listen<SecurityActionState>(securityActionProvider, (prev, next) {
+      if (next is SecurityActionSuccess) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message)));
+        // Refresh relevant data
+        final sid = _storeId;
+        if (sid != null) {
+          ref.read(securityOverviewProvider.notifier).load(sid);
+          ref.read(deviceListProvider.notifier).loadDevices(sid);
+          ref.read(sessionListProvider.notifier).loadSessions(sid);
+          ref.read(incidentListProvider.notifier).loadIncidents(sid);
+        }
+        ref.read(securityActionProvider.notifier).reset();
+      } else if (next is SecurityActionError) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
+        ref.read(securityActionProvider.notifier).reset();
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.securityTitle),
         bottom: TabBar(
           controller: _tabController,
+          isScrollable: true,
           tabs: [
+            Tab(text: l10n.securityOverview),
             Tab(text: l10n.securityPolicy),
             Tab(text: l10n.securityAuditLogs),
             Tab(text: l10n.securityDevices),
             Tab(text: l10n.securityLogins),
+            Tab(text: l10n.securitySessions),
+            Tab(text: l10n.securityIncidents),
           ],
         ),
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [_buildPolicyTab(), _buildAuditTab(), _buildDevicesTab(), _buildLoginsTab()],
+        children: [
+          _buildOverviewTab(),
+          _buildPolicyTab(),
+          _buildAuditTab(),
+          _buildDevicesTab(),
+          _buildLoginsTab(),
+          _buildSessionsTab(),
+          _buildIncidentsTab(),
+        ],
       ),
     );
+  }
+
+  Widget _buildOverviewTab() {
+    final state = ref.watch(securityOverviewProvider);
+    return switch (state) {
+      SecurityOverviewInitial() || SecurityOverviewLoading() => Center(child: PosLoadingSkeleton.list()),
+      SecurityOverviewLoaded(:final overview) => SecurityOverviewWidget(data: overview),
+      SecurityOverviewError(:final message) => PosErrorState(
+        message: message,
+        onRetry: () => ref.read(securityOverviewProvider.notifier).load(_storeId!),
+      ),
+    };
   }
 
   Widget _buildPolicyTab() {
     final state = ref.watch(securityPolicyProvider);
     return switch (state) {
-      SecurityPolicyInitial() || SecurityPolicyLoading() => const Center(child: CircularProgressIndicator()),
+      SecurityPolicyInitial() || SecurityPolicyLoading() => Center(child: PosLoadingSkeleton.list()),
       SecurityPolicyLoaded(policy: final p) => SingleChildScrollView(
         padding: AppSpacing.paddingAll16,
         child: SecurityPolicyEditor(policy: p),
       ),
-      SecurityPolicyError(message: final m) => Center(child: Text('Error: $m')),
+      SecurityPolicyError(message: final m) => PosErrorState(
+        message: AppLocalizations.of(context)!.securityError(m),
+        onRetry: () => ref.read(securityPolicyProvider.notifier).loadPolicy(_storeId!),
+      ),
     };
   }
 
   Widget _buildAuditTab() {
     final state = ref.watch(auditLogListProvider);
     return switch (state) {
-      AuditLogListInitial() || AuditLogListLoading() => const Center(child: CircularProgressIndicator()),
+      AuditLogListInitial() || AuditLogListLoading() => Center(child: PosLoadingSkeleton.list()),
       AuditLogListLoaded(logs: final logs) => AuditLogListWidget(logs: logs),
-      AuditLogListError(message: final m) => Center(child: Text('Error: $m')),
+      AuditLogListError(message: final m) => PosErrorState(
+        message: AppLocalizations.of(context)!.securityError(m),
+        onRetry: () => ref.read(auditLogListProvider.notifier).loadLogs(_storeId!),
+      ),
     };
   }
 
   Widget _buildDevicesTab() {
+    final actionState = ref.watch(securityActionProvider);
     final state = ref.watch(deviceListProvider);
+    final isLoading = actionState is SecurityActionLoading;
+
     return switch (state) {
-      DeviceListInitial() || DeviceListLoading() => const Center(child: CircularProgressIndicator()),
-      DeviceListLoaded(devices: final devices) => DeviceListWidget(devices: devices, onDeactivate: (_) {}, onRemoteWipe: (_) {}),
-      DeviceListError(message: final m) => Center(child: Text('Error: $m')),
+      DeviceListInitial() || DeviceListLoading() => Center(child: PosLoadingSkeleton.list()),
+      DeviceListLoaded(devices: final devices) => DeviceListWidget(
+        devices: devices,
+        isActionLoading: isLoading,
+        onDeactivate: (id) => ref.read(securityActionProvider.notifier).deactivateDevice(id),
+        onRemoteWipe: (id) => ref.read(securityActionProvider.notifier).requestRemoteWipe(id),
+      ),
+      DeviceListError(message: final m) => PosErrorState(
+        message: AppLocalizations.of(context)!.securityError(m),
+        onRetry: () => ref.read(deviceListProvider.notifier).loadDevices(_storeId!),
+      ),
     };
   }
 
   Widget _buildLoginsTab() {
     final state = ref.watch(loginAttemptsProvider);
     return switch (state) {
-      LoginAttemptsInitial() || LoginAttemptsLoading() => const Center(child: CircularProgressIndicator()),
+      LoginAttemptsInitial() || LoginAttemptsLoading() => Center(child: PosLoadingSkeleton.list()),
       LoginAttemptsLoaded(attempts: final attempts) => _buildLoginList(attempts),
-      LoginAttemptsError(message: final m) => Center(child: Text('Error: $m')),
+      LoginAttemptsError(message: final m) => PosErrorState(
+        message: AppLocalizations.of(context)!.securityError(m),
+        onRetry: () => ref.read(loginAttemptsProvider.notifier).loadAttempts(_storeId!),
+      ),
+    };
+  }
+
+  Widget _buildSessionsTab() {
+    final state = ref.watch(sessionListProvider);
+    final actionState = ref.watch(securityActionProvider);
+    final isLoading = actionState is SecurityActionLoading;
+
+    return switch (state) {
+      SessionListInitial() || SessionListLoading() => Center(child: PosLoadingSkeleton.list()),
+      SessionListLoaded(:final sessions) => SessionListWidget(
+        sessions: sessions,
+        isActionLoading: isLoading,
+        onEndSession: (id) => ref.read(securityActionProvider.notifier).endSession(id),
+        onEndAllSessions: () => ref.read(securityActionProvider.notifier).endAllSessions(_storeId!),
+      ),
+      SessionListError(:final message) => PosErrorState(
+        message: message,
+        onRetry: () => ref.read(sessionListProvider.notifier).loadSessions(_storeId!),
+      ),
+    };
+  }
+
+  Widget _buildIncidentsTab() {
+    final state = ref.watch(incidentListProvider);
+    final actionState = ref.watch(securityActionProvider);
+    final isLoading = actionState is SecurityActionLoading;
+
+    return switch (state) {
+      IncidentListInitial() || IncidentListLoading() => Center(child: PosLoadingSkeleton.list()),
+      IncidentListLoaded(:final incidents) => IncidentListWidget(
+        incidents: incidents,
+        isActionLoading: isLoading,
+        onResolve: (id, notes) => ref.read(securityActionProvider.notifier).resolveIncident(id, resolutionNotes: notes),
+      ),
+      IncidentListError(:final message) => PosErrorState(
+        message: message,
+        onRetry: () => ref.read(incidentListProvider.notifier).loadIncidents(_storeId!),
+      ),
     };
   }
 
   Widget _buildLoginList(List attempts) {
     final l10n = AppLocalizations.of(context)!;
     if (attempts.isEmpty) {
-      return Center(child: Text(l10n.securityNoLoginAttempts));
+      return PosEmptyState(title: l10n.securityNoLoginAttempts, icon: Icons.login);
     }
     return ListView.builder(
       itemCount: attempts.length,
@@ -115,11 +226,19 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> w
         return ListTile(
           leading: Icon(a.isSuccessful ? Icons.check_circle : Icons.cancel, color: color),
           title: Text(a.userIdentifier),
-          subtitle: Text('${a.attemptType.value} • ${a.ipAddress ?? 'N/A'}'),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('${a.attemptType.value} • ${a.ipAddress ?? l10n.securityNA}'),
+              if (a.userAgent != null) Text(a.userAgent!, style: TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+              if (a.failureReason != null) Text(a.failureReason!, style: TextStyle(fontSize: 11, color: AppColors.error)),
+            ],
+          ),
           trailing: Text(
             a.isSuccessful ? l10n.securityLoginSuccess : l10n.securityLoginFailed,
             style: TextStyle(color: color, fontWeight: FontWeight.w600),
           ),
+          isThreeLine: true,
         );
       },
     );

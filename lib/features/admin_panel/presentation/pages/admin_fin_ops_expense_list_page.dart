@@ -96,7 +96,7 @@ class _State extends ConsumerState<AdminFinOpsExpenseListPage> {
                 backgroundColor: AppColors.error.withValues(alpha: 0.15),
                 child: const Icon(Icons.receipt_long, color: AppColors.error, size: 20),
               ),
-              title: Text('ر.ع. ${amount.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.bold)),
+              title: Text('ر.س. ${amount.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(category[0].toUpperCase() + category.substring(1), style: const TextStyle(fontSize: 12)),
               trailing: Text(
                 item['expense_date']?.toString() ?? item['created_at']?.toString().substring(0, 10) ?? '',

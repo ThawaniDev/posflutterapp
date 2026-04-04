@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
@@ -31,7 +32,10 @@ class _PosHeldCartsDialogState extends ConsumerState<PosHeldCartsDialog> {
     ref.read(cartProvider.notifier).restoreFromHeldCart(cart.cartData, products.cast());
     await ref.read(heldCartsProvider.notifier).recallCart(cart.id);
     if (mounted) {
-      showPosSuccessSnackbar(context, 'Cart restored: ${cart.label ?? 'Held Cart'}');
+      showPosSuccessSnackbar(
+        context,
+        AppLocalizations.of(context)!.posCartRestored(cart.label ?? AppLocalizations.of(context)!.posHeldCartFallback),
+      );
       Navigator.pop(context);
     }
   }
@@ -39,9 +43,11 @@ class _PosHeldCartsDialogState extends ConsumerState<PosHeldCartsDialog> {
   Future<void> _deleteCart(HeldCart cart) async {
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Delete Held Cart?',
-      message: 'This will permanently remove "${cart.label ?? 'Held Cart'}".',
-      confirmLabel: 'Delete',
+      title: AppLocalizations.of(context)!.posDeleteHeldCart,
+      message: AppLocalizations.of(
+        context,
+      )!.posDeleteHeldCartMessage(cart.label ?? AppLocalizations.of(context)!.posHeldCartFallback),
+      confirmLabel: AppLocalizations.of(context)!.posDelete,
       isDanger: true,
     );
     if (confirmed == true) {
@@ -75,7 +81,7 @@ class _PosHeldCartsDialogState extends ConsumerState<PosHeldCartsDialog> {
                     child: const Icon(Icons.pause_circle_outline, color: AppColors.info, size: 22),
                   ),
                   AppSpacing.gapW12,
-                  Expanded(child: Text('Held Carts', style: AppTypography.headlineSmall)),
+                  Expanded(child: Text(AppLocalizations.of(context)!.posHeldCarts, style: AppTypography.headlineSmall)),
                   IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close_rounded)),
                 ],
               ),
@@ -86,7 +92,7 @@ class _PosHeldCartsDialogState extends ConsumerState<PosHeldCartsDialog> {
 
               AppSpacing.gapH16,
               PosButton(
-                label: 'Close',
+                label: AppLocalizations.of(context)!.posClose,
                 variant: PosButtonVariant.outline,
                 isFullWidth: true,
                 onPressed: () => Navigator.pop(context),
@@ -116,7 +122,7 @@ class _PosHeldCartsDialogState extends ConsumerState<PosHeldCartsDialog> {
           children: [
             Icon(Icons.inbox_rounded, size: 48, color: isDark ? AppColors.textDisabledDark : AppColors.textDisabledLight),
             AppSpacing.gapH8,
-            Text('No held carts', style: AppTypography.bodyMedium.copyWith(color: mutedColor)),
+            Text(AppLocalizations.of(context)!.posNoHeldCarts, style: AppTypography.bodyMedium.copyWith(color: mutedColor)),
           ],
         ),
       );
@@ -155,7 +161,7 @@ class _HeldCartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final itemCount = (cart.cartData['items'] as List?)?.length ?? 0;
-    final heldTime = cart.heldAt != null ? _timeAgo(cart.heldAt!) : '';
+    final heldTime = cart.heldAt != null ? _timeAgo(context, cart.heldAt!) : '';
 
     return PosCard(
       padding: AppSpacing.paddingAll16,
@@ -166,10 +172,10 @@ class _HeldCartCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(cart.label ?? 'Held Cart', style: AppTypography.titleSmall),
+                Text(cart.label ?? AppLocalizations.of(context)!.posHeldCartFallback, style: AppTypography.titleSmall),
                 AppSpacing.gapH4,
                 Text(
-                  '$itemCount item${itemCount == 1 ? '' : 's'} • $heldTime',
+                  AppLocalizations.of(context)!.posHeldCartItemCount(itemCount, heldTime),
                   style: AppTypography.bodySmall.copyWith(color: mutedColor),
                 ),
               ],
@@ -179,20 +185,25 @@ class _HeldCartCard extends StatelessWidget {
           IconButton(
             onPressed: onDelete,
             icon: const Icon(Icons.delete_outline, color: AppColors.error, size: 20),
-            tooltip: 'Delete',
+            tooltip: AppLocalizations.of(context)!.posDelete,
           ),
           AppSpacing.gapW4,
-          PosButton(label: 'Recall', icon: Icons.play_arrow_rounded, size: PosButtonSize.sm, onPressed: onRecall),
+          PosButton(
+            label: AppLocalizations.of(context)!.posRecall,
+            icon: Icons.play_arrow_rounded,
+            size: PosButtonSize.sm,
+            onPressed: onRecall,
+          ),
         ],
       ),
     );
   }
 
-  String _timeAgo(DateTime time) {
+  String _timeAgo(BuildContext context, DateTime time) {
     final diff = DateTime.now().difference(time);
-    if (diff.inMinutes < 1) return 'Just now';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    return '${diff.inDays}d ago';
+    if (diff.inMinutes < 1) return AppLocalizations.of(context)!.posJustNow;
+    if (diff.inMinutes < 60) return AppLocalizations.of(context)!.posMinutesAgo(diff.inMinutes);
+    if (diff.inHours < 24) return AppLocalizations.of(context)!.posHoursAgo(diff.inHours);
+    return AppLocalizations.of(context)!.posDaysAgo(diff.inDays);
   }
 }

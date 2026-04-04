@@ -5,8 +5,13 @@ import 'package:thawani_pos/features/sync/models/sync_conflict.dart';
 import 'package:thawani_pos/features/sync/providers/sync_state.dart';
 import 'package:thawani_pos/features/sync/repositories/sync_repository.dart';
 import 'package:thawani_pos/features/sync/services/connectivity_service.dart';
+import 'package:thawani_pos/features/sync/services/conflict_resolver_service.dart' as conflict_resolver;
+import 'package:thawani_pos/features/sync/services/data_integrity_service.dart';
+import 'package:thawani_pos/features/sync/services/delta_sync_service.dart';
+import 'package:thawani_pos/features/sync/services/full_sync_service.dart';
 import 'package:thawani_pos/features/sync/services/sync_engine.dart';
 import 'package:thawani_pos/features/sync/services/sync_queue_manager.dart';
+import 'package:thawani_pos/features/sync/services/sync_retry_service.dart';
 import 'package:thawani_pos/features/sync/services/websocket_service.dart';
 
 // ─── Connectivity Provider ─────────────────────────────────
@@ -59,6 +64,60 @@ final syncEngineProvider = Provider<SyncEngine>((ref) {
 
 final syncEngineStatusProvider = StreamProvider<SyncEngineStatus>((ref) {
   return ref.watch(syncEngineProvider).statusStream;
+});
+
+// ─── Data Integrity Provider ───────────────────────────────
+
+final dataIntegrityServiceProvider = Provider<DataIntegrityService>((ref) {
+  return DataIntegrityService();
+});
+
+// ─── Delta Sync Provider ───────────────────────────────────
+
+final deltaSyncServiceProvider = Provider<DeltaSyncService>((ref) {
+  return DeltaSyncService(
+    apiService: ref.watch(syncApiServiceProvider),
+    integrityService: ref.watch(dataIntegrityServiceProvider),
+  );
+});
+
+// ─── Full Sync Provider ────────────────────────────────────
+
+final fullSyncServiceProvider = Provider<FullSyncService>((ref) {
+  final service = FullSyncService(
+    apiService: ref.watch(syncApiServiceProvider),
+    integrityService: ref.watch(dataIntegrityServiceProvider),
+  );
+  ref.onDispose(() => service.dispose());
+  return service;
+});
+
+final fullSyncProgressProvider = StreamProvider<FullSyncProgress>((ref) {
+  return ref.watch(fullSyncServiceProvider).progressStream;
+});
+
+// ─── Conflict Resolver Provider ────────────────────────────
+
+final conflictResolverServiceProvider = Provider<conflict_resolver.ConflictResolverService>((ref) {
+  final service = conflict_resolver.ConflictResolverService(apiService: ref.watch(syncApiServiceProvider));
+  ref.onDispose(() => service.dispose());
+  return service;
+});
+
+final conflictStreamProvider = StreamProvider<List<conflict_resolver.SyncConflict>>((ref) {
+  return ref.watch(conflictResolverServiceProvider).conflictsStream;
+});
+
+// ─── Sync Retry Provider ───────────────────────────────────
+
+final syncRetryServiceProvider = Provider<SyncRetryService>((ref) {
+  final service = SyncRetryService();
+  ref.onDispose(() => service.dispose());
+  return service;
+});
+
+final retryStreamProvider = StreamProvider<RetryAttempt>((ref) {
+  return ref.watch(syncRetryServiceProvider).retryStream;
 });
 
 // ─── Sync Status Provider ──────────────────────────────────

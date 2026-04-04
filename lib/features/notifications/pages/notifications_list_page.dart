@@ -16,6 +16,9 @@ class NotificationsListPage extends ConsumerStatefulWidget {
 
 class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
   String? _selectedCategory;
+  String? _selectedPriority;
+  final Set<String> _selectedIds = {};
+  bool _isSelectionMode = false;
 
   @override
   void initState() {
@@ -28,7 +31,40 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
 
   void _filterByCategory(String? category) {
     setState(() => _selectedCategory = category);
-    ref.read(notificationListProvider.notifier).load(category: category);
+    _reload();
+  }
+
+  void _filterByPriority(String? priority) {
+    setState(() => _selectedPriority = priority);
+    _reload();
+  }
+
+  void _reload() {
+    ref.read(notificationListProvider.notifier).load(category: _selectedCategory, priority: _selectedPriority);
+  }
+
+  void _toggleSelection(String id) {
+    setState(() {
+      if (_selectedIds.contains(id)) {
+        _selectedIds.remove(id);
+      } else {
+        _selectedIds.add(id);
+      }
+      _isSelectionMode = _selectedIds.isNotEmpty;
+    });
+  }
+
+  void _clearSelection() {
+    setState(() {
+      _selectedIds.clear();
+      _isSelectionMode = false;
+    });
+  }
+
+  void _bulkDelete() {
+    if (_selectedIds.isEmpty) return;
+    ref.read(notificationActionProvider.notifier).bulkDelete(_selectedIds.toList());
+    _clearSelection();
   }
 
   @override
@@ -38,11 +74,10 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
     final unreadState = ref.watch(unreadCountProvider);
     final actionState = ref.watch(notificationActionProvider);
 
-    // Listen for action results
     ref.listen<NotificationActionState>(notificationActionProvider, (prev, next) {
       if (next is NotificationActionSuccess) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message)));
-        ref.read(notificationListProvider.notifier).load(category: _selectedCategory);
+        _reload();
         ref.read(unreadCountProvider.notifier).load();
         ref.read(notificationActionProvider.notifier).reset();
       }
@@ -50,36 +85,42 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.notificationsTitle),
+        title: _isSelectionMode ? Text(l10n.notificationsSelected(_selectedIds.length)) : Text(l10n.notificationsTitle),
+        leading: _isSelectionMode ? IconButton(icon: const Icon(Icons.close), onPressed: _clearSelection) : null,
         actions: [
-          // Unread badge
-          if (unreadState is UnreadCountLoaded && unreadState.count > 0)
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: Chip(
-                label: Text(
-                  l10n.notificationsUnread(unreadState.count),
-                  style: const TextStyle(color: Colors.white, fontSize: 12),
-                ),
-                backgroundColor: AppColors.error,
-              ),
+          if (_isSelectionMode) ...[
+            IconButton(
+              icon: const Icon(Icons.delete_outline),
+              tooltip: l10n.notificationsBulkDelete,
+              onPressed: actionState is NotificationActionLoading ? null : _bulkDelete,
             ),
-          // Mark all as read
-          IconButton(
-            icon: const Icon(Icons.done_all),
-            tooltip: l10n.notificationsMarkAllAsRead,
-            onPressed: actionState is NotificationActionLoading
-                ? null
-                : () => ref.read(notificationActionProvider.notifier).markAllAsRead(),
-          ),
+          ] else ...[
+            if (unreadState is UnreadCountLoaded && unreadState.count > 0)
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: Chip(
+                  label: Text(
+                    l10n.notificationsUnread(unreadState.count),
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                  backgroundColor: AppColors.error,
+                ),
+              ),
+            IconButton(
+              icon: const Icon(Icons.done_all),
+              tooltip: l10n.notificationsMarkAllAsRead,
+              onPressed: actionState is NotificationActionLoading
+                  ? null
+                  : () => ref.read(notificationActionProvider.notifier).markAllAsRead(),
+            ),
+          ],
         ],
       ),
       body: Column(
         children: [
-          // Category filter chips
           _buildCategoryFilter(),
+          _buildPriorityFilter(),
           const Divider(height: 1),
-          // Notification list
           Expanded(child: _buildList(listState)),
         ],
       ),
@@ -105,7 +146,7 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
             (cat) => Padding(
               padding: const EdgeInsets.only(right: 8),
               child: FilterChip(
-                label: Text(cat[0].toUpperCase() + cat.substring(1)),
+                label: Text(_localizedCategory(l10n, cat)),
                 selected: _selectedCategory == cat,
                 onSelected: (_) => _filterByCategory(cat),
               ),
@@ -116,18 +157,52 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
     );
   }
 
+  Widget _buildPriorityFilter() {
+    final l10n = AppLocalizations.of(context)!;
+    const priorities = ['low', 'normal', 'high', 'urgent'];
+
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Row(
+        children: [
+          Text(l10n.notificationsPriority, style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+          AppSpacing.gapW8,
+          FilterChip(
+            label: Text(l10n.ordersAll),
+            selected: _selectedPriority == null,
+            onSelected: (_) => _filterByPriority(null),
+            visualDensity: VisualDensity.compact,
+          ),
+          AppSpacing.gapW4,
+          ...priorities.map(
+            (p) => Padding(
+              padding: const EdgeInsets.only(right: 4),
+              child: FilterChip(
+                label: Text(_localizedPriority(l10n, p)),
+                selected: _selectedPriority == p,
+                onSelected: (_) => _filterByPriority(p),
+                visualDensity: VisualDensity.compact,
+                avatar: Icon(_priorityIcon(p), size: 14, color: _priorityColor(p)),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildList(NotificationListState state) {
+    final l10n = AppLocalizations.of(context)!;
     return switch (state) {
       NotificationListInitial() || NotificationListLoading() => Center(child: PosLoadingSkeleton.list()),
-      NotificationListError(:final message) => PosErrorState(
-        message: message,
-        onRetry: () => ref.read(notificationListProvider.notifier).load(category: _selectedCategory),
-      ),
+      NotificationListError(:final message) => PosErrorState(message: message, onRetry: _reload),
       NotificationListLoaded(:final notifications) =>
         notifications.isEmpty
             ? PosEmptyState(title: l10n.notificationsNoNotifications, icon: Icons.notifications_none)
             : RefreshIndicator(
-                onRefresh: () => ref.read(notificationListProvider.notifier).load(category: _selectedCategory),
+                onRefresh: () =>
+                    ref.read(notificationListProvider.notifier).load(category: _selectedCategory, priority: _selectedPriority),
                 child: ListView.separated(
                   itemCount: notifications.length,
                   separatorBuilder: (_, __) => const Divider(height: 1),
@@ -138,16 +213,19 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
   }
 
   Widget _buildNotificationTile(Map<String, dynamic> notification) {
+    final l10n = AppLocalizations.of(context)!;
     final isRead = notification['is_read'] as bool? ?? false;
     final category = notification['category'] as String? ?? '';
     final title = notification['title'] as String? ?? '';
     final message = notification['message'] as String? ?? '';
     final createdAt = notification['created_at'] as String?;
     final id = notification['id'] as String;
+    final priority = notification['priority'] as String?;
+    final isSelected = _selectedIds.contains(id);
 
     return Dismissible(
       key: Key(id),
-      direction: DismissDirection.endToStart,
+      direction: _isSelectionMode ? DismissDirection.none : DismissDirection.endToStart,
       background: Container(
         color: AppColors.error,
         alignment: Alignment.centerRight,
@@ -156,11 +234,36 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
       ),
       onDismissed: (_) => ref.read(notificationActionProvider.notifier).delete(id),
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: isRead ? AppColors.borderLight : _categoryColor(category),
-          child: Icon(_categoryIcon(category), color: isRead ? AppColors.textSecondary : Colors.white, size: 20),
+        selected: isSelected,
+        selectedTileColor: AppColors.primary.withValues(alpha: 0.08),
+        onLongPress: () => _toggleSelection(id),
+        onTap: _isSelectionMode ? () => _toggleSelection(id) : null,
+        leading: _isSelectionMode
+            ? Checkbox(value: isSelected, onChanged: (_) => _toggleSelection(id))
+            : CircleAvatar(
+                backgroundColor: isRead ? AppColors.borderLight : _categoryColor(category),
+                child: Icon(_categoryIcon(category), color: isRead ? AppColors.textSecondary : Colors.white, size: 20),
+              ),
+        title: Row(
+          children: [
+            Expanded(
+              child: Text(title, style: TextStyle(fontWeight: isRead ? FontWeight.normal : FontWeight.bold)),
+            ),
+            if (priority != null && priority != 'normal')
+              Container(
+                margin: const EdgeInsets.only(left: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: _priorityColor(priority).withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  _localizedPriority(l10n, priority),
+                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: _priorityColor(priority)),
+                ),
+              ),
+          ],
         ),
-        title: Text(title, style: TextStyle(fontWeight: isRead ? FontWeight.normal : FontWeight.bold)),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -171,7 +274,7 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
             ],
           ],
         ),
-        trailing: !isRead
+        trailing: !isRead && !_isSelectionMode
             ? IconButton(
                 icon: const Icon(Icons.circle, size: 12, color: AppColors.info),
                 tooltip: l10n.notificationsMarkRead,
@@ -207,17 +310,68 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
     };
   }
 
+  IconData _priorityIcon(String priority) {
+    return switch (priority) {
+      'urgent' => Icons.priority_high,
+      'high' => Icons.arrow_upward,
+      'low' => Icons.arrow_downward,
+      _ => Icons.remove,
+    };
+  }
+
+  Color _priorityColor(String priority) {
+    return switch (priority) {
+      'urgent' => AppColors.error,
+      'high' => AppColors.warning,
+      'low' => AppColors.textSecondary,
+      _ => AppColors.info,
+    };
+  }
+
   String _formatTime(String isoDate) {
     try {
       final dt = DateTime.parse(isoDate);
       final now = DateTime.now();
       final diff = now.difference(dt);
-      if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-      if (diff.inHours < 24) return '${diff.inHours}h ago';
-      if (diff.inDays < 7) return '${diff.inDays}d ago';
+      final loc = AppLocalizations.of(context)!;
+      if (diff.inMinutes < 60) return loc.posMinutesAgo(diff.inMinutes);
+      if (diff.inHours < 24) return loc.posHoursAgo(diff.inHours);
+      if (diff.inDays < 7) return loc.posDaysAgo(diff.inDays);
       return '${dt.day}/${dt.month}/${dt.year}';
     } catch (_) {
       return '';
+    }
+  }
+
+  String _localizedCategory(AppLocalizations l10n, String cat) {
+    switch (cat) {
+      case 'order':
+        return l10n.notifCategoryOrder;
+      case 'inventory':
+        return l10n.notifCategoryInventory;
+      case 'promotion':
+        return l10n.notifCategoryPromotion;
+      case 'system':
+        return l10n.notifCategorySystem;
+      case 'payment':
+        return l10n.notifCategoryPayment;
+      case 'staff':
+        return l10n.notifCategoryStaff;
+      default:
+        return cat[0].toUpperCase() + cat.substring(1);
+    }
+  }
+
+  String _localizedPriority(AppLocalizations l10n, String priority) {
+    switch (priority) {
+      case 'urgent':
+        return l10n.notifPriorityUrgent;
+      case 'high':
+        return l10n.notifPriorityHigh;
+      case 'low':
+        return l10n.notifPriorityLow;
+      default:
+        return l10n.notifPriorityNormal;
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
@@ -62,7 +63,7 @@ class _PosCustomerSearchDialogState extends ConsumerState<PosCustomerSearchDialo
                     child: const Icon(Icons.person_search_rounded, color: AppColors.info, size: 22),
                   ),
                   AppSpacing.gapW12,
-                  Expanded(child: Text('Find Customer', style: AppTypography.headlineSmall)),
+                  Expanded(child: Text(AppLocalizations.of(context)!.posFindCustomer, style: AppTypography.headlineSmall)),
                   IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close_rounded)),
                 ],
               ),
@@ -71,7 +72,7 @@ class _PosCustomerSearchDialogState extends ConsumerState<PosCustomerSearchDialo
               // Search input
               PosSearchField(
                 controller: _searchController,
-                hint: 'Search by name, phone, loyalty code...',
+                hint: AppLocalizations.of(context)!.posSearchCustomerHint,
                 autofocus: true,
                 onChanged: _onSearch,
               ),
@@ -82,7 +83,7 @@ class _PosCustomerSearchDialogState extends ConsumerState<PosCustomerSearchDialo
 
               AppSpacing.gapH12,
               PosButton(
-                label: 'Cancel',
+                label: AppLocalizations.of(context)!.posCancel,
                 variant: PosButtonVariant.outline,
                 isFullWidth: true,
                 onPressed: () => Navigator.pop(context),
@@ -102,7 +103,7 @@ class _PosCustomerSearchDialogState extends ConsumerState<PosCustomerSearchDialo
           children: [
             Icon(Icons.person_search_rounded, size: 48, color: isDark ? AppColors.textDisabledDark : AppColors.textDisabledLight),
             AppSpacing.gapH8,
-            Text('Search for a customer', style: AppTypography.bodySmall.copyWith(color: mutedColor)),
+            Text(AppLocalizations.of(context)!.posSearchForCustomer, style: AppTypography.bodySmall.copyWith(color: mutedColor)),
           ],
         ),
       );
@@ -125,7 +126,7 @@ class _PosCustomerSearchDialogState extends ConsumerState<PosCustomerSearchDialo
           children: [
             Icon(Icons.person_off_outlined, size: 48, color: isDark ? AppColors.textDisabledDark : AppColors.textDisabledLight),
             AppSpacing.gapH8,
-            Text('No customers found', style: AppTypography.bodySmall.copyWith(color: mutedColor)),
+            Text(AppLocalizations.of(context)!.posNoCustomersFound, style: AppTypography.bodySmall.copyWith(color: mutedColor)),
           ],
         ),
       );

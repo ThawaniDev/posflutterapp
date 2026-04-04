@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
@@ -89,15 +90,15 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
     // Client-side validation
     bool valid = true;
     if (_nameController.text.trim().isEmpty) {
-      setState(() => _nameError = 'Name is required');
+      setState(() => _nameError = AppLocalizations.of(context)!.termFormNameRequired);
       valid = false;
     }
     if (_deviceIdController.text.trim().isEmpty) {
-      setState(() => _deviceIdError = 'Device ID is required');
+      setState(() => _deviceIdError = AppLocalizations.of(context)!.termFormDeviceIdRequired);
       valid = false;
     }
     if (_selectedPlatform == null) {
-      setState(() => _platformError = 'Platform is required');
+      setState(() => _platformError = AppLocalizations.of(context)!.termFormPlatformRequired);
       valid = false;
     }
     if (!valid) return;
@@ -121,10 +122,18 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
     if (mounted) {
       setState(() => _isSaving = false);
       if (ok) {
-        showPosSuccessSnackbar(context, widget.isEditing ? 'Terminal updated successfully.' : 'Terminal created successfully.');
+        showPosSuccessSnackbar(
+          context,
+          widget.isEditing ? AppLocalizations.of(context)!.termFormUpdated : AppLocalizations.of(context)!.termFormCreated,
+        );
         context.pop();
       } else {
-        showPosErrorSnackbar(context, widget.isEditing ? 'Failed to update terminal.' : 'Failed to create terminal.');
+        showPosErrorSnackbar(
+          context,
+          widget.isEditing
+              ? AppLocalizations.of(context)!.termFormUpdateFailed
+              : AppLocalizations.of(context)!.termFormCreateFailed,
+        );
       }
     }
   }
@@ -136,7 +145,9 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final title = widget.isEditing ? 'Edit Terminal' : 'Add Terminal';
+    final title = widget.isEditing
+        ? AppLocalizations.of(context)!.termFormEditTitle
+        : AppLocalizations.of(context)!.termFormAddTitle;
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
@@ -145,7 +156,7 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
         leading: IconButton(icon: const Icon(Icons.arrow_back_ios_new_rounded), onPressed: () => context.pop()),
       ),
       body: _isLoadingInitial
-          ? const PosLoading(message: 'Loading terminal...')
+          ? PosLoading(message: AppLocalizations.of(context)!.termFormLoading)
           : SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxxl, vertical: AppSpacing.xl),
               child: Center(
@@ -177,9 +188,9 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text('Terminal Information', style: AppTypography.titleLarge),
+                                      Text(AppLocalizations.of(context)!.termFormSectionTitle, style: AppTypography.titleLarge),
                                       Text(
-                                        'Basic register details',
+                                        AppLocalizations.of(context)!.termFormSectionSubtitle,
                                         style: AppTypography.bodySmall.copyWith(
                                           color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                                         ),
@@ -193,8 +204,8 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
                               // Name
                               PosTextField(
                                 controller: _nameController,
-                                label: 'Terminal Name',
-                                hint: 'e.g. Cashier 1, Front Desk',
+                                label: AppLocalizations.of(context)!.termFormNameLabel,
+                                hint: AppLocalizations.of(context)!.termFormNameHint,
                                 prefixIcon: Icons.label_outline,
                                 errorText: _nameError,
                                 textInputAction: TextInputAction.next,
@@ -207,8 +218,8 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
                               // Device ID
                               PosTextField(
                                 controller: _deviceIdController,
-                                label: 'Device ID',
-                                hint: 'Unique identifier for this device',
+                                label: AppLocalizations.of(context)!.termFormDeviceIdLabel,
+                                hint: AppLocalizations.of(context)!.termFormDeviceIdHint,
                                 prefixIcon: Icons.fingerprint_outlined,
                                 errorText: _deviceIdError,
                                 textInputAction: TextInputAction.next,
@@ -220,8 +231,8 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
 
                               // Platform dropdown
                               PosDropdown<String>(
-                                label: 'Platform',
-                                hint: 'Select platform',
+                                label: AppLocalizations.of(context)!.termFormPlatformLabel,
+                                hint: AppLocalizations.of(context)!.termFormPlatformHint,
                                 value: _selectedPlatform,
                                 errorText: _platformError,
                                 items: _platforms
@@ -246,8 +257,8 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
                               // App version (optional)
                               PosTextField(
                                 controller: _appVersionController,
-                                label: 'App Version (optional)',
-                                hint: 'e.g. 1.0.0',
+                                label: AppLocalizations.of(context)!.termFormVersionLabel,
+                                hint: AppLocalizations.of(context)!.termFormVersionHint,
                                 prefixIcon: Icons.info_outline,
                                 textInputAction: TextInputAction.done,
                                 onSubmitted: (_) => _handleSubmit(),
@@ -262,10 +273,16 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            PosButton(label: 'Cancel', variant: PosButtonVariant.outline, onPressed: () => context.pop()),
+                            PosButton(
+                              label: AppLocalizations.of(context)!.posCancel,
+                              variant: PosButtonVariant.outline,
+                              onPressed: () => context.pop(),
+                            ),
                             AppSpacing.gapW12,
                             PosButton(
-                              label: widget.isEditing ? 'Save Changes' : 'Create Terminal',
+                              label: widget.isEditing
+                                  ? AppLocalizations.of(context)!.termFormSaveChanges
+                                  : AppLocalizations.of(context)!.termFormCreate,
                               icon: widget.isEditing ? Icons.save_outlined : Icons.add_rounded,
                               isLoading: _isSaving,
                               onPressed: _handleSubmit,

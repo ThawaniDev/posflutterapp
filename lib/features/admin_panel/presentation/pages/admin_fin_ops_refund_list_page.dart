@@ -94,7 +94,7 @@ class _State extends ConsumerState<AdminFinOpsRefundListPage> {
                 backgroundColor: _statusColor(status).withValues(alpha: 0.15),
                 child: Icon(Icons.replay, color: _statusColor(status), size: 20),
               ),
-              title: Text('ر.ع. ${amount.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.bold)),
+              title: Text('ر.س. ${amount.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(
                 item['method']?.toString().replaceAll('_', ' ').toUpperCase() ?? '',
                 style: const TextStyle(fontSize: 12),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -34,7 +35,7 @@ class _PinLoginPageState extends ConsumerState<PinLoginPage> {
 
     if (storeId == null) {
       setState(() {
-        _errorMessage = 'No store session found. Please sign in with email.';
+        _errorMessage = AppLocalizations.of(context)!.pinLoginNoStoreSession;
         _isLoading = false;
       });
       return;
@@ -98,10 +99,13 @@ class _PinLoginPageState extends ConsumerState<PinLoginPage> {
                   Icon(Icons.lock_rounded, size: 56, color: AppColors.primary),
                   const SizedBox(height: AppSpacing.md),
 
-                  Text('Enter PIN', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
+                  Text(
+                    AppLocalizations.of(context)!.pinLoginEnterPin,
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(height: AppSpacing.xs),
                   Text(
-                    'Quick switch — enter your 4-digit PIN',
+                    AppLocalizations.of(context)!.pinLoginSubtitle,
                     style: Theme.of(
                       context,
                     ).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
@@ -151,7 +155,10 @@ class _PinLoginPageState extends ConsumerState<PinLoginPage> {
                   // Switch to email login
                   TextButton(
                     onPressed: () => context.go(Routes.login),
-                    child: Text('Sign in with email instead', style: TextStyle(color: AppColors.primary)),
+                    child: Text(
+                      AppLocalizations.of(context)!.pinLoginSignInWithEmail,
+                      style: TextStyle(color: AppColors.primary),
+                    ),
                   ),
                 ],
               ),

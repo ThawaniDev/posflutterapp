@@ -5,6 +5,7 @@ import 'package:thawani_pos/features/inventory/models/stock_adjustment.dart';
 import 'package:thawani_pos/features/inventory/models/stock_level.dart';
 import 'package:thawani_pos/features/inventory/models/stock_movement.dart';
 import 'package:thawani_pos/features/inventory/models/stock_transfer.dart';
+import 'package:thawani_pos/features/inventory/models/supplier_return.dart';
 
 // ═══════════════════════════════════════════════════════════════════
 // Stock Levels State
@@ -215,4 +216,41 @@ class RecipesLoaded extends RecipesState {
 class RecipesError extends RecipesState {
   final String message;
   const RecipesError({required this.message});
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Supplier Returns State
+// ═══════════════════════════════════════════════════════════════════
+
+sealed class SupplierReturnsState {
+  const SupplierReturnsState();
+}
+
+class SupplierReturnsInitial extends SupplierReturnsState {
+  const SupplierReturnsInitial();
+}
+
+class SupplierReturnsLoading extends SupplierReturnsState {
+  const SupplierReturnsLoading();
+}
+
+class SupplierReturnsLoaded extends SupplierReturnsState {
+  final List<SupplierReturn> returns;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
+
+  const SupplierReturnsLoaded({
+    required this.returns,
+    this.total = 0,
+    this.currentPage = 1,
+    this.lastPage = 1,
+    this.perPage = 25,
+  });
+}
+
+class SupplierReturnsError extends SupplierReturnsState {
+  final String message;
+  const SupplierReturnsError({required this.message});
 }

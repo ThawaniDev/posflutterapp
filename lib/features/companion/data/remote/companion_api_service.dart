@@ -71,4 +71,47 @@ class CompanionApiService {
     );
     return res.data as Map<String, dynamic>;
   }
+
+  // ─── New Companion Endpoints ───────────────────────────
+
+  Future<Map<String, dynamic>> getDashboard() async {
+    final res = await _dio.get(ApiEndpoints.companionDashboard);
+    return res.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getBranches() async {
+    final res = await _dio.get(ApiEndpoints.companionBranches);
+    return res.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getSalesSummary({String? period, String? storeId}) async {
+    final res = await _dio.get(
+      ApiEndpoints.companionSalesSummary,
+      queryParameters: {if (period != null) 'period': period, if (storeId != null) 'store_id': storeId},
+    );
+    return res.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getActiveOrders({String? storeId}) async {
+    final res = await _dio.get(ApiEndpoints.companionActiveOrders, queryParameters: {if (storeId != null) 'store_id': storeId});
+    return res.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getInventoryAlerts({String? storeId}) async {
+    final res = await _dio.get(
+      ApiEndpoints.companionInventoryAlerts,
+      queryParameters: {if (storeId != null) 'store_id': storeId},
+    );
+    return res.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getActiveStaff({String? storeId}) async {
+    final res = await _dio.get(ApiEndpoints.companionActiveStaff, queryParameters: {if (storeId != null) 'store_id': storeId});
+    return res.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> toggleStoreAvailability({required bool isOpen}) async {
+    final res = await _dio.post(ApiEndpoints.companionStoreAvailability, data: {'is_open': isOpen});
+    return res.data as Map<String, dynamic>;
+  }
 }

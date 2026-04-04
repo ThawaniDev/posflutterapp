@@ -64,8 +64,8 @@ class MarketplaceApiService {
 
   // ── Purchase ──────────────────────────────────────────────
 
-  Future<TemplatePurchase> purchase(Map<String, dynamic> data) async {
-    final response = await _dio.post(ApiEndpoints.marketplacePurchase, data: data);
+  Future<TemplatePurchase> purchase(String listingId, Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.marketplacePurchase(listingId), data: data);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return TemplatePurchase.fromJson(apiResponse.data as Map<String, dynamic>);
   }
@@ -78,13 +78,13 @@ class MarketplaceApiService {
   }
 
   Future<bool> checkAccess(String listingId) async {
-    final response = await _dio.get(ApiEndpoints.marketplaceCheckAccess, queryParameters: {'listing_id': listingId});
+    final response = await _dio.get(ApiEndpoints.marketplaceCheckAccess(listingId));
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return (apiResponse.data as Map<String, dynamic>)['has_access'] as bool? ?? false;
   }
 
   Future<void> cancelPurchase(String purchaseId) async {
-    await _dio.post(ApiEndpoints.marketplaceCancelPurchase, data: {'purchase_id': purchaseId});
+    await _dio.post(ApiEndpoints.marketplaceCancelPurchase(purchaseId));
   }
 
   // ── Invoices ──────────────────────────────────────────────
@@ -104,17 +104,15 @@ class MarketplaceApiService {
 
   // ── Reviews ───────────────────────────────────────────────
 
-  Future<List<TemplateReview>> listReviews({String? listingId}) async {
-    final queryParams = <String, dynamic>{};
-    if (listingId != null) queryParams['listing_id'] = listingId;
-    final response = await _dio.get(ApiEndpoints.marketplaceReviews, queryParameters: queryParams);
+  Future<List<TemplateReview>> listReviews({required String listingId}) async {
+    final response = await _dio.get(ApiEndpoints.marketplaceListingReviews(listingId));
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final list = apiResponse.data as List;
     return list.map((j) => TemplateReview.fromJson(j as Map<String, dynamic>)).toList();
   }
 
-  Future<TemplateReview> createReview(Map<String, dynamic> data) async {
-    final response = await _dio.post(ApiEndpoints.marketplaceReviews, data: data);
+  Future<TemplateReview> createReview(String listingId, Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.marketplaceListingReviews(listingId), data: data);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return TemplateReview.fromJson(apiResponse.data as Map<String, dynamic>);
   }

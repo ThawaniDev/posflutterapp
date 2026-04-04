@@ -65,6 +65,12 @@ class InventoryPage extends ConsumerWidget {
             subtitle: l10n.inventoryRecipesSubtitle,
             onTap: () => context.push(Routes.recipes),
           ),
+          _InventoryTile(
+            icon: Icons.assignment_return_outlined,
+            title: l10n.supplierReturnsTitle,
+            subtitle: l10n.supplierReturnsSubtitle,
+            onTap: () => context.push(Routes.supplierReturns),
+          ),
         ],
       ),
     );

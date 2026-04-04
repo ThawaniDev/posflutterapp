@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/features/marketplace/models/marketplace_category.dart';
+import 'package:thawani_pos/features/marketplace/models/marketplace_listing.dart';
 import 'package:thawani_pos/features/marketplace/providers/marketplace_state.dart';
 import 'package:thawani_pos/features/marketplace/repositories/marketplace_repository.dart';
 
@@ -35,17 +37,15 @@ class MarketplaceListingsNotifier extends StateNotifier<MarketplaceListingsState
         ),
         _repo.listCategories(),
       ]);
-      final listingsResponse = results[0] as Map<String, dynamic>;
-      final categories = results[1];
-      final data = listingsResponse['data'] as List? ?? [];
-      final meta = listingsResponse['meta'] as Map<String, dynamic>? ?? {};
+      final listings = results[0] as List<MarketplaceListing>;
+      final categories = results[1] as List<MarketplaceCategory>;
 
       state = MarketplaceListingsLoaded(
-        listings: data as dynamic,
-        categories: categories as dynamic,
-        currentPage: meta['current_page'] as int? ?? page,
-        totalPages: meta['last_page'] as int? ?? 1,
-        totalItems: meta['total'] as int? ?? 0,
+        listings: listings,
+        categories: categories,
+        currentPage: page,
+        totalPages: 1,
+        totalItems: listings.length,
         perPage: perPage,
         searchQuery: search,
         categoryId: categoryId,
@@ -111,7 +111,7 @@ class MarketplaceDetailNotifier extends StateNotifier<MarketplaceDetailState> {
       state = MarketplaceDetailLoaded(
         listing: results[0] as dynamic,
         reviews: results[1] as dynamic,
-        hasAccess: (results[2] as Map<String, dynamic>?)?['has_access'] as bool? ?? false,
+        hasAccess: results[2] as bool? ?? false,
       );
     } on DioException catch (e) {
       state = MarketplaceDetailError(message: _extractError(e));
@@ -123,7 +123,7 @@ class MarketplaceDetailNotifier extends StateNotifier<MarketplaceDetailState> {
   Future<void> purchase(Map<String, dynamic> data) async {
     state = const MarketplaceDetailPurchasing();
     try {
-      await _repo.purchase(data);
+      await _repo.purchase(_listingId, data);
       await load();
     } on DioException catch (e) {
       state = MarketplaceDetailError(message: _extractError(e));
@@ -133,7 +133,7 @@ class MarketplaceDetailNotifier extends StateNotifier<MarketplaceDetailState> {
   Future<void> submitReview(Map<String, dynamic> data) async {
     if (state is! MarketplaceDetailLoaded) return;
     try {
-      await _repo.createReview(data);
+      await _repo.createReview(_listingId, data);
       final reviews = await _repo.listReviews(listingId: _listingId);
       final current = state as MarketplaceDetailLoaded;
       state = current.copyWith(reviews: reviews);

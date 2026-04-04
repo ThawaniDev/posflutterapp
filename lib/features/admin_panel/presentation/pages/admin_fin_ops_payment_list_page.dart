@@ -111,7 +111,7 @@ class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
           backgroundColor: _methodColor(method).withValues(alpha: 0.15),
           child: Icon(_methodIcon(method), color: _methodColor(method), size: 20),
         ),
-        title: Text('ر.ع. ${amount.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text('ر.س. ${amount.toStringAsFixed(2)}', style: const TextStyle(fontWeight: FontWeight.bold)),
         subtitle: Text(method.replaceAll('_', ' ').toUpperCase(), style: const TextStyle(fontSize: 12)),
         trailing: Text(
           item['created_at']?.toString().substring(0, 10) ?? '',

@@ -22,7 +22,7 @@ class CustomizationSettingsNotifier extends StateNotifier<CustomizationSettingsS
         primaryColor: d['primary_color'] as String? ?? '#FD8209',
         secondaryColor: d['secondary_color'] as String? ?? '#1A1A2E',
         accentColor: d['accent_color'] as String? ?? '#16213E',
-        fontScale: (d['font_scale'] as num?)?.toDouble() ?? 1.0,
+        fontScale: double.tryParse(d['font_scale'] as String? ?? '') ?? 1.0,
         handedness: d['handedness'] as String? ?? 'right',
         gridColumns: d['grid_columns'] as int? ?? 4,
         showProductImages: d['show_product_images'] as bool? ?? true,

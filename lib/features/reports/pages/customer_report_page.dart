@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
@@ -46,17 +47,18 @@ class _CustomerReportPageState extends ConsumerState<CustomerReportPage> with Ti
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: const Text('Customer Reports'),
+        title: Text(l10n.customerReportsTitle),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Top Customers'),
-            Tab(text: 'Retention'),
+          tabs: [
+            Tab(text: l10n.customerReportsTopCustomers),
+            Tab(text: l10n.customerReportsRetention),
           ],
         ),
       ),

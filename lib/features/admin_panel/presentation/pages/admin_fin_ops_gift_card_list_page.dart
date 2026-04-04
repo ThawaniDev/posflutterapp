@@ -100,7 +100,7 @@ class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
                 style: const TextStyle(fontWeight: FontWeight.bold, fontFamily: 'monospace'),
               ),
               subtitle: Text(
-                'Balance: ر.ع. ${balance.toStringAsFixed(2)} / ${initial.toStringAsFixed(2)}',
+                'Balance: ر.س. ${balance.toStringAsFixed(2)} / ${initial.toStringAsFixed(2)}',
                 style: const TextStyle(fontSize: 12),
               ),
               trailing: _statusChip(status),

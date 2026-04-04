@@ -9,6 +9,7 @@ import 'package:thawani_pos/features/inventory/models/stock_adjustment.dart';
 import 'package:thawani_pos/features/inventory/models/stock_level.dart';
 import 'package:thawani_pos/features/inventory/models/stock_movement.dart';
 import 'package:thawani_pos/features/inventory/models/stock_transfer.dart';
+import 'package:thawani_pos/features/inventory/models/supplier_return.dart';
 
 final inventoryRepositoryProvider = Provider<InventoryRepository>((ref) {
   return InventoryRepository(
@@ -140,4 +141,29 @@ class InventoryRepository {
   Future<Recipe> getRecipe(String id) => _apiService.getRecipe(id);
   Future<Recipe> updateRecipe(String id, Map<String, dynamic> data) => _apiService.updateRecipe(id, data);
   Future<void> deleteRecipe(String id) => _apiService.deleteRecipe(id);
+
+  // ─── Supplier Returns ─────────────────────────────────────────
+
+  Future<PaginatedResult<SupplierReturn>> listSupplierReturns({
+    int page = 1,
+    int perPage = 25,
+    String? status,
+    String? supplierId,
+    String? search,
+  }) {
+    return _apiService.listSupplierReturns(page: page, perPage: perPage, status: status, supplierId: supplierId, search: search);
+  }
+
+  Future<SupplierReturn> createSupplierReturn(Map<String, dynamic> data) async {
+    final storeId = await _getStoreId();
+    return _apiService.createSupplierReturn({'store_id': storeId, ...data});
+  }
+
+  Future<SupplierReturn> getSupplierReturn(String id) => _apiService.getSupplierReturn(id);
+  Future<SupplierReturn> updateSupplierReturn(String id, Map<String, dynamic> data) => _apiService.updateSupplierReturn(id, data);
+  Future<void> deleteSupplierReturn(String id) => _apiService.deleteSupplierReturn(id);
+  Future<SupplierReturn> submitSupplierReturn(String id) => _apiService.submitSupplierReturn(id);
+  Future<SupplierReturn> approveSupplierReturn(String id) => _apiService.approveSupplierReturn(id);
+  Future<SupplierReturn> completeSupplierReturn(String id) => _apiService.completeSupplierReturn(id);
+  Future<SupplierReturn> cancelSupplierReturn(String id) => _apiService.cancelSupplierReturn(id);
 }

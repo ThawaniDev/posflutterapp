@@ -10,6 +10,8 @@ import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/core/widgets/pos_error_state.dart';
 import 'package:thawani_pos/core/widgets/pos_loading_skeleton.dart';
 import 'package:thawani_pos/features/marketplace/models/template_review.dart';
+import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/features/marketplace/providers/marketplace_providers.dart';
 import 'package:thawani_pos/features/marketplace/providers/marketplace_state.dart';
 
@@ -46,7 +48,16 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      appBar: AppBar(title: Text(state is MarketplaceDetailLoaded ? state.listing.name : l10n.marketplaceListingDetail)),
+      appBar: AppBar(title: Text(state is MarketplaceDetailLoaded ? state.listing.title : l10n.marketplaceListingDetail)),
+      floatingActionButton: state is MarketplaceDetailLoaded
+          ? FloatingActionButton.extended(
+              onPressed: () => context.push(
+                '${Routes.marketplaceListingPreview}/${widget.listingId}?name=${Uri.encodeComponent(state.listing.title)}',
+              ),
+              icon: const Icon(Icons.preview_rounded),
+              label: Text(l10n.templatePreviewButton),
+            )
+          : null,
       body: switch (state) {
         MarketplaceDetailInitial() || MarketplaceDetailLoading() => PosLoadingSkeleton.list(),
         MarketplaceDetailPurchasing() => const Center(child: CircularProgressIndicator()),
@@ -66,12 +77,12 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Screenshot gallery
-                    if (listing.screenshotUrls.isNotEmpty) ...[
+                    if (listing.previewImages.isNotEmpty) ...[
                       ClipRRect(
                         borderRadius: AppRadius.borderMd,
                         child: AspectRatio(
                           aspectRatio: 16 / 9,
-                          child: Image.network(listing.screenshotUrls[_selectedScreenshot], fit: BoxFit.cover),
+                          child: Image.network(listing.previewImages[_selectedScreenshot], fit: BoxFit.cover),
                         ),
                       ),
                       AppSpacing.gapH8,
@@ -79,7 +90,7 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
                         height: 64,
                         child: ListView.separated(
                           scrollDirection: Axis.horizontal,
-                          itemCount: listing.screenshotUrls.length,
+                          itemCount: listing.previewImages.length,
                           separatorBuilder: (_, __) => AppSpacing.gapW8,
                           itemBuilder: (context, index) {
                             final isActive = index == _selectedScreenshot;
@@ -96,7 +107,7 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
                                 ),
                                 child: ClipRRect(
                                   borderRadius: AppRadius.borderSm,
-                                  child: Image.network(listing.screenshotUrls[index], fit: BoxFit.cover),
+                                  child: Image.network(listing.previewImages[index], fit: BoxFit.cover),
                                 ),
                               ),
                             );
@@ -152,7 +163,7 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('${listing.subscriptionPrice}', style: AppTypography.headlineSmall.copyWith(color: AppColors.primary)),
+                Text('${listing.priceAmount}', style: AppTypography.headlineSmall.copyWith(color: AppColors.primary)),
                 Text(
                   '/ ${listing.subscriptionInterval}',
                   style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
@@ -161,7 +172,7 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
             )
           else
             Text(
-              '${listing.price} ${l10n.marketplaceCurrency}',
+              '${listing.priceAmount} ${l10n.marketplaceCurrency}',
               style: AppTypography.headlineSmall.copyWith(color: AppColors.primary),
             ),
           AppSpacing.gapH16,
@@ -198,7 +209,7 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
               AppSpacing.gapW4,
               Expanded(
                 child: Text(
-                  listing.publishedBy ?? l10n.marketplaceUnknownPublisher,
+                  listing.publisherName ?? l10n.marketplaceUnknownPublisher,
                   style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                 ),
               ),
@@ -357,7 +368,7 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
         content: Text(
           listing.isFree
               ? l10n.marketplacePurchaseFreeConfirm
-              : '${l10n.marketplacePurchaseChargeConfirm} ${listing.price ?? listing.subscriptionPrice}',
+              : '${l10n.marketplacePurchaseChargeConfirm} ${listing.priceAmount}',
         ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.layoutCancel)),

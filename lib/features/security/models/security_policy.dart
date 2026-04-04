@@ -12,6 +12,16 @@ class SecurityPolicy {
   final bool? requirePinOverrideReturn;
   final bool? requirePinOverrideDiscount;
   final double? discountOverrideThreshold;
+  final bool? biometricEnabled;
+  final int? pinExpiryDays;
+  final bool? requireUniquePins;
+  final int? maxDevices;
+  final int? auditRetentionDays;
+  final bool? forceLogoutOnRoleChange;
+  final int? passwordExpiryDays;
+  final bool? requireStrongPassword;
+  final bool? ipRestrictionEnabled;
+  final List<String>? allowedIpRanges;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -29,6 +39,16 @@ class SecurityPolicy {
     this.requirePinOverrideReturn,
     this.requirePinOverrideDiscount,
     this.discountOverrideThreshold,
+    this.biometricEnabled,
+    this.pinExpiryDays,
+    this.requireUniquePins,
+    this.maxDevices,
+    this.auditRetentionDays,
+    this.forceLogoutOnRoleChange,
+    this.passwordExpiryDays,
+    this.requireStrongPassword,
+    this.ipRestrictionEnabled,
+    this.allowedIpRanges,
     this.createdAt,
     this.updatedAt,
   });
@@ -47,7 +67,19 @@ class SecurityPolicy {
       requirePinOverrideVoid: json['require_pin_override_void'] as bool?,
       requirePinOverrideReturn: json['require_pin_override_return'] as bool?,
       requirePinOverrideDiscount: json['require_pin_override_discount'] as bool?,
-      discountOverrideThreshold: (json['discount_override_threshold'] as num?)?.toDouble(),
+      discountOverrideThreshold: json['discount_override_threshold'] != null
+          ? double.tryParse(json['discount_override_threshold'].toString())
+          : null,
+      biometricEnabled: json['biometric_enabled'] as bool?,
+      pinExpiryDays: (json['pin_expiry_days'] as num?)?.toInt(),
+      requireUniquePins: json['require_unique_pins'] as bool?,
+      maxDevices: (json['max_devices'] as num?)?.toInt(),
+      auditRetentionDays: (json['audit_retention_days'] as num?)?.toInt(),
+      forceLogoutOnRoleChange: json['force_logout_on_role_change'] as bool?,
+      passwordExpiryDays: (json['password_expiry_days'] as num?)?.toInt(),
+      requireStrongPassword: json['require_strong_password'] as bool?,
+      ipRestrictionEnabled: json['ip_restriction_enabled'] as bool?,
+      allowedIpRanges: (json['allowed_ip_ranges'] as List?)?.map((e) => e as String).toList(),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
@@ -68,6 +100,16 @@ class SecurityPolicy {
       'require_pin_override_return': requirePinOverrideReturn,
       'require_pin_override_discount': requirePinOverrideDiscount,
       'discount_override_threshold': discountOverrideThreshold,
+      'biometric_enabled': biometricEnabled,
+      'pin_expiry_days': pinExpiryDays,
+      'require_unique_pins': requireUniquePins,
+      'max_devices': maxDevices,
+      'audit_retention_days': auditRetentionDays,
+      'force_logout_on_role_change': forceLogoutOnRoleChange,
+      'password_expiry_days': passwordExpiryDays,
+      'require_strong_password': requireStrongPassword,
+      'ip_restriction_enabled': ipRestrictionEnabled,
+      'allowed_ip_ranges': allowedIpRanges,
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
     };
@@ -87,6 +129,16 @@ class SecurityPolicy {
     bool? requirePinOverrideReturn,
     bool? requirePinOverrideDiscount,
     double? discountOverrideThreshold,
+    bool? biometricEnabled,
+    int? pinExpiryDays,
+    bool? requireUniquePins,
+    int? maxDevices,
+    int? auditRetentionDays,
+    bool? forceLogoutOnRoleChange,
+    int? passwordExpiryDays,
+    bool? requireStrongPassword,
+    bool? ipRestrictionEnabled,
+    List<String>? allowedIpRanges,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -104,19 +156,28 @@ class SecurityPolicy {
       requirePinOverrideReturn: requirePinOverrideReturn ?? this.requirePinOverrideReturn,
       requirePinOverrideDiscount: requirePinOverrideDiscount ?? this.requirePinOverrideDiscount,
       discountOverrideThreshold: discountOverrideThreshold ?? this.discountOverrideThreshold,
+      biometricEnabled: biometricEnabled ?? this.biometricEnabled,
+      pinExpiryDays: pinExpiryDays ?? this.pinExpiryDays,
+      requireUniquePins: requireUniquePins ?? this.requireUniquePins,
+      maxDevices: maxDevices ?? this.maxDevices,
+      auditRetentionDays: auditRetentionDays ?? this.auditRetentionDays,
+      forceLogoutOnRoleChange: forceLogoutOnRoleChange ?? this.forceLogoutOnRoleChange,
+      passwordExpiryDays: passwordExpiryDays ?? this.passwordExpiryDays,
+      requireStrongPassword: requireStrongPassword ?? this.requireStrongPassword,
+      ipRestrictionEnabled: ipRestrictionEnabled ?? this.ipRestrictionEnabled,
+      allowedIpRanges: allowedIpRanges ?? this.allowedIpRanges,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SecurityPolicy && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is SecurityPolicy && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'SecurityPolicy(id: $id, storeId: $storeId, pinMinLength: $pinMinLength, pinMaxLength: $pinMaxLength, autoLockSeconds: $autoLockSeconds, maxFailedAttempts: $maxFailedAttempts, ...)';
+  String toString() =>
+      'SecurityPolicy(id: $id, storeId: $storeId, pinMinLength: $pinMinLength, pinMaxLength: $pinMaxLength, autoLockSeconds: $autoLockSeconds, maxFailedAttempts: $maxFailedAttempts, ...)';
 }

@@ -29,7 +29,6 @@
   "retry": "Retry",
   "offline": "You are offline",
   "syncInProgress": "Syncing...",
-
   "adminFinOps": "Financial Operations",
   "adminFinOpsPayments": "Payments",
   "adminFinOpsRefunds": "Refunds",
@@ -73,7 +72,6 @@
   "allMethods": "All Methods",
   "allStatuses": "All Statuses",
   "status": "Status",
-
   "adminInfrastructure": "Infrastructure",
   "adminInfraFailedJobs": "Failed Jobs",
   "adminInfraBackups": "Backups",
@@ -84,7 +82,6 @@
   "providerBackups": "Provider Backups",
   "allQueues": "All Queues",
   "queue": "Queue",
-
   "adminProviderRoles": "Provider Roles",
   "adminProviderPermissions": "Provider Permissions",
   "adminProviderRoleTemplates": "Role Templates",
@@ -97,7 +94,6 @@
   "noPermissionsAssigned": "No permissions assigned",
   "slug": "Slug",
   "description": "Description",
-
   "adminProviderManagement": "Provider Management",
   "adminStores": "Stores",
   "adminStoreDetail": "Store Detail",
@@ -106,7 +102,6 @@
   "suspend": "Suspend",
   "activate": "Activate",
   "limitOverrides": "Limit Overrides",
-
   "adminPlatformRoles": "Platform Roles",
   "roles": "Roles",
   "roleDetail": "Role Detail",
@@ -115,7 +110,6 @@
   "teamUserDetail": "Team User Detail",
   "activityLog": "Activity Log",
   "permissions": "Permissions",
-
   "adminPackageSubscription": "Packages & Subscriptions",
   "plans": "Plans",
   "planDetail": "Plan Detail",
@@ -126,14 +120,12 @@
   "invoices": "Invoices",
   "invoiceDetail": "Invoice Detail",
   "revenueDashboard": "Revenue Dashboard",
-
   "adminUserManagement": "User Management",
   "providerUsers": "Provider Users",
   "adminUsers": "Admin Users",
   "userDetail": "User Detail",
   "resetPassword": "Reset Password",
   "userActivity": "User Activity",
-
   "adminBillingFinance": "Billing & Finance",
   "billingInvoices": "Billing Invoices",
   "createInvoice": "Create Invoice",
@@ -142,7 +134,6 @@
   "gateways": "Gateways",
   "hardwareSales": "Hardware Sales",
   "implementationFees": "Implementation Fees",
-
   "adminAnalytics": "Analytics & Reporting",
   "analyticsDashboard": "Analytics Dashboard",
   "analyticsRevenue": "Revenue Analytics",
@@ -150,42 +141,33 @@
   "analyticsSubscriptions": "Subscription Analytics",
   "analyticsFeatures": "Feature Usage",
   "analyticsSystemHealth": "System Health",
-
   "adminSupportTickets": "Support Tickets",
   "cannedResponses": "Canned Responses",
-
   "adminFeatureFlags": "Feature Flags",
   "featureFlagDetail": "Feature Flag Detail",
-
   "adminNotificationTemplates": "Notification Templates",
   "notificationLogs": "Notification Logs",
-
   "adminABTests": "A/B Tests",
   "abTestDetail": "A/B Test Detail",
   "abTestResults": "A/B Test Results",
   "platformEvents": "Platform Events",
-
   "adminContent": "Content & Onboarding",
   "cmsPages": "CMS Pages",
   "cmsPageDetail": "Page Detail",
   "articles": "Articles",
   "announcements": "Announcements",
-
   "adminMarketplace": "Marketplace",
   "marketplaceStores": "Marketplace Stores",
   "marketplaceSettlements": "Marketplace Settlements",
-
   "adminDeployment": "Deployment",
   "deploymentOverview": "Deployment Overview",
   "releases": "Releases",
-
   "adminSecurity": "Security Center",
   "securityOverview": "Security Overview",
   "securityAlerts": "Security Alerts",
   "dataManagement": "Data Management",
   "databaseBackupsList": "Database Backups",
   "healthDashboard": "Health Dashboard",
-
   "support": "Support",
   "supportDashboard": "Support Dashboard",
   "supportNewTicket": "New Ticket",
@@ -241,7 +223,6 @@
   "supportKbDelivery": "Delivery",
   "supportKbBilling": "Billing",
   "supportKbTroubleshooting": "Troubleshooting",
-
   "branches": "Branches",
   "branchesNoBranches": "No branches found",
   "branchesMain": "MAIN",
@@ -327,9 +308,21 @@
   "branchesTotalStaff": "Total Staff",
   "branchesTotalRegisters": "Total Registers",
   "branchesStaff": "{count} Staff",
-  "@branchesStaff": { "placeholders": { "count": { "type": "int" } } },
+  "@branchesStaff": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "branchesRegisters": "{count} Registers",
-  "@branchesRegisters": { "placeholders": { "count": { "type": "int" } } },
+  "@branchesRegisters": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "branchesFilterByCity": "Filter by City",
   "branchesFilterByStatus": "Filter by Status",
   "branchesSortBy": "Sort by",
@@ -349,7 +342,6 @@
   "branchesSocialInfo": "Social & Media",
   "branchesCannotDeleteMain": "Cannot delete the main branch",
   "branchesCannotDeleteWithTransactions": "Cannot delete a branch with existing transactions",
-
   "deliveryIntegration": "Delivery Integration",
   "deliveryOverview": "Overview",
   "deliveryPlatforms": "Platforms",
@@ -424,32 +416,42 @@
   "deliveryOrdersCount": "{count} orders",
   "@deliveryOrdersCount": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "deliveryLastOrder": "Last Order",
   "deliveryMinutesAgo": "{minutes}m ago",
   "@deliveryMinutesAgo": {
     "placeholders": {
-      "minutes": { "type": "int" }
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "deliveryHoursAgo": "{hours}h ago",
   "@deliveryHoursAgo": {
     "placeholders": {
-      "hours": { "type": "int" }
+      "hours": {
+        "type": "int"
+      }
     }
   },
   "deliveryDaysAgo": "{days}d ago",
   "@deliveryDaysAgo": {
     "placeholders": {
-      "days": { "type": "int" }
+      "days": {
+        "type": "int"
+      }
     }
   },
   "deliveryItemsCountValue": "{count} items",
   "@deliveryItemsCountValue": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "deliveryTriggeredBy": "Triggered by:",
@@ -480,7 +482,6 @@
   "deliveryAttempt": "Attempt",
   "deliveryRequestPayload": "Request Payload",
   "deliveryResponsePayload": "Response Payload",
-
   "thawaniPay": "Thawani Integration",
   "thawaniOverview": "Overview",
   "thawaniSettings": "Settings",
@@ -502,7 +503,6 @@
   "thawaniDisconnect": "Disconnect from Thawani",
   "thawaniOrdersPlaceholder": "Thawani Orders",
   "thawaniOrdersDesc": "Orders from Thawani marketplace will appear here",
-
   "settingsGeneral": "General",
   "settingsLocalization": "Localization",
   "settingsLocalizationDesc": "Languages, translations & regional settings",
@@ -524,7 +524,118 @@
   "settingsSecurityDesc": "PIN, password & access settings",
   "settingsAbout": "About",
   "settingsAboutDesc": "App version & legal information",
-
+  "settingsPosBehavior": "POS Behavior",
+  "settingsPosBehaviorDesc": "Sales, returns, inventory & loyalty settings",
+  "settingsSaved": "Settings saved successfully",
+  "settingsErrorLoading": "Failed to load settings",
+  "settingsErrorSaving": "Failed to save settings",
+  "save": "Save",
+  "retry": "Retry",
+  "settingsTaxLabel": "Tax Label",
+  "settingsTaxLabelHint": "e.g. VAT, GST, Sales Tax",
+  "settingsTaxRate": "Tax Rate (%)",
+  "settingsTaxRateHint": "e.g. 5.0",
+  "settingsTaxNumber": "Tax Registration Number",
+  "settingsTaxNumberHint": "Your tax identification number",
+  "settingsTaxPricesIncludeTax": "Prices Include Tax",
+  "settingsPricesIncludeTax": "Prices Include Tax",
+  "settingsPricesIncludeTaxDesc": "Product prices already include tax",
+  "settingsTaxConfig": "Tax Configuration",
+  "settingsReceiptContent": "Content",
+  "settingsReceiptHeader": "Receipt Header",
+  "settingsReceiptHeaderHint": "Text at the top of receipt",
+  "settingsReceiptFooter": "Receipt Footer",
+  "settingsReceiptFooterHint": "Text at the bottom of receipt",
+  "settingsReceiptDisplay": "Display Options",
+  "settingsReceiptShowLogo": "Show Logo",
+  "settingsReceiptShowTax": "Show Tax Breakdown",
+  "settingsReceiptShowAddress": "Show Store Address",
+  "settingsReceiptShowPhone": "Show Phone Number",
+  "settingsReceiptShowDate": "Show Date & Time",
+  "settingsReceiptShowCashier": "Show Cashier Name",
+  "settingsReceiptShowBarcode": "Show Barcode",
+  "settingsReceiptFormat": "Format",
+  "settingsReceiptPaperSize": "Paper Size",
+  "settingsReceiptFontSize": "Font Size",
+  "settingsReceiptLanguage": "Receipt Language",
+  "settingsFontSmall": "Small",
+  "settingsFontNormal": "Normal",
+  "settingsFontLarge": "Large",
+  "settingsLangArabic": "Arabic",
+  "settingsLangEnglish": "English",
+  "settingsLangBoth": "Both",
+  "settingsPosSales": "Sales",
+  "settingsPosDefaultSaleType": "Default Sale Type",
+  "settingsPosDineIn": "Dine-in",
+  "settingsPosTakeaway": "Takeaway",
+  "settingsPosDelivery": "Delivery",
+  "settingsPosRequireCustomer": "Require Customer for Sale",
+  "settingsPosAutoPrint": "Auto-print Receipt",
+  "settingsPosEnableTips": "Enable Tips",
+  "settingsPosHoldOrders": "Allow Hold Orders",
+  "settingsPosOpenPriceItems": "Allow Open Price Items",
+  "settingsPosQuickAdd": "Quick-add Mode",
+  "settingsPosBarcodeSound": "Barcode Scan Sound",
+  "settingsPosKitchenDisplay": "Send to Kitchen Display",
+  "settingsPosReturns": "Returns & Refunds",
+  "settingsPosEnableRefunds": "Enable Refunds",
+  "settingsPosEnableExchanges": "Enable Exchanges",
+  "settingsPosManagerRefund": "Manager Approval for Refunds",
+  "settingsPosManagerRefundDesc": "Require manager PIN for refund transactions",
+  "settingsPosManagerDiscount": "Manager Approval for Discounts",
+  "settingsPosManagerDiscountDesc": "Require manager PIN when applying discounts",
+  "settingsPosLimits": "Limits",
+  "settingsPosMaxDiscount": "Max Discount (%)",
+  "settingsPosSessionTimeout": "Session Timeout (minutes)",
+  "settingsPosInventory": "Inventory",
+  "settingsPosTrackInventory": "Track Inventory",
+  "settingsPosAllowNegStock": "Allow Negative Stock",
+  "settingsPosBatchTracking": "Batch Tracking",
+  "settingsPosExpiryTracking": "Expiry Date Tracking",
+  "settingsPosAutoDeductIngredients": "Auto-deduct Ingredients",
+  "settingsPosLowStockAlert": "Low Stock Alert",
+  "settingsPosLowStockThreshold": "Low Stock Threshold",
+  "settingsPosLoyalty": "Loyalty Program",
+  "settingsPosEnableLoyalty": "Enable Loyalty Points",
+  "settingsPosLoyaltyPointsPerCurrency": "Points per Currency Unit",
+  "settingsPosLoyaltyRedemptionValue": "Point Redemption Value",
+  "settingsPosCustomerDisplay": "Customer Display",
+  "settingsPosEnableCustomerDisplay": "Enable Customer Display",
+  "settingsPosCustomerDisplayMessage": "Welcome Message",
+  "settingsPosTheme": "Display Theme",
+  "settingsPosThemeLight": "Light",
+  "settingsPosThemeDark": "Dark",
+  "settingsPosThemeSystem": "System",
+  "settingsWorkingOpen": "Open",
+  "settingsWorkingClose": "Close",
+  "settingsWorkingBreakStart": "Break Start",
+  "settingsWorkingBreakEnd": "Break End",
+  "settingsProfileCurrency": "Currency",
+  "settingsProfileCurrencyCode": "Currency Code",
+  "settingsProfileCurrencyCodeHint": "e.g. OMR, SAR, USD",
+  "settingsProfileCurrencySymbol": "Currency Symbol",
+  "settingsProfileCurrencySymbolHint": "e.g. ر.ع, ﷼, $",
+  "settingsProfileFormatting": "Number Formatting",
+  "settingsProfileDecimalPlaces": "Decimal Places",
+  "settingsProfileThousandSep": "Thousand Separator",
+  "settingsProfileDecimalSep": "Decimal Separator",
+  "settingsAboutVersion": "Version {version}",
+  "@settingsAboutVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+  "settingsAboutTerms": "Terms of Service",
+  "settingsAboutPrivacy": "Privacy Policy",
+  "settingsAboutLicenses": "Open Source Licenses",
+  "settingsAboutSupport": "Support",
+  "settingsAboutSupportDesc": "Need help? Contact our support team",
+  "settingsAboutCopyright": "© {year} Thawani. All rights reserved.",
+  "@settingsAboutCopyright": {
+    "placeholders": {
+      "year": {"type": "String"}
+    }
+  },
   "sidebarSync": "Sync",
   "sidebarBackup": "Backup",
   "sidebarCompanionApp": "Companion App",
@@ -532,7 +643,6 @@
   "sidebarAccessibility": "Accessibility",
   "sidebarNiceToHave": "Nice-to-Have",
   "sidebarLocalization": "Localization",
-
   "syncTitle": "Data Sync",
   "syncPush": "Push Changes",
   "syncPull": "Pull Changes",
@@ -542,7 +652,6 @@
   "syncResolve": "Resolve Conflict",
   "syncLastSynced": "Last synced",
   "syncPending": "Pending changes",
-
   "backupTitle": "Backup & Recovery",
   "backupCreate": "Create Backup",
   "backupRestore": "Restore Backup",
@@ -552,14 +661,12 @@
   "backupVerify": "Verify Backup",
   "backupDelete": "Delete Backup",
   "backupHistory": "Backup History",
-
   "companionTitle": "Companion App",
   "companionQuickStats": "Quick Stats",
   "companionSessions": "Active Sessions",
   "companionPreferences": "Preferences",
   "companionQuickActions": "Quick Actions",
   "companionSummary": "Mobile Summary",
-
   "autoUpdateTitle": "Auto Update",
   "autoUpdateCheck": "Check for Updates",
   "autoUpdateChangelog": "Changelog",
@@ -567,7 +674,6 @@
   "autoUpdateCurrentVersion": "Current Version",
   "autoUpdateAvailable": "Update Available",
   "autoUpdateUpToDate": "You're up to date",
-
   "accessibilityTitle": "Accessibility",
   "accessibilityPreferences": "Preferences",
   "accessibilityShortcuts": "Keyboard Shortcuts",
@@ -575,7 +681,122 @@
   "accessibilityFontSize": "Font Size",
   "accessibilityHighContrast": "High Contrast",
   "accessibilityScreenReader": "Screen Reader Support",
+  "accessibilityScreenReaderDesc": "Optimize for screen reader software",
+  "accessibilityVisual": "Visual",
+  "accessibilityHighContrastDesc": "Increase contrast for better visibility",
+  "accessibilityColorBlind": "Color Blind Mode",
+  "accessibilityReducedMotion": "Reduced Motion",
+  "accessibilityReducedMotionDesc": "Minimize animations and transitions",
+  "accessibilityAudio": "Audio",
+  "accessibilityAudioFeedback": "Audio Feedback",
+  "accessibilityVolume": "Volume",
+  "accessibilityLargeTouchTargets": "Large Touch Targets",
+  "accessibilityLargeTouchTargetsDesc": "Increase button and control sizes",
+  "accessibilityVisibleFocus": "Visible Focus Indicators",
+  "accessibilityVisibleFocusDesc": "Show clear focus outlines on controls",
+  "accessibilityShortcutsPOS": "POS",
+  "accessibilityShortcutsGlobal": "Global",
+  "accessibilityShortcutsNavigation": "Navigation",
+  "accessibilityNavScreens": "Alt + 1-9 — Switch screens",
+  "accessibilityNavTab": "Tab / Shift+Tab — Move focus",
+  "accessibilityNavCancel": "Esc — Cancel / Close",
+  "accessibilityNavConfirm": "Enter — Confirm",
+  "companionNoActiveSessions": "No active companion sessions",
+  "companionConnectionGuide": "Connection Guide",
+  "companionConnectionGuideDesc": "Open the companion app on your mobile device and scan the QR code or enter the session ID to connect.",
+  "companionSessionActive": "Session Active",
+  "companionSessionId": "Session ID",
+  "companionSessionStarted": "Started",
+  "companionTodayRevenue": "Today's Revenue",
+  "companionOrders": "Orders",
+  "companionTransactions": "Transactions",
+  "companionPendingOrders": "Pending Orders",
+  "companionActiveStaff": "Active Staff",
+  "companionLowStock": "Low Stock Items",
+  "companionLastSync": "Last Sync",
 
+  "companionDashboard": "Dashboard",
+  "companionSales": "Sales",
+  "companionActiveOrdersTitle": "Active Orders",
+  "companionInventory": "Inventory",
+  "companionStaff": "Staff",
+  "companionStoreStatus": "Store Status",
+  "companionStoreOpen": "Store is Open",
+  "companionStoreClosed": "Store is Closed",
+  "companionRevenue": "Revenue",
+  "companionToday": "Today",
+  "companionYesterday": "Yesterday",
+  "companionThisWeek": "This Week",
+  "companionThisMonth": "This Month",
+  "companionSalesPeriod": "Sales Period",
+  "companionTotalRevenue": "Total Revenue",
+  "companionTotalOrders": "Total Orders",
+  "companionAvgOrderValue": "Avg. Order Value",
+  "companionDailyBreakdown": "Daily Breakdown",
+  "companionNoActiveOrders": "No active orders",
+  "companionCustomer": "Customer",
+  "companionItems": "Items",
+  "companionRetry": "Retry",
+  "companionOutOfStock": "Out of Stock",
+  "companionNoAlerts": "No inventory alerts",
+  "companionStock": "Stock",
+  "companionMinStock": "Min",
+  "companionNoActiveStaff": "No active staff",
+  "companionClockedIn": "Clocked in",
+
+  "autoUpdateSettings": "Update Settings",
+  "autoUpdateEnable": "Auto Update",
+  "autoUpdateEnableDesc": "Automatically download and install updates",
+  "autoUpdateMaintenanceWindow": "Maintenance Window",
+  "autoUpdateWindowStart": "Start Hour",
+  "autoUpdateWindowEnd": "End Hour",
+  "autoUpdateWindowDesc": "Updates will be installed during this window",
+  "autoUpdateChannel": "Update Channel",
+  "autoUpdateChannelStable": "Stable",
+  "autoUpdateChannelBeta": "Beta",
+  "autoUpdateChannelAlpha": "Alpha",
+  "autoUpdateRequired": "Required Update",
+  "autoUpdateForceDesc": "This update is required and must be installed to continue.",
+  "autoUpdateWhatsNew": "What's New",
+  "autoUpdateRemindLater": "Remind Later",
+  "autoUpdateSchedule": "Schedule",
+  "autoUpdateInstallNow": "Install Now",
+  "autoUpdateFailed": "Update Failed",
+  "autoUpdateComplete": "Update Complete",
+  "autoUpdateInstalling": "Installing Update",
+  "autoUpdateRestart": "Restart Now",
+  "autoUpdateStepBackup": "Backup",
+  "autoUpdateStepDownload": "Download",
+  "autoUpdateStepVerify": "Verify",
+  "autoUpdateStepInstall": "Install",
+  "autoUpdateStepMigrate": "Migrate",
+  "autoUpdateStepComplete": "Complete",
+  "autoUpdateProgress": "Update Progress",
+  "autoUpdateNewVersion": "New version available: {version}",
+  "@autoUpdateNewVersion": {
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+
+  "accessibilityShortcutReference": "Shortcut Reference",
+  "accessibilityShortcutHint": "Press Ctrl+/ to show shortcuts",
+  "accessibilityReassignShortcut": "Reassign Shortcut",
+  "accessibilityReassignDesc": "Press the new key combination",
+  "accessibilityPressKey": "Press a key combination...",
+  "accessibilityCurrentShortcut": "Current",
+  "accessibilityShortcutReserved": "This shortcut is reserved",
+  "accessibilityShortcutConflict": "Conflicts with: {name}",
+  "@accessibilityShortcutConflict": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+
+  "settingsSaved": "Settings saved",
+  "close": "Close",
+  "cancel": "Cancel",
+  "save": "Save",
   "niceToHaveTitle": "Nice-to-Have Features",
   "niceToHaveWishlist": "Wishlist",
   "niceToHaveAppointments": "Appointments",
@@ -583,14 +804,12 @@
   "niceToHaveGiftRegistry": "Gift Registry",
   "niceToHaveSignage": "Digital Signage",
   "niceToHaveGamification": "Gamification",
-
   "localizationTitle": "Localization",
   "localizationLanguage": "Language",
   "localizationTranslations": "Translations",
   "localizationOverrides": "Translation Overrides",
   "localizationExport": "Export Translations",
   "localizationImport": "Import Translations",
-
   "zatcaTitle": "ZATCA Compliance",
   "zatcaInvoices": "ZATCA Invoices",
   "zatcaCertificates": "Certificates",
@@ -603,7 +822,6 @@
   "zatcaQrCode": "QR Code",
   "zatcaInvoiceHash": "Invoice Hash",
   "zatcaBatchSubmit": "Submit Batch",
-
   "hardwareTitle": "Hardware",
   "hardwareConfigurations": "Hardware Configurations",
   "hardwareEventLog": "Event Log",
@@ -618,7 +836,6 @@
   "hardwareCustomerDisplay": "Customer Display",
   "hardwareConnected": "Connected",
   "hardwareDisconnected": "Disconnected",
-
   "posCustomizationTitle": "POS Customization",
   "posCustomizationLayout": "Layout Settings",
   "posCustomizationReceipt": "Receipt Templates",
@@ -630,7 +847,6 @@
   "posCustomizationShowPrices": "Show Prices",
   "posCustomizationReceiptHeader": "Receipt Header",
   "posCustomizationReceiptFooter": "Receipt Footer",
-
   "bakeryTitle": "Bakery",
   "bakeryRecipes": "Recipes",
   "bakeryCustomCakeOrders": "Custom Cake Orders",
@@ -642,7 +858,6 @@
   "bakeryCakeShape": "Cake Shape",
   "bakeryDecorations": "Decorations",
   "bakeryPickupDate": "Pickup Date",
-
   "electronicsTitle": "Electronics",
   "electronicsImeiRecords": "IMEI Records",
   "electronicsRepairJobs": "Repair Jobs",
@@ -653,7 +868,6 @@
   "electronicsConditionGrade": "Condition Grade",
   "electronicsWarrantyStatus": "Warranty Status",
   "electronicsSerialNumber": "Serial Number",
-
   "floristTitle": "Florist",
   "floristArrangements": "Arrangements",
   "floristFreshnessTracking": "Freshness Tracking",
@@ -665,7 +879,6 @@
   "floristDisposeDate": "Dispose Date",
   "floristDeliveryDay": "Delivery Day",
   "floristFrequency": "Frequency",
-
   "jewelryTitle": "Jewelry",
   "jewelryProductDetails": "Product Details",
   "jewelryMetalRates": "Metal Rates",
@@ -678,7 +891,6 @@
   "jewelryMakingCharges": "Making Charges",
   "jewelryStoneCarat": "Stone Weight (ct)",
   "jewelryCertificateNumber": "Certificate Number",
-
   "pharmacyTitle": "Pharmacy",
   "pharmacyDrugSchedules": "Drug Schedules",
   "pharmacyPrescriptions": "Prescriptions",
@@ -690,7 +902,6 @@
   "pharmacyRequiresPrescription": "Requires Prescription",
   "pharmacyActiveIngredient": "Active Ingredient",
   "pharmacyDosageForm": "Dosage Form",
-
   "restaurantTitle": "Restaurant",
   "restaurantTables": "Tables",
   "restaurantReservations": "Reservations",
@@ -704,7 +915,6 @@
   "restaurantPartySize": "Party Size",
   "restaurantFireTicket": "Fire Ticket",
   "restaurantCompleteTicket": "Complete Ticket",
-
   "accountingTitle": "Accounting Integration",
   "accountingConnect": "Connect Provider",
   "accountingDisconnect": "Disconnect",
@@ -714,7 +924,6 @@
   "accountingProvider": "Provider",
   "accountingLastSync": "Last Sync",
   "accountingExportHistory": "Export History",
-
   "labelsTitle": "Labels",
   "labelsTemplates": "Label Templates",
   "labelsPrint": "Print Labels",
@@ -722,11 +931,9 @@
   "labelsSelectProducts": "Select Products",
   "labelsPreview": "Preview",
   "labelsQuantity": "Quantity",
-
   "create": "Create",
   "deleteConfirmation": "Are you sure you want to delete",
   "deleted": "deleted",
-
   "staffMembers": "Staff Members",
   "staffMember": "Staff Member",
   "staffAddMember": "Add Member",
@@ -810,7 +1017,13 @@
   "staffPermissions": "Permissions",
   "staffSystemRole": "System",
   "staffPermissionCount": "{count} {count, plural, =1{permission} other{permissions}}",
-  "@staffPermissionCount": { "placeholders": { "count": { "type": "int" } } },
+  "@staffPermissionCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "staffRoleCreated": "Role created successfully",
   "staffRoleUpdated": "Role updated successfully",
   "staffNoRoles": "No roles configured yet",
@@ -840,7 +1053,6 @@
   "staffOrdersWithCommission": "Orders with Commission",
   "staffAveragePerOrder": "Average per Order",
   "staffEffectiveRate": "Effective Rate",
-
   "subscriptionMySubscription": "My Subscription",
   "subscriptionCurrentPlan": "Current Plan",
   "subscriptionPlanUsage": "Plan Usage",
@@ -871,15 +1083,23 @@
   "subscriptionSubscribeTo": "Subscribe to {planName}?",
   "@subscriptionSubscribeTo": {
     "placeholders": {
-      "planName": {"type": "String"}
+      "planName": {
+        "type": "String"
+      }
     }
   },
   "subscriptionSubscribeConfirm": "You will be subscribed to {planName} on a {billingCycle} basis.\n\nPrice: {price} SAR/{billingCycle}",
   "@subscriptionSubscribeConfirm": {
     "placeholders": {
-      "planName": {"type": "String"},
-      "billingCycle": {"type": "String"},
-      "price": {"type": "String"}
+      "planName": {
+        "type": "String"
+      },
+      "billingCycle": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      }
     }
   },
   "subscriptionSubscribe": "Subscribe",
@@ -887,39 +1107,53 @@
   "subscriptionFreeTrialDays": "{days}-day free trial",
   "@subscriptionFreeTrialDays": {
     "placeholders": {
-      "days": {"type": "int"}
+      "days": {
+        "type": "int"
+      }
     }
   },
   "subscriptionBilling": "Billing: {cycle}",
   "@subscriptionBilling": {
     "placeholders": {
-      "cycle": {"type": "String"}
+      "cycle": {
+        "type": "String"
+      }
     }
   },
   "subscriptionPeriod": "Period: {start} — {end}",
   "@subscriptionPeriod": {
     "placeholders": {
-      "start": {"type": "String"},
-      "end": {"type": "String"}
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
     }
   },
   "subscriptionTrialEnds": "Trial ends: {date}",
   "@subscriptionTrialEnds": {
     "placeholders": {
-      "date": {"type": "String"}
+      "date": {
+        "type": "String"
+      }
     }
   },
   "subscriptionGracePeriodEnds": "Grace period ends: {date}",
   "@subscriptionGracePeriodEnds": {
     "placeholders": {
-      "date": {"type": "String"}
+      "date": {
+        "type": "String"
+      }
     }
   },
   "subscriptionGracePeriodActive": "Grace Period Active",
   "subscriptionGracePeriodDaysLeft": "{days} day(s) remaining in grace period. Renew to avoid losing access.",
   "@subscriptionGracePeriodDaysLeft": {
     "placeholders": {
-      "days": {"type": "int"}
+      "days": {
+        "type": "int"
+      }
     }
   },
   "subscriptionGracePeriodEndsToday": "Grace period ends today. Renew immediately.",
@@ -947,8 +1181,12 @@
   "subscriptionPageOf": "Page {current} of {total}",
   "@subscriptionPageOf": {
     "placeholders": {
-      "current": {"type": "int"},
-      "total": {"type": "int"}
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "subscriptionAll": "All",
@@ -971,27 +1209,39 @@
   "subscriptionAddAddon": "Add {name}?",
   "@subscriptionAddAddon": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "subscriptionAddAddonConfirm": "This will add {name} to your subscription.\n\nCost: {price} SAR/{cycle}",
   "@subscriptionAddAddonConfirm": {
     "placeholders": {
-      "name": {"type": "String"},
-      "price": {"type": "String"},
-      "cycle": {"type": "String"}
+      "name": {
+        "type": "String"
+      },
+      "price": {
+        "type": "String"
+      },
+      "cycle": {
+        "type": "String"
+      }
     }
   },
   "subscriptionRemoveAddon": "Remove {name}?",
   "@subscriptionRemoveAddon": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "subscriptionRemoveAddonConfirm": "Are you sure you want to remove {name} from your subscription?",
   "@subscriptionRemoveAddonConfirm": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "subscriptionKeep": "Keep",
@@ -1001,7 +1251,9 @@
   "subscriptionRenews": "Renews: {date}",
   "@subscriptionRenews": {
     "placeholders": {
-      "date": {"type": "String"}
+      "date": {
+        "type": "String"
+      }
     }
   },
   "subscriptionComingSoon": "Feature coming soon",
@@ -1011,20 +1263,25 @@
   "subscriptionLimitReachedMessage": "You've reached the {limit} limit on your current plan.",
   "@subscriptionLimitReachedMessage": {
     "placeholders": {
-      "limit": {"type": "String"}
+      "limit": {
+        "type": "String"
+      }
     }
   },
   "subscriptionUpgrade": "Upgrade Plan",
   "subscriptionUsageOf": "{current} of {max}",
   "@subscriptionUsageOf": {
     "placeholders": {
-      "current": {"type": "int"},
-      "max": {"type": "int"}
+      "current": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
     }
   },
   "subscriptionSyncFailed": "Failed to sync subscription data",
   "subscriptionEntitlementsCached": "Using cached subscription data",
-
   "reportsInventory": "Inventory Reports",
   "reportsFinancial": "Financial Reports",
   "reportsCustomers": "Customer Reports",
@@ -1041,7 +1298,6 @@
   "reportsProductMargin": "Product Margin",
   "reportsExport": "Export Report",
   "reportsScheduled": "Scheduled Reports",
-
   "staffLinkedAccount": "Linked User Account",
   "staffLinkUser": "Link User Account",
   "staffUnlink": "Unlink",
@@ -1053,7 +1309,6 @@
   "staffLinkNoUsers": "No available users to link",
   "staffLinkSelectUser": "Select User Account",
   "staffLinkName": "Name",
-
   "layoutBuilder": "Layout Builder",
   "layoutBuilderSubtitle": "Design custom POS screen layouts",
   "layoutTemplates": "Layout Templates",
@@ -1091,7 +1346,6 @@
   "layoutCloneNameHint": "e.g. Copy of Main Layout",
   "layoutCancel": "Cancel",
   "layoutCreate": "Create",
-
   "customizationTitle": "POS Customization",
   "customizationTheme": "Theme",
   "customizationReceipt": "Receipt",
@@ -1154,7 +1408,6 @@
   "labelPrintSuccess": "Labels sent to printer successfully",
   "labelNoHistory": "No Print History",
   "labelNoHistorySubtitle": "Print history will appear here after printing labels",
-
   "marketplaceTitle": "Template Marketplace",
   "marketplaceSubtitle": "Browse and install community templates",
   "marketplaceMyPurchases": "My Purchases",
@@ -1166,7 +1419,7 @@
   "marketplaceNoListings": "No templates found",
   "marketplaceNoListingsSubtitle": "Try adjusting your search or filters.",
   "marketplacePage": "Page",
-  "marketplaceCurrency": "OMR",
+  "marketplaceCurrency": "SAR",
   "marketplaceListingDetail": "Template Detail",
   "marketplaceDescription": "Description",
   "marketplaceOwned": "Owned",
@@ -1208,7 +1461,6 @@
   "marketplacePaymentMethod": "Payment Method",
   "marketplacePaidAt": "Paid At",
   "marketplacePaid": "Paid",
-
   "hwDeviceSetup": "Device Setup",
   "hwEditDevice": "Edit Device",
   "hwAddDevice": "Add Device",
@@ -1244,7 +1496,6 @@
   "hwAutoDetect": "Auto Detect",
   "hwNetworkScan": "Network Scan",
   "hwUpdate": "Update",
-
   "cashManagement": "Cash Management",
   "cashCount": "Cash Count",
   "sessionHistory": "Session History",
@@ -1267,7 +1518,6 @@
   "amountSar": "Amount (SAR)",
   "reason": "Reason",
   "record": "Record",
-
   "expenses": "Expenses",
   "newExpense": "New Expense",
   "noExpensesRecorded": "No expenses recorded",
@@ -1275,7 +1525,6 @@
   "recordExpense": "Record Expense",
   "category": "Category",
   "descriptionOptional": "Description (optional)",
-
   "giftCards": "Gift Cards",
   "issue": "Issue",
   "checkBalance": "Check Balance",
@@ -1296,12 +1545,10 @@
   "initial": "Initial",
   "balance": "Balance",
   "recipient": "Recipient",
-  "active": "Active",
   "redeemed": "Redeemed",
   "expired": "Expired",
   "deactivated": "Deactivated",
   "unknown": "Unknown",
-
   "financialReconciliation": "Financial Reconciliation",
   "printReport": "Print Report",
   "exportPdf": "Export PDF",
@@ -1321,7 +1568,6 @@
   "confirmReconciliationTitle": "Confirm Reconciliation",
   "confirmReconciliationMessage": "This will finalize the reconciliation for today. All cash sessions will be marked as reconciled.",
   "reconciliationConfirmed": "Reconciliation confirmed",
-
   "dailySummary": "Daily Summary",
   "print": "Print",
   "grossRevenue": "Gross Revenue",
@@ -1335,7 +1581,6 @@
   "sessionDetails": "Session Details",
   "noSessions": "No sessions",
   "na": "N/A",
-
   "paymentCash": "Cash",
   "paymentMada": "mada",
   "paymentVisa": "Visa",
@@ -1343,7 +1588,6 @@
   "paymentStoreCredit": "Store Credit",
   "paymentGiftCard": "Gift Card",
   "paymentMobilePayment": "Mobile Payment",
-
   "offlineChangesSynced": "Offline — changes will sync when connected",
   "syncing": "Syncing...",
   "syncError": "Sync error — will retry",
@@ -1351,10 +1595,11 @@
   "pendingCount": "{count} pending",
   "@pendingCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
-
   "conflictResolution": "Conflict Resolution",
   "open": "Open",
   "resolved": "Resolved",
@@ -1367,10 +1612,11 @@
   "moreFields": "+ {count} more fields",
   "@moreFields": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
-
   "connectingToServer": "Connecting to server...",
   "checkingConnectivity": "Checking connectivity...",
   "noInternetPrompt": "No internet connection. Please connect and try again.",
@@ -1379,7 +1625,9 @@
   "syncCompleteRecords": "Sync complete — {count} records loaded",
   "@syncCompleteRecords": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "syncFailed": "Sync Failed",
@@ -1387,7 +1635,6 @@
   "settingUp": "Setting Up",
   "skipOffline": "Skip (Offline)",
   "initialSync": "Initial Sync",
-
   "adminTerminals": "Admin — Terminals",
   "adminTerminalsSubtitle": "Manage all POS terminals & SoftPOS configuration",
   "addTerminal": "Add Terminal",
@@ -1400,7 +1647,6 @@
   "toggleStatusTitle": "Toggle Status",
   "terminalStatusUpdated": "Terminal status updated.",
   "searchTerminals": "Search terminals...",
-
   "softpos": "SoftPOS",
   "softposEnabled": "SoftPOS Enabled",
   "softposOff": "SoftPOS Off",
@@ -1420,20 +1666,17 @@
   "softposDeactivated": "SoftPOS deactivated.",
   "softposActivationFailed": "Activation failed. Ensure NearPay TID and acquirer are set.",
   "softposActive": "SoftPOS Active",
-
   "acquirerHala": "HALA",
   "acquirerRajhi": "Al Rajhi Bank",
   "acquirerSnb": "SNB",
   "acquirerGeidea": "Geidea",
   "acquirerOther": "Other",
-
   "deviceHardware": "Device Hardware",
   "deviceHardwareSubtitle": "Physical device details",
   "deviceModel": "Device Model",
   "osVersion": "OS Version",
   "nfcCapable": "NFC Capable",
   "serialNumber": "Serial Number",
-
   "feeConfiguration": "Fee Configuration",
   "feeConfigSubtitle": "Transaction fee rates for this terminal",
   "feeProfile": "Fee Profile",
@@ -1445,16 +1688,13 @@
   "feeFlatPerTxn": "Flat Fee / Txn",
   "wameedMargin": "Wameed Margin %",
   "feesUpdated": "Fees updated.",
-
   "settlementDetails": "Settlement Details",
   "settlementSubtitle": "Bank and settlement cycle configuration",
   "settlementCycle": "Settlement Cycle",
   "settlementBankName": "Bank Name",
   "settlementIban": "IBAN",
-
   "adminNotes": "Admin Notes",
   "adminNotesSubtitle": "Internal notes (not visible to providers)",
-
   "terminalInformation": "Terminal Information",
   "storeId": "Store ID",
   "allSoftpos": "All SoftPOS",
@@ -1462,9 +1702,7 @@
   "allAcquirers": "All Acquirers",
   "pending": "Pending",
   "suspended": "Suspended",
-  "deactivated": "Deactivated",
   "clearFilters": "Clear",
-
   "posCashierTitle": "POS Terminal",
   "posStartShift": "Start Your Shift",
   "posStartShiftDesc": "Open a cash session to start processing transactions",
@@ -1472,7 +1710,7 @@
   "posCloseShift": "Close Shift",
   "posEndShift": "End Shift",
   "posOpeningCash": "Opening Cash",
-  "posClosingCash": "Closing Cash Count",
+  "posClosingCash": "Closing Cash",
   "posSelectRegister": "Select register",
   "posNoRegisters": "No registers found. Please add one first.",
   "posCountOpeningCash": "Count your opening cash to begin",
@@ -1497,7 +1735,7 @@
   "posHold": "Hold",
   "posPay": "Pay",
   "posClearCart": "Clear Cart",
-  "posClearCartConfirm": "All items will be removed.",
+  "posClearCartConfirm": "Clear Cart?",
   "posSearchProducts": "Search products or scan barcode",
   "posNoProducts": "No products found",
   "posNoProductsHint": "Try a different search or check your catalog.",
@@ -1546,5 +1784,1227 @@
   "posCancel": "Cancel",
   "posClose": "Close",
   "posDelete": "Delete",
-  "posConfirm": "Confirm"
+  "posConfirm": "Confirm",
+  "posLabelOptional": "Label (optional)",
+  "posLabelHint": "e.g. Table 5, Mr. Ahmed",
+  "posHeldCart": "Held Cart",
+  "posVoidLastItem": "Void Last Item?",
+  "posRemoveItemFromCart": "Remove \"{name}\" from cart?",
+  "@posRemoveItemFromCart": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "posRemove": "Remove",
+  "posStartYourShift": "Start Your Shift",
+  "posOpenShiftDescription": "Open a cash session to start processing transactions",
+  "posNotes": "Notes",
+  "posVoidLast": "Void Last",
+  "posSessionNumber": "Session #{id}",
+  "@posSessionNumber": {
+    "placeholders": {
+      "id": {}
+    }
+  },
+  "posSearchProductsHint": "Search products or scan barcode (F2)",
+  "posNoProductsFound": "No products found",
+  "posNoProductsSubtitle": "Try a different search or check your catalog.",
+  "posTapProductsToAdd": "Tap products to add them",
+  "posTax15": "Tax (15%)",
+  "posClearCartMessage": "All items will be removed.",
+  "posClear": "Clear",
+  "posWalkInCustomer": "Walk-in Customer",
+  "posCartDiscount": "Cart Discount",
+  "posSubtotalAmount": "Subtotal: SAR {amount}",
+  "@posSubtotalAmount": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "posDiscountAmountSar": "Discount Amount (SAR)",
+  "posApply": "Apply",
+  "posOrderNotes": "Order Notes",
+  "posNotesHint": "Add notes for this order...",
+  "posSave": "Save",
+  "posCashier": "Cashier",
+  "@posProductAdded": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "posReviewSessionSummary": "Review your session summary",
+  "posSessionSummaryZReport": "Session Summary (Z-Report)",
+  "posClosingCashCount": "Closing Cash Count",
+  "posInvalidClosingCash": "Please enter a valid closing cash amount",
+  "posSearchCustomerHint": "Search by name, phone, loyalty code...",
+  "posNoCustomersFound": "No customers found",
+  "posDeleteHeldCartMessage": "This will permanently remove \"{label}\".",
+  "@posDeleteHeldCartMessage": {
+    "placeholders": {
+      "label": {}
+    }
+  },
+  "posItems": "items",
+  "posJustNow": "Just now",
+  "posMinutesAgo": "{count}m ago",
+  "@posMinutesAgo": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "posHoursAgo": "{count}h ago",
+  "@posHoursAgo": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "posDaysAgo": "{count}d ago",
+  "@posDaysAgo": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "posOpenShiftDialog": "Open Shift",
+  "posRegister": "Register",
+  "posPleaseSelectRegister": "Please select a register",
+  "posNoRegistersFound": "No registers found. Please add one first.",
+  "@posTransactionNumber": {
+    "placeholders": {
+      "number": {}
+    }
+  },
+  "posChangeGiven": "Change: SAR {amount}",
+  "@posChangeGiven": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "posTotalAmountSar": "Total: SAR {amount}",
+  "@posTotalAmountSar": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "posTotalNotCovered": "Total paid does not cover the outstanding amount",
+  "posReceiptTransactionNumber": "Receipt / Transaction number",
+  "posFind": "Find",
+  "posCustomerReturn": "Customer return",
+  "posEnterTransactionNumber": "Enter a transaction/receipt number",
+  "posFailedToFindTransaction": "Failed to find transaction: {error}",
+  "@posFailedToFindTransaction": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "posReturnFailed": "Return failed: {error}",
+  "@posReturnFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "posEnterReceiptNumber": "Enter a receipt number to find the transaction",
+  "posOpenPosSession": "Open POS Session",
+  "posOpenPosSessionSubtitle": "Enter the opening cash amount for this session.",
+  "posOpeningCashLabel": "Opening Cash",
+  "posOpenSession": "Open Session",
+  "posPosSessionOpened": "POS session opened.",
+  "posCloseSession": "Close Session",
+  "posCloseSessionSubtitle": "Enter the closing cash amount to close this session.",
+  "posSessionClosed": "Session closed.",
+  "posSessions": "POS Sessions",
+  "posSessionHistory": "Session history",
+  "posStatus": "Status",
+  "posOpenedAt": "Opened At",
+  "posClosedAt": "Closed At",
+  "posOpeningFloat": "Opening Float",
+  "posClosingCashCol": "Closing Cash",
+  "posVariance": "Variance",
+  "posActions": "Actions",
+  "posOpen": "Open",
+  "posClosed": "Closed",
+  "posNoSessionsFound": "No sessions found",
+  "posOpenSessionSubtitle": "Open a POS session to start processing transactions.",
+  "posEditTerminal": "Edit Terminal",
+  "posAddTerminal": "Add Terminal",
+  "posLoadingTerminal": "Loading terminal...",
+  "posTerminalInformation": "Terminal Information",
+  "posBasicRegisterDetails": "Basic register details",
+  "posTerminalName": "Terminal Name",
+  "posTerminalNameHint": "e.g. Cashier 1, Front Desk",
+  "posDeviceId": "Device ID",
+  "posDeviceIdHint": "Unique identifier for this device",
+  "posPlatform": "Platform",
+  "posSelectPlatform": "Select platform",
+  "posAppVersion": "App Version (optional)",
+  "posAppVersionHint": "e.g. 1.0.0",
+  "posSaveChanges": "Save Changes",
+  "posCreateTerminal": "Create Terminal",
+  "posPlatformWindows": "Windows",
+  "posPlatformMacOS": "macOS",
+  "posPlatformIOS": "iOS",
+  "posPlatformAndroid": "Android",
+  "posDeleteTerminal": "Delete Terminal?",
+  "posDeleteTerminalMessage": "Deleting \"{name}\" cannot be undone.",
+  "@posDeleteTerminalMessage": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "posDeactivateTerminal": "Deactivate Terminal?",
+  "posActivateTerminal": "Activate Terminal?",
+  "posDeactivateActivateMessage": "{action} \"{name}\"?",
+  "@posDeactivateActivateMessage": {
+    "placeholders": {
+      "action": {},
+      "name": {}
+    }
+  },
+  "posDeactivate": "Deactivate",
+  "posActivate": "Activate",
+  "posTerminalDeleted": "Terminal \"{name}\" deleted.",
+  "@posTerminalDeleted": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "posFailedDeleteTerminal": "Failed to delete terminal.",
+  "posTerminalStatusChanged": "Terminal \"{name}\" {status}.",
+  "@posTerminalStatusChanged": {
+    "placeholders": {
+      "name": {},
+      "status": {}
+    }
+  },
+  "posFailedUpdateTerminalStatus": "Failed to update terminal status.",
+  "posActivated": "activated",
+  "posDeactivated": "deactivated",
+  "posTerminals": "Terminals",
+  "posManageTerminals": "Manage POS terminal registers",
+  "posSearchTerminals": "Search terminals...",
+  "posName": "Name",
+  "posDeviceIdCol": "Device ID",
+  "posPlatformCol": "Platform",
+  "posVersionCol": "Version",
+  "posStatusCol": "Status",
+  "posLastSeen": "Last Seen",
+  "posActionsCol": "Actions",
+  "posEdit": "Edit",
+  "posToggleStatus": "Toggle Status",
+  "posNoTerminalsFound": "No terminals found",
+  "posNoTerminalsSubtitle": "Add your first POS terminal to get started.",
+  "posOff": "Off",
+  "posOn": "On",
+  "posActive": "Active",
+  "posInactive": "Inactive",
+  "posPlatformUnknown": "Unknown",
+  "posCashManagement": "Cash Management",
+  "posCashCount": "Cash Count",
+  "posSessionHistoryTab": "Session History",
+  "posActiveSession": "Active Session",
+  "posOpened": "Opened: {time}",
+  "@posOpened": {
+    "placeholders": {
+      "time": {}
+    }
+  },
+  "posTerminal": "Terminal",
+  "posCashIn": "Cash In",
+  "posCashOut": "Cash Out",
+  "posNoActiveCashSession": "No Active Cash Session",
+  "posOpenCashSessionDescription": "Open a session to start accepting cash payments",
+  "posOpenCashSession": "Open Cash Session",
+  "posTotalCount": "Total Count",
+  "posNoSessionsYet": "No sessions yet",
+  "posOpenCashSessionDialog": "Open Cash Session",
+  "posOpeningFloatSar": "Opening Float (SAR)",
+  "posCloseCashSession": "Close Cash Session",
+  "posCountedCash": "Counted Cash: {amount} SAR",
+  "@posCountedCash": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "posNotesOptional": "Notes (optional)",
+  "posAmountSar": "Amount (SAR)",
+  "posReason": "Reason",
+  "posReasonPettyCash": "Petty Cash",
+  "posReasonSupplierPayment": "Supplier Payment",
+  "posReasonBankDeposit": "Bank Deposit",
+  "posReasonTips": "Tips",
+  "posReasonChangeReplenish": "Change Replenish",
+  "posReasonOther": "Other",
+  "posRecord": "Record",
+  "posQuickAmountPlus": "+{amount}",
+  "@posQuickAmountPlus": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "loginTitle": "Wameed POS",
+  "loginSubtitle": "Sign in to your account",
+  "loginEmail": "Email",
+  "loginEmailHint": "Enter your email",
+  "loginPassword": "Password",
+  "loginPasswordHint": "Enter your password",
+  "loginSigningIn": "Signing in...",
+  "loginSignIn": "Sign In",
+  "loginNoAccount": "Don't have an account? ",
+  "loginRegister": "Register",
+  "loginAdmin": "Admin",
+  "loginCashier": "Cashier",
+  "pinLoginEnterPin": "Enter PIN",
+  "pinLoginSubtitle": "Quick switch — enter your 4-digit PIN",
+  "pinLoginNoStoreSession": "No store session found. Please sign in with email.",
+  "pinLoginSignInWithEmail": "Sign in with email instead",
+  "securityError": "Error: {message}",
+  "@securityError": {
+    "placeholders": {
+      "message": {}
+    }
+  },
+  "securityNA": "N/A",
+  "conflictMoreFields": "+ {count} more fields",
+  "@conflictMoreFields": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "notifCategoryOrder": "Order",
+  "notifCategoryInventory": "Inventory",
+  "notifCategoryPromotion": "Promotion",
+  "notifCategorySystem": "System",
+  "notifCategoryPayment": "Payment",
+  "notifCategoryStaff": "Staff",
+  "stockReorderPointHint": "e.g. 10",
+  "stockMaxLevelHint": "e.g. 100",
+  "stockNoLowStockProducts": "No products are below reorder point.",
+  "stockLevelsEmptySubtitle": "Stock levels will appear once products receive inventory.",
+  "stockAdjustReasonDamaged": "Damaged",
+  "stockAdjustReasonExpired": "Expired",
+  "stockAdjustReasonLost": "Lost",
+  "stockAdjustReasonCorrection": "Correction",
+  "stockAdjustReasonReturned": "Returned",
+  "stockAdjustReasonMiscounted": "Miscounted",
+  "stockAdjustReasonTheft": "Theft",
+  "stockAdjustReasonOther": "Other",
+  "stockTransferApproveConfirm": "Approve this transfer? This will deduct stock from the source store.",
+  "stockTransferReceiveConfirm": "Mark this transfer as received? Stock will be added to the destination store.",
+  "stockTransferCancelConfirm": "Cancel this transfer?",
+  "stockTransferActionTitle": "{action} Transfer",
+  "@stockTransferActionTitle": {
+    "placeholders": {
+      "action": {}
+    }
+  },
+  "stockTransferActionSuccess": "Transfer {action}d successfully.",
+  "@stockTransferActionSuccess": {
+    "placeholders": {
+      "action": {}
+    }
+  },
+  "purchaseOrderCancelConfirm": "Cancel order \"{reference}\"?",
+  "@purchaseOrderCancelConfirm": {
+    "placeholders": {
+      "reference": {}
+    }
+  },
+  "goodsReceiptConfirm": "Are you sure you want to confirm receipt \"{reference}\"?\n\nThis will update stock levels and cannot be undone.",
+  "@goodsReceiptConfirm": {
+    "placeholders": {
+      "reference": {}
+    }
+  },
+  "recipeDeleteConfirm": "Delete recipe \"{name}\"?",
+  "@recipeDeleteConfirm": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "sarCurrency": "SAR",
+  "amountWithSar": "SAR {amount}",
+  "@amountWithSar": {
+    "placeholders": {
+      "amount": {}
+    }
+  },
+  "authAlreadyHaveAccount": "Already have an account?",
+  "authBusinessInformation": "Business Information",
+  "authBusinessNameHint": "e.g. My Company",
+  "authBusinessNameOptional": "Business Name (optional)",
+  "authConfirmPassword": "Confirm Password",
+  "authConfirmPasswordHint": "Re-enter your password",
+  "authCountry": "Country",
+  "authCountryOman": "Oman",
+  "authCountrySaudiArabia": "Saudi Arabia",
+  "authCreateAccount": "Create Account",
+  "authCreatingAccount": "Creating Account...",
+  "authEmail": "Email",
+  "authEmailHint": "Enter your email",
+  "authFullName": "Full Name",
+  "authFullNameHint": "e.g. Ahmed Al-Said",
+  "authPassword": "Password",
+  "authPasswordHintMinChars": "Minimum 8 characters",
+  "authPasswordsDoNotMatch": "Passwords do not match",
+  "authPersonalInformation": "Personal Information",
+  "authPhoneOptional": "Phone (optional)",
+  "authSecurity": "Security",
+  "authSignIn": "Sign In",
+  "authStoreNameHint": "e.g. Main Branch",
+  "authStoreNameOptional": "Store Name (optional)",
+  "cashMgmtActiveSession": "Active Session",
+  "cashMgmtAmountSar": "Amount (SAR)",
+  "cashMgmtCashCount": "Cash Count",
+  "cashMgmtCashIn": "Cash In",
+  "cashMgmtCashOut": "Cash Out",
+  "cashMgmtCloseCashSession": "Close Cash Session",
+  "cashMgmtCloseSession": "Close Session",
+  "cashMgmtCountedCash": "Counted Cash",
+  "cashMgmtExpectedCash": "Expected Cash",
+  "cashMgmtNA": "N/A",
+  "cashMgmtNoActiveSession": "No Active Session",
+  "cashMgmtNoActiveSessionSubtitle": "Open a cash session to start processing transactions",
+  "cashMgmtNoSessions": "No sessions",
+  "cashMgmtNotesOptional": "Notes (optional)",
+  "cashMgmtOpenCashSession": "Open Cash Session",
+  "cashMgmtOpenSession": "Open Session",
+  "cashMgmtOpened": "Opened",
+  "cashMgmtOpeningFloat": "Opening Float",
+  "cashMgmtOpeningFloatSar": "Opening Float (SAR)",
+  "cashMgmtReason": "Reason",
+  "cashMgmtRecord": "Record",
+  "cashMgmtSessionHistory": "Session History",
+  "cashMgmtTerminal": "Terminal",
+  "cashMgmtTitle": "Cash Management",
+  "cashMgmtTotalCount": "Total Count",
+  "commonActive": "Active",
+  "commonCancel": "Cancel",
+  "commonCreate": "Create",
+  "commonDate": "Date",
+  "commonDelete": "Delete",
+  "commonEdit": "Edit",
+  "commonInactive": "Inactive",
+  "commonInvalid": "Invalid",
+  "commonNo": "No",
+  "commonNotes": "Notes",
+  "commonNotesOptional": "Notes (optional)",
+  "commonOk": "OK",
+  "commonRefresh": "Refresh",
+  "commonRequired": "Required",
+  "commonRetry": "Retry",
+  "commonSave": "Save",
+  "commonStatus": "Status",
+  "commonType": "Type",
+  "customersNoCustomersFound": "No customers found",
+  "customersPoints": "{points} pts",
+  "@customersPoints": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "hardwareConfiguredDevices": "Configured Devices",
+  "hardwareManagement": "Hardware Management",
+  "hardwareNoDevicesConfigured": "No devices configured",
+  "hardwareRecentEvents": "Recent Events",
+  "hardwareSelectDeviceToTest": "Select a device to test",
+  "hardwareSupportedHardware": "Supported Hardware",
+  "hardwareTestingDevice": "Testing device...",
+  "inventoryAddItemLabel": "Add Item",
+  "inventoryAdjustmentCreated": "Stock adjustment created",
+  "inventoryAll": "All",
+  "inventoryApprove": "Approve",
+  "inventoryAvgCost": "Avg. Cost",
+  "inventoryCancelOrder": "Cancel Order",
+  "inventoryCancelPOTitle": "Cancel Purchase Order?",
+  "inventoryCancelled": "Cancelled",
+  "inventoryConfirmReceiptTitle": "Confirm Receipt",
+  "inventoryCreateReceipt": "Create Receipt",
+  "inventoryDamage": "Damage",
+  "inventoryDecrease": "Decrease",
+  "inventoryDeleteRecipeTitle": "Delete Recipe?",
+  "inventoryDraft": "Draft",
+  "inventoryDraftReceiptCreated": "Draft receipt created",
+  "inventoryExpected": "Expected",
+  "inventoryFilterByStatus": "Filter by status",
+  "inventoryFromStore": "From Store",
+  "inventoryFullyReceived": "Fully Received",
+  "inventoryGoodsReceipts": "Goods Receipts",
+  "inventoryGoodsReceiptsSubtitle": "Receive and verify incoming stock shipments",
+  "inventoryIncrease": "Increase",
+  "inventoryIngredient": "Ingredient",
+  "inventoryIngredientProduct": "Ingredient Product",
+  "inventoryInvalidNumber": "Invalid number",
+  "inventoryItemLabel": "Item {index}",
+  "@inventoryItemLabel": {
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "inventoryLineItems": "Line Items",
+  "inventoryLowStock": "Low Stock",
+  "inventoryManagement": "Inventory Management",
+  "inventoryMaxStockLevelOptional": "Max Stock Level (optional)",
+  "inventoryNewAdjustment": "New Adjustment",
+  "inventoryNewGoodsReceipt": "New Goods Receipt",
+  "inventoryNewPO": "New PO",
+  "inventoryNewReceipt": "New Receipt",
+  "inventoryNewRecipe": "New Recipe",
+  "inventoryNewStockAdjustment": "New Stock Adjustment",
+  "inventoryNewTransfer": "New Transfer",
+  "inventoryNoAdjustments": "No adjustments",
+  "inventoryNoGoodsReceipts": "No goods receipts",
+  "inventoryNoGoodsReceiptsHint": "Create a goods receipt to track incoming stock.",
+  "inventoryNoMovements": "No movements",
+  "inventoryNoPOs": "No purchase orders",
+  "inventoryNoRecipes": "No recipes",
+  "inventoryNoRecipesHint": "Create a recipe to track product ingredients.",
+  "inventoryNoStockLevels": "No stock levels",
+  "inventoryNoTransfers": "No transfers",
+  "inventoryNotesHint": "Add notes...",
+  "inventoryOutputProduct": "Output Product",
+  "inventoryPOCancelled": "Purchase order cancelled",
+  "inventoryPOCreatedMsg": "Purchase order created",
+  "inventoryPOSent": "Purchase order sent",
+  "inventoryPartiallyReceived": "Partially Received",
+  "inventoryProduct": "Product",
+  "inventoryPurchaseOrders": "Purchase Orders",
+  "inventoryPurchaseOrdersSubtitle": "Create and manage supplier purchase orders",
+  "inventoryQuantity": "Quantity",
+  "inventoryReceiptConfirmedMsg": "Receipt confirmed",
+  "inventoryReceive": "Receive",
+  "inventoryReceiveAction": "Receive",
+  "inventoryReceived": "Received",
+  "inventoryRecipeCreated": "Recipe created",
+  "inventoryRecipeDeleted": "Recipe deleted",
+  "inventoryRecipes": "Recipes",
+  "inventoryRecipesSubtitle": "Define product ingredients and yields",
+  "inventoryRef": "Ref",
+  "inventoryReference": "Reference",
+  "inventoryReferenceNumber": "Reference Number",
+  "inventoryReferenceNumberHint": "e.g. GR-001",
+  "inventoryReferenceOptional": "Reference (optional)",
+  "inventoryReorderPoint": "Reorder Point",
+  "inventoryReorderPointSaved": "Reorder point saved",
+  "inventoryReorderPt": "Reorder Pt.",
+  "inventoryReserved": "Reserved",
+  "inventorySaving": "Saving...",
+  "inventorySearchByProduct": "Search by product...",
+  "inventorySendAction": "Send",
+  "inventorySent": "Sent",
+  "inventorySetReorderPoint": "Set Reorder Point",
+  "inventoryStockAdjustments": "Stock Adjustments",
+  "inventoryStockAdjustmentsSubtitle": "Record inventory corrections and write-offs",
+  "inventoryStockLevels": "Stock Levels",
+  "inventoryStockLevelsSubtitle": "Monitor current inventory across all products",
+  "inventoryStockMovements": "Stock Movements",
+  "inventoryStockMovementsSubtitle": "Track all inventory ins and outs",
+  "inventoryStockTransfers": "Stock Transfers",
+  "inventoryStockTransfersSubtitle": "Move stock between stores or warehouses",
+  "inventorySupplier": "Supplier",
+  "inventoryToStore": "To Store",
+  "inventoryTotal": "Total",
+  "inventoryTotalCost": "Total Cost",
+  "inventoryTransferCreated": "Transfer created",
+  "inventoryUnitCostLabel": "Unit Cost",
+  "inventoryWastePercent": "Waste %",
+  "inventoryYield": "Yield",
+  "inventoryYieldQuantity": "Yield Quantity",
+  "notificationsCategories": "Notification Categories",
+  "notificationsClearQuietHours": "Clear Quiet Hours",
+  "notificationsInApp": "In-App",
+  "notificationsInventoryAlerts": "Inventory Alerts",
+  "notificationsInventoryAlertsSubtitle": "Low stock and reorder notifications",
+  "notificationsMarkAllAsRead": "Mark all as read",
+  "notificationsMarkRead": "Mark as read",
+  "notificationsNoNotifications": "No notifications",
+  "notificationsNotSet": "Not set",
+  "notificationsOrderUpdates": "Order Updates",
+  "notificationsOrderUpdatesSubtitle": "Receive alerts for new orders and status changes",
+  "notificationsPreferences": "Notification Preferences",
+  "notificationsPromotions": "Promotions",
+  "notificationsPromotionsSubtitle": "Promotion activity and coupon usage alerts",
+  "notificationsPush": "Push",
+  "notificationsQuietEnd": "End",
+  "notificationsQuietHours": "Quiet Hours",
+  "notificationsQuietHoursSubtitle": "Pause notifications during these hours",
+  "notificationsQuietStart": "Start",
+  "notificationsSave": "Save",
+  "notificationsSystemUpdates": "System Updates",
+  "notificationsSystemUpdatesSubtitle": "App updates and maintenance notices",
+  "notificationsTitle": "Notifications",
+  "notificationsUnread": "{count} unread",
+  "@notificationsUnread": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationsSelected": "{count} selected",
+  "@notificationsSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationsBulkDelete": "Delete Selected",
+  "notificationsPriority": "Priority:",
+  "notifPriorityUrgent": "Urgent",
+  "notifPriorityHigh": "High",
+  "notifPriorityNormal": "Normal",
+  "notifPriorityLow": "Low",
+  "notificationsGeneralSettings": "General Settings",
+  "notificationsSoundEnabled": "Sound Enabled",
+  "notificationsSoundEnabledSubtitle": "Play sounds for incoming notifications",
+  "notificationsEmailDigest": "Email Digest",
+  "notificationsEmailDigestSubtitle": "Receive a summary of notifications by email",
+  "notificationsDigestNone": "None",
+  "notificationsDigestDaily": "Daily",
+  "notificationsDigestWeekly": "Weekly",
+  "notifSchedulesTitle": "Scheduled Notifications",
+  "notifSchedulesEmpty": "No scheduled notifications",
+  "notifScheduleCreate": "Create Schedule",
+  "notifScheduleTitle": "Title",
+  "notifScheduleMessage": "Message",
+  "notifScheduleCategory": "Category",
+  "notifSchedulePriority": "Priority",
+  "notifScheduleChannel": "Channel",
+  "notifScheduleDateTime": "Scheduled Date & Time",
+  "notifScheduleCancel": "Cancel",
+  "notifScheduleCreateBtn": "Create",
+  "notifScheduleCancelBtn": "Cancel Schedule",
+  "notifScheduleCancelled": "Cancelled",
+  "notifScheduleSent": "Sent",
+  "notifSchedulePending": "Pending",
+  "notifSoundConfigsTitle": "Sound Settings",
+  "notifSoundConfigsEmpty": "No sound configurations",
+  "notifSoundConfigDefault": "Default sound",
+  "notifDeliveryLogsTitle": "Delivery Logs",
+  "notifDeliveryLogsEmpty": "No delivery logs",
+  "notifDeliveryLogsChannel": "Channel:",
+  "notifDeliveryLogsStatus": "Status:",
+  "notifDeliveryLogsNotifId": "Notification",
+  "notifDeliveryLogsRetries": "Retries",
+  "notifStatsTotal": "Total",
+  "notifStatsUnread": "Unread",
+  "notifStatsRead": "Read",
+  "notifStatsDeliveryRate": "Delivery Rate",
+  "notifStatsByCategory": "By Category",
+  "notifStatsByChannel": "By Channel",
+  "ordersAll": "All",
+  "ordersCancelled": "Cancelled",
+  "ordersCompleted": "Completed",
+  "ordersConfirmed": "Confirmed",
+  "ordersDate": "Date",
+  "ordersDelivered": "Delivered",
+  "ordersDispatched": "Dispatched",
+  "ordersFilterByStatus": "Filter by status",
+  "ordersNew": "New",
+  "ordersNoOrders": "No orders",
+  "ordersNoOrdersSubtitle": "Orders will appear here once transactions are made.",
+  "ordersOrderNumberCol": "Order #",
+  "ordersPickedUp": "Picked Up",
+  "ordersPreparing": "Preparing",
+  "ordersReady": "Ready",
+  "ordersSearchByNumber": "Search by order number...",
+  "ordersSource": "Source",
+  "ordersStatus": "Status",
+  "ordersSubtotal": "Subtotal",
+  "ordersTax": "Tax",
+  "ordersTotal": "Total",
+  "ordersVoid": "Void",
+  "ordersVoidConfirm": "Are you sure you want to void order {orderNumber}?",
+  "@ordersVoidConfirm": {
+    "placeholders": {
+      "orderNumber": {
+        "type": "String"
+      }
+    }
+  },
+  "ordersVoidOrder": "Void Order",
+  "ordersVoided": "Voided",
+  "ordersVoided2": "Order voided",
+  "posChangeAmount": "Change: SAR {amount}",
+  "@posChangeAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "posEnterReceiptNumberHint": "Enter a receipt number to find the transaction",
+  "posHeldCartFallback": "Held Cart",
+  "posHeldCartItemCount": "{count} items • {time}",
+  "@posHeldCartItemCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "posPaymentNotCover": "Payment does not cover the total amount",
+  "posSelectRegisterError": "Please select a register",
+  "posTotalAmount": "Total: SAR {amount}",
+  "@posTotalAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "posTransactionLookupFailed": "Transaction lookup failed: {error}",
+  "@posTransactionLookupFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "promotionsActiveCoupons": "Active Coupons",
+  "promotionsAnalytics": "Promotion Analytics",
+  "promotionsAvgDiscountPerUse": "Avg. Discount Per Use",
+  "promotionsCouponRedemptionRate": "Coupon Redemption Rate",
+  "promotionsPerformance": "Performance",
+  "promotionsTotalCoupons": "Total Coupons",
+  "promotionsTotalDiscount": "Total Discount",
+  "promotionsTotalUses": "Total Uses",
+  "promotionsUniqueCustomers": "Unique Customers",
+  "securityAuditLogs": "Audit Logs",
+  "securityDevices": "Devices",
+  "securityLoginFailed": "Failed",
+  "securityLoginSuccess": "Success",
+  "securityLogins": "Logins",
+  "securityNoLoginAttempts": "No login attempts",
+  "securityPolicy": "Policy",
+  "securityTitle": "Security",
+  "securityError": "Security error: {message}",
+  "@securityError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "securityNA": "N/A",
+  "securityOverview": "Overview",
+  "securitySessions": "Sessions",
+  "securityIncidents": "Incidents",
+  "securityActive": "Active",
+  "securityInactive": "Inactive",
+  "securityEnded": "Ended",
+  "securityResolved": "Resolved",
+  "securityUnresolved": "Unresolved",
+  "securityNoDevices": "No devices registered",
+  "securityNoSessions": "No sessions",
+  "securityNoIncidents": "No incidents",
+  "securityEndSession": "End Session",
+  "securityEndAllSessions": "End All Sessions",
+  "securityStarted": "Started",
+  "securityLastActivity": "Last Activity",
+  "securityResolve": "Resolve",
+  "securityResolveIncident": "Resolve Incident",
+  "securityResolutionNotes": "Resolution Notes",
+  "securityType": "Type",
+  "securityIP": "IP",
+  "securityHardware": "Hardware",
+  "securityOS": "OS",
+  "securityApp": "App",
+  "securityDeviceType": "Device Type",
+  "securityRemoteWipeRequested": "Remote wipe requested",
+  "securityDeactivate": "Deactivate",
+  "securityRemoteWipe": "Remote Wipe",
+  "securityRecentActivity": "Recent Activity",
+  "securityActiveDevices": "Active Devices",
+  "securityActiveSessions": "Active Sessions",
+  "securityUnresolvedIncidents": "Unresolved Incidents",
+  "securityFailedLoginsToday": "Failed Logins Today",
+  "securityTotalAuditLogs": "Audit Logs",
+  "securityLockedOutUsers": "Locked Out",
+  "securityPinAuth": "PIN & Authentication",
+  "securityLockoutSessions": "Lockout & Sessions",
+  "securityPinOverrides": "PIN Overrides",
+  "securityPasswordDevice": "Password & Device",
+  "securityIpRestrictions": "IP Restrictions",
+  "securityPinLength": "PIN Length",
+  "securityDigits": "digits",
+  "securityDays": "days",
+  "securityMinutes": "min",
+  "securityPinExpiryDays": "PIN Expiry",
+  "securityRequireUniquePins": "Require Unique PINs",
+  "securityBiometricEnabled": "Biometric Enabled",
+  "securityRequire2fa": "Require 2FA for Owner",
+  "securityAutoLock": "Auto-lock",
+  "securityMaxFailedAttempts": "Max Failed Attempts",
+  "securityLockoutDuration": "Lockout Duration",
+  "securitySessionMaxHours": "Session Max Hours",
+  "securityForceLogoutOnRoleChange": "Force Logout on Role Change",
+  "securityPinOverrideVoid": "PIN Override: Void",
+  "securityPinOverrideReturn": "PIN Override: Return",
+  "securityPinOverrideDiscount": "PIN Override: Discount",
+  "securityDiscountThreshold": "Discount Override Threshold",
+  "securityPasswordExpiryDays": "Password Expiry",
+  "securityRequireStrongPassword": "Require Strong Password",
+  "securityMaxDevices": "Max Devices",
+  "securityAuditRetentionDays": "Audit Retention",
+  "securityIpRestrictionEnabled": "IP Restriction Enabled",
+  "securityAllowedIpRanges": "Allowed IP Ranges:",
+  "sessionsCloseSession": "Close Session",
+  "sessionsCloseSessionDescription": "Enter the closing cash amount to close this session.",
+  "sessionsClosingCash": "Closing Cash",
+  "sessionsColCashier": "Cashier",
+  "sessionsColOpenedAt": "Opened At",
+  "sessionsColOpeningCash": "Opening Cash",
+  "sessionsColRegister": "Register",
+  "sessionsColSessionId": "Session ID",
+  "sessionsColStatus": "Status",
+  "sessionsColTotalSales": "Total Sales",
+  "sessionsColTransactions": "Transactions",
+  "sessionsHistory": "Session history",
+  "sessionsNoSessions": "No sessions found",
+  "sessionsNoSessionsSubtitle": "Open a POS session to start processing transactions.",
+  "sessionsOpenPosSession": "Open POS Session",
+  "sessionsOpenSession": "Open Session",
+  "sessionsOpenSessionDescription": "Enter the opening cash amount for this session.",
+  "sessionsOpeningCash": "Opening Cash",
+  "sessionsSessionClosed": "Session closed.",
+  "sessionsSessionOpened": "POS session opened.",
+  "sessionsSessionPlural": "sessions",
+  "sessionsSessionSingular": "session",
+  "sessionsStatusClosed": "Closed",
+  "sessionsStatusOpen": "Open",
+  "sessionsTitle": "POS Sessions",
+  "syncAll": "All",
+  "syncCloudData": "Cloud Data",
+  "syncConflictResolution": "Conflict Resolution",
+  "syncLocalData": "Local Data",
+  "syncNoConflicts": "No conflicts",
+  "syncNoUnresolvedConflicts": "No unresolved conflicts",
+  "syncOpen": "Open",
+  "syncRecordsSynced": "{count} records synced",
+  "@syncRecordsSynced": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "syncResolved": "Resolved",
+  "syncSyncProgress": "Syncing {operation}...",
+  "@syncSyncProgress": {
+    "placeholders": {
+      "operation": {
+        "type": "String"
+      }
+    }
+  },
+  "syncUnresolvedConflicts": "Unresolved Conflicts ({total})",
+  "@syncUnresolvedConflicts": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "syncUseCloud": "Use Cloud",
+  "syncUseLocal": "Use Local",
+  "termFormAddTitle": "Add Terminal",
+  "termFormCreate": "Create Terminal",
+  "termFormCreateFailed": "Failed to create terminal",
+  "termFormCreated": "Terminal created successfully",
+  "termFormDeviceIdHint": "Unique identifier for this device",
+  "termFormDeviceIdLabel": "Device ID",
+  "termFormDeviceIdRequired": "Device ID is required",
+  "termFormEditTitle": "Edit Terminal",
+  "termFormLoading": "Loading terminal...",
+  "termFormNameHint": "e.g. Cashier 1, Front Desk",
+  "termFormNameLabel": "Terminal Name",
+  "termFormNameRequired": "Terminal name is required",
+  "termFormPlatformHint": "Select platform",
+  "termFormPlatformLabel": "Platform",
+  "termFormPlatformRequired": "Platform is required",
+  "termFormSaveChanges": "Save Changes",
+  "termFormSectionSubtitle": "Basic register details",
+  "termFormSectionTitle": "Terminal Information",
+  "termFormUpdateFailed": "Failed to update terminal",
+  "termFormUpdated": "Terminal updated successfully",
+  "termFormVersionHint": "e.g. 1.0.0",
+  "termFormVersionLabel": "App Version (optional)",
+  "terminalsActivate": "Activate",
+  "terminalsActivatedLower": "activated",
+  "terminalsActive": "Active",
+  "terminalsAdd": "Add Terminal",
+  "terminalsColDeviceId": "Device ID",
+  "terminalsColLastSync": "Last Sync",
+  "terminalsColName": "Name",
+  "terminalsColOnline": "Online",
+  "terminalsColPlatform": "Platform",
+  "terminalsColSoftpos": "SoftPOS",
+  "terminalsColStatus": "Status",
+  "terminalsColVersion": "Version",
+  "terminalsDeactivate": "Deactivate",
+  "terminalsDeactivatedLower": "deactivated",
+  "terminalsDeleteFailed": "Failed to delete terminal.",
+  "terminalsDeleteMessage": "Deleting \"{name}\" will remove all its data. This cannot be undone.",
+  "@terminalsDeleteMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "terminalsDeleteTitle": "Delete Terminal?",
+  "terminalsDeleted": "Terminal \"{name}\" deleted.",
+  "@terminalsDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "terminalsEdit": "Edit",
+  "terminalsInactive": "Inactive",
+  "terminalsNever": "Never",
+  "terminalsNoTerminals": "No terminals found",
+  "terminalsNoTerminalsSubtitle": "Add your first POS terminal to get started.",
+  "terminalsOff": "Off",
+  "terminalsOn": "On",
+  "terminalsSearch": "Search terminals...",
+  "terminalsSubtitle": "Manage POS terminal registers",
+  "terminalsTitle": "Terminals",
+  "terminalsToggleFailed": "Failed to update terminal status.",
+  "terminalsToggleMessage": "{action} terminal \"{name}\"?",
+  "@terminalsToggleMessage": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "terminalsToggleStatus": "Toggle Status",
+  "terminalsToggleTitle": "{action} Terminal?",
+  "@terminalsToggleTitle": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "terminalsToggled": "Terminal \"{name}\" {actionPast}.",
+  "@terminalsToggled": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "actionPast": {
+        "type": "String"
+      }
+    }
+  },
+  "zatcaEInvoicing": "ZATCA e-Invoicing",
+  "zatcaRecentInvoices": "Recent Invoices",
+  "zatcaViewAll": "View all ({total})",
+  "@zatcaViewAll": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "appBarLanguage": "Language",
+  "appBarTheme": "Theme",
+  "appBarDarkMode": "Dark Mode",
+  "appBarLightMode": "Light Mode",
+  "appBarSystemTheme": "System",
+  "logoutConfirm": "Are you sure you want to logout?",
+  "logoutTitle": "Logout",
+  "sidebarDashboard": "Dashboard",
+  "sidebarPosTerminal": "POS Terminal",
+  "sidebarTerminals": "Terminals",
+  "sidebarSessions": "Sessions",
+  "sidebarOrders": "Orders",
+  "sidebarPayments": "Payments",
+  "sidebarProducts": "Products",
+  "sidebarCategories": "Categories",
+  "sidebarSuppliers": "Suppliers",
+  "sidebarInventory": "Inventory",
+  "sidebarLabels": "Labels",
+  "sidebarCustomers": "Customers",
+  "sidebarStaffMembers": "Staff Members",
+  "sidebarRolesPermissions": "Roles & Permissions",
+  "sidebarAttendance": "Attendance",
+  "sidebarShiftSchedule": "Shift Schedule",
+  "sidebarBranches": "Branches",
+  "sidebarAccounting": "Accounting",
+  "sidebarReports": "Reports",
+  "sidebarSalesSummary": "Sales Summary",
+  "sidebarHourlySales": "Hourly Sales",
+  "sidebarProductPerformance": "Product Performance",
+  "sidebarCategoryBreakdown": "Category Breakdown",
+  "sidebarPaymentMethods": "Payment Methods",
+  "sidebarStaffPerformance": "Staff Performance",
+  "sidebarInventoryReports": "Inventory Reports",
+  "sidebarFinancialReports": "Financial Reports",
+  "sidebarCustomerReports": "Customer Reports",
+  "sidebarPromotions": "Promotions",
+  "sidebarThawaniPay": "Thawani Pay",
+  "sidebarDelivery": "Delivery",
+  "sidebarZatca": "ZATCA",
+  "sidebarHardware": "Hardware",
+  "sidebarRestaurant": "Restaurant",
+  "sidebarBakery": "Bakery",
+  "sidebarPharmacy": "Pharmacy",
+  "sidebarElectronics": "Electronics",
+  "sidebarFlorist": "Florist",
+  "sidebarJewelry": "Jewelry",
+  "sidebarPosCustomize": "POS Customize",
+  "sidebarLayoutBuilder": "Layout Builder",
+  "sidebarMarketplace": "Marketplace",
+  "sidebarReceiptTemplates": "Receipt Templates",
+  "sidebarCfdThemes": "CFD Themes",
+  "sidebarNotifications": "Notifications",
+  "sidebarSecurity": "Security",
+  "sidebarSettings": "Settings",
+  "sidebarSubscription": "Subscription",
+  "sidebarOnboarding": "Onboarding",
+  "sidebarAdminStores": "Admin Stores",
+  "sidebarSupport": "Support",
+  "sidebarTickets": "Tickets",
+  "sidebarKnowledgeBase": "Knowledge Base",
+  "sidebarStoreName": "Store Name",
+  "dailySummaryTitle": "Daily Summary",
+  "dailySummaryPrint": "Print",
+  "dailySummaryGrossRevenue": "Gross Revenue",
+  "dailySummaryExpenses": "Expenses",
+  "dailySummaryNetRevenue": "Net Revenue",
+  "dailySummaryTransactions": "Transactions",
+  "dailySummaryRevenueByMethod": "Revenue by Payment Method",
+  "dailySummaryNoPayments": "No payments today",
+  "dailySummaryCashVariance": "Cash Variance",
+  "dailySummaryWithinTolerance": "Within tolerance",
+  "dailySummaryNeedsReview": "Needs review",
+  "dailySummarySessions": "Sessions: {count}",
+  "@dailySummarySessions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dailySummaryHourlyActivity": "Hourly Activity",
+  "dailySummarySessionDetails": "Session Details",
+  "dailySummaryNoSessions": "No sessions",
+  "dailySummaryFloat": "Float: {amount} SAR",
+  "@dailySummaryFloat": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dailySummaryTerminal": "Terminal: {id}",
+  "@dailySummaryTerminal": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "finReconTitle": "Financial Reconciliation",
+  "finReconRevenueSummary": "Revenue Summary",
+  "finReconTotalRevenue": "Total Revenue",
+  "finReconTransactions": "Transactions",
+  "finReconAvgTransaction": "Avg Transaction",
+  "finReconPaymentMethods": "Payment Methods",
+  "finReconNoPayments": "No payments recorded",
+  "finReconCashRecon": "Cash Reconciliation",
+  "finReconExpectedCash": "Expected Cash",
+  "finReconActualCash": "Actual Cash",
+  "finReconVariance": "Variance",
+  "finReconSessionsClosed": "Sessions: {count} closed",
+  "@finReconSessionsClosed": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "finReconExpenses": "Expenses",
+  "finReconNoExpenses": "No expenses",
+  "finReconPhysicalCashCount": "Physical Cash Count",
+  "finReconCountedTotal": "Counted Total",
+  "finReconPrintReport": "Print Report",
+  "finReconExportPdf": "Export PDF",
+  "finReconConfirmRecon": "Confirm Reconciliation",
+  "finReconConfirmMessage": "This will finalize the reconciliation for today. All cash sessions will be marked as reconciled.",
+  "finReconConfirmed": "Reconciliation confirmed",
+  "commonConfirm": "Confirm",
+  "customerReportsTitle": "Customer Reports",
+  "customerReportsTopCustomers": "Top Customers",
+  "customerReportsRetention": "Retention",
+
+  "receiptTemplatesTitle": "Receipt Templates",
+  "receiptTemplatesEmpty": "No Receipt Templates",
+  "receiptTemplatesEmptySubtitle": "No receipt layout templates are available for your plan.",
+  "receiptTemplateDetail": "Receipt Template Details",
+  "receiptTemplateBilingual": "Bilingual",
+  "receiptTemplateActive": "Active",
+  "receiptTemplateHeaderConfig": "Header Configuration",
+  "receiptTemplateBodyConfig": "Body Configuration",
+  "receiptTemplateFooterConfig": "Footer Configuration",
+
+  "cfdThemesTitle": "Customer Facing Display Themes",
+  "cfdThemesEmpty": "No CFD Themes",
+  "cfdThemesEmptySubtitle": "No customer facing display themes are available for your plan.",
+  "cfdThemeDetail": "CFD Theme Details",
+  "cfdThemeActive": "Active",
+  "cfdThemeColorPalette": "Color Palette",
+  "cfdThemeDisplaySettings": "Display Settings",
+  "cfdThemeCartLayout": "Cart Layout",
+  "cfdThemeIdleLayout": "Idle Layout",
+  "cfdThemeFontFamily": "Font Family",
+  "cfdThemeAnimation": "Animation Style",
+  "cfdThemeTransition": "Transition Duration",
+  "cfdThemeThankYou": "Thank You Animation",
+  "cfdThemeShowLogo": "Show Store Logo",
+  "cfdThemeShowTotal": "Show Running Total",
+  "cfdThemeBackground": "Background",
+  "cfdThemeText": "Text",
+  "cfdThemeAccent": "Accent",
+  "cfdThemePreviewTitle": "Theme Preview",
+  "cfdThemePreviewButton": "Sample Button",
+  "cfdThemeYes": "Yes",
+  "cfdThemeNo": "No",
+
+  "templatePreviewButton": "Preview",
+  "templatePreviewTitle": "Preview",
+  "templatePreviewRefresh": "Refresh Preview",
+
+  "labelLayoutTemplatesTitle": "Label Layout Templates",
+  "labelLayoutTemplatesEmpty": "No Label Templates",
+  "labelLayoutTemplatesEmptySubtitle": "Label layout templates will appear here once created by admin",
+  "labelLayoutTemplateDetail": "Label Template Detail",
+  "labelLayoutTemplateActive": "Active",
+  "labelLayoutTemplateBordered": "Bordered",
+  "labelLayoutTemplateDimensions": "Dimensions & Font",
+  "labelLayoutTemplateWidth": "Width",
+  "labelLayoutTemplateHeight": "Height",
+  "labelLayoutTemplateFontFamily": "Font Family",
+  "labelLayoutTemplateFontSize": "Font Size",
+  "labelLayoutTemplateBackground": "Background",
+  "labelLayoutTemplateBarcodeSettings": "Barcode Settings",
+  "labelLayoutTemplateBarcodeType": "Barcode Type",
+  "labelLayoutTemplateShowNumber": "Show Number",
+  "labelLayoutTemplateYes": "Yes",
+  "labelLayoutTemplateNo": "No",
+  "labelLayoutTemplateFieldLayout": "Field Layout",
+  "labelLayoutTemplateSimpleLayout": "Simple stacked layout",
+  "labelLayoutTemplateNoFields": "No fields configured",
+  "sidebarLabelLayoutTemplates": "Label Templates",
+
+  "commonUpdate": "Update",
+  "commonClose": "Close",
+
+  "supplierTitle": "Suppliers",
+  "supplierNew": "New Supplier",
+  "supplierEdit": "Edit Supplier",
+  "supplierName": "Name",
+  "supplierNameHint": "Enter supplier name",
+  "supplierPhone": "Phone",
+  "supplierEmail": "Email",
+  "supplierWebsite": "Website",
+  "supplierAddress": "Address",
+  "supplierAddressLine": "Address",
+  "supplierAddressHint": "Enter address",
+  "supplierCity": "City",
+  "supplierCountry": "Country",
+  "supplierPostalCode": "Postal Code",
+  "supplierContactPerson": "Contact Person",
+  "supplierContactPersonHint": "Primary contact name",
+  "supplierCategory": "Category",
+  "supplierCategoryHint": "e.g. Raw Materials, Packaging",
+  "supplierTaxNumber": "Tax Number",
+  "supplierPaymentTerms": "Payment Terms",
+  "supplierPaymentTermsHint": "e.g. Net 30",
+  "supplierCreditLimit": "Credit Limit",
+  "supplierOutstandingBalance": "Outstanding Balance",
+  "supplierRating": "Rating",
+  "supplierBankName": "Bank Name",
+  "supplierBankAccount": "Bank Account",
+  "supplierIban": "IBAN",
+  "supplierBasicInfo": "Basic Information",
+  "supplierContactInfo": "Contact Information",
+  "supplierBankingInfo": "Banking Information",
+  "supplierBusinessInfo": "Business Information",
+  "supplierNotesHint": "Any additional notes",
+  "supplierSearchHint": "Search suppliers...",
+  "supplierNoSuppliers": "No suppliers yet",
+  "supplierNoSuppliersHint": "Add suppliers to track your product sources.",
+  "supplierStatistics": "Statistics",
+  "supplierCreated": "Supplier created.",
+  "supplierUpdated": "Supplier updated.",
+  "supplierDeleteTitle": "Delete Supplier",
+  "supplierDeleteConfirm": "Are you sure you want to delete \"{name}\"?",
+  "@supplierDeleteConfirm": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "supplierDeleted": "Supplier \"{name}\" deleted.",
+  "@supplierDeleted": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+
+  "supplierReturnsTitle": "Supplier Returns",
+  "supplierReturnsSubtitle": "Manage product returns to suppliers",
+  "supplierReturnNew": "New Return",
+  "supplierReturnDetail": "Return Detail",
+  "supplierReturnReason": "Reason",
+  "supplierReturnReasonHint": "e.g. Defective items, Wrong shipment",
+  "supplierReturnRefHint": "e.g. SR-001",
+  "supplierReturnSearchHint": "Search returns...",
+  "supplierReturnNoReturns": "No supplier returns",
+  "supplierReturnNoReturnsHint": "Create a return to send products back to a supplier.",
+  "supplierReturnNoItems": "No items in this return",
+  "supplierReturnSelectSupplier": "Please select a supplier",
+  "supplierReturnSelectProduct": "Please select a product",
+  "supplierReturnItemReason": "Item Reason",
+  "supplierReturnItemReasonHint": "Reason for returning this item",
+  "supplierReturnBatchNumber": "Batch Number",
+  "supplierReturnBatchHint": "e.g. BATCH-001",
+  "supplierReturnCreateBtn": "Create Return",
+  "supplierReturnCreated": "Supplier return created as draft.",
+  "supplierReturnSubmitAction": "Submit",
+  "supplierReturnSubmitted": "Submitted",
+  "supplierReturnCompleteAction": "Complete",
+  "supplierReturnCompleted": "Completed",
+  "supplierReturnCreatedBy": "Created By",
+  "supplierReturnApprovedBy": "Approved By",
+  "supplierReturnApprovedAt": "Approved At",
+  "supplierReturnCompletedAt": "Completed At",
+  "supplierReturnCreatedAt": "Created At",
+  "supplierReturnActionConfirm": "{action} return \"{reference}\"?",
+  "@supplierReturnActionConfirm": {
+    "placeholders": {
+      "action": {"type": "String"},
+      "reference": {"type": "String"}
+    }
+  },
+  "supplierReturnActionSuccess": "Return {action} successfully.",
+  "@supplierReturnActionSuccess": {
+    "placeholders": {
+      "action": {"type": "String"}
+    }
+  }
 }

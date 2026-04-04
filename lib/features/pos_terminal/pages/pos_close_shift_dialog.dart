@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
@@ -58,7 +59,7 @@ class _PosCloseShiftDialogState extends ConsumerState<PosCloseShiftDialog> {
   Future<void> _submit() async {
     final closingCash = double.tryParse(_cashController.text);
     if (closingCash == null || closingCash < 0) {
-      setState(() => _error = 'Please enter a valid closing cash amount');
+      setState(() => _error = AppLocalizations.of(context)!.posInvalidClosingCash);
       return;
     }
 
@@ -110,8 +111,11 @@ class _PosCloseShiftDialogState extends ConsumerState<PosCloseShiftDialog> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Close Shift', style: AppTypography.headlineSmall),
-                          Text('Review your session summary', style: AppTypography.bodySmall.copyWith(color: mutedColor)),
+                          Text(AppLocalizations.of(context)!.posCloseShift, style: AppTypography.headlineSmall),
+                          Text(
+                            AppLocalizations.of(context)!.posReviewSessionSummary,
+                            style: AppTypography.bodySmall.copyWith(color: mutedColor),
+                          ),
                         ],
                       ),
                     ),
@@ -134,7 +138,7 @@ class _PosCloseShiftDialogState extends ConsumerState<PosCloseShiftDialog> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Session Summary (Z-Report)', style: AppTypography.titleSmall),
+                          Text(AppLocalizations.of(context)!.posSessionSummaryZReport, style: AppTypography.titleSmall),
                           if (_isRefreshing)
                             const SizedBox(
                               width: 16,
@@ -144,28 +148,46 @@ class _PosCloseShiftDialogState extends ConsumerState<PosCloseShiftDialog> {
                         ],
                       ),
                       AppSpacing.gapH12,
-                      _summaryRow('Opening Cash', _session.openingCash, mutedColor),
-                      _summaryRow('Cash Sales', _session.totalCashSales ?? 0, mutedColor),
-                      _summaryRow('Card Sales', _session.totalCardSales ?? 0, mutedColor),
-                      _summaryRow('Other Sales', _session.totalOtherSales ?? 0, mutedColor),
-                      Divider(height: 16, color: isDark ? AppColors.borderDark : AppColors.borderLight),
-                      _summaryRow('Refunds', -(_session.totalRefunds ?? 0), mutedColor, color: AppColors.error),
-                      _summaryRow('Voids', -(_session.totalVoids ?? 0), mutedColor, color: AppColors.error),
+                      _summaryRow(AppLocalizations.of(context)!.posOpeningCash, _session.openingCash, mutedColor),
+                      _summaryRow(AppLocalizations.of(context)!.posCashSales, _session.totalCashSales ?? 0, mutedColor),
+                      _summaryRow(AppLocalizations.of(context)!.posCardSales, _session.totalCardSales ?? 0, mutedColor),
+                      _summaryRow(AppLocalizations.of(context)!.posOtherSales, _session.totalOtherSales ?? 0, mutedColor),
                       Divider(height: 16, color: isDark ? AppColors.borderDark : AppColors.borderLight),
                       _summaryRow(
-                        'Expected Cash',
+                        AppLocalizations.of(context)!.posRefunds,
+                        -(_session.totalRefunds ?? 0),
+                        mutedColor,
+                        color: AppColors.error,
+                      ),
+                      _summaryRow(
+                        AppLocalizations.of(context)!.posVoids,
+                        -(_session.totalVoids ?? 0),
+                        mutedColor,
+                        color: AppColors.error,
+                      ),
+                      Divider(height: 16, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                      _summaryRow(
+                        AppLocalizations.of(context)!.posExpectedCash,
                         _session.openingCash + (_session.totalCashSales ?? 0) - (_session.totalRefunds ?? 0),
                         mutedColor,
                         isBold: true,
                       ),
-                      _summaryRow('Transactions', (_session.transactionCount ?? 0).toDouble(), mutedColor, isCount: true),
+                      _summaryRow(
+                        AppLocalizations.of(context)!.posTransactions,
+                        (_session.transactionCount ?? 0).toDouble(),
+                        mutedColor,
+                        isCount: true,
+                      ),
                     ],
                   ),
                 ),
                 AppSpacing.gapH16,
 
                 // Closing cash input
-                Text('Closing Cash Count', style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600)),
+                Text(
+                  AppLocalizations.of(context)!.posClosingCashCount,
+                  style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                ),
                 AppSpacing.gapH4,
                 PosTextField(
                   controller: _cashController,
@@ -196,7 +218,10 @@ class _PosCloseShiftDialogState extends ConsumerState<PosCloseShiftDialog> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Difference', style: AppTypography.bodySmall.copyWith(color: diffColor)),
+                          Text(
+                            AppLocalizations.of(context)!.posDifference,
+                            style: AppTypography.bodySmall.copyWith(color: diffColor),
+                          ),
                           Text(
                             '${diff >= 0 ? '+' : ''}SAR ${diff.toStringAsFixed(2)}',
                             style: AppTypography.labelSmall.copyWith(color: diffColor, fontWeight: FontWeight.bold),
@@ -231,7 +256,7 @@ class _PosCloseShiftDialogState extends ConsumerState<PosCloseShiftDialog> {
                   children: [
                     Expanded(
                       child: PosButton(
-                        label: 'Cancel',
+                        label: AppLocalizations.of(context)!.posCancel,
                         variant: PosButtonVariant.outline,
                         onPressed: () => Navigator.pop(context),
                       ),
@@ -239,7 +264,7 @@ class _PosCloseShiftDialogState extends ConsumerState<PosCloseShiftDialog> {
                     AppSpacing.gapW12,
                     Expanded(
                       child: PosButton(
-                        label: 'Close Shift',
+                        label: AppLocalizations.of(context)!.posCloseShift,
                         icon: Icons.logout_rounded,
                         variant: PosButtonVariant.danger,
                         isLoading: _isLoading,

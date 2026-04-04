@@ -14,6 +14,10 @@ class NotificationDeliveryLog {
   final bool? isFallback;
   final Map<String, dynamic>? attemptedProviders;
   final DateTime? createdAt;
+  final int? retryCount;
+  final DateTime? nextRetryAt;
+  final Map<String, dynamic>? requestPayload;
+  final Map<String, dynamic>? responsePayload;
 
   const NotificationDeliveryLog({
     required this.id,
@@ -28,6 +32,10 @@ class NotificationDeliveryLog {
     this.isFallback,
     this.attemptedProviders,
     this.createdAt,
+    this.retryCount,
+    this.nextRetryAt,
+    this.requestPayload,
+    this.responsePayload,
   });
 
   factory NotificationDeliveryLog.fromJson(Map<String, dynamic> json) {
@@ -42,8 +50,14 @@ class NotificationDeliveryLog {
       errorMessage: json['error_message'] as String?,
       latencyMs: (json['latency_ms'] as num?)?.toInt(),
       isFallback: json['is_fallback'] as bool?,
-      attemptedProviders: json['attempted_providers'] != null ? Map<String, dynamic>.from(json['attempted_providers'] as Map) : null,
+      attemptedProviders: json['attempted_providers'] != null
+          ? Map<String, dynamic>.from(json['attempted_providers'] as Map)
+          : null,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
+      retryCount: (json['retry_count'] as num?)?.toInt(),
+      nextRetryAt: json['next_retry_at'] != null ? DateTime.parse(json['next_retry_at'] as String) : null,
+      requestPayload: json['request_payload'] != null ? Map<String, dynamic>.from(json['request_payload'] as Map) : null,
+      responsePayload: json['response_payload'] != null ? Map<String, dynamic>.from(json['response_payload'] as Map) : null,
     );
   }
 
@@ -61,6 +75,10 @@ class NotificationDeliveryLog {
       'is_fallback': isFallback,
       'attempted_providers': attemptedProviders,
       'created_at': createdAt?.toIso8601String(),
+      'retry_count': retryCount,
+      'next_retry_at': nextRetryAt?.toIso8601String(),
+      'request_payload': requestPayload,
+      'response_payload': responsePayload,
     };
   }
 
@@ -77,6 +95,10 @@ class NotificationDeliveryLog {
     bool? isFallback,
     Map<String, dynamic>? attemptedProviders,
     DateTime? createdAt,
+    int? retryCount,
+    DateTime? nextRetryAt,
+    Map<String, dynamic>? requestPayload,
+    Map<String, dynamic>? responsePayload,
   }) {
     return NotificationDeliveryLog(
       id: id ?? this.id,
@@ -91,17 +113,20 @@ class NotificationDeliveryLog {
       isFallback: isFallback ?? this.isFallback,
       attemptedProviders: attemptedProviders ?? this.attemptedProviders,
       createdAt: createdAt ?? this.createdAt,
+      retryCount: retryCount ?? this.retryCount,
+      nextRetryAt: nextRetryAt ?? this.nextRetryAt,
+      requestPayload: requestPayload ?? this.requestPayload,
+      responsePayload: responsePayload ?? this.responsePayload,
     );
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is NotificationDeliveryLog && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is NotificationDeliveryLog && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'NotificationDeliveryLog(id: $id, notificationId: $notificationId, channel: $channel, provider: $provider, recipient: $recipient, status: $status, ...)';
+  String toString() =>
+      'NotificationDeliveryLog(id: $id, notificationId: $notificationId, channel: $channel, provider: $provider, recipient: $recipient, status: $status, ...)';
 }

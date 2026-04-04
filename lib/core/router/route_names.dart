@@ -35,6 +35,9 @@ class Routes {
   static const String stockTransfers = '/inventory/stock-transfers';
   static const String purchaseOrders = '/inventory/purchase-orders';
   static const String recipes = '/inventory/recipes';
+  static const String supplierReturns = '/inventory/supplier-returns';
+  static const String supplierReturnsAdd = '/inventory/supplier-returns/add';
+  static const String supplierReturnDetail = '/inventory/supplier-returns/detail';
 
   // Orders
   static const String orders = '/orders';
@@ -71,6 +74,12 @@ class Routes {
   // Settings
   static const String settings = '/settings';
   static const String localization = '/settings/localization';
+  static const String settingsTax = '/settings/tax';
+  static const String settingsReceipt = '/settings/receipt';
+  static const String settingsPosBehavior = '/settings/pos-behavior';
+  static const String settingsWorkingHours = '/settings/working-hours';
+  static const String settingsStoreProfile = '/settings/store-profile';
+  static const String settingsAbout = '/settings/about';
 
   // Branches
   static const String branches = '/branches';
@@ -295,6 +304,19 @@ class Routes {
   // ─── Marketplace ────────────────────────────────────────
   static const String marketplace = '/marketplace';
   static const String myPurchases = '/marketplace/purchases';
+
+  // ─── Receipt Templates & CFD Themes ─────────────────────
+  static const String receiptTemplates = '/receipt-templates';
+  static const String receiptTemplatePreview = '/receipt-templates/preview';
+  static const String cfdThemes = '/cfd-themes';
+  static const String cfdThemePreview = '/cfd-themes/preview';
+
+  // ─── Label Layout Templates ─────────────────────────────
+  static const String labelLayoutTemplates = '/label-layout-templates';
+  static const String labelLayoutTemplatePreview = '/label-layout-templates/preview';
+
+  // ─── Marketplace Preview ────────────────────────────────
+  static const String marketplaceListingPreview = '/marketplace/preview';
 
   // ─── Auto Updates ───────────────────────────────────────
   static const String autoUpdateDashboard = '/auto-update';

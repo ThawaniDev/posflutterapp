@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
@@ -97,7 +98,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
 
   Future<void> _completePayment() async {
     if (!_isFullyPaid) {
-      setState(() => _error = 'Total paid does not cover the outstanding amount');
+      setState(() => _error = AppLocalizations.of(context)!.posPaymentNotCover);
       return;
     }
 
@@ -145,27 +146,27 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                   child: const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 36),
                 ),
                 AppSpacing.gapH16,
-                Text('Payment Successful', style: AppTypography.headlineSmall),
+                Text(AppLocalizations.of(context)!.posPaymentSuccessful, style: AppTypography.headlineSmall),
                 AppSpacing.gapH8,
                 Text(
-                  'Transaction #${state.transactionNumber}',
+                  AppLocalizations.of(context)!.posTransactionNumber(state.transactionNumber),
                   style: AppTypography.bodyMedium.copyWith(color: AppColors.textMutedLight),
                 ),
                 AppSpacing.gapH8,
                 Text(
-                  'SAR ${state.totalAmount.toStringAsFixed(2)}',
+                  AppLocalizations.of(context)!.amountWithSar(state.totalAmount.toStringAsFixed(2)),
                   style: AppTypography.headlineLarge.copyWith(color: AppColors.primary),
                 ),
                 if (state.changeGiven != null && state.changeGiven! > 0) ...[
                   AppSpacing.gapH4,
                   Text(
-                    'Change: SAR ${state.changeGiven!.toStringAsFixed(2)}',
+                    AppLocalizations.of(context)!.posChangeAmount(state.changeGiven!.toStringAsFixed(2)),
                     style: AppTypography.bodyMedium.copyWith(color: AppColors.success),
                   ),
                 ],
                 AppSpacing.gapH24,
                 PosButton(
-                  label: 'Done',
+                  label: AppLocalizations.of(context)!.posDone,
                   isFullWidth: true,
                   onPressed: () {
                     Navigator.pop(ctx);
@@ -212,9 +213,9 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Payment', style: AppTypography.headlineSmall),
+                          Text(AppLocalizations.of(context)!.posPayment, style: AppTypography.headlineSmall),
                           Text(
-                            'Total: SAR ${widget.totalAmount.toStringAsFixed(2)}',
+                            AppLocalizations.of(context)!.posTotalAmount(widget.totalAmount.toStringAsFixed(2)),
                             style: AppTypography.bodySmall.copyWith(color: mutedColor),
                           ),
                         ],
@@ -238,7 +239,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                     child: TextButton.icon(
                       onPressed: _addSplitMethod,
                       icon: const Icon(Icons.add_rounded, size: 18),
-                      label: const Text('Split Payment'),
+                      label: Text(AppLocalizations.of(context)!.posSplitPayment),
                       style: TextButton.styleFrom(foregroundColor: AppColors.primary),
                     ),
                   ),
@@ -247,7 +248,10 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
 
                 // Cash tendered (only if any leg is cash)
                 if (_legs.any((l) => l.method == PaymentMethod.cash)) ...[
-                  Text('Cash Tendered', style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600)),
+                  Text(
+                    AppLocalizations.of(context)!.posCashTendered,
+                    style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                  ),
                   AppSpacing.gapH4,
                   PosTextField(
                     controller: _cashTenderedController,
@@ -271,7 +275,9 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                           side: const BorderSide(color: AppColors.primary),
                           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                         ),
-                        child: Text('SAR ${amount.toStringAsFixed(amount == amount.roundToDouble() ? 0 : 2)}'),
+                        child: Text(
+                          '${AppLocalizations.of(context)!.sarCurrency} ${amount.toStringAsFixed(amount == amount.roundToDouble() ? 0 : 2)}',
+                        ),
                       );
                     }).toList(),
                   ),
@@ -287,9 +293,12 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Change', style: AppTypography.bodySmall.copyWith(color: AppColors.success)),
                           Text(
-                            'SAR ${_changeGiven.toStringAsFixed(2)}',
+                            AppLocalizations.of(context)!.posChange,
+                            style: AppTypography.bodySmall.copyWith(color: AppColors.success),
+                          ),
+                          Text(
+                            AppLocalizations.of(context)!.amountWithSar(_changeGiven.toStringAsFixed(2)),
                             style: AppTypography.labelMedium.copyWith(color: AppColors.success, fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -306,9 +315,12 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Remaining', style: AppTypography.bodySmall.copyWith(color: AppColors.warning)),
                         Text(
-                          'SAR ${_remaining.toStringAsFixed(2)}',
+                          AppLocalizations.of(context)!.posRemaining,
+                          style: AppTypography.bodySmall.copyWith(color: AppColors.warning),
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.amountWithSar(_remaining.toStringAsFixed(2)),
                           style: AppTypography.labelMedium.copyWith(color: AppColors.warning, fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -339,7 +351,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                   children: [
                     Expanded(
                       child: PosButton(
-                        label: 'Cancel',
+                        label: AppLocalizations.of(context)!.posCancel,
                         variant: PosButtonVariant.outline,
                         onPressed: isProcessing ? null : () => Navigator.pop(context),
                       ),
@@ -348,7 +360,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                     Expanded(
                       flex: 2,
                       child: PosButton(
-                        label: 'Complete Payment',
+                        label: AppLocalizations.of(context)!.posCompletePayment,
                         icon: Icons.check_circle_outline,
                         isLoading: isProcessing,
                         onPressed: isProcessing ? null : _completePayment,

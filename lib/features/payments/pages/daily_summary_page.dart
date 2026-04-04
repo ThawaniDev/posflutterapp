@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/payments/enums/payment_method_key.dart';
@@ -30,6 +31,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final paymentsState = ref.watch(paymentsProvider);
     final sessionsState = ref.watch(cashSessionsProvider);
     final expensesState = ref.watch(expensesProvider);
@@ -68,7 +70,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Daily Summary'),
+        title: Text(l10n.dailySummaryTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.chevron_left),
@@ -91,7 +93,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                 : null,
           ),
           AppSpacing.gapW8,
-          OutlinedButton.icon(onPressed: () {}, icon: const Icon(Icons.print, size: 18), label: const Text('Print')),
+          OutlinedButton.icon(onPressed: () {}, icon: const Icon(Icons.print, size: 18), label: Text(l10n.dailySummaryPrint)),
           AppSpacing.gapW12,
         ],
       ),
@@ -107,7 +109,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                     children: [
                       _kpiCard(
                         theme,
-                        'Gross Revenue',
+                        l10n.dailySummaryGrossRevenue,
                         '${totalRevenue.toStringAsFixed(2)} SAR',
                         Icons.trending_up,
                         AppColors.success,
@@ -115,7 +117,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                       AppSpacing.gapW12,
                       _kpiCard(
                         theme,
-                        'Expenses',
+                        l10n.dailySummaryExpenses,
                         '${totalExpenses.toStringAsFixed(2)} SAR',
                         Icons.trending_down,
                         AppColors.error,
@@ -123,13 +125,13 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                       AppSpacing.gapW12,
                       _kpiCard(
                         theme,
-                        'Net Revenue',
+                        l10n.dailySummaryNetRevenue,
                         '${netRevenue.toStringAsFixed(2)} SAR',
                         Icons.account_balance,
                         netRevenue >= 0 ? AppColors.success : AppColors.error,
                       ),
                       AppSpacing.gapW12,
-                      _kpiCard(theme, 'Transactions', '$txCount', Icons.receipt, AppColors.info),
+                      _kpiCard(theme, l10n.dailySummaryTransactions, '$txCount', Icons.receipt, AppColors.info),
                     ],
                   ),
                   AppSpacing.gapH24,
@@ -138,19 +140,19 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(flex: 3, child: _buildMethodBreakdownCard(theme, byMethod, totalRevenue)),
+                      Expanded(flex: 3, child: _buildMethodBreakdownCard(theme, byMethod, totalRevenue, l10n)),
                       AppSpacing.gapW16,
-                      Expanded(flex: 2, child: _buildCashVarianceCard(theme, closedSessions, totalVariance)),
+                      Expanded(flex: 2, child: _buildCashVarianceCard(theme, closedSessions, totalVariance, l10n)),
                     ],
                   ),
                   AppSpacing.gapH24,
 
                   // ── Hourly Activity ──
-                  _buildHourlyActivityCard(theme, payments),
+                  _buildHourlyActivityCard(theme, payments, l10n),
                   AppSpacing.gapH24,
 
                   // ── Session Details ──
-                  _buildSessionDetailsCard(theme, sessions),
+                  _buildSessionDetailsCard(theme, sessions, l10n),
                 ],
               ),
             ),
@@ -186,7 +188,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
     );
   }
 
-  Widget _buildMethodBreakdownCard(ThemeData theme, Map<String, double> byMethod, double total) {
+  Widget _buildMethodBreakdownCard(ThemeData theme, Map<String, double> byMethod, double total, AppLocalizations l10n) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
       child: Padding(
@@ -194,12 +196,12 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Revenue by Payment Method', style: theme.textTheme.titleMedium),
+            Text(l10n.dailySummaryRevenueByMethod, style: theme.textTheme.titleMedium),
             AppSpacing.gapH16,
             if (byMethod.isEmpty)
               Padding(
                 padding: AppSpacing.paddingAll16,
-                child: Text('No payments today', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+                child: Text(l10n.dailySummaryNoPayments, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
               )
             else
               ...byMethod.entries.map((entry) {
@@ -258,7 +260,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
     );
   }
 
-  Widget _buildCashVarianceCard(ThemeData theme, List<dynamic> closedSessions, double totalVariance) {
+  Widget _buildCashVarianceCard(ThemeData theme, List<dynamic> closedSessions, double totalVariance, AppLocalizations l10n) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
       child: Padding(
@@ -266,7 +268,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Cash Variance', style: theme.textTheme.titleMedium),
+            Text(l10n.dailySummaryCashVariance, style: theme.textTheme.titleMedium),
             AppSpacing.gapH16,
             Center(
               child: Column(
@@ -286,21 +288,24 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                   ),
                   AppSpacing.gapH4,
                   Text(
-                    totalVariance.abs() <= 5 ? 'Within tolerance' : 'Needs review',
+                    totalVariance.abs() <= 5 ? l10n.dailySummaryWithinTolerance : l10n.dailySummaryNeedsReview,
                     style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
                   ),
                 ],
               ),
             ),
             AppSpacing.gapH16,
-            Text('Sessions: ${closedSessions.length}', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+            Text(
+              l10n.dailySummarySessions(closedSessions.length),
+              style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildHourlyActivityCard(ThemeData theme, List<dynamic> payments) {
+  Widget _buildHourlyActivityCard(ThemeData theme, List<dynamic> payments, AppLocalizations l10n) {
     // Group payments by hour
     final byHour = <int, int>{};
     for (final p in payments) {
@@ -319,7 +324,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Hourly Activity', style: theme.textTheme.titleMedium),
+            Text(l10n.dailySummaryHourlyActivity, style: theme.textTheme.titleMedium),
             AppSpacing.gapH16,
             SizedBox(
               height: 120,
@@ -364,7 +369,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
     );
   }
 
-  Widget _buildSessionDetailsCard(ThemeData theme, List<dynamic> sessions) {
+  Widget _buildSessionDetailsCard(ThemeData theme, List<dynamic> sessions, AppLocalizations l10n) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
       child: Padding(
@@ -372,10 +377,10 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Session Details', style: theme.textTheme.titleMedium),
+            Text(l10n.dailySummarySessionDetails, style: theme.textTheme.titleMedium),
             AppSpacing.gapH12,
             if (sessions.isEmpty)
-              Text('No sessions', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor))
+              Text(l10n.dailySummaryNoSessions, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor))
             else
               ...sessions.map(
                 (s) => Container(
@@ -398,11 +403,11 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Float: ${s.openingFloat.toStringAsFixed(2)} SAR',
+                              l10n.dailySummaryFloat(s.openingFloat.toStringAsFixed(2)),
                               style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
                             ),
                             Text(
-                              'Terminal: ${s.terminalId ?? 'N/A'}',
+                              l10n.dailySummaryTerminal(s.terminalId ?? 'N/A'),
                               style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
                             ),
                           ],

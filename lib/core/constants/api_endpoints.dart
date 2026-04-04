@@ -22,6 +22,7 @@ class ApiEndpoints {
   static const String stockTransfers = '/inventory/stock-transfers';
   static const String purchaseOrders = '/inventory/purchase-orders';
   static const String recipes = '/inventory/recipes';
+  static const String supplierReturns = '/inventory/supplier-returns';
 
   // POS
   static const String posBase = '/pos';
@@ -141,6 +142,15 @@ class ApiEndpoints {
   static String notificationDelete(String id) => '/notifications/$id';
   static const String notificationPreferences = '/notifications/preferences';
   static const String fcmTokens = '/notifications/fcm-tokens';
+  static const String notificationBatch = '/notifications/batch';
+  static const String notificationBulkDelete = '/notifications/bulk';
+  static const String notificationUnreadCountByCategory = '/notifications/unread-count-by-category';
+  static const String notificationStats = '/notifications/stats';
+  static const String notificationDeliveryLogs = '/notifications/delivery-logs';
+  static const String notificationDeliveryStats = '/notifications/delivery-stats';
+  static const String notificationSoundConfigs = '/notifications/sound-configs';
+  static const String notificationSchedules = '/notifications/schedules';
+  static String notificationScheduleCancel(String id) => '/notifications/schedules/$id/cancel';
 
   // Store (Core)
   static const String storesMine = '/core/stores/mine';
@@ -506,11 +516,23 @@ class ApiEndpoints {
   // ─── POS Feature #24: Security Provider ──────────────────
   static const String securityPolicy = '/security/policy';
   static const String securityAuditLogs = '/security/audit-logs';
+  static const String securityAuditStats = '/security/audit-stats';
+  static const String securityOverviewEndpoint = '/security/overview';
   static const String securityDevices = '/security/devices';
+  static String securityDeviceById(String id) => '/security/devices/$id';
   static String securityDeviceDeactivate(String id) => '/security/devices/$id/deactivate';
   static String securityDeviceRemoteWipe(String id) => '/security/devices/$id/remote-wipe';
+  static String securityDeviceHeartbeat(String id) => '/security/devices/$id/heartbeat';
   static const String securityLoginAttempts = '/security/login-attempts';
   static const String securityLoginAttemptsFailedCount = '/security/login-attempts/failed-count';
+  static const String securityLoginAttemptsIsLockedOut = '/security/login-attempts/is-locked-out';
+  static const String securityLoginAttemptsStats = '/security/login-attempts/stats';
+  static const String securitySessions = '/security/sessions';
+  static String securitySessionEnd(String id) => '/security/sessions/$id/end';
+  static String securitySessionHeartbeat(String id) => '/security/sessions/$id/heartbeat';
+  static const String securitySessionsEndAll = '/security/sessions/end-all';
+  static const String securityIncidents = '/security/incidents';
+  static String securityIncidentResolve(String id) => '/security/incidents/$id/resolve';
 
   // ─── POS Feature #25: Backup & Recovery ──────────────────
   static const String backupCreate = '/backup/create';
@@ -532,6 +554,13 @@ class ApiEndpoints {
   static const String companionPreferences = '/companion/preferences';
   static const String companionQuickActions = '/companion/quick-actions';
   static const String companionEvents = '/companion/events';
+  static const String companionDashboard = '/companion/dashboard';
+  static const String companionBranches = '/companion/branches';
+  static const String companionSalesSummary = '/companion/sales/summary';
+  static const String companionActiveOrders = '/companion/orders/active';
+  static const String companionInventoryAlerts = '/companion/inventory/alerts';
+  static const String companionActiveStaff = '/companion/staff/active';
+  static const String companionStoreAvailability = '/companion/store/availability';
 
   // ─── POS Feature #27: POS Customization ─────────────────
   static const String customizationSettings = '/customization/settings';
@@ -549,12 +578,15 @@ class ApiEndpoints {
   // UI Template Browsing
   static const String uiReceiptTemplates = '/ui/receipt-templates';
   static String uiReceiptTemplateBySlug(String slug) => '/ui/receipt-templates/$slug';
+  static String uiReceiptTemplatePreviewUrl(String id) => '/ui/receipt-templates/$id/preview-url';
   static const String uiCfdThemes = '/ui/cfd-themes';
   static String uiCfdThemeBySlug(String slug) => '/ui/cfd-themes/$slug';
+  static String uiCfdThemePreviewUrl(String id) => '/ui/cfd-themes/$id/preview-url';
   static const String uiSignageTemplates = '/ui/signage-templates';
   static String uiSignageTemplateBySlug(String slug) => '/ui/signage-templates/$slug';
   static const String uiLabelTemplates = '/ui/label-templates';
   static String uiLabelTemplateBySlug(String slug) => '/ui/label-templates/$slug';
+  static String uiLabelTemplatePreviewUrl(String id) => '/ui/label-templates/$id/preview-url';
 
   // Layout Builder
   static const String layoutBuilderWidgets = '/ui/layout-builder/widgets';
@@ -571,15 +603,16 @@ class ApiEndpoints {
   // Template Marketplace
   static const String marketplaceListings = '/ui/marketplace/listings';
   static String marketplaceListingById(String id) => '/ui/marketplace/listings/$id';
+  static String marketplaceListingPreviewUrl(String id) => '/ui/marketplace/listings/$id/preview-url';
   static const String marketplaceCategories = '/ui/marketplace/categories';
   static String marketplaceCategoryById(String id) => '/ui/marketplace/categories/$id';
-  static const String marketplacePurchase = '/ui/marketplace/purchase';
+  static String marketplacePurchase(String listingId) => '/ui/marketplace/listings/$listingId/purchase';
   static const String marketplaceMyPurchases = '/ui/marketplace/my-purchases';
-  static const String marketplaceCheckAccess = '/ui/marketplace/check-access';
-  static const String marketplaceCancelPurchase = '/ui/marketplace/cancel';
+  static String marketplaceCheckAccess(String listingId) => '/ui/marketplace/listings/$listingId/check-access';
+  static String marketplaceCancelPurchase(String purchaseId) => '/ui/marketplace/purchases/$purchaseId/cancel';
   static const String marketplaceMyInvoices = '/ui/marketplace/my-invoices';
   static String marketplaceInvoiceById(String id) => '/ui/marketplace/invoices/$id';
-  static const String marketplaceReviews = '/ui/marketplace/reviews';
+  static String marketplaceListingReviews(String listingId) => '/ui/marketplace/listings/$listingId/reviews';
   static String marketplaceReviewById(String id) => '/ui/marketplace/reviews/$id';
 
   // ─── POS Feature #28: Auto Updates ──────────────────────
@@ -588,6 +621,9 @@ class ApiEndpoints {
   static const String autoUpdateChangelog = '/auto-update/changelog';
   static const String autoUpdateHistory = '/auto-update/history';
   static const String autoUpdateCurrentVersion = '/auto-update/current-version';
+  static String autoUpdateManifest(String version) => '/auto-update/manifest/$version';
+  static String autoUpdateDownload(String version) => '/auto-update/download/$version';
+  static const String autoUpdateRolloutStatus = '/auto-update/rollout-status';
 
   // ─── POS Feature #29: Accessibility ─────────────────────
   static const String accessibilityPreferences = '/accessibility/preferences';

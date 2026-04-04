@@ -239,7 +239,7 @@ class _DataPanel extends StatelessWidget {
               ),
           if (data.length > 8)
             Text(
-              '+ ${data.length - 8} more fields',
+              AppLocalizations.of(context)!.conflictMoreFields(data.length - 8),
               style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor, fontSize: 10),
             ),
         ],

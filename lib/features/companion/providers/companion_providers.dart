@@ -152,3 +152,148 @@ class CompanionOperationNotifier extends StateNotifier<CompanionOperationState> 
     state = const CompanionOperationIdle();
   }
 }
+
+// --- Companion Dashboard Provider ---
+final companionDashboardProvider = StateNotifierProvider<CompanionDashboardNotifier, CompanionDashboardState>((ref) {
+  return CompanionDashboardNotifier(ref.watch(companionRepositoryProvider));
+});
+
+class CompanionDashboardNotifier extends StateNotifier<CompanionDashboardState> {
+  final CompanionRepository _repo;
+
+  CompanionDashboardNotifier(this._repo) : super(const CompanionDashboardInitial());
+
+  Future<void> load() async {
+    if (state is! CompanionDashboardLoaded) state = const CompanionDashboardLoading();
+    try {
+      final res = await _repo.getDashboard();
+      final d = res['data'] as Map<String, dynamic>? ?? res;
+      state = CompanionDashboardLoaded(
+        todayRevenue: (d['today_revenue'] as num?)?.toDouble() ?? 0,
+        yesterdayRevenue: (d['yesterday_revenue'] as num?)?.toDouble() ?? 0,
+        todayOrders: d['today_orders'] as int? ?? 0,
+        yesterdayOrders: d['yesterday_orders'] as int? ?? 0,
+        activeStaff: d['active_staff'] as int? ?? 0,
+        lowStockItems: d['low_stock_items'] as int? ?? 0,
+        pendingOrders: d['pending_orders'] as int? ?? 0,
+        storeIsOpen: d['store_is_open'] as bool? ?? true,
+        currency: d['currency'] as String? ?? 'SAR',
+        raw: d,
+      );
+    } catch (e) {
+      if (state is! CompanionDashboardLoaded) state = CompanionDashboardError(e.toString());
+    }
+  }
+
+  Future<void> toggleStoreAvailability(bool isOpen) async {
+    try {
+      await _repo.toggleStoreAvailability(isOpen: isOpen);
+      await load();
+    } catch (e) {
+      if (state is! CompanionDashboardLoaded) state = CompanionDashboardError(e.toString());
+    }
+  }
+}
+
+// --- Sales Summary Provider ---
+final salesSummaryProvider = StateNotifierProvider<SalesSummaryNotifier, SalesSummaryState>((ref) {
+  return SalesSummaryNotifier(ref.watch(companionRepositoryProvider));
+});
+
+class SalesSummaryNotifier extends StateNotifier<SalesSummaryState> {
+  final CompanionRepository _repo;
+
+  SalesSummaryNotifier(this._repo) : super(const SalesSummaryInitial());
+
+  Future<void> load({String period = 'today', String? storeId}) async {
+    if (state is! SalesSummaryLoaded) state = const SalesSummaryLoading();
+    try {
+      final res = await _repo.getSalesSummary(period: period, storeId: storeId);
+      final d = res['data'] as Map<String, dynamic>? ?? res;
+      final daily = (d['daily_breakdown'] as List<dynamic>?)?.map((e) => Map<String, dynamic>.from(e as Map)).toList() ?? [];
+      state = SalesSummaryLoaded(
+        period: d['period'] as String? ?? period,
+        totalRevenue: (d['total_revenue'] as num?)?.toDouble() ?? 0,
+        totalOrders: d['total_orders'] as int? ?? 0,
+        averageOrderValue: (d['average_order_value'] as num?)?.toDouble() ?? 0,
+        dailyBreakdown: daily,
+        raw: d,
+      );
+    } catch (e) {
+      if (state is! SalesSummaryLoaded) state = SalesSummaryError(e.toString());
+    }
+  }
+}
+
+// --- Active Orders Provider ---
+final activeOrdersProvider = StateNotifierProvider<ActiveOrdersNotifier, ActiveOrdersState>((ref) {
+  return ActiveOrdersNotifier(ref.watch(companionRepositoryProvider));
+});
+
+class ActiveOrdersNotifier extends StateNotifier<ActiveOrdersState> {
+  final CompanionRepository _repo;
+
+  ActiveOrdersNotifier(this._repo) : super(const ActiveOrdersInitial());
+
+  Future<void> load({String? storeId}) async {
+    if (state is! ActiveOrdersLoaded) state = const ActiveOrdersLoading();
+    try {
+      final res = await _repo.getActiveOrders(storeId: storeId);
+      final d = res['data'] as Map<String, dynamic>? ?? res;
+      final orders = (d['orders'] as List<dynamic>?)?.map((e) => Map<String, dynamic>.from(e as Map)).toList() ?? [];
+      state = ActiveOrdersLoaded(orders: orders, total: d['total'] as int? ?? orders.length);
+    } catch (e) {
+      if (state is! ActiveOrdersLoaded) state = ActiveOrdersError(e.toString());
+    }
+  }
+}
+
+// --- Inventory Alerts Provider ---
+final inventoryAlertsProvider = StateNotifierProvider<InventoryAlertsNotifier, InventoryAlertsState>((ref) {
+  return InventoryAlertsNotifier(ref.watch(companionRepositoryProvider));
+});
+
+class InventoryAlertsNotifier extends StateNotifier<InventoryAlertsState> {
+  final CompanionRepository _repo;
+
+  InventoryAlertsNotifier(this._repo) : super(const InventoryAlertsInitial());
+
+  Future<void> load({String? storeId}) async {
+    if (state is! InventoryAlertsLoaded) state = const InventoryAlertsLoading();
+    try {
+      final res = await _repo.getInventoryAlerts(storeId: storeId);
+      final d = res['data'] as Map<String, dynamic>? ?? res;
+      final alerts = (d['alerts'] as List<dynamic>?)?.map((e) => Map<String, dynamic>.from(e as Map)).toList() ?? [];
+      state = InventoryAlertsLoaded(
+        alerts: alerts,
+        lowStockCount: d['low_stock_count'] as int? ?? 0,
+        outOfStockCount: d['out_of_stock_count'] as int? ?? 0,
+      );
+    } catch (e) {
+      if (state is! InventoryAlertsLoaded) state = InventoryAlertsError(e.toString());
+    }
+  }
+}
+
+// --- Active Staff Provider ---
+final activeStaffProvider = StateNotifierProvider<ActiveStaffNotifier, ActiveStaffState>((ref) {
+  return ActiveStaffNotifier(ref.watch(companionRepositoryProvider));
+});
+
+class ActiveStaffNotifier extends StateNotifier<ActiveStaffState> {
+  final CompanionRepository _repo;
+
+  ActiveStaffNotifier(this._repo) : super(const ActiveStaffInitial());
+
+  Future<void> load({String? storeId}) async {
+    if (state is! ActiveStaffLoaded) state = const ActiveStaffLoading();
+    try {
+      final res = await _repo.getActiveStaff(storeId: storeId);
+      final d = res['data'] as Map<String, dynamic>? ?? res;
+      final staff = (d['staff'] as List<dynamic>?)?.map((e) => Map<String, dynamic>.from(e as Map)).toList() ?? [];
+      state = ActiveStaffLoaded(staff: staff, totalActive: d['total_active'] as int? ?? staff.length);
+    } catch (e) {
+      if (state is! ActiveStaffLoaded) state = ActiveStaffError(e.toString());
+    }
+  }
+}

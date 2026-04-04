@@ -313,7 +313,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                             const SizedBox(height: 4),
                             Text('Product Name', style: TextStyle(fontSize: 10, color: Colors.grey.shade700)),
                             Text(
-                              '0.000 OMR',
+                              '0.000 SAR',
                               style: TextStyle(fontSize: 9, color: Colors.grey.shade600, fontWeight: FontWeight.w600),
                             ),
                             Container(

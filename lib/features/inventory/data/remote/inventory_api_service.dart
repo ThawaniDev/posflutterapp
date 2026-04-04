@@ -11,6 +11,7 @@ import 'package:thawani_pos/features/inventory/models/stock_adjustment.dart';
 import 'package:thawani_pos/features/inventory/models/stock_level.dart';
 import 'package:thawani_pos/features/inventory/models/stock_movement.dart';
 import 'package:thawani_pos/features/inventory/models/stock_transfer.dart';
+import 'package:thawani_pos/features/inventory/models/supplier_return.dart';
 
 final inventoryApiServiceProvider = Provider<InventoryApiService>((ref) {
   return InventoryApiService(ref.watch(dioClientProvider));
@@ -319,5 +320,91 @@ class InventoryApiService {
   /// DELETE /inventory/recipes/:id
   Future<void> deleteRecipe(String id) async {
     await _dio.delete('${ApiEndpoints.recipes}/$id');
+  }
+
+  // ─── Supplier Returns ─────────────────────────────────────────
+
+  /// GET /inventory/supplier-returns
+  Future<PaginatedResult<SupplierReturn>> listSupplierReturns({
+    int page = 1,
+    int perPage = 25,
+    String? status,
+    String? supplierId,
+    String? search,
+  }) async {
+    final response = await _dio.get(
+      ApiEndpoints.supplierReturns,
+      queryParameters: {
+        'page': page,
+        'per_page': perPage,
+        if (status != null) 'status': status,
+        if (supplierId != null) 'supplier_id': supplierId,
+        if (search != null && search.isNotEmpty) 'search': search,
+      },
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    final map = apiResponse.data as Map<String, dynamic>;
+    final items = (map['data'] as List).map((j) => SupplierReturn.fromJson(j as Map<String, dynamic>)).toList();
+    return PaginatedResult(
+      items: items,
+      total: map['total'] as int? ?? items.length,
+      currentPage: map['current_page'] as int? ?? page,
+      lastPage: map['last_page'] as int? ?? 1,
+      perPage: map['per_page'] as int? ?? perPage,
+    );
+  }
+
+  /// POST /inventory/supplier-returns
+  Future<SupplierReturn> createSupplierReturn(Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.supplierReturns, data: data);
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    return SupplierReturn.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  /// GET /inventory/supplier-returns/:id
+  Future<SupplierReturn> getSupplierReturn(String id) async {
+    final response = await _dio.get('${ApiEndpoints.supplierReturns}/$id');
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    return SupplierReturn.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  /// PUT /inventory/supplier-returns/:id
+  Future<SupplierReturn> updateSupplierReturn(String id, Map<String, dynamic> data) async {
+    final response = await _dio.put('${ApiEndpoints.supplierReturns}/$id', data: data);
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    return SupplierReturn.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  /// DELETE /inventory/supplier-returns/:id
+  Future<void> deleteSupplierReturn(String id) async {
+    await _dio.delete('${ApiEndpoints.supplierReturns}/$id');
+  }
+
+  /// POST /inventory/supplier-returns/:id/submit
+  Future<SupplierReturn> submitSupplierReturn(String id) async {
+    final response = await _dio.post('${ApiEndpoints.supplierReturns}/$id/submit');
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    return SupplierReturn.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  /// POST /inventory/supplier-returns/:id/approve
+  Future<SupplierReturn> approveSupplierReturn(String id) async {
+    final response = await _dio.post('${ApiEndpoints.supplierReturns}/$id/approve');
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    return SupplierReturn.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  /// POST /inventory/supplier-returns/:id/complete
+  Future<SupplierReturn> completeSupplierReturn(String id) async {
+    final response = await _dio.post('${ApiEndpoints.supplierReturns}/$id/complete');
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    return SupplierReturn.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  /// POST /inventory/supplier-returns/:id/cancel
+  Future<SupplierReturn> cancelSupplierReturn(String id) async {
+    final response = await _dio.post('${ApiEndpoints.supplierReturns}/$id/cancel');
+    final apiResponse = ApiResponse.fromJson(response.data, (d) => d);
+    return SupplierReturn.fromJson(apiResponse.data as Map<String, dynamic>);
   }
 }

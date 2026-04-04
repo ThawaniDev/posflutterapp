@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/inventory/models/purchase_order.dart';
 import 'package:thawani_pos/features/inventory/models/stock_transfer.dart';
+import 'package:thawani_pos/features/inventory/models/supplier_return.dart';
 import 'package:thawani_pos/features/inventory/providers/inventory_state.dart';
 import 'package:thawani_pos/features/inventory/repositories/inventory_repository.dart';
 
@@ -454,6 +455,152 @@ class RecipesNotifier extends StateNotifier<RecipesState> {
       }
     } on DioException catch (e) {
       throw Exception(_extractError(e));
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Supplier Returns
+// ═══════════════════════════════════════════════════════════════════
+
+final supplierReturnsProvider = StateNotifierProvider<SupplierReturnsNotifier, SupplierReturnsState>((ref) {
+  return SupplierReturnsNotifier(ref.watch(inventoryRepositoryProvider));
+});
+
+class SupplierReturnsNotifier extends StateNotifier<SupplierReturnsState> {
+  final InventoryRepository _repository;
+
+  SupplierReturnsNotifier(this._repository) : super(const SupplierReturnsInitial());
+
+  String? _statusFilter;
+  String? _supplierFilter;
+  String? _search;
+
+  Future<void> load({int page = 1}) async {
+    state = const SupplierReturnsLoading();
+    try {
+      final result = await _repository.listSupplierReturns(
+        page: page,
+        status: _statusFilter,
+        supplierId: _supplierFilter,
+        search: _search,
+      );
+      state = SupplierReturnsLoaded(
+        returns: result.items,
+        total: result.total,
+        currentPage: result.currentPage,
+        lastPage: result.lastPage,
+      );
+    } on DioException catch (e) {
+      state = SupplierReturnsError(message: _extractError(e));
+    } catch (e) {
+      state = SupplierReturnsError(message: e.toString());
+    }
+  }
+
+  Future<void> filterByStatus(String? status) async {
+    _statusFilter = status;
+    await load();
+  }
+
+  Future<void> filterBySupplier(String? supplierId) async {
+    _supplierFilter = supplierId;
+    await load();
+  }
+
+  Future<void> searchReturns(String? query) async {
+    _search = query?.isNotEmpty == true ? query : null;
+    await load();
+  }
+
+  Future<void> createReturn(Map<String, dynamic> data) async {
+    try {
+      final created = await _repository.createSupplierReturn(data);
+      if (state is SupplierReturnsLoaded) {
+        final loaded = state as SupplierReturnsLoaded;
+        state = SupplierReturnsLoaded(
+          returns: [created, ...loaded.returns],
+          total: loaded.total + 1,
+          currentPage: loaded.currentPage,
+          lastPage: loaded.lastPage,
+        );
+      }
+    } on DioException catch (e) {
+      throw Exception(_extractError(e));
+    }
+  }
+
+  Future<void> updateReturn(String id, Map<String, dynamic> data) async {
+    try {
+      final updated = await _repository.updateSupplierReturn(id, data);
+      _updateReturnInState(id, updated);
+    } on DioException catch (e) {
+      throw Exception(_extractError(e));
+    }
+  }
+
+  Future<void> deleteReturn(String id) async {
+    try {
+      await _repository.deleteSupplierReturn(id);
+      if (state is SupplierReturnsLoaded) {
+        final loaded = state as SupplierReturnsLoaded;
+        state = SupplierReturnsLoaded(
+          returns: loaded.returns.where((r) => r.id != id).toList(),
+          total: loaded.total - 1,
+          currentPage: loaded.currentPage,
+          lastPage: loaded.lastPage,
+        );
+      }
+    } on DioException catch (e) {
+      throw Exception(_extractError(e));
+    }
+  }
+
+  Future<void> submitReturn(String id) async {
+    try {
+      final updated = await _repository.submitSupplierReturn(id);
+      _updateReturnInState(id, updated);
+    } on DioException catch (e) {
+      throw Exception(_extractError(e));
+    }
+  }
+
+  Future<void> approveReturn(String id) async {
+    try {
+      final updated = await _repository.approveSupplierReturn(id);
+      _updateReturnInState(id, updated);
+    } on DioException catch (e) {
+      throw Exception(_extractError(e));
+    }
+  }
+
+  Future<void> completeReturn(String id) async {
+    try {
+      final updated = await _repository.completeSupplierReturn(id);
+      _updateReturnInState(id, updated);
+    } on DioException catch (e) {
+      throw Exception(_extractError(e));
+    }
+  }
+
+  Future<void> cancelReturn(String id) async {
+    try {
+      final updated = await _repository.cancelSupplierReturn(id);
+      _updateReturnInState(id, updated);
+    } on DioException catch (e) {
+      throw Exception(_extractError(e));
+    }
+  }
+
+  void _updateReturnInState(String id, SupplierReturn updated) {
+    if (state is SupplierReturnsLoaded) {
+      final loaded = state as SupplierReturnsLoaded;
+      state = SupplierReturnsLoaded(
+        returns: loaded.returns.map((r) => r.id == id ? updated : r).toList(),
+        total: loaded.total,
+        currentPage: loaded.currentPage,
+        lastPage: loaded.lastPage,
+      );
     }
   }
 }
