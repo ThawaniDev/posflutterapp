@@ -24,7 +24,7 @@ class StorePrice {
       id: json['id'] as String,
       storeId: json['store_id'] as String,
       productId: json['product_id'] as String,
-      sellPrice: (json['sell_price'] as num).toDouble(),
+      sellPrice: double.tryParse(json['sell_price'].toString()) ?? 0.0,
       validFrom: json['valid_from'] != null ? DateTime.parse(json['valid_from'] as String) : null,
       validTo: json['valid_to'] != null ? DateTime.parse(json['valid_to'] as String) : null,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,

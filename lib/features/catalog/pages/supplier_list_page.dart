@@ -338,9 +338,9 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
                 if (supplier.bankName != null) _infoRow(l10n.supplierBankName, supplier.bankName!),
                 if (supplier.iban != null) _infoRow(l10n.supplierIban, supplier.iban!),
                 if (supplier.creditLimit != null)
-                  _infoRow(l10n.supplierCreditLimit, '${supplier.creditLimit!.toStringAsFixed(2)} SAR'),
+                  _infoRow(l10n.supplierCreditLimit, '${supplier.creditLimit!.toStringAsFixed(2)} \u0081'),
                 if (supplier.outstandingBalance != null)
-                  _infoRow(l10n.supplierOutstandingBalance, '${supplier.outstandingBalance!.toStringAsFixed(2)} SAR'),
+                  _infoRow(l10n.supplierOutstandingBalance, '${supplier.outstandingBalance!.toStringAsFixed(2)} \u0081'),
                 if (supplier.rating != null)
                   _infoRow(l10n.supplierRating, '${'★' * supplier.rating!}${'☆' * (5 - supplier.rating!)}'),
                 if (supplier.notes != null) _infoRow(l10n.commonNotes, supplier.notes!),

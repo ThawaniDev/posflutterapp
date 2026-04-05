@@ -27,8 +27,8 @@ class DailyMetalRate {
       storeId: json['store_id'] as String,
       metalType: MetalType.fromValue(json['metal_type'] as String),
       karat: json['karat'] as String?,
-      ratePerGram: (json['rate_per_gram'] as num).toDouble(),
-      buybackRatePerGram: (json['buyback_rate_per_gram'] as num?)?.toDouble(),
+      ratePerGram: double.tryParse(json['rate_per_gram'].toString()) ?? 0.0,
+      buybackRatePerGram: (json['buyback_rate_per_gram'] != null ? double.tryParse(json['buyback_rate_per_gram'].toString()) : null),
       effectiveDate: DateTime.parse(json['effective_date'] as String),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );

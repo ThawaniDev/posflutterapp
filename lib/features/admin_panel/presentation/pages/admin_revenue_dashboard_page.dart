@@ -46,11 +46,11 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
               Row(
                 children: [
                   Expanded(
-                    child: _metricCard('MRR', '${state.mrr.toStringAsFixed(2)} SAR', Icons.trending_up, AppColors.success),
+                    child: _metricCard('MRR', '${state.mrr.toStringAsFixed(2)} \u0081', Icons.trending_up, AppColors.success),
                   ),
                   const SizedBox(width: AppSpacing.sm),
                   Expanded(
-                    child: _metricCard('ARR', '${state.arr.toStringAsFixed(2)} SAR', Icons.calendar_today, AppColors.info),
+                    child: _metricCard('ARR', '${state.arr.toStringAsFixed(2)} \u0081', Icons.calendar_today, AppColors.info),
                   ),
                 ],
               ),
@@ -76,7 +76,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                   Expanded(
                     child: _metricCard(
                       'Hardware Revenue',
-                      '${state.hardwareRevenue.toStringAsFixed(2)} SAR',
+                      '${state.hardwareRevenue.toStringAsFixed(2)} \u0081',
                       Icons.devices,
                       AppColors.purple,
                     ),
@@ -86,7 +86,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
               const SizedBox(height: AppSpacing.sm),
               _metricCard(
                 'Implementation Revenue',
-                '${state.implementationRevenue.toStringAsFixed(2)} SAR',
+                '${state.implementationRevenue.toStringAsFixed(2)} \u0081',
                 Icons.build_circle,
                 AppColors.info,
               ),
@@ -101,7 +101,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                     leading: Icon(Icons.circle, color: _statusColor(item['status'] ?? '')),
                     title: Text((item['status'] as String? ?? '').toUpperCase()),
                     subtitle: Text('${item['count']} invoices'),
-                    trailing: Text('${item['revenue']} SAR', style: const TextStyle(fontWeight: FontWeight.bold)),
+                    trailing: Text('${item['revenue']} \u0081', style: const TextStyle(fontWeight: FontWeight.bold)),
                   ),
                 ),
               ),

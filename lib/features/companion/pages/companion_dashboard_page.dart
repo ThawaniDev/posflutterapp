@@ -6,7 +6,6 @@ import 'package:thawani_pos/features/companion/widgets/companion_home_dashboard.
 import 'package:thawani_pos/features/companion/widgets/quick_stats_widget.dart';
 import 'package:thawani_pos/features/companion/widgets/quick_actions_widget.dart';
 import 'package:thawani_pos/features/companion/widgets/preferences_widget.dart';
-import 'package:thawani_pos/features/companion/widgets/sessions_widget.dart';
 import 'package:thawani_pos/features/companion/widgets/mobile_summary_widget.dart';
 import 'package:thawani_pos/features/companion/widgets/sales_summary_widget.dart';
 import 'package:thawani_pos/features/companion/widgets/active_orders_widget.dart';

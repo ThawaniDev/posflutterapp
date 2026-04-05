@@ -35,7 +35,7 @@ class DeliveryStatsWidget extends StatelessWidget {
             AppSpacing.gapW12,
             _StatTile(
               label: l10n.deliveryTodayRevenue,
-              value: '${todayRevenue.toStringAsFixed(2)} SAR',
+              value: '${todayRevenue.toStringAsFixed(2)} \u0081',
               icon: Icons.payments_outlined,
               color: AppColors.success,
             ),

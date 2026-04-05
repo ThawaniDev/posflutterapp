@@ -41,7 +41,7 @@ class PurchaseOrder {
       referenceNumber: json['reference_number'] as String?,
       status: PurchaseOrderStatus.tryFromValue(json['status'] as String?),
       expectedDate: json['expected_date'] != null ? DateTime.parse(json['expected_date'] as String) : null,
-      totalCost: (json['total_cost'] as num?)?.toDouble(),
+      totalCost: (json['total_cost'] != null ? double.tryParse(json['total_cost'].toString()) : null),
       notes: json['notes'] as String?,
       createdBy: json['created_by'] as String,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,

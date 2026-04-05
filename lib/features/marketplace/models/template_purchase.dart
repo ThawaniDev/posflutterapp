@@ -34,7 +34,7 @@ class TemplatePurchase {
       listingId: json['listing_id'] as String,
       listingName: json['listing_name'] as String?,
       purchaseType: json['purchase_type'] as String,
-      amountPaid: (json['amount_paid'] as num).toDouble(),
+      amountPaid: double.tryParse(json['amount_paid'].toString()) ?? 0.0,
       subscriptionInterval: json['subscription_interval'] as String?,
       expiresAt: json['expires_at'] != null ? DateTime.parse(json['expires_at'] as String) : null,
       isActive: json['is_active'] as bool? ?? true,

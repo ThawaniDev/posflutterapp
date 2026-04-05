@@ -52,8 +52,8 @@ class ZatcaInvoice {
       previousInvoiceHash: json['previous_invoice_hash'] as String,
       digitalSignature: json['digital_signature'] as String,
       qrCodeData: json['qr_code_data'] as String,
-      totalAmount: (json['total_amount'] as num).toDouble(),
-      vatAmount: (json['vat_amount'] as num).toDouble(),
+      totalAmount: double.tryParse(json['total_amount'].toString()) ?? 0.0,
+      vatAmount: double.tryParse(json['vat_amount'].toString()) ?? 0.0,
       submissionStatus: ZatcaSubmissionStatus.tryFromValue(json['submission_status'] as String?),
       zatcaResponseCode: json['zatca_response_code'] as String?,
       zatcaResponseMessage: json['zatca_response_message'] as String?,
@@ -125,13 +125,12 @@ class ZatcaInvoice {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ZatcaInvoice && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is ZatcaInvoice && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'ZatcaInvoice(id: $id, storeId: $storeId, orderId: $orderId, invoiceNumber: $invoiceNumber, invoiceType: $invoiceType, invoiceXml: $invoiceXml, ...)';
+  String toString() =>
+      'ZatcaInvoice(id: $id, storeId: $storeId, orderId: $orderId, invoiceNumber: $invoiceNumber, invoiceType: $invoiceType, invoiceXml: $invoiceXml, ...)';
 }

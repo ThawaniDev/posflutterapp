@@ -2696,11 +2696,11 @@ abstract class AppLocalizations {
   /// **'Response Payload'**
   String get deliveryResponsePayload;
 
-  /// No description provided for @thawaniPay.
+  /// No description provided for @thawaniIntegration.
   ///
   /// In en, this message translates to:
   /// **'Thawani Integration'**
-  String get thawaniPay;
+  String get thawaniIntegration;
 
   /// No description provided for @thawaniOverview.
   ///
@@ -3467,7 +3467,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsProfileCurrencyCodeHint.
   ///
   /// In en, this message translates to:
-  /// **'e.g. OMR, SAR, USD'**
+  /// **'e.g. OMR, , USD'**
   String get settingsProfileCurrencyCodeHint;
 
   /// No description provided for @settingsProfileCurrencySymbol.
@@ -6077,7 +6077,7 @@ abstract class AppLocalizations {
   /// No description provided for @subscriptionSubscribeConfirm.
   ///
   /// In en, this message translates to:
-  /// **'You will be subscribed to {planName} on a {billingCycle} basis.\n\nPrice: {price} SAR/{billingCycle}'**
+  /// **'You will be subscribed to {planName} on a {billingCycle} basis.\n\nPrice: {price} /{billingCycle}'**
   String subscriptionSubscribeConfirm(
     String planName,
     String billingCycle,
@@ -6387,7 +6387,7 @@ abstract class AppLocalizations {
   /// No description provided for @subscriptionAddAddonConfirm.
   ///
   /// In en, this message translates to:
-  /// **'This will add {name} to your subscription.\n\nCost: {price} SAR/{cycle}'**
+  /// **'This will add {name} to your subscription.\n\nCost: {price} /{cycle}'**
   String subscriptionAddAddonConfirm(String name, String price, String cycle);
 
   /// No description provided for @subscriptionRemoveAddon.
@@ -7269,7 +7269,7 @@ abstract class AppLocalizations {
   /// No description provided for @marketplaceCurrency.
   ///
   /// In en, this message translates to:
-  /// **'SAR'**
+  /// **''**
   String get marketplaceCurrency;
 
   /// No description provided for @marketplaceListingDetail.
@@ -7821,7 +7821,7 @@ abstract class AppLocalizations {
   /// No description provided for @openingFloatSar.
   ///
   /// In en, this message translates to:
-  /// **'Opening Float (SAR)'**
+  /// **'Opening Float ()'**
   String get openingFloatSar;
 
   /// No description provided for @openSession.
@@ -7845,7 +7845,7 @@ abstract class AppLocalizations {
   /// No description provided for @amountSar.
   ///
   /// In en, this message translates to:
-  /// **'Amount (SAR)'**
+  /// **'Amount ()'**
   String get amountSar;
 
   /// No description provided for @reason.
@@ -7989,7 +7989,7 @@ abstract class AppLocalizations {
   /// No description provided for @redemptionAmountSar.
   ///
   /// In en, this message translates to:
-  /// **'Redemption Amount (SAR)'**
+  /// **'Redemption Amount ()'**
   String get redemptionAmountSar;
 
   /// No description provided for @giftCardIssued.
@@ -9135,7 +9135,7 @@ abstract class AppLocalizations {
   /// No description provided for @posPaymentTotal.
   ///
   /// In en, this message translates to:
-  /// **'Total: SAR {amount}'**
+  /// **'Total:  {amount}'**
   String posPaymentTotal(Object amount);
 
   /// No description provided for @posSplitPayment.
@@ -9459,13 +9459,13 @@ abstract class AppLocalizations {
   /// No description provided for @posSubtotalAmount.
   ///
   /// In en, this message translates to:
-  /// **'Subtotal: SAR {amount}'**
+  /// **'Subtotal:  {amount}'**
   String posSubtotalAmount(Object amount);
 
   /// No description provided for @posDiscountAmountSar.
   ///
   /// In en, this message translates to:
-  /// **'Discount Amount (SAR)'**
+  /// **'Discount Amount ()'**
   String get posDiscountAmountSar;
 
   /// No description provided for @posApply.
@@ -9597,13 +9597,13 @@ abstract class AppLocalizations {
   /// No description provided for @posChangeGiven.
   ///
   /// In en, this message translates to:
-  /// **'Change: SAR {amount}'**
+  /// **'Change:  {amount}'**
   String posChangeGiven(Object amount);
 
   /// No description provided for @posTotalAmountSar.
   ///
   /// In en, this message translates to:
-  /// **'Total: SAR {amount}'**
+  /// **'Total:  {amount}'**
   String posTotalAmountSar(Object amount);
 
   /// No description provided for @posTotalNotCovered.
@@ -10173,7 +10173,7 @@ abstract class AppLocalizations {
   /// No description provided for @posOpeningFloatSar.
   ///
   /// In en, this message translates to:
-  /// **'Opening Float (SAR)'**
+  /// **'Opening Float ()'**
   String get posOpeningFloatSar;
 
   /// No description provided for @posCloseCashSession.
@@ -10185,7 +10185,7 @@ abstract class AppLocalizations {
   /// No description provided for @posCountedCash.
   ///
   /// In en, this message translates to:
-  /// **'Counted Cash: {amount} SAR'**
+  /// **'Counted Cash: {amount} '**
   String posCountedCash(Object amount);
 
   /// No description provided for @posNotesOptional.
@@ -10197,7 +10197,7 @@ abstract class AppLocalizations {
   /// No description provided for @posAmountSar.
   ///
   /// In en, this message translates to:
-  /// **'Amount (SAR)'**
+  /// **'Amount ()'**
   String get posAmountSar;
 
   /// No description provided for @posReason.
@@ -10527,13 +10527,13 @@ abstract class AppLocalizations {
   /// No description provided for @sarCurrency.
   ///
   /// In en, this message translates to:
-  /// **'SAR'**
+  /// **''**
   String get sarCurrency;
 
   /// No description provided for @amountWithSar.
   ///
   /// In en, this message translates to:
-  /// **'SAR {amount}'**
+  /// **' {amount}'**
   String amountWithSar(Object amount);
 
   /// No description provided for @authAlreadyHaveAccount.
@@ -10689,7 +10689,7 @@ abstract class AppLocalizations {
   /// No description provided for @cashMgmtAmountSar.
   ///
   /// In en, this message translates to:
-  /// **'Amount (SAR)'**
+  /// **'Amount ()'**
   String get cashMgmtAmountSar;
 
   /// No description provided for @cashMgmtCashCount.
@@ -10791,7 +10791,7 @@ abstract class AppLocalizations {
   /// No description provided for @cashMgmtOpeningFloatSar.
   ///
   /// In en, this message translates to:
-  /// **'Opening Float (SAR)'**
+  /// **'Opening Float ()'**
   String get cashMgmtOpeningFloatSar;
 
   /// No description provided for @cashMgmtReason.
@@ -12135,7 +12135,7 @@ abstract class AppLocalizations {
   /// No description provided for @posChangeAmount.
   ///
   /// In en, this message translates to:
-  /// **'Change: SAR {amount}'**
+  /// **'Change:  {amount}'**
   String posChangeAmount(String amount);
 
   /// No description provided for @posEnterReceiptNumberHint.
@@ -12171,7 +12171,7 @@ abstract class AppLocalizations {
   /// No description provided for @posTotalAmount.
   ///
   /// In en, this message translates to:
-  /// **'Total: SAR {amount}'**
+  /// **'Total:  {amount}'**
   String posTotalAmount(String amount);
 
   /// No description provided for @posTransactionLookupFailed.
@@ -13440,11 +13440,11 @@ abstract class AppLocalizations {
   /// **'Promotions'**
   String get sidebarPromotions;
 
-  /// No description provided for @sidebarThawaniPay.
+  /// No description provided for @sidebarThawaniIntegration.
   ///
   /// In en, this message translates to:
-  /// **'Thawani Pay'**
-  String get sidebarThawaniPay;
+  /// **'Thawani Integration'**
+  String get sidebarThawaniIntegration;
 
   /// No description provided for @sidebarDelivery.
   ///
@@ -13683,7 +13683,7 @@ abstract class AppLocalizations {
   /// No description provided for @dailySummaryFloat.
   ///
   /// In en, this message translates to:
-  /// **'Float: {amount} SAR'**
+  /// **'Float: {amount} '**
   String dailySummaryFloat(String amount);
 
   /// No description provided for @dailySummaryTerminal.
@@ -14171,6 +14171,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Label Templates'**
   String get sidebarLabelLayoutTemplates;
+
+  /// No description provided for @sidebarGroupCore.
+  ///
+  /// In en, this message translates to:
+  /// **'Core'**
+  String get sidebarGroupCore;
+
+  /// No description provided for @sidebarGroupCatalog.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalog & Inventory'**
+  String get sidebarGroupCatalog;
+
+  /// No description provided for @sidebarGroupPeople.
+  ///
+  /// In en, this message translates to:
+  /// **'People'**
+  String get sidebarGroupPeople;
+
+  /// No description provided for @sidebarGroupBusiness.
+  ///
+  /// In en, this message translates to:
+  /// **'Business'**
+  String get sidebarGroupBusiness;
+
+  /// No description provided for @sidebarGroupReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports'**
+  String get sidebarGroupReports;
+
+  /// No description provided for @sidebarGroupIntegrations.
+  ///
+  /// In en, this message translates to:
+  /// **'Integrations'**
+  String get sidebarGroupIntegrations;
+
+  /// No description provided for @sidebarGroupHardware.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware & Sync'**
+  String get sidebarGroupHardware;
+
+  /// No description provided for @sidebarGroupIndustry.
+  ///
+  /// In en, this message translates to:
+  /// **'Industry'**
+  String get sidebarGroupIndustry;
+
+  /// No description provided for @sidebarGroupSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings & Tools'**
+  String get sidebarGroupSettings;
 
   /// No description provided for @commonUpdate.
   ///

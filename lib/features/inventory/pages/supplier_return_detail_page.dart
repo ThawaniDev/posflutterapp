@@ -169,7 +169,7 @@ class _SupplierReturnDetailPageState extends ConsumerState<SupplierReturnDetailP
                 const SizedBox(height: AppSpacing.md),
                 _detailRow(l10n.inventorySupplier, ret.supplierName ?? '-'),
                 _detailRow(l10n.supplierReturnReason, ret.reason ?? '-'),
-                _detailRow(l10n.inventoryTotalCost, '${ret.totalAmount.toStringAsFixed(2)} SAR'),
+                _detailRow(l10n.inventoryTotalCost, '${ret.totalAmount.toStringAsFixed(2)} \u0081'),
                 if (ret.notes != null && ret.notes!.isNotEmpty) _detailRow(l10n.commonNotes, ret.notes!),
                 if (ret.createdByName != null) _detailRow(l10n.supplierReturnCreatedBy, ret.createdByName!),
                 if (ret.approvedByName != null) _detailRow(l10n.supplierReturnApprovedBy, ret.approvedByName!),

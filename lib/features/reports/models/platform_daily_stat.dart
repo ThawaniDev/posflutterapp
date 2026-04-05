@@ -28,8 +28,8 @@ class PlatformDailyStat {
       totalActiveStores: (json['total_active_stores'] as num).toInt(),
       newRegistrations: (json['new_registrations'] as num).toInt(),
       totalOrders: (json['total_orders'] as num).toInt(),
-      totalGmv: (json['total_gmv'] as num).toDouble(),
-      totalMrr: (json['total_mrr'] as num).toDouble(),
+      totalGmv: double.tryParse(json['total_gmv'].toString()) ?? 0.0,
+      totalMrr: double.tryParse(json['total_mrr'].toString()) ?? 0.0,
       churnCount: (json['churn_count'] as num).toInt(),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );

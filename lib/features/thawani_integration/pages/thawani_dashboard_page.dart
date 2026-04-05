@@ -51,7 +51,7 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.thawaniPay),
+        title: Text(AppLocalizations.of(context)!.thawaniIntegration),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),

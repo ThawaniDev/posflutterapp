@@ -104,7 +104,7 @@ class _DailySummaryTab extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      'ر.س. ${total.toStringAsFixed(2)}',
+                      '\u0081. ${total.toStringAsFixed(2)}',
                       style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.success),
                     ),
                     if (item['avg_order_value'] != null)
@@ -173,7 +173,7 @@ class _ProductSalesTab extends ConsumerWidget {
                   ),
                 ),
                 Text(
-                  'ر.س. ${revenue.toStringAsFixed(2)}',
+                  '\u0081. ${revenue.toStringAsFixed(2)}',
                   style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.success),
                 ),
               ],

@@ -76,7 +76,7 @@ class _OrderRow extends StatelessWidget {
           AppSpacing.gapW8,
           PosBadge(label: status, variant: _statusVariant(status)),
           AppSpacing.gapW8,
-          Text('SAR ${((order['total'] as num?)?.toDouble() ?? 0).toStringAsFixed(2)}', style: AppTypography.labelMedium),
+          Text('\u0081 ${((order['total'] != null ? double.tryParse((order['total'].toString())) : null) ?? 0).toStringAsFixed(2)}', style: AppTypography.labelMedium),
         ],
       ),
     );

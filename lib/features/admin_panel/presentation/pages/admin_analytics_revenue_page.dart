@@ -54,9 +54,9 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                 // MRR & ARR cards
                 Row(
                   children: [
-                    Expanded(child: _metricCard('MRR', '\$${mrr.toStringAsFixed(2)}', AppColors.success)),
+                    Expanded(child: _metricCard('MRR', '\u0081${mrr.toStringAsFixed(2)}', AppColors.success)),
                     const SizedBox(width: AppSpacing.sm),
-                    Expanded(child: _metricCard('ARR', '\$${arr.toStringAsFixed(2)}', AppColors.info)),
+                    Expanded(child: _metricCard('ARR', '\u0081${arr.toStringAsFixed(2)}', AppColors.info)),
                   ],
                 ),
                 const SizedBox(height: AppSpacing.sm),
@@ -88,7 +88,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                         title: Text(p['plan_name'] as String? ?? 'Unknown'),
                         subtitle: Text('${p['active_count'] ?? 0} active stores'),
                         trailing: Text(
-                          '\$${(p['mrr'] as num? ?? 0).toStringAsFixed(2)}',
+                          '\u0081${(p['mrr'] as num? ?? 0).toStringAsFixed(2)}',
                           style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.success),
                         ),
                       ),
@@ -117,7 +117,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text('\$${(t['mrr'] as num? ?? 0).toStringAsFixed(0)}', style: const TextStyle(fontSize: 10)),
+                              Text('\u0081${(t['mrr'] as num? ?? 0).toStringAsFixed(0)}', style: const TextStyle(fontSize: 10)),
                               Container(
                                 width: 30,
                                 height: ((t['mrr'] as num? ?? 0).toDouble() / (mrr > 0 ? mrr : 1) * 120).clamp(4.0, 150.0),

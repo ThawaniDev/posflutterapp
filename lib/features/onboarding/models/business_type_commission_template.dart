@@ -31,7 +31,7 @@ class BusinessTypeCommissionTemplate {
       name: json['name'] as String,
       nameAr: json['name_ar'] as String,
       commissionType: BusinessCommissionType.fromValue(json['commission_type'] as String),
-      value: (json['value'] as num?)?.toDouble(),
+      value: (json['value'] != null ? double.tryParse(json['value'].toString()) : null),
       appliesTo: CommissionAppliesTo.tryFromValue(json['applies_to'] as String?),
       tierThresholds: json['tier_thresholds'] != null ? Map<String, dynamic>.from(json['tier_thresholds'] as Map) : null,
       sortOrder: (json['sort_order'] as num?)?.toInt(),

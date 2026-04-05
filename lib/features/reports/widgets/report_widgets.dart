@@ -9,7 +9,7 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 
 /// Format a number as currency string
 String formatCurrency(num value) {
-  final f = NumberFormat.currency(symbol: '\$', decimalDigits: 2);
+  final f = NumberFormat.currency(symbol: '\u0081', decimalDigits: 2);
   return f.format(value);
 }
 

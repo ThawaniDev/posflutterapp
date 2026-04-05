@@ -37,7 +37,7 @@ class InvoiceTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text('${invoice.total.toStringAsFixed(2)} SAR', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+            Text('${invoice.total.toStringAsFixed(2)} \u0081', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
             AppSpacing.verticalXs,
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),

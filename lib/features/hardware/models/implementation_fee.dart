@@ -25,7 +25,7 @@ class ImplementationFee {
       id: json['id'] as String,
       storeId: json['store_id'] as String,
       feeType: ImplementationFeeType.fromValue(json['fee_type'] as String),
-      amount: (json['amount'] as num).toDouble(),
+      amount: double.tryParse(json['amount'].toString()) ?? 0.0,
       status: ImplementationFeeStatus.fromValue(json['status'] as String),
       notes: json['notes'] as String?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,

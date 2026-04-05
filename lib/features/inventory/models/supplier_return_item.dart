@@ -30,8 +30,8 @@ class SupplierReturnItem {
       productId: json['product_id'] as String,
       productName: productMap?['name'] as String?,
       productSku: productMap?['sku'] as String?,
-      quantity: (json['quantity'] as num).toDouble(),
-      unitCost: (json['unit_cost'] as num).toDouble(),
+      quantity: double.tryParse(json['quantity'].toString()) ?? 0.0,
+      unitCost: double.tryParse(json['unit_cost'].toString()) ?? 0.0,
       reason: json['reason'] as String?,
       batchNumber: json['batch_number'] as String?,
     );

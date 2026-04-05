@@ -18,7 +18,7 @@ class CustomerGroup {
       id: json['id'] as String,
       organizationId: json['organization_id'] as String,
       name: json['name'] as String,
-      discountPercent: (json['discount_percent'] as num?)?.toDouble(),
+      discountPercent: (json['discount_percent'] != null ? double.tryParse(json['discount_percent'].toString()) : null),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }

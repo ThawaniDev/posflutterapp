@@ -482,7 +482,7 @@
   "deliveryAttempt": "المحاولة",
   "deliveryRequestPayload": "بيانات الطلب",
   "deliveryResponsePayload": "بيانات الاستجابة",
-  "thawaniPay": "ثواني باي",
+  "thawaniIntegration": "ربط ثواني",
   "thawaniOverview": "نظرة عامة",
   "thawaniSettings": "الإعدادات",
   "thawaniOrders": "الطلبات",
@@ -612,7 +612,7 @@
   "settingsWorkingBreakEnd": "نهاية الاستراحة",
   "settingsProfileCurrency": "العملة",
   "settingsProfileCurrencyCode": "رمز العملة",
-  "settingsProfileCurrencyCodeHint": "مثال: OMR, SAR, USD",
+  "settingsProfileCurrencyCodeHint": "مثال: OMR, \u0081, USD",
   "settingsProfileCurrencySymbol": "رمز العملة",
   "settingsProfileCurrencySymbolHint": "مثال: ر.ع, ﷼, $",
   "settingsProfileFormatting": "تنسيق الأرقام",
@@ -1088,7 +1088,7 @@
       }
     }
   },
-  "subscriptionSubscribeConfirm": "سيتم اشتراكك في {planName} على أساس {billingCycle}.\n\nالسعر: {price} ر.س/{billingCycle}",
+  "subscriptionSubscribeConfirm": "سيتم اشتراكك في {planName} على أساس {billingCycle}.\n\nالسعر: {price} \u0081/{billingCycle}",
   "@subscriptionSubscribeConfirm": {
     "placeholders": {
       "planName": {
@@ -1214,7 +1214,7 @@
       }
     }
   },
-  "subscriptionAddAddonConfirm": "سيتم إضافة {name} إلى اشتراكك.\n\nالتكلفة: {price} ر.س/{cycle}",
+  "subscriptionAddAddonConfirm": "سيتم إضافة {name} إلى اشتراكك.\n\nالتكلفة: {price} \u0081/{cycle}",
   "@subscriptionAddAddonConfirm": {
     "placeholders": {
       "name": {
@@ -1419,7 +1419,7 @@
   "marketplaceNoListings": "لم يتم العثور على قوالب",
   "marketplaceNoListingsSubtitle": "حاول تعديل البحث أو الفلاتر.",
   "marketplacePage": "صفحة",
-  "marketplaceCurrency": "ر.س.",
+  "marketplaceCurrency": "\u0081.",
   "marketplaceListingDetail": "تفاصيل القالب",
   "marketplaceDescription": "الوصف",
   "marketplaceOwned": "مملوك",
@@ -1511,11 +1511,11 @@
   "openCashSession": "فتح جلسة نقدية",
   "noSessionsYet": "لا توجد جلسات بعد",
   "totalCount": "المجموع الكلي",
-  "openingFloatSar": "الرصيد الافتتاحي (ر.س)",
+  "openingFloatSar": "الرصيد الافتتاحي (\u0081)",
   "openSession": "فتح الجلسة",
   "closeCashSession": "إغلاق الجلسة النقدية",
   "notesOptional": "ملاحظات (اختياري)",
-  "amountSar": "المبلغ (ر.س)",
+  "amountSar": "المبلغ (\u0081)",
   "reason": "السبب",
   "record": "تسجيل",
   "expenses": "المصروفات",
@@ -1539,7 +1539,7 @@
   "check": "تحقق",
   "availableBalance": "الرصيد المتاح",
   "redeemGiftCard": "استرداد بطاقة الهدية",
-  "redemptionAmountSar": "مبلغ الاسترداد (ر.س)",
+  "redemptionAmountSar": "مبلغ الاسترداد (\u0081)",
   "giftCardIssued": "تم إصدار بطاقة الهدية",
   "code": "الرمز",
   "initial": "المبدئي",
@@ -1751,7 +1751,7 @@
   "posFindTransaction": "أدخل رقم الإيصال للبحث عن المعاملة",
   "posTransactionNotFound": "المعاملة غير موجودة",
   "posPayment": "الدفع",
-  "posPaymentTotal": "الإجمالي: ر.س {amount}",
+  "posPaymentTotal": "الإجمالي: \u0081 {amount}",
   "posSplitPayment": "تقسيم الدفع",
   "posCashTendered": "المبلغ المدفوع",
   "posChange": "الباقي",
@@ -1805,8 +1805,8 @@
   "posClear": "مسح",
   "posWalkInCustomer": "عميل زائر",
   "posCartDiscount": "خصم السلة",
-  "posSubtotalAmount": "المجموع الفرعي: ر.س {amount}",
-  "posDiscountAmountSar": "مبلغ الخصم (ر.س)",
+  "posSubtotalAmount": "المجموع الفرعي: \u0081 {amount}",
+  "posDiscountAmountSar": "مبلغ الخصم (\u0081)",
   "posApply": "تطبيق",
   "posOrderNotes": "ملاحظات الطلب",
   "posNotesHint": "أضف ملاحظات لهذا الطلب...",
@@ -1828,8 +1828,8 @@
   "posRegister": "السجل",
   "posPleaseSelectRegister": "الرجاء اختيار سجل",
   "posNoRegistersFound": "لم يتم العثور على سجلات. الرجاء إضافة واحد أولاً.",
-  "posChangeGiven": "الباقي: ر.س {amount}",
-  "posTotalAmountSar": "الإجمالي: ر.س {amount}",
+  "posChangeGiven": "الباقي: \u0081 {amount}",
+  "posTotalAmountSar": "الإجمالي: \u0081 {amount}",
   "posTotalNotCovered": "المبلغ المدفوع لا يغطي المبلغ المستحق",
   "posReceiptTransactionNumber": "رقم الإيصال / المعاملة",
   "posFind": "بحث",
@@ -1924,11 +1924,11 @@
   "posTotalCount": "إجمالي العد",
   "posNoSessionsYet": "لا توجد جلسات بعد",
   "posOpenCashSessionDialog": "فتح جلسة نقدية",
-  "posOpeningFloatSar": "النقد الافتتاحي (ر.س)",
+  "posOpeningFloatSar": "النقد الافتتاحي (\u0081)",
   "posCloseCashSession": "إغلاق الجلسة النقدية",
-  "posCountedCash": "النقد المعدود: {amount} ر.س",
+  "posCountedCash": "النقد المعدود: {amount} \u0081",
   "posNotesOptional": "ملاحظات (اختياري)",
-  "posAmountSar": "المبلغ (ر.س)",
+  "posAmountSar": "المبلغ (\u0081)",
   "posReason": "السبب",
   "posReasonPettyCash": "مصروفات نثرية",
   "posReasonSupplierPayment": "دفع مورد",
@@ -1938,7 +1938,7 @@
   "posReasonOther": "أخرى",
   "posRecord": "تسجيل",
   "posQuickAmountPlus": "+{amount}",
-  "loginTitle": "وامض نقاط البيع",
+  "loginTitle": "وميض نقاط البيع",
   "loginSubtitle": "سجل الدخول إلى حسابك",
   "loginEmail": "البريد الإلكتروني",
   "loginEmailHint": "أدخل بريدك الإلكتروني",
@@ -1983,8 +1983,8 @@
   "purchaseOrderCancelConfirm": "هل تريد إلغاء الطلب \"{reference}\"؟",
   "goodsReceiptConfirm": "هل تريد تأكيد الاستلام \"{reference}\"؟\n\nسيتم تحديث مستويات المخزون ولا يمكن التراجع عن ذلك.",
   "recipeDeleteConfirm": "هل تريد حذف الوصفة \"{name}\"؟",
-  "sarCurrency": "ر.س",
-  "amountWithSar": "ر.س {amount}",
+  "sarCurrency": "\u0081",
+  "amountWithSar": "\u0081 {amount}",
   "authAlreadyHaveAccount": "هل لديك حساب بالفعل؟",
   "authBusinessInformation": "معلومات العمل",
   "authBusinessNameHint": "مثلاً شركتي",
@@ -2010,7 +2010,7 @@
   "authStoreNameHint": "مثلاً الفرع الرئيسي",
   "authStoreNameOptional": "اسم المتجر (اختياري)",
   "cashMgmtActiveSession": "الجلسة النشطة",
-  "cashMgmtAmountSar": "المبلغ (ر.س.)",
+  "cashMgmtAmountSar": "المبلغ (\u0081.)",
   "cashMgmtCashCount": "عد النقد",
   "cashMgmtCashIn": "إيداع نقدي",
   "cashMgmtCashOut": "سحب نقدي",
@@ -2027,7 +2027,7 @@
   "cashMgmtOpenSession": "فتح الجلسة",
   "cashMgmtOpened": "مفتوحة",
   "cashMgmtOpeningFloat": "الرصيد الافتتاحي",
-  "cashMgmtOpeningFloatSar": "الرصيد الافتتاحي (ر.س.)",
+  "cashMgmtOpeningFloatSar": "الرصيد الافتتاحي (\u0081.)",
   "cashMgmtReason": "السبب",
   "cashMgmtRecord": "تسجيل",
   "cashMgmtSessionHistory": "سجل الجلسات",
@@ -2286,7 +2286,7 @@
   "ordersVoidOrder": "إلغاء الطلب",
   "ordersVoided": "ملغى",
   "ordersVoided2": "تم إلغاء الطلب",
-  "posChangeAmount": "الباقي: ر.س. {amount}",
+  "posChangeAmount": "الباقي: \u0081. {amount}",
   "@posChangeAmount": {
     "placeholders": {
       "amount": {
@@ -2309,7 +2309,7 @@
   },
   "posPaymentNotCover": "الدفع لا يغطي المبلغ الإجمالي",
   "posSelectRegisterError": "يرجى اختيار سجل",
-  "posTotalAmount": "الإجمالي: ر.س. {amount}",
+  "posTotalAmount": "الإجمالي: \u0081. {amount}",
   "@posTotalAmount": {
     "placeholders": {
       "amount": {
@@ -2614,7 +2614,7 @@
   "sidebarFinancialReports": "التقارير المالية",
   "sidebarCustomerReports": "تقارير العملاء",
   "sidebarPromotions": "العروض",
-  "sidebarThawaniPay": "ثواني باي",
+  "sidebarThawaniIntegration": "ربط ثواني",
   "sidebarDelivery": "التوصيل",
   "sidebarZatca": "زاتكا",
   "sidebarHardware": "الأجهزة",
@@ -2661,7 +2661,7 @@
   "dailySummaryHourlyActivity": "النشاط بالساعة",
   "dailySummarySessionDetails": "تفاصيل الجلسات",
   "dailySummaryNoSessions": "لا توجد جلسات",
-  "dailySummaryFloat": "المبلغ الافتتاحي: {amount} ر.س",
+  "dailySummaryFloat": "المبلغ الافتتاحي: {amount} \u0081",
   "@dailySummaryFloat": {
     "placeholders": {
       "amount": {
@@ -2768,6 +2768,16 @@
   "labelLayoutTemplateSimpleLayout": "تخطيط بسيط متراص",
   "labelLayoutTemplateNoFields": "لم يتم تكوين حقول",
   "sidebarLabelLayoutTemplates": "قوالب الملصقات",
+
+  "sidebarGroupCore": "الأساسية",
+  "sidebarGroupCatalog": "المنتجات والمخزون",
+  "sidebarGroupPeople": "الأشخاص",
+  "sidebarGroupBusiness": "الأعمال",
+  "sidebarGroupReports": "التقارير",
+  "sidebarGroupIntegrations": "التكاملات",
+  "sidebarGroupHardware": "الأجهزة والمزامنة",
+  "sidebarGroupIndustry": "القطاعات",
+  "sidebarGroupSettings": "الإعدادات والأدوات",
 
   "commonUpdate": "تحديث",
   "commonClose": "إغلاق",

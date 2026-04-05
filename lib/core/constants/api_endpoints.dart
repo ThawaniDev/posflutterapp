@@ -733,6 +733,17 @@ class ApiEndpoints {
   static const String thawaniProductMappings = '/thawani/product-mappings';
   static const String thawaniSettlements = '/thawani/settlements';
 
+  // ─── Predefined Catalog ───────────────────────────────────
+  static const String predefinedCategories = '/predefined-catalog/categories';
+  static const String predefinedCategoryTree = '/predefined-catalog/categories/tree';
+  static String predefinedCategoryById(String id) => '/predefined-catalog/categories/$id';
+  static String predefinedCategoryClone(String id) => '/predefined-catalog/categories/$id/clone';
+  static const String predefinedProducts = '/predefined-catalog/products';
+  static String predefinedProductById(String id) => '/predefined-catalog/products/$id';
+  static String predefinedProductClone(String id) => '/predefined-catalog/products/$id/clone';
+  static const String predefinedProductsBulkAction = '/predefined-catalog/products/bulk-action';
+  static const String predefinedCloneAll = '/predefined-catalog/clone-all';
+
   // Branches (uses core stores)
   static const String branches = '/core/stores';
   static const String branchStats = '/core/stores/stats';

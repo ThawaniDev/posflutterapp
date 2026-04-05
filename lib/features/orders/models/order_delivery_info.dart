@@ -32,7 +32,7 @@ class OrderDeliveryInfo {
       driverPhone: json['driver_phone'] as String?,
       estimatedDelivery: json['estimated_delivery'] != null ? DateTime.parse(json['estimated_delivery'] as String) : null,
       actualDelivery: json['actual_delivery'] != null ? DateTime.parse(json['actual_delivery'] as String) : null,
-      deliveryFee: (json['delivery_fee'] as num?)?.toDouble(),
+      deliveryFee: (json['delivery_fee'] != null ? double.tryParse(json['delivery_fee'].toString()) : null),
       trackingUrl: json['tracking_url'] as String?,
     );
   }

@@ -76,7 +76,7 @@ class _StaffList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final totalRevenue = staff.fold<double>(0, (sum, s) => sum + (s['total_revenue'] as num).toDouble());
+    final totalRevenue = staff.fold<double>(0, (sum, s) => sum + (double.tryParse(s['total_revenue'].toString()) ?? 0.0));
     final totalOrders = staff.fold<int>(0, (sum, s) => sum + (s['total_orders'] as num).toInt());
 
     return ListView(
@@ -100,7 +100,7 @@ class _StaffList extends StatelessWidget {
             ),
             ReportKpiCard(
               label: 'Avg per Staff',
-              value: staff.isNotEmpty ? formatCurrency(totalRevenue / staff.length) : '\$0',
+              value: staff.isNotEmpty ? formatCurrency(totalRevenue / staff.length) : '\u00810',
               icon: Icons.person_rounded,
               color: AppColors.warning,
             ),
@@ -116,10 +116,10 @@ class _StaffList extends StatelessWidget {
             children: List.generate(staff.length, (i) {
               final s = staff[i];
               final name = s['staff_name'] as String? ?? 'Unknown';
-              final revenue = (s['total_revenue'] as num).toDouble();
+              final revenue = double.tryParse(s['total_revenue'].toString()) ?? 0.0;
               final orders = (s['total_orders'] as num).toInt();
-              final avgOrder = (s['avg_order_value'] as num).toDouble();
-              final discounts = (s['total_discounts_given'] as num).toDouble();
+              final avgOrder = double.tryParse(s['avg_order_value'].toString()) ?? 0.0;
+              final discounts = double.tryParse(s['total_discounts_given'].toString()) ?? 0.0;
               final initials = name.isNotEmpty ? name[0].toUpperCase() : 'U';
 
               return Column(

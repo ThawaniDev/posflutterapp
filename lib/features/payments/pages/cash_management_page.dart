@@ -225,7 +225,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                     SizedBox(
                       width: 100,
                       child: Text(
-                        '${dc.total.toStringAsFixed(2)} SAR',
+                        '${dc.total.toStringAsFixed(2)} \u0081',
                         style: theme.textTheme.bodyMedium,
                         textAlign: TextAlign.end,
                       ),
@@ -241,7 +241,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
               children: [
                 Text(AppLocalizations.of(context)!.cashMgmtTotalCount, style: theme.textTheme.titleMedium),
                 Text(
-                  '${total.toStringAsFixed(2)} SAR',
+                  '${total.toStringAsFixed(2)} \u0081',
                   style: theme.textTheme.titleMedium?.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
                 ),
               ],
@@ -286,7 +286,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                         isActive ? Icons.lock_open : Icons.lock,
                         color: isActive ? AppColors.success : Theme.of(context).hintColor,
                       ),
-                      title: Text('Float: ${session.openingFloat.toStringAsFixed(2)} SAR'),
+                      title: Text('Float: ${session.openingFloat.toStringAsFixed(2)} \u0081'),
                       subtitle: Text(
                         isActive ? 'Opened ${_formatTime(session.openedAt)}' : 'Closed ${_formatTime(session.closedAt)}',
                       ),

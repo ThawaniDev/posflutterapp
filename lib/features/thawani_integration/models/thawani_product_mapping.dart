@@ -30,7 +30,7 @@ class ThawaniProductMapping {
       productId: json['product_id'] as String,
       thawaniProductId: json['thawani_product_id'] as String,
       isPublished: json['is_published'] as bool?,
-      onlinePrice: (json['online_price'] as num?)?.toDouble(),
+      onlinePrice: (json['online_price'] != null ? double.tryParse(json['online_price'].toString()) : null),
       displayOrder: (json['display_order'] as num?)?.toInt(),
       lastSyncedAt: json['last_synced_at'] != null ? DateTime.parse(json['last_synced_at'] as String) : null,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,

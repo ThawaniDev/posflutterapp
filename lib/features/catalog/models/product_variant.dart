@@ -36,7 +36,7 @@ class ProductVariant {
       variantValueAr: json['variant_value_ar'] as String?,
       sku: json['sku'] as String?,
       barcode: json['barcode'] as String?,
-      priceAdjustment: (json['price_adjustment'] as num?)?.toDouble(),
+      priceAdjustment: (json['price_adjustment'] != null ? double.tryParse(json['price_adjustment'].toString()) : null),
       imageUrl: json['image_url'] as String?,
       isActive: json['is_active'] as bool?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,

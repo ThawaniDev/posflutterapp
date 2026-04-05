@@ -138,7 +138,7 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
   }
 
   String _avgDiscount(Map<String, dynamic> data) {
-    final total = (data['total_discount_given'] as num?)?.toDouble() ?? 0;
+    final total = (data['total_discount_given'] != null ? double.tryParse(data['total_discount_given'].toString()) : null) ?? 0;
     final count = (data['usage_count'] as num?)?.toInt() ?? 0;
     if (count == 0) return '0.00';
     return (total / count).toStringAsFixed(2);

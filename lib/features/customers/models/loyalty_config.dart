@@ -25,8 +25,8 @@ class LoyaltyConfig {
     return LoyaltyConfig(
       id: json['id'] as String,
       organizationId: json['organization_id'] as String,
-      pointsPerSar: (json['points_per_sar'] as num?)?.toDouble(),
-      sarPerPoint: (json['sar_per_point'] as num?)?.toDouble(),
+      pointsPerSar: (json['points_per_sar'] != null ? double.tryParse(json['points_per_sar'].toString()) : null),
+      sarPerPoint: (json['sar_per_point'] != null ? double.tryParse(json['sar_per_point'].toString()) : null),
       minRedemptionPoints: (json['min_redemption_points'] as num?)?.toInt(),
       pointsExpiryMonths: (json['points_expiry_months'] as num?)?.toInt(),
       isActive: json['is_active'] as bool?,

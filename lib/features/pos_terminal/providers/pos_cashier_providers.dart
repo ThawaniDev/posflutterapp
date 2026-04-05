@@ -99,9 +99,9 @@ class CartNotifier extends StateNotifier<CartState> {
         items.add(
           CartItem(
             product: product,
-            quantity: (map['quantity'] as num).toDouble(),
-            unitPrice: (map['unit_price'] as num).toDouble(),
-            discountAmount: (map['discount_amount'] as num?)?.toDouble(),
+            quantity: double.tryParse(map['quantity'].toString()) ?? 0.0,
+            unitPrice: double.tryParse(map['unit_price'].toString()) ?? 0.0,
+            discountAmount: (map['discount_amount'] != null ? double.tryParse(map['discount_amount'].toString()) : null),
             notes: map['notes'] as String?,
           ),
         );
@@ -110,7 +110,7 @@ class CartNotifier extends StateNotifier<CartState> {
     state = CartState(
       items: items,
       notes: cartData['notes'] as String?,
-      manualDiscount: (cartData['manual_discount'] as num?)?.toDouble(),
+      manualDiscount: (cartData['manual_discount'] != null ? double.tryParse(cartData['manual_discount'].toString()) : null),
     );
   }
 }
@@ -274,7 +274,7 @@ class SaleNotifier extends StateNotifier<SaleState> {
       final transaction = await _repo.createTransaction(data);
       final change = payments
           .where((p) => p['method'] == 'cash' && p['change_given'] != null)
-          .fold<double>(0, (sum, p) => sum + (p['change_given'] as num).toDouble());
+          .fold<double>(0, (sum, p) => sum + (double.tryParse(p['change_given'].toString()) ?? 0.0));
       state = SaleCompleted(
         transactionNumber: transaction.transactionNumber,
         totalAmount: transaction.totalAmount,

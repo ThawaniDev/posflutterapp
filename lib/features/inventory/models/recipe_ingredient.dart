@@ -20,9 +20,9 @@ class RecipeIngredient {
       id: json['id'] as String,
       recipeId: json['recipe_id'] as String,
       ingredientProductId: json['ingredient_product_id'] as String,
-      quantity: (json['quantity'] as num).toDouble(),
+      quantity: double.tryParse(json['quantity'].toString()) ?? 0.0,
       unit: json['unit'] as String?,
-      wastePercent: (json['waste_percent'] as num?)?.toDouble(),
+      wastePercent: (json['waste_percent'] != null ? double.tryParse(json['waste_percent'].toString()) : null),
     );
   }
 

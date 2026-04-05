@@ -149,7 +149,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
                     ],
                   ),
                 ),
-                Text('${fee['amount'] ?? 0} SAR', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                Text('${fee['amount'] ?? 0} \u0081', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
               ],
             ),
             const SizedBox(height: AppSpacing.xs),
@@ -217,7 +217,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
               ),
               TextField(
                 controller: amountCtrl,
-                decoration: const InputDecoration(labelText: 'Amount (SAR)'),
+                decoration: const InputDecoration(labelText: 'Amount (\u0081)'),
                 keyboardType: TextInputType.number,
               ),
               TextField(
@@ -263,7 +263,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
             children: [
               TextField(
                 controller: amountCtrl,
-                decoration: const InputDecoration(labelText: 'Amount (SAR)'),
+                decoration: const InputDecoration(labelText: 'Amount (\u0081)'),
                 keyboardType: TextInputType.number,
               ),
               TextField(

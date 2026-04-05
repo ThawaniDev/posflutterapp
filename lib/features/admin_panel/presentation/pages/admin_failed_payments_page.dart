@@ -81,12 +81,15 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
                         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                       ),
                       if (invoice['store_name'] != null)
-                        Text('Store: ${invoice['store_name']}', style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+                        Text(
+                          'Store: ${invoice['store_name']}',
+                          style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
+                        ),
                     ],
                   ),
                 ),
                 Text(
-                  '${invoice['total_amount'] ?? 0} SAR',
+                  '${invoice['total_amount'] ?? 0} \u0081',
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.error),
                 ),
               ],
@@ -102,7 +105,10 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
                 ],
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(12)),
+                  decoration: BoxDecoration(
+                    color: AppColors.error.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   child: Text(
                     'FAILED',
                     style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold, color: AppColors.errorDark),

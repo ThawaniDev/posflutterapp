@@ -21,8 +21,8 @@ class InvoiceLineItem {
       invoiceId: json['invoice_id'] as String,
       description: json['description'] as String,
       quantity: (json['quantity'] as num?)?.toInt(),
-      unitPrice: (json['unit_price'] as num).toDouble(),
-      total: (json['total'] as num).toDouble(),
+      unitPrice: double.tryParse(json['unit_price'].toString()) ?? 0.0,
+      total: double.tryParse(json['total'].toString()) ?? 0.0,
     );
   }
 

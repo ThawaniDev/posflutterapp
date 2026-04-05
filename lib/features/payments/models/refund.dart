@@ -30,7 +30,7 @@ class Refund {
       returnId: json['return_id'] as String,
       paymentId: json['payment_id'] as String?,
       method: PaymentMethodKey.fromValue(json['method'] as String),
-      amount: (json['amount'] as num).toDouble(),
+      amount: double.tryParse(json['amount'].toString()) ?? 0.0,
       referenceNumber: json['reference_number'] as String?,
       status: RefundStatus.tryFromValue(json['status'] as String?),
       processedBy: json['processed_by'] as String,

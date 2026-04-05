@@ -18,14 +18,14 @@ class QuickStatsNotifier extends StateNotifier<QuickStatsState> {
       final res = await _repo.quickStats();
       final d = res['data'] as Map<String, dynamic>? ?? res;
       state = QuickStatsLoaded(
-        todayRevenue: (d['today_revenue'] as num?)?.toDouble() ?? 0,
+        todayRevenue: (d['today_revenue'] != null ? double.tryParse(d['today_revenue'].toString()) : null) ?? 0,
         todayTransactions: d['today_transactions'] as int? ?? 0,
         todayOrders: d['today_orders'] as int? ?? 0,
         pendingOrders: d['pending_orders'] as int? ?? 0,
         activeStaff: d['active_staff'] as int? ?? 0,
         lowStockItems: d['low_stock_items'] as int? ?? 0,
         lastSync: d['last_sync'] as String?,
-        currency: d['currency'] as String? ?? 'SAR',
+        currency: d['currency'] as String? ?? '\u0081',
         raw: d,
       );
     } catch (e) {
@@ -169,15 +169,15 @@ class CompanionDashboardNotifier extends StateNotifier<CompanionDashboardState> 
       final res = await _repo.getDashboard();
       final d = res['data'] as Map<String, dynamic>? ?? res;
       state = CompanionDashboardLoaded(
-        todayRevenue: (d['today_revenue'] as num?)?.toDouble() ?? 0,
-        yesterdayRevenue: (d['yesterday_revenue'] as num?)?.toDouble() ?? 0,
+        todayRevenue: (d['today_revenue'] != null ? double.tryParse(d['today_revenue'].toString()) : null) ?? 0,
+        yesterdayRevenue: (d['yesterday_revenue'] != null ? double.tryParse(d['yesterday_revenue'].toString()) : null) ?? 0,
         todayOrders: d['today_orders'] as int? ?? 0,
         yesterdayOrders: d['yesterday_orders'] as int? ?? 0,
         activeStaff: d['active_staff'] as int? ?? 0,
         lowStockItems: d['low_stock_items'] as int? ?? 0,
         pendingOrders: d['pending_orders'] as int? ?? 0,
         storeIsOpen: d['store_is_open'] as bool? ?? true,
-        currency: d['currency'] as String? ?? 'SAR',
+        currency: d['currency'] as String? ?? '\u0081',
         raw: d,
       );
     } catch (e) {
@@ -213,9 +213,9 @@ class SalesSummaryNotifier extends StateNotifier<SalesSummaryState> {
       final daily = (d['daily_breakdown'] as List<dynamic>?)?.map((e) => Map<String, dynamic>.from(e as Map)).toList() ?? [];
       state = SalesSummaryLoaded(
         period: d['period'] as String? ?? period,
-        totalRevenue: (d['total_revenue'] as num?)?.toDouble() ?? 0,
+        totalRevenue: (d['total_revenue'] != null ? double.tryParse(d['total_revenue'].toString()) : null) ?? 0,
         totalOrders: d['total_orders'] as int? ?? 0,
-        averageOrderValue: (d['average_order_value'] as num?)?.toDouble() ?? 0,
+        averageOrderValue: (d['average_order_value'] != null ? double.tryParse(d['average_order_value'].toString()) : null) ?? 0,
         dailyBreakdown: daily,
         raw: d,
       );

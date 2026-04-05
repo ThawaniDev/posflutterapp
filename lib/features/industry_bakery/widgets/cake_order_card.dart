@@ -55,7 +55,7 @@ class CakeOrderCard extends StatelessWidget {
                   Text('Delivery: ${order.deliveryDate}', style: AppTypography.bodySmall),
                   const Spacer(),
                   Text(
-                    '${order.price.toStringAsFixed(2)} SAR',
+                    '${order.price.toStringAsFixed(2)} \u0081',
                     style: AppTypography.priceSmall.copyWith(color: AppColors.primary),
                   ),
                 ],

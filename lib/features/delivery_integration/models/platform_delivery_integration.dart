@@ -41,7 +41,7 @@ class PlatformDeliveryIntegration {
       clientId: json['client_id'] as String?,
       clientSecretEncrypted: json['client_secret_encrypted'] as String?,
       webhookSecretEncrypted: json['webhook_secret_encrypted'] as String?,
-      defaultCommissionPercent: (json['default_commission_percent'] as num?)?.toDouble(),
+      defaultCommissionPercent: (json['default_commission_percent'] != null ? double.tryParse(json['default_commission_percent'].toString()) : null),
       isActive: json['is_active'] as bool?,
       supportedCountries: json['supported_countries'] != null ? Map<String, dynamic>.from(json['supported_countries'] as Map) : null,
       logoUrl: json['logo_url'] as String?,

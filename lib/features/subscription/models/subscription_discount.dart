@@ -32,7 +32,7 @@ class SubscriptionDiscount {
       id: json['id'] as String,
       code: json['code'] as String,
       type: DiscountType.fromValue(json['type'] as String),
-      value: (json['value'] as num).toDouble(),
+      value: double.tryParse(json['value'].toString()) ?? 0.0,
       maxUses: (json['max_uses'] as num?)?.toInt(),
       timesUsed: (json['times_used'] as num?)?.toInt(),
       validFrom: json['valid_from'] != null ? DateTime.parse(json['valid_from'] as String) : null,

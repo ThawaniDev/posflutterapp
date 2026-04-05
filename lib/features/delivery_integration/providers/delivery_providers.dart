@@ -20,7 +20,7 @@ class DeliveryStatsNotifier extends StateNotifier<DeliveryStatsState> {
         pendingOrders: data['pending_orders'] as int? ?? 0,
         completedOrders: data['completed_orders'] as int? ?? 0,
         todayOrders: data['today_orders'] as int? ?? 0,
-        todayRevenue: (data['today_revenue'] as num?)?.toDouble() ?? 0.0,
+        todayRevenue: (data['today_revenue'] != null ? double.tryParse(data['today_revenue'].toString()) : null) ?? 0.0,
         activeOrders: data['active_orders'] as int? ?? 0,
         rejectedOrders: data['rejected_orders'] as int? ?? 0,
         platformBreakdown: platforms,

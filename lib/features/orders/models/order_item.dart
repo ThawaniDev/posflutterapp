@@ -35,11 +35,11 @@ class OrderItem {
       variantId: json['variant_id'] as String?,
       productName: json['product_name'] as String,
       productNameAr: json['product_name_ar'] as String?,
-      quantity: (json['quantity'] as num).toDouble(),
-      unitPrice: (json['unit_price'] as num).toDouble(),
-      discountAmount: (json['discount_amount'] as num?)?.toDouble(),
-      taxAmount: (json['tax_amount'] as num?)?.toDouble(),
-      total: (json['total'] as num).toDouble(),
+      quantity: double.tryParse(json['quantity'].toString()) ?? 0.0,
+      unitPrice: double.tryParse(json['unit_price'].toString()) ?? 0.0,
+      discountAmount: (json['discount_amount'] != null ? double.tryParse(json['discount_amount'].toString()) : null),
+      taxAmount: (json['tax_amount'] != null ? double.tryParse(json['tax_amount'].toString()) : null),
+      total: double.tryParse(json['total'].toString()) ?? 0.0,
       notes: json['notes'] as String?,
     );
   }

@@ -53,7 +53,7 @@ class PlanCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  '${price.toStringAsFixed(2)} SAR',
+                  '${price.toStringAsFixed(2)} \u0081',
                   style: Theme.of(
                     context,
                   ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),

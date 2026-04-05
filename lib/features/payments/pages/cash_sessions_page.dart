@@ -46,7 +46,7 @@ class _CashSessionsPageState extends ConsumerState<CashSessionsPage> {
                     return ListTile(
                       title: Text('Terminal: ${session.terminalId ?? 'N/A'}'),
                       subtitle: Text('Status: ${session.status?.name ?? 'unknown'}'),
-                      trailing: Text('\$${session.openingFloat.toStringAsFixed(2)}'),
+                      trailing: Text('\u0081${session.openingFloat.toStringAsFixed(2)}'),
                     );
                   },
                 ),

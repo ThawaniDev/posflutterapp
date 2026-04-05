@@ -24,7 +24,7 @@ class PromotionUsageLog {
       couponCodeId: json['coupon_code_id'] as String?,
       orderId: json['order_id'] as String,
       customerId: json['customer_id'] as String?,
-      discountAmount: (json['discount_amount'] as num).toDouble(),
+      discountAmount: double.tryParse(json['discount_amount'].toString()) ?? 0.0,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }

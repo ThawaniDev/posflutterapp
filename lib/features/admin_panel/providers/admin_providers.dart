@@ -1316,12 +1316,12 @@ class RevenueDashboardNotifier extends StateNotifier<RevenueDashboardState> {
       final response = await _repo.getBillingRevenue();
       final data = response['data'] as Map<String, dynamic>;
       state = RevenueDashboardLoaded(
-        mrr: (data['mrr'] as num).toDouble(),
-        arr: (data['arr'] as num).toDouble(),
+        mrr: double.tryParse(data['mrr'].toString()) ?? 0.0,
+        arr: double.tryParse(data['arr'].toString()) ?? 0.0,
         revenueByStatus: List<Map<String, dynamic>>.from(data['revenue_by_status'] as List),
         upcomingRenewals: data['upcoming_renewals'] as int,
-        hardwareRevenue: (data['hardware_revenue'] as num).toDouble(),
-        implementationRevenue: (data['implementation_revenue'] as num).toDouble(),
+        hardwareRevenue: double.tryParse(data['hardware_revenue'].toString()) ?? 0.0,
+        implementationRevenue: double.tryParse(data['implementation_revenue'].toString()) ?? 0.0,
         totalInvoices: data['total_invoices'] as int,
         paidInvoices: data['paid_invoices'] as int,
         failedInvoices: data['failed_invoices'] as int,
@@ -1639,8 +1639,8 @@ class AnalyticsRevenueNotifier extends StateNotifier<AnalyticsRevenueState> {
       final response = await _repo.getAnalyticsRevenue(params: params.isEmpty ? null : params);
       final data = response['data'] as Map<String, dynamic>;
       state = AnalyticsRevenueLoaded(
-        mrr: (data['mrr'] as num).toDouble(),
-        arr: (data['arr'] as num).toDouble(),
+        mrr: double.tryParse(data['mrr'].toString()) ?? 0.0,
+        arr: double.tryParse(data['arr'].toString()) ?? 0.0,
         revenueTrend: List<Map<String, dynamic>>.from(data['revenue_trend'] as List),
         revenueByPlan: List<Map<String, dynamic>>.from(data['revenue_by_plan'] as List),
         failedPaymentsCount: data['failed_payments_count'] as int,
@@ -1676,9 +1676,9 @@ class AnalyticsSubscriptionsNotifier extends StateNotifier<AnalyticsSubscription
       state = AnalyticsSubscriptionsLoaded(
         statusCounts: data['status_counts'] as Map<String, dynamic>,
         lifecycleTrend: List<Map<String, dynamic>>.from(data['lifecycle_trend'] as List),
-        averageSubscriptionAgeDays: (data['average_subscription_age_days'] as num).toDouble(),
+        averageSubscriptionAgeDays: double.tryParse(data['average_subscription_age_days'].toString()) ?? 0.0,
         totalChurnInPeriod: data['total_churn_in_period'] as int,
-        trialToPaidConversionRate: (data['trial_to_paid_conversion_rate'] as num).toDouble(),
+        trialToPaidConversionRate: double.tryParse(data['trial_to_paid_conversion_rate'].toString()) ?? 0.0,
       );
     } catch (e) {
       state = AnalyticsSubscriptionsError(e.toString());
@@ -2013,7 +2013,7 @@ class ABTestResultsNotifier extends StateNotifier<ABTestResultsState> {
         test: data['test'] as Map<String, dynamic>,
         results: List<Map<String, dynamic>>.from(data['results'] as List),
         winner: data['winner'] as String?,
-        confidence: (data['confidence'] as num).toDouble(),
+        confidence: double.tryParse(data['confidence'].toString()) ?? 0.0,
       );
     } catch (e) {
       state = ABTestResultsError(e.toString());

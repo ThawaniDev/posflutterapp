@@ -38,7 +38,7 @@ class Prescription {
       doctorName: json['doctor_name'] as String?,
       doctorLicense: json['doctor_license'] as String?,
       insuranceProvider: json['insurance_provider'] as String?,
-      insuranceClaimAmount: (json['insurance_claim_amount'] as num?)?.toDouble(),
+      insuranceClaimAmount: (json['insurance_claim_amount'] != null ? double.tryParse(json['insurance_claim_amount'].toString()) : null),
       notes: json['notes'] as String?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );

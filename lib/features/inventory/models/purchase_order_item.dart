@@ -20,9 +20,9 @@ class PurchaseOrderItem {
       id: json['id'] as String,
       purchaseOrderId: json['purchase_order_id'] as String,
       productId: json['product_id'] as String,
-      quantityOrdered: (json['quantity_ordered'] as num).toDouble(),
-      unitCost: (json['unit_cost'] as num).toDouble(),
-      quantityReceived: (json['quantity_received'] as num?)?.toDouble(),
+      quantityOrdered: double.tryParse(json['quantity_ordered'].toString()) ?? 0.0,
+      unitCost: double.tryParse(json['unit_cost'].toString()) ?? 0.0,
+      quantityReceived: (json['quantity_received'] != null ? double.tryParse(json['quantity_received'].toString()) : null),
     );
   }
 

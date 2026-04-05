@@ -26,7 +26,7 @@ class Exchange {
       originalOrderId: json['original_order_id'] as String,
       returnId: json['return_id'] as String,
       newOrderId: json['new_order_id'] as String,
-      netAmount: (json['net_amount'] as num).toDouble(),
+      netAmount: double.tryParse(json['net_amount'].toString()) ?? 0.0,
       processedBy: json['processed_by'] as String,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );

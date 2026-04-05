@@ -26,7 +26,7 @@ class CashEvent {
       id: json['id'] as String,
       cashSessionId: json['cash_session_id'] as String,
       type: CashEventType.fromValue(json['type'] as String),
-      amount: (json['amount'] as num).toDouble(),
+      amount: double.tryParse(json['amount'].toString()) ?? 0.0,
       reason: json['reason'] as String,
       notes: json['notes'] as String?,
       performedBy: json['performed_by'] as String,

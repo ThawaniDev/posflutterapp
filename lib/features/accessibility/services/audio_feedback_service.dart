@@ -5,9 +5,8 @@ import 'accessibility_service.dart';
 
 /// Plays audio feedback sounds for POS actions when audio feedback is enabled.
 class AudioFeedbackService {
-  AudioFeedbackService(this._settingsProvider);
+  AudioFeedbackService();
 
-  final Provider<AccessibilitySettings> _settingsProvider;
   final AudioPlayer _player = AudioPlayer();
 
   bool _enabled = true;
@@ -65,7 +64,7 @@ class AudioFeedbackService {
 }
 
 final audioFeedbackServiceProvider = Provider<AudioFeedbackService>((ref) {
-  final service = AudioFeedbackService(accessibilitySettingsProvider);
+  final service = AudioFeedbackService();
   final settings = ref.watch(accessibilitySettingsProvider);
   service.updateSettings(enabled: settings.audioFeedback, volume: settings.audioVolume);
   ref.onDispose(() => service.dispose());

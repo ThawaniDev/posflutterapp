@@ -154,7 +154,7 @@ class Store {
       closingDate: json['closing_date'] as String?,
       maxRegisters: (json['max_registers'] as num?)?.toInt(),
       maxStaff: (json['max_staff'] as num?)?.toInt(),
-      areaSqm: (json['area_sqm'] as num?)?.toDouble(),
+      areaSqm: (json['area_sqm'] != null ? double.tryParse(json['area_sqm'].toString()) : null),
       seatingCapacity: (json['seating_capacity'] as num?)?.toInt(),
       crNumber: json['cr_number'] as String?,
       vatNumber: json['vat_number'] as String?,

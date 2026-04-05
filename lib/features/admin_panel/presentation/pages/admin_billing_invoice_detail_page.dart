@@ -71,9 +71,9 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
                         ],
                       ),
                       const Divider(),
-                      _infoRow('Amount', '${inv['amount']} SAR'),
-                      _infoRow('Tax', '${inv['tax']} SAR'),
-                      _infoRow('Total', '${inv['total']} SAR'),
+                      _infoRow('Amount', '${inv['amount']} \u0081'),
+                      _infoRow('Tax', '${inv['tax']} \u0081'),
+                      _infoRow('Total', '${inv['total']} \u0081'),
                       _infoRow('Due Date', inv['due_date'] ?? 'N/A'),
                       if (inv['paid_at'] != null) _infoRow('Paid At', inv['paid_at']),
                     ],
@@ -90,8 +90,8 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
                   (item) => Card(
                     child: ListTile(
                       title: Text(item['description'] ?? ''),
-                      subtitle: Text('Qty: ${item['quantity']} × ${item['unit_price']} SAR'),
-                      trailing: Text('${item['total']} SAR', style: const TextStyle(fontWeight: FontWeight.bold)),
+                      subtitle: Text('Qty: ${item['quantity']} × ${item['unit_price']} \u0081'),
+                      trailing: Text('${item['total']} \u0081', style: const TextStyle(fontWeight: FontWeight.bold)),
                     ),
                   ),
                 ),

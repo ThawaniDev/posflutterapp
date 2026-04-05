@@ -81,7 +81,10 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                       Builder(
                         builder: (context) {
                           final peak = hours.reduce((a, b) => (a['total_revenue'] as num) > (b['total_revenue'] as num) ? a : b);
-                          final totalRevenue = hours.fold<double>(0, (sum, h) => sum + (h['total_revenue'] as num).toDouble());
+                          final totalRevenue = hours.fold<double>(
+                            0,
+                            (sum, h) => sum + (double.tryParse(h['total_revenue'].toString()) ?? 0.0),
+                          );
                           final totalOrders = hours.fold<int>(0, (sum, h) => sum + (h['total_orders'] as int? ?? 0));
                           return Column(
                             children: [
@@ -132,10 +135,10 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                             if (i > 0) const SizedBox(height: 8),
                             _HourRow(
                               hour: _formatHour(hours[i]['hour'] as int),
-                              revenue: (hours[i]['total_revenue'] as num).toDouble(),
+                              revenue: double.tryParse(hours[i]['total_revenue'].toString()) ?? 0.0,
                               orders: hours[i]['total_orders'] as int? ?? 0,
                               maxRevenue: hours.fold<double>(0, (max, h) {
-                                final r = (h['total_revenue'] as num).toDouble();
+                                final r = double.tryParse(h['total_revenue'].toString()) ?? 0.0;
                                 return r > max ? r : max;
                               }),
                               isDark: isDark,

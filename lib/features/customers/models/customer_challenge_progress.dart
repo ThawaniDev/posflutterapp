@@ -26,7 +26,7 @@ class CustomerChallengeProgress {
       id: json['id'] as String,
       customerId: json['customer_id'] as String,
       challengeId: json['challenge_id'] as String,
-      currentValue: (json['current_value'] as num?)?.toDouble(),
+      currentValue: (json['current_value'] != null ? double.tryParse(json['current_value'].toString()) : null),
       isCompleted: json['is_completed'] as bool?,
       completedAt: json['completed_at'] != null ? DateTime.parse(json['completed_at'] as String) : null,
       rewardClaimed: json['reward_claimed'] as bool?,

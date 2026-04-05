@@ -868,7 +868,7 @@ class _ProductGridTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'SAR ${product.offerPrice!.toStringAsFixed(2)}',
+                      '\u0081 ${product.offerPrice!.toStringAsFixed(2)}',
                       style: AppTypography.labelMedium.copyWith(color: AppColors.error, fontWeight: FontWeight.bold),
                     ),
                     AppSpacing.gapW4,
@@ -883,7 +883,7 @@ class _ProductGridTile extends StatelessWidget {
                 )
               else
                 Text(
-                  'SAR ${product.sellPrice.toStringAsFixed(2)}',
+                  '\u0081 ${product.sellPrice.toStringAsFixed(2)}',
                   style: AppTypography.labelMedium.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
                 ),
             ],
@@ -928,12 +928,12 @@ class _CartItemTile extends ConsumerWidget {
                   Text(item.product.name, style: AppTypography.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
                   AppSpacing.gapH4,
                   Text(
-                    'SAR ${item.unitPrice.toStringAsFixed(2)} x ${item.quantity.toStringAsFixed(item.quantity == item.quantity.roundToDouble() ? 0 : 2)}',
+                    '\u0081 ${item.unitPrice.toStringAsFixed(2)} x ${item.quantity.toStringAsFixed(item.quantity == item.quantity.roundToDouble() ? 0 : 2)}',
                     style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                   ),
                   if (item.discountAmount != null && item.discountAmount! > 0)
                     Text(
-                      '-SAR ${item.discountAmount!.toStringAsFixed(2)}',
+                      '-\u0081 ${item.discountAmount!.toStringAsFixed(2)}',
                       style: AppTypography.bodySmall.copyWith(color: AppColors.error),
                     ),
                 ],
@@ -965,7 +965,7 @@ class _CartItemTile extends ConsumerWidget {
             SizedBox(
               width: 88,
               child: Text(
-                'SAR ${item.lineTotal.toStringAsFixed(2)}',
+                '\u0081 ${item.lineTotal.toStringAsFixed(2)}',
                 style: AppTypography.titleSmall.copyWith(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.end,
               ),

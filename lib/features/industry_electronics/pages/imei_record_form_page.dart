@@ -147,7 +147,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _purchasePriceCtrl,
-              label: 'Purchase Price (SAR)',
+              label: 'Purchase Price (\u0081)',
               hint: '0.000',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),

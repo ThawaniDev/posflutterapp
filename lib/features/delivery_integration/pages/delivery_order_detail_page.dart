@@ -60,9 +60,9 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
     final customerName = order['customer_name'] as String?;
     final customerPhone = order['customer_phone'] as String?;
     final deliveryAddress = order['delivery_address'] as String?;
-    final subtotal = (order['subtotal'] as num?)?.toDouble();
-    final deliveryFee = (order['delivery_fee'] as num?)?.toDouble();
-    final totalAmount = (order['total_amount'] as num?)?.toDouble();
+    final subtotal = (order['subtotal'] != null ? double.tryParse(order['subtotal'].toString()) : null);
+    final deliveryFee = (order['delivery_fee'] != null ? double.tryParse(order['delivery_fee'].toString()) : null);
+    final totalAmount = (order['total_amount'] != null ? double.tryParse(order['total_amount'].toString()) : null);
     final itemsCount = order['items_count'] as int?;
     final notes = order['notes'] as String?;
     final rejectionReason = order['rejection_reason'] as String?;
@@ -106,10 +106,10 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
           title: l10n.deliveryFinancials,
           icon: Icons.payments_outlined,
           children: [
-            if (subtotal != null) _InfoRow(label: l10n.deliverySubtotal, value: '${subtotal.toStringAsFixed(2)} SAR'),
-            if (deliveryFee != null) _InfoRow(label: l10n.deliveryDeliveryFee, value: '${deliveryFee.toStringAsFixed(2)} SAR'),
+            if (subtotal != null) _InfoRow(label: l10n.deliverySubtotal, value: '${subtotal.toStringAsFixed(2)} \u0081'),
+            if (deliveryFee != null) _InfoRow(label: l10n.deliveryDeliveryFee, value: '${deliveryFee.toStringAsFixed(2)} \u0081'),
             if (totalAmount != null)
-              _InfoRow(label: l10n.deliveryTotal, value: '${totalAmount.toStringAsFixed(2)} SAR', isBold: true),
+              _InfoRow(label: l10n.deliveryTotal, value: '${totalAmount.toStringAsFixed(2)} \u0081', isBold: true),
             if (itemsCount != null) _InfoRow(label: l10n.deliveryItemsCount, value: '$itemsCount'),
           ],
         ),

@@ -83,10 +83,10 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
         final map = e as Map<String, dynamic>;
         return _LabelElement(
           type: map['type'] as String? ?? 'custom_text',
-          x: (map['x'] as num?)?.toDouble() ?? 0,
-          y: (map['y'] as num?)?.toDouble() ?? 0,
-          width: (map['width'] as num?)?.toDouble() ?? 80,
-          height: (map['height'] as num?)?.toDouble() ?? 24,
+          x: (map['x'] != null ? double.tryParse(map['x'].toString()) : null) ?? 0,
+          y: (map['y'] != null ? double.tryParse(map['y'].toString()) : null) ?? 0,
+          width: (map['width'] != null ? double.tryParse(map['width'].toString()) : null) ?? 80,
+          height: (map['height'] != null ? double.tryParse(map['height'].toString()) : null) ?? 24,
           config: Map<String, dynamic>.from(map['config'] as Map? ?? {}),
         );
       }).toList();

@@ -105,7 +105,7 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _assessedValueCtrl,
-              label: 'Assessed Value (SAR)',
+              label: 'Assessed Value (\u0081)',
               hint: '0.000',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),

@@ -67,7 +67,7 @@ class AddOnCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '${price.toStringAsFixed(2)} SAR',
+                      '${price.toStringAsFixed(2)} \u0081',
                       style: Theme.of(
                         context,
                       ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),

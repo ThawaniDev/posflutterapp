@@ -74,7 +74,7 @@ class ArrangementCard extends StatelessWidget {
                 children: [
                   Text('${arrangement.itemsJson.length} flower types', style: AppTypography.bodySmall),
                   Text(
-                    '${arrangement.totalPrice.toStringAsFixed(2)} SAR',
+                    '${arrangement.totalPrice.toStringAsFixed(2)} \u0081',
                     style: AppTypography.priceSmall.copyWith(color: AppColors.primary),
                   ),
                 ],

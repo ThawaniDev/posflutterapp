@@ -47,7 +47,7 @@ class _StoreProfilePageState extends SettingsSubPageState<StoreProfilePage> {
           children: [
             TextField(
               controller: _currencyCodeCtrl,
-              decoration: InputDecoration(labelText: l10n.settingsProfileCurrencyCode, hintText: 'SAR'),
+              decoration: InputDecoration(labelText: l10n.settingsProfileCurrencyCode, hintText: '\u0081'),
             ),
             const SizedBox(height: 12),
             TextField(

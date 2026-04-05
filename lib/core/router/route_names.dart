@@ -94,8 +94,8 @@ class Routes {
   static const String promotions = '/promotions';
   static const String promotionAnalytics = '/promotions/analytics';
 
-  // Thawani Pay
-  static const String thawaniPay = '/thawani-pay';
+  // Thawani Integration
+  static const String thawaniIntegration = '/thawani-integration';
 
   // Delivery
   static const String delivery = '/delivery';
@@ -334,6 +334,10 @@ class Routes {
   static const String industryFlorist = '/industry/florist';
   static const String industryBakery = '/industry/bakery';
   static const String industryRestaurant = '/industry/restaurant';
+
+  // ─── Predefined Catalog ─────────────────────────────────
+  static const String predefinedCatalog = '/predefined-catalog';
+  static const String predefinedCatalogProducts = '/predefined-catalog/products';
 
   // ─── Role-Based Home Route ──────────────────────────────
   /// Returns the appropriate landing route for a given user role.

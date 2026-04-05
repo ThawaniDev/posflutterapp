@@ -117,9 +117,9 @@ class _TopCustomersTab extends ConsumerWidget {
                     child: Column(
                       children: List.generate(customers.length, (i) {
                         final c = customers[i];
-                        final totalSpend = (c['total_spend'] as num?)?.toDouble() ?? 0;
+                        final totalSpend = (c['total_spend'] != null ? double.tryParse(c['total_spend'].toString()) : null) ?? 0;
                         final visits = (c['visit_count'] as num?)?.toInt() ?? 0;
-                        final avgSpend = (c['avg_spend_per_visit'] as num?)?.toDouble() ?? 0;
+                        final avgSpend = (c['avg_spend_per_visit'] != null ? double.tryParse(c['avg_spend_per_visit'].toString()) : null) ?? 0;
                         final loyalty = (c['loyalty_points'] as num?)?.toInt() ?? 0;
 
                         return Column(

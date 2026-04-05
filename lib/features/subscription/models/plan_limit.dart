@@ -19,7 +19,7 @@ class PlanLimit {
       subscriptionPlanId: json['subscription_plan_id'] as String,
       limitKey: json['limit_key'] as String,
       limitValue: (json['limit_value'] as num).toInt(),
-      pricePerExtraUnit: (json['price_per_extra_unit'] as num?)?.toDouble(),
+      pricePerExtraUnit: (json['price_per_extra_unit'] != null ? double.tryParse(json['price_per_extra_unit'].toString()) : null),
     );
   }
 

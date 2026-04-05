@@ -91,7 +91,7 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> with SingleTickerProvid
             child: AddOnCard(
               name: addOn['name']?.toString() ?? 'Add-On',
               description: addOn['description']?.toString(),
-              price: (addOn['price'] as num?)?.toDouble() ?? 0,
+              price: (addOn['price'] != null ? double.tryParse(addOn['price'].toString()) : null) ?? 0,
               billingCycle: addOn['billing_cycle']?.toString() ?? 'monthly',
               isActive: isActive,
               onToggle: () => _toggleAddOn(addOn, isActive),
@@ -124,7 +124,7 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> with SingleTickerProvid
             child: AddOnCard(
               name: planAddOn?['name']?.toString() ?? storeAddOn['plan_add_on_id']?.toString() ?? 'Add-On',
               description: planAddOn?['description']?.toString(),
-              price: (planAddOn?['price'] as num?)?.toDouble() ?? 0,
+              price: (planAddOn?['price'] != null ? double.tryParse(planAddOn!['price'].toString()) : null) ?? 0,
               billingCycle: planAddOn?['billing_cycle']?.toString() ?? 'monthly',
               isActive: true,
               expiresAt: expiresAt,
@@ -146,7 +146,7 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> with SingleTickerProvid
 
   void _confirmAddAddOn(Map<String, dynamic> addOn) {
     final name = addOn['name']?.toString() ?? 'this add-on';
-    final price = (addOn['price'] as num?)?.toDouble() ?? 0;
+    final price = (addOn['price'] != null ? double.tryParse(addOn['price'].toString()) : null) ?? 0;
 
     showDialog(
       context: context,
@@ -154,7 +154,7 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> with SingleTickerProvid
         title: Text('Add $name?'),
         content: Text(
           'This will add $name to your subscription.\n\n'
-          'Cost: ${price.toStringAsFixed(2)} SAR/${addOn['billing_cycle'] ?? 'month'}',
+          'Cost: ${price.toStringAsFixed(2)} \u0081/${addOn['billing_cycle'] ?? 'month'}',
         ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),

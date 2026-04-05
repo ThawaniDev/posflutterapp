@@ -22,7 +22,7 @@ class OrderItemModifier {
       modifierOptionId: json['modifier_option_id'] as String?,
       modifierName: json['modifier_name'] as String,
       modifierNameAr: json['modifier_name_ar'] as String?,
-      priceAdjustment: (json['price_adjustment'] as num?)?.toDouble(),
+      priceAdjustment: (json['price_adjustment'] != null ? double.tryParse(json['price_adjustment'].toString()) : null),
     );
   }
 

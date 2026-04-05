@@ -424,16 +424,16 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
           case 2: // Category
             return Text(categoryName(product.categoryId));
           case 3: // Cost
-            return Text(product.costPrice != null ? '${product.costPrice!.toStringAsFixed(2)} SAR' : '—');
+            return Text(product.costPrice != null ? '${product.costPrice!.toStringAsFixed(2)} \u0081' : '—');
           case 4: // Price
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text('${product.sellPrice.toStringAsFixed(2)} SAR'),
+                Text('${product.sellPrice.toStringAsFixed(2)} \u0081'),
                 if (product.offerPrice != null)
                   Text(
-                    '${product.offerPrice!.toStringAsFixed(2)} SAR',
+                    '${product.offerPrice!.toStringAsFixed(2)} \u0081',
                     style: Theme.of(
                       context,
                     ).textTheme.labelSmall?.copyWith(color: AppColors.success, fontWeight: FontWeight.w600),
@@ -682,7 +682,7 @@ class _ProductGridCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${product.sellPrice.toStringAsFixed(2)} SAR',
+                        '${product.sellPrice.toStringAsFixed(2)} \u0081',
                         style: Theme.of(
                           context,
                         ).textTheme.labelMedium?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w700),

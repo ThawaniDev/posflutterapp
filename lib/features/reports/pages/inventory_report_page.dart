@@ -131,8 +131,8 @@ class _ValuationTab extends ConsumerWidget {
                   children: List.generate((data['products'] as List).length, (i) {
                     final p = (data['products'] as List).cast<Map<String, dynamic>>()[i];
                     final qty = (p['quantity'] as num?)?.toInt() ?? 0;
-                    final avgCost = (p['average_cost'] as num?)?.toDouble() ?? 0;
-                    final stockVal = (p['stock_value'] as num?)?.toDouble() ?? 0;
+                    final avgCost = (p['average_cost'] != null ? double.tryParse(p['average_cost'].toString()) : null) ?? 0;
+                    final stockVal = (p['stock_value'] != null ? double.tryParse(p['stock_value'].toString()) : null) ?? 0;
                     return Column(
                       children: [
                         if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
@@ -186,8 +186,8 @@ class _TurnoverTab extends ConsumerWidget {
                     child: Column(
                       children: List.generate(products.length, (i) {
                         final p = products[i];
-                        final ratio = (p['turnover_ratio'] as num?)?.toDouble() ?? 0;
-                        final cogs = (p['cogs'] as num?)?.toDouble() ?? 0;
+                        final ratio = (p['turnover_ratio'] != null ? double.tryParse(p['turnover_ratio'].toString()) : null) ?? 0;
+                        final cogs = (p['cogs'] != null ? double.tryParse(p['cogs'].toString()) : null) ?? 0;
                         final stock = (p['current_stock'] as num?)?.toInt() ?? 0;
                         final ratioColor = ratio > 2
                             ? AppColors.success

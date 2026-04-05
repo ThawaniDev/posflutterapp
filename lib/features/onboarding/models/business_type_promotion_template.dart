@@ -40,12 +40,12 @@ class BusinessTypePromotionTemplate {
       nameAr: json['name_ar'] as String,
       description: json['description'] as String?,
       promotionType: BusinessPromotionType.fromValue(json['promotion_type'] as String),
-      discountValue: (json['discount_value'] as num?)?.toDouble(),
+      discountValue: (json['discount_value'] != null ? double.tryParse(json['discount_value'].toString()) : null),
       appliesTo: PromotionAppliesTo.tryFromValue(json['applies_to'] as String?),
       timeStart: json['time_start'] as String?,
       timeEnd: json['time_end'] as String?,
       activeDays: json['active_days'] != null ? Map<String, dynamic>.from(json['active_days'] as Map) : null,
-      minimumOrder: (json['minimum_order'] as num?)?.toDouble(),
+      minimumOrder: (json['minimum_order'] != null ? double.tryParse(json['minimum_order'].toString()) : null),
       sortOrder: (json['sort_order'] as num?)?.toInt(),
     );
   }

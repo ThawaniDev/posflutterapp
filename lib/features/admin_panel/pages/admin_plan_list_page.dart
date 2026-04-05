@@ -128,12 +128,12 @@ class _PlanCard extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  '\$${plan['monthly_price']}/mo',
+                  '\u0081${plan['monthly_price']}/mo',
                   style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.primary),
                 ),
                 if (plan['annual_price'] != null) ...[
                   AppSpacing.gapW16,
-                  Text('\$${plan['annual_price']}/yr', style: TextStyle(fontSize: 14, color: AppColors.textSecondary)),
+                  Text('\u0081${plan['annual_price']}/yr', style: TextStyle(fontSize: 14, color: AppColors.textSecondary)),
                 ],
               ],
             ),

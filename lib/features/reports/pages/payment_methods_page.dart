@@ -100,11 +100,11 @@ class _PaymentList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final totalAmount = methods.fold<double>(0, (sum, m) => sum + (m['total_amount'] as num).toDouble());
+    final totalAmount = methods.fold<double>(0, (sum, m) => sum + (double.tryParse(m['total_amount'].toString()) ?? 0.0));
     final totalTx = methods.fold<int>(0, (sum, m) => sum + (m['transaction_count'] as num).toInt());
     final maxAmount = methods.isEmpty
         ? 1.0
-        : methods.map((m) => (m['total_amount'] as num).toDouble()).reduce((a, b) => a > b ? a : b);
+        : methods.map((m) => double.tryParse(m['total_amount'].toString()) ?? 0.0).reduce((a, b) => a > b ? a : b);
 
     return ListView(
       padding: const EdgeInsets.all(20),
@@ -132,7 +132,7 @@ class _PaymentList extends StatelessWidget {
             ),
             ReportKpiCard(
               label: 'Avg per Tx',
-              value: totalTx > 0 ? formatCurrency(totalAmount / totalTx) : '\$0',
+              value: totalTx > 0 ? formatCurrency(totalAmount / totalTx) : '\u00810',
               icon: Icons.calculate_rounded,
               color: AppColors.warning,
             ),
@@ -144,9 +144,9 @@ class _PaymentList extends StatelessWidget {
 
         ...methods.map((m) {
           final method = m['method'] as String;
-          final amount = (m['total_amount'] as num).toDouble();
+          final amount = double.tryParse(m['total_amount'].toString()) ?? 0.0;
           final txCount = (m['transaction_count'] as num).toInt();
-          final avg = (m['avg_amount'] as num).toDouble();
+          final avg = double.tryParse(m['avg_amount'].toString()) ?? 0.0;
           final pct = totalAmount > 0 ? amount / totalAmount : 0.0;
           final color = _colorForMethod(method);
 

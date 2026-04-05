@@ -223,7 +223,7 @@ class _PosCloseShiftDialogState extends ConsumerState<PosCloseShiftDialog> {
                             style: AppTypography.bodySmall.copyWith(color: diffColor),
                           ),
                           Text(
-                            '${diff >= 0 ? '+' : ''}SAR ${diff.toStringAsFixed(2)}',
+                            '${diff >= 0 ? '+' : ''}\u0081 ${diff.toStringAsFixed(2)}',
                             style: AppTypography.labelSmall.copyWith(color: diffColor, fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -289,7 +289,7 @@ class _PosCloseShiftDialogState extends ConsumerState<PosCloseShiftDialog> {
         children: [
           Text(label, style: AppTypography.bodySmall.copyWith(color: mutedColor)),
           Text(
-            isCount ? value.toInt().toString() : 'SAR ${value.toStringAsFixed(2)}',
+            isCount ? value.toInt().toString() : '\u0081 ${value.toStringAsFixed(2)}',
             style: (isBold ? AppTypography.labelMedium : AppTypography.bodySmall).copyWith(
               color: color,
               fontWeight: isBold ? FontWeight.bold : null,

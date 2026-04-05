@@ -30,7 +30,7 @@ class AuthRepository {
     String? organizationNameAr,
     String? storeName,
     String? storeNameAr,
-    String country = 'OM',
+    String country = 'SA',
     String currency = 'SAR',
     String locale = 'ar',
     String? businessType,

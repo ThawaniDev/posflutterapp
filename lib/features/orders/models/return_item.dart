@@ -25,9 +25,9 @@ class ReturnItem {
       returnId: json['return_id'] as String,
       orderItemId: json['order_item_id'] as String,
       productId: json['product_id'] as String,
-      quantity: (json['quantity'] as num).toDouble(),
-      unitPrice: (json['unit_price'] as num).toDouble(),
-      refundAmount: (json['refund_amount'] as num).toDouble(),
+      quantity: double.tryParse(json['quantity'].toString()) ?? 0.0,
+      unitPrice: double.tryParse(json['unit_price'].toString()) ?? 0.0,
+      refundAmount: double.tryParse(json['refund_amount'].toString()) ?? 0.0,
       restoreStock: json['restore_stock'] as bool?,
     );
   }

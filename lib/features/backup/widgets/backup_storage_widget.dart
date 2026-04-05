@@ -33,7 +33,7 @@ class BackupStorageWidget extends ConsumerWidget {
     final d = data['data'] as Map<String, dynamic>? ?? data;
     final totalBytes = (d['total_backup_bytes'] as num?)?.toInt() ?? 0;
     final quotaBytes = (d['quota_bytes'] as num?)?.toInt() ?? 1;
-    final usagePercent = (d['usage_percentage'] as num?)?.toDouble() ?? 0.0;
+    final usagePercent = (d['usage_percentage'] != null ? double.tryParse(d['usage_percentage'].toString()) : null) ?? 0.0;
     final backupCount = (d['backup_count'] as num?)?.toInt() ?? 0;
     final dbBytes = (d['database_backup_bytes'] as num?)?.toInt() ?? 0;
 

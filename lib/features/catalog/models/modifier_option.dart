@@ -27,7 +27,7 @@ class ModifierOption {
       modifierGroupId: json['modifier_group_id'] as String,
       name: json['name'] as String,
       nameAr: json['name_ar'] as String?,
-      priceAdjustment: (json['price_adjustment'] as num?)?.toDouble(),
+      priceAdjustment: (json['price_adjustment'] != null ? double.tryParse(json['price_adjustment'].toString()) : null),
       isDefault: json['is_default'] as bool?,
       sortOrder: (json['sort_order'] as num?)?.toInt(),
       isActive: json['is_active'] as bool?,

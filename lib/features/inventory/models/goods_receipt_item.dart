@@ -22,8 +22,8 @@ class GoodsReceiptItem {
       id: json['id'] as String,
       goodsReceiptId: json['goods_receipt_id'] as String,
       productId: json['product_id'] as String,
-      quantity: (json['quantity'] as num).toDouble(),
-      unitCost: (json['unit_cost'] as num).toDouble(),
+      quantity: double.tryParse(json['quantity'].toString()) ?? 0.0,
+      unitCost: double.tryParse(json['unit_cost'].toString()) ?? 0.0,
       batchNumber: json['batch_number'] as String?,
       expiryDate: json['expiry_date'] != null ? DateTime.parse(json['expiry_date'] as String) : null,
     );

@@ -22,7 +22,7 @@ class ProductSupplier {
       id: json['id'] as String,
       productId: json['product_id'] as String,
       supplierId: json['supplier_id'] as String,
-      costPrice: (json['cost_price'] as num?)?.toDouble(),
+      costPrice: (json['cost_price'] != null ? double.tryParse(json['cost_price'].toString()) : null),
       leadTimeDays: (json['lead_time_days'] as num?)?.toInt(),
       supplierSku: json['supplier_sku'] as String?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,

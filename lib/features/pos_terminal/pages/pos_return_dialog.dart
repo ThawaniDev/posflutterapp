@@ -345,7 +345,7 @@ class _ReturnItemRow extends StatelessWidget {
               children: [
                 Text(item.productName, style: AppTypography.labelSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
                 Text(
-                  'Qty: ${item.quantity.toStringAsFixed(0)} × SAR ${item.unitPrice.toStringAsFixed(2)}',
+                  'Qty: ${item.quantity.toStringAsFixed(0)} × \u0081 ${item.unitPrice.toStringAsFixed(2)}',
                   style: AppTypography.micro.copyWith(color: mutedColor),
                 ),
               ],
@@ -371,7 +371,7 @@ class _ReturnItemRow extends StatelessWidget {
           SizedBox(
             width: 80,
             child: Text(
-              returnQty > 0 ? 'SAR ${((item.lineTotal / item.quantity) * returnQty).toStringAsFixed(2)}' : '-',
+              returnQty > 0 ? '\u0081 ${((item.lineTotal / item.quantity) * returnQty).toStringAsFixed(2)}' : '-',
               style: AppTypography.labelSmall.copyWith(color: returnQty > 0 ? AppColors.error : mutedColor),
               textAlign: TextAlign.end,
             ),

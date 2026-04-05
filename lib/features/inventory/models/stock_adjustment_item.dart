@@ -18,8 +18,8 @@ class StockAdjustmentItem {
       id: json['id'] as String,
       stockAdjustmentId: json['stock_adjustment_id'] as String,
       productId: json['product_id'] as String,
-      quantity: (json['quantity'] as num).toDouble(),
-      unitCost: (json['unit_cost'] as num?)?.toDouble(),
+      quantity: double.tryParse(json['quantity'].toString()) ?? 0.0,
+      unitCost: (json['unit_cost'] != null ? double.tryParse(json['unit_cost'].toString()) : null),
     );
   }
 

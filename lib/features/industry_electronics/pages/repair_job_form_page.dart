@@ -121,7 +121,7 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _estimatedCostCtrl,
-                    label: 'Est. Cost (SAR)',
+                    label: 'Est. Cost (\u0081)',
                     hint: '0.000',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
@@ -130,7 +130,7 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _finalCostCtrl,
-                    label: 'Final Cost (SAR)',
+                    label: 'Final Cost (\u0081)',
                     hint: '0.000',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),

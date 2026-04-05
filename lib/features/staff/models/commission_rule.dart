@@ -31,7 +31,7 @@ class CommissionRule {
       storeId: json['store_id'] as String,
       staffUserId: json['staff_user_id'] as String?,
       type: CommissionRuleType.fromValue(json['type'] as String),
-      percentage: (json['percentage'] as num?)?.toDouble(),
+      percentage: (json['percentage'] != null ? double.tryParse(json['percentage'].toString()) : null),
       tiersJson: json['tiers_json'] != null ? Map<String, dynamic>.from(json['tiers_json'] as Map) : null,
       productCategoryId: json['product_category_id'] as String?,
       isActive: json['is_active'] as bool?,

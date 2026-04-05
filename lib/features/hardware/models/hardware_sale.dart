@@ -31,7 +31,7 @@ class HardwareSale {
       itemType: HardwareSaleItemType.fromValue(json['item_type'] as String),
       itemDescription: json['item_description'] as String?,
       serialNumber: json['serial_number'] as String?,
-      amount: (json['amount'] as num).toDouble(),
+      amount: double.tryParse(json['amount'].toString()) ?? 0.0,
       notes: json['notes'] as String?,
       soldAt: json['sold_at'] != null ? DateTime.parse(json['sold_at'] as String) : null,
     );

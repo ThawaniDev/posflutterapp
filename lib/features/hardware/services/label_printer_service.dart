@@ -56,9 +56,9 @@ class LabelPrinterConfig {
       usbDevicePath: json['usb_device_path'] as String?,
       language: json['language'] as String? ?? 'zpl',
       dpi: json['dpi'] as int? ?? 203,
-      labelWidthMm: (json['label_width_mm'] as num?)?.toDouble() ?? 50,
-      labelHeightMm: (json['label_height_mm'] as num?)?.toDouble() ?? 30,
-      gapMm: (json['gap_mm'] as num?)?.toDouble() ?? 3,
+      labelWidthMm: (json['label_width_mm'] != null ? double.tryParse(json['label_width_mm'].toString()) : null) ?? 50,
+      labelHeightMm: (json['label_height_mm'] != null ? double.tryParse(json['label_height_mm'].toString()) : null) ?? 30,
+      gapMm: (json['gap_mm'] != null ? double.tryParse(json['gap_mm'].toString()) : null) ?? 3,
       darkness: json['darkness'] as int? ?? 10,
       speed: json['speed'] as int? ?? 4,
     );
@@ -98,7 +98,7 @@ class ProductLabelData {
     required this.nameEn,
     required this.barcode,
     required this.price,
-    this.currency = 'SAR',
+    this.currency = '\u0081',
     this.originalPrice,
     this.sku,
     this.expiryDate,
@@ -240,7 +240,7 @@ class LabelPrinterService {
       nameEn: 'Test Label',
       barcode: '1234567890128',
       price: 9.99,
-      currency: 'SAR',
+      currency: '\u0081',
       sku: 'TEST-001',
     );
 

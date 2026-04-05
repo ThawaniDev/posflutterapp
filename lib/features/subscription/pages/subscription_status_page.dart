@@ -179,7 +179,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
                 label: (item['limit_key'] as String?) ?? '',
                 current: (item['current'] as num?)?.toInt() ?? 0,
                 limit: (item['limit'] as num?)?.toInt(),
-                percentage: (item['percentage'] as num?)?.toDouble() ?? 0,
+                percentage: (item['percentage'] != null ? double.tryParse(item['percentage'].toString()) : null) ?? 0,
               ),
             ),
           ],

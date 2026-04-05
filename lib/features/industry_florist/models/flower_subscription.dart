@@ -36,7 +36,7 @@ class FlowerSubscription {
       frequency: FlowerSubscriptionFrequency.fromValue(json['frequency'] as String),
       deliveryDay: json['delivery_day'] as String?,
       deliveryAddress: json['delivery_address'] as String,
-      pricePerDelivery: (json['price_per_delivery'] as num).toDouble(),
+      pricePerDelivery: double.tryParse(json['price_per_delivery'].toString()) ?? 0.0,
       isActive: json['is_active'] as bool?,
       nextDeliveryDate: DateTime.parse(json['next_delivery_date'] as String),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,

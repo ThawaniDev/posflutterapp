@@ -78,7 +78,7 @@ class _ProductList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final totalRevenue = products.fold<double>(0, (sum, p) => sum + (p['total_revenue'] as num).toDouble());
+    final totalRevenue = products.fold<double>(0, (sum, p) => sum + (double.tryParse(p['total_revenue'].toString()) ?? 0.0));
 
     return ListView(
       padding: const EdgeInsets.all(20),
@@ -106,7 +106,7 @@ class _ProductList extends StatelessWidget {
             ),
             ReportKpiCard(
               label: 'Total Profit',
-              value: formatCurrency(products.fold<double>(0, (s, p) => s + (p['profit'] as num).toDouble())),
+              value: formatCurrency(products.fold<double>(0, (s, p) => s + (double.tryParse(p['profit'].toString()) ?? 0.0))),
               icon: Icons.trending_up_rounded,
               color: AppColors.warning,
             ),
@@ -121,10 +121,10 @@ class _ProductList extends StatelessWidget {
           child: Column(
             children: List.generate(products.length, (i) {
               final p = products[i];
-              final revenue = (p['total_revenue'] as num).toDouble();
+              final revenue = double.tryParse(p['total_revenue'].toString()) ?? 0.0;
               final qty = (p['total_quantity'] as num).toInt();
-              final profit = (p['profit'] as num).toDouble();
-              final cost = (p['total_cost'] as num).toDouble();
+              final profit = double.tryParse(p['profit'].toString()) ?? 0.0;
+              final cost = double.tryParse(p['total_cost'].toString()) ?? 0.0;
               final returns = (p['total_returns'] as num?)?.toInt() ?? 0;
 
               return Column(

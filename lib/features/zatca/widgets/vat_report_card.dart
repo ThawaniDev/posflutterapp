@@ -19,23 +19,16 @@ class VatReportCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
         borderRadius: BorderRadius.circular(AppRadius.md),
-        border: Border.all(
-          color: isDark
-              ? Colors.white.withValues(alpha: 0.1)
-              : Colors.black.withValues(alpha: 0.06),
-        ),
+        border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.06)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const Icon(Icons.account_balance_outlined,
-                  color: AppColors.primary, size: 24),
+              const Icon(Icons.account_balance_outlined, color: AppColors.primary, size: 24),
               AppSpacing.gapH8,
-              Text('VAT Report',
-                  style: theme.textTheme.titleMedium
-                      ?.copyWith(fontWeight: FontWeight.w600)),
+              Text('VAT Report', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
             ],
           ),
           AppSpacing.gapH20,
@@ -52,30 +45,22 @@ class VatReportCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Total Revenue',
-                        style: theme.textTheme.bodySmall
-                            ?.copyWith(color: theme.hintColor)),
+                    Text('Total Revenue', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
                     AppSpacing.gapH2,
                     Text(
-                      'SAR ${data.totalAmount.toStringAsFixed(2)}',
-                      style: theme.textTheme.titleLarge
-                          ?.copyWith(fontWeight: FontWeight.w700),
+                      '\u0081 ${data.totalAmount.toStringAsFixed(2)}',
+                      style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
                     ),
                   ],
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text('Total VAT',
-                        style: theme.textTheme.bodySmall
-                            ?.copyWith(color: theme.hintColor)),
+                    Text('Total VAT', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
                     AppSpacing.gapH2,
                     Text(
-                      'SAR ${data.totalVatCollected.toStringAsFixed(2)}',
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.primary,
-                      ),
+                      '\u0081 ${data.totalVatCollected.toStringAsFixed(2)}',
+                      style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700, color: AppColors.primary),
                     ),
                   ],
                 ),
@@ -89,23 +74,17 @@ class VatReportCard extends StatelessWidget {
             icon: Icons.description_outlined,
             color: AppColors.info,
             count: (data.standardInvoices['count'] as num?)?.toInt() ?? 0,
-            amount:
-                (data.standardInvoices['total_amount'] as num?)?.toDouble() ??
-                    0,
-            vat: (data.standardInvoices['total_vat'] as num?)?.toDouble() ?? 0,
+            amount: (data.standardInvoices['total_amount'] != null ? double.tryParse(data.standardInvoices['total_amount'].toString()) : null) ?? 0,
+            vat: (data.standardInvoices['total_vat'] != null ? double.tryParse(data.standardInvoices['total_vat'].toString()) : null) ?? 0,
           ),
           AppSpacing.gapH12,
           _InvoiceBreakdownRow(
             label: 'Simplified Invoices',
             icon: Icons.receipt_outlined,
             color: AppColors.success,
-            count:
-                (data.simplifiedInvoices['count'] as num?)?.toInt() ?? 0,
-            amount: (data.simplifiedInvoices['total_amount'] as num?)
-                    ?.toDouble() ??
-                0,
-            vat: (data.simplifiedInvoices['total_vat'] as num?)?.toDouble() ??
-                0,
+            count: (data.simplifiedInvoices['count'] as num?)?.toInt() ?? 0,
+            amount: (data.simplifiedInvoices['total_amount'] != null ? double.tryParse(data.simplifiedInvoices['total_amount'].toString()) : null) ?? 0,
+            vat: (data.simplifiedInvoices['total_vat'] != null ? double.tryParse(data.simplifiedInvoices['total_vat'].toString()) : null) ?? 0,
           ),
         ],
       ),
@@ -141,24 +120,16 @@ class _InvoiceBreakdownRow extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(label,
-                  style: theme.textTheme.bodyMedium
-                      ?.copyWith(fontWeight: FontWeight.w500)),
-              Text('$count invoices',
-                  style: theme.textTheme.bodySmall
-                      ?.copyWith(color: theme.hintColor)),
+              Text(label, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),
+              Text('$count invoices', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
             ],
           ),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text('SAR ${amount.toStringAsFixed(2)}',
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(fontWeight: FontWeight.w600)),
-            Text('VAT: SAR ${vat.toStringAsFixed(2)}',
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(color: theme.hintColor)),
+            Text('\u0081 ${amount.toStringAsFixed(2)}', style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
+            Text('VAT: \u0081 ${vat.toStringAsFixed(2)}', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
           ],
         ),
       ],

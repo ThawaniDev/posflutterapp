@@ -472,7 +472,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
             Expanded(
               child: PosTextField(
                 controller: _sellPriceController,
-                label: 'Sell Price (SAR) *',
+                label: 'Sell Price (\u0081) *',
                 hint: 'e.g. 5.50',
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
@@ -482,7 +482,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
             Expanded(
               child: PosTextField(
                 controller: _costPriceController,
-                label: 'Cost Price (SAR)',
+                label: 'Cost Price (\u0081)',
                 hint: 'e.g. 3.20',
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
@@ -521,7 +521,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
                       ),
                       const SizedBox(width: AppSpacing.lg),
                       Text(
-                        'Profit: ${(sell - cost).toStringAsFixed(2)} SAR',
+                        'Profit: ${(sell - cost).toStringAsFixed(2)} \u0081',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.info),
                       ),
                     ],
@@ -536,7 +536,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
         _sectionHeader('Offer / Promotion'),
         PosTextField(
           controller: _offerPriceController,
-          label: 'Offer Price (SAR)',
+          label: 'Offer Price (\u0081)',
           hint: 'Leave empty for no offer',
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
@@ -581,7 +581,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
                 child: ListTile(
                   leading: const Icon(Icons.store, size: 20),
                   title: Text('Store: ${sp.storeId}'),
-                  subtitle: Text('${sp.sellPrice.toStringAsFixed(2)} SAR'),
+                  subtitle: Text('${sp.sellPrice.toStringAsFixed(2)} \u0081'),
                   trailing: sp.validFrom != null
                       ? Text(
                           '${_formatDate(sp.validFrom!)} – ${sp.validTo != null ? _formatDate(sp.validTo!) : '∞'}',
@@ -805,7 +805,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
                               Expanded(child: Text(opt.name)),
                               if (opt.priceAdjustment != null && opt.priceAdjustment != 0)
                                 Text(
-                                  '${opt.priceAdjustment! >= 0 ? '+' : ''}${opt.priceAdjustment!.toStringAsFixed(2)} SAR',
+                                  '${opt.priceAdjustment! >= 0 ? '+' : ''}${opt.priceAdjustment!.toStringAsFixed(2)} \u0081',
                                   style: Theme.of(
                                     context,
                                   ).textTheme.labelSmall?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600),
@@ -1069,7 +1069,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
                 subtitle: Text(
                   [
                     if (ps.supplierSku != null) 'Supplier SKU: ${ps.supplierSku}',
-                    if (ps.costPrice != null) 'Cost: ${ps.costPrice!.toStringAsFixed(2)} SAR',
+                    if (ps.costPrice != null) 'Cost: ${ps.costPrice!.toStringAsFixed(2)} \u0081',
                     if (ps.leadTimeDays != null) 'Lead time: ${ps.leadTimeDays} days',
                   ].join(' · '),
                 ),
@@ -1123,7 +1123,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
                     Expanded(
                       child: PosTextField(
                         controller: costController,
-                        label: 'Cost Price (SAR)',
+                        label: 'Cost Price (\u0081)',
                         hint: 'Cost from this supplier',
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],

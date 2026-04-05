@@ -208,7 +208,7 @@ import 'package:thawani_pos/features/delivery_integration/pages/delivery_order_d
 import 'package:thawani_pos/features/delivery_integration/pages/menu_sync_page.dart';
 import 'package:thawani_pos/features/delivery_integration/pages/delivery_webhook_logs_page.dart';
 import 'package:thawani_pos/features/delivery_integration/pages/delivery_status_push_logs_page.dart';
-// Thawani Pay
+// Thawani Integration
 import 'package:thawani_pos/features/thawani_integration/pages/thawani_dashboard_page.dart';
 // Branches
 import 'package:thawani_pos/features/branches/pages/branch_list_page.dart';
@@ -230,6 +230,9 @@ import 'package:thawani_pos/features/industry_electronics/pages/electronics_dash
 import 'package:thawani_pos/features/industry_florist/pages/florist_dashboard_page.dart';
 import 'package:thawani_pos/features/industry_bakery/pages/bakery_dashboard_page.dart';
 import 'package:thawani_pos/features/industry_restaurant/pages/restaurant_dashboard_page.dart';
+// Predefined Catalog
+import 'package:thawani_pos/features/predefined_catalog/pages/predefined_catalog_page.dart';
+import 'package:thawani_pos/features/predefined_catalog/pages/predefined_products_page.dart';
 import 'route_names.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -1134,8 +1137,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => PromotionAnalyticsPage(promotionId: state.pathParameters['id']!),
           ),
 
-          // ─── Thawani Pay ───
-          GoRoute(path: Routes.thawaniPay, name: 'thawaniPay', builder: (context, state) => const ThawaniDashboardPage()),
+          // ─── Thawani Integration ───
+          GoRoute(
+            path: Routes.thawaniIntegration,
+            name: 'thawaniIntegration',
+            builder: (context, state) => const ThawaniDashboardPage(),
+          ),
 
           // ─── Delivery Integration ───
           GoRoute(path: Routes.delivery, name: 'delivery', builder: (context, state) => const DeliveryDashboardPage()),
@@ -1211,6 +1218,25 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: Routes.industryRestaurant,
             name: 'industryRestaurant',
             builder: (context, state) => const RestaurantDashboardPage(),
+          ),
+
+          // ─── Predefined Catalog ───
+          GoRoute(
+            path: Routes.predefinedCatalog,
+            name: 'predefinedCatalog',
+            builder: (context, state) => const PredefinedCatalogPage(),
+          ),
+          GoRoute(
+            path: Routes.predefinedCatalogProducts,
+            name: 'predefinedCatalogProducts',
+            builder: (context, state) {
+              final extra = state.extra as Map<String, dynamic>?;
+              return PredefinedProductsPage(
+                businessTypeId: extra?['businessTypeId'] as String?,
+                categoryId: extra?['categoryId'] as String?,
+                categoryName: extra?['categoryName'] as String?,
+              );
+            },
           ),
         ], // end ShellRoute routes
       ), // end ShellRoute

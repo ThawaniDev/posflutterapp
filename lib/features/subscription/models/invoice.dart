@@ -34,9 +34,9 @@ class Invoice {
     return Invoice(
       id: json['id'] as String,
       invoiceNumber: json['invoice_number'] as String?,
-      amount: (json['amount'] as num).toDouble(),
-      tax: (json['tax'] as num?)?.toDouble(),
-      total: (json['total'] as num).toDouble(),
+      amount: double.tryParse(json['amount'].toString()) ?? 0.0,
+      tax: (json['tax'] != null ? double.tryParse(json['tax'].toString()) : null),
+      total: double.tryParse(json['total'].toString()) ?? 0.0,
       status: json['status'] != null ? InvoiceStatus.fromValue(json['status'] as String) : null,
       dueDate: json['due_date'] != null ? DateTime.parse(json['due_date'] as String) : null,
       paidAt: json['paid_at'] != null ? DateTime.parse(json['paid_at'] as String) : null,

@@ -110,7 +110,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                       _kpiCard(
                         theme,
                         l10n.dailySummaryGrossRevenue,
-                        '${totalRevenue.toStringAsFixed(2)} SAR',
+                        '${totalRevenue.toStringAsFixed(2)} \u0081',
                         Icons.trending_up,
                         AppColors.success,
                       ),
@@ -118,7 +118,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                       _kpiCard(
                         theme,
                         l10n.dailySummaryExpenses,
-                        '${totalExpenses.toStringAsFixed(2)} SAR',
+                        '${totalExpenses.toStringAsFixed(2)} \u0081',
                         Icons.trending_down,
                         AppColors.error,
                       ),
@@ -126,7 +126,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                       _kpiCard(
                         theme,
                         l10n.dailySummaryNetRevenue,
-                        '${netRevenue.toStringAsFixed(2)} SAR',
+                        '${netRevenue.toStringAsFixed(2)} \u0081',
                         Icons.account_balance,
                         netRevenue >= 0 ? AppColors.success : AppColors.error,
                       ),
@@ -280,7 +280,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                   ),
                   AppSpacing.gapH12,
                   Text(
-                    '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} SAR',
+                    '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} \u0081',
                     style: theme.textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: totalVariance.abs() > 5 ? AppColors.error : AppColors.success,

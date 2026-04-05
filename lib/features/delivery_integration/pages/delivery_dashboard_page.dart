@@ -369,7 +369,7 @@ class _PlatformBreakdownTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final name = data['label'] as String? ?? data['platform'] as String? ?? '';
     final orders = data['orders'] as int? ?? 0;
-    final revenue = (data['revenue'] as num?)?.toDouble() ?? 0.0;
+    final revenue = (data['revenue'] != null ? double.tryParse(data['revenue'].toString()) : null) ?? 0.0;
     final isActive = data['is_active'] == true;
 
     return Container(
@@ -396,7 +396,7 @@ class _PlatformBreakdownTile extends StatelessWidget {
             style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
           ),
           AppSpacing.gapW16,
-          Text('${revenue.toStringAsFixed(2)} SAR', style: const TextStyle(fontWeight: FontWeight.w500)),
+          Text('${revenue.toStringAsFixed(2)} \u0081', style: const TextStyle(fontWeight: FontWeight.w500)),
         ],
       ),
     );

@@ -125,7 +125,7 @@ class StaffUser {
       biometricEnabled: json['biometric_enabled'] as bool?,
       employmentType: EmploymentType.fromValue(json['employment_type'] as String),
       salaryType: SalaryType.fromValue(json['salary_type'] as String),
-      hourlyRate: (json['hourly_rate'] as num?)?.toDouble(),
+      hourlyRate: (json['hourly_rate'] != null ? double.tryParse(json['hourly_rate'].toString()) : null),
       hireDate: DateTime.parse(json['hire_date'] as String),
       terminationDate: json['termination_date'] != null ? DateTime.parse(json['termination_date'] as String) : null,
       status: StaffStatus.tryFromValue(json['status'] as String?),

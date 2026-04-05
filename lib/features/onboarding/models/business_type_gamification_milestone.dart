@@ -31,7 +31,7 @@ class BusinessTypeGamificationMilestone {
       name: json['name'] as String,
       nameAr: json['name_ar'] as String,
       milestoneType: MilestoneType.fromValue(json['milestone_type'] as String),
-      thresholdValue: (json['threshold_value'] as num).toDouble(),
+      thresholdValue: double.tryParse(json['threshold_value'].toString()) ?? 0.0,
       rewardType: MilestoneRewardType.fromValue(json['reward_type'] as String),
       rewardValue: json['reward_value'] as String,
       sortOrder: (json['sort_order'] as num?)?.toInt(),

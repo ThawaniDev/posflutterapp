@@ -26,14 +26,14 @@ class DashboardKpiCards extends StatelessWidget {
           crossAxisCount: crossAxisCount,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
-          childAspectRatio: 2.2,
+          childAspectRatio: 2,
           children: [
             _KpiTile(
               icon: Icons.trending_up_rounded,
               iconColor: AppColors.primary,
               iconBgColor: AppColors.primary.withValues(alpha: 0.1),
               label: "Today's Sales",
-              value: 'SAR ${_formatNum(stats['today_sales'])}',
+              value: '\u0081 ${_formatNum(stats['today_sales'])}',
               trend: _toDouble(stats['sales_trend']),
               trendLabel: 'vs yesterday',
               isDark: isDark,
@@ -53,7 +53,7 @@ class DashboardKpiCards extends StatelessWidget {
               iconColor: AppColors.warning,
               iconBgColor: AppColors.warning.withValues(alpha: 0.1),
               label: 'Avg Basket',
-              value: 'SAR ${_formatNum(stats['avg_basket'])}',
+              value: '\u0081 ${_formatNum(stats['avg_basket'])}',
               trend: _toDouble(stats['basket_trend']),
               trendLabel: 'vs yesterday',
               isDark: isDark,
@@ -63,7 +63,7 @@ class DashboardKpiCards extends StatelessWidget {
               iconColor: AppColors.success,
               iconBgColor: AppColors.success.withValues(alpha: 0.1),
               label: 'Net Profit',
-              value: 'SAR ${_formatNum(stats['net_profit'])}',
+              value: '\u0081 ${_formatNum(stats['net_profit'])}',
               trend: _toDouble(stats['profit_trend']),
               trendLabel: 'vs yesterday',
               isDark: isDark,
@@ -113,7 +113,7 @@ class _KpiTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PosCard(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,

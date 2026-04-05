@@ -28,8 +28,8 @@ class StockBatch {
       productId: json['product_id'] as String,
       batchNumber: json['batch_number'] as String?,
       expiryDate: json['expiry_date'] != null ? DateTime.parse(json['expiry_date'] as String) : null,
-      quantity: (json['quantity'] as num).toDouble(),
-      unitCost: (json['unit_cost'] as num?)?.toDouble(),
+      quantity: double.tryParse(json['quantity'].toString()) ?? 0.0,
+      unitCost: (json['unit_cost'] != null ? double.tryParse(json['unit_cost'].toString()) : null),
       goodsReceiptId: json['goods_receipt_id'] as String?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );

@@ -3,7 +3,7 @@ class Validators {
 
   static String? required(String? value, [String? fieldName]) {
     if (value == null || value.trim().isEmpty) {
-      return '\${fieldName ?? "This field"} is required';
+      return '\u0081{fieldName ?? "This field"} is required';
     }
     return null;
   }
@@ -24,7 +24,7 @@ class Validators {
 
   static String? minLength(String? value, int min, [String? fieldName]) {
     if (value == null || value.length < min) {
-      return '\${fieldName ?? "This field"} must be at least \$min characters';
+      return '\u0081{fieldName ?? "This field"} must be at least \$min characters';
     }
     return null;
   }

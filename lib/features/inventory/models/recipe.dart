@@ -31,7 +31,7 @@ class Recipe {
       name: json['name'] as String?,
       description: json['description'] as String?,
       productName: (json['product'] as Map<String, dynamic>?)?['name'] as String?,
-      yieldQuantity: (json['yield_quantity'] as num).toDouble(),
+      yieldQuantity: double.tryParse(json['yield_quantity'].toString()) ?? 0.0,
       isActive: json['is_active'] as bool?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,

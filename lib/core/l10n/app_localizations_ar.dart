@@ -1332,7 +1332,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get deliveryResponsePayload => 'بيانات الاستجابة';
 
   @override
-  String get thawaniPay => 'ثواني باي';
+  String get thawaniIntegration => 'ربط ثواني';
 
   @override
   String get thawaniOverview => 'نظرة عامة';
@@ -1725,7 +1725,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsProfileCurrencyCode => 'رمز العملة';
 
   @override
-  String get settingsProfileCurrencyCodeHint => 'مثال: OMR, SAR, USD';
+  String get settingsProfileCurrencyCodeHint => 'مثال: OMR, , USD';
 
   @override
   String get settingsProfileCurrencySymbol => 'رمز العملة';
@@ -3063,7 +3063,7 @@ class AppLocalizationsAr extends AppLocalizations {
     String billingCycle,
     String price,
   ) {
-    return 'سيتم اشتراكك في $planName على أساس $billingCycle.\n\nالسعر: $price ر.س/$billingCycle';
+    return 'سيتم اشتراكك في $planName على أساس $billingCycle.\n\nالسعر: $price /$billingCycle';
   }
 
   @override
@@ -3236,7 +3236,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String subscriptionAddAddonConfirm(String name, String price, String cycle) {
-    return 'سيتم إضافة $name إلى اشتراكك.\n\nالتكلفة: $price ر.س/$cycle';
+    return 'سيتم إضافة $name إلى اشتراكك.\n\nالتكلفة: $price /$cycle';
   }
 
   @override
@@ -3696,7 +3696,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get marketplacePage => 'صفحة';
 
   @override
-  String get marketplaceCurrency => 'ر.س.';
+  String get marketplaceCurrency => '.';
 
   @override
   String get marketplaceListingDetail => 'تفاصيل القالب';
@@ -3975,7 +3975,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get totalCount => 'المجموع الكلي';
 
   @override
-  String get openingFloatSar => 'الرصيد الافتتاحي (ر.س)';
+  String get openingFloatSar => 'الرصيد الافتتاحي ()';
 
   @override
   String get openSession => 'فتح الجلسة';
@@ -3987,7 +3987,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notesOptional => 'ملاحظات (اختياري)';
 
   @override
-  String get amountSar => 'المبلغ (ر.س)';
+  String get amountSar => 'المبلغ ()';
 
   @override
   String get reason => 'السبب';
@@ -4059,7 +4059,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get redeemGiftCard => 'استرداد بطاقة الهدية';
 
   @override
-  String get redemptionAmountSar => 'مبلغ الاسترداد (ر.س)';
+  String get redemptionAmountSar => 'مبلغ الاسترداد ()';
 
   @override
   String get giftCardIssued => 'تم إصدار بطاقة الهدية';
@@ -4649,7 +4649,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String posPaymentTotal(Object amount) {
-    return 'الإجمالي: ر.س $amount';
+    return 'الإجمالي:  $amount';
   }
 
   @override
@@ -4825,11 +4825,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String posSubtotalAmount(Object amount) {
-    return 'المجموع الفرعي: ر.س $amount';
+    return 'المجموع الفرعي:  $amount';
   }
 
   @override
-  String get posDiscountAmountSar => 'مبلغ الخصم (ر.س)';
+  String get posDiscountAmountSar => 'مبلغ الخصم ()';
 
   @override
   String get posApply => 'تطبيق';
@@ -4905,12 +4905,12 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String posChangeGiven(Object amount) {
-    return 'الباقي: ر.س $amount';
+    return 'الباقي:  $amount';
   }
 
   @override
   String posTotalAmountSar(Object amount) {
-    return 'الإجمالي: ر.س $amount';
+    return 'الإجمالي:  $amount';
   }
 
   @override
@@ -5214,21 +5214,21 @@ class AppLocalizationsAr extends AppLocalizations {
   String get posOpenCashSessionDialog => 'فتح جلسة نقدية';
 
   @override
-  String get posOpeningFloatSar => 'النقد الافتتاحي (ر.س)';
+  String get posOpeningFloatSar => 'النقد الافتتاحي ()';
 
   @override
   String get posCloseCashSession => 'إغلاق الجلسة النقدية';
 
   @override
   String posCountedCash(Object amount) {
-    return 'النقد المعدود: $amount ر.س';
+    return 'النقد المعدود: $amount ';
   }
 
   @override
   String get posNotesOptional => 'ملاحظات (اختياري)';
 
   @override
-  String get posAmountSar => 'المبلغ (ر.س)';
+  String get posAmountSar => 'المبلغ ()';
 
   @override
   String get posReason => 'السبب';
@@ -5260,7 +5260,7 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get loginTitle => 'وامض نقاط البيع';
+  String get loginTitle => 'وميض نقاط البيع';
 
   @override
   String get loginSubtitle => 'سجل الدخول إلى حسابك';
@@ -5416,11 +5416,11 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get sarCurrency => 'ر.س';
+  String get sarCurrency => '';
 
   @override
   String amountWithSar(Object amount) {
-    return 'ر.س $amount';
+    return ' $amount';
   }
 
   @override
@@ -5499,7 +5499,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cashMgmtActiveSession => 'الجلسة النشطة';
 
   @override
-  String get cashMgmtAmountSar => 'المبلغ (ر.س.)';
+  String get cashMgmtAmountSar => 'المبلغ (.)';
 
   @override
   String get cashMgmtCashCount => 'عد النقد';
@@ -5551,7 +5551,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cashMgmtOpeningFloat => 'الرصيد الافتتاحي';
 
   @override
-  String get cashMgmtOpeningFloatSar => 'الرصيد الافتتاحي (ر.س.)';
+  String get cashMgmtOpeningFloatSar => 'الرصيد الافتتاحي (.)';
 
   @override
   String get cashMgmtReason => 'السبب';
@@ -6247,7 +6247,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String posChangeAmount(String amount) {
-    return 'الباقي: ر.س. $amount';
+    return 'الباقي: . $amount';
   }
 
   @override
@@ -6270,7 +6270,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String posTotalAmount(String amount) {
-    return 'الإجمالي: ر.س. $amount';
+    return 'الإجمالي: . $amount';
   }
 
   @override
@@ -6931,7 +6931,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sidebarPromotions => 'العروض';
 
   @override
-  String get sidebarThawaniPay => 'ثواني باي';
+  String get sidebarThawaniIntegration => 'ربط ثواني';
 
   @override
   String get sidebarDelivery => 'التوصيل';
@@ -7054,7 +7054,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String dailySummaryFloat(String amount) {
-    return 'المبلغ الافتتاحي: $amount ر.س';
+    return 'المبلغ الافتتاحي: $amount ';
   }
 
   @override
@@ -7307,6 +7307,33 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sidebarLabelLayoutTemplates => 'قوالب الملصقات';
+
+  @override
+  String get sidebarGroupCore => 'الأساسية';
+
+  @override
+  String get sidebarGroupCatalog => 'المنتجات والمخزون';
+
+  @override
+  String get sidebarGroupPeople => 'الأشخاص';
+
+  @override
+  String get sidebarGroupBusiness => 'الأعمال';
+
+  @override
+  String get sidebarGroupReports => 'التقارير';
+
+  @override
+  String get sidebarGroupIntegrations => 'التكاملات';
+
+  @override
+  String get sidebarGroupHardware => 'الأجهزة والمزامنة';
+
+  @override
+  String get sidebarGroupIndustry => 'القطاعات';
+
+  @override
+  String get sidebarGroupSettings => 'الإعدادات والأدوات';
 
   @override
   String get commonUpdate => 'تحديث';

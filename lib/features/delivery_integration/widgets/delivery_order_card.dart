@@ -22,7 +22,7 @@ class DeliveryOrderCard extends StatelessWidget {
     final platform = DeliveryConfigPlatform.tryFromValue(platformSlug);
     final externalId = order['external_order_id'] as String? ?? order['platform_order_id'] as String? ?? 'Order';
     final customerName = order['customer_name'] as String?;
-    final totalAmount = (order['total_amount'] as num?)?.toDouble();
+    final totalAmount = (order['total_amount'] != null ? double.tryParse(order['total_amount'].toString()) : null);
     final itemsCount = order['items_count'] as int?;
     final createdAt = order['created_at'] as String?;
 
@@ -90,7 +90,7 @@ class DeliveryOrderCard extends StatelessWidget {
                     if (totalAmount != null) ...[
                       const Spacer(),
                       Text(
-                        '${totalAmount.toStringAsFixed(2)} SAR',
+                        '${totalAmount.toStringAsFixed(2)} \u0081',
                         style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                       ),
                     ],

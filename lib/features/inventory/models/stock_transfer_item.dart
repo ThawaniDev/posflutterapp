@@ -18,8 +18,8 @@ class StockTransferItem {
       id: json['id'] as String,
       stockTransferId: json['stock_transfer_id'] as String,
       productId: json['product_id'] as String,
-      quantitySent: (json['quantity_sent'] as num).toDouble(),
-      quantityReceived: (json['quantity_received'] as num?)?.toDouble(),
+      quantitySent: double.tryParse(json['quantity_sent'].toString()) ?? 0.0,
+      quantityReceived: (json['quantity_received'] != null ? double.tryParse(json['quantity_received'].toString()) : null),
     );
   }
 

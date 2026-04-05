@@ -103,7 +103,7 @@ class _AdminMarketplaceSettlementListPageState extends ConsumerState<AdminMarket
             title: Text(store?['name']?.toString() ?? 'Unknown'),
             subtitle: Text('${s['settlement_date']} • ${s['order_count']} orders'),
             trailing: Text(
-              '${s['net_amount']} SAR',
+              '${s['net_amount']} \u0081',
               style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.success),
             ),
           ),

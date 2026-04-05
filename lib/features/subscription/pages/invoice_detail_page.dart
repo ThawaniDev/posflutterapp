@@ -244,7 +244,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
             style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.w500, fontSize: isBold ? 16 : 14, color: color),
           ),
           Text(
-            '${amount.toStringAsFixed(2)} SAR',
+            '${amount.toStringAsFixed(2)} \u0081',
             style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.w500, fontSize: isBold ? 16 : 14, color: color),
           ),
         ],

@@ -64,7 +64,12 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                     color: AppColors.warning,
                     icon: Icons.hourglass_empty,
                   ),
-                  _StatCard(label: 'Failed', value: '${loaded.failedInvoices}', color: AppColors.warning, icon: Icons.warning_amber),
+                  _StatCard(
+                    label: 'Failed',
+                    value: '${loaded.failedInvoices}',
+                    color: AppColors.warning,
+                    icon: Icons.warning_amber,
+                  ),
                   _StatCard(label: 'Total', value: '${loaded.totalInvoices}', color: AppColors.error, icon: Icons.receipt_long),
                 ],
               ),
@@ -81,7 +86,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                         children: [
                           const Text('Monthly Revenue (MRR)', style: TextStyle(fontSize: 16)),
                           Text(
-                            '\$${loaded.mrr.toStringAsFixed(2)}',
+                            '\u0081${loaded.mrr.toStringAsFixed(2)}',
                             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
                           ),
                         ],
@@ -92,7 +97,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                         children: [
                           const Text('Annual Revenue (ARR)', style: TextStyle(fontSize: 16)),
                           Text(
-                            '\$${loaded.arr.toStringAsFixed(2)}',
+                            '\u0081${loaded.arr.toStringAsFixed(2)}',
                             style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                           ),
                         ],

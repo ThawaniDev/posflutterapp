@@ -2,6 +2,7 @@ enum ZatcaSubmissionStatus {
   pending('pending'),
   submitted('submitted'),
   accepted('accepted'),
+  reported('reported'),
   rejected('rejected'),
   warning('warning');
 

@@ -94,7 +94,7 @@ class StoreSettings {
     this.receiptPaperSize = '80mm',
     this.receiptFontSize = 'normal',
     this.receiptLanguage = 'ar',
-    this.currencyCode = 'SAR',
+    this.currencyCode = '\u0081',
     this.currencySymbol = '﷼',
     this.decimalPlaces = 2,
     this.thousandSeparator = ',',
@@ -155,7 +155,7 @@ class StoreSettings {
       receiptFontSize: json['receipt_font_size'] as String? ?? 'normal',
       receiptLanguage: json['receipt_language'] as String? ?? 'ar',
       // Currency
-      currencyCode: json['currency_code'] as String? ?? 'SAR',
+      currencyCode: json['currency_code'] as String? ?? '\u0081',
       currencySymbol: json['currency_symbol'] as String? ?? '﷼',
       decimalPlaces: json['decimal_places'] as int? ?? 2,
       thousandSeparator: json['thousand_separator'] as String? ?? ',',

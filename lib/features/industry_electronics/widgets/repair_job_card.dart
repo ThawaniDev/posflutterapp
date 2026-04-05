@@ -66,11 +66,11 @@ class RepairJobCard extends StatelessWidget {
                 Row(
                   children: [
                     if (job.estimatedCost != null)
-                      Text('Est: ${job.estimatedCost!.toStringAsFixed(2)} SAR', style: AppTypography.bodySmall),
+                      Text('Est: ${job.estimatedCost!.toStringAsFixed(2)} \u0081', style: AppTypography.bodySmall),
                     if (job.finalCost != null) ...[
                       AppSpacing.gapW16,
                       Text(
-                        'Final: ${job.finalCost!.toStringAsFixed(2)} SAR',
+                        'Final: ${job.finalCost!.toStringAsFixed(2)} \u0081',
                         style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.w600),
                       ),
                     ],

@@ -144,14 +144,14 @@ void main() {
       final json = {
         ...baseJson,
         'type': 'happy_hour',
-        'active_days': {'monday': true, 'tuesday': true, 'wednesday': false},
+        'active_days': ['monday', 'tuesday'],
         'active_time_from': '14:00',
         'active_time_to': '18:00',
       };
       final promo = Promotion.fromJson(json);
       expect(promo.type, PromotionType.happyHour);
-      expect(promo.activeDays, isA<Map>());
-      expect(promo.activeDays!['monday'], true);
+      expect(promo.activeDays, isA<List<String>>());
+      expect(promo.activeDays.contains('monday'), true);
       expect(promo.activeTimeFrom, '14:00');
       expect(promo.activeTimeTo, '18:00');
     });

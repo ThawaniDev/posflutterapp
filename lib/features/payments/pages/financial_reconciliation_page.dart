@@ -128,7 +128,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
                 _summaryTile(
                   theme,
                   l10n.finReconTotalRevenue,
-                  '${totalRevenue.toStringAsFixed(2)} SAR',
+                  '${totalRevenue.toStringAsFixed(2)} \u0081',
                   Icons.trending_up,
                   AppColors.success,
                 ),
@@ -138,7 +138,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
                 _summaryTile(
                   theme,
                   l10n.finReconAvgTransaction,
-                  txCount > 0 ? '${(totalRevenue / txCount).toStringAsFixed(2)} SAR' : '0.00 SAR',
+                  txCount > 0 ? '${(totalRevenue / txCount).toStringAsFixed(2)} \u0081' : '0.00 \u0081',
                   Icons.analytics,
                   AppColors.primary,
                 ),
@@ -189,7 +189,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
                         children: [
                           Text(entry.key, style: theme.textTheme.bodyMedium),
                           Text(
-                            '${entry.value.toStringAsFixed(2)} SAR (${pct.toStringAsFixed(1)}%)',
+                            '${entry.value.toStringAsFixed(2)} \u0081 (${pct.toStringAsFixed(1)}%)',
                             style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
                           ),
                         ],
@@ -237,7 +237,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
                 _summaryTile(
                   theme,
                   l10n.finReconExpectedCash,
-                  '${totalExpected.toStringAsFixed(2)} SAR',
+                  '${totalExpected.toStringAsFixed(2)} \u0081',
                   Icons.calculate,
                   AppColors.info,
                 ),
@@ -245,7 +245,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
                 _summaryTile(
                   theme,
                   l10n.finReconActualCash,
-                  '${totalActual.toStringAsFixed(2)} SAR',
+                  '${totalActual.toStringAsFixed(2)} \u0081',
                   Icons.payments,
                   AppColors.primary,
                 ),
@@ -253,7 +253,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
                 _summaryTile(
                   theme,
                   l10n.finReconVariance,
-                  '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} SAR',
+                  '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} \u0081',
                   Icons.compare_arrows,
                   totalVariance.abs() > 5 ? AppColors.error : AppColors.success,
                 ),
@@ -299,7 +299,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
               children: [
                 Text(l10n.finReconExpenses, style: theme.textTheme.titleMedium),
                 Text(
-                  '${totalExpenses.toStringAsFixed(2)} SAR',
+                  '${totalExpenses.toStringAsFixed(2)} \u0081',
                   style: theme.textTheme.titleMedium?.copyWith(color: AppColors.error, fontWeight: FontWeight.bold),
                 ),
               ],
@@ -313,7 +313,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
                 runSpacing: 6,
                 children: byCategory.entries.map((e) {
                   return Chip(
-                    label: Text('${e.key}: ${e.value.toStringAsFixed(2)} SAR', style: const TextStyle(fontSize: 12)),
+                    label: Text('${e.key}: ${e.value.toStringAsFixed(2)} \u0081', style: const TextStyle(fontSize: 12)),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: VisualDensity.compact,
                   );
@@ -366,7 +366,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
               children: [
                 Text(l10n.finReconCountedTotal, style: theme.textTheme.titleSmall),
                 Text(
-                  '${total.toStringAsFixed(2)} SAR',
+                  '${total.toStringAsFixed(2)} \u0081',
                   style: theme.textTheme.titleSmall?.copyWith(color: AppColors.primary, fontWeight: FontWeight.bold),
                 ),
               ],

@@ -65,7 +65,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     String? storeName,
     String? storeNameAr,
     String country = 'OM',
-    String currency = 'SAR',
+    String currency = '\u0081',
     String locale = 'ar',
     String? businessType,
   }) async {

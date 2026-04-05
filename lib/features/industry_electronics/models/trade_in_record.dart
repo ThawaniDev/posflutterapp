@@ -31,7 +31,7 @@ class TradeInRecord {
       deviceDescription: json['device_description'] as String,
       imei: json['imei'] as String?,
       conditionGrade: json['condition_grade'] as String,
-      assessedValue: (json['assessed_value'] as num).toDouble(),
+      assessedValue: double.tryParse(json['assessed_value'].toString()) ?? 0.0,
       appliedToOrderId: json['applied_to_order_id'] as String?,
       staffUserId: json['staff_user_id'] as String,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,

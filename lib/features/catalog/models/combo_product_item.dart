@@ -20,7 +20,7 @@ class ComboProductItem {
       id: json['id'] as String,
       comboProductId: json['combo_product_id'] as String,
       productId: json['product_id'] as String,
-      quantity: (json['quantity'] as num).toDouble(),
+      quantity: double.tryParse(json['quantity'].toString()) ?? 0.0,
       isOptional: json['is_optional'] as bool?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );

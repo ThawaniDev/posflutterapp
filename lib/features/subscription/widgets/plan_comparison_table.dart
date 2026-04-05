@@ -74,7 +74,7 @@ class PlanComparisonTable extends StatelessWidget {
               plans.map((p) {
                 final price = isAnnual ? (p.annualPrice ?? p.monthlyPrice) : p.monthlyPrice;
                 final period = isAnnual ? '/yr' : '/mo';
-                return Text('${price.toStringAsFixed(2)} SAR$period', style: const TextStyle(fontWeight: FontWeight.w600));
+                return Text('${price.toStringAsFixed(2)} \u0081$period', style: const TextStyle(fontWeight: FontWeight.w600));
               }).toList(),
             ),
 

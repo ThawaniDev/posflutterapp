@@ -137,7 +137,7 @@ class CardTerminalService {
 
   /// Process a card payment (tap-to-pay / chip / swipe)
   ///
-  /// [amountInHalalas] — amount in halalas (1 SAR = 100 halalas)
+  /// [amountInHalalas] — amount in halalas (1 \u0081 = 100 halalas)
   /// [transactionRef] — POS transaction ID for reconciliation
   Future<CardPaymentResult> purchase({required int amountInHalalas, required String transactionRef, String? customerRef}) async {
     if (!_isInitialized || !_isConnected) {

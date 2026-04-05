@@ -292,7 +292,7 @@ class FinancialExpensesNotifier extends StateNotifier<FinancialExpensesState> {
     try {
       final data = await _repo.getFinancialExpenses(dateFrom: dateFrom, dateTo: dateTo);
       state = FinancialExpensesLoaded(
-        totalExpenses: (data['total_expenses'] as num).toDouble(),
+        totalExpenses: double.tryParse(data['total_expenses'].toString()) ?? 0.0,
         categories: (data['categories'] as List).cast<Map<String, dynamic>>(),
       );
     } catch (e) {

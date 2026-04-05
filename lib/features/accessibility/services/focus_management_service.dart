@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Manages focus traversal and programmatic focus movement for keyboard users.
@@ -7,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class FocusManagementService {
   final Map<String, FocusNode> _namedNodes = {};
   final List<String> _focusHistory = [];
+  // ignore: unused_field
   FocusScopeNode? _currentScope;
 
   /// Register a named focus node for quick access.

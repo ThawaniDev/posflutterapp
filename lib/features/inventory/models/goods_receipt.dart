@@ -38,7 +38,7 @@ class GoodsReceipt {
       purchaseOrderId: json['purchase_order_id'] as String?,
       referenceNumber: json['reference_number'] as String?,
       status: GoodsReceiptStatus.tryFromValue(json['status'] as String?),
-      totalCost: (json['total_cost'] as num?)?.toDouble(),
+      totalCost: (json['total_cost'] != null ? double.tryParse(json['total_cost'].toString()) : null),
       notes: json['notes'] as String?,
       receivedBy: json['received_by'] as String,
       receivedAt: json['received_at'] != null ? DateTime.parse(json['received_at'] as String) : null,

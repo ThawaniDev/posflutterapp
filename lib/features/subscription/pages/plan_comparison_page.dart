@@ -127,7 +127,7 @@ class _PlanComparisonPageState extends ConsumerState<PlanComparisonPage> {
         title: Text('Subscribe to ${plan.name}?'),
         content: Text(
           'You will be subscribed to ${plan.name} on a $billingCycle basis.\n\n'
-          'Price: ${price.toStringAsFixed(2)} SAR/$billingCycle',
+          'Price: ${price.toStringAsFixed(2)} \u0081/$billingCycle',
         ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),

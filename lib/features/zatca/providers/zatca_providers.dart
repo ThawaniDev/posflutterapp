@@ -115,7 +115,7 @@ class ZatcaComplianceSummaryNotifier
         accepted: data['accepted'] as int,
         rejected: data['rejected'] as int,
         pending: data['pending'] as int,
-        successRate: (data['success_rate'] as num).toDouble(),
+        successRate: double.tryParse(data['success_rate'].toString()) ?? 0.0,
         certificate: certData != null
             ? ZatcaCertificate.fromJson(certData)
             : null,
@@ -151,8 +151,8 @@ class ZatcaVatReportNotifier extends StateNotifier<ZatcaVatReportState> {
             Map<String, dynamic>.from(data['standard_invoices'] as Map),
         simplifiedInvoices:
             Map<String, dynamic>.from(data['simplified_invoices'] as Map),
-        totalVatCollected: (data['total_vat_collected'] as num).toDouble(),
-        totalAmount: (data['total_amount'] as num).toDouble(),
+        totalVatCollected: double.tryParse(data['total_vat_collected'].toString()) ?? 0.0,
+        totalAmount: double.tryParse(data['total_amount'].toString()) ?? 0.0,
       );
     } catch (e) {
       state = ZatcaVatReportError(e.toString());

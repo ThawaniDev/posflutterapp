@@ -32,8 +32,7 @@ void main() {
     });
 
     test('registerHandler adds handler for id', () {
-      bool called = false;
-      service.registerHandler('new_sale', () => called = true);
+      service.registerHandler('new_sale', () {});
       // Handler registered — we can't easily test the callback without key events
       // but we verify no errors
       expect(true, isTrue);

@@ -41,7 +41,7 @@ class DeviceImeiRecord {
       imei2: json['imei2'] as String?,
       serialNumber: json['serial_number'] as String?,
       conditionGrade: ConditionGrade.tryFromValue(json['condition_grade'] as String?),
-      purchasePrice: (json['purchase_price'] as num?)?.toDouble(),
+      purchasePrice: (json['purchase_price'] != null ? double.tryParse(json['purchase_price'].toString()) : null),
       status: DeviceImeiStatus.tryFromValue(json['status'] as String?),
       warrantyEndDate: json['warranty_end_date'] != null ? DateTime.parse(json['warranty_end_date'] as String) : null,
       storeWarrantyEndDate: json['store_warranty_end_date'] != null ? DateTime.parse(json['store_warranty_end_date'] as String) : null,

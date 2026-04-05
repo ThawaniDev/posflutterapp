@@ -78,9 +78,6 @@ class DeltaSyncService {
 
     _isSyncing = true;
     try {
-      // Compute checksum for the payload
-      final checksum = integrityService.computeChecksum(changes);
-
       final result = await apiService.push(terminalId: terminalId, changes: changes, syncToken: _lastSyncToken);
 
       final recordsSynced = result['records_synced'] as int? ?? 0;

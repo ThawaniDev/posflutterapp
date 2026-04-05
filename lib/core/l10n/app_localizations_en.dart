@@ -1334,7 +1334,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deliveryResponsePayload => 'Response Payload';
 
   @override
-  String get thawaniPay => 'Thawani Integration';
+  String get thawaniIntegration => 'Thawani Integration';
 
   @override
   String get thawaniOverview => 'Overview';
@@ -1729,7 +1729,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsProfileCurrencyCode => 'Currency Code';
 
   @override
-  String get settingsProfileCurrencyCodeHint => 'e.g. OMR, SAR, USD';
+  String get settingsProfileCurrencyCodeHint => 'e.g. OMR, , USD';
 
   @override
   String get settingsProfileCurrencySymbol => 'Currency Symbol';
@@ -3071,7 +3071,7 @@ class AppLocalizationsEn extends AppLocalizations {
     String billingCycle,
     String price,
   ) {
-    return 'You will be subscribed to $planName on a $billingCycle basis.\n\nPrice: $price SAR/$billingCycle';
+    return 'You will be subscribed to $planName on a $billingCycle basis.\n\nPrice: $price /$billingCycle';
   }
 
   @override
@@ -3245,7 +3245,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String subscriptionAddAddonConfirm(String name, String price, String cycle) {
-    return 'This will add $name to your subscription.\n\nCost: $price SAR/$cycle';
+    return 'This will add $name to your subscription.\n\nCost: $price /$cycle';
   }
 
   @override
@@ -3707,7 +3707,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get marketplacePage => 'Page';
 
   @override
-  String get marketplaceCurrency => 'SAR';
+  String get marketplaceCurrency => '';
 
   @override
   String get marketplaceListingDetail => 'Template Detail';
@@ -3989,7 +3989,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get totalCount => 'Total Count';
 
   @override
-  String get openingFloatSar => 'Opening Float (SAR)';
+  String get openingFloatSar => 'Opening Float ()';
 
   @override
   String get openSession => 'Open Session';
@@ -4001,7 +4001,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notesOptional => 'Notes (optional)';
 
   @override
-  String get amountSar => 'Amount (SAR)';
+  String get amountSar => 'Amount ()';
 
   @override
   String get reason => 'Reason';
@@ -4073,7 +4073,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get redeemGiftCard => 'Redeem Gift Card';
 
   @override
-  String get redemptionAmountSar => 'Redemption Amount (SAR)';
+  String get redemptionAmountSar => 'Redemption Amount ()';
 
   @override
   String get giftCardIssued => 'Gift Card Issued';
@@ -4667,7 +4667,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String posPaymentTotal(Object amount) {
-    return 'Total: SAR $amount';
+    return 'Total:  $amount';
   }
 
   @override
@@ -4845,11 +4845,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String posSubtotalAmount(Object amount) {
-    return 'Subtotal: SAR $amount';
+    return 'Subtotal:  $amount';
   }
 
   @override
-  String get posDiscountAmountSar => 'Discount Amount (SAR)';
+  String get posDiscountAmountSar => 'Discount Amount ()';
 
   @override
   String get posApply => 'Apply';
@@ -4925,12 +4925,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String posChangeGiven(Object amount) {
-    return 'Change: SAR $amount';
+    return 'Change:  $amount';
   }
 
   @override
   String posTotalAmountSar(Object amount) {
-    return 'Total: SAR $amount';
+    return 'Total:  $amount';
   }
 
   @override
@@ -5238,21 +5238,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get posOpenCashSessionDialog => 'Open Cash Session';
 
   @override
-  String get posOpeningFloatSar => 'Opening Float (SAR)';
+  String get posOpeningFloatSar => 'Opening Float ()';
 
   @override
   String get posCloseCashSession => 'Close Cash Session';
 
   @override
   String posCountedCash(Object amount) {
-    return 'Counted Cash: $amount SAR';
+    return 'Counted Cash: $amount ';
   }
 
   @override
   String get posNotesOptional => 'Notes (optional)';
 
   @override
-  String get posAmountSar => 'Amount (SAR)';
+  String get posAmountSar => 'Amount ()';
 
   @override
   String get posReason => 'Reason';
@@ -5437,11 +5437,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get sarCurrency => 'SAR';
+  String get sarCurrency => '';
 
   @override
   String amountWithSar(Object amount) {
-    return 'SAR $amount';
+    return ' $amount';
   }
 
   @override
@@ -5520,7 +5520,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cashMgmtActiveSession => 'Active Session';
 
   @override
-  String get cashMgmtAmountSar => 'Amount (SAR)';
+  String get cashMgmtAmountSar => 'Amount ()';
 
   @override
   String get cashMgmtCashCount => 'Cash Count';
@@ -5572,7 +5572,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cashMgmtOpeningFloat => 'Opening Float';
 
   @override
-  String get cashMgmtOpeningFloatSar => 'Opening Float (SAR)';
+  String get cashMgmtOpeningFloatSar => 'Opening Float ()';
 
   @override
   String get cashMgmtReason => 'Reason';
@@ -6272,7 +6272,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String posChangeAmount(String amount) {
-    return 'Change: SAR $amount';
+    return 'Change:  $amount';
   }
 
   @override
@@ -6295,7 +6295,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String posTotalAmount(String amount) {
-    return 'Total: SAR $amount';
+    return 'Total:  $amount';
   }
 
   @override
@@ -6956,7 +6956,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sidebarPromotions => 'Promotions';
 
   @override
-  String get sidebarThawaniPay => 'Thawani Pay';
+  String get sidebarThawaniIntegration => 'Thawani Integration';
 
   @override
   String get sidebarDelivery => 'Delivery';
@@ -7079,7 +7079,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String dailySummaryFloat(String amount) {
-    return 'Float: $amount SAR';
+    return 'Float: $amount ';
   }
 
   @override
@@ -7332,6 +7332,33 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sidebarLabelLayoutTemplates => 'Label Templates';
+
+  @override
+  String get sidebarGroupCore => 'Core';
+
+  @override
+  String get sidebarGroupCatalog => 'Catalog & Inventory';
+
+  @override
+  String get sidebarGroupPeople => 'People';
+
+  @override
+  String get sidebarGroupBusiness => 'Business';
+
+  @override
+  String get sidebarGroupReports => 'Reports';
+
+  @override
+  String get sidebarGroupIntegrations => 'Integrations';
+
+  @override
+  String get sidebarGroupHardware => 'Hardware & Sync';
+
+  @override
+  String get sidebarGroupIndustry => 'Industry';
+
+  @override
+  String get sidebarGroupSettings => 'Settings & Tools';
 
   @override
   String get commonUpdate => 'Update';

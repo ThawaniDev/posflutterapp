@@ -88,12 +88,15 @@ class _DiscountCard extends StatelessWidget {
           decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
           alignment: Alignment.center,
           child: Text(
-            type == 'percentage' ? '%' : '\$',
+            type == 'percentage' ? '%' : '\u0081',
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.primary),
           ),
         ),
         title: Text(code, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-        subtitle: Text(type == 'percentage' ? '$value% off' : '\$$value off', style: TextStyle(color: AppColors.textSecondary)),
+        subtitle: Text(
+          type == 'percentage' ? '$value% off' : '\u0081$value off',
+          style: TextStyle(color: AppColors.textSecondary),
+        ),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,

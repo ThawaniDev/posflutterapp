@@ -101,7 +101,7 @@ class _IssueTabState extends ConsumerState<_IssueTab> {
             children: _presetAmounts.map((amount) {
               final selected = _selectedPreset == amount;
               return ChoiceChip(
-                label: Text('${amount.toInt()} SAR'),
+                label: Text('${amount.toInt()} \u0081'),
                 selected: selected,
                 onSelected: (v) {
                   setState(() {
@@ -118,7 +118,7 @@ class _IssueTabState extends ConsumerState<_IssueTab> {
           TextField(
             controller: _amountController,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            decoration: const InputDecoration(labelText: 'Amount (SAR)', border: OutlineInputBorder(), prefixText: 'SAR '),
+            decoration: const InputDecoration(labelText: 'Amount (\u0081)', border: OutlineInputBorder(), prefixText: '\u0081 '),
             onChanged: (_) => setState(() => _selectedPreset = null),
           ),
           AppSpacing.gapH16,
@@ -248,7 +248,7 @@ class _CheckBalanceTabState extends ConsumerState<_CheckBalanceTab> {
                     Icon(Icons.account_balance_wallet, size: 48, color: AppColors.primary),
                     AppSpacing.gapH12,
                     Text(
-                      '${(state.lastBalance!['balance'] as num?)?.toStringAsFixed(2) ?? '0.00'} SAR',
+                      '${(state.lastBalance!['balance'] as num?)?.toStringAsFixed(2) ?? '0.00'} \u0081',
                       style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
                     ),
                     AppSpacing.gapH4,
@@ -338,9 +338,9 @@ class _RedeemTabState extends ConsumerState<_RedeemTab> {
             controller: _amountController,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             decoration: const InputDecoration(
-              labelText: 'Redemption Amount (SAR)',
+              labelText: 'Redemption Amount (\u0081)',
               border: OutlineInputBorder(),
-              prefixText: 'SAR ',
+              prefixText: '\u0081 ',
             ),
           ),
           AppSpacing.gapH24,
@@ -432,8 +432,8 @@ class _GiftCardResultCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _infoColumn(theme, 'Initial', '${card.initialAmount.toStringAsFixed(2)} SAR'),
-                _infoColumn(theme, 'Balance', '${card.balance.toStringAsFixed(2)} SAR'),
+                _infoColumn(theme, 'Initial', '${card.initialAmount.toStringAsFixed(2)} \u0081'),
+                _infoColumn(theme, 'Balance', '${card.balance.toStringAsFixed(2)} \u0081'),
                 if (card.recipientName != null) _infoColumn(theme, 'Recipient', card.recipientName!),
               ],
             ),

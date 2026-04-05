@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 /// Wameed POS Formatters — currency, dates, numbers, relative time.
 ///
 /// Conventions:
-///  - Currency: Saudi Riyal (SAR) with 3 decimal places.
+///  - Currency: Saudi Riyal (\u0081) with 3 decimal places.
 ///  - Dates: dd/MM/yyyy (display), yyyy-MM-dd (API/ISO).
 ///  - Arabic numerals are handled via Intl locale.
 class Formatters {
@@ -11,20 +11,20 @@ class Formatters {
 
   // ─── Currency ────────────────────────────────────────────
 
-  /// Saudi Riyal: 1234.567 → "ر.س 1,234.567"
-  static String currency(double amount, {String symbol = 'ر.س'}) {
+  /// Saudi Riyal: 1234.567 → "\u0081 1,234.567"
+  static String currency(double amount, {String symbol = '\u0081'}) {
     final formatter = NumberFormat.currency(decimalDigits: 3, symbol: '$symbol ');
     return formatter.format(amount);
   }
 
-  /// Short currency (no decimals): 1234 → "ر.س 1,234"
-  static String currencyShort(double amount, {String symbol = 'ر.س'}) {
+  /// Short currency (no decimals): 1234 → "\u0081 1,234"
+  static String currencyShort(double amount, {String symbol = '\u0081'}) {
     final formatter = NumberFormat.currency(decimalDigits: 0, symbol: '$symbol ');
     return formatter.format(amount);
   }
 
-  /// Compact currency: 12500 → "ر.س 12.5K"
-  static String currencyCompact(double amount, {String symbol = 'ر.س'}) {
+  /// Compact currency: 12500 → "\u0081 12.5K"
+  static String currencyCompact(double amount, {String symbol = '\u0081'}) {
     return '$symbol ${NumberFormat.compact().format(amount)}';
   }
 

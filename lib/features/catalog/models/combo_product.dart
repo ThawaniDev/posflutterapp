@@ -18,7 +18,7 @@ class ComboProduct {
       id: json['id'] as String,
       productId: json['product_id'] as String,
       name: json['name'] as String,
-      comboPrice: (json['combo_price'] as num?)?.toDouble(),
+      comboPrice: (json['combo_price'] != null ? double.tryParse(json['combo_price'].toString()) : null),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }

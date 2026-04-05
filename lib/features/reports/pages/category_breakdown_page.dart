@@ -78,10 +78,10 @@ class _CategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final totalRevenue = categories.fold<double>(0, (sum, c) => sum + (c['total_revenue'] as num).toDouble());
+    final totalRevenue = categories.fold<double>(0, (sum, c) => sum + (double.tryParse(c['total_revenue'].toString()) ?? 0.0));
     final maxRevenue = categories.isEmpty
         ? 1.0
-        : categories.map((c) => (c['total_revenue'] as num).toDouble()).reduce((a, b) => a > b ? a : b);
+        : categories.map((c) => double.tryParse(c['total_revenue'].toString()) ?? 0.0).reduce((a, b) => a > b ? a : b);
 
     return ListView(
       padding: const EdgeInsets.all(20),
@@ -112,9 +112,9 @@ class _CategoryList extends StatelessWidget {
           child: Column(
             children: List.generate(categories.length, (i) {
               final c = categories[i];
-              final revenue = (c['total_revenue'] as num).toDouble();
+              final revenue = double.tryParse(c['total_revenue'].toString()) ?? 0.0;
               final pct = totalRevenue > 0 ? revenue / totalRevenue : 0.0;
-              final profit = (c['profit'] as num).toDouble();
+              final profit = double.tryParse(c['profit'].toString()) ?? 0.0;
               final qty = (c['total_quantity'] as num).toInt();
 
               return Column(

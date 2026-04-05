@@ -77,7 +77,7 @@ class ActiveCashiersList extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'SAR ${((c['session_total'] as num?)?.toDouble() ?? 0).toStringAsFixed(2)}',
+                      '\u0081 ${(c['session_total'] != null ? double.tryParse(c['session_total'].toString()) : null)?.toStringAsFixed(2) ?? '0.00'}',
                       style: AppTypography.labelMedium.copyWith(color: AppColors.success),
                     ),
                   ],

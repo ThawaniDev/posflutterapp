@@ -115,10 +115,10 @@ class Register {
       serialNumber: json['serial_number'] as String?,
       // Fees
       feeProfile: json['fee_profile'] as String?,
-      feeMadaPercentage: (json['fee_mada_percentage'] as num?)?.toDouble() ?? 0.0150,
-      feeVisaMcPercentage: (json['fee_visa_mc_percentage'] as num?)?.toDouble() ?? 0.0200,
-      feeFlatPerTxn: (json['fee_flat_per_txn'] as num?)?.toDouble() ?? 0.00,
-      wameedMarginPercentage: (json['wameed_margin_percentage'] as num?)?.toDouble() ?? 0.0040,
+      feeMadaPercentage: (json['fee_mada_percentage'] != null ? double.tryParse(json['fee_mada_percentage'].toString()) : null) ?? 0.0150,
+      feeVisaMcPercentage: (json['fee_visa_mc_percentage'] != null ? double.tryParse(json['fee_visa_mc_percentage'].toString()) : null) ?? 0.0200,
+      feeFlatPerTxn: (json['fee_flat_per_txn'] != null ? double.tryParse(json['fee_flat_per_txn'].toString()) : null) ?? 0.00,
+      wameedMarginPercentage: (json['wameed_margin_percentage'] != null ? double.tryParse(json['wameed_margin_percentage'].toString()) : null) ?? 0.0040,
       feeDescription: json['fee_description'] as String?,
       // Settlement
       settlementCycle: json['settlement_cycle'] as String?,

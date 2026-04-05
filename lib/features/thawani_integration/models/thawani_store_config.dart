@@ -37,7 +37,7 @@ class ThawaniStoreConfig {
       autoSyncInventory: json['auto_sync_inventory'] as bool?,
       autoAcceptOrders: json['auto_accept_orders'] as bool?,
       operatingHoursJson: json['operating_hours_json'] != null ? Map<String, dynamic>.from(json['operating_hours_json'] as Map) : null,
-      commissionRate: (json['commission_rate'] as num?)?.toDouble(),
+      commissionRate: (json['commission_rate'] != null ? double.tryParse(json['commission_rate'].toString()) : null),
       connectedAt: json['connected_at'] != null ? DateTime.parse(json['connected_at'] as String) : null,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,

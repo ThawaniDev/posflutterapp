@@ -95,7 +95,10 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(date, style: theme.textTheme.titleSmall),
-                  Text('${dayTotal.toStringAsFixed(2)} SAR', style: theme.textTheme.titleSmall?.copyWith(color: AppColors.error)),
+                  Text(
+                    '${dayTotal.toStringAsFixed(2)} \u0081',
+                    style: theme.textTheme.titleSmall?.copyWith(color: AppColors.error),
+                  ),
                 ],
               ),
             ),
@@ -116,7 +119,7 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
                     style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
                   ),
                   trailing: Text(
-                    '${expense.amount.toStringAsFixed(2)} SAR',
+                    '${expense.amount.toStringAsFixed(2)} \u0081',
                     style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600, color: AppColors.error),
                   ),
                 ),
@@ -147,7 +150,11 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
                 TextField(
                   controller: amountController,
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  decoration: const InputDecoration(labelText: 'Amount (SAR)', border: OutlineInputBorder(), prefixText: 'SAR '),
+                  decoration: const InputDecoration(
+                    labelText: 'Amount (\u0081)',
+                    border: OutlineInputBorder(),
+                    prefixText: '\u0081 ',
+                  ),
                   autofocus: true,
                 ),
                 AppSpacing.gapH16,

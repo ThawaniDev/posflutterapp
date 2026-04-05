@@ -72,7 +72,7 @@ class PrescriptionCard extends StatelessWidget {
               if (prescription.insuranceClaimAmount != null) ...[
                 AppSpacing.gapH4,
                 Text(
-                  'Claim: ${prescription.insuranceClaimAmount!.toStringAsFixed(2)} SAR',
+                  'Claim: ${prescription.insuranceClaimAmount!.toStringAsFixed(2)} \u0081',
                   style: AppTypography.bodySmall.copyWith(color: AppColors.primary),
                 ),
               ],

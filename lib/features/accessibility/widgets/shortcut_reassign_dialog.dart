@@ -32,7 +32,6 @@ class ShortcutReassignDialog extends StatefulWidget {
 class _ShortcutReassignDialogState extends State<ShortcutReassignDialog> {
   String? _capturedLabel;
   String? _error;
-  bool _listening = false;
   final _focusNode = FocusNode();
 
   @override

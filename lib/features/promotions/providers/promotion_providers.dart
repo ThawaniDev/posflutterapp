@@ -128,7 +128,7 @@ class CouponValidationNotifier extends StateNotifier<CouponValidationState> {
           couponCodeId: result['coupon_code_id'] as String,
           promotionName: result['promotion_name'] as String,
           type: result['type'] as String,
-          discountAmount: (result['discount_amount'] as num).toDouble(),
+          discountAmount: double.tryParse(result['discount_amount'].toString()) ?? 0.0,
         );
       } else {
         state = CouponValidationInvalid(

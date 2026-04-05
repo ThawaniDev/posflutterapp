@@ -53,7 +53,7 @@ class BuybackCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '${buyback.totalAmount.toStringAsFixed(2)} SAR',
+                '${buyback.totalAmount.toStringAsFixed(2)} \u0081',
                 style: AppTypography.titleSmall.copyWith(fontWeight: FontWeight.w700, color: AppColors.success),
               ),
             ],

@@ -210,7 +210,7 @@ class _FeatureGateDialog extends ConsumerWidget {
                         AppSpacing.gapW8,
                         Expanded(child: Text(plan.name, style: AppTypography.bodySmall)),
                         Text(
-                          '${plan.monthlyPrice.toStringAsFixed(0)} SAR/mo',
+                          '${plan.monthlyPrice.toStringAsFixed(0)} \u0081/mo',
                           style: AppTypography.labelSmall.copyWith(color: AppColors.primary),
                         ),
                       ],

@@ -23,8 +23,8 @@ class CommissionEarning {
       staffUserId: json['staff_user_id'] as String,
       orderId: json['order_id'] as String,
       commissionRuleId: json['commission_rule_id'] as String,
-      orderTotal: (json['order_total'] as num).toDouble(),
-      commissionAmount: (json['commission_amount'] as num).toDouble(),
+      orderTotal: double.tryParse(json['order_total'].toString()) ?? 0.0,
+      commissionAmount: double.tryParse(json['commission_amount'].toString()) ?? 0.0,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }

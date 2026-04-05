@@ -143,7 +143,7 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _pricePerDeliveryCtrl,
-              label: 'Price Per Delivery (SAR)',
+              label: 'Price Per Delivery (\u0081)',
               hint: '0.000',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),

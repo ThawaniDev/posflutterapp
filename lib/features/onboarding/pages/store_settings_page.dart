@@ -217,7 +217,7 @@ class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
           ]),
           const SizedBox(height: AppSpacing.xl),
           _buildSection('Currency', Icons.attach_money, [
-            _buildTextField('Currency Code', _currencyCodeCtrl, hint: 'SAR'),
+            _buildTextField('Currency Code', _currencyCodeCtrl, hint: '\u0081'),
             _buildTextField('Currency Symbol', _currencySymbolCtrl, hint: '﷼'),
             _buildTextField('Decimal Places', _decimalPlacesCtrl, hint: '2', keyboard: TextInputType.number),
           ]),

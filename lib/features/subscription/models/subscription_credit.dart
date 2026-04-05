@@ -20,7 +20,7 @@ class SubscriptionCredit {
       id: json['id'] as String,
       storeSubscriptionId: json['store_subscription_id'] as String,
       appliedBy: json['applied_by'] as String,
-      amount: (json['amount'] as num).toDouble(),
+      amount: double.tryParse(json['amount'].toString()) ?? 0.0,
       reason: json['reason'] as String,
       appliedAt: json['applied_at'] != null ? DateTime.parse(json['applied_at'] as String) : null,
     );

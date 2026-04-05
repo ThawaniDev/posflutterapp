@@ -54,7 +54,7 @@ class TradeInCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '${record.assessedValue.toStringAsFixed(2)} SAR',
+                '${record.assessedValue.toStringAsFixed(2)} \u0081',
                 style: AppTypography.titleSmall.copyWith(fontWeight: FontWeight.w700, color: AppColors.success),
               ),
             ],

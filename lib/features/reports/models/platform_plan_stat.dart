@@ -25,7 +25,7 @@ class PlatformPlanStat {
       activeCount: (json['active_count'] as num).toInt(),
       trialCount: (json['trial_count'] as num).toInt(),
       churnedCount: (json['churned_count'] as num).toInt(),
-      mrr: (json['mrr'] as num).toDouble(),
+      mrr: double.tryParse(json['mrr'].toString()) ?? 0.0,
     );
   }
 

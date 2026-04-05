@@ -27,7 +27,7 @@ class PendingOrder {
       storeId: json['store_id'] as String,
       customerId: json['customer_id'] as String?,
       itemsJson: Map<String, dynamic>.from(json['items_json'] as Map),
-      total: (json['total'] as num).toDouble(),
+      total: double.tryParse(json['total'].toString()) ?? 0.0,
       notes: json['notes'] as String?,
       createdBy: json['created_by'] as String,
       expiresAt: json['expires_at'] != null ? DateTime.parse(json['expires_at'] as String) : null,

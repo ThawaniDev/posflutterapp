@@ -59,7 +59,7 @@ class SupplierReturn {
       referenceNumber: json['reference_number'] as String?,
       status: SupplierReturnStatus.tryFromValue(json['status'] as String?),
       reason: json['reason'] as String?,
-      totalAmount: (json['total_amount'] as num?)?.toDouble() ?? 0,
+      totalAmount: (json['total_amount'] != null ? double.tryParse(json['total_amount'].toString()) : null) ?? 0,
       notes: json['notes'] as String?,
       createdBy: json['created_by'] as String?,
       createdByName: createdByMap?['name'] as String?,

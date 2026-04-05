@@ -31,7 +31,7 @@ class AppShell extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
 
     Widget sidebar = PosSidebar(
-      items: PosSidebar.getDefaultItems(l10n),
+      groups: PosSidebar.getDefaultGroups(l10n),
       currentRoute: currentRoute,
       isCollapsed: isCollapsed,
       onToggleCollapse: () => ref.read(sidebarCollapsedProvider.notifier).state = !isCollapsed,

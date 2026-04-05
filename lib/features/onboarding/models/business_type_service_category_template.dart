@@ -24,7 +24,7 @@ class BusinessTypeServiceCategoryTemplate {
       name: json['name'] as String,
       nameAr: json['name_ar'] as String,
       defaultDurationMinutes: (json['default_duration_minutes'] as num).toInt(),
-      defaultPrice: (json['default_price'] as num?)?.toDouble(),
+      defaultPrice: (json['default_price'] != null ? double.tryParse(json['default_price'].toString()) : null),
       sortOrder: (json['sort_order'] as num?)?.toInt(),
     );
   }

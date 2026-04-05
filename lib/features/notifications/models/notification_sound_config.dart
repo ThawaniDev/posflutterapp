@@ -25,7 +25,7 @@ class NotificationSoundConfig {
       storeId: json['store_id'] as String,
       eventKey: json['event_key'] as String,
       soundFile: json['sound_file'] as String,
-      volume: (json['volume'] as num?)?.toDouble() ?? 1.0,
+      volume: (json['volume'] != null ? double.tryParse(json['volume'].toString()) : null) ?? 1.0,
       isEnabled: json['is_enabled'] as bool? ?? true,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,

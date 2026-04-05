@@ -128,7 +128,7 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
                                 child: Icon(Icons.receipt_long, color: _statusColor(status)),
                               ),
                               title: Text(inv['invoice_number'] ?? 'N/A', style: const TextStyle(fontWeight: FontWeight.bold)),
-                              subtitle: Text('Total: ${inv['total']} SAR · Due: ${inv['due_date'] ?? 'N/A'}'),
+                              subtitle: Text('Total: ${inv['total']} \u0081 · Due: ${inv['due_date'] ?? 'N/A'}'),
                               trailing: Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                 decoration: BoxDecoration(

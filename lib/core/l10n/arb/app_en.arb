@@ -482,7 +482,7 @@
   "deliveryAttempt": "Attempt",
   "deliveryRequestPayload": "Request Payload",
   "deliveryResponsePayload": "Response Payload",
-  "thawaniPay": "Thawani Integration",
+  "thawaniIntegration": "Thawani Integration",
   "thawaniOverview": "Overview",
   "thawaniSettings": "Settings",
   "thawaniOrders": "Orders",
@@ -612,7 +612,7 @@
   "settingsWorkingBreakEnd": "Break End",
   "settingsProfileCurrency": "Currency",
   "settingsProfileCurrencyCode": "Currency Code",
-  "settingsProfileCurrencyCodeHint": "e.g. OMR, SAR, USD",
+  "settingsProfileCurrencyCodeHint": "e.g. OMR, \u0081, USD",
   "settingsProfileCurrencySymbol": "Currency Symbol",
   "settingsProfileCurrencySymbolHint": "e.g. ر.ع, ﷼, $",
   "settingsProfileFormatting": "Number Formatting",
@@ -1088,7 +1088,7 @@
       }
     }
   },
-  "subscriptionSubscribeConfirm": "You will be subscribed to {planName} on a {billingCycle} basis.\n\nPrice: {price} SAR/{billingCycle}",
+  "subscriptionSubscribeConfirm": "You will be subscribed to {planName} on a {billingCycle} basis.\n\nPrice: {price} \u0081/{billingCycle}",
   "@subscriptionSubscribeConfirm": {
     "placeholders": {
       "planName": {
@@ -1214,7 +1214,7 @@
       }
     }
   },
-  "subscriptionAddAddonConfirm": "This will add {name} to your subscription.\n\nCost: {price} SAR/{cycle}",
+  "subscriptionAddAddonConfirm": "This will add {name} to your subscription.\n\nCost: {price} \u0081/{cycle}",
   "@subscriptionAddAddonConfirm": {
     "placeholders": {
       "name": {
@@ -1419,7 +1419,7 @@
   "marketplaceNoListings": "No templates found",
   "marketplaceNoListingsSubtitle": "Try adjusting your search or filters.",
   "marketplacePage": "Page",
-  "marketplaceCurrency": "SAR",
+  "marketplaceCurrency": "\u0081",
   "marketplaceListingDetail": "Template Detail",
   "marketplaceDescription": "Description",
   "marketplaceOwned": "Owned",
@@ -1511,11 +1511,11 @@
   "openCashSession": "Open Cash Session",
   "noSessionsYet": "No sessions yet",
   "totalCount": "Total Count",
-  "openingFloatSar": "Opening Float (SAR)",
+  "openingFloatSar": "Opening Float (\u0081)",
   "openSession": "Open Session",
   "closeCashSession": "Close Cash Session",
   "notesOptional": "Notes (optional)",
-  "amountSar": "Amount (SAR)",
+  "amountSar": "Amount (\u0081)",
   "reason": "Reason",
   "record": "Record",
   "expenses": "Expenses",
@@ -1539,7 +1539,7 @@
   "check": "Check",
   "availableBalance": "Available Balance",
   "redeemGiftCard": "Redeem Gift Card",
-  "redemptionAmountSar": "Redemption Amount (SAR)",
+  "redemptionAmountSar": "Redemption Amount (\u0081)",
   "giftCardIssued": "Gift Card Issued",
   "code": "Code",
   "initial": "Initial",
@@ -1751,7 +1751,7 @@
   "posFindTransaction": "Enter a receipt number to find the transaction",
   "posTransactionNotFound": "Transaction not found",
   "posPayment": "Payment",
-  "posPaymentTotal": "Total: SAR {amount}",
+  "posPaymentTotal": "Total: \u0081 {amount}",
   "posSplitPayment": "Split Payment",
   "posCashTendered": "Cash Tendered",
   "posChange": "Change",
@@ -1815,13 +1815,13 @@
   "posClear": "Clear",
   "posWalkInCustomer": "Walk-in Customer",
   "posCartDiscount": "Cart Discount",
-  "posSubtotalAmount": "Subtotal: SAR {amount}",
+  "posSubtotalAmount": "Subtotal: \u0081 {amount}",
   "@posSubtotalAmount": {
     "placeholders": {
       "amount": {}
     }
   },
-  "posDiscountAmountSar": "Discount Amount (SAR)",
+  "posDiscountAmountSar": "Discount Amount (\u0081)",
   "posApply": "Apply",
   "posOrderNotes": "Order Notes",
   "posNotesHint": "Add notes for this order...",
@@ -1873,13 +1873,13 @@
       "number": {}
     }
   },
-  "posChangeGiven": "Change: SAR {amount}",
+  "posChangeGiven": "Change: \u0081 {amount}",
   "@posChangeGiven": {
     "placeholders": {
       "amount": {}
     }
   },
-  "posTotalAmountSar": "Total: SAR {amount}",
+  "posTotalAmountSar": "Total: \u0081 {amount}",
   "@posTotalAmountSar": {
     "placeholders": {
       "amount": {}
@@ -2016,16 +2016,16 @@
   "posTotalCount": "Total Count",
   "posNoSessionsYet": "No sessions yet",
   "posOpenCashSessionDialog": "Open Cash Session",
-  "posOpeningFloatSar": "Opening Float (SAR)",
+  "posOpeningFloatSar": "Opening Float (\u0081)",
   "posCloseCashSession": "Close Cash Session",
-  "posCountedCash": "Counted Cash: {amount} SAR",
+  "posCountedCash": "Counted Cash: {amount} \u0081",
   "@posCountedCash": {
     "placeholders": {
       "amount": {}
     }
   },
   "posNotesOptional": "Notes (optional)",
-  "posAmountSar": "Amount (SAR)",
+  "posAmountSar": "Amount (\u0081)",
   "posReason": "Reason",
   "posReasonPettyCash": "Petty Cash",
   "posReasonSupplierPayment": "Supplier Payment",
@@ -2120,8 +2120,8 @@
       "name": {}
     }
   },
-  "sarCurrency": "SAR",
-  "amountWithSar": "SAR {amount}",
+  "sarCurrency": "\u0081",
+  "amountWithSar": "\u0081 {amount}",
   "@amountWithSar": {
     "placeholders": {
       "amount": {}
@@ -2152,7 +2152,7 @@
   "authStoreNameHint": "e.g. Main Branch",
   "authStoreNameOptional": "Store Name (optional)",
   "cashMgmtActiveSession": "Active Session",
-  "cashMgmtAmountSar": "Amount (SAR)",
+  "cashMgmtAmountSar": "Amount (\u0081)",
   "cashMgmtCashCount": "Cash Count",
   "cashMgmtCashIn": "Cash In",
   "cashMgmtCashOut": "Cash Out",
@@ -2169,7 +2169,7 @@
   "cashMgmtOpenSession": "Open Session",
   "cashMgmtOpened": "Opened",
   "cashMgmtOpeningFloat": "Opening Float",
-  "cashMgmtOpeningFloatSar": "Opening Float (SAR)",
+  "cashMgmtOpeningFloatSar": "Opening Float (\u0081)",
   "cashMgmtReason": "Reason",
   "cashMgmtRecord": "Record",
   "cashMgmtSessionHistory": "Session History",
@@ -2428,7 +2428,7 @@
   "ordersVoidOrder": "Void Order",
   "ordersVoided": "Voided",
   "ordersVoided2": "Order voided",
-  "posChangeAmount": "Change: SAR {amount}",
+  "posChangeAmount": "Change: \u0081 {amount}",
   "@posChangeAmount": {
     "placeholders": {
       "amount": {
@@ -2451,7 +2451,7 @@
   },
   "posPaymentNotCover": "Payment does not cover the total amount",
   "posSelectRegisterError": "Please select a register",
-  "posTotalAmount": "Total: SAR {amount}",
+  "posTotalAmount": "Total: \u0081 {amount}",
   "@posTotalAmount": {
     "placeholders": {
       "amount": {
@@ -2756,7 +2756,7 @@
   "sidebarFinancialReports": "Financial Reports",
   "sidebarCustomerReports": "Customer Reports",
   "sidebarPromotions": "Promotions",
-  "sidebarThawaniPay": "Thawani Pay",
+  "sidebarThawaniIntegration": "Thawani Integration",
   "sidebarDelivery": "Delivery",
   "sidebarZatca": "ZATCA",
   "sidebarHardware": "Hardware",
@@ -2803,7 +2803,7 @@
   "dailySummaryHourlyActivity": "Hourly Activity",
   "dailySummarySessionDetails": "Session Details",
   "dailySummaryNoSessions": "No sessions",
-  "dailySummaryFloat": "Float: {amount} SAR",
+  "dailySummaryFloat": "Float: {amount} \u0081",
   "@dailySummaryFloat": {
     "placeholders": {
       "amount": {
@@ -2910,6 +2910,16 @@
   "labelLayoutTemplateSimpleLayout": "Simple stacked layout",
   "labelLayoutTemplateNoFields": "No fields configured",
   "sidebarLabelLayoutTemplates": "Label Templates",
+
+  "sidebarGroupCore": "Core",
+  "sidebarGroupCatalog": "Catalog & Inventory",
+  "sidebarGroupPeople": "People",
+  "sidebarGroupBusiness": "Business",
+  "sidebarGroupReports": "Reports",
+  "sidebarGroupIntegrations": "Integrations",
+  "sidebarGroupHardware": "Hardware & Sync",
+  "sidebarGroupIndustry": "Industry",
+  "sidebarGroupSettings": "Settings & Tools",
 
   "commonUpdate": "Update",
   "commonClose": "Close",

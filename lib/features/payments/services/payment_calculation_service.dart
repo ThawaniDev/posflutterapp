@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:thawani_pos/features/payments/enums/payment_method_key.dart';
 
-/// SAR denomination values (notes and coins)
+/// \u0081 denomination values (notes and coins)
 class SarDenomination {
   final double value;
   final String label;
@@ -12,15 +12,15 @@ class SarDenomination {
   const SarDenomination({required this.value, required this.label, required this.labelAr, this.isCoin = false});
 
   static const List<SarDenomination> all = [
-    SarDenomination(value: 500, label: '500 SAR', labelAr: '٥٠٠ ر.س'),
-    SarDenomination(value: 200, label: '200 SAR', labelAr: '٢٠٠ ر.س'),
-    SarDenomination(value: 100, label: '100 SAR', labelAr: '١٠٠ ر.س'),
-    SarDenomination(value: 50, label: '50 SAR', labelAr: '٥٠ ر.س'),
-    SarDenomination(value: 20, label: '20 SAR', labelAr: '٢٠ ر.س'),
-    SarDenomination(value: 10, label: '10 SAR', labelAr: '١٠ ر.س'),
-    SarDenomination(value: 5, label: '5 SAR', labelAr: '٥ ر.س'),
-    SarDenomination(value: 2, label: '2 SAR', labelAr: '٢ ر.س', isCoin: true),
-    SarDenomination(value: 1, label: '1 SAR', labelAr: '١ ر.س', isCoin: true),
+    SarDenomination(value: 500, label: '500 \u0081', labelAr: '٥٠٠ \u0081'),
+    SarDenomination(value: 200, label: '200 \u0081', labelAr: '٢٠٠ \u0081'),
+    SarDenomination(value: 100, label: '100 \u0081', labelAr: '١٠٠ \u0081'),
+    SarDenomination(value: 50, label: '50 \u0081', labelAr: '٥٠ \u0081'),
+    SarDenomination(value: 20, label: '20 \u0081', labelAr: '٢٠ \u0081'),
+    SarDenomination(value: 10, label: '10 \u0081', labelAr: '١٠ \u0081'),
+    SarDenomination(value: 5, label: '5 \u0081', labelAr: '٥ \u0081'),
+    SarDenomination(value: 2, label: '2 \u0081', labelAr: '٢ \u0081', isCoin: true),
+    SarDenomination(value: 1, label: '1 \u0081', labelAr: '١ \u0081', isCoin: true),
     SarDenomination(value: 0.50, label: '50 Halalas', labelAr: '٥٠ هللة', isCoin: true),
     SarDenomination(value: 0.25, label: '25 Halalas', labelAr: '٢٥ هللة', isCoin: true),
     SarDenomination(value: 0.10, label: '10 Halalas', labelAr: '١٠ هللة', isCoin: true),
@@ -56,7 +56,7 @@ class SplitPaymentLeg {
 
 /// Payment calculation service — handles rounding, change, split payment logic
 class PaymentCalculationService {
-  /// Round cash amount to nearest 0.25 SAR (Saudi common practice)
+  /// Round cash amount to nearest 0.25 \u0081 (Saudi common practice)
   /// Card payments are NOT rounded — exact halalas
   static double roundCash(double amount) {
     return (amount * 4).round() / 4;

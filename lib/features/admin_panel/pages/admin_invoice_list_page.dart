@@ -145,7 +145,7 @@ class _InvoiceCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text('\$${invoice['total'] ?? 0}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            Text('\u0081${invoice['total'] ?? 0}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(

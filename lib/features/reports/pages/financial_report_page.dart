@@ -148,10 +148,10 @@ class _DailyPlTab extends ConsumerWidget {
               const PosEmptyState(title: 'No data for period', icon: Icons.bar_chart)
             else
               ...daily.map((d) {
-                final revenue = (d['revenue'] as num?)?.toDouble() ?? 0;
-                final cogs = (d['cost_of_goods'] as num?)?.toDouble() ?? 0;
-                final expenses = (d['expenses'] as num?)?.toDouble() ?? 0;
-                final netProfit = (d['net_profit'] as num?)?.toDouble() ?? 0;
+                final revenue = (d['revenue'] != null ? double.tryParse(d['revenue'].toString()) : null) ?? 0;
+                final cogs = (d['cost_of_goods'] != null ? double.tryParse(d['cost_of_goods'].toString()) : null) ?? 0;
+                final expenses = (d['expenses'] != null ? double.tryParse(d['expenses'].toString()) : null) ?? 0;
+                final netProfit = (d['net_profit'] != null ? double.tryParse(d['net_profit'].toString()) : null) ?? 0;
 
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 10),
@@ -222,7 +222,7 @@ class _ExpensesTab extends ConsumerWidget {
                 child: Column(
                   children: List.generate(categories.length, (i) {
                     final c = categories[i];
-                    final amount = (c['total_amount'] as num?)?.toDouble() ?? 0;
+                    final amount = (c['total_amount'] != null ? double.tryParse(c['total_amount'].toString()) : null) ?? 0;
                     final pct = totalExpenses > 0 ? amount / totalExpenses * 100 : 0.0;
                     final txCount = c['expense_count'] ?? 0;
 
@@ -338,9 +338,9 @@ class _CashVarianceTab extends ConsumerWidget {
               const PosEmptyState(title: 'No closed sessions', icon: Icons.point_of_sale)
             else
               ...((data['sessions'] as List).cast<Map<String, dynamic>>()).map((s) {
-                final variance = (s['variance'] as num?)?.toDouble() ?? 0;
-                final expected = (s['expected_cash'] as num?)?.toDouble() ?? 0;
-                final actual = (s['actual_cash'] as num?)?.toDouble() ?? 0;
+                final variance = (s['variance'] != null ? double.tryParse(s['variance'].toString()) : null) ?? 0;
+                final expected = (s['expected_cash'] != null ? double.tryParse(s['expected_cash'].toString()) : null) ?? 0;
+                final actual = (s['actual_cash'] != null ? double.tryParse(s['actual_cash'].toString()) : null) ?? 0;
                 final isShort = variance < 0;
                 final color = isShort ? AppColors.error : AppColors.success;
 

@@ -30,7 +30,7 @@ class Expense {
       id: json['id'] as String,
       storeId: json['store_id'] as String,
       cashSessionId: json['cash_session_id'] as String?,
-      amount: (json['amount'] as num).toDouble(),
+      amount: double.tryParse(json['amount'].toString()) ?? 0.0,
       category: ExpenseCategory.fromValue(json['category'] as String),
       description: json['description'] as String?,
       receiptImageUrl: json['receipt_image_url'] as String?,

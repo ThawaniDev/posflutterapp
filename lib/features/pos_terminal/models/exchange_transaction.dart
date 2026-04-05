@@ -18,7 +18,7 @@ class ExchangeTransaction {
       id: json['id'] as String,
       returnTransactionId: json['return_transaction_id'] as String,
       saleTransactionId: json['sale_transaction_id'] as String,
-      netAmount: (json['net_amount'] as num).toDouble(),
+      netAmount: double.tryParse(json['net_amount'].toString()) ?? 0.0,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }

@@ -21,7 +21,7 @@ class CommissionSummaryPage extends ConsumerStatefulWidget {
 class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
   DateTimeRange? _dateRange;
   final _dateFormat = DateFormat('yyyy-MM-dd');
-  final _currencyFormat = NumberFormat.currency(symbol: 'SAR ');
+  final _currencyFormat = NumberFormat.currency(symbol: '\u0081 ');
 
   @override
   void initState() {
@@ -65,9 +65,9 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
   Widget _buildContent(BuildContext context, Map<String, dynamic> summary) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
-    final totalEarnings = (summary['total_earnings'] as num?)?.toDouble() ?? 0.0;
+    final totalEarnings = (summary['total_earnings'] != null ? double.tryParse(summary['total_earnings'].toString()) : null) ?? 0.0;
     final totalOrders = (summary['total_orders'] as num?)?.toInt() ?? 0;
-    final avgPerOrder = (summary['avg_per_order'] as num?)?.toDouble() ?? 0.0;
+    final avgPerOrder = (summary['avg_per_order'] != null ? double.tryParse(summary['avg_per_order'].toString()) : null) ?? 0.0;
 
     return ListView(
       padding: AppSpacing.paddingAll16,

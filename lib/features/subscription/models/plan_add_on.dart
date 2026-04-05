@@ -27,7 +27,7 @@ class PlanAddOn {
       name: json['name'] as String,
       nameAr: json['name_ar'] as String,
       slug: json['slug'] as String,
-      monthlyPrice: (json['monthly_price'] as num).toDouble(),
+      monthlyPrice: double.tryParse(json['monthly_price'].toString()) ?? 0.0,
       description: json['description'] as String?,
       isActive: json['is_active'] as bool?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,

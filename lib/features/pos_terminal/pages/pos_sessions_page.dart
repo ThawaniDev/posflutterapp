@@ -268,10 +268,14 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
           variant: session.status == SessionStatus.open ? PosBadgeVariant.success : PosBadgeVariant.neutral,
         );
       case 4: // Opening Cash
-        return Text('${session.openingCash.toStringAsFixed(3)} SAR', style: AppTypography.bodySmall, textAlign: TextAlign.right);
+        return Text(
+          '${session.openingCash.toStringAsFixed(3)} \u0081',
+          style: AppTypography.bodySmall,
+          textAlign: TextAlign.right,
+        );
       case 5: // Total Sales
         final total = (session.totalCashSales ?? 0) + (session.totalCardSales ?? 0) + (session.totalOtherSales ?? 0);
-        return Text('${total.toStringAsFixed(3)} SAR', style: AppTypography.bodySmall, textAlign: TextAlign.right);
+        return Text('${total.toStringAsFixed(3)} \u0081', style: AppTypography.bodySmall, textAlign: TextAlign.right);
       case 6: // Transactions
         return Text('${session.transactionCount ?? 0}', style: AppTypography.bodySmall, textAlign: TextAlign.right);
       case 7: // Opened At

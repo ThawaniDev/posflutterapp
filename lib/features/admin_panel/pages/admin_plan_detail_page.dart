@@ -117,7 +117,7 @@ class _PlanDetailBody extends StatelessWidget {
                 leading: const Icon(Icons.data_usage),
                 title: Text(l['limit_key'] ?? ''),
                 trailing: Text('${l['limit_value']}', style: const TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: l['price_per_extra_unit'] != null ? Text('\$${l['price_per_extra_unit']} per extra unit') : null,
+                subtitle: l['price_per_extra_unit'] != null ? Text('\u0081${l['price_per_extra_unit']} per extra unit') : null,
                 dense: true,
               ),
             ),

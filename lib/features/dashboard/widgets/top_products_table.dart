@@ -116,7 +116,7 @@ class TopProductsTable extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
-                            'SAR ${((p['total_revenue'] as num?)?.toDouble() ?? 0).toStringAsFixed(0)}',
+                            '\u0081 ${(p['total_revenue'] != null ? double.tryParse(p['total_revenue'].toString()) : null)?.toStringAsFixed(0) ?? '0'}',
                             style: AppTypography.labelMedium.copyWith(color: AppColors.success),
                             textAlign: TextAlign.right,
                           ),

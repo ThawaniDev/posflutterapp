@@ -151,7 +151,7 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
         title: Text('Subscribe to ${plan.name}?'),
         content: Text(
           'You will be subscribed to ${plan.name} on a $billingCycle basis.\n\n'
-          'Price: ${_isAnnual ? plan.annualPrice : plan.monthlyPrice} SAR/$billingCycle',
+          'Price: ${_isAnnual ? plan.annualPrice : plan.monthlyPrice} \u0081/$billingCycle',
         ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),

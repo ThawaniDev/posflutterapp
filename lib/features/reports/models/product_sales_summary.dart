@@ -31,13 +31,13 @@ class ProductSalesSummary {
       storeId: json['store_id'] as String,
       productId: json['product_id'] as String,
       date: DateTime.parse(json['date'] as String),
-      quantitySold: (json['quantity_sold'] as num?)?.toDouble(),
-      revenue: (json['revenue'] as num?)?.toDouble(),
-      cost: (json['cost'] as num?)?.toDouble(),
-      discountAmount: (json['discount_amount'] as num?)?.toDouble(),
-      taxAmount: (json['tax_amount'] as num?)?.toDouble(),
-      returnQuantity: (json['return_quantity'] as num?)?.toDouble(),
-      returnAmount: (json['return_amount'] as num?)?.toDouble(),
+      quantitySold: (json['quantity_sold'] != null ? double.tryParse(json['quantity_sold'].toString()) : null),
+      revenue: (json['revenue'] != null ? double.tryParse(json['revenue'].toString()) : null),
+      cost: (json['cost'] != null ? double.tryParse(json['cost'].toString()) : null),
+      discountAmount: (json['discount_amount'] != null ? double.tryParse(json['discount_amount'].toString()) : null),
+      taxAmount: (json['tax_amount'] != null ? double.tryParse(json['tax_amount'].toString()) : null),
+      returnQuantity: (json['return_quantity'] != null ? double.tryParse(json['return_quantity'].toString()) : null),
+      returnAmount: (json['return_amount'] != null ? double.tryParse(json['return_amount'].toString()) : null),
     );
   }
 

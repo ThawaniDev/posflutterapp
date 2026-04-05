@@ -84,7 +84,7 @@ class SalesTrendChart extends StatelessWidget {
   double _maxRevenue(List<Map<String, dynamic>> a, List<Map<String, dynamic>> b) {
     double max = 0;
     for (final item in [...a, ...b]) {
-      final val = (item['revenue'] as num?)?.toDouble() ?? 0;
+      final val = (item['revenue'] != null ? double.tryParse(item['revenue'].toString()) : null) ?? 0;
       if (val > max) max = val;
     }
     return max == 0 ? 1 : max;
@@ -174,7 +174,7 @@ class _SalesChartPainter extends CustomPainter {
     final path = Path();
     for (int i = 0; i < data.length; i++) {
       final x = size.width * i / (data.length - 1);
-      final val = (data[i]['revenue'] as num?)?.toDouble() ?? 0;
+      final val = (data[i]['revenue'] != null ? double.tryParse(data[i]['revenue'].toString()) : null) ?? 0;
       final y = size.height - (val / maxValue * size.height);
       if (i == 0) {
         path.moveTo(x, y);
@@ -195,7 +195,7 @@ class _SalesChartPainter extends CustomPainter {
     path.moveTo(0, size.height);
     for (int i = 0; i < data.length; i++) {
       final x = size.width * i / (data.length - 1);
-      final val = (data[i]['revenue'] as num?)?.toDouble() ?? 0;
+      final val = (data[i]['revenue'] != null ? double.tryParse(data[i]['revenue'].toString()) : null) ?? 0;
       final y = size.height - (val / maxValue * size.height);
       path.lineTo(x, y);
     }

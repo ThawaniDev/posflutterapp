@@ -29,7 +29,7 @@ class StoreDeliveryPlatformEnrollment {
       merchantIdOnPlatform: json['merchant_id_on_platform'] as String?,
       isEnabled: json['is_enabled'] as bool?,
       autoAccept: json['auto_accept'] as bool?,
-      commissionOverride: (json['commission_override'] as num?)?.toDouble(),
+      commissionOverride: (json['commission_override'] != null ? double.tryParse(json['commission_override'].toString()) : null),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
