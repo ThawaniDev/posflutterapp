@@ -14,4 +14,13 @@ class ApiResponse<T> {
       errors: json['errors'] != null ? Map<String, dynamic>.from(json['errors'] as Map) : null,
     );
   }
+
+  /// Extract the items list from [data], handling both plain lists and
+  /// Laravel paginated responses (`{"data": [...], "current_page": ...}`).
+  List<dynamic> get dataList {
+    final d = data;
+    if (d is List) return d;
+    if (d is Map<String, dynamic>) return d['data'] as List? ?? [];
+    return [];
+  }
 }

@@ -172,7 +172,7 @@ class PosTerminalApiService {
   Future<List<HeldCart>> listHeldCarts() async {
     final response = await _dio.get(ApiEndpoints.heldCarts);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => HeldCart.fromJson(j as Map<String, dynamic>)).toList();
   }
 

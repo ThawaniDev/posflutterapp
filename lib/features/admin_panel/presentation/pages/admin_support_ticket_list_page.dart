@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminSupportTicketListPage extends ConsumerStatefulWidget {
   const AdminSupportTicketListPage({super.key});
@@ -17,11 +20,15 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
   String? _statusFilter;
   String? _priorityFilter;
   String? _categoryFilter;
+  String? _storeId;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(ticketListProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _applyFilters();
+    });
   }
 
   @override
@@ -32,11 +39,17 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
 
   void _applyFilters() {
     final params = <String, dynamic>{};
+    if (_storeId != null) params['store_id'] = _storeId!;
     if (_searchController.text.isNotEmpty) params['search'] = _searchController.text;
     if (_statusFilter != null) params['status'] = _statusFilter;
     if (_priorityFilter != null) params['priority'] = _priorityFilter;
     if (_categoryFilter != null) params['category'] = _categoryFilter;
-    ref.read(ticketListProvider.notifier).load(params: params);
+    ref.read(ticketListProvider.notifier).load(params: params.isEmpty ? null : params);
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _applyFilters();
   }
 
   Color _statusColor(String status) => switch (status) {
@@ -71,6 +84,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
       appBar: AppBar(title: const Text('Support Tickets'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // ── Filters ──
           Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
@@ -94,76 +108,141 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
                   onSubmitted: (_) => _applyFilters(),
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                Row(
-                  children: [
-                    Expanded(
-                      child: DropdownButtonFormField<String>(
-                        value: _statusFilter,
-                        decoration: const InputDecoration(
-                          labelText: 'Status',
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                        ),
-                        items: const [
-                          DropdownMenuItem(value: null, child: Text('All')),
-                          DropdownMenuItem(value: 'open', child: Text('Open')),
-                          DropdownMenuItem(value: 'in_progress', child: Text('In Progress')),
-                          DropdownMenuItem(value: 'resolved', child: Text('Resolved')),
-                          DropdownMenuItem(value: 'closed', child: Text('Closed')),
+                context.isPhone
+                    ? Column(
+                        children: [
+                          DropdownButtonFormField<String>(
+                            value: _statusFilter,
+                            decoration: const InputDecoration(
+                              labelText: 'Status',
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+                            ),
+                            items: const [
+                              DropdownMenuItem(value: null, child: Text('All')),
+                              DropdownMenuItem(value: 'open', child: Text('Open')),
+                              DropdownMenuItem(value: 'in_progress', child: Text('In Progress')),
+                              DropdownMenuItem(value: 'resolved', child: Text('Resolved')),
+                              DropdownMenuItem(value: 'closed', child: Text('Closed')),
+                            ],
+                            onChanged: (v) {
+                              setState(() => _statusFilter = v);
+                              _applyFilters();
+                            },
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          DropdownButtonFormField<String>(
+                            value: _priorityFilter,
+                            decoration: const InputDecoration(
+                              labelText: 'Priority',
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+                            ),
+                            items: const [
+                              DropdownMenuItem(value: null, child: Text('All')),
+                              DropdownMenuItem(value: 'low', child: Text('Low')),
+                              DropdownMenuItem(value: 'medium', child: Text('Medium')),
+                              DropdownMenuItem(value: 'high', child: Text('High')),
+                              DropdownMenuItem(value: 'critical', child: Text('Critical')),
+                            ],
+                            onChanged: (v) {
+                              setState(() => _priorityFilter = v);
+                              _applyFilters();
+                            },
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          DropdownButtonFormField<String>(
+                            value: _categoryFilter,
+                            decoration: const InputDecoration(
+                              labelText: 'Category',
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+                            ),
+                            items: const [
+                              DropdownMenuItem(value: null, child: Text('All')),
+                              DropdownMenuItem(value: 'billing', child: Text('Billing')),
+                              DropdownMenuItem(value: 'technical', child: Text('Technical')),
+                              DropdownMenuItem(value: 'zatca', child: Text('ZATCA')),
+                              DropdownMenuItem(value: 'feature_request', child: Text('Feature')),
+                              DropdownMenuItem(value: 'general', child: Text('General')),
+                            ],
+                            onChanged: (v) {
+                              setState(() => _categoryFilter = v);
+                              _applyFilters();
+                            },
+                          ),
                         ],
-                        onChanged: (v) {
-                          setState(() => _statusFilter = v);
-                          _applyFilters();
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    Expanded(
-                      child: DropdownButtonFormField<String>(
-                        value: _priorityFilter,
-                        decoration: const InputDecoration(
-                          labelText: 'Priority',
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                        ),
-                        items: const [
-                          DropdownMenuItem(value: null, child: Text('All')),
-                          DropdownMenuItem(value: 'low', child: Text('Low')),
-                          DropdownMenuItem(value: 'medium', child: Text('Medium')),
-                          DropdownMenuItem(value: 'high', child: Text('High')),
-                          DropdownMenuItem(value: 'critical', child: Text('Critical')),
+                      )
+                    : Row(
+                        children: [
+                          Expanded(
+                            child: DropdownButtonFormField<String>(
+                              value: _statusFilter,
+                              decoration: const InputDecoration(
+                                labelText: 'Status',
+                                border: OutlineInputBorder(),
+                                contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+                              ),
+                              items: const [
+                                DropdownMenuItem(value: null, child: Text('All')),
+                                DropdownMenuItem(value: 'open', child: Text('Open')),
+                                DropdownMenuItem(value: 'in_progress', child: Text('In Progress')),
+                                DropdownMenuItem(value: 'resolved', child: Text('Resolved')),
+                                DropdownMenuItem(value: 'closed', child: Text('Closed')),
+                              ],
+                              onChanged: (v) {
+                                setState(() => _statusFilter = v);
+                                _applyFilters();
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.sm),
+                          Expanded(
+                            child: DropdownButtonFormField<String>(
+                              value: _priorityFilter,
+                              decoration: const InputDecoration(
+                                labelText: 'Priority',
+                                border: OutlineInputBorder(),
+                                contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+                              ),
+                              items: const [
+                                DropdownMenuItem(value: null, child: Text('All')),
+                                DropdownMenuItem(value: 'low', child: Text('Low')),
+                                DropdownMenuItem(value: 'medium', child: Text('Medium')),
+                                DropdownMenuItem(value: 'high', child: Text('High')),
+                                DropdownMenuItem(value: 'critical', child: Text('Critical')),
+                              ],
+                              onChanged: (v) {
+                                setState(() => _priorityFilter = v);
+                                _applyFilters();
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.sm),
+                          Expanded(
+                            child: DropdownButtonFormField<String>(
+                              value: _categoryFilter,
+                              decoration: const InputDecoration(
+                                labelText: 'Category',
+                                border: OutlineInputBorder(),
+                                contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+                              ),
+                              items: const [
+                                DropdownMenuItem(value: null, child: Text('All')),
+                                DropdownMenuItem(value: 'billing', child: Text('Billing')),
+                                DropdownMenuItem(value: 'technical', child: Text('Technical')),
+                                DropdownMenuItem(value: 'zatca', child: Text('ZATCA')),
+                                DropdownMenuItem(value: 'feature_request', child: Text('Feature')),
+                                DropdownMenuItem(value: 'general', child: Text('General')),
+                              ],
+                              onChanged: (v) {
+                                setState(() => _categoryFilter = v);
+                                _applyFilters();
+                              },
+                            ),
+                          ),
                         ],
-                        onChanged: (v) {
-                          setState(() => _priorityFilter = v);
-                          _applyFilters();
-                        },
                       ),
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    Expanded(
-                      child: DropdownButtonFormField<String>(
-                        value: _categoryFilter,
-                        decoration: const InputDecoration(
-                          labelText: 'Category',
-                          border: OutlineInputBorder(),
-                          contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                        ),
-                        items: const [
-                          DropdownMenuItem(value: null, child: Text('All')),
-                          DropdownMenuItem(value: 'billing', child: Text('Billing')),
-                          DropdownMenuItem(value: 'technical', child: Text('Technical')),
-                          DropdownMenuItem(value: 'zatca', child: Text('ZATCA')),
-                          DropdownMenuItem(value: 'feature_request', child: Text('Feature')),
-                          DropdownMenuItem(value: 'general', child: Text('General')),
-                        ],
-                        onChanged: (v) {
-                          setState(() => _categoryFilter = v);
-                          _applyFilters();
-                        },
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),

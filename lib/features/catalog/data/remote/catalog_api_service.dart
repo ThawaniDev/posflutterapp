@@ -90,7 +90,7 @@ class CatalogApiService {
   Future<List<Product>> getCatalog() async {
     final response = await _dio.get('${ApiEndpoints.products}/catalog');
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => Product.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -98,7 +98,7 @@ class CatalogApiService {
   Future<List<Product>> getChanges(int sinceVersion) async {
     final response = await _dio.get('${ApiEndpoints.products}/changes', queryParameters: {'since': sinceVersion});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => Product.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -128,7 +128,7 @@ class CatalogApiService {
   Future<List<StorePrice>> getStorePrices(String productId) async {
     final response = await _dio.get('${ApiEndpoints.products}/$productId/store-prices');
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => StorePrice.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -141,7 +141,7 @@ class CatalogApiService {
   Future<List<ProductSupplier>> getProductSuppliers(String productId) async {
     final response = await _dio.get('${ApiEndpoints.products}/$productId/suppliers');
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => ProductSupplier.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -154,7 +154,7 @@ class CatalogApiService {
   Future<List<ModifierGroup>> getModifiers(String productId) async {
     final response = await _dio.get('${ApiEndpoints.products}/$productId/modifiers');
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => ModifierGroup.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -167,7 +167,7 @@ class CatalogApiService {
   Future<List<ProductVariant>> getVariants(String productId) async {
     final response = await _dio.get('${ApiEndpoints.products}/$productId/variants');
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => ProductVariant.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -180,7 +180,7 @@ class CatalogApiService {
   Future<List<ProductBarcode>> getBarcodes(String productId) async {
     final response = await _dio.get('${ApiEndpoints.products}/$productId/barcodes');
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => ProductBarcode.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -190,7 +190,7 @@ class CatalogApiService {
   Future<List<Category>> getCategoryTree({bool activeOnly = false}) async {
     final response = await _dio.get(ApiEndpoints.categories, queryParameters: {if (activeOnly) 'active_only': 1});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => Category.fromJson(j as Map<String, dynamic>)).toList();
   }
 

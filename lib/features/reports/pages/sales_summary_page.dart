@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/reports/models/report_filters.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
+import 'package:thawani_pos/features/reports/widgets/report_charts.dart';
+import 'package:thawani_pos/features/reports/widgets/report_filter_panel.dart';
 import 'package:thawani_pos/features/reports/widgets/report_widgets.dart';
 
 class SalesSummaryPage extends ConsumerStatefulWidget {
@@ -15,7 +17,7 @@ class SalesSummaryPage extends ConsumerStatefulWidget {
 }
 
 class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
-  DateTimeRange? _dateRange;
+  ReportFilters _filters = const ReportFilters();
 
   @override
   void initState() {
@@ -24,25 +26,12 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
   }
 
   void _loadData() {
-    ref
-        .read(salesSummaryProvider.notifier)
-        .load(
-          dateFrom: _dateRange != null ? DateFormat('yyyy-MM-dd').format(_dateRange!.start) : null,
-          dateTo: _dateRange != null ? DateFormat('yyyy-MM-dd').format(_dateRange!.end) : null,
-        );
+    ref.read(salesSummaryProvider.notifier).load(filters: _filters);
   }
 
-  Future<void> _pickDate() async {
-    final picked = await showDateRangePicker(
-      context: context,
-      firstDate: DateTime(2020),
-      lastDate: DateTime.now(),
-      initialDateRange: _dateRange,
-    );
-    if (picked != null) {
-      setState(() => _dateRange = picked);
-      _loadData();
-    }
+  void _onFiltersChanged(ReportFilters filters) {
+    setState(() => _filters = filters);
+    _loadData();
   }
 
   @override
@@ -52,13 +41,16 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
 
     return ReportPageScaffold(
       title: 'Sales Summary',
-      dateRange: _dateRange,
-      onPickDate: _pickDate,
-      onClearDate: () {
-        setState(() => _dateRange = null);
-        _loadData();
-      },
-      onRefresh: _loadData,
+      filterPanel: ReportFilterPanel(
+        filters: _filters,
+        onFiltersChanged: _onFiltersChanged,
+        onRefresh: _loadData,
+        showStaffFilter: true,
+        showPaymentMethodFilter: true,
+        showAmountRange: true,
+        showOrderStatus: true,
+        showGranularity: true,
+      ),
       body: switch (state) {
         SalesSummaryInitial() || SalesSummaryLoading() => PosLoadingSkeleton.list(),
         SalesSummaryError(:final message) => PosErrorState(message: message, onRetry: _loadData),
@@ -94,6 +86,22 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
               ],
             ),
             const SizedBox(height: 20),
+
+            // Revenue Trend Chart
+            if (daily.length > 1) ...[
+              const ReportSectionHeader(title: 'Revenue Trend', icon: Icons.show_chart_rounded),
+              ReportDataCard(
+                child: ReportLineChart(
+                  data: daily,
+                  xKey: 'date',
+                  yKeys: const ['total_revenue', 'net_revenue'],
+                  yLabels: const ['Revenue', 'Net Revenue'],
+                  colors: [AppColors.primary, AppColors.success],
+                  showArea: true,
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
 
             const ReportSectionHeader(title: 'Breakdown', icon: Icons.pie_chart_rounded),
             ReportDataCard(

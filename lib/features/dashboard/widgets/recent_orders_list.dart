@@ -4,6 +4,7 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
 import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 
 class RecentOrdersList extends StatelessWidget {
   final List<Map<String, dynamic>> orders;
@@ -47,6 +48,7 @@ class _OrderRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final status = order['status'] as String? ?? 'unknown';
+    final isPhone = context.isPhone;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
@@ -65,18 +67,22 @@ class _OrderRow extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            child: Text(
-              order['customer_name'] as String? ?? 'Walk-in',
-              style: AppTypography.bodySmall,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+          if (!isPhone)
+            Expanded(
+              child: Text(
+                order['customer_name'] as String? ?? 'Walk-in',
+                style: AppTypography.bodySmall,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
           AppSpacing.gapW8,
           PosBadge(label: status, variant: _statusVariant(status)),
           AppSpacing.gapW8,
-          Text('\u0081 ${((order['total'] != null ? double.tryParse((order['total'].toString())) : null) ?? 0).toStringAsFixed(2)}', style: AppTypography.labelMedium),
+          Text(
+            '\u0081 ${((order['total'] != null ? double.tryParse((order['total'].toString())) : null) ?? 0).toStringAsFixed(2)}',
+            style: AppTypography.labelMedium,
+          ),
         ],
       ),
     );

@@ -5,6 +5,7 @@ import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/branches/models/store.dart';
 import 'package:thawani_pos/features/branches/models/branch_stats.dart';
@@ -84,29 +85,66 @@ class _BranchListPageState extends ConsumerState<BranchListPage> {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(AppSpacing.base, AppSpacing.base, AppSpacing.base, 0),
-                child: Row(
-                  children: [
-                    _statChip(Icons.store, '${stats.totalBranches}', l10n.branchesTotalBranches),
-                    AppSpacing.gapW8,
-                    _statChip(
-                      Icons.check_circle_outline,
-                      '${stats.activeBranches}',
-                      l10n.branchesActiveBranches,
-                      color: AppColors.success,
-                    ),
-                    AppSpacing.gapW8,
-                    _statChip(
-                      Icons.pause_circle_outline,
-                      '${stats.inactiveBranches}',
-                      l10n.branchesInactiveBranches,
-                      color: AppColors.error,
-                    ),
-                    if (stats.warehouses > 0) ...[
-                      AppSpacing.gapW8,
-                      _statChip(Icons.warehouse_outlined, '${stats.warehouses}', l10n.branchesWarehouses, color: AppColors.info),
-                    ],
-                  ],
-                ),
+                child: context.isPhone
+                    ? SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            _statChipFixed(Icons.store, '${stats.totalBranches}', l10n.branchesTotalBranches),
+                            AppSpacing.gapW8,
+                            _statChipFixed(
+                              Icons.check_circle_outline,
+                              '${stats.activeBranches}',
+                              l10n.branchesActiveBranches,
+                              color: AppColors.success,
+                            ),
+                            AppSpacing.gapW8,
+                            _statChipFixed(
+                              Icons.pause_circle_outline,
+                              '${stats.inactiveBranches}',
+                              l10n.branchesInactiveBranches,
+                              color: AppColors.error,
+                            ),
+                            if (stats.warehouses > 0) ...[
+                              AppSpacing.gapW8,
+                              _statChipFixed(
+                                Icons.warehouse_outlined,
+                                '${stats.warehouses}',
+                                l10n.branchesWarehouses,
+                                color: AppColors.info,
+                              ),
+                            ],
+                          ],
+                        ),
+                      )
+                    : Row(
+                        children: [
+                          _statChip(Icons.store, '${stats.totalBranches}', l10n.branchesTotalBranches),
+                          AppSpacing.gapW8,
+                          _statChip(
+                            Icons.check_circle_outline,
+                            '${stats.activeBranches}',
+                            l10n.branchesActiveBranches,
+                            color: AppColors.success,
+                          ),
+                          AppSpacing.gapW8,
+                          _statChip(
+                            Icons.pause_circle_outline,
+                            '${stats.inactiveBranches}',
+                            l10n.branchesInactiveBranches,
+                            color: AppColors.error,
+                          ),
+                          if (stats.warehouses > 0) ...[
+                            AppSpacing.gapW8,
+                            _statChip(
+                              Icons.warehouse_outlined,
+                              '${stats.warehouses}',
+                              l10n.branchesWarehouses,
+                              color: AppColors.info,
+                            ),
+                          ],
+                        ],
+                      ),
               ),
             ),
 
@@ -198,6 +236,35 @@ class _BranchListPageState extends ConsumerState<BranchListPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _statChipFixed(IconData icon, String value, String label, {Color? color}) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Container(
+      width: 90,
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm, horizontal: AppSpacing.xs),
+      decoration: BoxDecoration(
+        color: (color ?? AppColors.primary).withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(AppSpacing.sm),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, size: 16, color: color ?? AppColors.primary),
+          const SizedBox(height: 2),
+          Text(
+            value,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: color ?? AppColors.primary),
+          ),
+          Text(
+            label,
+            style: TextStyle(fontSize: 8, color: color ?? (isDark ? AppColors.textMutedDark : AppColors.textMutedLight)),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

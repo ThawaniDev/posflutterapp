@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminNotificationLogListPage extends ConsumerStatefulWidget {
   const AdminNotificationLogListPage({super.key});
@@ -15,11 +18,15 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
   final _searchController = TextEditingController();
   String? _channelFilter;
   String? _statusFilter;
+  String? _storeId;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(notificationLogListProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _applyFilters();
+    });
   }
 
   @override
@@ -30,10 +37,16 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
 
   void _applyFilters() {
     final params = <String, dynamic>{};
+    if (_storeId != null) params['store_id'] = _storeId!;
     if (_searchController.text.isNotEmpty) params['search'] = _searchController.text;
     if (_channelFilter != null) params['channel'] = _channelFilter;
     if (_statusFilter != null) params['status'] = _statusFilter;
-    ref.read(notificationLogListProvider.notifier).load(params: params);
+    ref.read(notificationLogListProvider.notifier).load(params: params.isEmpty ? null : params);
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _applyFilters();
   }
 
   Color _channelColor(String? channel) => switch (channel) {
@@ -53,26 +66,25 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
       appBar: AppBar(title: const Text('Notification Logs')),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      hintText: 'Search notification logs...',
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                    ),
-                    onSubmitted: (_) => _applyFilters(),
+            child: Builder(
+              builder: (context) {
+                final searchField = TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search notification logs...',
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                   ),
-                ),
-                const SizedBox(width: 12),
-                DropdownButton<String>(
+                  onSubmitted: (_) => _applyFilters(),
+                );
+                final channelDropdown = DropdownButton<String>(
                   value: _channelFilter,
                   hint: const Text('Channel'),
+                  isExpanded: context.isPhone,
                   items: const [
                     DropdownMenuItem(value: 'push', child: Text('Push')),
                     DropdownMenuItem(value: 'email', child: Text('Email')),
@@ -84,11 +96,11 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
                     setState(() => _channelFilter = v);
                     _applyFilters();
                   },
-                ),
-                const SizedBox(width: 8),
-                DropdownButton<String>(
+                );
+                final statusDropdown = DropdownButton<String>(
                   value: _statusFilter,
                   hint: const Text('Status'),
+                  isExpanded: context.isPhone,
                   items: const [
                     DropdownMenuItem(value: 'pending', child: Text('Pending')),
                     DropdownMenuItem(value: 'sent', child: Text('Sent')),
@@ -99,8 +111,32 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
                     setState(() => _statusFilter = v);
                     _applyFilters();
                   },
-                ),
-              ],
+                );
+                if (context.isPhone) {
+                  return Column(
+                    children: [
+                      searchField,
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Expanded(child: channelDropdown),
+                          const SizedBox(width: 8),
+                          Expanded(child: statusDropdown),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+                return Row(
+                  children: [
+                    Expanded(child: searchField),
+                    const SizedBox(width: 12),
+                    channelDropdown,
+                    const SizedBox(width: 8),
+                    statusDropdown,
+                  ],
+                );
+              },
             ),
           ),
           Expanded(

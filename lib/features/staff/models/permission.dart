@@ -27,7 +27,7 @@ class Permission {
       name: json['name'] as String,
       displayName: json['display_name'] as String,
       displayNameAr: json['display_name_ar'] as String?,
-      module: json['module'] as String,
+      module: json['module'] as String? ?? (json['name'] as String).split('.').first,
       guardName: json['guard_name'] as String? ?? 'staff',
       requiresPin: json['requires_pin'] as bool? ?? false,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,

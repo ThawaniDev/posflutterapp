@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminHealthDashboardPage extends ConsumerStatefulWidget {
   const AdminHealthDashboardPage({super.key});
@@ -12,13 +15,25 @@ class AdminHealthDashboardPage extends ConsumerStatefulWidget {
 }
 
 class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardPage> {
+  String? _storeId;
+
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
-      ref.read(healthDashboardProvider.notifier).load();
-      ref.read(storeHealthListProvider.notifier).load();
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _loadData();
     });
+  }
+
+  void _loadData() {
+    ref.read(healthDashboardProvider.notifier).load(storeId: _storeId);
+    ref.read(storeHealthListProvider.notifier).load(params: _storeId != null ? {'store_id': _storeId} : null);
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _loadData();
   }
 
   Color _statusColor(String? status) => switch (status) {
@@ -53,43 +68,42 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
     return Scaffold(
       appBar: AppBar(
         title: const Text('System Health'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              ref.read(healthDashboardProvider.notifier).load();
-              ref.read(storeHealthListProvider.notifier).load();
-            },
+        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData)],
+      ),
+      body: Column(
+        children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Health Summary
+                  switch (dashState) {
+                    HealthDashboardInitial() || HealthDashboardLoading() => const Center(child: CircularProgressIndicator()),
+                    HealthDashboardLoaded(data: final data) => _buildDashboard(data),
+                    HealthDashboardError(message: final msg) => Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Text(msg, style: const TextStyle(color: AppColors.error)),
+                      ),
+                    ),
+                  },
+                  const SizedBox(height: 24),
+                  // Store Health
+                  Text('Store Health', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 12),
+                  switch (storeState) {
+                    StoreHealthListInitial() || StoreHealthListLoading() => const Center(child: CircularProgressIndicator()),
+                    StoreHealthListLoaded(data: final data) => _buildStoreHealth(data),
+                    StoreHealthListError(message: final msg) => Text(msg, style: const TextStyle(color: AppColors.error)),
+                  },
+                ],
+              ),
+            ),
           ),
         ],
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Health Summary
-            switch (dashState) {
-              HealthDashboardInitial() || HealthDashboardLoading() => const Center(child: CircularProgressIndicator()),
-              HealthDashboardLoaded(data: final data) => _buildDashboard(data),
-              HealthDashboardError(message: final msg) => Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(msg, style: const TextStyle(color: AppColors.error)),
-                ),
-              ),
-            },
-            const SizedBox(height: 24),
-            // Store Health
-            Text('Store Health', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 12),
-            switch (storeState) {
-              StoreHealthListInitial() || StoreHealthListLoading() => const Center(child: CircularProgressIndicator()),
-              StoreHealthListLoaded(data: final data) => _buildStoreHealth(data),
-              StoreHealthListError(message: final msg) => Text(msg, style: const TextStyle(color: AppColors.error)),
-            },
-          ],
-        ),
       ),
     );
   }
@@ -140,12 +154,12 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
                     children: [
                       Text('Health Score', style: Theme.of(context).textTheme.titleMedium),
                       const SizedBox(height: 8),
-                      Row(
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
                         children: [
                           _statChip('Healthy', summary['healthy'] ?? 0, AppColors.success),
-                          const SizedBox(width: 8),
                           _statChip('Degraded', summary['degraded'] ?? 0, AppColors.warning),
-                          const SizedBox(width: 8),
                           _statChip('Down', summary['down'] ?? 0, AppColors.error),
                         ],
                       ),

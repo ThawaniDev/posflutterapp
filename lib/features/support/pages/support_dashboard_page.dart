@@ -11,6 +11,7 @@ import 'package:thawani_pos/core/widgets/pos_empty_state.dart';
 import 'package:thawani_pos/core/widgets/pos_error_state.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/core/widgets/pos_loading_skeleton.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/support/providers/support_providers.dart';
 import 'package:thawani_pos/features/support/providers/support_state.dart';
 import 'package:thawani_pos/features/support/widgets/ticket_card_widget.dart';
@@ -134,52 +135,107 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
       ),
       SupportStatsLoaded(:final total, :final open, :final inProgress, :final resolved) => Padding(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-        child: Row(
-          children: [
-            Expanded(
-              child: PosKpiCard(
-                label: l10n.supportTotal,
-                value: '$total',
-                icon: Icons.confirmation_number_rounded,
-                iconColor: AppColors.info,
-                iconBgColor: AppColors.info.withValues(alpha: 0.1),
+        child: context.isPhone
+            ? Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: PosKpiCard(
+                          label: l10n.supportTotal,
+                          value: '$total',
+                          icon: Icons.confirmation_number_rounded,
+                          iconColor: AppColors.info,
+                          iconBgColor: AppColors.info.withValues(alpha: 0.1),
+                        ),
+                      ),
+                      AppSpacing.gapW8,
+                      Expanded(
+                        child: PosKpiCard(
+                          label: l10n.supportOpen,
+                          value: '$open',
+                          icon: Icons.inbox_rounded,
+                          iconColor: AppColors.warning,
+                          iconBgColor: AppColors.warning.withValues(alpha: 0.1),
+                          onTap: () => _applyFilter('open'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  AppSpacing.gapH8,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: PosKpiCard(
+                          label: l10n.supportInProgress,
+                          value: '$inProgress',
+                          icon: Icons.autorenew_rounded,
+                          iconColor: AppColors.primary,
+                          iconBgColor: AppColors.primary10,
+                          onTap: () => _applyFilter('in_progress'),
+                        ),
+                      ),
+                      AppSpacing.gapW8,
+                      Expanded(
+                        child: PosKpiCard(
+                          label: l10n.supportResolved,
+                          value: '$resolved',
+                          icon: Icons.check_circle_outline_rounded,
+                          iconColor: AppColors.success,
+                          iconBgColor: AppColors.success.withValues(alpha: 0.1),
+                          onTap: () => _applyFilter('resolved'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )
+            : Row(
+                children: [
+                  Expanded(
+                    child: PosKpiCard(
+                      label: l10n.supportTotal,
+                      value: '$total',
+                      icon: Icons.confirmation_number_rounded,
+                      iconColor: AppColors.info,
+                      iconBgColor: AppColors.info.withValues(alpha: 0.1),
+                    ),
+                  ),
+                  AppSpacing.gapW8,
+                  Expanded(
+                    child: PosKpiCard(
+                      label: l10n.supportOpen,
+                      value: '$open',
+                      icon: Icons.inbox_rounded,
+                      iconColor: AppColors.warning,
+                      iconBgColor: AppColors.warning.withValues(alpha: 0.1),
+                      onTap: () => _applyFilter('open'),
+                    ),
+                  ),
+                  AppSpacing.gapW8,
+                  Expanded(
+                    child: PosKpiCard(
+                      label: l10n.supportInProgress,
+                      value: '$inProgress',
+                      icon: Icons.autorenew_rounded,
+                      iconColor: AppColors.primary,
+                      iconBgColor: AppColors.primary10,
+                      onTap: () => _applyFilter('in_progress'),
+                    ),
+                  ),
+                  AppSpacing.gapW8,
+                  Expanded(
+                    child: PosKpiCard(
+                      label: l10n.supportResolved,
+                      value: '$resolved',
+                      icon: Icons.check_circle_outline_rounded,
+                      iconColor: AppColors.success,
+                      iconBgColor: AppColors.success.withValues(alpha: 0.1),
+                      onTap: () => _applyFilter('resolved'),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            AppSpacing.gapW8,
-            Expanded(
-              child: PosKpiCard(
-                label: l10n.supportOpen,
-                value: '$open',
-                icon: Icons.inbox_rounded,
-                iconColor: AppColors.warning,
-                iconBgColor: AppColors.warning.withValues(alpha: 0.1),
-                onTap: () => _applyFilter('open'),
-              ),
-            ),
-            AppSpacing.gapW8,
-            Expanded(
-              child: PosKpiCard(
-                label: l10n.supportInProgress,
-                value: '$inProgress',
-                icon: Icons.autorenew_rounded,
-                iconColor: AppColors.primary,
-                iconBgColor: AppColors.primary10,
-                onTap: () => _applyFilter('in_progress'),
-              ),
-            ),
-            AppSpacing.gapW8,
-            Expanded(
-              child: PosKpiCard(
-                label: l10n.supportResolved,
-                value: '$resolved',
-                icon: Icons.check_circle_outline_rounded,
-                iconColor: AppColors.success,
-                iconBgColor: AppColors.success.withValues(alpha: 0.1),
-                onTap: () => _applyFilter('resolved'),
-              ),
-            ),
-          ],
-        ),
       ),
     };
   }

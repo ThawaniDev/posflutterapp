@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminAnalyticsStoresPage extends ConsumerStatefulWidget {
   const AdminAnalyticsStoresPage({super.key});
@@ -13,10 +16,20 @@ class AdminAnalyticsStoresPage extends ConsumerStatefulWidget {
 }
 
 class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresPage> {
+  String? _storeId;
+
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(analyticsStoresProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(analyticsStoresProvider.notifier).load(storeId: _storeId);
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    ref.read(analyticsStoresProvider.notifier).load(storeId: _storeId);
   }
 
   @override
@@ -39,6 +52,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
       ),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           if (exportState is AnalyticsExportSuccess)
             MaterialBanner(
               content: Text('Export ready: ${exportState.recordCount} records'),
@@ -60,20 +74,30 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                 healthSummary: final health,
               ) =>
                 RefreshIndicator(
-                  onRefresh: () => ref.read(analyticsStoresProvider.notifier).load(),
+                  onRefresh: () => ref.read(analyticsStoresProvider.notifier).load(storeId: _storeId),
                   child: ListView(
                     padding: const EdgeInsets.all(AppSpacing.md),
                     children: [
                       // Overview cards
-                      Row(
-                        children: [
-                          Expanded(child: _metricCard('Total Stores', '$total', AppColors.info)),
-                          const SizedBox(width: AppSpacing.sm),
-                          Expanded(child: _metricCard('Active', '$active', AppColors.success)),
-                          const SizedBox(width: AppSpacing.sm),
-                          Expanded(child: _metricCard('Inactive', '${total - active}', AppColors.textSecondary)),
-                        ],
-                      ),
+                      context.isPhone
+                          ? Wrap(
+                              spacing: AppSpacing.sm,
+                              runSpacing: AppSpacing.sm,
+                              children: [
+                                _metricCard('Total Stores', '$total', AppColors.info),
+                                _metricCard('Active', '$active', AppColors.success),
+                                _metricCard('Inactive', '${total - active}', AppColors.textSecondary),
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                Expanded(child: _metricCard('Total Stores', '$total', AppColors.info)),
+                                const SizedBox(width: AppSpacing.sm),
+                                Expanded(child: _metricCard('Active', '$active', AppColors.success)),
+                                const SizedBox(width: AppSpacing.sm),
+                                Expanded(child: _metricCard('Inactive', '${total - active}', AppColors.textSecondary)),
+                              ],
+                            ),
                       const SizedBox(height: AppSpacing.lg),
 
                       // Health Summary
@@ -134,7 +158,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                     Text('Error: $msg'),
                     const SizedBox(height: AppSpacing.sm),
                     ElevatedButton(
-                      onPressed: () => ref.read(analyticsStoresProvider.notifier).load(),
+                      onPressed: () => ref.read(analyticsStoresProvider.notifier).load(storeId: _storeId),
                       child: const Text('Retry'),
                     ),
                   ],

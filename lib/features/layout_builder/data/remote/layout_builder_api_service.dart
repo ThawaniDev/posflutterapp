@@ -23,7 +23,7 @@ class LayoutBuilderApiService {
   Future<List<PosLayoutTemplate>> listLayouts() async {
     final response = await _dio.get(ApiEndpoints.uiLayouts);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => PosLayoutTemplate.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -34,7 +34,7 @@ class LayoutBuilderApiService {
     if (category != null) queryParams['category'] = category;
     final response = await _dio.get(ApiEndpoints.layoutBuilderWidgets, queryParameters: queryParams);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => LayoutWidget.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -63,7 +63,7 @@ class LayoutBuilderApiService {
   Future<List<WidgetPlacement>> listPlacements() async {
     final response = await _dio.get(ApiEndpoints.layoutBuilderPlacements);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => WidgetPlacement.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -104,7 +104,7 @@ class LayoutBuilderApiService {
   Future<List<TemplateVersion>> listVersions() async {
     final response = await _dio.get(ApiEndpoints.layoutBuilderVersions);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => TemplateVersion.fromJson(j as Map<String, dynamic>)).toList();
   }
 

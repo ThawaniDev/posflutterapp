@@ -13,6 +13,7 @@ import 'package:thawani_pos/features/labels/models/label_template.dart';
 import 'package:thawani_pos/features/labels/providers/label_providers.dart';
 import 'package:thawani_pos/features/labels/providers/label_state.dart';
 import 'package:thawani_pos/features/labels/repositories/label_repository.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 
 /// The Label Print Queue page allows users to:
 /// - Select a label template
@@ -74,288 +75,596 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
           ),
         ],
       ),
-      body: Row(
+      body: context.isPhone
+          ? _buildMobileBody(context, l10n, isDark, templates)
+          : _buildDesktopBody(context, l10n, isDark, templates),
+    );
+  }
+
+  Widget _buildMobileBody(BuildContext context, AppLocalizations l10n, bool isDark, List<LabelTemplate> templates) {
+    return Padding(
+      padding: const EdgeInsets.all(AppSpacing.sm),
+      child: Column(
         children: [
-          // ─── Left: Print Settings + Queue ──────────────
+          // Settings — stacked
+          PosCard(
+            padding: const EdgeInsets.all(AppSpacing.sm),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l10n.labelPrintSettings,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                DropdownButtonFormField<String>(
+                  value: _selectedTemplateId,
+                  decoration: InputDecoration(
+                    labelText: l10n.labelTemplate,
+                    border: const OutlineInputBorder(),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  ),
+                  items: templates.map((t) => DropdownMenuItem(value: t.id, child: Text(t.name))).toList(),
+                  onChanged: (v) => setState(() => _selectedTemplateId = v),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        initialValue: _printerName,
+                        decoration: InputDecoration(
+                          labelText: l10n.labelPrinterName,
+                          border: const OutlineInputBorder(),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                          prefixIcon: const Icon(Icons.print_rounded, size: 20),
+                        ),
+                        onChanged: (v) => _printerName = v,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    SizedBox(
+                      width: 80,
+                      child: TextFormField(
+                        initialValue: _copies.toString(),
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          labelText: l10n.labelCopies,
+                          border: const OutlineInputBorder(),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                        ),
+                        onChanged: (v) => _copies = int.tryParse(v) ?? 1,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+
+          // Search
+          PosCard(
+            padding: const EdgeInsets.all(AppSpacing.sm),
+            child: Row(
+              children: [
+                Expanded(
+                  child: PosSearchField(
+                    controller: _searchController,
+                    hint: l10n.labelSearchProducts,
+                    onSubmitted: (_) => _addDemoItem(),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                IconButton(icon: const Icon(Icons.add_rounded), onPressed: _addDemoItem),
+              ],
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+
+          // Queue list
           Expanded(
-            flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.all(AppSpacing.base),
+            child: PosCard(
+              padding: const EdgeInsets.all(AppSpacing.sm),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Template & printer selection
-                  PosCard(
-                    padding: const EdgeInsets.all(AppSpacing.base),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.labelPrintSettings,
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                  Row(
+                    children: [
+                      Text(l10n.labelQueue, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+                      const Spacer(),
+                      PosBadge(label: '${_queueItems.length} ${l10n.labelItems}', variant: PosBadgeVariant.primary),
+                      if (_queueItems.isNotEmpty)
+                        IconButton(
+                          icon: const Icon(Icons.delete_sweep_rounded, size: 20),
+                          onPressed: () => setState(() => _queueItems.clear()),
                         ),
-                        const SizedBox(height: AppSpacing.md),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: DropdownButtonFormField<String>(
-                                value: _selectedTemplateId,
-                                decoration: InputDecoration(
-                                  labelText: l10n.labelTemplate,
-                                  border: const OutlineInputBorder(),
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                ),
-                                items: templates.map((t) => DropdownMenuItem(value: t.id, child: Text(t.name))).toList(),
-                                onChanged: (v) => setState(() => _selectedTemplateId = v),
-                              ),
-                            ),
-                            const SizedBox(width: AppSpacing.md),
-                            Expanded(
-                              child: TextFormField(
-                                initialValue: _printerName,
-                                decoration: InputDecoration(
-                                  labelText: l10n.labelPrinterName,
-                                  border: const OutlineInputBorder(),
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                  prefixIcon: const Icon(Icons.print_rounded, size: 20),
-                                ),
-                                onChanged: (v) => _printerName = v,
-                              ),
-                            ),
-                            const SizedBox(width: AppSpacing.md),
-                            SizedBox(
-                              width: 100,
-                              child: TextFormField(
-                                initialValue: _copies.toString(),
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  labelText: l10n.labelCopies,
-                                  border: const OutlineInputBorder(),
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                ),
-                                onChanged: (v) => _copies = int.tryParse(v) ?? 1,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    ],
                   ),
-                  const SizedBox(height: AppSpacing.base),
-
-                  // Search to add products
-                  PosCard(
-                    padding: const EdgeInsets.all(AppSpacing.base),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.labelAddProducts,
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(height: AppSpacing.md),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: PosSearchField(
-                                controller: _searchController,
-                                hint: l10n.labelSearchProducts,
-                                onSubmitted: (_) => _addDemoItem(),
-                              ),
-                            ),
-                            const SizedBox(width: AppSpacing.sm),
-                            PosButton(
-                              label: l10n.labelAdd,
-                              icon: Icons.add_rounded,
-                              variant: PosButtonVariant.soft,
-                              size: PosButtonSize.sm,
-                              onPressed: _addDemoItem,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.base),
-
-                  // Queue list
+                  const Divider(height: 1),
                   Expanded(
-                    child: PosCard(
-                      padding: const EdgeInsets.all(AppSpacing.base),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                l10n.labelQueue,
-                                style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
-                              ),
-                              const Spacer(),
-                              PosBadge(label: '${_queueItems.length} ${l10n.labelItems}', variant: PosBadgeVariant.primary),
-                              if (_queueItems.isNotEmpty) ...[
-                                const SizedBox(width: AppSpacing.sm),
-                                PosButton(
-                                  label: l10n.labelClearAll,
-                                  variant: PosButtonVariant.ghost,
-                                  size: PosButtonSize.sm,
-                                  onPressed: () => setState(() => _queueItems.clear()),
+                    child: _queueItems.isEmpty
+                        ? Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.queue_rounded,
+                                  size: 40,
+                                  color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                ),
+                                const SizedBox(height: AppSpacing.sm),
+                                Text(
+                                  l10n.labelEmptyQueue,
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                  ),
                                 ),
                               ],
-                            ],
+                            ),
+                          )
+                        : ListView.separated(
+                            itemCount: _queueItems.length,
+                            separatorBuilder: (_, __) => const Divider(height: 1),
+                            itemBuilder: (context, index) {
+                              final item = _queueItems[index];
+                              return ListTile(
+                                dense: true,
+                                contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
+                                leading: Container(
+                                  width: 32,
+                                  height: 32,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.primary.withValues(alpha: 0.1),
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  child: const Icon(Icons.inventory_2_rounded, size: 16, color: AppColors.primary),
+                                ),
+                                title: Text(item.productName, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                                subtitle: Text('SKU: ${item.sku}', style: const TextStyle(fontSize: 11)),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.remove_circle_outline, size: 18),
+                                      constraints: const BoxConstraints(),
+                                      padding: const EdgeInsets.all(4),
+                                      onPressed: () {
+                                        setState(() {
+                                          if (item.quantity > 1) _queueItems[index] = item.copyWith(quantity: item.quantity - 1);
+                                        });
+                                      },
+                                    ),
+                                    Text('${item.quantity}', style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+                                    IconButton(
+                                      icon: const Icon(Icons.add_circle_outline, size: 18),
+                                      constraints: const BoxConstraints(),
+                                      padding: const EdgeInsets.all(4),
+                                      onPressed: () {
+                                        setState(() {
+                                          _queueItems[index] = item.copyWith(quantity: item.quantity + 1);
+                                        });
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: const Icon(Icons.close, size: 16, color: AppColors.error),
+                                      constraints: const BoxConstraints(),
+                                      padding: const EdgeInsets.all(4),
+                                      onPressed: () => setState(() => _queueItems.removeAt(index)),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
                           ),
-                          const SizedBox(height: AppSpacing.md),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+
+          // Summary bar + preview button
+          PosCard(
+            padding: const EdgeInsets.all(AppSpacing.sm),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('${l10n.labelTotalProducts}: ${_queueItems.length}', style: Theme.of(context).textTheme.bodySmall),
+                    Text(
+                      '${l10n.labelTotalLabels}: ${_queueItems.fold<int>(0, (sum, i) => sum + i.quantity)}',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton.icon(
+                        icon: const Icon(Icons.preview_rounded, size: 18),
+                        label: Text(l10n.labelPreview),
+                        onPressed: () => _showMobilePreviewSheet(context, l10n, isDark),
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: FilledButton.icon(
+                        icon: _isPrinting
+                            ? const SizedBox(
+                                width: 16,
+                                height: 16,
+                                child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                              )
+                            : const Icon(Icons.print_rounded, size: 18),
+                        label: Text(l10n.labelPrint),
+                        onPressed: _queueItems.isNotEmpty && !_isPrinting ? _handlePrint : null,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showMobilePreviewSheet(BuildContext context, AppLocalizations l10n, bool isDark) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      builder: (ctx) => Padding(
+        padding: const EdgeInsets.all(AppSpacing.base),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(color: Colors.grey.shade400, borderRadius: BorderRadius.circular(2)),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Text(l10n.labelPreview, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+            const SizedBox(height: AppSpacing.md),
+            Container(
+              width: 200,
+              height: 120,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtleLight),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.qr_code_2_rounded, size: 36, color: Colors.grey.shade600),
+                  const SizedBox(height: 4),
+                  Text('Product Name', style: TextStyle(fontSize: 10, color: Colors.grey.shade700)),
+                  Text(
+                    '0.000 \u0081',
+                    style: TextStyle(fontSize: 9, color: Colors.grey.shade600, fontWeight: FontWeight.w600),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    height: 18,
+                    color: Colors.grey.shade300,
+                    child: Center(
+                      child: Text('||||||||||||', style: TextStyle(fontSize: 8, letterSpacing: -1, color: Colors.grey.shade700)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Container(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              decoration: BoxDecoration(
+                color: isDark ? AppColors.cardDark : AppColors.primary.withValues(alpha: 0.05),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Column(
+                children: [
+                  _summaryRow(l10n.labelTotalProducts, '${_queueItems.length}'),
+                  const SizedBox(height: AppSpacing.xs),
+                  _summaryRow(l10n.labelTotalLabels, '${_queueItems.fold<int>(0, (sum, i) => sum + i.quantity)}'),
+                  const SizedBox(height: AppSpacing.xs),
+                  _summaryRow(l10n.labelCopies, '$_copies'),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDesktopBody(BuildContext context, AppLocalizations l10n, bool isDark, List<LabelTemplate> templates) {
+    return Row(
+      children: [
+        // ─── Left: Print Settings + Queue ──────────────
+        Expanded(
+          flex: 3,
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.base),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Template & printer selection
+                PosCard(
+                  padding: const EdgeInsets.all(AppSpacing.base),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l10n.labelPrintSettings,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+                      Row(
+                        children: [
                           Expanded(
-                            child: _queueItems.isEmpty
-                                ? Center(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          Icons.queue_rounded,
-                                          size: 48,
+                            child: DropdownButtonFormField<String>(
+                              value: _selectedTemplateId,
+                              decoration: InputDecoration(
+                                labelText: l10n.labelTemplate,
+                                border: const OutlineInputBorder(),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                              ),
+                              items: templates.map((t) => DropdownMenuItem(value: t.id, child: Text(t.name))).toList(),
+                              onChanged: (v) => setState(() => _selectedTemplateId = v),
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.md),
+                          Expanded(
+                            child: TextFormField(
+                              initialValue: _printerName,
+                              decoration: InputDecoration(
+                                labelText: l10n.labelPrinterName,
+                                border: const OutlineInputBorder(),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                prefixIcon: const Icon(Icons.print_rounded, size: 20),
+                              ),
+                              onChanged: (v) => _printerName = v,
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.md),
+                          SizedBox(
+                            width: 100,
+                            child: TextFormField(
+                              initialValue: _copies.toString(),
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                labelText: l10n.labelCopies,
+                                border: const OutlineInputBorder(),
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                              ),
+                              onChanged: (v) => _copies = int.tryParse(v) ?? 1,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.base),
+
+                // Search to add products
+                PosCard(
+                  padding: const EdgeInsets.all(AppSpacing.base),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l10n.labelAddProducts,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: PosSearchField(
+                              controller: _searchController,
+                              hint: l10n.labelSearchProducts,
+                              onSubmitted: (_) => _addDemoItem(),
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.sm),
+                          PosButton(
+                            label: l10n.labelAdd,
+                            icon: Icons.add_rounded,
+                            variant: PosButtonVariant.soft,
+                            size: PosButtonSize.sm,
+                            onPressed: _addDemoItem,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.base),
+
+                // Queue list
+                Expanded(
+                  child: PosCard(
+                    padding: const EdgeInsets.all(AppSpacing.base),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              l10n.labelQueue,
+                              style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                            ),
+                            const Spacer(),
+                            PosBadge(label: '${_queueItems.length} ${l10n.labelItems}', variant: PosBadgeVariant.primary),
+                            if (_queueItems.isNotEmpty) ...[
+                              const SizedBox(width: AppSpacing.sm),
+                              PosButton(
+                                label: l10n.labelClearAll,
+                                variant: PosButtonVariant.ghost,
+                                size: PosButtonSize.sm,
+                                onPressed: () => setState(() => _queueItems.clear()),
+                              ),
+                            ],
+                          ],
+                        ),
+                        const SizedBox(height: AppSpacing.md),
+                        Expanded(
+                          child: _queueItems.isEmpty
+                              ? Center(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.queue_rounded,
+                                        size: 48,
+                                        color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                                      ),
+                                      const SizedBox(height: AppSpacing.md),
+                                      Text(
+                                        l10n.labelEmptyQueue,
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                           color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                                         ),
-                                        const SizedBox(height: AppSpacing.md),
-                                        Text(
-                                          l10n.labelEmptyQueue,
-                                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                            color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                : ListView.separated(
-                                    itemCount: _queueItems.length,
-                                    separatorBuilder: (_, __) => const Divider(height: 1),
-                                    itemBuilder: (context, index) {
-                                      final item = _queueItems[index];
-                                      return ListTile(
-                                        contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                                        leading: Container(
-                                          width: 36,
-                                          height: 36,
-                                          decoration: BoxDecoration(
-                                            color: AppColors.primary.withValues(alpha: 0.1),
-                                            borderRadius: BorderRadius.circular(8),
-                                          ),
-                                          child: const Icon(Icons.inventory_2_rounded, size: 18, color: AppColors.primary),
-                                        ),
-                                        title: Text(item.productName, style: const TextStyle(fontWeight: FontWeight.w600)),
-                                        subtitle: Text('SKU: ${item.sku}'),
-                                        trailing: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            IconButton(
-                                              icon: const Icon(Icons.remove_circle_outline, size: 20),
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (item.quantity > 1) {
-                                                    _queueItems[index] = item.copyWith(quantity: item.quantity - 1);
-                                                  }
-                                                });
-                                              },
-                                            ),
-                                            Text('${item.quantity}', style: const TextStyle(fontWeight: FontWeight.w600)),
-                                            IconButton(
-                                              icon: const Icon(Icons.add_circle_outline, size: 20),
-                                              onPressed: () {
-                                                setState(() {
-                                                  _queueItems[index] = item.copyWith(quantity: item.quantity + 1);
-                                                });
-                                              },
-                                            ),
-                                            const SizedBox(width: AppSpacing.sm),
-                                            IconButton(
-                                              icon: const Icon(Icons.close, size: 18, color: AppColors.error),
-                                              onPressed: () => setState(() => _queueItems.removeAt(index)),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
+                                      ),
+                                    ],
                                   ),
+                                )
+                              : ListView.separated(
+                                  itemCount: _queueItems.length,
+                                  separatorBuilder: (_, __) => const Divider(height: 1),
+                                  itemBuilder: (context, index) {
+                                    final item = _queueItems[index];
+                                    return ListTile(
+                                      contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+                                      leading: Container(
+                                        width: 36,
+                                        height: 36,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.primary.withValues(alpha: 0.1),
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: const Icon(Icons.inventory_2_rounded, size: 18, color: AppColors.primary),
+                                      ),
+                                      title: Text(item.productName, style: const TextStyle(fontWeight: FontWeight.w600)),
+                                      subtitle: Text('SKU: ${item.sku}'),
+                                      trailing: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(Icons.remove_circle_outline, size: 20),
+                                            onPressed: () {
+                                              setState(() {
+                                                if (item.quantity > 1) {
+                                                  _queueItems[index] = item.copyWith(quantity: item.quantity - 1);
+                                                }
+                                              });
+                                            },
+                                          ),
+                                          Text('${item.quantity}', style: const TextStyle(fontWeight: FontWeight.w600)),
+                                          IconButton(
+                                            icon: const Icon(Icons.add_circle_outline, size: 20),
+                                            onPressed: () {
+                                              setState(() {
+                                                _queueItems[index] = item.copyWith(quantity: item.quantity + 1);
+                                              });
+                                            },
+                                          ),
+                                          const SizedBox(width: AppSpacing.sm),
+                                          IconButton(
+                                            icon: const Icon(Icons.close, size: 18, color: AppColors.error),
+                                            onPressed: () => setState(() => _queueItems.removeAt(index)),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        // ─── Right: Preview ────────────────────────────
+        const SizedBox(width: AppSpacing.base),
+        SizedBox(
+          width: 300,
+          child: PosCard(
+            padding: const EdgeInsets.all(AppSpacing.base),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l10n.labelPreview, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+                const SizedBox(height: AppSpacing.md),
+                Expanded(
+                  child: Center(
+                    child: Container(
+                      width: 200,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtleLight),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.qr_code_2_rounded, size: 36, color: Colors.grey.shade600),
+                          const SizedBox(height: 4),
+                          Text('Product Name', style: TextStyle(fontSize: 10, color: Colors.grey.shade700)),
+                          Text(
+                            '0.000 \u0081',
+                            style: TextStyle(fontSize: 9, color: Colors.grey.shade600, fontWeight: FontWeight.w600),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                            height: 18,
+                            color: Colors.grey.shade300,
+                            child: Center(
+                              child: Text(
+                                '||||||||||||',
+                                style: TextStyle(fontSize: 8, letterSpacing: -1, color: Colors.grey.shade700),
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(height: AppSpacing.md),
+                // Summary
+                Container(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  decoration: BoxDecoration(
+                    color: isDark ? AppColors.cardDark : AppColors.primary.withValues(alpha: 0.05),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    children: [
+                      _summaryRow(l10n.labelTotalProducts, '${_queueItems.length}'),
+                      const SizedBox(height: AppSpacing.xs),
+                      _summaryRow(l10n.labelTotalLabels, '${_queueItems.fold<int>(0, (sum, i) => sum + i.quantity)}'),
+                      const SizedBox(height: AppSpacing.xs),
+                      _summaryRow(l10n.labelCopies, '$_copies'),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
-
-          // ─── Right: Preview ────────────────────────────
-          SizedBox(
-            width: 300,
-            child: PosCard(
-              padding: const EdgeInsets.all(AppSpacing.base),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(l10n.labelPreview, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
-                  const SizedBox(height: AppSpacing.md),
-                  Expanded(
-                    child: Center(
-                      child: Container(
-                        width: 200,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtleLight),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.qr_code_2_rounded, size: 36, color: Colors.grey.shade600),
-                            const SizedBox(height: 4),
-                            Text('Product Name', style: TextStyle(fontSize: 10, color: Colors.grey.shade700)),
-                            Text(
-                              '0.000 \u0081',
-                              style: TextStyle(fontSize: 9, color: Colors.grey.shade600, fontWeight: FontWeight.w600),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                              height: 18,
-                              color: Colors.grey.shade300,
-                              child: Center(
-                                child: Text(
-                                  '||||||||||||',
-                                  style: TextStyle(fontSize: 8, letterSpacing: -1, color: Colors.grey.shade700),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  // Summary
-                  Container(
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    decoration: BoxDecoration(
-                      color: isDark ? AppColors.cardDark : AppColors.primary.withValues(alpha: 0.05),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Column(
-                      children: [
-                        _summaryRow(l10n.labelTotalProducts, '${_queueItems.length}'),
-                        const SizedBox(height: AppSpacing.xs),
-                        _summaryRow(l10n.labelTotalLabels, '${_queueItems.fold<int>(0, (sum, i) => sum + i.quantity)}'),
-                        const SizedBox(height: AppSpacing.xs),
-                        _summaryRow(l10n.labelCopies, '$_copies'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/reports/models/report_filters.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
+import 'package:thawani_pos/features/reports/widgets/report_charts.dart';
+import 'package:thawani_pos/features/reports/widgets/report_filter_panel.dart';
 import 'package:thawani_pos/features/reports/widgets/report_widgets.dart';
 
 class FinancialReportPage extends ConsumerStatefulWidget {
@@ -17,7 +19,7 @@ class FinancialReportPage extends ConsumerStatefulWidget {
 
 class _FinancialReportPageState extends ConsumerState<FinancialReportPage> with TickerProviderStateMixin {
   late final TabController _tabController;
-  DateTimeRange? _dateRange;
+  ReportFilters _filters = const ReportFilters();
 
   @override
   void initState() {
@@ -30,29 +32,19 @@ class _FinancialReportPageState extends ConsumerState<FinancialReportPage> with 
   }
 
   void _loadCurrentTab() {
-    final from = _dateRange != null ? DateFormat('yyyy-MM-dd').format(_dateRange!.start) : null;
-    final to = _dateRange != null ? DateFormat('yyyy-MM-dd').format(_dateRange!.end) : null;
     switch (_tabController.index) {
       case 0:
-        ref.read(financialDailyPlProvider.notifier).load(dateFrom: from, dateTo: to);
+        ref.read(financialDailyPlProvider.notifier).load(filters: _filters);
       case 1:
-        ref.read(financialExpensesProvider.notifier).load(dateFrom: from, dateTo: to);
+        ref.read(financialExpensesProvider.notifier).load(filters: _filters);
       case 2:
-        ref.read(cashVarianceProvider.notifier).load(dateFrom: from, dateTo: to);
+        ref.read(cashVarianceProvider.notifier).load(filters: _filters);
     }
   }
 
-  Future<void> _pickDateRange() async {
-    final picked = await showDateRangePicker(
-      context: context,
-      firstDate: DateTime(2020),
-      lastDate: DateTime.now(),
-      initialDateRange: _dateRange,
-    );
-    if (picked != null) {
-      setState(() => _dateRange = picked);
-      _loadCurrentTab();
-    }
+  void _onFiltersChanged(ReportFilters filters) {
+    setState(() => _filters = filters);
+    _loadCurrentTab();
   }
 
   @override
@@ -81,14 +73,12 @@ class _FinancialReportPageState extends ConsumerState<FinancialReportPage> with 
       ),
       body: Column(
         children: [
-          ReportDateBar(
-            dateRange: _dateRange,
-            onPickDate: _pickDateRange,
-            onClear: () {
-              setState(() => _dateRange = null);
-              _loadCurrentTab();
-            },
+          ReportFilterPanel(
+            filters: _filters,
+            onFiltersChanged: _onFiltersChanged,
             onRefresh: _loadCurrentTab,
+            showGranularity: true,
+            showStaffFilter: true,
           ),
           Expanded(
             child: TabBarView(controller: _tabController, children: const [_DailyPlTab(), _ExpensesTab(), _CashVarianceTab()]),
@@ -142,6 +132,22 @@ class _DailyPlTab extends ConsumerWidget {
                 ),
               ],
             ),
+
+            // P&L Area Chart
+            if (daily.length > 1) ...[
+              const SizedBox(height: 20),
+              const ReportSectionHeader(title: 'P&L Trend', icon: Icons.area_chart_rounded),
+              ReportDataCard(
+                child: ReportAreaChart(
+                  data: daily,
+                  xKey: 'date',
+                  revenueKey: 'revenue',
+                  costKey: 'cost_of_goods',
+                  profitKey: 'net_profit',
+                ),
+              ),
+            ],
+
             const SizedBox(height: 24),
             const ReportSectionHeader(title: 'Daily Breakdown', icon: Icons.calendar_today_rounded),
             if (daily.isEmpty)
@@ -212,6 +218,16 @@ class _ExpensesTab extends ConsumerWidget {
               icon: Icons.receipt_long_rounded,
               color: AppColors.error,
             ),
+
+            // Expense Category Pie
+            if (categories.isNotEmpty) ...[
+              const SizedBox(height: 20),
+              const ReportSectionHeader(title: 'Expense Distribution', icon: Icons.donut_large_rounded),
+              ReportDataCard(
+                child: ReportPieChart(data: categories, labelKey: 'category', valueKey: 'total_amount', donut: true),
+              ),
+            ],
+
             const SizedBox(height: 24),
             const ReportSectionHeader(title: 'By Category', icon: Icons.category_rounded),
             if (categories.isEmpty)

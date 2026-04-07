@@ -194,7 +194,7 @@ class StaffApiService {
   Future<List<ShiftTemplate>> listShiftTemplates() async {
     final response = await _dio.get(ApiEndpoints.shiftTemplates);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => ShiftTemplate.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -245,7 +245,7 @@ class StaffApiService {
   Future<List<BranchAssignment>> listBranchAssignments(String staffId) async {
     final response = await _dio.get(ApiEndpoints.staffMemberBranchAssignments(staffId));
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => BranchAssignment.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -291,6 +291,6 @@ class StaffApiService {
   Future<List<Map<String, dynamic>>> getLinkableUsers() async {
     final response = await _dio.get(ApiEndpoints.staffLinkableUsers);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    return (apiResponse.data as List).map((j) => j as Map<String, dynamic>).toList();
+    return apiResponse.dataList.map((j) => j as Map<String, dynamic>).toList();
   }
 }

@@ -79,7 +79,7 @@ class CustomizationApiService {
   Future<List<ReceiptLayoutTemplate>> listReceiptLayoutTemplates() async {
     final res = await _dio.get(ApiEndpoints.uiReceiptTemplates);
     final apiResponse = ApiResponse.fromJson(res.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => ReceiptLayoutTemplate.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -94,7 +94,7 @@ class CustomizationApiService {
   Future<List<CfdTheme>> listCfdThemes() async {
     final res = await _dio.get(ApiEndpoints.uiCfdThemes);
     final apiResponse = ApiResponse.fromJson(res.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => CfdTheme.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -125,7 +125,7 @@ class CustomizationApiService {
   Future<List<LabelLayoutTemplate>> listLabelLayoutTemplates() async {
     final res = await _dio.get(ApiEndpoints.uiLabelTemplates);
     final apiResponse = ApiResponse.fromJson(res.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => LabelLayoutTemplate.fromJson(j as Map<String, dynamic>)).toList();
   }
 

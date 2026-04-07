@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/constants/api_endpoints.dart';
 import 'package:thawani_pos/core/network/dio_client.dart';
+import 'package:thawani_pos/features/reports/models/report_filters.dart';
 
 final reportApiServiceProvider = Provider<ReportApiService>((ref) {
   return ReportApiService(ref.watch(dioClientProvider));
@@ -12,193 +13,131 @@ class ReportApiService {
 
   ReportApiService(this._dio);
 
+  Map<String, dynamic> _buildParams(ReportFilters filters) => filters.toQueryParams();
+
   // ─── Sales Summary ─────────────────────────────────────────
 
-  Future<Map<String, dynamic>> getSalesSummary({String? dateFrom, String? dateTo}) async {
-    final params = <String, dynamic>{};
-    if (dateFrom != null) params['date_from'] = dateFrom;
-    if (dateTo != null) params['date_to'] = dateTo;
-
-    final response = await _dio.get(ApiEndpoints.salesSummary, queryParameters: params);
+  Future<Map<String, dynamic>> getSalesSummary({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.salesSummary, queryParameters: _buildParams(filters));
     return response.data['data'] as Map<String, dynamic>;
   }
 
   // ─── Product Performance ───────────────────────────────────
 
-  Future<List<Map<String, dynamic>>> getProductPerformance({
-    String? dateFrom,
-    String? dateTo,
-    String? categoryId,
-    int? limit,
-  }) async {
-    final params = <String, dynamic>{};
-    if (dateFrom != null) params['date_from'] = dateFrom;
-    if (dateTo != null) params['date_to'] = dateTo;
-    if (categoryId != null) params['category_id'] = categoryId;
-    if (limit != null) params['limit'] = limit;
-
-    final response = await _dio.get(ApiEndpoints.productPerformance, queryParameters: params);
+  Future<List<Map<String, dynamic>>> getProductPerformance({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.productPerformance, queryParameters: _buildParams(filters));
     return (response.data['data'] as List).cast<Map<String, dynamic>>();
   }
 
   // ─── Category Breakdown ────────────────────────────────────
 
-  Future<List<Map<String, dynamic>>> getCategoryBreakdown({String? dateFrom, String? dateTo}) async {
-    final params = <String, dynamic>{};
-    if (dateFrom != null) params['date_from'] = dateFrom;
-    if (dateTo != null) params['date_to'] = dateTo;
-
-    final response = await _dio.get(ApiEndpoints.categoryBreakdown, queryParameters: params);
+  Future<List<Map<String, dynamic>>> getCategoryBreakdown({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.categoryBreakdown, queryParameters: _buildParams(filters));
     return (response.data['data'] as List).cast<Map<String, dynamic>>();
   }
 
   // ─── Staff Performance ─────────────────────────────────────
 
-  Future<List<Map<String, dynamic>>> getStaffPerformance({String? dateFrom, String? dateTo}) async {
-    final params = <String, dynamic>{};
-    if (dateFrom != null) params['date_from'] = dateFrom;
-    if (dateTo != null) params['date_to'] = dateTo;
-
-    final response = await _dio.get(ApiEndpoints.staffPerformance, queryParameters: params);
+  Future<List<Map<String, dynamic>>> getStaffPerformance({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.staffPerformance, queryParameters: _buildParams(filters));
     return (response.data['data'] as List).cast<Map<String, dynamic>>();
   }
 
   // ─── Hourly Sales ──────────────────────────────────────────
 
-  Future<List<Map<String, dynamic>>> getHourlySales({String? dateFrom, String? dateTo}) async {
-    final params = <String, dynamic>{};
-    if (dateFrom != null) params['date_from'] = dateFrom;
-    if (dateTo != null) params['date_to'] = dateTo;
-
-    final response = await _dio.get(ApiEndpoints.hourlySales, queryParameters: params);
+  Future<List<Map<String, dynamic>>> getHourlySales({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.hourlySales, queryParameters: _buildParams(filters));
     return (response.data['data'] as List).cast<Map<String, dynamic>>();
   }
 
   // ─── Payment Methods ───────────────────────────────────────
 
-  Future<List<Map<String, dynamic>>> getPaymentMethods({String? dateFrom, String? dateTo}) async {
-    final params = <String, dynamic>{};
-    if (dateFrom != null) params['date_from'] = dateFrom;
-    if (dateTo != null) params['date_to'] = dateTo;
-
-    final response = await _dio.get(ApiEndpoints.paymentMethods, queryParameters: params);
+  Future<List<Map<String, dynamic>>> getPaymentMethods({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.paymentMethods, queryParameters: _buildParams(filters));
     return (response.data['data'] as List).cast<Map<String, dynamic>>();
   }
 
   // ─── Dashboard ─────────────────────────────────────────────
 
-  Future<Map<String, dynamic>> getDashboard() async {
-    final response = await _dio.get(ApiEndpoints.dashboard);
+  Future<Map<String, dynamic>> getDashboard({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.dashboard, queryParameters: _buildParams(filters));
     return response.data['data'] as Map<String, dynamic>;
   }
 
   // ─── Slow Movers ───────────────────────────────────────────
 
-  Future<List<Map<String, dynamic>>> getSlowMovers({String? dateFrom, String? dateTo, int? limit}) async {
-    final params = <String, dynamic>{};
-    if (dateFrom != null) params['date_from'] = dateFrom;
-    if (dateTo != null) params['date_to'] = dateTo;
-    if (limit != null) params['limit'] = limit;
-
-    final response = await _dio.get(ApiEndpoints.slowMovers, queryParameters: params);
+  Future<List<Map<String, dynamic>>> getSlowMovers({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.slowMovers, queryParameters: _buildParams(filters));
     return (response.data['data'] as List).cast<Map<String, dynamic>>();
   }
 
   // ─── Product Margin ────────────────────────────────────────
 
-  Future<List<Map<String, dynamic>>> getProductMargin({String? dateFrom, String? dateTo, String? categoryId}) async {
-    final params = <String, dynamic>{};
-    if (dateFrom != null) params['date_from'] = dateFrom;
-    if (dateTo != null) params['date_to'] = dateTo;
-    if (categoryId != null) params['category_id'] = categoryId;
-
-    final response = await _dio.get(ApiEndpoints.productMargin, queryParameters: params);
+  Future<List<Map<String, dynamic>>> getProductMargin({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.productMargin, queryParameters: _buildParams(filters));
     return (response.data['data'] as List).cast<Map<String, dynamic>>();
   }
 
   // ─── Inventory Valuation ───────────────────────────────────
 
-  Future<Map<String, dynamic>> getInventoryValuation() async {
-    final response = await _dio.get(ApiEndpoints.inventoryValuation);
+  Future<Map<String, dynamic>> getInventoryValuation({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.inventoryValuation, queryParameters: _buildParams(filters));
     return response.data['data'] as Map<String, dynamic>;
   }
 
   // ─── Inventory Turnover ────────────────────────────────────
 
-  Future<List<Map<String, dynamic>>> getInventoryTurnover({String? dateFrom, String? dateTo}) async {
-    final params = <String, dynamic>{};
-    if (dateFrom != null) params['date_from'] = dateFrom;
-    if (dateTo != null) params['date_to'] = dateTo;
-
-    final response = await _dio.get(ApiEndpoints.inventoryTurnover, queryParameters: params);
+  Future<List<Map<String, dynamic>>> getInventoryTurnover({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.inventoryTurnover, queryParameters: _buildParams(filters));
     return (response.data['data'] as List).cast<Map<String, dynamic>>();
   }
 
   // ─── Inventory Shrinkage ───────────────────────────────────
 
-  Future<Map<String, dynamic>> getInventoryShrinkage({String? dateFrom, String? dateTo}) async {
-    final params = <String, dynamic>{};
-    if (dateFrom != null) params['date_from'] = dateFrom;
-    if (dateTo != null) params['date_to'] = dateTo;
-
-    final response = await _dio.get(ApiEndpoints.inventoryShrinkage, queryParameters: params);
+  Future<Map<String, dynamic>> getInventoryShrinkage({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.inventoryShrinkage, queryParameters: _buildParams(filters));
     return response.data['data'] as Map<String, dynamic>;
   }
 
   // ─── Inventory Low Stock ───────────────────────────────────
 
-  Future<List<Map<String, dynamic>>> getInventoryLowStock() async {
-    final response = await _dio.get(ApiEndpoints.inventoryLowStock);
+  Future<List<Map<String, dynamic>>> getInventoryLowStock({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.inventoryLowStock, queryParameters: _buildParams(filters));
     return (response.data['data'] as List).cast<Map<String, dynamic>>();
   }
 
   // ─── Financial: Daily P&L ─────────────────────────────────
 
-  Future<Map<String, dynamic>> getFinancialDailyPl({String? dateFrom, String? dateTo}) async {
-    final params = <String, dynamic>{};
-    if (dateFrom != null) params['date_from'] = dateFrom;
-    if (dateTo != null) params['date_to'] = dateTo;
-
-    final response = await _dio.get(ApiEndpoints.financialDailyPl, queryParameters: params);
+  Future<Map<String, dynamic>> getFinancialDailyPl({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.financialDailyPl, queryParameters: _buildParams(filters));
     return response.data['data'] as Map<String, dynamic>;
   }
 
   // ─── Financial: Expenses ───────────────────────────────────
 
-  Future<Map<String, dynamic>> getFinancialExpenses({String? dateFrom, String? dateTo}) async {
-    final params = <String, dynamic>{};
-    if (dateFrom != null) params['date_from'] = dateFrom;
-    if (dateTo != null) params['date_to'] = dateTo;
-
-    final response = await _dio.get(ApiEndpoints.financialExpenses, queryParameters: params);
+  Future<Map<String, dynamic>> getFinancialExpenses({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.financialExpenses, queryParameters: _buildParams(filters));
     return response.data['data'] as Map<String, dynamic>;
   }
 
   // ─── Financial: Cash Variance ──────────────────────────────
 
-  Future<Map<String, dynamic>> getFinancialCashVariance({String? dateFrom, String? dateTo}) async {
-    final params = <String, dynamic>{};
-    if (dateFrom != null) params['date_from'] = dateFrom;
-    if (dateTo != null) params['date_to'] = dateTo;
-
-    final response = await _dio.get(ApiEndpoints.financialCashVariance, queryParameters: params);
+  Future<Map<String, dynamic>> getFinancialCashVariance({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.financialCashVariance, queryParameters: _buildParams(filters));
     return response.data['data'] as Map<String, dynamic>;
   }
 
   // ─── Top Customers ────────────────────────────────────────
 
-  Future<List<Map<String, dynamic>>> getTopCustomers({int? limit}) async {
-    final params = <String, dynamic>{};
-    if (limit != null) params['limit'] = limit;
-
-    final response = await _dio.get(ApiEndpoints.topCustomers, queryParameters: params);
+  Future<List<Map<String, dynamic>>> getTopCustomers({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.topCustomers, queryParameters: _buildParams(filters));
     return (response.data['data'] as List).cast<Map<String, dynamic>>();
   }
 
   // ─── Customer Retention ────────────────────────────────────
 
-  Future<Map<String, dynamic>> getCustomerRetention() async {
-    final response = await _dio.get(ApiEndpoints.customerRetention);
+  Future<Map<String, dynamic>> getCustomerRetention({ReportFilters filters = const ReportFilters()}) async {
+    final response = await _dio.get(ApiEndpoints.customerRetention, queryParameters: _buildParams(filters));
     return response.data['data'] as Map<String, dynamic>;
   }
 
@@ -207,12 +146,9 @@ class ReportApiService {
   Future<Map<String, dynamic>> exportReport({
     required String reportType,
     required String format,
-    String? dateFrom,
-    String? dateTo,
+    ReportFilters filters = const ReportFilters(),
   }) async {
-    final body = <String, dynamic>{'report_type': reportType, 'format': format};
-    if (dateFrom != null) body['date_from'] = dateFrom;
-    if (dateTo != null) body['date_to'] = dateTo;
+    final body = <String, dynamic>{'report_type': reportType, 'format': format, ..._buildParams(filters)};
 
     final response = await _dio.post(ApiEndpoints.reportExport, data: body);
     return response.data['data'] as Map<String, dynamic>;

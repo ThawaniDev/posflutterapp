@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_datawedge/flutter_datawedge.dart';
 
 /// Barcode scan result
 class BarcodeScanResult {
@@ -66,18 +68,55 @@ class BarcodeScannerService {
   Timer? _scanTimer;
   bool _isListening = false;
 
+  // DataWedge (PDA) support
+  FlutterDataWedge? _dataWedge;
+  StreamSubscription<ScanResult>? _dataWedgeSub;
+  bool _dataWedgeInitialized = false;
+
   Stream<BarcodeScanResult> get onScan => _scanController.stream;
   bool get isListening => _isListening;
+  bool get isDataWedgeAvailable => _dataWedgeInitialized;
   ScannerConfig get config => _config;
 
   void configure(ScannerConfig config) {
     _config = config;
   }
 
-  /// Start listening for barcode scans via keyboard-wedge (HID)
+  /// Start listening for barcode scans via keyboard-wedge (HID) and DataWedge (PDA)
   void startListening() {
     _isListening = true;
     HardwareKeyboard.instance.addHandler(_handleKeyEvent);
+
+    // Initialize DataWedge for PDA devices (Android only)
+    if (!kIsWeb && Platform.isAndroid) {
+      _initDataWedge();
+    }
+  }
+
+  /// Initialize Zebra/Honeywell DataWedge for PDA barcode scanning
+  Future<void> _initDataWedge() async {
+    if (_dataWedgeInitialized) return;
+    try {
+      _dataWedge = FlutterDataWedge();
+      await _dataWedge!.initialize();
+      await _dataWedge!.createDefaultProfile(profileName: 'ThawaniPOS');
+      _dataWedgeSub = _dataWedge!.onScanResult.listen(_handleDataWedgeScan);
+      _dataWedgeInitialized = true;
+      debugPrint('BarcodeScannerService: DataWedge initialized successfully');
+    } catch (e) {
+      debugPrint('BarcodeScannerService: DataWedge not available ($e) — using keyboard-wedge only');
+      _dataWedgeInitialized = false;
+    }
+  }
+
+  /// Handle scan result from DataWedge PDA
+  void _handleDataWedgeScan(ScanResult result) {
+    final barcode = result.data.trim();
+    if (barcode.isEmpty) return;
+    if (barcode.length < _config.minBarcodeLength || barcode.length > _config.maxBarcodeLength) return;
+
+    debugPrint('BarcodeScannerService: DataWedge scan: $barcode');
+    _scanController.add(BarcodeScanResult(barcode: barcode, scannedAt: DateTime.now(), source: 'datawedge'));
   }
 
   /// Stop listening
@@ -86,6 +125,8 @@ class BarcodeScannerService {
     HardwareKeyboard.instance.removeHandler(_handleKeyEvent);
     _scanTimer?.cancel();
     _buffer = '';
+    _dataWedgeSub?.cancel();
+    _dataWedgeSub = null;
   }
 
   /// Handle a keyboard event — distinguish scanner input from human typing
@@ -161,6 +202,8 @@ class BarcodeScannerService {
 
   void dispose() {
     stopListening();
+    _dataWedge = null;
+    _dataWedgeInitialized = false;
     _scanController.close();
   }
 }

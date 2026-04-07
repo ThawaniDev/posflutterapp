@@ -15,13 +15,21 @@ class AdminStoreListNotifier extends StateNotifier<AdminStoreListState> {
 
   AdminStoreListNotifier(this._repository) : super(const AdminStoreListInitial());
 
-  Future<void> load({String? search, bool? isActive, String? businessType, int perPage = 15, int page = 1}) async {
+  Future<void> load({
+    String? search,
+    bool? isActive,
+    String? businessType,
+    String? storeId,
+    int perPage = 15,
+    int page = 1,
+  }) async {
     state = const AdminStoreListLoading();
     try {
       final response = await _repository.listStores(
         search: search,
         isActive: isActive,
         businessType: businessType,
+        storeId: storeId,
         perPage: perPage,
         page: page,
       );
@@ -171,10 +179,16 @@ class RegistrationListNotifier extends StateNotifier<RegistrationListState> {
 
   RegistrationListNotifier(this._repository) : super(const RegistrationListInitial());
 
-  Future<void> load({String? status, String? search, int perPage = 15, int page = 1}) async {
+  Future<void> load({String? status, String? search, String? storeId, int perPage = 15, int page = 1}) async {
     state = const RegistrationListLoading();
     try {
-      final response = await _repository.listRegistrations(status: status, search: search, perPage: perPage, page: page);
+      final response = await _repository.listRegistrations(
+        status: status,
+        search: search,
+        storeId: storeId,
+        perPage: perPage,
+        page: page,
+      );
       final data = response['data'] as Map<String, dynamic>;
       final pagination = data['pagination'] as Map<String, dynamic>;
       state = RegistrationListLoaded(
@@ -427,13 +441,14 @@ class AdminTeamListNotifier extends StateNotifier<AdminTeamListState> {
 
   AdminTeamListNotifier(this._repository) : super(const AdminTeamListInitial());
 
-  Future<void> load({String? search, bool? isActive, String? roleId, int perPage = 15, int page = 1}) async {
+  Future<void> load({String? search, bool? isActive, String? roleId, String? storeId, int perPage = 15, int page = 1}) async {
     state = const AdminTeamListLoading();
     try {
       final response = await _repository.listTeamUsers(
         search: search,
         isActive: isActive,
         roleId: roleId,
+        storeId: storeId,
         perPage: perPage,
         page: page,
       );
@@ -594,6 +609,7 @@ class ActivityLogNotifier extends StateNotifier<ActivityLogState> {
     String? entityType,
     String? dateFrom,
     String? dateTo,
+    String? storeId,
     int perPage = 25,
     int page = 1,
   }) async {
@@ -605,6 +621,7 @@ class ActivityLogNotifier extends StateNotifier<ActivityLogState> {
         entityType: entityType,
         dateFrom: dateFrom,
         dateTo: dateTo,
+        storeId: storeId,
         perPage: perPage,
         page: page,
       );
@@ -924,10 +941,15 @@ class InvoiceListNotifier extends StateNotifier<InvoiceListState> {
   final AdminRepository _repo;
   InvoiceListNotifier(this._repo) : super(const InvoiceListInitial());
 
-  Future<void> loadInvoices({String? status, String? subscriptionId, int perPage = 15}) async {
+  Future<void> loadInvoices({String? status, String? subscriptionId, String? storeId, int perPage = 15}) async {
     state = const InvoiceListLoading();
     try {
-      final response = await _repo.listInvoices(status: status, subscriptionId: subscriptionId, perPage: perPage);
+      final response = await _repo.listInvoices(
+        status: status,
+        subscriptionId: subscriptionId,
+        storeId: storeId,
+        perPage: perPage,
+      );
       final data = response['data'] as Map<String, dynamic>;
       final pagination = data['pagination'] as Map<String, dynamic>;
       state = InvoiceListLoaded(
@@ -1064,10 +1086,10 @@ class AdminUserListNotifier extends StateNotifier<AdminUserListState> {
   final AdminRepository _repo;
   AdminUserListNotifier(this._repo) : super(const AdminUserListInitial());
 
-  Future<void> loadAdmins({String? search, bool? isActive}) async {
+  Future<void> loadAdmins({String? search, bool? isActive, String? storeId}) async {
     state = const AdminUserListLoading();
     try {
-      final response = await _repo.listAdminUsers(search: search, isActive: isActive);
+      final response = await _repo.listAdminUsers(search: search, isActive: isActive, storeId: storeId);
       final data = response['data'] as Map<String, dynamic>;
       state = AdminUserListLoaded(List<Map<String, dynamic>>.from(data['admins'] as List));
     } catch (e) {
@@ -1184,7 +1206,14 @@ class BillingInvoiceListNotifier extends StateNotifier<BillingInvoiceListState> 
   final AdminRepository _repo;
   BillingInvoiceListNotifier(this._repo) : super(const BillingInvoiceListInitial());
 
-  Future<void> loadInvoices({String? search, String? status, String? dateFrom, String? dateTo, int page = 1}) async {
+  Future<void> loadInvoices({
+    String? search,
+    String? status,
+    String? dateFrom,
+    String? dateTo,
+    String? storeId,
+    int page = 1,
+  }) async {
     state = const BillingInvoiceListLoading();
     try {
       final params = <String, dynamic>{'page': page};
@@ -1192,6 +1221,7 @@ class BillingInvoiceListNotifier extends StateNotifier<BillingInvoiceListState> 
       if (status != null && status.isNotEmpty) params['status'] = status;
       if (dateFrom != null) params['date_from'] = dateFrom;
       if (dateTo != null) params['date_to'] = dateTo;
+      if (storeId != null) params['store_id'] = storeId;
 
       final response = await _repo.listBillingInvoices(params: params);
       final data = response['data'] as Map<String, dynamic>;
@@ -1286,10 +1316,12 @@ class FailedPaymentsNotifier extends StateNotifier<BillingInvoiceListState> {
   final AdminRepository _repo;
   FailedPaymentsNotifier(this._repo) : super(const BillingInvoiceListInitial());
 
-  Future<void> loadFailedPayments({int page = 1}) async {
+  Future<void> loadFailedPayments({String? storeId, int page = 1}) async {
     state = const BillingInvoiceListLoading();
     try {
-      final response = await _repo.listFailedPayments(params: {'page': page});
+      final params = <String, dynamic>{'page': page};
+      if (storeId != null) params['store_id'] = storeId;
+      final response = await _repo.listFailedPayments(params: params);
       final data = response['data'] as Map<String, dynamic>;
       state = BillingInvoiceListLoaded(
         List<Map<String, dynamic>>.from(data['invoices'] as List),
@@ -1310,10 +1342,10 @@ class RevenueDashboardNotifier extends StateNotifier<RevenueDashboardState> {
   final AdminRepository _repo;
   RevenueDashboardNotifier(this._repo) : super(const RevenueDashboardInitial());
 
-  Future<void> loadDashboard() async {
+  Future<void> loadDashboard({String? storeId}) async {
     state = const RevenueDashboardLoading();
     try {
-      final response = await _repo.getBillingRevenue();
+      final response = await _repo.getBillingRevenue(storeId: storeId);
       final data = response['data'] as Map<String, dynamic>;
       state = RevenueDashboardLoaded(
         mrr: double.tryParse(data['mrr'].toString()) ?? 0.0,
@@ -1385,11 +1417,12 @@ class GatewayListNotifier extends StateNotifier<GatewayListState> {
   final AdminRepository _repo;
   GatewayListNotifier(this._repo) : super(const GatewayListInitial());
 
-  Future<void> loadGateways({String? environment}) async {
+  Future<void> loadGateways({String? environment, String? storeId}) async {
     state = const GatewayListLoading();
     try {
       final params = <String, dynamic>{};
       if (environment != null) params['environment'] = environment;
+      if (storeId != null) params['store_id'] = storeId;
 
       final response = await _repo.listGateways(params: params);
       state = GatewayListLoaded(List<Map<String, dynamic>>.from(response['data'] as List));
@@ -1601,10 +1634,10 @@ class AnalyticsDashboardNotifier extends StateNotifier<AnalyticsDashboardState> 
   final AdminRepository _repo;
   AnalyticsDashboardNotifier(this._repo) : super(const AnalyticsDashboardInitial());
 
-  Future<void> load() async {
+  Future<void> load({String? storeId}) async {
     state = const AnalyticsDashboardLoading();
     try {
-      final response = await _repo.getAnalyticsDashboard();
+      final response = await _repo.getAnalyticsDashboard(storeId: storeId);
       final data = response['data'] as Map<String, dynamic>;
       state = AnalyticsDashboardLoaded(
         kpi: data['kpi'] as Map<String, dynamic>,
@@ -1628,13 +1661,14 @@ class AnalyticsRevenueNotifier extends StateNotifier<AnalyticsRevenueState> {
   final AdminRepository _repo;
   AnalyticsRevenueNotifier(this._repo) : super(const AnalyticsRevenueInitial());
 
-  Future<void> load({String? dateFrom, String? dateTo, String? planId}) async {
+  Future<void> load({String? dateFrom, String? dateTo, String? planId, String? storeId}) async {
     state = const AnalyticsRevenueLoading();
     try {
       final params = <String, dynamic>{};
       if (dateFrom != null) params['date_from'] = dateFrom;
       if (dateTo != null) params['date_to'] = dateTo;
       if (planId != null) params['plan_id'] = planId;
+      if (storeId != null) params['store_id'] = storeId;
 
       final response = await _repo.getAnalyticsRevenue(params: params.isEmpty ? null : params);
       final data = response['data'] as Map<String, dynamic>;
@@ -1664,12 +1698,13 @@ class AnalyticsSubscriptionsNotifier extends StateNotifier<AnalyticsSubscription
   final AdminRepository _repo;
   AnalyticsSubscriptionsNotifier(this._repo) : super(const AnalyticsSubscriptionsInitial());
 
-  Future<void> load({String? dateFrom, String? dateTo}) async {
+  Future<void> load({String? dateFrom, String? dateTo, String? storeId}) async {
     state = const AnalyticsSubscriptionsLoading();
     try {
       final params = <String, dynamic>{};
       if (dateFrom != null) params['date_from'] = dateFrom;
       if (dateTo != null) params['date_to'] = dateTo;
+      if (storeId != null) params['store_id'] = storeId;
 
       final response = await _repo.getAnalyticsSubscriptions(params: params.isEmpty ? null : params);
       final data = response['data'] as Map<String, dynamic>;
@@ -1698,10 +1733,12 @@ class AnalyticsStoresNotifier extends StateNotifier<AnalyticsStoresState> {
   final AdminRepository _repo;
   AnalyticsStoresNotifier(this._repo) : super(const AnalyticsStoresInitial());
 
-  Future<void> load({int limit = 20}) async {
+  Future<void> load({int limit = 20, String? storeId}) async {
     state = const AnalyticsStoresLoading();
     try {
-      final response = await _repo.getAnalyticsStores(params: {'limit': limit});
+      final params = <String, dynamic>{'limit': limit};
+      if (storeId != null) params['store_id'] = storeId;
+      final response = await _repo.getAnalyticsStores(params: params);
       final data = response['data'] as Map<String, dynamic>;
       state = AnalyticsStoresLoaded(
         totalStores: data['total_stores'] as int,
@@ -1727,12 +1764,13 @@ class AnalyticsFeaturesNotifier extends StateNotifier<AnalyticsFeaturesState> {
   final AdminRepository _repo;
   AnalyticsFeaturesNotifier(this._repo) : super(const AnalyticsFeaturesInitial());
 
-  Future<void> load({String? dateFrom, String? dateTo}) async {
+  Future<void> load({String? dateFrom, String? dateTo, String? storeId}) async {
     state = const AnalyticsFeaturesLoading();
     try {
       final params = <String, dynamic>{};
       if (dateFrom != null) params['date_from'] = dateFrom;
       if (dateTo != null) params['date_to'] = dateTo;
+      if (storeId != null) params['store_id'] = storeId;
 
       final response = await _repo.getAnalyticsFeatures(params: params.isEmpty ? null : params);
       final data = response['data'] as Map<String, dynamic>;
@@ -1758,10 +1796,10 @@ class AnalyticsSystemHealthNotifier extends StateNotifier<AnalyticsSystemHealthS
   final AdminRepository _repo;
   AnalyticsSystemHealthNotifier(this._repo) : super(const AnalyticsSystemHealthInitial());
 
-  Future<void> load() async {
+  Future<void> load({String? storeId}) async {
     state = const AnalyticsSystemHealthLoading();
     try {
-      final response = await _repo.getAnalyticsSystemHealth();
+      final response = await _repo.getAnalyticsSystemHealth(storeId: storeId);
       final data = response['data'] as Map<String, dynamic>;
       state = AnalyticsSystemHealthLoaded(
         storesMonitored: data['stores_monitored'] as int,
@@ -2115,10 +2153,10 @@ class CmsPageListNotifier extends StateNotifier<CmsPageListState> {
   final AdminRepository _repo;
   CmsPageListNotifier(this._repo) : super(const CmsPageListInitial());
 
-  Future<void> load({String? search, String? pageType, bool? isPublished}) async {
+  Future<void> load({String? search, String? pageType, bool? isPublished, String? storeId}) async {
     state = const CmsPageListLoading();
     try {
-      final res = await _repo.getCmsPages(search: search, pageType: pageType, isPublished: isPublished);
+      final res = await _repo.getCmsPages(search: search, pageType: pageType, isPublished: isPublished, storeId: storeId);
       final data = res['data'] as Map<String, dynamic>;
       state = CmsPageListLoaded(pages: List<Map<String, dynamic>>.from(data['pages'] ?? []), total: data['total'] ?? 0);
     } catch (e) {
@@ -2206,7 +2244,7 @@ class ArticleListNotifier extends StateNotifier<ArticleListState> {
   final AdminRepository _repo;
   ArticleListNotifier(this._repo) : super(const ArticleListInitial());
 
-  Future<void> load({String? search, String? category, bool? isPublished, int? page, int? perPage}) async {
+  Future<void> load({String? search, String? category, bool? isPublished, int? page, int? perPage, String? storeId}) async {
     state = const ArticleListLoading();
     try {
       final res = await _repo.getArticles(
@@ -2215,6 +2253,7 @@ class ArticleListNotifier extends StateNotifier<ArticleListState> {
         isPublished: isPublished,
         page: page,
         perPage: perPage,
+        storeId: storeId,
       );
       final data = res['data'] as Map<String, dynamic>;
       state = ArticleListLoaded(
@@ -2308,10 +2347,10 @@ class AnnouncementListNotifier extends StateNotifier<AnnouncementListState> {
   final AdminRepository _repo;
   AnnouncementListNotifier(this._repo) : super(const AnnouncementListInitial());
 
-  Future<void> load({String? search, String? type, int? page, int? perPage}) async {
+  Future<void> load({String? search, String? type, int? page, int? perPage, String? storeId}) async {
     state = const AnnouncementListLoading();
     try {
-      final res = await _repo.getAnnouncements(search: search, type: type, page: page, perPage: perPage);
+      final res = await _repo.getAnnouncements(search: search, type: type, page: page, perPage: perPage, storeId: storeId);
       final data = res['data'] as Map<String, dynamic>;
       state = AnnouncementListLoaded(
         announcements: List<Map<String, dynamic>>.from(data['announcements'] ?? []),
@@ -2394,10 +2433,10 @@ class NotificationTemplateListNotifier extends StateNotifier<NotificationTemplat
   final AdminRepository _repo;
   NotificationTemplateListNotifier(this._repo) : super(const NotificationTemplateListInitial());
 
-  Future<void> load({String? search, String? channel, bool? isActive}) async {
+  Future<void> load({String? search, String? channel, bool? isActive, String? storeId}) async {
     state = const NotificationTemplateListLoading();
     try {
-      final res = await _repo.getNotificationTemplates(search: search, channel: channel, isActive: isActive);
+      final res = await _repo.getNotificationTemplates(search: search, channel: channel, isActive: isActive, storeId: storeId);
       final data = res['data'] as Map<String, dynamic>;
       state = NotificationTemplateListLoaded(
         templates: List<Map<String, dynamic>>.from(data['templates'] ?? []),
@@ -2684,10 +2723,10 @@ class HealthDashboardNotifier extends StateNotifier<HealthDashboardState> {
   final AdminRepository _repo;
   HealthDashboardNotifier(this._repo) : super(const HealthDashboardInitial());
 
-  Future<void> load() async {
+  Future<void> load({String? storeId}) async {
     state = const HealthDashboardLoading();
     try {
-      final data = await _repo.getHealthDashboard();
+      final data = await _repo.getHealthDashboard(storeId: storeId);
       state = HealthDashboardLoaded(data);
     } catch (e) {
       state = HealthDashboardError(e.toString());
@@ -3188,10 +3227,10 @@ final deploymentOverviewProvider = StateNotifierProvider<DeploymentOverviewNotif
 class DeploymentOverviewNotifier extends StateNotifier<DeploymentOverviewState> {
   final AdminRepository _repo;
   DeploymentOverviewNotifier(this._repo) : super(const DeploymentOverviewInitial());
-  Future<void> load() async {
+  Future<void> load({String? storeId}) async {
     state = const DeploymentOverviewLoading();
     try {
-      final data = await _repo.getDeploymentOverview();
+      final data = await _repo.getDeploymentOverview(storeId: storeId);
       state = DeploymentOverviewLoaded(data);
     } catch (e) {
       state = DeploymentOverviewError(e.toString());
@@ -3360,10 +3399,10 @@ final dataManagementOverviewProvider = StateNotifierProvider<DataManagementOverv
 class DataManagementOverviewNotifier extends StateNotifier<DataManagementOverviewState> {
   final AdminRepository _repo;
   DataManagementOverviewNotifier(this._repo) : super(const DataManagementOverviewInitial());
-  Future<void> load() async {
+  Future<void> load({String? storeId}) async {
     state = const DataManagementOverviewLoading();
     try {
-      state = DataManagementOverviewLoaded(await _repo.getDataManagementOverview());
+      state = DataManagementOverviewLoaded(await _repo.getDataManagementOverview(storeId: storeId));
     } catch (e) {
       state = DataManagementOverviewError(e.toString());
     }
@@ -3509,10 +3548,10 @@ final securityOverviewProvider = StateNotifierProvider<SecurityOverviewNotifier,
 class SecurityOverviewNotifier extends StateNotifier<SecurityOverviewState> {
   final AdminRepository _repo;
   SecurityOverviewNotifier(this._repo) : super(const SecurityOverviewInitial());
-  Future<void> load() async {
+  Future<void> load({String? storeId}) async {
     state = const SecurityOverviewLoading();
     try {
-      state = SecurityOverviewLoaded(await _repo.getSecurityOverview());
+      state = SecurityOverviewLoaded(await _repo.getSecurityOverview(storeId: storeId));
     } catch (e) {
       state = SecurityOverviewError(e.toString());
     }
@@ -3666,10 +3705,10 @@ final finOpsOverviewProvider = StateNotifierProvider<FinOpsOverviewNotifier, Fin
 class FinOpsOverviewNotifier extends StateNotifier<FinOpsOverviewState> {
   final AdminRepository _repo;
   FinOpsOverviewNotifier(this._repo) : super(const FinOpsOverviewInitial());
-  Future<void> load() async {
+  Future<void> load({String? storeId}) async {
     state = const FinOpsOverviewLoading();
     try {
-      state = FinOpsOverviewLoaded(await _repo.getFinOpsOverview());
+      state = FinOpsOverviewLoaded(await _repo.getFinOpsOverview(storeId: storeId));
     } catch (e) {
       state = FinOpsOverviewError(e.toString());
     }
@@ -4319,10 +4358,10 @@ final infraOverviewProvider = StateNotifierProvider<InfraOverviewNotifier, Infra
 class InfraOverviewNotifier extends StateNotifier<InfraOverviewState> {
   final AdminRepository _repo;
   InfraOverviewNotifier(this._repo) : super(const InfraOverviewInitial());
-  Future<void> load() async {
+  Future<void> load({String? storeId}) async {
     state = const InfraOverviewLoading();
     try {
-      state = InfraOverviewLoaded(await _repo.getInfraOverview());
+      state = InfraOverviewLoaded(await _repo.getInfraOverview(storeId: storeId));
     } catch (e) {
       state = InfraOverviewError(e.toString());
     }

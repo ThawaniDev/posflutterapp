@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/features/reports/models/report_filters.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
 import 'package:thawani_pos/features/reports/repositories/report_repository.dart';
 
@@ -13,13 +14,13 @@ class SalesSummaryNotifier extends StateNotifier<SalesSummaryState> {
 
   SalesSummaryNotifier(this._repo) : super(const SalesSummaryInitial());
 
-  Future<void> load({String? dateFrom, String? dateTo}) async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! SalesSummaryLoaded) state = const SalesSummaryLoading();
     try {
-      final data = await _repo.getSalesSummary(dateFrom: dateFrom, dateTo: dateTo);
+      final data = await _repo.getSalesSummary(filters: filters);
       state = SalesSummaryLoaded(
         totals: data['totals'] as Map<String, dynamic>,
-        daily: (data['daily'] as List).cast<Map<String, dynamic>>(),
+        daily: ((data['series'] ?? data['daily']) as List).cast<Map<String, dynamic>>(),
       );
     } catch (e) {
       if (state is! SalesSummaryLoaded) state = SalesSummaryError(message: e.toString());
@@ -38,10 +39,10 @@ class ProductPerformanceNotifier extends StateNotifier<ProductPerformanceState> 
 
   ProductPerformanceNotifier(this._repo) : super(const ProductPerformanceInitial());
 
-  Future<void> load({String? dateFrom, String? dateTo, String? categoryId, int? limit}) async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! ProductPerformanceLoaded) state = const ProductPerformanceLoading();
     try {
-      final data = await _repo.getProductPerformance(dateFrom: dateFrom, dateTo: dateTo, categoryId: categoryId, limit: limit);
+      final data = await _repo.getProductPerformance(filters: filters);
       state = ProductPerformanceLoaded(products: data);
     } catch (e) {
       if (state is! ProductPerformanceLoaded) state = ProductPerformanceError(message: e.toString());
@@ -60,10 +61,10 @@ class CategoryBreakdownNotifier extends StateNotifier<CategoryBreakdownState> {
 
   CategoryBreakdownNotifier(this._repo) : super(const CategoryBreakdownInitial());
 
-  Future<void> load({String? dateFrom, String? dateTo}) async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! CategoryBreakdownLoaded) state = const CategoryBreakdownLoading();
     try {
-      final data = await _repo.getCategoryBreakdown(dateFrom: dateFrom, dateTo: dateTo);
+      final data = await _repo.getCategoryBreakdown(filters: filters);
       state = CategoryBreakdownLoaded(categories: data);
     } catch (e) {
       if (state is! CategoryBreakdownLoaded) state = CategoryBreakdownError(message: e.toString());
@@ -82,10 +83,10 @@ class StaffPerformanceNotifier extends StateNotifier<StaffPerformanceState> {
 
   StaffPerformanceNotifier(this._repo) : super(const StaffPerformanceInitial());
 
-  Future<void> load({String? dateFrom, String? dateTo}) async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! StaffPerformanceLoaded) state = const StaffPerformanceLoading();
     try {
-      final data = await _repo.getStaffPerformance(dateFrom: dateFrom, dateTo: dateTo);
+      final data = await _repo.getStaffPerformance(filters: filters);
       state = StaffPerformanceLoaded(staff: data);
     } catch (e) {
       if (state is! StaffPerformanceLoaded) state = StaffPerformanceError(message: e.toString());
@@ -104,10 +105,10 @@ class HourlySalesNotifier extends StateNotifier<HourlySalesState> {
 
   HourlySalesNotifier(this._repo) : super(const HourlySalesInitial());
 
-  Future<void> load({String? dateFrom, String? dateTo}) async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! HourlySalesLoaded) state = const HourlySalesLoading();
     try {
-      final data = await _repo.getHourlySales(dateFrom: dateFrom, dateTo: dateTo);
+      final data = await _repo.getHourlySales(filters: filters);
       state = HourlySalesLoaded(hours: data);
     } catch (e) {
       if (state is! HourlySalesLoaded) state = HourlySalesError(message: e.toString());
@@ -126,10 +127,10 @@ class PaymentMethodsNotifier extends StateNotifier<PaymentMethodsState> {
 
   PaymentMethodsNotifier(this._repo) : super(const PaymentMethodsInitial());
 
-  Future<void> load({String? dateFrom, String? dateTo}) async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! PaymentMethodsLoaded) state = const PaymentMethodsLoading();
     try {
-      final data = await _repo.getPaymentMethods(dateFrom: dateFrom, dateTo: dateTo);
+      final data = await _repo.getPaymentMethods(filters: filters);
       state = PaymentMethodsLoaded(methods: data);
     } catch (e) {
       if (state is! PaymentMethodsLoaded) state = PaymentMethodsError(message: e.toString());
@@ -148,10 +149,10 @@ class DashboardNotifier extends StateNotifier<DashboardState> {
 
   DashboardNotifier(this._repo) : super(const DashboardInitial());
 
-  Future<void> load() async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! DashboardLoaded) state = const DashboardLoading();
     try {
-      final data = await _repo.getDashboard();
+      final data = await _repo.getDashboard(filters: filters);
       state = DashboardLoaded(
         today: data['today'] as Map<String, dynamic>,
         yesterday: data['yesterday'] as Map<String, dynamic>,
@@ -174,10 +175,10 @@ class InventoryValuationNotifier extends StateNotifier<InventoryValuationState> 
 
   InventoryValuationNotifier(this._repo) : super(const InventoryValuationInitial());
 
-  Future<void> load() async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! InventoryValuationLoaded) state = const InventoryValuationLoading();
     try {
-      final data = await _repo.getInventoryValuation();
+      final data = await _repo.getInventoryValuation(filters: filters);
       state = InventoryValuationLoaded(data: data);
     } catch (e) {
       if (state is! InventoryValuationLoaded) state = InventoryValuationError(message: e.toString());
@@ -196,10 +197,10 @@ class InventoryTurnoverNotifier extends StateNotifier<InventoryTurnoverState> {
 
   InventoryTurnoverNotifier(this._repo) : super(const InventoryTurnoverInitial());
 
-  Future<void> load({String? dateFrom, String? dateTo}) async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! InventoryTurnoverLoaded) state = const InventoryTurnoverLoading();
     try {
-      final data = await _repo.getInventoryTurnover(dateFrom: dateFrom, dateTo: dateTo);
+      final data = await _repo.getInventoryTurnover(filters: filters);
       state = InventoryTurnoverLoaded(products: data);
     } catch (e) {
       if (state is! InventoryTurnoverLoaded) state = InventoryTurnoverError(message: e.toString());
@@ -218,10 +219,10 @@ class InventoryShrinkageNotifier extends StateNotifier<InventoryShrinkageState> 
 
   InventoryShrinkageNotifier(this._repo) : super(const InventoryShrinkageInitial());
 
-  Future<void> load({String? dateFrom, String? dateTo}) async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! InventoryShrinkageLoaded) state = const InventoryShrinkageLoading();
     try {
-      final data = await _repo.getInventoryShrinkage(dateFrom: dateFrom, dateTo: dateTo);
+      final data = await _repo.getInventoryShrinkage(filters: filters);
       state = InventoryShrinkageLoaded(data: data);
     } catch (e) {
       if (state is! InventoryShrinkageLoaded) state = InventoryShrinkageError(message: e.toString());
@@ -240,10 +241,10 @@ class InventoryLowStockNotifier extends StateNotifier<InventoryLowStockState> {
 
   InventoryLowStockNotifier(this._repo) : super(const InventoryLowStockInitial());
 
-  Future<void> load() async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! InventoryLowStockLoaded) state = const InventoryLowStockLoading();
     try {
-      final data = await _repo.getInventoryLowStock();
+      final data = await _repo.getInventoryLowStock(filters: filters);
       state = InventoryLowStockLoaded(products: data);
     } catch (e) {
       if (state is! InventoryLowStockLoaded) state = InventoryLowStockError(message: e.toString());
@@ -262,10 +263,10 @@ class FinancialDailyPlNotifier extends StateNotifier<FinancialDailyPlState> {
 
   FinancialDailyPlNotifier(this._repo) : super(const FinancialDailyPlInitial());
 
-  Future<void> load({String? dateFrom, String? dateTo}) async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! FinancialDailyPlLoaded) state = const FinancialDailyPlLoading();
     try {
-      final data = await _repo.getFinancialDailyPl(dateFrom: dateFrom, dateTo: dateTo);
+      final data = await _repo.getFinancialDailyPl(filters: filters);
       state = FinancialDailyPlLoaded(
         totals: data['totals'] as Map<String, dynamic>,
         daily: (data['daily'] as List).cast<Map<String, dynamic>>(),
@@ -287,10 +288,10 @@ class FinancialExpensesNotifier extends StateNotifier<FinancialExpensesState> {
 
   FinancialExpensesNotifier(this._repo) : super(const FinancialExpensesInitial());
 
-  Future<void> load({String? dateFrom, String? dateTo}) async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! FinancialExpensesLoaded) state = const FinancialExpensesLoading();
     try {
-      final data = await _repo.getFinancialExpenses(dateFrom: dateFrom, dateTo: dateTo);
+      final data = await _repo.getFinancialExpenses(filters: filters);
       state = FinancialExpensesLoaded(
         totalExpenses: double.tryParse(data['total_expenses'].toString()) ?? 0.0,
         categories: (data['categories'] as List).cast<Map<String, dynamic>>(),
@@ -312,10 +313,10 @@ class CashVarianceNotifier extends StateNotifier<CashVarianceState> {
 
   CashVarianceNotifier(this._repo) : super(const CashVarianceInitial());
 
-  Future<void> load({String? dateFrom, String? dateTo}) async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! CashVarianceLoaded) state = const CashVarianceLoading();
     try {
-      final data = await _repo.getFinancialCashVariance(dateFrom: dateFrom, dateTo: dateTo);
+      final data = await _repo.getFinancialCashVariance(filters: filters);
       state = CashVarianceLoaded(data: data);
     } catch (e) {
       if (state is! CashVarianceLoaded) state = CashVarianceError(message: e.toString());
@@ -334,10 +335,10 @@ class TopCustomersNotifier extends StateNotifier<TopCustomersState> {
 
   TopCustomersNotifier(this._repo) : super(const TopCustomersInitial());
 
-  Future<void> load({int? limit}) async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! TopCustomersLoaded) state = const TopCustomersLoading();
     try {
-      final data = await _repo.getTopCustomers(limit: limit);
+      final data = await _repo.getTopCustomers(filters: filters);
       state = TopCustomersLoaded(customers: data);
     } catch (e) {
       if (state is! TopCustomersLoaded) state = TopCustomersError(message: e.toString());
@@ -356,10 +357,10 @@ class CustomerRetentionNotifier extends StateNotifier<CustomerRetentionState> {
 
   CustomerRetentionNotifier(this._repo) : super(const CustomerRetentionInitial());
 
-  Future<void> load() async {
+  Future<void> load({ReportFilters filters = const ReportFilters()}) async {
     if (state is! CustomerRetentionLoaded) state = const CustomerRetentionLoading();
     try {
-      final data = await _repo.getCustomerRetention();
+      final data = await _repo.getCustomerRetention(filters: filters);
       state = CustomerRetentionLoaded(data: data);
     } catch (e) {
       if (state is! CustomerRetentionLoaded) state = CustomerRetentionError(message: e.toString());

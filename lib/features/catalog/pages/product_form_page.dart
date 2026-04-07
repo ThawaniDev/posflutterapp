@@ -21,8 +21,9 @@ import 'package:thawani_pos/features/catalog/repositories/catalog_repository.dar
 
 class ProductFormPage extends ConsumerStatefulWidget {
   final String? productId;
+  final String? initialBarcode;
 
-  const ProductFormPage({super.key, this.productId});
+  const ProductFormPage({super.key, this.productId, this.initialBarcode});
 
   @override
   ConsumerState<ProductFormPage> createState() => _ProductFormPageState();
@@ -88,6 +89,10 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
   void initState() {
     super.initState();
     _tabController = TabController(length: 7, vsync: this);
+
+    if (widget.initialBarcode != null && widget.initialBarcode!.isNotEmpty) {
+      _barcodeController.text = widget.initialBarcode!;
+    }
 
     Future.microtask(() {
       ref.read(categoriesProvider.notifier).load(activeOnly: true);

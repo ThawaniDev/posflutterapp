@@ -6,6 +6,7 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
 import 'package:thawani_pos/core/widgets/pos_card.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/pos_customization/providers/customization_providers.dart';
 import 'package:thawani_pos/features/pos_customization/widgets/pos_settings_widget.dart';
 import 'package:thawani_pos/features/pos_customization/widgets/receipt_template_widget.dart';
@@ -60,14 +61,15 @@ class _CustomizationDashboardPageState extends ConsumerState<CustomizationDashbo
         children: [
           // Feature links bar
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: EdgeInsets.symmetric(horizontal: context.isPhone ? 8 : 16, vertical: 12),
             decoration: BoxDecoration(
               color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
               border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
             ),
             child: SizedBox(
-              height: 200,
-              child: Row(
+              height: context.isPhone ? 100 : 200,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
                 children: [
                   _featureLink(
                     icon: Icons.dashboard_customize_rounded,
@@ -76,7 +78,7 @@ class _CustomizationDashboardPageState extends ConsumerState<CustomizationDashbo
                     onTap: () => context.push(Routes.layoutTemplates),
                     isDark: isDark,
                   ),
-                  AppSpacing.gapW16,
+                  SizedBox(width: context.isPhone ? 8 : 16),
                   _featureLink(
                     icon: Icons.storefront_rounded,
                     label: l10n.marketplaceTitle,
@@ -84,7 +86,7 @@ class _CustomizationDashboardPageState extends ConsumerState<CustomizationDashbo
                     onTap: () => context.push(Routes.marketplace),
                     isDark: isDark,
                   ),
-                  AppSpacing.gapW16,
+                  SizedBox(width: context.isPhone ? 8 : 16),
                   _featureLink(
                     icon: Icons.label_rounded,
                     label: l10n.labelsTemplates,
@@ -92,7 +94,7 @@ class _CustomizationDashboardPageState extends ConsumerState<CustomizationDashbo
                     onTap: () => context.push(Routes.labels),
                     isDark: isDark,
                   ),
-                  AppSpacing.gapW16,
+                  SizedBox(width: context.isPhone ? 8 : 16),
                   _featureLink(
                     icon: Icons.receipt_long_rounded,
                     label: l10n.receiptTemplatesTitle,
@@ -100,7 +102,7 @@ class _CustomizationDashboardPageState extends ConsumerState<CustomizationDashbo
                     onTap: () => context.push(Routes.receiptTemplates),
                     isDark: isDark,
                   ),
-                  AppSpacing.gapW16,
+                  SizedBox(width: context.isPhone ? 8 : 16),
                   _featureLink(
                     icon: Icons.tv_rounded,
                     label: l10n.cfdThemesTitle,
@@ -108,7 +110,7 @@ class _CustomizationDashboardPageState extends ConsumerState<CustomizationDashbo
                     onTap: () => context.push(Routes.cfdThemes),
                     isDark: isDark,
                   ),
-                  AppSpacing.gapW16,
+                  SizedBox(width: context.isPhone ? 8 : 16),
                   _featureLink(
                     icon: Icons.label_rounded,
                     label: l10n.labelLayoutTemplatesTitle,
@@ -139,39 +141,50 @@ class _CustomizationDashboardPageState extends ConsumerState<CustomizationDashbo
     required VoidCallback onTap,
     required bool isDark,
   }) {
-    return Expanded(
+    final isMobile = MediaQuery.sizeOf(context).width < 768;
+    return SizedBox(
+      width: isMobile ? 100 : null,
       child: GestureDetector(
         onTap: onTap,
         child: PosCard(
-          padding: const EdgeInsets.all(12),
+          padding: EdgeInsets.all(isMobile ? 8 : 12),
           child: Column(
             children: [
               Container(
-                width: 80,
-                height: 80,
+                width: isMobile ? 40 : 80,
+                height: isMobile ? 40 : 80,
                 decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.borderSm),
-                child: Icon(icon, color: AppColors.primary, size: 40),
+                child: Icon(icon, color: AppColors.primary, size: isMobile ? 22 : 40),
               ),
-              AppSpacing.gapH12,
+              SizedBox(height: isMobile ? 6 : 12),
               Expanded(
                 child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(label, style: AppTypography.titleMedium),
                     Text(
-                      subtitle,
-                      style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-                      maxLines: 1,
+                      label,
+                      style: isMobile ? AppTypography.labelSmall : AppTypography.titleMedium,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
+                    if (!isMobile)
+                      Text(
+                        subtitle,
+                        style: AppTypography.bodySmall.copyWith(
+                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                   ],
                 ),
               ),
-              Icon(
-                Icons.keyboard_arrow_down_rounded,
-                size: 18,
-                color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-              ),
+              if (!isMobile)
+                Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  size: 18,
+                  color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                ),
             ],
           ),
         ),

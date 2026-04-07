@@ -342,7 +342,7 @@ PosDataTable<Product>(
     switch (colIndex) {
       case 0: return Text(product.name, style: AppTypography.titleMedium);
       case 1: return Text(product.sku, style: AppTypography.bodyMedium);
-      case 2: return Text('${product.price} OMR', style: AppTypography.bodyMedium);
+      case 2: return Text('${product.price} SAR', style: AppTypography.bodyMedium);
       case 3: return Text('${product.stock}', style: AppTypography.bodyMedium);
       case 4: return PosBadge(label: product.status, variant: PosBadgeVariant.success);
       default: return const SizedBox.shrink();
@@ -627,7 +627,7 @@ Dashboard metric card with icon, value, and trend arrow.
 ```dart
 PosKpiCard(
   label: 'Total Sales',
-  value: '1,234 OMR',
+  value: '1,23 SAR',
   icon: Icons.attach_money_rounded,
   iconColor: AppColors.success,
   iconBgColor: AppColors.success.withValues(alpha: 0.10),
@@ -646,7 +646,7 @@ Product tile for POS terminal grid view.
 ```dart
 PosProductCard(
   name: 'iPhone 15 Pro',
-  price: '450.000 OMR',
+  price: '450.00 SAR',
   imageUrl: 'https://...',    // null shows placeholder icon
   category: 'Electronics',
   stockStatus: 'in_stock',    // 'in_stock' | 'low' | 'out'
@@ -664,7 +664,7 @@ Horizontal product card for list/management views.
 ```dart
 PosProductListCard(
   name: 'iPhone 15 Pro',
-  price: '450.000 OMR',
+  price: '450.00 SAR',
   imageUrl: 'https://...',
   subtitle: 'SKU: IPH-15-PRO',
   trailing: PosBadge(label: 'Active', variant: PosBadgeVariant.success),

@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminFinOpsGiftCardListPage extends ConsumerStatefulWidget {
   const AdminFinOpsGiftCardListPage({super.key});
@@ -13,16 +15,26 @@ class AdminFinOpsGiftCardListPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
+  String? _storeId;
   String? _statusFilter;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(finOpsGiftCardsProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _applyFilter();
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _applyFilter();
   }
 
   void _applyFilter() {
     final params = <String, dynamic>{};
+    if (_storeId != null) params['store_id'] = _storeId!;
     if (_statusFilter != null && _statusFilter!.isNotEmpty) params['status'] = _statusFilter;
     ref.read(finOpsGiftCardsProvider.notifier).load(params: params);
   }
@@ -35,6 +47,7 @@ class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
       appBar: AppBar(title: const Text('Gift Cards'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.sm),
             child: DropdownButtonFormField<String>(

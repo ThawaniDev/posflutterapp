@@ -181,11 +181,11 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          SizedBox(
-            width: 120,
+          Expanded(
+            flex: 2,
             child: Text(label, style: TextStyle(color: AppColors.textSecondary)),
           ),
-          Expanded(child: Text(value)),
+          Expanded(flex: 3, child: Text(value)),
         ],
       ),
     );

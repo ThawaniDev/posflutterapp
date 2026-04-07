@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminActivityLogListPage extends ConsumerStatefulWidget {
   const AdminActivityLogListPage({super.key});
@@ -15,11 +17,15 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
   final _searchController = TextEditingController();
   String? _actionFilter;
   String? _entityTypeFilter;
+  String? _storeId;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(activityLogListProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _applyFilters();
+    });
   }
 
   @override
@@ -30,10 +36,16 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
 
   void _applyFilters() {
     final params = <String, dynamic>{};
+    if (_storeId != null) params['store_id'] = _storeId!;
     if (_searchController.text.isNotEmpty) params['search'] = _searchController.text;
     if (_actionFilter != null) params['action'] = _actionFilter;
     if (_entityTypeFilter != null) params['entity_type'] = _entityTypeFilter;
-    ref.read(activityLogListProvider.notifier).load(params: params);
+    ref.read(activityLogListProvider.notifier).load(params: params.isEmpty ? null : params);
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _applyFilters();
   }
 
   @override
@@ -44,6 +56,7 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
       appBar: AppBar(title: const Text('Activity Logs')),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(

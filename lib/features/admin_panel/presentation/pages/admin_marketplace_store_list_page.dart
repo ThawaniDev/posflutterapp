@@ -4,6 +4,8 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminMarketplaceStoreListPage extends ConsumerStatefulWidget {
   const AdminMarketplaceStoreListPage({super.key});
@@ -15,11 +17,15 @@ class AdminMarketplaceStoreListPage extends ConsumerStatefulWidget {
 class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplaceStoreListPage> {
   final _searchController = TextEditingController();
   String? _connectedFilter;
+  String? _storeId;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(marketplaceStoreListProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _applyFilters();
+    });
   }
 
   @override
@@ -30,9 +36,15 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
 
   void _applyFilters() {
     final params = <String, dynamic>{};
+    if (_storeId != null) params['store_id'] = _storeId!;
     if (_searchController.text.isNotEmpty) params['search'] = _searchController.text;
     if (_connectedFilter != null) params['is_connected'] = _connectedFilter;
-    ref.read(marketplaceStoreListProvider.notifier).load(params: params);
+    ref.read(marketplaceStoreListProvider.notifier).load(params: params.isEmpty ? null : params);
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _applyFilters();
   }
 
   @override
@@ -43,6 +55,7 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
       appBar: AppBar(title: const Text('Marketplace Stores'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
             child: Row(
@@ -131,7 +144,11 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
               ),
               child: Text(
                 isConnected ? 'CONNECTED' : 'DISCONNECTED',
-                style: TextStyle(color: isConnected ? AppColors.success : AppColors.textSecondary, fontSize: 11, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  color: isConnected ? AppColors.success : AppColors.textSecondary,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),

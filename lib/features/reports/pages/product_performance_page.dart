@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/reports/models/report_filters.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
+import 'package:thawani_pos/features/reports/widgets/report_charts.dart';
+import 'package:thawani_pos/features/reports/widgets/report_filter_panel.dart';
 import 'package:thawani_pos/features/reports/widgets/report_widgets.dart';
 
 class ProductPerformancePage extends ConsumerStatefulWidget {
@@ -15,7 +17,7 @@ class ProductPerformancePage extends ConsumerStatefulWidget {
 }
 
 class _ProductPerformancePageState extends ConsumerState<ProductPerformancePage> {
-  DateTimeRange? _dateRange;
+  ReportFilters _filters = const ReportFilters();
 
   @override
   void initState() {
@@ -24,25 +26,12 @@ class _ProductPerformancePageState extends ConsumerState<ProductPerformancePage>
   }
 
   void _loadData() {
-    ref
-        .read(productPerformanceProvider.notifier)
-        .load(
-          dateFrom: _dateRange != null ? DateFormat('yyyy-MM-dd').format(_dateRange!.start) : null,
-          dateTo: _dateRange != null ? DateFormat('yyyy-MM-dd').format(_dateRange!.end) : null,
-        );
+    ref.read(productPerformanceProvider.notifier).load(filters: _filters);
   }
 
-  Future<void> _pickDateRange() async {
-    final picked = await showDateRangePicker(
-      context: context,
-      firstDate: DateTime(2020),
-      lastDate: DateTime.now(),
-      initialDateRange: _dateRange,
-    );
-    if (picked != null) {
-      setState(() => _dateRange = picked);
-      _loadData();
-    }
+  void _onFiltersChanged(ReportFilters filters) {
+    setState(() => _filters = filters);
+    _loadData();
   }
 
   @override
@@ -51,13 +40,13 @@ class _ProductPerformancePageState extends ConsumerState<ProductPerformancePage>
 
     return ReportPageScaffold(
       title: 'Product Performance',
-      dateRange: _dateRange,
-      onPickDate: _pickDateRange,
-      onClearDate: () {
-        setState(() => _dateRange = null);
-        _loadData();
-      },
-      onRefresh: _loadData,
+      filterPanel: ReportFilterPanel(
+        filters: _filters,
+        onFiltersChanged: _onFiltersChanged,
+        onRefresh: _loadData,
+        showCategoryFilter: true,
+        showSortOptions: true,
+      ),
       body: switch (state) {
         ProductPerformanceInitial() || ProductPerformanceLoading() => PosLoadingSkeleton.list(),
         ProductPerformanceError(:final message) => PosErrorState(message: message, onRetry: _loadData),
@@ -112,6 +101,22 @@ class _ProductList extends StatelessWidget {
             ),
           ],
         ),
+
+        // Bar Chart — Top 10 products by revenue
+        if (products.isNotEmpty) ...[
+          const SizedBox(height: 20),
+          const ReportSectionHeader(title: 'Top Products by Revenue', icon: Icons.bar_chart_rounded),
+          ReportDataCard(
+            child: ReportBarChart(
+              data: products.take(10).toList(),
+              labelKey: 'product_name',
+              valueKey: 'total_revenue',
+              barColor: AppColors.primary,
+              secondaryValueKey: 'profit',
+              secondaryBarColor: AppColors.success,
+            ),
+          ),
+        ],
 
         const SizedBox(height: 24),
         const ReportSectionHeader(title: 'Products Ranked by Revenue', icon: Icons.leaderboard_rounded),

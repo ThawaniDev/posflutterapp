@@ -233,11 +233,12 @@ class _DetailRow extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 140,
+          Expanded(
+            flex: 2,
             child: Text(label, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
           ),
           Expanded(
+            flex: 3,
             child: Text(value, style: TextStyle(fontSize: 12, color: valueColor)),
           ),
         ],

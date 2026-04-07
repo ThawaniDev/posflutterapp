@@ -9,6 +9,7 @@ import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/core/widgets/pos_error_state.dart';
 import 'package:thawani_pos/core/widgets/pos_loading_skeleton.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/marketplace/models/template_review.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
@@ -66,16 +67,14 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
           onRetry: () => ref.read(marketplaceDetailProvider(widget.listingId).notifier).load(),
         ),
         MarketplaceDetailLoaded(:final listing, :final reviews, :final hasAccess) => SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Left: Screenshots + description
-              Expanded(
-                flex: 3,
-                child: Column(
+          padding: EdgeInsets.all(context.isPhone ? 12 : 16),
+          child: context.isPhone
+              ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Purchase card first on mobile for immediate visibility
+                    _buildPurchaseCard(listing, hasAccess, l10n, isDark),
+                    AppSpacing.gapH16,
                     // Screenshot gallery
                     if (listing.previewImages.isNotEmpty) ...[
                       ClipRRect(
@@ -125,26 +124,92 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
                         color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
                       ),
                     ),
-                    AppSpacing.gapH24,
-                    // Reviews section
-                    _buildReviewsSection(reviews, l10n, isDark),
-                  ],
-                ),
-              ),
-              AppSpacing.gapW24,
-              // Right: Purchase card + stats
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: [
-                    _buildPurchaseCard(listing, hasAccess, l10n, isDark),
                     AppSpacing.gapH16,
                     _buildStatsCard(listing, l10n, isDark),
+                    AppSpacing.gapH24,
+                    _buildReviewsSection(reviews, l10n, isDark),
+                  ],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Left: Screenshots + description
+                    Expanded(
+                      flex: 3,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Screenshot gallery
+                          if (listing.previewImages.isNotEmpty) ...[
+                            ClipRRect(
+                              borderRadius: AppRadius.borderMd,
+                              child: AspectRatio(
+                                aspectRatio: 16 / 9,
+                                child: Image.network(listing.previewImages[_selectedScreenshot], fit: BoxFit.cover),
+                              ),
+                            ),
+                            AppSpacing.gapH8,
+                            SizedBox(
+                              height: 64,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: listing.previewImages.length,
+                                separatorBuilder: (_, __) => AppSpacing.gapW8,
+                                itemBuilder: (context, index) {
+                                  final isActive = index == _selectedScreenshot;
+                                  return GestureDetector(
+                                    onTap: () => setState(() => _selectedScreenshot = index),
+                                    child: Container(
+                                      width: 96,
+                                      decoration: BoxDecoration(
+                                        borderRadius: AppRadius.borderSm,
+                                        border: Border.all(
+                                          color: isActive
+                                              ? AppColors.primary
+                                              : (isDark ? AppColors.borderDark : AppColors.borderLight),
+                                          width: isActive ? 2 : 1,
+                                        ),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: AppRadius.borderSm,
+                                        child: Image.network(listing.previewImages[index], fit: BoxFit.cover),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            AppSpacing.gapH16,
+                          ],
+                          // Description
+                          Text(l10n.marketplaceDescription, style: AppTypography.titleSmall),
+                          AppSpacing.gapH8,
+                          Text(
+                            listing.description ?? '',
+                            style: AppTypography.bodyMedium.copyWith(
+                              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                            ),
+                          ),
+                          AppSpacing.gapH24,
+                          // Reviews section
+                          _buildReviewsSection(reviews, l10n, isDark),
+                        ],
+                      ),
+                    ),
+                    AppSpacing.gapW24,
+                    // Right: Purchase card + stats
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          _buildPurchaseCard(listing, hasAccess, l10n, isDark),
+                          AppSpacing.gapH16,
+                          _buildStatsCard(listing, l10n, isDark),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              ),
-            ],
-          ),
         ),
       },
     );

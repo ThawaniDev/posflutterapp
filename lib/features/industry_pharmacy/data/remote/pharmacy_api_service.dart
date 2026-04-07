@@ -20,7 +20,7 @@ class PharmacyApiService {
       queryParameters: {'per_page': perPage, if (search != null && search.isNotEmpty) 'search': search},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => Prescription.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -46,7 +46,7 @@ class PharmacyApiService {
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => DrugSchedule.fromJson(j as Map<String, dynamic>)).toList();
   }
 

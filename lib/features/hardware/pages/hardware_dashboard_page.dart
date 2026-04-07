@@ -6,6 +6,7 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/hardware/providers/hardware_providers.dart';
 import 'package:thawani_pos/features/hardware/providers/hardware_state.dart';
 import 'package:thawani_pos/features/hardware/widgets/certified_hardware_list.dart';
+import 'package:thawani_pos/features/hardware/widgets/connected_devices_panel.dart';
 import 'package:thawani_pos/features/hardware/widgets/device_config_card.dart';
 import 'package:thawani_pos/features/hardware/widgets/event_log_list.dart';
 
@@ -48,6 +49,13 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // ── Connected Devices ──
+              Text(l10n.hardwareConnected, style: theme.textTheme.titleMedium),
+              AppSpacing.gapH12,
+              const ConnectedDevicesPanel(),
+
+              AppSpacing.gapH24,
+
               // ── Configured Devices ──
               Text(l10n.hardwareConfiguredDevices, style: theme.textTheme.titleMedium),
               AppSpacing.gapH12,

@@ -21,7 +21,7 @@ class FloristApiService {
       queryParameters: {'per_page': perPage, if (search != null && search.isNotEmpty) 'search': search},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => FlowerArrangement.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -47,7 +47,7 @@ class FloristApiService {
       queryParameters: {'per_page': perPage, if (status != null) 'status': status},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => FlowerFreshnessLog.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -66,7 +66,7 @@ class FloristApiService {
   Future<List<FlowerSubscription>> listSubscriptions({int perPage = 20}) async {
     final response = await _dio.get(ApiEndpoints.floristSubscriptions, queryParameters: {'per_page': perPage});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => FlowerSubscription.fromJson(j as Map<String, dynamic>)).toList();
   }
 

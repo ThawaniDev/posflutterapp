@@ -6727,6 +6727,144 @@ class AppLocalizationsEn extends AppLocalizations {
   String get termFormVersionLabel => 'App Version (optional)';
 
   @override
+  String get termFormDeviceSection => 'Device Hardware';
+
+  @override
+  String get termFormDeviceSectionSub => 'Physical device details';
+
+  @override
+  String get termFormDeviceModelLabel => 'Device Model';
+
+  @override
+  String get termFormDeviceModelHint => 'e.g. Samsung Galaxy A54';
+
+  @override
+  String get termFormOsVersionLabel => 'OS Version';
+
+  @override
+  String get termFormOsVersionHint => 'e.g. Android 14, iOS 17.4';
+
+  @override
+  String get termFormSerialNumberLabel => 'Serial Number';
+
+  @override
+  String get termFormSerialNumberHint => 'Device serial number';
+
+  @override
+  String get termFormNfcCapable => 'NFC Capable';
+
+  @override
+  String get termFormNfcCapableSub => 'Device supports contactless payments';
+
+  @override
+  String get termFormSoftposSection => 'SoftPOS Configuration';
+
+  @override
+  String get termFormSoftposSectionSub => 'Tap-on-phone payment settings';
+
+  @override
+  String get termFormSoftposEnabled => 'SoftPOS Enabled';
+
+  @override
+  String get termFormSoftposEnabledSub => 'Enable tap-on-phone payments';
+
+  @override
+  String get termFormNearpayTidLabel => 'NearPay TID';
+
+  @override
+  String get termFormNearpayTidHint => 'Terminal ID from NearPay';
+
+  @override
+  String get termFormNearpayMidLabel => 'NearPay MID';
+
+  @override
+  String get termFormNearpayMidHint => 'Merchant ID from NearPay';
+
+  @override
+  String get termFormAcquirerSection => 'Acquirer Details';
+
+  @override
+  String get termFormAcquirerSectionSub => 'Payment acquirer configuration';
+
+  @override
+  String get termFormAcquirerSourceLabel => 'Acquirer Source';
+
+  @override
+  String get termFormAcquirerSourceHint => 'Select acquirer';
+
+  @override
+  String get termFormAcquirerNameLabel => 'Acquirer Name';
+
+  @override
+  String get termFormAcquirerNameHint => 'Custom acquirer name';
+
+  @override
+  String get termFormAcquirerRefLabel => 'Acquirer Reference';
+
+  @override
+  String get termFormAcquirerRefHint => 'Acquirer reference ID';
+
+  @override
+  String get termFormSettlementSection => 'Settlement';
+
+  @override
+  String get termFormSettlementSectionSub => 'Bank settlement configuration';
+
+  @override
+  String get termFormSettlementCycleLabel => 'Settlement Cycle';
+
+  @override
+  String get termFormSettlementCycleHint => 'Select cycle';
+
+  @override
+  String get termFormSettlementBankLabel => 'Bank Name';
+
+  @override
+  String get termFormSettlementBankHint => 'e.g. Al Rajhi Bank';
+
+  @override
+  String get termFormSettlementIbanLabel => 'IBAN';
+
+  @override
+  String get termFormSettlementIbanHint => 'e.g. SA0380000000608010167519';
+
+  @override
+  String get termFormNotesSection => 'Notes';
+
+  @override
+  String get termFormNotesSectionSub => 'Additional information';
+
+  @override
+  String get termFormAdminNotesLabel => 'Admin Notes';
+
+  @override
+  String get termFormAdminNotesHint => 'Internal notes about this terminal';
+
+  @override
+  String get terminalsColDeviceModel => 'Device';
+
+  @override
+  String get terminalsColSerialNo => 'Serial #';
+
+  @override
+  String get terminalsColAcquirer => 'Acquirer';
+
+  @override
+  String get terminalsColNfc => 'NFC';
+
+  @override
+  String get terminalsColLastTxn => 'Last Transaction';
+
+  @override
+  String get terminalsYes => 'Yes';
+
+  @override
+  String get terminalsNo => 'No';
+
+  @override
+  String get terminalsNa => 'N/A';
+
+  @override
   String get terminalsActivate => 'Activate';
 
   @override
@@ -6902,6 +7040,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sidebarLabels => 'Labels';
 
   @override
+  String get sidebarPredefinedCatalog => 'Predefined Catalog';
+
+  @override
   String get sidebarCustomers => 'Customers';
 
   @override
@@ -6921,6 +7062,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sidebarAccounting => 'Accounting';
+
+  @override
+  String get sidebarDebits => 'Debits';
 
   @override
   String get sidebarReports => 'Reports';
@@ -7588,4 +7732,199 @@ class AppLocalizationsEn extends AppLocalizations {
   String supplierReturnActionSuccess(String action) {
     return 'Return $action successfully.';
   }
+
+  @override
+  String get debitsTitle => 'Debits';
+
+  @override
+  String get debitsCreate => 'Create Debit';
+
+  @override
+  String get debitsEdit => 'Edit Debit';
+
+  @override
+  String get debitsDetail => 'Debit Details';
+
+  @override
+  String get debitsNoDebits => 'No debits';
+
+  @override
+  String get debitsNoDebitsSubtitle => 'Debits will appear here once created.';
+
+  @override
+  String get debitsSearchHint =>
+      'Search by reference, customer, description...';
+
+  @override
+  String get debitsFilterByStatus => 'Filter by status';
+
+  @override
+  String get debitsFilterByType => 'Filter by type';
+
+  @override
+  String get debitsAll => 'All';
+
+  @override
+  String get debitsReferenceNumber => 'Reference #';
+
+  @override
+  String get debitsCustomer => 'Customer';
+
+  @override
+  String get debitsType => 'Type';
+
+  @override
+  String get debitsSource => 'Source';
+
+  @override
+  String get debitsAmount => 'Amount';
+
+  @override
+  String get debitsRemainingBalance => 'Remaining Balance';
+
+  @override
+  String get debitsDescription => 'Description';
+
+  @override
+  String get debitsDescriptionAr => 'Description (Arabic)';
+
+  @override
+  String get debitsSelectCustomer => 'Select Customer';
+
+  @override
+  String get debitsSelectType => 'Select Type';
+
+  @override
+  String get debitsSelectSource => 'Select Source';
+
+  @override
+  String get debitsStatusPending => 'Pending';
+
+  @override
+  String get debitsStatusPartiallyAllocated => 'Partially Allocated';
+
+  @override
+  String get debitsStatusFullyAllocated => 'Fully Allocated';
+
+  @override
+  String get debitsStatusReversed => 'Reversed';
+
+  @override
+  String get debitsTypeCustomerCredit => 'Customer Credit';
+
+  @override
+  String get debitsTypeSupplierReturn => 'Supplier Return';
+
+  @override
+  String get debitsTypeInventoryAdjustment => 'Inventory Adjustment';
+
+  @override
+  String get debitsTypeManualCredit => 'Manual Credit';
+
+  @override
+  String get debitsSourcePosTerminal => 'POS Terminal';
+
+  @override
+  String get debitsSourceInvoice => 'Invoice';
+
+  @override
+  String get debitsSourceReturn => 'Return';
+
+  @override
+  String get debitsSourceManual => 'Manual';
+
+  @override
+  String get debitsSourceInventorySystem => 'Inventory System';
+
+  @override
+  String get debitsAllocate => 'Allocate';
+
+  @override
+  String get debitsAllocateDebit => 'Allocate Debit';
+
+  @override
+  String get debitsAllocateToOrder => 'Allocate to Order';
+
+  @override
+  String get debitsOrderId => 'Order ID';
+
+  @override
+  String get debitsAllocateAmount => 'Allocation Amount';
+
+  @override
+  String get debitsReverse => 'Reverse';
+
+  @override
+  String get debitsReverseDebit => 'Reverse Debit';
+
+  @override
+  String get debitsReverseReason => 'Reason for reversal';
+
+  @override
+  String get debitsReverseConfirm =>
+      'Are you sure you want to reverse this debit?';
+
+  @override
+  String get debitsDeleteConfirm =>
+      'Are you sure you want to delete this debit?';
+
+  @override
+  String get debitsCreatedSuccess => 'Debit created successfully';
+
+  @override
+  String get debitsUpdatedSuccess => 'Debit updated successfully';
+
+  @override
+  String get debitsDeletedSuccess => 'Debit deleted successfully';
+
+  @override
+  String get debitsAllocatedSuccess => 'Debit allocated successfully';
+
+  @override
+  String get debitsReversedSuccess => 'Debit reversed successfully';
+
+  @override
+  String get debitsSummaryTitle => 'Debits Summary';
+
+  @override
+  String get debitsSummaryTotal => 'Total Debits';
+
+  @override
+  String get debitsSummaryPending => 'Pending';
+
+  @override
+  String get debitsSummaryPartially => 'Partially Allocated';
+
+  @override
+  String get debitsSummaryFully => 'Fully Allocated';
+
+  @override
+  String get debitsSummaryReversed => 'Reversed';
+
+  @override
+  String get debitsSummaryAllocated => 'Total Allocated';
+
+  @override
+  String get debitsSummaryUnallocated => 'Unallocated';
+
+  @override
+  String get debitsAllocations => 'Allocations';
+
+  @override
+  String get debitsNoAllocations => 'No allocations yet';
+
+  @override
+  String get debitsCreatedBy => 'Created By';
+
+  @override
+  String get debitsAllocatedBy => 'Allocated By';
+
+  @override
+  String get debitsAllocatedAt => 'Allocated At';
+
+  @override
+  String get debitsCreatedAt => 'Created At';
+
+  @override
+  String get debitsOrderNumber => 'Order #';
 }

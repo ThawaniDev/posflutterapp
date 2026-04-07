@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminProviderUserListPage extends ConsumerStatefulWidget {
   const AdminProviderUserListPage({super.key});
@@ -14,13 +16,17 @@ class AdminProviderUserListPage extends ConsumerStatefulWidget {
 
 class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserListPage> {
   final _searchController = TextEditingController();
+  String? _storeId;
   String? _roleFilter;
   bool? _activeFilter;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(providerUserListProvider.notifier).loadUsers());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(providerUserListProvider.notifier).loadUsers(storeId: _storeId);
+    });
   }
 
   @override
@@ -36,7 +42,13 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
           search: _searchController.text.isEmpty ? null : _searchController.text,
           role: _roleFilter,
           isActive: _activeFilter,
+          storeId: _storeId,
         );
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _applyFilters();
   }
 
   @override
@@ -47,6 +59,7 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
       appBar: AppBar(title: const Text('Provider Users')),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // Search bar
           Padding(
             padding: AppSpacing.paddingAll16,

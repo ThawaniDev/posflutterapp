@@ -6,6 +6,8 @@ import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class RegistrationQueuePage extends ConsumerStatefulWidget {
   const RegistrationQueuePage({super.key});
@@ -16,6 +18,7 @@ class RegistrationQueuePage extends ConsumerStatefulWidget {
 
 class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
   final _searchController = TextEditingController();
+  String? _storeId;
   String? _statusFilter;
   int _currentPage = 1;
 
@@ -26,7 +29,10 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => _load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _load();
+    });
   }
 
   @override
@@ -38,7 +44,17 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
   void _load() {
     ref
         .read(registrationListProvider.notifier)
-        .load(status: _statusFilter, search: _searchController.text.isEmpty ? null : _searchController.text, page: _currentPage);
+        .load(
+          status: _statusFilter,
+          search: _searchController.text.isEmpty ? null : _searchController.text,
+          storeId: _storeId,
+          page: _currentPage,
+        );
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _load();
   }
 
   @override
@@ -60,6 +76,7 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
       appBar: AppBar(title: const Text('Registration Queue')),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // ─── Filter Bar ─────────────────────────────────
           Container(
             padding: AppSpacing.paddingAll16,

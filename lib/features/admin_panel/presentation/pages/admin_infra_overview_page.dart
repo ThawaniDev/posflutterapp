@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_infra_failed_jobs_page.dart';
 import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_infra_backups_page.dart';
 import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_infra_health_page.dart';
@@ -16,10 +18,20 @@ class AdminInfraOverviewPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminInfraOverviewPage> {
+  String? _storeId;
+
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(infraOverviewProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(infraOverviewProvider.notifier).load(storeId: _storeId);
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    ref.read(infraOverviewProvider.notifier).load(storeId: _storeId);
   }
 
   @override
@@ -28,21 +40,31 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
 
     return Scaffold(
       appBar: AppBar(title: const Text('Infrastructure'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: switch (state) {
-        InfraOverviewLoading() => const Center(child: CircularProgressIndicator()),
-        InfraOverviewLoaded(data: final resp) => _buildContent(resp),
-        InfraOverviewError(message: final msg) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
-              const SizedBox(height: AppSpacing.md),
-              ElevatedButton(onPressed: () => ref.read(infraOverviewProvider.notifier).load(), child: const Text('Retry')),
-            ],
+      body: Column(
+        children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          Expanded(
+            child: switch (state) {
+              InfraOverviewLoading() => const Center(child: CircularProgressIndicator()),
+              InfraOverviewLoaded(data: final resp) => _buildContent(resp),
+              InfraOverviewError(message: final msg) => Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
+                    const SizedBox(height: AppSpacing.md),
+                    ElevatedButton(
+                      onPressed: () => ref.read(infraOverviewProvider.notifier).load(storeId: _storeId),
+                      child: const Text('Retry'),
+                    ),
+                  ],
+                ),
+              ),
+              _ => const Center(child: Text('Loading...')),
+            },
           ),
-        ),
-        _ => const Center(child: Text('Loading...')),
-      },
+        ],
+      ),
     );
   }
 
@@ -55,7 +77,7 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
     final providerBackups = data['provider_backups'] as Map<String, dynamic>? ?? {};
 
     return RefreshIndicator(
-      onRefresh: () async => ref.read(infraOverviewProvider.notifier).load(),
+      onRefresh: () async => ref.read(infraOverviewProvider.notifier).load(storeId: _storeId),
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.all(AppSpacing.md),

@@ -195,7 +195,7 @@ class SalesSummaryLoading extends SalesSummaryState {
 }
 
 class SalesSummaryLoaded extends SalesSummaryState {
-  final String period;
+  final Map<String, dynamic> period;
   final double totalRevenue;
   final int totalOrders;
   final double averageOrderValue;

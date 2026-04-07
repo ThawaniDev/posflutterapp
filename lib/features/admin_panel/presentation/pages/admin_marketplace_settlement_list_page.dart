@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminMarketplaceSettlementListPage extends ConsumerStatefulWidget {
   const AdminMarketplaceSettlementListPage({super.key});
@@ -13,13 +16,27 @@ class AdminMarketplaceSettlementListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminMarketplaceSettlementListPageState extends ConsumerState<AdminMarketplaceSettlementListPage> {
+  String? _storeId;
+
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
-      ref.read(marketplaceSettlementListProvider.notifier).load();
-      ref.read(marketplaceSettlementSummaryProvider.notifier).load();
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _loadData();
     });
+  }
+
+  void _loadData() {
+    final params = <String, dynamic>{};
+    if (_storeId != null) params['store_id'] = _storeId!;
+    ref.read(marketplaceSettlementListProvider.notifier).load(params: params.isEmpty ? null : params);
+    ref.read(marketplaceSettlementSummaryProvider.notifier).load(params: params.isEmpty ? null : params);
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _loadData();
   }
 
   @override
@@ -31,6 +48,7 @@ class _AdminMarketplaceSettlementListPageState extends ConsumerState<AdminMarket
       appBar: AppBar(title: const Text('Settlements'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // Summary card
           switch (summaryState) {
             MarketplaceSettlementSummaryLoaded(:final data) => _buildSummary(data),
@@ -62,14 +80,39 @@ class _AdminMarketplaceSettlementListPageState extends ConsumerState<AdminMarket
       margin: const EdgeInsets.all(AppSpacing.md),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _summaryItem('Gross', summary['total_gross']?.toString() ?? '0'),
-            _summaryItem('Commission', summary['total_commission']?.toString() ?? '0'),
-            _summaryItem('Net', summary['total_net']?.toString() ?? '0'),
-            _summaryItem('Orders', summary['total_orders']?.toString() ?? '0'),
-          ],
+        child: Builder(
+          builder: (context) {
+            if (context.isPhone) {
+              return Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _summaryItem('Gross', summary['total_gross']?.toString() ?? '0'),
+                      _summaryItem('Commission', summary['total_commission']?.toString() ?? '0'),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _summaryItem('Net', summary['total_net']?.toString() ?? '0'),
+                      _summaryItem('Orders', summary['total_orders']?.toString() ?? '0'),
+                    ],
+                  ),
+                ],
+              );
+            }
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _summaryItem('Gross', summary['total_gross']?.toString() ?? '0'),
+                _summaryItem('Commission', summary['total_commission']?.toString() ?? '0'),
+                _summaryItem('Net', summary['total_net']?.toString() ?? '0'),
+                _summaryItem('Orders', summary['total_orders']?.toString() ?? '0'),
+              ],
+            );
+          },
         ),
       ),
     );

@@ -5,6 +5,7 @@ import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/auth/providers/auth_providers.dart';
 import 'package:thawani_pos/features/catalog/models/product.dart';
@@ -328,24 +329,292 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
       return _buildNoSessionView(isDark, sessionState);
     }
 
+    final isMobile = context.isPhone;
+
     return Focus(
       autofocus: true,
       onKeyEvent: _handleKeyEvent,
       child: Scaffold(
         backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-        body: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Column(
+        body: isMobile
+            ? _buildMobileBody(isDark, sessionState.session)
+            : Row(
                 children: [
-                  _buildTopBar(isDark, sessionState.session),
-                  _buildSearchBar(isDark),
-                  Expanded(child: _buildProductGrid(isDark)),
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      children: [
+                        _buildTopBar(isDark, sessionState.session),
+                        _buildSearchBar(isDark),
+                        Expanded(child: _buildProductGrid(isDark)),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 480, child: _buildCartPanel(isDark)),
+                ],
+              ),
+      ),
+    );
+  }
+
+  // ─── Mobile Body ──────────────────────────────────────────────
+
+  Widget _buildMobileBody(bool isDark, PosSession session) {
+    final cart = ref.watch(cartProvider);
+    return Column(
+      children: [
+        // Compact mobile top bar
+        _buildMobileTopBar(isDark, session),
+        // Search
+        _buildSearchBar(isDark),
+        // Product grid
+        Expanded(child: _buildProductGrid(isDark)),
+        // Mobile cart summary bar — tap to expand
+        _buildMobileCartBar(isDark, cart),
+      ],
+    );
+  }
+
+  Widget _buildMobileTopBar(bool isDark, PosSession session) {
+    final user = ref.watch(currentUserProvider);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.cardDark : AppColors.cardLight,
+        border: Border(bottom: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(user?.name ?? AppLocalizations.of(context)!.posCashier, style: AppTypography.titleSmall),
+                Text(
+                  AppLocalizations.of(context)!.posSessionNumber(session.id.substring(0, 8)),
+                  style: AppTypography.bodySmall.copyWith(
+                    color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                    fontSize: 11,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Compact icon actions
+          IconButton(
+            icon: const Icon(Icons.discount_outlined, size: 20),
+            tooltip: AppLocalizations.of(context)!.posDiscount,
+            onPressed: _handleDiscount,
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+          ),
+          IconButton(
+            icon: const Icon(Icons.note_alt_outlined, size: 20),
+            tooltip: AppLocalizations.of(context)!.posNotes,
+            onPressed: _handleNotes,
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+          ),
+          IconButton(
+            icon: const Icon(Icons.assignment_return_outlined, size: 20),
+            tooltip: AppLocalizations.of(context)!.posReturn,
+            onPressed: _handleReturn,
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+          ),
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert, size: 22),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+            onSelected: (value) {
+              switch (value) {
+                case 'void_last':
+                  _handleVoidLastItem();
+                case 'held_carts':
+                  _handleRecallCart();
+                case 'end_shift':
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (_) => PosCloseShiftDialog(session: session),
+                  );
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'void_last',
+                child: ListTile(
+                  leading: const Icon(Icons.backspace_outlined, size: 20),
+                  title: Text(AppLocalizations.of(context)!.posVoidLast),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              PopupMenuItem(
+                value: 'held_carts',
+                child: ListTile(
+                  leading: const Icon(Icons.pause_circle_outline, size: 20),
+                  title: Text(AppLocalizations.of(context)!.posHeldF9),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              const PopupMenuDivider(),
+              PopupMenuItem(
+                value: 'end_shift',
+                child: ListTile(
+                  leading: const Icon(Icons.logout_rounded, size: 20, color: AppColors.error),
+                  title: Text(AppLocalizations.of(context)!.posEndShift, style: const TextStyle(color: AppColors.error)),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMobileCartBar(bool isDark, CartState cart) {
+    final saleState = ref.watch(saleProvider);
+    return GestureDetector(
+      onTap: cart.isNotEmpty ? () => _showMobileCartSheet(isDark) : null,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        decoration: BoxDecoration(
+          color: isDark ? AppColors.cardDark : AppColors.cardLight,
+          border: Border(top: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.08), blurRadius: 8, offset: const Offset(0, -2))],
+        ),
+        child: SafeArea(
+          top: false,
+          child: Row(
+            children: [
+              // Cart icon + badge
+              Stack(
+                children: [
+                  const Icon(Icons.shopping_cart_outlined, size: 24, color: AppColors.primary),
+                  if (cart.isNotEmpty)
+                    Positioned(
+                      right: -2,
+                      top: -2,
+                      child: Container(
+                        padding: const EdgeInsets.all(3),
+                        decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
+                        child: Text(
+                          '${cart.itemCount}',
+                          style: const TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+              AppSpacing.gapW12,
+              // Total
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      cart.isEmpty
+                          ? AppLocalizations.of(context)!.posNoItems
+                          : AppLocalizations.of(context)!.amountWithSar(cart.totalAmount.toStringAsFixed(2)),
+                      style: AppTypography.titleMedium.copyWith(
+                        color: cart.isEmpty ? (isDark ? AppColors.textMutedDark : AppColors.textMutedLight) : null,
+                      ),
+                    ),
+                    if (cart.isNotEmpty)
+                      Text(
+                        '${cart.itemCount} ${AppLocalizations.of(context)!.posItems} • Tap to view cart',
+                        style: AppTypography.bodySmall.copyWith(
+                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                          fontSize: 11,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              // Pay button
+              PosButton(
+                label: AppLocalizations.of(context)!.posPay,
+                icon: Icons.payment_rounded,
+                size: PosButtonSize.md,
+                isLoading: saleState is SaleProcessing,
+                onPressed: cart.isNotEmpty ? _handlePay : null,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showMobileCartSheet(bool isDark) {
+    final cart = ref.read(cartProvider);
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: isDark ? AppColors.cardDark : AppColors.cardLight,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      builder: (ctx) => DraggableScrollableSheet(
+        initialChildSize: 0.7,
+        minChildSize: 0.4,
+        maxChildSize: 0.92,
+        expand: false,
+        builder: (ctx, scrollController) => Column(
+          children: [
+            // Handle
+            Center(
+              child: Container(
+                margin: const EdgeInsets.only(top: 8, bottom: 4),
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: isDark ? AppColors.borderDark : AppColors.borderLight,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            // Cart header
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  const Icon(Icons.shopping_cart_outlined, size: 22, color: AppColors.primary),
+                  AppSpacing.gapW8,
+                  Text(AppLocalizations.of(context)!.posCart, style: AppTypography.headlineSmall),
+                  const Spacer(),
+                  PosBadge(label: '${cart.itemCount}', variant: PosBadgeVariant.primary),
+                  AppSpacing.gapW8,
+                  IconButton(
+                    icon: const Icon(Icons.close, size: 20),
+                    onPressed: () => Navigator.pop(ctx),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                  ),
                 ],
               ),
             ),
-            SizedBox(width: 480, child: _buildCartPanel(isDark)),
+            const Divider(height: 1),
+            // Customer
+            _buildCustomerRow(isDark, cart),
+            const Divider(height: 1),
+            // Items
+            Expanded(
+              child: ListView.separated(
+                controller: scrollController,
+                padding: const EdgeInsets.symmetric(vertical: 4),
+                itemCount: cart.items.length,
+                separatorBuilder: (_, __) =>
+                    Divider(height: 1, color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtleLight),
+                itemBuilder: (context, index) => _CartItemTile(item: cart.items[index], index: index, isDark: isDark),
+              ),
+            ),
+            // Footer with totals + buttons
+            _buildCartFooter(isDark, cart, ref.read(saleProvider)),
           ],
         ),
       ),

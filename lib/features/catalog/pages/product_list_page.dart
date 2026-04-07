@@ -6,7 +6,9 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
+import 'package:thawani_pos/core/widgets/pos_mobile_data_list.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/catalog/models/category.dart';
 import 'package:thawani_pos/features/catalog/models/product.dart';
 import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
@@ -104,6 +106,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
     final productsState = ref.watch(productsProvider);
     final categoriesState = ref.watch(categoriesProvider);
     final categories = categoriesState is CategoriesLoaded ? categoriesState.categories : <Category>[];
+    final isMobile = context.isPhone;
 
     return Scaffold(
       appBar: AppBar(
@@ -114,11 +117,12 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
             tooltip: _showFilters ? 'Hide filters' : 'Show filters',
             onPressed: () => setState(() => _showFilters = !_showFilters),
           ),
-          IconButton(
-            icon: Icon(_isGridView ? Icons.view_list : Icons.grid_view),
-            tooltip: _isGridView ? 'List view' : 'Grid view',
-            onPressed: () => setState(() => _isGridView = !_isGridView),
-          ),
+          if (!isMobile)
+            IconButton(
+              icon: Icon(_isGridView ? Icons.view_list : Icons.grid_view),
+              tooltip: _isGridView ? 'List view' : 'Grid view',
+              onPressed: () => setState(() => _isGridView = !_isGridView),
+            ),
           IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: 'Refresh',
@@ -126,36 +130,279 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
           ),
         ],
       ),
-      floatingActionButton: PosButton(label: 'Add Product', icon: Icons.add, onPressed: () => context.push(Routes.productsAdd)),
-      body: Row(
-        children: [
-          // ─── Category sidebar ─────────────────────────────────
-          _CategorySidebar(
-            categories: categories,
-            selectedCategoryId: productsState is ProductsLoaded ? productsState.selectedCategoryId : null,
-            onCategorySelected: (id) => ref.read(productsProvider.notifier).filterByCategory(id),
-          ),
-
-          // Divider
-          const VerticalDivider(width: 1, thickness: 1),
-
-          // ─── Main content ─────────────────────────────────────
-          Expanded(
-            child: Column(
+      floatingActionButton: PosButton(
+        label: isMobile ? '' : 'Add Product',
+        icon: Icons.add,
+        onPressed: () => context.push(Routes.productsAdd),
+      ),
+      body: isMobile
+          ? _buildMobileBody(productsState, categories)
+          : Row(
               children: [
-                // Search + bulk bar
-                _buildToolbar(productsState),
+                // ─── Category sidebar ─────────────────────────────────
+                _CategorySidebar(
+                  categories: categories,
+                  selectedCategoryId: productsState is ProductsLoaded ? productsState.selectedCategoryId : null,
+                  onCategorySelected: (id) => ref.read(productsProvider.notifier).filterByCategory(id),
+                ),
 
-                // Filters panel
-                if (_showFilters) _buildFilterPanel(categories, productsState),
+                // Divider
+                const VerticalDivider(width: 1, thickness: 1),
 
-                // Content
-                Expanded(child: _buildBody(productsState, categories)),
+                // ─── Main content ─────────────────────────────────────
+                Expanded(
+                  child: Column(
+                    children: [
+                      // Search + bulk bar
+                      _buildToolbar(productsState),
+
+                      // Filters panel
+                      if (_showFilters) _buildFilterPanel(categories, productsState),
+
+                      // Content
+                      Expanded(child: _buildBody(productsState, categories)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+    );
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // Mobile Body
+  // ═══════════════════════════════════════════════════════════════
+
+  Widget _buildMobileBody(ProductsState productsState, List<Category> categories) {
+    final selectedCategoryId = productsState is ProductsLoaded ? productsState.selectedCategoryId : null;
+
+    return Column(
+      children: [
+        // Search bar
+        MobileToolbar(
+          searchController: _searchController,
+          searchHint: 'Search products...',
+          onSearch: (value) => ref.read(productsProvider.notifier).search(value),
+          onSearchChanged: (value) {
+            if (value.isEmpty) ref.read(productsProvider.notifier).search(null);
+          },
+        ),
+
+        // Category chips (horizontal scroll)
+        if (categories.isNotEmpty)
+          SizedBox(
+            height: 40,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              children: [
+                _buildCategoryChip('All', null, selectedCategoryId == null),
+                ...categories
+                    .where((c) => c.parentId == null)
+                    .map((c) => _buildCategoryChip(c.name, c.id, selectedCategoryId == c.id)),
               ],
             ),
           ),
+
+        // Filters panel
+        if (_showFilters) _buildMobileFilterPanel(categories, productsState),
+
+        // Product list
+        Expanded(child: _buildMobileProductList(productsState, categories)),
+      ],
+    );
+  }
+
+  Widget _buildCategoryChip(String label, String? id, bool selected) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 6),
+      child: FilterChip(
+        label: Text(label, style: const TextStyle(fontSize: 12)),
+        selected: selected,
+        onSelected: (_) => ref.read(productsProvider.notifier).filterByCategory(id),
+        visualDensity: VisualDensity.compact,
+      ),
+    );
+  }
+
+  Widget _buildMobileFilterPanel(List<Category> categories, ProductsState state) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: Row(
+        children: [
+          if (state is ProductsLoaded)
+            Text(
+              '${state.total} products',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+            ),
+          const Spacer(),
+          TextButton.icon(
+            onPressed: () => setState(() => _isGridView = !_isGridView),
+            icon: Icon(_isGridView ? Icons.view_list : Icons.grid_view, size: 16),
+            label: Text(_isGridView ? 'List' : 'Grid', style: const TextStyle(fontSize: 12)),
+          ),
         ],
       ),
+    );
+  }
+
+  Widget _buildMobileProductList(ProductsState state, List<Category> categories) {
+    final isLoading = state is ProductsLoading || state is ProductsInitial;
+    final error = state is ProductsError ? state.message : null;
+    final loaded = state is ProductsLoaded ? state : null;
+    final products = loaded?.products ?? <Product>[];
+
+    if (isLoading) return const Center(child: CircularProgressIndicator());
+
+    if (error != null) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.error_outline, size: 48, color: AppColors.error),
+            const SizedBox(height: 12),
+            Text(error, textAlign: TextAlign.center),
+            const SizedBox(height: 16),
+            FilledButton(onPressed: () => ref.read(productsProvider.notifier).load(), child: const Text('Retry')),
+          ],
+        ),
+      );
+    }
+
+    if (loaded != null && products.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.inventory_2_outlined, size: 56, color: Theme.of(context).hintColor),
+            const SizedBox(height: 12),
+            const Text('No products found'),
+          ],
+        ),
+      );
+    }
+
+    if (loaded == null) return const SizedBox.shrink();
+
+    if (_isGridView) {
+      return Column(
+        children: [
+          Expanded(child: _buildGrid(products)),
+          _MobilePaginationBar(
+            currentPage: loaded.currentPage,
+            totalPages: loaded.lastPage,
+            totalItems: loaded.total,
+            onPrevious: () => ref.read(productsProvider.notifier).previousPage(),
+            onNext: () => ref.read(productsProvider.notifier).nextPage(),
+          ),
+        ],
+      );
+    }
+
+    String categoryName(String? catId) {
+      if (catId == null) return '';
+      return categories.where((c) => c.id == catId).firstOrNull?.name ?? '';
+    }
+
+    return Column(
+      children: [
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: () async => ref.read(productsProvider.notifier).load(),
+            child: ListView.builder(
+              padding: const EdgeInsets.only(bottom: 80),
+              itemCount: products.length,
+              itemBuilder: (context, index) {
+                final product = products[index];
+                return MobileListCard(
+                  onTap: () => context.push('${Routes.products}/${product.id}'),
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: product.imageUrl != null
+                        ? Image.network(
+                            product.imageUrl!,
+                            width: 48,
+                            height: 48,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) => _mobileProductPlaceholder(),
+                          )
+                        : _mobileProductPlaceholder(),
+                  ),
+                  title: Text(
+                    product.name,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  subtitle: Text(
+                    [
+                      if (product.sku != null) 'SKU: ${product.sku}',
+                      if (product.barcode != null) product.barcode,
+                      categoryName(product.categoryId),
+                    ].where((s) => s != null && s.isNotEmpty).join(' · '),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  trailing: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '${product.sellPrice.toStringAsFixed(2)} ﷼',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700, color: AppColors.primary),
+                      ),
+                      if (product.offerPrice != null)
+                        Text(
+                          '${product.offerPrice!.toStringAsFixed(2)} ﷼',
+                          style: Theme.of(
+                            context,
+                          ).textTheme.labelSmall?.copyWith(color: AppColors.success, fontWeight: FontWeight.w600),
+                        ),
+                      const SizedBox(height: 4),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+                        decoration: BoxDecoration(
+                          color: product.isActive == true
+                              ? AppColors.success.withValues(alpha: 0.1)
+                              : AppColors.error.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          product.isActive == true ? 'Active' : 'Inactive',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: product.isActive == true ? AppColors.success : AppColors.error,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+        _MobilePaginationBar(
+          currentPage: loaded.currentPage,
+          totalPages: loaded.lastPage,
+          totalItems: loaded.total,
+          onPrevious: () => ref.read(productsProvider.notifier).previousPage(),
+          onNext: () => ref.read(productsProvider.notifier).nextPage(),
+        ),
+      ],
+    );
+  }
+
+  Widget _mobileProductPlaceholder() {
+    return Container(
+      width: 48,
+      height: 48,
+      decoration: BoxDecoration(color: AppColors.primary10, borderRadius: BorderRadius.circular(8)),
+      child: Icon(Icons.inventory_2_outlined, size: 24, color: AppColors.primary),
     );
   }
 
@@ -702,6 +949,54 @@ class _ProductGridCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Mobile Pagination Bar (local to this file)
+// ═══════════════════════════════════════════════════════════════
+
+class _MobilePaginationBar extends StatelessWidget {
+  const _MobilePaginationBar({
+    required this.currentPage,
+    required this.totalPages,
+    this.totalItems,
+    this.onPrevious,
+    this.onNext,
+  });
+
+  final int currentPage;
+  final int totalPages;
+  final int? totalItems;
+  final VoidCallback? onPrevious;
+  final VoidCallback? onNext;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: Theme.of(context).dividerColor)),
+      ),
+      child: Row(
+        children: [
+          if (totalItems != null)
+            Text('$totalItems items', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor)),
+          const Spacer(),
+          IconButton(
+            icon: const Icon(Icons.chevron_left, size: 20),
+            onPressed: currentPage > 1 ? onPrevious : null,
+            visualDensity: VisualDensity.compact,
+          ),
+          Text('$currentPage / $totalPages', style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
+          IconButton(
+            icon: const Icon(Icons.chevron_right, size: 20),
+            onPressed: currentPage < totalPages ? onNext : null,
+            visualDensity: VisualDensity.compact,
+          ),
+        ],
       ),
     );
   }

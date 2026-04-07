@@ -5,8 +5,11 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/reports/models/report_filters.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
+import 'package:thawani_pos/features/reports/widgets/report_charts.dart';
+import 'package:thawani_pos/features/reports/widgets/report_filter_panel.dart';
 import 'package:thawani_pos/features/reports/widgets/report_widgets.dart';
 
 class DashboardPage extends ConsumerStatefulWidget {
@@ -17,12 +20,23 @@ class DashboardPage extends ConsumerStatefulWidget {
 }
 
 class _DashboardPageState extends ConsumerState<DashboardPage> {
+  ReportFilters _filters = const ReportFilters();
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(dashboardProvider.notifier).load();
+      ref.read(dashboardProvider.notifier).load(filters: _filters);
     });
+  }
+
+  void _loadData() {
+    ref.read(dashboardProvider.notifier).load(filters: _filters);
+  }
+
+  void _onFiltersChanged(ReportFilters filters) {
+    setState(() => _filters = filters);
+    _loadData();
   }
 
   @override
@@ -37,7 +51,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
         title: const Text('Reports & Analytics'),
         actions: [
           IconButton.filled(
-            onPressed: () => ref.read(dashboardProvider.notifier).load(),
+            onPressed: _loadData,
             icon: const Icon(Icons.refresh_rounded, size: 20),
             style: IconButton.styleFrom(
               backgroundColor: AppColors.primary.withValues(alpha: 0.1),
@@ -47,126 +61,142 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
           const SizedBox(width: 8),
         ],
       ),
-      body: switch (state) {
-        DashboardInitial() || DashboardLoading() => PosLoadingSkeleton.list(),
-        DashboardError(:final message) => PosErrorState(
-          message: message,
-          onRetry: () => ref.read(dashboardProvider.notifier).load(),
-        ),
-        DashboardLoaded(:final today, :final yesterday, :final topProducts) => RefreshIndicator(
-          onRefresh: () => ref.read(dashboardProvider.notifier).load(),
-          child: ListView(
-            padding: const EdgeInsets.all(20),
-            children: [
-              _ReportNavGrid(isDark: isDark),
-              const SizedBox(height: 28),
-
-              const ReportSectionHeader(title: "Today's Overview", icon: Icons.today_rounded),
-              ReportKpiGrid(
-                cards: [
-                  ReportKpiCard(
-                    label: 'Revenue',
-                    value: formatCurrency(today['total_revenue'] as num? ?? 0),
-                    icon: Icons.trending_up_rounded,
-                    color: AppColors.success,
-                  ),
-                  ReportKpiCard(
-                    label: 'Transactions',
-                    value: '${today['total_transactions'] ?? 0}',
-                    icon: Icons.receipt_long_rounded,
-                    color: AppColors.info,
-                  ),
-                  ReportKpiCard(
-                    label: 'Net Revenue',
-                    value: formatCurrency(today['net_revenue'] as num? ?? 0),
-                    icon: Icons.account_balance_wallet_rounded,
-                    color: AppColors.primary,
-                  ),
-                  ReportKpiCard(
-                    label: 'Avg Basket',
-                    value: formatCurrency(today['avg_basket_size'] as num? ?? 0),
-                    icon: Icons.shopping_basket_rounded,
-                    color: AppColors.warning,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: ReportKpiCard(
-                      label: 'Customers',
-                      value: '${today['unique_customers'] ?? 0}',
-                      icon: Icons.people_rounded,
-                      color: AppColors.purple,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: ReportKpiCard(
-                      label: 'Refunds',
-                      value: formatCurrency(today['total_refunds'] as num? ?? 0),
-                      icon: Icons.undo_rounded,
-                      color: AppColors.error,
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 28),
-
-              const ReportSectionHeader(title: 'vs Yesterday', icon: Icons.compare_arrows_rounded),
-              ReportDataCard(
-                child: Column(
+      body: Column(
+        children: [
+          ReportFilterPanel(filters: _filters, onFiltersChanged: _onFiltersChanged, onRefresh: _loadData),
+          Expanded(
+            child: switch (state) {
+              DashboardInitial() || DashboardLoading() => PosLoadingSkeleton.list(),
+              DashboardError(:final message) => PosErrorState(message: message, onRetry: _loadData),
+              DashboardLoaded(:final today, :final yesterday, :final topProducts) => RefreshIndicator(
+                onRefresh: () => ref.read(dashboardProvider.notifier).load(filters: _filters),
+                child: ListView(
+                  padding: const EdgeInsets.all(20),
                   children: [
-                    ReportComparisonRow(
-                      label: 'Revenue',
-                      todayVal: (today['total_revenue'] as num? ?? 0).toDouble(),
-                      yesterdayVal: (yesterday['total_revenue'] as num? ?? 0).toDouble(),
+                    _ReportNavGrid(isDark: isDark),
+                    const SizedBox(height: 28),
+
+                    const ReportSectionHeader(title: "Today's Overview", icon: Icons.today_rounded),
+                    ReportKpiGrid(
+                      cards: [
+                        ReportKpiCard(
+                          label: 'Revenue',
+                          value: formatCurrency(today['total_revenue'] as num? ?? 0),
+                          icon: Icons.trending_up_rounded,
+                          color: AppColors.success,
+                        ),
+                        ReportKpiCard(
+                          label: 'Transactions',
+                          value: '${today['total_transactions'] ?? 0}',
+                          icon: Icons.receipt_long_rounded,
+                          color: AppColors.info,
+                        ),
+                        ReportKpiCard(
+                          label: 'Net Revenue',
+                          value: formatCurrency(today['net_revenue'] as num? ?? 0),
+                          icon: Icons.account_balance_wallet_rounded,
+                          color: AppColors.primary,
+                        ),
+                        ReportKpiCard(
+                          label: 'Avg Basket',
+                          value: formatCurrency(today['avg_basket_size'] as num? ?? 0),
+                          icon: Icons.shopping_basket_rounded,
+                          color: AppColors.warning,
+                        ),
+                      ],
                     ),
-                    Divider(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-                    ReportComparisonRow(
-                      label: 'Transactions',
-                      todayVal: (today['total_transactions'] as num? ?? 0).toDouble(),
-                      yesterdayVal: (yesterday['total_transactions'] as num? ?? 0).toDouble(),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ReportKpiCard(
+                            label: 'Customers',
+                            value: '${today['unique_customers'] ?? 0}',
+                            icon: Icons.people_rounded,
+                            color: AppColors.purple,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: ReportKpiCard(
+                            label: 'Refunds',
+                            value: formatCurrency(today['total_refunds'] as num? ?? 0),
+                            icon: Icons.undo_rounded,
+                            color: AppColors.error,
+                          ),
+                        ),
+                      ],
                     ),
+
+                    const SizedBox(height: 28),
+
+                    const ReportSectionHeader(title: 'vs Yesterday', icon: Icons.compare_arrows_rounded),
+                    ReportDataCard(
+                      child: Column(
+                        children: [
+                          ReportComparisonRow(
+                            label: 'Revenue',
+                            todayVal: (today['total_revenue'] as num? ?? 0).toDouble(),
+                            yesterdayVal: (yesterday['total_revenue'] as num? ?? 0).toDouble(),
+                          ),
+                          Divider(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                          ReportComparisonRow(
+                            label: 'Transactions',
+                            todayVal: (today['total_transactions'] as num? ?? 0).toDouble(),
+                            yesterdayVal: (yesterday['total_transactions'] as num? ?? 0).toDouble(),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 28),
+
+                    const ReportSectionHeader(title: 'Top Products Today', icon: Icons.star_rounded),
+                    if (topProducts.isEmpty)
+                      const ReportDataCard(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 24),
+                          child: Center(child: Text('No sales data yet today')),
+                        ),
+                      )
+                    else ...[
+                      // Mini bar chart for top products
+                      ReportDataCard(
+                        child: ReportBarChart(
+                          data: topProducts.take(5).toList(),
+                          labelKey: 'product_name',
+                          valueKey: 'revenue',
+                          barColor: AppColors.success,
+                          height: 180,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      ReportDataCard(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        child: Column(
+                          children: [
+                            for (int i = 0; i < topProducts.length; i++) ...[
+                              if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
+                              ReportRankedItem(
+                                rank: i + 1,
+                                title: topProducts[i]['product_name'] as String? ?? '',
+                                subtitle: 'Qty: ${(topProducts[i]['quantity_sold'] as num? ?? 0).toStringAsFixed(0)}',
+                                trailingValue: formatCurrency(topProducts[i]['revenue'] as num? ?? 0),
+                                trailingColor: AppColors.success,
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),
-
-              const SizedBox(height: 28),
-
-              const ReportSectionHeader(title: 'Top Products Today', icon: Icons.star_rounded),
-              if (topProducts.isEmpty)
-                const ReportDataCard(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 24),
-                    child: Center(child: Text('No sales data yet today')),
-                  ),
-                )
-              else
-                ReportDataCard(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Column(
-                    children: [
-                      for (int i = 0; i < topProducts.length; i++) ...[
-                        if (i > 0) Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.borderLight),
-                        ReportRankedItem(
-                          rank: i + 1,
-                          title: topProducts[i]['product_name'] as String? ?? '',
-                          subtitle: 'Qty: ${(topProducts[i]['quantity_sold'] as num? ?? 0).toStringAsFixed(0)}',
-                          trailingValue: formatCurrency(topProducts[i]['revenue'] as num? ?? 0),
-                          trailingColor: AppColors.success,
-                        ),
-                      ],
-                    ],
-                  ),
-                ),
-              const SizedBox(height: 20),
-            ],
+            },
           ),
-        ),
-      },
+        ],
+      ),
     );
   }
 }

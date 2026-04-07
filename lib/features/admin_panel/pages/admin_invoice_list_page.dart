@@ -5,6 +5,8 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminInvoiceListPage extends ConsumerStatefulWidget {
   const AdminInvoiceListPage({super.key});
@@ -14,17 +16,26 @@ class AdminInvoiceListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminInvoiceListPageState extends ConsumerState<AdminInvoiceListPage> {
+  String? _storeId;
   String? _statusFilter;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(invoiceListProvider.notifier).loadInvoices());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(invoiceListProvider.notifier).loadInvoices(storeId: _storeId);
+    });
   }
 
   void _onFilterChanged(String? status) {
     setState(() => _statusFilter = status);
-    ref.read(invoiceListProvider.notifier).loadInvoices(status: status);
+    ref.read(invoiceListProvider.notifier).loadInvoices(status: status, storeId: _storeId);
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    ref.read(invoiceListProvider.notifier).loadInvoices(status: _statusFilter, storeId: _storeId);
   }
 
   @override
@@ -35,6 +46,7 @@ class _AdminInvoiceListPageState extends ConsumerState<AdminInvoiceListPage> {
       appBar: AppBar(title: const Text('Invoices')),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: SingleChildScrollView(
@@ -67,7 +79,8 @@ class _AdminInvoiceListPageState extends ConsumerState<AdminInvoiceListPage> {
                     PosButton(
                       label: 'Retry',
                       variant: PosButtonVariant.outline,
-                      onPressed: () => ref.read(invoiceListProvider.notifier).loadInvoices(status: _statusFilter),
+                      onPressed: () =>
+                          ref.read(invoiceListProvider.notifier).loadInvoices(status: _statusFilter, storeId: _storeId),
                     ),
                   ],
                 ),

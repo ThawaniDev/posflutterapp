@@ -5,6 +5,8 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminDiscountListPage extends ConsumerStatefulWidget {
   const AdminDiscountListPage({super.key});
@@ -14,10 +16,19 @@ class AdminDiscountListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminDiscountListPageState extends ConsumerState<AdminDiscountListPage> {
+  String? _storeId;
+
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(discountListProvider.notifier).loadDiscounts());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(discountListProvider.notifier).loadDiscounts();
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
   }
 
   @override
@@ -36,35 +47,42 @@ class _AdminDiscountListPageState extends ConsumerState<AdminDiscountListPage> {
           ),
         ],
       ),
-      body: switch (state) {
-        DiscountListLoading() => const Center(child: CircularProgressIndicator()),
-        DiscountListError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message, style: const TextStyle(color: AppColors.error)),
-              AppSpacing.gapH16,
-              PosButton(
-                label: 'Retry',
-                variant: PosButtonVariant.outline,
-                onPressed: () => ref.read(discountListProvider.notifier).loadDiscounts(),
-              ),
-            ],
-          ),
-        ),
-        DiscountListLoaded(:final discounts) =>
-          discounts.isEmpty
-              ? const Center(child: Text('No discounts found'))
-              : ListView.builder(
-                  padding: AppSpacing.paddingAll16,
-                  itemCount: discounts.length,
-                  itemBuilder: (context, index) {
-                    final discount = discounts[index];
-                    return _DiscountCard(discount: discount);
-                  },
+      body: Column(
+        children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          Expanded(
+            child: switch (state) {
+              DiscountListLoading() => const Center(child: CircularProgressIndicator()),
+              DiscountListError(:final message) => Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(message, style: const TextStyle(color: AppColors.error)),
+                    AppSpacing.gapH16,
+                    PosButton(
+                      label: 'Retry',
+                      variant: PosButtonVariant.outline,
+                      onPressed: () => ref.read(discountListProvider.notifier).loadDiscounts(),
+                    ),
+                  ],
                 ),
-        _ => const SizedBox.shrink(),
-      },
+              ),
+              DiscountListLoaded(:final discounts) =>
+                discounts.isEmpty
+                    ? const Center(child: Text('No discounts found'))
+                    : ListView.builder(
+                        padding: AppSpacing.paddingAll16,
+                        itemCount: discounts.length,
+                        itemBuilder: (context, index) {
+                          final discount = discounts[index];
+                          return _DiscountCard(discount: discount);
+                        },
+                      ),
+              _ => const SizedBox.shrink(),
+            },
+          ),
+        ],
+      ),
     );
   }
 }

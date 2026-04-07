@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/payments/providers/payment_providers.dart';
 import 'package:thawani_pos/features/payments/providers/payment_state.dart';
 import 'package:thawani_pos/features/payments/services/payment_calculation_service.dart';
@@ -38,10 +39,11 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
     final theme = Theme.of(context);
     final sessionsState = ref.watch(cashSessionsProvider);
 
+    final isMobile = context.isPhone;
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.cashMgmtTitle)),
       body: SingleChildScrollView(
-        padding: AppSpacing.paddingAll16,
+        padding: EdgeInsets.all(isMobile ? 12 : 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -98,51 +100,105 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                 ],
               ),
               AppSpacing.gapH16,
-              Row(
-                children: [
-                  _infoTile(
-                    theme,
-                    AppLocalizations.of(context)!.cashMgmtOpeningFloat,
-                    '${activeSession.openingFloat.toStringAsFixed(2)} ${AppLocalizations.of(context)!.sarCurrency}',
-                  ),
-                  AppSpacing.gapW16,
-                  _infoTile(
-                    theme,
-                    AppLocalizations.of(context)!.cashMgmtExpectedCash,
-                    '${(activeSession.expectedCash ?? 0).toStringAsFixed(2)} ${AppLocalizations.of(context)!.sarCurrency}',
-                  ),
-                  AppSpacing.gapW16,
-                  _infoTile(
-                    theme,
-                    AppLocalizations.of(context)!.cashMgmtTerminal,
-                    activeSession.terminalId ?? AppLocalizations.of(context)!.cashMgmtNA,
-                  ),
-                ],
-              ),
+              context.isPhone
+                  ? Column(
+                      children: [
+                        _infoTileCompact(
+                          theme,
+                          AppLocalizations.of(context)!.cashMgmtOpeningFloat,
+                          '${activeSession.openingFloat.toStringAsFixed(2)} ${AppLocalizations.of(context)!.sarCurrency}',
+                        ),
+                        AppSpacing.gapH8,
+                        _infoTileCompact(
+                          theme,
+                          AppLocalizations.of(context)!.cashMgmtExpectedCash,
+                          '${(activeSession.expectedCash ?? 0).toStringAsFixed(2)} ${AppLocalizations.of(context)!.sarCurrency}',
+                        ),
+                        AppSpacing.gapH8,
+                        _infoTileCompact(
+                          theme,
+                          AppLocalizations.of(context)!.cashMgmtTerminal,
+                          activeSession.terminalId ?? AppLocalizations.of(context)!.cashMgmtNA,
+                        ),
+                      ],
+                    )
+                  : Row(
+                      children: [
+                        _infoTile(
+                          theme,
+                          AppLocalizations.of(context)!.cashMgmtOpeningFloat,
+                          '${activeSession.openingFloat.toStringAsFixed(2)} ${AppLocalizations.of(context)!.sarCurrency}',
+                        ),
+                        AppSpacing.gapW16,
+                        _infoTile(
+                          theme,
+                          AppLocalizations.of(context)!.cashMgmtExpectedCash,
+                          '${(activeSession.expectedCash ?? 0).toStringAsFixed(2)} ${AppLocalizations.of(context)!.sarCurrency}',
+                        ),
+                        AppSpacing.gapW16,
+                        _infoTile(
+                          theme,
+                          AppLocalizations.of(context)!.cashMgmtTerminal,
+                          activeSession.terminalId ?? AppLocalizations.of(context)!.cashMgmtNA,
+                        ),
+                      ],
+                    ),
               AppSpacing.gapH16,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  OutlinedButton.icon(
-                    onPressed: () => _showCashInOutDialog(context, 'cash_in', activeSession.id),
-                    icon: const Icon(Icons.add, size: 18),
-                    label: Text(AppLocalizations.of(context)!.cashMgmtCashIn),
-                  ),
-                  AppSpacing.gapW8,
-                  OutlinedButton.icon(
-                    onPressed: () => _showCashInOutDialog(context, 'cash_out', activeSession.id),
-                    icon: const Icon(Icons.remove, size: 18),
-                    label: Text(AppLocalizations.of(context)!.cashMgmtCashOut),
-                  ),
-                  AppSpacing.gapW8,
-                  FilledButton.icon(
-                    onPressed: () => _showCloseSessionDialog(context, activeSession.id),
-                    icon: const Icon(Icons.lock, size: 18),
-                    label: Text(AppLocalizations.of(context)!.cashMgmtCloseSession),
-                    style: FilledButton.styleFrom(backgroundColor: AppColors.warning),
-                  ),
-                ],
-              ),
+              context.isPhone
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: OutlinedButton.icon(
+                                onPressed: () => _showCashInOutDialog(context, 'cash_in', activeSession.id),
+                                icon: const Icon(Icons.add, size: 18),
+                                label: Text(AppLocalizations.of(context)!.cashMgmtCashIn),
+                              ),
+                            ),
+                            AppSpacing.gapW8,
+                            Expanded(
+                              child: OutlinedButton.icon(
+                                onPressed: () => _showCashInOutDialog(context, 'cash_out', activeSession.id),
+                                icon: const Icon(Icons.remove, size: 18),
+                                label: Text(AppLocalizations.of(context)!.cashMgmtCashOut),
+                              ),
+                            ),
+                          ],
+                        ),
+                        AppSpacing.gapH8,
+                        FilledButton.icon(
+                          onPressed: () => _showCloseSessionDialog(context, activeSession.id),
+                          icon: const Icon(Icons.lock, size: 18),
+                          label: Text(AppLocalizations.of(context)!.cashMgmtCloseSession),
+                          style: FilledButton.styleFrom(backgroundColor: AppColors.warning),
+                        ),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        OutlinedButton.icon(
+                          onPressed: () => _showCashInOutDialog(context, 'cash_in', activeSession.id),
+                          icon: const Icon(Icons.add, size: 18),
+                          label: Text(AppLocalizations.of(context)!.cashMgmtCashIn),
+                        ),
+                        AppSpacing.gapW8,
+                        OutlinedButton.icon(
+                          onPressed: () => _showCashInOutDialog(context, 'cash_out', activeSession.id),
+                          icon: const Icon(Icons.remove, size: 18),
+                          label: Text(AppLocalizations.of(context)!.cashMgmtCashOut),
+                        ),
+                        AppSpacing.gapW8,
+                        FilledButton.icon(
+                          onPressed: () => _showCloseSessionDialog(context, activeSession.id),
+                          icon: const Icon(Icons.lock, size: 18),
+                          label: Text(AppLocalizations.of(context)!.cashMgmtCloseSession),
+                          style: FilledButton.styleFrom(backgroundColor: AppColors.warning),
+                        ),
+                      ],
+                    ),
             ],
           ),
         ),
@@ -192,26 +248,31 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 120,
+                      width: context.isPhone ? 80 : 120,
                       child: Text(
                         dc.denomination.label,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           fontWeight: dc.denomination.isCoin ? FontWeight.normal : FontWeight.w600,
+                          fontSize: context.isPhone ? 12 : null,
                         ),
                       ),
                     ),
                     const Text('×'),
                     AppSpacing.gapW8,
                     SizedBox(
-                      width: 80,
+                      width: context.isPhone ? 60 : 80,
                       child: TextField(
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
                           isDense: true,
-                          contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: context.isPhone ? 6 : 8,
+                            horizontal: context.isPhone ? 4 : 8,
+                          ),
                         ),
+                        style: TextStyle(fontSize: context.isPhone ? 13 : null),
                         onChanged: (v) {
                           setState(() {
                             dc.count = int.tryParse(v) ?? 0;
@@ -222,11 +283,10 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                     AppSpacing.gapW12,
                     const Text('='),
                     AppSpacing.gapW8,
-                    SizedBox(
-                      width: 100,
+                    Expanded(
                       child: Text(
                         '${dc.total.toStringAsFixed(2)} \u0081',
-                        style: theme.textTheme.bodyMedium,
+                        style: theme.textTheme.bodyMedium?.copyWith(fontSize: context.isPhone ? 12 : null),
                         textAlign: TextAlign.end,
                       ),
                     ),
@@ -326,6 +386,16 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
           Text(value, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
         ],
       ),
+    );
+  }
+
+  Widget _infoTileCompact(ThemeData theme, String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+        Text(value, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
+      ],
     );
   }
 

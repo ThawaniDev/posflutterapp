@@ -56,7 +56,7 @@ class PredefinedCatalogApiService {
     final response = await _dio.get(ApiEndpoints.predefinedCategoryTree, queryParameters: {'business_type_id': businessTypeId});
 
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => PredefinedCategory.fromJson(j as Map<String, dynamic>)).toList();
   }
 

@@ -178,8 +178,8 @@ class _ReceiptTemplateDetailPageState extends ConsumerState<ReceiptTemplateDetai
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: 180,
+                    Expanded(
+                      flex: 2,
                       child: Text(
                         _formatKey(entry.key),
                         style: AppTypography.labelSmall.copyWith(
@@ -188,7 +188,7 @@ class _ReceiptTemplateDetailPageState extends ConsumerState<ReceiptTemplateDetai
                       ),
                     ),
                     AppSpacing.gapW8,
-                    Expanded(child: Text(_formatValue(entry.value), style: AppTypography.bodySmall)),
+                    Expanded(flex: 3, child: Text(_formatValue(entry.value), style: AppTypography.bodySmall)),
                   ],
                 ),
               ),

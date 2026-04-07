@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminCmsPageListPage extends ConsumerStatefulWidget {
   const AdminCmsPageListPage({super.key});
@@ -14,11 +16,20 @@ class AdminCmsPageListPage extends ConsumerStatefulWidget {
 class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
   final _searchController = TextEditingController();
   String? _selectedType;
+  String? _storeId;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(cmsPageListProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(cmsPageListProvider.notifier).load(storeId: _storeId);
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _search();
   }
 
   @override
@@ -30,7 +41,11 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
   void _search() {
     ref
         .read(cmsPageListProvider.notifier)
-        .load(search: _searchController.text.isNotEmpty ? _searchController.text : null, pageType: _selectedType);
+        .load(
+          search: _searchController.text.isNotEmpty ? _searchController.text : null,
+          pageType: _selectedType,
+          storeId: _storeId,
+        );
   }
 
   @override
@@ -44,6 +59,7 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
       ),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -100,7 +116,9 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
                                 children: [
                                   Chip(
                                     label: Text(page['is_published'] == true ? 'Published' : 'Draft'),
-                                    backgroundColor: page['is_published'] == true ? AppColors.success.withValues(alpha: 0.15) : AppColors.borderLight,
+                                    backgroundColor: page['is_published'] == true
+                                        ? AppColors.success.withValues(alpha: 0.15)
+                                        : AppColors.borderLight,
                                   ),
                                   const SizedBox(width: 8),
                                   Text('$total total'),

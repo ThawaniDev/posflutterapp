@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/payments/providers/payment_providers.dart';
 import 'package:thawani_pos/features/payments/providers/payment_state.dart';
 import 'package:thawani_pos/features/payments/services/payment_calculation_service.dart';
@@ -50,7 +51,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
         ],
       ),
       body: SingleChildScrollView(
-        padding: AppSpacing.paddingAll16,
+        padding: EdgeInsets.all(context.isPhone ? 12 : 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -77,28 +78,59 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
             AppSpacing.gapH24,
 
             // ── Actions ──
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                OutlinedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.print, size: 18),
-                  label: Text(l10n.finReconPrintReport),
-                ),
-                AppSpacing.gapW8,
-                OutlinedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.download, size: 18),
-                  label: Text(l10n.finReconExportPdf),
-                ),
-                AppSpacing.gapW8,
-                FilledButton.icon(
-                  onPressed: () => _confirmReconciliation(context),
-                  icon: const Icon(Icons.check_circle_outline, size: 18),
-                  label: Text(l10n.finReconConfirmRecon),
-                ),
-              ],
-            ),
+            context.isPhone
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              onPressed: () {},
+                              icon: const Icon(Icons.print, size: 18),
+                              label: Text(l10n.finReconPrintReport),
+                            ),
+                          ),
+                          AppSpacing.gapW8,
+                          Expanded(
+                            child: OutlinedButton.icon(
+                              onPressed: () {},
+                              icon: const Icon(Icons.download, size: 18),
+                              label: Text(l10n.finReconExportPdf),
+                            ),
+                          ),
+                        ],
+                      ),
+                      AppSpacing.gapH8,
+                      FilledButton.icon(
+                        onPressed: () => _confirmReconciliation(context),
+                        icon: const Icon(Icons.check_circle_outline, size: 18),
+                        label: Text(l10n.finReconConfirmRecon),
+                      ),
+                    ],
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      OutlinedButton.icon(
+                        onPressed: () {},
+                        icon: const Icon(Icons.print, size: 18),
+                        label: Text(l10n.finReconPrintReport),
+                      ),
+                      AppSpacing.gapW8,
+                      OutlinedButton.icon(
+                        onPressed: () {},
+                        icon: const Icon(Icons.download, size: 18),
+                        label: Text(l10n.finReconExportPdf),
+                      ),
+                      AppSpacing.gapW8,
+                      FilledButton.icon(
+                        onPressed: () => _confirmReconciliation(context),
+                        icon: const Icon(Icons.check_circle_outline, size: 18),
+                        label: Text(l10n.finReconConfirmRecon),
+                      ),
+                    ],
+                  ),
           ],
         ),
       ),
@@ -123,27 +155,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
           children: [
             Text(l10n.finReconRevenueSummary, style: theme.textTheme.titleMedium),
             AppSpacing.gapH16,
-            Row(
-              children: [
-                _summaryTile(
-                  theme,
-                  l10n.finReconTotalRevenue,
-                  '${totalRevenue.toStringAsFixed(2)} \u0081',
-                  Icons.trending_up,
-                  AppColors.success,
-                ),
-                AppSpacing.gapW16,
-                _summaryTile(theme, l10n.finReconTransactions, '$txCount', Icons.receipt_long, AppColors.info),
-                AppSpacing.gapW16,
-                _summaryTile(
-                  theme,
-                  l10n.finReconAvgTransaction,
-                  txCount > 0 ? '${(totalRevenue / txCount).toStringAsFixed(2)} \u0081' : '0.00 \u0081',
-                  Icons.analytics,
-                  AppColors.primary,
-                ),
-              ],
-            ),
+            _buildSummaryTiles(theme, l10n, txCount, totalRevenue),
           ],
         ),
       ),
@@ -232,33 +244,7 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
           children: [
             Text(l10n.finReconCashRecon, style: theme.textTheme.titleMedium),
             AppSpacing.gapH16,
-            Row(
-              children: [
-                _summaryTile(
-                  theme,
-                  l10n.finReconExpectedCash,
-                  '${totalExpected.toStringAsFixed(2)} \u0081',
-                  Icons.calculate,
-                  AppColors.info,
-                ),
-                AppSpacing.gapW16,
-                _summaryTile(
-                  theme,
-                  l10n.finReconActualCash,
-                  '${totalActual.toStringAsFixed(2)} \u0081',
-                  Icons.payments,
-                  AppColors.primary,
-                ),
-                AppSpacing.gapW16,
-                _summaryTile(
-                  theme,
-                  l10n.finReconVariance,
-                  '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} \u0081',
-                  Icons.compare_arrows,
-                  totalVariance.abs() > 5 ? AppColors.error : AppColors.success,
-                ),
-              ],
-            ),
+            _buildCashReconTiles(theme, l10n, totalExpected, totalActual, totalVariance),
             if (closedSessions.isNotEmpty) ...[
               AppSpacing.gapH16,
               Text(
@@ -336,8 +322,8 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: context.isPhone ? 2 : 4,
                 childAspectRatio: 2.5,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
@@ -396,6 +382,144 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
           ],
         ),
       ),
+    );
+  }
+
+  Widget _summaryTileFullWidth(ThemeData theme, String label, String value, IconData icon, Color color) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.06), borderRadius: AppRadius.borderMd),
+      child: Row(
+        children: [
+          Icon(icon, color: color, size: 20),
+          AppSpacing.gapW12,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(label, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+                Text(
+                  value,
+                  style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold, color: color),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSummaryTiles(ThemeData theme, AppLocalizations l10n, int txCount, double totalRevenue) {
+    if (context.isPhone) {
+      return Column(
+        children: [
+          _summaryTileFullWidth(
+            theme,
+            l10n.finReconTotalRevenue,
+            '${totalRevenue.toStringAsFixed(2)} \u0081',
+            Icons.trending_up,
+            AppColors.success,
+          ),
+          AppSpacing.gapH8,
+          _summaryTileFullWidth(theme, l10n.finReconTransactions, '$txCount', Icons.receipt_long, AppColors.info),
+          AppSpacing.gapH8,
+          _summaryTileFullWidth(
+            theme,
+            l10n.finReconAvgTransaction,
+            txCount > 0 ? '${(totalRevenue / txCount).toStringAsFixed(2)} \u0081' : '0.00 \u0081',
+            Icons.analytics,
+            AppColors.primary,
+          ),
+        ],
+      );
+    }
+    return Row(
+      children: [
+        _summaryTile(
+          theme,
+          l10n.finReconTotalRevenue,
+          '${totalRevenue.toStringAsFixed(2)} \u0081',
+          Icons.trending_up,
+          AppColors.success,
+        ),
+        AppSpacing.gapW16,
+        _summaryTile(theme, l10n.finReconTransactions, '$txCount', Icons.receipt_long, AppColors.info),
+        AppSpacing.gapW16,
+        _summaryTile(
+          theme,
+          l10n.finReconAvgTransaction,
+          txCount > 0 ? '${(totalRevenue / txCount).toStringAsFixed(2)} \u0081' : '0.00 \u0081',
+          Icons.analytics,
+          AppColors.primary,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCashReconTiles(
+    ThemeData theme,
+    AppLocalizations l10n,
+    double totalExpected,
+    double totalActual,
+    double totalVariance,
+  ) {
+    if (context.isPhone) {
+      return Column(
+        children: [
+          _summaryTileFullWidth(
+            theme,
+            l10n.finReconExpectedCash,
+            '${totalExpected.toStringAsFixed(2)} \u0081',
+            Icons.calculate,
+            AppColors.info,
+          ),
+          AppSpacing.gapH8,
+          _summaryTileFullWidth(
+            theme,
+            l10n.finReconActualCash,
+            '${totalActual.toStringAsFixed(2)} \u0081',
+            Icons.payments,
+            AppColors.primary,
+          ),
+          AppSpacing.gapH8,
+          _summaryTileFullWidth(
+            theme,
+            l10n.finReconVariance,
+            '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} \u0081',
+            Icons.compare_arrows,
+            totalVariance.abs() > 5 ? AppColors.error : AppColors.success,
+          ),
+        ],
+      );
+    }
+    return Row(
+      children: [
+        _summaryTile(
+          theme,
+          l10n.finReconExpectedCash,
+          '${totalExpected.toStringAsFixed(2)} \u0081',
+          Icons.calculate,
+          AppColors.info,
+        ),
+        AppSpacing.gapW16,
+        _summaryTile(
+          theme,
+          l10n.finReconActualCash,
+          '${totalActual.toStringAsFixed(2)} \u0081',
+          Icons.payments,
+          AppColors.primary,
+        ),
+        AppSpacing.gapW16,
+        _summaryTile(
+          theme,
+          l10n.finReconVariance,
+          '${totalVariance >= 0 ? '+' : ''}${totalVariance.toStringAsFixed(2)} \u0081',
+          Icons.compare_arrows,
+          totalVariance.abs() > 5 ? AppColors.error : AppColors.success,
+        ),
+      ],
     );
   }
 

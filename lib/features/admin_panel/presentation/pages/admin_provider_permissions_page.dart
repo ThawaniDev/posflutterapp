@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminProviderPermissionsPage extends ConsumerStatefulWidget {
   const AdminProviderPermissionsPage({super.key});
@@ -13,12 +15,20 @@ class AdminProviderPermissionsPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminProviderPermissionsPage> {
+  String? _storeId;
   String? _groupFilter;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(providerPermissionListProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(providerPermissionListProvider.notifier).load();
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
   }
 
   void _applyFilter() {
@@ -39,6 +49,7 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
       ),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.sm),
             child: DropdownButtonFormField<String>(
@@ -120,7 +131,11 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
                     ),
                     child: Text(
                       isActive ? 'Active' : 'Inactive',
-                      style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: isActive ? AppColors.success : AppColors.textSecondary),
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: isActive ? AppColors.success : AppColors.textSecondary,
+                      ),
                     ),
                   ),
                 ),

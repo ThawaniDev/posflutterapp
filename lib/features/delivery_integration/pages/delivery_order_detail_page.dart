@@ -326,11 +326,12 @@ class _InfoRow extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              width: 120,
+            Expanded(
+              flex: 2,
               child: Text(label, style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
             ),
             Expanded(
+              flex: 3,
               child: Text(
                 value,
                 style: TextStyle(fontSize: 13, fontWeight: isBold ? FontWeight.w600 : FontWeight.normal, color: valueColor),

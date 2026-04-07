@@ -1,3 +1,4 @@
+import 'package:thawani_pos/features/staff/data/remote/role_api_service.dart';
 import 'package:thawani_pos/features/staff/models/permission.dart';
 import 'package:thawani_pos/features/staff/models/role.dart';
 
@@ -98,11 +99,47 @@ class UserPermissionsState {
   final bool isLoaded;
   final String? error;
 
-  const UserPermissionsState({this.permissions = const [], this.isLoaded = false, this.error});
+  /// 'organization' = can access all branches, 'branch' = restricted to own store
+  final String branchScope;
+
+  /// Store IDs the user can access (empty until loaded)
+  final List<String> accessibleStoreIds;
+
+  /// Per-branch role info keyed by store ID
+  final Map<String, BranchRoleInfo> branchRoles;
+
+  const UserPermissionsState({
+    this.permissions = const [],
+    this.isLoaded = false,
+    this.error,
+    this.branchScope = 'branch',
+    this.accessibleStoreIds = const [],
+    this.branchRoles = const {},
+  });
 
   bool hasPermission(String code) => permissions.contains(code);
 
-  UserPermissionsState copyWith({List<String>? permissions, bool? isLoaded, String? error}) {
-    return UserPermissionsState(permissions: permissions ?? this.permissions, isLoaded: isLoaded ?? this.isLoaded, error: error);
+  bool get isOrganizationScoped => branchScope == 'organization';
+  bool get isBranchScoped => branchScope == 'branch';
+
+  /// Get the role info for a specific branch, or null if none assigned.
+  BranchRoleInfo? roleForBranch(String storeId) => branchRoles[storeId];
+
+  UserPermissionsState copyWith({
+    List<String>? permissions,
+    bool? isLoaded,
+    String? error,
+    String? branchScope,
+    List<String>? accessibleStoreIds,
+    Map<String, BranchRoleInfo>? branchRoles,
+  }) {
+    return UserPermissionsState(
+      permissions: permissions ?? this.permissions,
+      isLoaded: isLoaded ?? this.isLoaded,
+      error: error,
+      branchScope: branchScope ?? this.branchScope,
+      accessibleStoreIds: accessibleStoreIds ?? this.accessibleStoreIds,
+      branchRoles: branchRoles ?? this.branchRoles,
+    );
   }
 }

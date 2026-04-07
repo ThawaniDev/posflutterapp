@@ -755,4 +755,14 @@ class ApiEndpoints {
   static String branchWorkingHours(String id) => '/core/stores/$id/working-hours';
   static String branchCopySettings(String id) => '/core/stores/$id/copy-settings';
   static String branchCopyWorkingHours(String id) => '/core/stores/$id/copy-working-hours';
+
+  // Debits
+  static const String debits = '/debits';
+  static const String debitsSummary = '/debits/summary';
+  static String debitById(String id) => '/debits/$id';
+  static String debitAllocate(String id) => '/debits/$id/allocate';
+  static String debitAllocations(String id) => '/debits/$id/allocations';
+  static String debitReverse(String id) => '/debits/$id/reverse';
+  static String debitCustomerBalance(String customerId) => '/debits/customer/$customerId/balance';
+  static String debitCustomerDebits(String customerId) => '/debits/customer/$customerId';
 }

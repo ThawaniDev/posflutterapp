@@ -16,6 +16,7 @@ class AdminRepository {
     bool? isActive,
     String? businessType,
     String? organizationId,
+    String? storeId,
     int perPage = 15,
     int page = 1,
   }) => _apiService.listStores(
@@ -23,6 +24,7 @@ class AdminRepository {
     isActive: isActive,
     businessType: businessType,
     organizationId: organizationId,
+    storeId: storeId,
     perPage: perPage,
     page: page,
   );
@@ -76,8 +78,13 @@ class AdminRepository {
       _apiService.removeLimitOverride(storeId, limitKey);
 
   // ─── Registrations ────────────────────────────────────
-  Future<Map<String, dynamic>> listRegistrations({String? status, String? search, int perPage = 15, int page = 1}) =>
-      _apiService.listRegistrations(status: status, search: search, perPage: perPage, page: page);
+  Future<Map<String, dynamic>> listRegistrations({
+    String? status,
+    String? search,
+    String? storeId,
+    int perPage = 15,
+    int page = 1,
+  }) => _apiService.listRegistrations(status: status, search: search, storeId: storeId, perPage: perPage, page: page);
 
   Future<Map<String, dynamic>> approveRegistration(String id) => _apiService.approveRegistration(id);
 
@@ -111,8 +118,21 @@ class AdminRepository {
   Future<Map<String, dynamic>> listPermissions() => _apiService.listPermissions();
 
   // ─── Admin Team (P2) ──────────────────────────────────
-  Future<Map<String, dynamic>> listTeamUsers({String? search, bool? isActive, String? roleId, int perPage = 15, int page = 1}) =>
-      _apiService.listTeamUsers(search: search, isActive: isActive, roleId: roleId, perPage: perPage, page: page);
+  Future<Map<String, dynamic>> listTeamUsers({
+    String? search,
+    bool? isActive,
+    String? roleId,
+    String? storeId,
+    int perPage = 15,
+    int page = 1,
+  }) => _apiService.listTeamUsers(
+    search: search,
+    isActive: isActive,
+    roleId: roleId,
+    storeId: storeId,
+    perPage: perPage,
+    page: page,
+  );
 
   Future<Map<String, dynamic>> showTeamUser(String userId) => _apiService.showTeamUser(userId);
 
@@ -153,6 +173,7 @@ class AdminRepository {
     String? entityType,
     String? dateFrom,
     String? dateTo,
+    String? storeId,
     int perPage = 25,
     int page = 1,
   }) => _apiService.listActivityLogs(
@@ -161,6 +182,7 @@ class AdminRepository {
     entityType: entityType,
     dateFrom: dateFrom,
     dateTo: dateTo,
+    storeId: storeId,
     perPage: perPage,
     page: page,
   );
@@ -216,8 +238,8 @@ class AdminRepository {
 
   // ─── Invoices (P3) ────────────────────────────────────────
 
-  Future<Map<String, dynamic>> listInvoices({String? status, String? subscriptionId, int perPage = 15}) =>
-      _apiService.listInvoices(status: status, subscriptionId: subscriptionId, perPage: perPage);
+  Future<Map<String, dynamic>> listInvoices({String? status, String? subscriptionId, String? storeId, int perPage = 15}) =>
+      _apiService.listInvoices(status: status, subscriptionId: subscriptionId, storeId: storeId, perPage: perPage);
 
   Future<Map<String, dynamic>> showInvoice(String invoiceId) => _apiService.showInvoice(invoiceId);
 
@@ -261,8 +283,8 @@ class AdminRepository {
 
   // ─── Admin Users ──────────────────────────────────────────
 
-  Future<Map<String, dynamic>> listAdminUsers({String? search, bool? isActive}) =>
-      _apiService.listAdminUsers(search: search, isActive: isActive);
+  Future<Map<String, dynamic>> listAdminUsers({String? search, bool? isActive, String? storeId}) =>
+      _apiService.listAdminUsers(search: search, isActive: isActive, storeId: storeId);
 
   Future<Map<String, dynamic>> showAdminUser(String userId) => _apiService.showAdminUser(userId);
 
@@ -300,7 +322,7 @@ class AdminRepository {
 
   Future<Map<String, dynamic>> updateRetryRules(Map<String, dynamic> data) => _apiService.updateRetryRules(data);
 
-  Future<Map<String, dynamic>> getBillingRevenue() => _apiService.getBillingRevenue();
+  Future<Map<String, dynamic>> getBillingRevenue({String? storeId}) => _apiService.getBillingRevenue(storeId: storeId);
 
   Future<Map<String, dynamic>> listGateways({Map<String, dynamic>? params}) => _apiService.listGateways(params: params);
 
@@ -340,7 +362,7 @@ class AdminRepository {
 
   // ─── P6: Analytics & Reporting ──────────────────────────────
 
-  Future<Map<String, dynamic>> getAnalyticsDashboard() => _apiService.getAnalyticsDashboard();
+  Future<Map<String, dynamic>> getAnalyticsDashboard({String? storeId}) => _apiService.getAnalyticsDashboard(storeId: storeId);
 
   Future<Map<String, dynamic>> getAnalyticsRevenue({Map<String, dynamic>? params}) =>
       _apiService.getAnalyticsRevenue(params: params);
@@ -357,7 +379,8 @@ class AdminRepository {
   Future<Map<String, dynamic>> getAnalyticsSupport({Map<String, dynamic>? params}) =>
       _apiService.getAnalyticsSupport(params: params);
 
-  Future<Map<String, dynamic>> getAnalyticsSystemHealth() => _apiService.getAnalyticsSystemHealth();
+  Future<Map<String, dynamic>> getAnalyticsSystemHealth({String? storeId}) =>
+      _apiService.getAnalyticsSystemHealth(storeId: storeId);
 
   Future<Map<String, dynamic>> getAnalyticsNotifications({Map<String, dynamic>? params}) =>
       _apiService.getAnalyticsNotifications(params: params);
@@ -422,8 +445,8 @@ class AdminRepository {
   // ═══════════════════════════════════════════════════════════════
 
   // CMS Pages
-  Future<Map<String, dynamic>> getCmsPages({String? search, String? pageType, bool? isPublished}) =>
-      _apiService.getCmsPages(search: search, pageType: pageType, isPublished: isPublished);
+  Future<Map<String, dynamic>> getCmsPages({String? search, String? pageType, bool? isPublished, String? storeId}) =>
+      _apiService.getCmsPages(search: search, pageType: pageType, isPublished: isPublished, storeId: storeId);
   Future<Map<String, dynamic>> createCmsPage(Map<String, dynamic> data) => _apiService.createCmsPage(data);
   Future<Map<String, dynamic>> getCmsPage(String id) => _apiService.getCmsPage(id);
   Future<Map<String, dynamic>> updateCmsPage(String id, Map<String, dynamic> data) => _apiService.updateCmsPage(id, data);
@@ -431,8 +454,21 @@ class AdminRepository {
   Future<Map<String, dynamic>> toggleCmsPagePublish(String id) => _apiService.toggleCmsPagePublish(id);
 
   // Articles
-  Future<Map<String, dynamic>> getArticles({String? search, String? category, bool? isPublished, int? page, int? perPage}) =>
-      _apiService.getArticles(search: search, category: category, isPublished: isPublished, page: page, perPage: perPage);
+  Future<Map<String, dynamic>> getArticles({
+    String? search,
+    String? category,
+    bool? isPublished,
+    int? page,
+    int? perPage,
+    String? storeId,
+  }) => _apiService.getArticles(
+    search: search,
+    category: category,
+    isPublished: isPublished,
+    page: page,
+    perPage: perPage,
+    storeId: storeId,
+  );
   Future<Map<String, dynamic>> createArticle(Map<String, dynamic> data) => _apiService.createArticle(data);
   Future<Map<String, dynamic>> getArticle(String id) => _apiService.getArticle(id);
   Future<Map<String, dynamic>> updateArticle(String id, Map<String, dynamic> data) => _apiService.updateArticle(id, data);
@@ -440,8 +476,8 @@ class AdminRepository {
   Future<Map<String, dynamic>> toggleArticlePublish(String id) => _apiService.toggleArticlePublish(id);
 
   // Announcements
-  Future<Map<String, dynamic>> getAnnouncements({String? search, String? type, int? page, int? perPage}) =>
-      _apiService.getAnnouncements(search: search, type: type, page: page, perPage: perPage);
+  Future<Map<String, dynamic>> getAnnouncements({String? search, String? type, int? page, int? perPage, String? storeId}) =>
+      _apiService.getAnnouncements(search: search, type: type, page: page, perPage: perPage, storeId: storeId);
   Future<Map<String, dynamic>> createAnnouncement(Map<String, dynamic> data) => _apiService.createAnnouncement(data);
   Future<Map<String, dynamic>> getAnnouncement(String id) => _apiService.getAnnouncement(id);
   Future<Map<String, dynamic>> updateAnnouncement(String id, Map<String, dynamic> data) =>
@@ -449,8 +485,8 @@ class AdminRepository {
   Future<Map<String, dynamic>> deleteAnnouncement(String id) => _apiService.deleteAnnouncement(id);
 
   // Notification Templates
-  Future<Map<String, dynamic>> getNotificationTemplates({String? search, String? channel, bool? isActive}) =>
-      _apiService.getNotificationTemplates(search: search, channel: channel, isActive: isActive);
+  Future<Map<String, dynamic>> getNotificationTemplates({String? search, String? channel, bool? isActive, String? storeId}) =>
+      _apiService.getNotificationTemplates(search: search, channel: channel, isActive: isActive, storeId: storeId);
   Future<Map<String, dynamic>> createNotificationTemplate(Map<String, dynamic> data) =>
       _apiService.createNotificationTemplate(data);
   Future<Map<String, dynamic>> getNotificationTemplate(String id) => _apiService.getNotificationTemplate(id);
@@ -478,7 +514,7 @@ class AdminRepository {
   Future<Map<String, dynamic>> createPlatformEvent(Map<String, dynamic> data) => _apiService.createPlatformEvent(data);
   Future<Map<String, dynamic>> getPlatformEvent(String id) => _apiService.getPlatformEvent(id);
 
-  Future<Map<String, dynamic>> getHealthDashboard() => _apiService.getHealthDashboard();
+  Future<Map<String, dynamic>> getHealthDashboard({String? storeId}) => _apiService.getHealthDashboard(storeId: storeId);
   Future<Map<String, dynamic>> getHealthChecks({Map<String, dynamic>? params}) => _apiService.getHealthChecks(params: params);
   Future<Map<String, dynamic>> createHealthCheck(Map<String, dynamic> data) => _apiService.createHealthCheck(data);
 
@@ -532,7 +568,7 @@ class AdminRepository {
       _apiService.getMarketplaceSettlementSummary(params: params);
 
   // ─── P12  Deployment & Release Management ───────────────
-  Future<Map<String, dynamic>> getDeploymentOverview() => _apiService.getDeploymentOverview();
+  Future<Map<String, dynamic>> getDeploymentOverview({String? storeId}) => _apiService.getDeploymentOverview(storeId: storeId);
   Future<Map<String, dynamic>> getDeploymentReleases({Map<String, dynamic>? params}) =>
       _apiService.getDeploymentReleases(params: params);
   Future<Map<String, dynamic>> createDeploymentRelease(Map<String, dynamic> data) => _apiService.createDeploymentRelease(data);
@@ -551,7 +587,8 @@ class AdminRepository {
   Future<Map<String, dynamic>> getDeploymentReleaseSummary(String id) => _apiService.getDeploymentReleaseSummary(id);
 
   // ─── P13  Data Management & Migration ───────────────────
-  Future<Map<String, dynamic>> getDataManagementOverview() => _apiService.getDataManagementOverview();
+  Future<Map<String, dynamic>> getDataManagementOverview({String? storeId}) =>
+      _apiService.getDataManagementOverview(storeId: storeId);
   Future<Map<String, dynamic>> getDatabaseBackups({Map<String, dynamic>? params}) =>
       _apiService.getDatabaseBackups(params: params);
   Future<Map<String, dynamic>> createDatabaseBackup(Map<String, dynamic> data) => _apiService.createDatabaseBackup(data);
@@ -572,7 +609,7 @@ class AdminRepository {
   Future<Map<String, dynamic>> getProviderBackupStatus(String id) => _apiService.getProviderBackupStatus(id);
 
   // ─── P14  Security Center ──────────────────────────────────────────
-  Future<Map<String, dynamic>> getSecurityOverview() => _apiService.getSecurityOverview();
+  Future<Map<String, dynamic>> getSecurityOverview({String? storeId}) => _apiService.getSecurityOverview(storeId: storeId);
   Future<Map<String, dynamic>> getSecCenterAlerts({Map<String, dynamic>? params}) =>
       _apiService.getSecCenterAlerts(params: params);
   Future<Map<String, dynamic>> getSecCenterAlert(String id) => _apiService.getSecCenterAlert(id);
@@ -609,7 +646,7 @@ class AdminRepository {
   Future<Map<String, dynamic>> deleteSecurityIpBlocklistEntry(String id) => _apiService.deleteSecurityIpBlocklistEntry(id);
 
   // ─── P15: Financial Operations ───────────────────────────
-  Future<Map<String, dynamic>> getFinOpsOverview() => _apiService.getFinOpsOverview();
+  Future<Map<String, dynamic>> getFinOpsOverview({String? storeId}) => _apiService.getFinOpsOverview(storeId: storeId);
   Future<Map<String, dynamic>> getFinOpsPayments({Map<String, dynamic>? params}) => _apiService.getFinOpsPayments(params: params);
   Future<Map<String, dynamic>> getFinOpsPayment(String id) => _apiService.getFinOpsPayment(id);
   Future<Map<String, dynamic>> getFinOpsRefunds({Map<String, dynamic>? params}) => _apiService.getFinOpsRefunds(params: params);
@@ -692,7 +729,7 @@ class AdminRepository {
       _apiService.getFinOpsProductSalesSummaryDetail(id);
 
   // ─── P16: Infrastructure & Operations ────────────────────
-  Future<Map<String, dynamic>> getInfraOverview() => _apiService.getInfraOverview();
+  Future<Map<String, dynamic>> getInfraOverview({String? storeId}) => _apiService.getInfraOverview(storeId: storeId);
   Future<Map<String, dynamic>> getInfraQueues({Map<String, dynamic>? params}) => _apiService.getInfraQueues(params: params);
   Future<Map<String, dynamic>> retryInfraQueue(String id) => _apiService.retryInfraQueue(id);
   Future<Map<String, dynamic>> getInfraFailedJobs({Map<String, dynamic>? params}) =>

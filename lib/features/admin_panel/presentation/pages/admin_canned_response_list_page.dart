@@ -4,6 +4,8 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminCannedResponseListPage extends ConsumerStatefulWidget {
   const AdminCannedResponseListPage({super.key});
@@ -15,11 +17,15 @@ class AdminCannedResponseListPage extends ConsumerStatefulWidget {
 class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedResponseListPage> {
   final _searchController = TextEditingController();
   String? _categoryFilter;
+  String? _storeId;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(cannedResponseListProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _applyFilters();
+    });
   }
 
   @override
@@ -30,9 +36,15 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
 
   void _applyFilters() {
     final params = <String, dynamic>{};
+    if (_storeId != null) params['store_id'] = _storeId!;
     if (_searchController.text.isNotEmpty) params['search'] = _searchController.text;
     if (_categoryFilter != null) params['category'] = _categoryFilter;
-    ref.read(cannedResponseListProvider.notifier).load(params: params);
+    ref.read(cannedResponseListProvider.notifier).load(params: params.isEmpty ? null : params);
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _applyFilters();
   }
 
   @override
@@ -43,6 +55,7 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
       appBar: AppBar(title: const Text('Canned Responses'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
             child: Row(

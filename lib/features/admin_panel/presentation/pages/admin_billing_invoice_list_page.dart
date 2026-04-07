@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminBillingInvoiceListPage extends ConsumerStatefulWidget {
   const AdminBillingInvoiceListPage({super.key});
@@ -14,12 +16,16 @@ class AdminBillingInvoiceListPage extends ConsumerStatefulWidget {
 
 class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoiceListPage> {
   final _searchController = TextEditingController();
+  String? _storeId;
   String? _selectedStatus;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(billingInvoiceListProvider.notifier).loadInvoices());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(billingInvoiceListProvider.notifier).loadInvoices(storeId: _storeId);
+    });
   }
 
   @override
@@ -29,7 +35,14 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
   }
 
   void _onSearch() {
-    ref.read(billingInvoiceListProvider.notifier).loadInvoices(search: _searchController.text, status: _selectedStatus);
+    ref
+        .read(billingInvoiceListProvider.notifier)
+        .loadInvoices(search: _searchController.text, status: _selectedStatus, storeId: _storeId);
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _onSearch();
   }
 
   Color _statusColor(String status) {
@@ -64,6 +77,7 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
       ),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
             child: Column(

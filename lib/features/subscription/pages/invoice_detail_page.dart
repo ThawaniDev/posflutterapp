@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -111,66 +112,106 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
           Card(
             child: Padding(
               padding: AppSpacing.paddingAllMd,
-              child: Column(
-                children: [
-                  // Table header
-                  Row(
+              child: Builder(
+                builder: (context) {
+                  if (context.isPhone) {
+                    return Column(
+                      children: invoice.lineItems!
+                          .map(
+                            (item) => Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(item.description, style: const TextStyle(fontWeight: FontWeight.w500)),
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Qty: ${item.quantity ?? 1}',
+                                        style: TextStyle(color: AppColors.textSecondaryLight, fontSize: 12),
+                                      ),
+                                      Text(
+                                        'Unit: ${item.unitPrice.toStringAsFixed(2)}',
+                                        style: TextStyle(color: AppColors.textSecondaryLight, fontSize: 12),
+                                      ),
+                                      Text(
+                                        '${item.total.toStringAsFixed(2)}',
+                                        style: const TextStyle(fontWeight: FontWeight.w600),
+                                      ),
+                                    ],
+                                  ),
+                                  const Divider(),
+                                ],
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    );
+                  }
+                  return Column(
                     children: [
-                      Expanded(
-                        flex: 4,
-                        child: Text(
-                          'Description',
-                          style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Text(
-                          'Qty',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Unit Price',
-                          textAlign: TextAlign.end,
-                          style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Text(
-                          'Total',
-                          textAlign: TextAlign.end,
-                          style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Divider(),
-                  ...invoice.lineItems!.map(
-                    (item) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Row(
+                      // Table header
+                      Row(
                         children: [
-                          Expanded(flex: 4, child: Text(item.description)),
-                          Expanded(flex: 1, child: Text('${item.quantity ?? 1}', textAlign: TextAlign.center)),
-                          Expanded(flex: 2, child: Text('${item.unitPrice.toStringAsFixed(2)}', textAlign: TextAlign.end)),
+                          Expanded(
+                            flex: 4,
+                            child: Text(
+                              'Description',
+                              style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              'Qty',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
+                            ),
+                          ),
                           Expanded(
                             flex: 2,
                             child: Text(
-                              '${item.total.toStringAsFixed(2)}',
+                              'Unit Price',
                               textAlign: TextAlign.end,
-                              style: const TextStyle(fontWeight: FontWeight.w500),
+                              style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              'Total',
+                              textAlign: TextAlign.end,
+                              style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                ],
+                      const Divider(),
+                      ...invoice.lineItems!.map(
+                        (item) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Row(
+                            children: [
+                              Expanded(flex: 4, child: Text(item.description)),
+                              Expanded(flex: 1, child: Text('${item.quantity ?? 1}', textAlign: TextAlign.center)),
+                              Expanded(flex: 2, child: Text('${item.unitPrice.toStringAsFixed(2)}', textAlign: TextAlign.end)),
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  '${item.total.toStringAsFixed(2)}',
+                                  textAlign: TextAlign.end,
+                                  style: const TextStyle(fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ),

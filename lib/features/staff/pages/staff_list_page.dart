@@ -5,6 +5,7 @@ import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/branches/models/store.dart';
 import 'package:thawani_pos/features/branches/providers/branch_providers.dart';
@@ -59,6 +60,7 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
     final state = ref.watch(staffListProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
+    final isMobile = context.isPhone;
 
     return Scaffold(
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
@@ -70,7 +72,8 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push(Routes.staffMembersCreate),
         icon: const Icon(Icons.person_add),
-        label: Text(l10n.staffAddMember),
+        label: Text(isMobile ? '' : l10n.staffAddMember),
+        isExtended: !isMobile,
       ),
       body: Column(
         children: [
@@ -78,7 +81,7 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
           _buildStoreSelector(context, isDark, l10n),
           // Search bar
           Padding(
-            padding: AppSpacing.paddingAll16,
+            padding: EdgeInsets.all(isMobile ? 12 : 16),
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
@@ -94,16 +97,17 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
                       )
                     : null,
                 border: const OutlineInputBorder(),
+                isDense: isMobile,
               ),
               onSubmitted: (_) => _loadStaff(),
             ),
           ),
           // Filter chips
           SizedBox(
-            height: 48,
+            height: isMobile ? 40 : 48,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 16),
               children: [
                 _buildFilterChip(
                   label: 'All Status',
@@ -272,7 +276,10 @@ class _StaffCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      margin: EdgeInsets.symmetric(
+        horizontal: MediaQuery.sizeOf(context).width < AppSizes.breakpointTablet ? 12 : 16,
+        vertical: MediaQuery.sizeOf(context).width < AppSizes.breakpointTablet ? 3 : 4,
+      ),
       elevation: 0,
       color: isDark ? AppColors.cardDark : AppColors.cardLight,
       shape: RoundedRectangleBorder(

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/payments/enums/payment_method_key.dart';
 import 'package:thawani_pos/features/payments/providers/payment_providers.dart';
 import 'package:thawani_pos/features/payments/providers/payment_state.dart';
@@ -100,51 +101,97 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
-              padding: AppSpacing.paddingAll16,
+              padding: EdgeInsets.all(context.isPhone ? 12 : 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // ── Top KPI Cards ──
-                  Row(
-                    children: [
-                      _kpiCard(
-                        theme,
-                        l10n.dailySummaryGrossRevenue,
-                        '${totalRevenue.toStringAsFixed(2)} \u0081',
-                        Icons.trending_up,
-                        AppColors.success,
-                      ),
-                      AppSpacing.gapW12,
-                      _kpiCard(
-                        theme,
-                        l10n.dailySummaryExpenses,
-                        '${totalExpenses.toStringAsFixed(2)} \u0081',
-                        Icons.trending_down,
-                        AppColors.error,
-                      ),
-                      AppSpacing.gapW12,
-                      _kpiCard(
-                        theme,
-                        l10n.dailySummaryNetRevenue,
-                        '${netRevenue.toStringAsFixed(2)} \u0081',
-                        Icons.account_balance,
-                        netRevenue >= 0 ? AppColors.success : AppColors.error,
-                      ),
-                      AppSpacing.gapW12,
-                      _kpiCard(theme, l10n.dailySummaryTransactions, '$txCount', Icons.receipt, AppColors.info),
-                    ],
-                  ),
+                  context.isPhone
+                      ? Column(
+                          children: [
+                            Row(
+                              children: [
+                                _kpiCard(
+                                  theme,
+                                  l10n.dailySummaryGrossRevenue,
+                                  '${totalRevenue.toStringAsFixed(2)} \u0081',
+                                  Icons.trending_up,
+                                  AppColors.success,
+                                ),
+                                AppSpacing.gapW8,
+                                _kpiCard(
+                                  theme,
+                                  l10n.dailySummaryExpenses,
+                                  '${totalExpenses.toStringAsFixed(2)} \u0081',
+                                  Icons.trending_down,
+                                  AppColors.error,
+                                ),
+                              ],
+                            ),
+                            AppSpacing.gapH8,
+                            Row(
+                              children: [
+                                _kpiCard(
+                                  theme,
+                                  l10n.dailySummaryNetRevenue,
+                                  '${netRevenue.toStringAsFixed(2)} \u0081',
+                                  Icons.account_balance,
+                                  netRevenue >= 0 ? AppColors.success : AppColors.error,
+                                ),
+                                AppSpacing.gapW8,
+                                _kpiCard(theme, l10n.dailySummaryTransactions, '$txCount', Icons.receipt, AppColors.info),
+                              ],
+                            ),
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            _kpiCard(
+                              theme,
+                              l10n.dailySummaryGrossRevenue,
+                              '${totalRevenue.toStringAsFixed(2)} \u0081',
+                              Icons.trending_up,
+                              AppColors.success,
+                            ),
+                            AppSpacing.gapW12,
+                            _kpiCard(
+                              theme,
+                              l10n.dailySummaryExpenses,
+                              '${totalExpenses.toStringAsFixed(2)} \u0081',
+                              Icons.trending_down,
+                              AppColors.error,
+                            ),
+                            AppSpacing.gapW12,
+                            _kpiCard(
+                              theme,
+                              l10n.dailySummaryNetRevenue,
+                              '${netRevenue.toStringAsFixed(2)} \u0081',
+                              Icons.account_balance,
+                              netRevenue >= 0 ? AppColors.success : AppColors.error,
+                            ),
+                            AppSpacing.gapW12,
+                            _kpiCard(theme, l10n.dailySummaryTransactions, '$txCount', Icons.receipt, AppColors.info),
+                          ],
+                        ),
                   AppSpacing.gapH24,
 
                   // ── Revenue by Payment Method ──
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(flex: 3, child: _buildMethodBreakdownCard(theme, byMethod, totalRevenue, l10n)),
-                      AppSpacing.gapW16,
-                      Expanded(flex: 2, child: _buildCashVarianceCard(theme, closedSessions, totalVariance, l10n)),
-                    ],
-                  ),
+                  context.isPhone
+                      ? Column(
+                          children: [
+                            _buildMethodBreakdownCard(theme, byMethod, totalRevenue, l10n),
+                            AppSpacing.gapH16,
+                            _buildCashVarianceCard(theme, closedSessions, totalVariance, l10n),
+                          ],
+                        )
+                      : Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(flex: 3, child: _buildMethodBreakdownCard(theme, byMethod, totalRevenue, l10n)),
+                            AppSpacing.gapW16,
+                            Expanded(flex: 2, child: _buildCashVarianceCard(theme, closedSessions, totalVariance, l10n)),
+                          ],
+                        ),
                   AppSpacing.gapH24,
 
                   // ── Hourly Activity ──

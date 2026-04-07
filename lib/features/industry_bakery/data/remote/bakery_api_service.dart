@@ -21,7 +21,7 @@ class BakeryApiService {
       queryParameters: {'per_page': perPage, if (search != null && search.isNotEmpty) 'search': search},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => BakeryRecipe.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -47,7 +47,7 @@ class BakeryApiService {
       queryParameters: {'per_page': perPage, if (status != null) 'status': status},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => ProductionSchedule.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -75,7 +75,7 @@ class BakeryApiService {
       queryParameters: {'per_page': perPage, if (status != null) 'status': status},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => CustomCakeOrder.fromJson(j as Map<String, dynamic>)).toList();
   }
 

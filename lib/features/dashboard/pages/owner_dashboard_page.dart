@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/dashboard/providers/dashboard_providers.dart';
 import 'package:thawani_pos/features/dashboard/providers/dashboard_state.dart';
 import 'package:thawani_pos/features/dashboard/widgets/active_cashiers_list.dart';
@@ -75,19 +76,21 @@ class _OwnerDashboardPageState extends ConsumerState<OwnerDashboardPage> {
           child: LayoutBuilder(
             builder: (context, constraints) {
               final isWide = constraints.maxWidth > 900;
+              final isMobile = context.isPhone;
+              final padding = isMobile ? const EdgeInsets.all(12.0) : AppSpacing.paddingAll16;
 
               return ListView(
-                padding: AppSpacing.paddingAll16,
+                padding: padding,
                 children: [
                   // KPI Cards
                   DashboardKpiCards(stats: stats),
-                  AppSpacing.gapH16,
+                  SizedBox(height: isMobile ? 12 : 16),
 
                   // Sales Trend Chart (full width)
                   SalesTrendChart(salesTrend: salesTrend),
-                  AppSpacing.gapH16,
+                  SizedBox(height: isMobile ? 12 : 16),
 
-                  // Two-column layout on wide screens
+                  // Two-column layout on wide screens, stacked on mobile
                   if (isWide)
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,11 +122,11 @@ class _OwnerDashboardPageState extends ConsumerState<OwnerDashboardPage> {
                     )
                   else ...[
                     TopProductsTable(products: topProducts),
-                    AppSpacing.gapH16,
+                    SizedBox(height: isMobile ? 12 : 16),
                     LowStockAlerts(items: lowStock),
-                    AppSpacing.gapH16,
+                    SizedBox(height: isMobile ? 12 : 16),
                     ActiveCashiersList(cashiers: activeCashiers),
-                    AppSpacing.gapH16,
+                    SizedBox(height: isMobile ? 12 : 16),
                     RecentOrdersList(orders: recentOrders),
                   ],
                 ],

@@ -161,7 +161,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               ? null
                               : () {
                                   _emailController.text = 'owner@ostora.sa';
-                                  _passwordController.text = 'Owner@2026';
+                                  _passwordController.text = 'password123';
                                 },
                           icon: const Icon(Icons.admin_panel_settings, size: 16),
                           label: Text(AppLocalizations.of(context)!.loginAdmin),
@@ -180,6 +180,21 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 },
                           icon: const Icon(Icons.point_of_sale, size: 16),
                           label: Text(AppLocalizations.of(context)!.loginCashier),
+                          style: TextButton.styleFrom(
+                            foregroundColor: AppColors.primary,
+                            textStyle: const TextStyle(fontSize: 12),
+                          ),
+                        ),
+                        const SizedBox(width: AppSpacing.sm),
+                        TextButton.icon(
+                          onPressed: isLoading
+                              ? null
+                              : () {
+                                  _emailController.text = 'branchmanager@ostora.sa';
+                                  _passwordController.text = 'password123';
+                                },
+                          icon: const Icon(Icons.store_rounded, size: 16),
+                          label: const Text('Branch Mgr'),
                           style: TextButton.styleFrom(
                             foregroundColor: AppColors.primary,
                             textStyle: const TextStyle(fontSize: 12),

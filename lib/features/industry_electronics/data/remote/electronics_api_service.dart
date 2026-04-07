@@ -25,7 +25,7 @@ class ElectronicsApiService {
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => DeviceImeiRecord.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -51,7 +51,7 @@ class ElectronicsApiService {
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => RepairJob.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -83,7 +83,7 @@ class ElectronicsApiService {
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => TradeInRecord.fromJson(j as Map<String, dynamic>)).toList();
   }
 

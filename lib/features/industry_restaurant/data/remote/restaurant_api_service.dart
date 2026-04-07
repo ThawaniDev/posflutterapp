@@ -20,7 +20,7 @@ class RestaurantApiService {
   Future<List<RestaurantTable>> listTables({int perPage = 50}) async {
     final response = await _dio.get(ApiEndpoints.restaurantTables, queryParameters: {'per_page': perPage});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => RestaurantTable.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -49,7 +49,7 @@ class RestaurantApiService {
       queryParameters: {'per_page': perPage, if (status != null) 'status': status},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => KitchenTicket.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -72,7 +72,7 @@ class RestaurantApiService {
       queryParameters: {'per_page': perPage, if (status != null) 'status': status, if (date != null) 'date': date},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => TableReservation.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -98,7 +98,7 @@ class RestaurantApiService {
   Future<List<OpenTab>> listTabs({int perPage = 50}) async {
     final response = await _dio.get(ApiEndpoints.restaurantTabs, queryParameters: {'per_page': perPage});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => OpenTab.fromJson(j as Map<String, dynamic>)).toList();
   }
 

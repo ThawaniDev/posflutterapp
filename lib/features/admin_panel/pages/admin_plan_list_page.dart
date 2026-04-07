@@ -5,6 +5,8 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminPlanListPage extends ConsumerStatefulWidget {
   const AdminPlanListPage({super.key});
@@ -14,10 +16,19 @@ class AdminPlanListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminPlanListPageState extends ConsumerState<AdminPlanListPage> {
+  String? _storeId;
+
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(planListProvider.notifier).loadPlans());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(planListProvider.notifier).loadPlans();
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
   }
 
   @override
@@ -36,35 +47,42 @@ class _AdminPlanListPageState extends ConsumerState<AdminPlanListPage> {
           ),
         ],
       ),
-      body: switch (state) {
-        PlanListLoading() => const Center(child: CircularProgressIndicator()),
-        PlanListError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message, style: const TextStyle(color: AppColors.error)),
-              AppSpacing.gapH16,
-              PosButton(
-                label: 'Retry',
-                variant: PosButtonVariant.outline,
-                onPressed: () => ref.read(planListProvider.notifier).loadPlans(),
-              ),
-            ],
-          ),
-        ),
-        PlanListLoaded(:final plans) =>
-          plans.isEmpty
-              ? const Center(child: Text('No plans found'))
-              : ListView.builder(
-                  padding: AppSpacing.paddingAll16,
-                  itemCount: plans.length,
-                  itemBuilder: (context, index) {
-                    final plan = plans[index];
-                    return _PlanCard(plan: plan);
-                  },
+      body: Column(
+        children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          Expanded(
+            child: switch (state) {
+              PlanListLoading() => const Center(child: CircularProgressIndicator()),
+              PlanListError(:final message) => Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(message, style: const TextStyle(color: AppColors.error)),
+                    AppSpacing.gapH16,
+                    PosButton(
+                      label: 'Retry',
+                      variant: PosButtonVariant.outline,
+                      onPressed: () => ref.read(planListProvider.notifier).loadPlans(),
+                    ),
+                  ],
                 ),
-        _ => const SizedBox.shrink(),
-      },
+              ),
+              PlanListLoaded(:final plans) =>
+                plans.isEmpty
+                    ? const Center(child: Text('No plans found'))
+                    : ListView.builder(
+                        padding: AppSpacing.paddingAll16,
+                        itemCount: plans.length,
+                        itemBuilder: (context, index) {
+                          final plan = plans[index];
+                          return _PlanCard(plan: plan);
+                        },
+                      ),
+              _ => const SizedBox.shrink(),
+            },
+          ),
+        ],
+      ),
     );
   }
 }

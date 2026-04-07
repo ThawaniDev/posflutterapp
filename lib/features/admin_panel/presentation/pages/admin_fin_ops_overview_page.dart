@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_payment_list_page.dart';
 import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_refund_list_page.dart';
 import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_cash_session_list_page.dart';
@@ -21,10 +23,20 @@ class AdminFinOpsOverviewPage extends ConsumerStatefulWidget {
 }
 
 class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPage> {
+  String? _storeId;
+
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(finOpsOverviewProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(finOpsOverviewProvider.notifier).load(storeId: _storeId);
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    ref.read(finOpsOverviewProvider.notifier).load(storeId: _storeId);
   }
 
   @override
@@ -37,21 +49,31 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
       ),
-      body: switch (state) {
-        FinOpsOverviewLoading() => const Center(child: CircularProgressIndicator()),
-        FinOpsOverviewLoaded(data: final resp) => _buildContent(resp),
-        FinOpsOverviewError(message: final msg) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
-              const SizedBox(height: AppSpacing.md),
-              ElevatedButton(onPressed: () => ref.read(finOpsOverviewProvider.notifier).load(), child: const Text('Retry')),
-            ],
+      body: Column(
+        children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          Expanded(
+            child: switch (state) {
+              FinOpsOverviewLoading() => const Center(child: CircularProgressIndicator()),
+              FinOpsOverviewLoaded(data: final resp) => _buildContent(resp),
+              FinOpsOverviewError(message: final msg) => Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
+                    const SizedBox(height: AppSpacing.md),
+                    ElevatedButton(
+                      onPressed: () => ref.read(finOpsOverviewProvider.notifier).load(storeId: _storeId),
+                      child: const Text('Retry'),
+                    ),
+                  ],
+                ),
+              ),
+              _ => const Center(child: Text('Loading financial data...')),
+            },
           ),
-        ),
-        _ => const Center(child: Text('Loading financial data...')),
-      },
+        ],
+      ),
     );
   }
 
@@ -59,7 +81,7 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
 
     return RefreshIndicator(
-      onRefresh: () => ref.read(finOpsOverviewProvider.notifier).load(),
+      onRefresh: () => ref.read(finOpsOverviewProvider.notifier).load(storeId: _storeId),
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.all(AppSpacing.md),

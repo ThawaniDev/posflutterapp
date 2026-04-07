@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminUserActivityPage extends ConsumerStatefulWidget {
   final String userId;
@@ -15,10 +17,13 @@ class AdminUserActivityPage extends ConsumerStatefulWidget {
 }
 
 class _AdminUserActivityPageState extends ConsumerState<AdminUserActivityPage> {
+  String? _storeId;
+
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
       final notifier = ref.read(userActivityProvider.notifier);
       if (widget.isAdmin) {
         notifier.loadAdminActivity(widget.userId);
@@ -28,27 +33,38 @@ class _AdminUserActivityPageState extends ConsumerState<AdminUserActivityPage> {
     });
   }
 
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(userActivityProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(widget.isAdmin ? 'Admin Activity' : 'User Activity')),
-      body: switch (state) {
-        UserActivityLoading() => const Center(child: CircularProgressIndicator()),
-        UserActivityError(:final message) => Center(
-          child: Text(message, style: const TextStyle(color: AppColors.error)),
-        ),
-        UserActivityLoaded(:final logs) =>
-          logs.isEmpty
-              ? const Center(child: Text('No activity logged'))
-              : ListView.builder(
-                  itemCount: logs.length,
-                  padding: AppSpacing.paddingAll8,
-                  itemBuilder: (context, index) => _buildLogEntry(logs[index]),
-                ),
-        _ => const SizedBox.shrink(),
-      },
+      body: Column(
+        children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          Expanded(
+            child: switch (state) {
+              UserActivityLoading() => const Center(child: CircularProgressIndicator()),
+              UserActivityError(:final message) => Center(
+                child: Text(message, style: const TextStyle(color: AppColors.error)),
+              ),
+              UserActivityLoaded(:final logs) =>
+                logs.isEmpty
+                    ? const Center(child: Text('No activity logged'))
+                    : ListView.builder(
+                        itemCount: logs.length,
+                        padding: AppSpacing.paddingAll8,
+                        itemBuilder: (context, index) => _buildLogEntry(logs[index]),
+                      ),
+              _ => const SizedBox.shrink(),
+            },
+          ),
+        ],
+      ),
     );
   }
 

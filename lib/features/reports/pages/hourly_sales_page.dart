@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/reports/models/report_filters.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
+import 'package:thawani_pos/features/reports/widgets/report_charts.dart';
+import 'package:thawani_pos/features/reports/widgets/report_filter_panel.dart';
 import 'package:thawani_pos/features/reports/widgets/report_widgets.dart';
 
 class HourlySalesPage extends ConsumerStatefulWidget {
@@ -15,7 +18,7 @@ class HourlySalesPage extends ConsumerStatefulWidget {
 }
 
 class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
-  DateTimeRange? _dateRange;
+  ReportFilters _filters = const ReportFilters();
 
   @override
   void initState() {
@@ -24,25 +27,12 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
   }
 
   void _loadData() {
-    ref
-        .read(hourlySalesProvider.notifier)
-        .load(
-          dateFrom: _dateRange != null ? DateFormat('yyyy-MM-dd').format(_dateRange!.start) : null,
-          dateTo: _dateRange != null ? DateFormat('yyyy-MM-dd').format(_dateRange!.end) : null,
-        );
+    ref.read(hourlySalesProvider.notifier).load(filters: _filters);
   }
 
-  Future<void> _pickDate() async {
-    final picked = await showDateRangePicker(
-      context: context,
-      firstDate: DateTime(2020),
-      lastDate: DateTime.now(),
-      initialDateRange: _dateRange,
-    );
-    if (picked != null) {
-      setState(() => _dateRange = picked);
-      _loadData();
-    }
+  void _onFiltersChanged(ReportFilters filters) {
+    setState(() => _filters = filters);
+    _loadData();
   }
 
   String _formatHour(int hour) {
@@ -58,13 +48,14 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
 
     return ReportPageScaffold(
       title: 'Hourly Sales',
-      dateRange: _dateRange,
-      onPickDate: _pickDate,
-      onClearDate: () {
-        setState(() => _dateRange = null);
-        _loadData();
-      },
-      onRefresh: _loadData,
+      filterPanel: ReportFilterPanel(
+        filters: _filters,
+        onFiltersChanged: _onFiltersChanged,
+        onRefresh: _loadData,
+        showStaffFilter: true,
+        showPaymentMethodFilter: true,
+        showOrderStatus: true,
+      ),
       body: switch (state) {
         HourlySalesInitial() || HourlySalesLoading() => PosLoadingSkeleton.list(),
         HourlySalesError(:final message) => PosErrorState(message: message, onRetry: _loadData),
@@ -76,7 +67,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
               : ListView(
                   padding: const EdgeInsets.all(20),
                   children: [
-                    // Peak hour highlight
+                    // Peak hour highlight + KPIs
                     if (hours.isNotEmpty) ...[
                       Builder(
                         builder: (context) {
@@ -88,43 +79,84 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                           final totalOrders = hours.fold<int>(0, (sum, h) => sum + (h['total_orders'] as int? ?? 0));
                           return Column(
                             children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: ReportKpiCard(
-                                      label: 'Peak Hour',
-                                      value: _formatHour(peak['hour'] as int),
-                                      icon: Icons.whatshot_rounded,
-                                      color: AppColors.warning,
-                                      subtitle: formatCurrency(peak['total_revenue'] as num),
+                              context.isPhone
+                                  ? Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: ReportKpiCard(
+                                                label: 'Peak Hour',
+                                                value: _formatHour(peak['hour'] as int),
+                                                icon: Icons.whatshot_rounded,
+                                                color: AppColors.warning,
+                                                subtitle: formatCurrency(peak['total_revenue'] as num),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 12),
+                                            Expanded(
+                                              child: ReportKpiCard(
+                                                label: 'Total Revenue',
+                                                value: formatCurrency(totalRevenue),
+                                                icon: Icons.trending_up_rounded,
+                                                color: AppColors.success,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 12),
+                                        ReportKpiCard(
+                                          label: 'Total Orders',
+                                          value: '$totalOrders',
+                                          icon: Icons.receipt_long_rounded,
+                                          color: AppColors.info,
+                                        ),
+                                      ],
+                                    )
+                                  : Row(
+                                      children: [
+                                        Expanded(
+                                          child: ReportKpiCard(
+                                            label: 'Peak Hour',
+                                            value: _formatHour(peak['hour'] as int),
+                                            icon: Icons.whatshot_rounded,
+                                            color: AppColors.warning,
+                                            subtitle: formatCurrency(peak['total_revenue'] as num),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                          child: ReportKpiCard(
+                                            label: 'Total Revenue',
+                                            value: formatCurrency(totalRevenue),
+                                            icon: Icons.trending_up_rounded,
+                                            color: AppColors.success,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                          child: ReportKpiCard(
+                                            label: 'Total Orders',
+                                            value: '$totalOrders',
+                                            icon: Icons.receipt_long_rounded,
+                                            color: AppColors.info,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: ReportKpiCard(
-                                      label: 'Total Revenue',
-                                      value: formatCurrency(totalRevenue),
-                                      icon: Icons.trending_up_rounded,
-                                      color: AppColors.success,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: ReportKpiCard(
-                                      label: 'Total Orders',
-                                      value: '$totalOrders',
-                                      icon: Icons.receipt_long_rounded,
-                                      color: AppColors.info,
-                                    ),
-                                  ),
-                                ],
-                              ),
                               const SizedBox(height: 24),
                             ],
                           );
                         },
                       ),
                     ],
+
+                    // Hourly Chart
+                    const ReportSectionHeader(title: 'Hourly Pattern', icon: Icons.schedule_rounded),
+                    ReportDataCard(
+                      child: ReportHourlyChart(data: hours, valueKey: 'total_revenue'),
+                    ),
+                    const SizedBox(height: 24),
 
                     const ReportSectionHeader(title: 'Revenue by Hour', icon: Icons.bar_chart_rounded),
                     ReportDataCard(

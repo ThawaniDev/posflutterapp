@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/providers/branch_context_provider.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import '../../widgets/admin_branch_bar.dart';
 
 class AdminSecurityOverviewPage extends ConsumerStatefulWidget {
   const AdminSecurityOverviewPage({super.key});
@@ -13,10 +15,20 @@ class AdminSecurityOverviewPage extends ConsumerStatefulWidget {
 }
 
 class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOverviewPage> {
+  String? _storeId;
+
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(securityOverviewProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(securityOverviewProvider.notifier).load(storeId: _storeId);
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    ref.read(securityOverviewProvider.notifier).load(storeId: _storeId);
   }
 
   @override
@@ -25,30 +37,40 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
 
     return Scaffold(
       appBar: AppBar(title: const Text('Security Center'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: switch (state) {
-        SecurityOverviewLoading() => const Center(child: CircularProgressIndicator()),
-        SecurityOverviewError(message: final msg) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.error_outline, size: 48, color: AppColors.error),
-              const SizedBox(height: AppSpacing.md),
-              Text(msg, textAlign: TextAlign.center),
-              const SizedBox(height: AppSpacing.md),
-              ElevatedButton(onPressed: () => ref.read(securityOverviewProvider.notifier).load(), child: const Text('Retry')),
-            ],
+      body: Column(
+        children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          Expanded(
+            child: switch (state) {
+              SecurityOverviewLoading() => const Center(child: CircularProgressIndicator()),
+              SecurityOverviewError(message: final msg) => Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.error_outline, size: 48, color: AppColors.error),
+                    const SizedBox(height: AppSpacing.md),
+                    Text(msg, textAlign: TextAlign.center),
+                    const SizedBox(height: AppSpacing.md),
+                    ElevatedButton(
+                      onPressed: () => ref.read(securityOverviewProvider.notifier).load(storeId: _storeId),
+                      child: const Text('Retry'),
+                    ),
+                  ],
+                ),
+              ),
+              SecurityOverviewLoaded(data: final data) => _buildOverview(data),
+              _ => const SizedBox.shrink(),
+            },
           ),
-        ),
-        SecurityOverviewLoaded(data: final data) => _buildOverview(data),
-        _ => const SizedBox.shrink(),
-      },
+        ],
+      ),
     );
   }
 
   Widget _buildOverview(Map<String, dynamic> data) {
     final overview = data['data'] as Map<String, dynamic>? ?? data;
     return RefreshIndicator(
-      onRefresh: () => ref.read(securityOverviewProvider.notifier).load(),
+      onRefresh: () => ref.read(securityOverviewProvider.notifier).load(storeId: _storeId),
       child: ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [

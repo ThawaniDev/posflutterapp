@@ -280,14 +280,14 @@ class _SupplierReturnDetailPageState extends ConsumerState<SupplierReturnDetailP
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 140,
+          Expanded(
+            flex: 2,
             child: Text(
               label,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
           ),
-          Expanded(child: Text(value, style: Theme.of(context).textTheme.bodyMedium)),
+          Expanded(flex: 3, child: Text(value, style: Theme.of(context).textTheme.bodyMedium)),
         ],
       ),
     );

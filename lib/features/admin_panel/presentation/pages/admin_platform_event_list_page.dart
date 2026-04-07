@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminPlatformEventListPage extends ConsumerStatefulWidget {
   const AdminPlatformEventListPage({super.key});
@@ -15,11 +18,15 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
   final _searchController = TextEditingController();
   String? _levelFilter;
   String? _eventTypeFilter;
+  String? _storeId;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(platformEventListProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _applyFilters();
+    });
   }
 
   @override
@@ -30,10 +37,16 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
 
   void _applyFilters() {
     final params = <String, dynamic>{};
+    if (_storeId != null) params['store_id'] = _storeId!;
     if (_searchController.text.isNotEmpty) params['search'] = _searchController.text;
     if (_levelFilter != null) params['level'] = _levelFilter;
     if (_eventTypeFilter != null) params['event_type'] = _eventTypeFilter;
-    ref.read(platformEventListProvider.notifier).load(params: params);
+    ref.read(platformEventListProvider.notifier).load(params: params.isEmpty ? null : params);
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _applyFilters();
   }
 
   Color _levelColor(String? level) => switch (level) {
@@ -62,26 +75,25 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
       appBar: AppBar(title: const Text('Platform Events')),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      hintText: 'Search events...',
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                    ),
-                    onSubmitted: (_) => _applyFilters(),
+            child: Builder(
+              builder: (context) {
+                final searchField = TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search events...',
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                   ),
-                ),
-                const SizedBox(width: 12),
-                DropdownButton<String>(
+                  onSubmitted: (_) => _applyFilters(),
+                );
+                final levelDropdown = DropdownButton<String>(
                   value: _levelFilter,
                   hint: const Text('Level'),
+                  isExpanded: context.isPhone,
                   items: const [
                     DropdownMenuItem(value: 'debug', child: Text('Debug')),
                     DropdownMenuItem(value: 'info', child: Text('Info')),
@@ -93,11 +105,11 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
                     setState(() => _levelFilter = v);
                     _applyFilters();
                   },
-                ),
-                const SizedBox(width: 8),
-                DropdownButton<String>(
+                );
+                final typeDropdown = DropdownButton<String>(
                   value: _eventTypeFilter,
                   hint: const Text('Type'),
+                  isExpanded: context.isPhone,
                   items: const [
                     DropdownMenuItem(value: 'deployment', child: Text('Deployment')),
                     DropdownMenuItem(value: 'config_change', child: Text('Config Change')),
@@ -109,8 +121,32 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
                     setState(() => _eventTypeFilter = v);
                     _applyFilters();
                   },
-                ),
-              ],
+                );
+                if (context.isPhone) {
+                  return Column(
+                    children: [
+                      searchField,
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Expanded(child: levelDropdown),
+                          const SizedBox(width: 8),
+                          Expanded(child: typeDropdown),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+                return Row(
+                  children: [
+                    Expanded(child: searchField),
+                    const SizedBox(width: 12),
+                    levelDropdown,
+                    const SizedBox(width: 8),
+                    typeDropdown,
+                  ],
+                );
+              },
             ),
           ),
           Expanded(

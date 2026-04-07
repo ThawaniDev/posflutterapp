@@ -6703,6 +6703,144 @@ class AppLocalizationsAr extends AppLocalizations {
   String get termFormVersionLabel => 'إصدار التطبيق (اختياري)';
 
   @override
+  String get termFormDeviceSection => 'معلومات الجهاز';
+
+  @override
+  String get termFormDeviceSectionSub => 'تفاصيل الجهاز الفعلي';
+
+  @override
+  String get termFormDeviceModelLabel => 'طراز الجهاز';
+
+  @override
+  String get termFormDeviceModelHint => 'مثلاً Samsung Galaxy A54';
+
+  @override
+  String get termFormOsVersionLabel => 'إصدار النظام';
+
+  @override
+  String get termFormOsVersionHint => 'مثلاً Android 14, iOS 17.4';
+
+  @override
+  String get termFormSerialNumberLabel => 'الرقم التسلسلي';
+
+  @override
+  String get termFormSerialNumberHint => 'الرقم التسلسلي للجهاز';
+
+  @override
+  String get termFormNfcCapable => 'يدعم NFC';
+
+  @override
+  String get termFormNfcCapableSub => 'الجهاز يدعم الدفع بدون تلامس';
+
+  @override
+  String get termFormSoftposSection => 'إعدادات SoftPOS';
+
+  @override
+  String get termFormSoftposSectionSub => 'إعدادات الدفع عبر الهاتف';
+
+  @override
+  String get termFormSoftposEnabled => 'تفعيل SoftPOS';
+
+  @override
+  String get termFormSoftposEnabledSub => 'تفعيل الدفع بدون تلامس عبر الهاتف';
+
+  @override
+  String get termFormNearpayTidLabel => 'معرف NearPay TID';
+
+  @override
+  String get termFormNearpayTidHint => 'معرف الجهاز من NearPay';
+
+  @override
+  String get termFormNearpayMidLabel => 'معرف NearPay MID';
+
+  @override
+  String get termFormNearpayMidHint => 'معرف التاجر من NearPay';
+
+  @override
+  String get termFormAcquirerSection => 'بيانات المعالج';
+
+  @override
+  String get termFormAcquirerSectionSub => 'إعدادات معالج الدفع';
+
+  @override
+  String get termFormAcquirerSourceLabel => 'مصدر المعالج';
+
+  @override
+  String get termFormAcquirerSourceHint => 'اختر المعالج';
+
+  @override
+  String get termFormAcquirerNameLabel => 'اسم المعالج';
+
+  @override
+  String get termFormAcquirerNameHint => 'اسم معالج الدفع';
+
+  @override
+  String get termFormAcquirerRefLabel => 'مرجع المعالج';
+
+  @override
+  String get termFormAcquirerRefHint => 'معرف مرجع المعالج';
+
+  @override
+  String get termFormSettlementSection => 'التسوية';
+
+  @override
+  String get termFormSettlementSectionSub => 'إعدادات التسوية البنكية';
+
+  @override
+  String get termFormSettlementCycleLabel => 'دورة التسوية';
+
+  @override
+  String get termFormSettlementCycleHint => 'اختر الدورة';
+
+  @override
+  String get termFormSettlementBankLabel => 'اسم البنك';
+
+  @override
+  String get termFormSettlementBankHint => 'مثلاً مصرف الراجحي';
+
+  @override
+  String get termFormSettlementIbanLabel => 'IBAN';
+
+  @override
+  String get termFormSettlementIbanHint => 'مثلاً SA0380000000608010167519';
+
+  @override
+  String get termFormNotesSection => 'ملاحظات';
+
+  @override
+  String get termFormNotesSectionSub => 'معلومات إضافية';
+
+  @override
+  String get termFormAdminNotesLabel => 'ملاحظات المدير';
+
+  @override
+  String get termFormAdminNotesHint => 'ملاحظات داخلية حول هذا الجهاز';
+
+  @override
+  String get terminalsColDeviceModel => 'الجهاز';
+
+  @override
+  String get terminalsColSerialNo => 'الرقم التسلسلي';
+
+  @override
+  String get terminalsColAcquirer => 'المعالج';
+
+  @override
+  String get terminalsColNfc => 'NFC';
+
+  @override
+  String get terminalsColLastTxn => 'آخر معاملة';
+
+  @override
+  String get terminalsYes => 'نعم';
+
+  @override
+  String get terminalsNo => 'لا';
+
+  @override
+  String get terminalsNa => 'غ/م';
+
+  @override
   String get terminalsActivate => 'تفعيل';
 
   @override
@@ -6877,6 +7015,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sidebarLabels => 'التصنيفات';
 
   @override
+  String get sidebarPredefinedCatalog => 'الكتالوج المحدد مسبقاً';
+
+  @override
   String get sidebarCustomers => 'العملاء';
 
   @override
@@ -6896,6 +7037,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sidebarAccounting => 'المحاسبة';
+
+  @override
+  String get sidebarDebits => 'المدينون';
 
   @override
   String get sidebarReports => 'التقارير';
@@ -7562,4 +7706,196 @@ class AppLocalizationsAr extends AppLocalizations {
   String supplierReturnActionSuccess(String action) {
     return 'تم $action المرتجع بنجاح.';
   }
+
+  @override
+  String get debitsTitle => 'المدينون';
+
+  @override
+  String get debitsCreate => 'إنشاء مديونية';
+
+  @override
+  String get debitsEdit => 'تعديل المديونية';
+
+  @override
+  String get debitsDetail => 'تفاصيل المديونية';
+
+  @override
+  String get debitsNoDebits => 'لا توجد مديونيات';
+
+  @override
+  String get debitsNoDebitsSubtitle => 'ستظهر المديونيات هنا بمجرد إنشائها.';
+
+  @override
+  String get debitsSearchHint => 'بحث بالمرجع، العميل، الوصف...';
+
+  @override
+  String get debitsFilterByStatus => 'تصفية حسب الحالة';
+
+  @override
+  String get debitsFilterByType => 'تصفية حسب النوع';
+
+  @override
+  String get debitsAll => 'الكل';
+
+  @override
+  String get debitsReferenceNumber => 'رقم المرجع';
+
+  @override
+  String get debitsCustomer => 'العميل';
+
+  @override
+  String get debitsType => 'النوع';
+
+  @override
+  String get debitsSource => 'المصدر';
+
+  @override
+  String get debitsAmount => 'المبلغ';
+
+  @override
+  String get debitsRemainingBalance => 'الرصيد المتبقي';
+
+  @override
+  String get debitsDescription => 'الوصف';
+
+  @override
+  String get debitsDescriptionAr => 'الوصف (عربي)';
+
+  @override
+  String get debitsSelectCustomer => 'اختر العميل';
+
+  @override
+  String get debitsSelectType => 'اختر النوع';
+
+  @override
+  String get debitsSelectSource => 'اختر المصدر';
+
+  @override
+  String get debitsStatusPending => 'معلق';
+
+  @override
+  String get debitsStatusPartiallyAllocated => 'مخصص جزئياً';
+
+  @override
+  String get debitsStatusFullyAllocated => 'مخصص بالكامل';
+
+  @override
+  String get debitsStatusReversed => 'معكوس';
+
+  @override
+  String get debitsTypeCustomerCredit => 'رصيد عميل';
+
+  @override
+  String get debitsTypeSupplierReturn => 'مرتجع مورد';
+
+  @override
+  String get debitsTypeInventoryAdjustment => 'تسوية مخزون';
+
+  @override
+  String get debitsTypeManualCredit => 'رصيد يدوي';
+
+  @override
+  String get debitsSourcePosTerminal => 'نقطة البيع';
+
+  @override
+  String get debitsSourceInvoice => 'فاتورة';
+
+  @override
+  String get debitsSourceReturn => 'مرتجع';
+
+  @override
+  String get debitsSourceManual => 'يدوي';
+
+  @override
+  String get debitsSourceInventorySystem => 'نظام المخزون';
+
+  @override
+  String get debitsAllocate => 'تخصيص';
+
+  @override
+  String get debitsAllocateDebit => 'تخصيص المديونية';
+
+  @override
+  String get debitsAllocateToOrder => 'تخصيص للطلب';
+
+  @override
+  String get debitsOrderId => 'معرف الطلب';
+
+  @override
+  String get debitsAllocateAmount => 'مبلغ التخصيص';
+
+  @override
+  String get debitsReverse => 'عكس';
+
+  @override
+  String get debitsReverseDebit => 'عكس المديونية';
+
+  @override
+  String get debitsReverseReason => 'سبب العكس';
+
+  @override
+  String get debitsReverseConfirm => 'هل أنت متأكد من عكس هذه المديونية؟';
+
+  @override
+  String get debitsDeleteConfirm => 'هل أنت متأكد من حذف هذه المديونية؟';
+
+  @override
+  String get debitsCreatedSuccess => 'تم إنشاء المديونية بنجاح';
+
+  @override
+  String get debitsUpdatedSuccess => 'تم تحديث المديونية بنجاح';
+
+  @override
+  String get debitsDeletedSuccess => 'تم حذف المديونية بنجاح';
+
+  @override
+  String get debitsAllocatedSuccess => 'تم تخصيص المديونية بنجاح';
+
+  @override
+  String get debitsReversedSuccess => 'تم عكس المديونية بنجاح';
+
+  @override
+  String get debitsSummaryTitle => 'ملخص المديونيات';
+
+  @override
+  String get debitsSummaryTotal => 'إجمالي المديونيات';
+
+  @override
+  String get debitsSummaryPending => 'معلقة';
+
+  @override
+  String get debitsSummaryPartially => 'مخصصة جزئياً';
+
+  @override
+  String get debitsSummaryFully => 'مخصصة بالكامل';
+
+  @override
+  String get debitsSummaryReversed => 'معكوسة';
+
+  @override
+  String get debitsSummaryAllocated => 'إجمالي المخصص';
+
+  @override
+  String get debitsSummaryUnallocated => 'غير مخصص';
+
+  @override
+  String get debitsAllocations => 'التخصيصات';
+
+  @override
+  String get debitsNoAllocations => 'لا توجد تخصيصات بعد';
+
+  @override
+  String get debitsCreatedBy => 'أنشأه';
+
+  @override
+  String get debitsAllocatedBy => 'خصصه';
+
+  @override
+  String get debitsAllocatedAt => 'تاريخ التخصيص';
+
+  @override
+  String get debitsCreatedAt => 'تاريخ الإنشاء';
+
+  @override
+  String get debitsOrderNumber => 'رقم الطلب';
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/constants/permission_constants.dart';
 import '../l10n/app_localizations.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
@@ -6,12 +7,23 @@ import '../theme/app_typography.dart';
 
 /// A navigation item definition for [PosSidebar].
 class PosSidebarItem {
-  PosSidebarItem({required this.label, required this.icon, this.activeIcon, this.route, this.badge, this.children});
+  PosSidebarItem({
+    required this.label,
+    required this.icon,
+    this.activeIcon,
+    this.route,
+    this.badge,
+    this.children,
+    this.permission,
+  });
 
   final String label;
   final IconData icon;
   final IconData? activeIcon;
   final String? route;
+
+  /// The permission code required to see this item. Null = always visible.
+  final String? permission;
 
   /// Optional badge count (e.g. pending orders).
   final int? badge;
@@ -76,18 +88,44 @@ class PosSidebar extends StatefulWidget {
       label: l10n.sidebarGroupCore,
       icon: Icons.dashboard_rounded,
       items: [
-        PosSidebarItem(label: l10n.sidebarDashboard, icon: Icons.dashboard_rounded, route: '/dashboard'),
+        PosSidebarItem(
+          label: l10n.sidebarDashboard,
+          icon: Icons.dashboard_rounded,
+          route: '/dashboard',
+          permission: Permissions.dashboardView,
+        ),
         PosSidebarItem(
           label: l10n.sidebarPosTerminal,
           icon: Icons.point_of_sale_rounded,
           route: '/pos',
+          permission: Permissions.posSell,
           children: [
-            PosSidebarItem(label: l10n.sidebarTerminals, icon: Icons.devices_other_rounded, route: '/pos/terminals'),
-            PosSidebarItem(label: l10n.sidebarSessions, icon: Icons.receipt_long_rounded, route: '/pos/sessions'),
+            PosSidebarItem(
+              label: l10n.sidebarTerminals,
+              icon: Icons.devices_other_rounded,
+              route: '/pos/terminals',
+              permission: Permissions.posManageTerminals,
+            ),
+            PosSidebarItem(
+              label: l10n.sidebarSessions,
+              icon: Icons.receipt_long_rounded,
+              route: '/pos/sessions',
+              permission: Permissions.posViewSessions,
+            ),
           ],
         ),
-        PosSidebarItem(label: l10n.sidebarOrders, icon: Icons.receipt_long_rounded, route: '/orders'),
-        PosSidebarItem(label: l10n.sidebarPayments, icon: Icons.payments_rounded, route: '/cash-management'),
+        PosSidebarItem(
+          label: l10n.sidebarOrders,
+          icon: Icons.receipt_long_rounded,
+          route: '/orders',
+          permission: Permissions.ordersView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarPayments,
+          icon: Icons.payments_rounded,
+          route: '/cash-management',
+          permission: Permissions.cashManage,
+        ),
       ],
     ),
 
@@ -96,11 +134,42 @@ class PosSidebar extends StatefulWidget {
       label: l10n.sidebarGroupCatalog,
       icon: Icons.inventory_2_rounded,
       items: [
-        PosSidebarItem(label: l10n.sidebarProducts, icon: Icons.inventory_2_rounded, route: '/products'),
-        PosSidebarItem(label: l10n.sidebarCategories, icon: Icons.category_rounded, route: '/categories'),
-        PosSidebarItem(label: l10n.sidebarSuppliers, icon: Icons.people_alt_rounded, route: '/suppliers'),
-        PosSidebarItem(label: l10n.sidebarInventory, icon: Icons.warehouse_rounded, route: '/inventory'),
-        PosSidebarItem(label: l10n.sidebarLabels, icon: Icons.label_rounded, route: '/labels'),
+        PosSidebarItem(
+          label: l10n.sidebarProducts,
+          icon: Icons.inventory_2_rounded,
+          route: '/products',
+          permission: Permissions.productsView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarCategories,
+          icon: Icons.category_rounded,
+          route: '/categories',
+          permission: Permissions.productsManageCategories,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarSuppliers,
+          icon: Icons.people_alt_rounded,
+          route: '/suppliers',
+          permission: Permissions.productsManageSuppliers,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarInventory,
+          icon: Icons.warehouse_rounded,
+          route: '/inventory',
+          permission: Permissions.inventoryView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarLabels,
+          icon: Icons.label_rounded,
+          route: '/labels',
+          permission: Permissions.labelsView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarPredefinedCatalog,
+          icon: Icons.auto_awesome_rounded,
+          route: '/predefined-catalog',
+          permission: Permissions.productsUsePredefined,
+        ),
       ],
     ),
 
@@ -109,11 +178,36 @@ class PosSidebar extends StatefulWidget {
       label: l10n.sidebarGroupPeople,
       icon: Icons.people_rounded,
       items: [
-        PosSidebarItem(label: l10n.sidebarCustomers, icon: Icons.people_rounded, route: '/customers'),
-        PosSidebarItem(label: l10n.sidebarStaffMembers, icon: Icons.badge_rounded, route: '/staff/members'),
-        PosSidebarItem(label: l10n.sidebarRolesPermissions, icon: Icons.admin_panel_settings_rounded, route: '/staff/roles'),
-        PosSidebarItem(label: l10n.sidebarAttendance, icon: Icons.access_time_rounded, route: '/staff/attendance'),
-        PosSidebarItem(label: l10n.sidebarShiftSchedule, icon: Icons.calendar_month_rounded, route: '/staff/shifts'),
+        PosSidebarItem(
+          label: l10n.sidebarCustomers,
+          icon: Icons.people_rounded,
+          route: '/customers',
+          permission: Permissions.customersView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarStaffMembers,
+          icon: Icons.badge_rounded,
+          route: '/staff/members',
+          permission: Permissions.staffView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarRolesPermissions,
+          icon: Icons.admin_panel_settings_rounded,
+          route: '/staff/roles',
+          permission: Permissions.rolesView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarAttendance,
+          icon: Icons.access_time_rounded,
+          route: '/staff/attendance',
+          permission: Permissions.reportsAttendance,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarShiftSchedule,
+          icon: Icons.calendar_month_rounded,
+          route: '/staff/shifts',
+          permission: Permissions.staffManageShifts,
+        ),
       ],
     ),
 
@@ -122,9 +216,30 @@ class PosSidebar extends StatefulWidget {
       label: l10n.sidebarGroupBusiness,
       icon: Icons.business_rounded,
       items: [
-        PosSidebarItem(label: l10n.sidebarBranches, icon: Icons.store_rounded, route: '/branches'),
-        PosSidebarItem(label: l10n.sidebarAccounting, icon: Icons.account_balance_rounded, route: '/accounting'),
-        PosSidebarItem(label: l10n.sidebarPromotions, icon: Icons.local_offer_rounded, route: '/promotions'),
+        PosSidebarItem(
+          label: l10n.sidebarBranches,
+          icon: Icons.store_rounded,
+          route: '/branches',
+          permission: Permissions.branchesView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarAccounting,
+          icon: Icons.account_balance_rounded,
+          route: '/accounting',
+          permission: Permissions.accountingViewHistory,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarDebits,
+          icon: Icons.account_balance_wallet_rounded,
+          route: '/debits',
+          permission: Permissions.customersManageDebits,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarPromotions,
+          icon: Icons.local_offer_rounded,
+          route: '/promotions',
+          permission: Permissions.promotionsManage,
+        ),
       ],
     ),
 
@@ -133,24 +248,66 @@ class PosSidebar extends StatefulWidget {
       label: l10n.sidebarGroupReports,
       icon: Icons.bar_chart_rounded,
       items: [
-        PosSidebarItem(label: l10n.sidebarReports, icon: Icons.bar_chart_rounded, route: '/reports'),
-        PosSidebarItem(label: l10n.sidebarSalesSummary, icon: Icons.receipt_long_rounded, route: '/reports/sales-summary'),
-        PosSidebarItem(label: l10n.sidebarHourlySales, icon: Icons.schedule_rounded, route: '/reports/hourly-sales'),
+        PosSidebarItem(
+          label: l10n.sidebarReports,
+          icon: Icons.bar_chart_rounded,
+          route: '/reports',
+          permission: Permissions.reportsView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarSalesSummary,
+          icon: Icons.receipt_long_rounded,
+          route: '/reports/sales-summary',
+          permission: Permissions.reportsSales,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarHourlySales,
+          icon: Icons.schedule_rounded,
+          route: '/reports/hourly-sales',
+          permission: Permissions.reportsSales,
+        ),
         PosSidebarItem(
           label: l10n.sidebarProductPerformance,
           icon: Icons.inventory_2_rounded,
           route: '/reports/product-performance',
+          permission: Permissions.reportsSales,
         ),
-        PosSidebarItem(label: l10n.sidebarCategoryBreakdown, icon: Icons.category_rounded, route: '/reports/category-breakdown'),
-        PosSidebarItem(label: l10n.sidebarPaymentMethods, icon: Icons.payment_rounded, route: '/reports/payment-methods'),
-        PosSidebarItem(label: l10n.sidebarStaffPerformance, icon: Icons.people_rounded, route: '/reports/staff-performance'),
-        PosSidebarItem(label: l10n.sidebarInventoryReports, icon: Icons.warehouse_rounded, route: '/reports/inventory'),
+        PosSidebarItem(
+          label: l10n.sidebarCategoryBreakdown,
+          icon: Icons.category_rounded,
+          route: '/reports/category-breakdown',
+          permission: Permissions.reportsSales,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarPaymentMethods,
+          icon: Icons.payment_rounded,
+          route: '/reports/payment-methods',
+          permission: Permissions.reportsSales,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarStaffPerformance,
+          icon: Icons.people_rounded,
+          route: '/reports/staff-performance',
+          permission: Permissions.reportsStaff,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarInventoryReports,
+          icon: Icons.warehouse_rounded,
+          route: '/reports/inventory',
+          permission: Permissions.reportsInventory,
+        ),
         PosSidebarItem(
           label: l10n.sidebarFinancialReports,
           icon: Icons.account_balance_wallet_rounded,
           route: '/reports/financial',
+          permission: Permissions.reportsViewFinancial,
         ),
-        PosSidebarItem(label: l10n.sidebarCustomerReports, icon: Icons.group_rounded, route: '/reports/customers'),
+        PosSidebarItem(
+          label: l10n.sidebarCustomerReports,
+          icon: Icons.group_rounded,
+          route: '/reports/customers',
+          permission: Permissions.reportsCustomers,
+        ),
       ],
     ),
 
@@ -159,9 +316,24 @@ class PosSidebar extends StatefulWidget {
       label: l10n.sidebarGroupIntegrations,
       icon: Icons.extension_rounded,
       items: [
-        PosSidebarItem(label: l10n.sidebarThawaniIntegration, icon: Icons.delivery_dining_sharp, route: '/thawani-integration'),
-        PosSidebarItem(label: l10n.sidebarDelivery, icon: Icons.local_shipping_rounded, route: '/delivery'),
-        PosSidebarItem(label: l10n.sidebarZatca, icon: Icons.verified_rounded, route: '/zatca'),
+        PosSidebarItem(
+          label: l10n.sidebarThawaniIntegration,
+          icon: Icons.delivery_dining_sharp,
+          route: '/thawani-integration',
+          permission: Permissions.thawaniViewDashboard,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarDelivery,
+          icon: Icons.local_shipping_rounded,
+          route: '/delivery',
+          permission: Permissions.deliveryViewDashboard,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarZatca,
+          icon: Icons.verified_rounded,
+          route: '/zatca',
+          permission: Permissions.zatcaView,
+        ),
       ],
     ),
 
@@ -170,9 +342,19 @@ class PosSidebar extends StatefulWidget {
       label: l10n.sidebarGroupHardware,
       icon: Icons.print_rounded,
       items: [
-        PosSidebarItem(label: l10n.sidebarHardware, icon: Icons.print_rounded, route: '/hardware'),
-        PosSidebarItem(label: l10n.sidebarSync, icon: Icons.sync_rounded, route: '/sync'),
-        PosSidebarItem(label: l10n.sidebarBackup, icon: Icons.backup_rounded, route: '/backup'),
+        PosSidebarItem(
+          label: l10n.sidebarHardware,
+          icon: Icons.print_rounded,
+          route: '/hardware',
+          permission: Permissions.hardwareView,
+        ),
+        PosSidebarItem(label: l10n.sidebarSync, icon: Icons.sync_rounded, route: '/sync', permission: Permissions.syncView),
+        PosSidebarItem(
+          label: l10n.sidebarBackup,
+          icon: Icons.backup_rounded,
+          route: '/backup',
+          permission: Permissions.backupView,
+        ),
       ],
     ),
 
@@ -181,12 +363,42 @@ class PosSidebar extends StatefulWidget {
       label: l10n.sidebarGroupIndustry,
       icon: Icons.storefront_rounded,
       items: [
-        PosSidebarItem(label: l10n.sidebarRestaurant, icon: Icons.restaurant_rounded, route: '/industry/restaurant'),
-        PosSidebarItem(label: l10n.sidebarBakery, icon: Icons.cake_rounded, route: '/industry/bakery'),
-        PosSidebarItem(label: l10n.sidebarPharmacy, icon: Icons.local_pharmacy_rounded, route: '/industry/pharmacy'),
-        PosSidebarItem(label: l10n.sidebarElectronics, icon: Icons.devices_rounded, route: '/industry/electronics'),
-        PosSidebarItem(label: l10n.sidebarFlorist, icon: Icons.local_florist_rounded, route: '/industry/florist'),
-        PosSidebarItem(label: l10n.sidebarJewelry, icon: Icons.diamond_rounded, route: '/industry/jewelry'),
+        PosSidebarItem(
+          label: l10n.sidebarRestaurant,
+          icon: Icons.restaurant_rounded,
+          route: '/industry/restaurant',
+          permission: Permissions.restaurantView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarBakery,
+          icon: Icons.cake_rounded,
+          route: '/industry/bakery',
+          permission: Permissions.bakeryView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarPharmacy,
+          icon: Icons.local_pharmacy_rounded,
+          route: '/industry/pharmacy',
+          permission: Permissions.pharmacyView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarElectronics,
+          icon: Icons.devices_rounded,
+          route: '/industry/electronics',
+          permission: Permissions.mobileView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarFlorist,
+          icon: Icons.local_florist_rounded,
+          route: '/industry/florist',
+          permission: Permissions.flowersView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarJewelry,
+          icon: Icons.diamond_rounded,
+          route: '/industry/jewelry',
+          permission: Permissions.jewelryView,
+        ),
       ],
     ),
 
@@ -199,30 +411,112 @@ class PosSidebar extends StatefulWidget {
           label: l10n.sidebarPosCustomize,
           icon: Icons.tune_rounded,
           route: '/customization',
+          permission: Permissions.posCustomizationView,
           children: [
-            PosSidebarItem(label: l10n.sidebarLayoutBuilder, icon: Icons.dashboard_customize_rounded, route: '/layout-templates'),
-            PosSidebarItem(label: l10n.sidebarMarketplace, icon: Icons.storefront_rounded, route: '/marketplace'),
-            PosSidebarItem(label: l10n.sidebarReceiptTemplates, icon: Icons.receipt_long_rounded, route: '/receipt-templates'),
-            PosSidebarItem(label: l10n.sidebarCfdThemes, icon: Icons.tv_rounded, route: '/cfd-themes'),
-            PosSidebarItem(label: l10n.sidebarLabelLayoutTemplates, icon: Icons.label_rounded, route: '/label-layout-templates'),
+            PosSidebarItem(
+              label: l10n.sidebarLayoutBuilder,
+              icon: Icons.dashboard_customize_rounded,
+              route: '/layout-templates',
+              permission: Permissions.layoutBuilderView,
+            ),
+            PosSidebarItem(
+              label: l10n.sidebarMarketplace,
+              icon: Icons.storefront_rounded,
+              route: '/marketplace',
+              permission: Permissions.marketplaceView,
+            ),
+            PosSidebarItem(
+              label: l10n.sidebarReceiptTemplates,
+              icon: Icons.receipt_long_rounded,
+              route: '/receipt-templates',
+              permission: Permissions.posCustomizationView,
+            ),
+            PosSidebarItem(
+              label: l10n.sidebarCfdThemes,
+              icon: Icons.tv_rounded,
+              route: '/cfd-themes',
+              permission: Permissions.posCustomizationView,
+            ),
+            PosSidebarItem(
+              label: l10n.sidebarLabelLayoutTemplates,
+              icon: Icons.label_rounded,
+              route: '/label-layout-templates',
+              permission: Permissions.posCustomizationView,
+            ),
           ],
         ),
-        PosSidebarItem(label: l10n.sidebarCompanionApp, icon: Icons.phone_android_rounded, route: '/companion'),
-        PosSidebarItem(label: l10n.sidebarNiceToHave, icon: Icons.auto_awesome_rounded, route: '/nice-to-have'),
-        PosSidebarItem(label: l10n.sidebarNotifications, icon: Icons.notifications_rounded, route: '/notifications'),
-        PosSidebarItem(label: l10n.sidebarSecurity, icon: Icons.security_rounded, route: '/security'),
-        PosSidebarItem(label: l10n.sidebarAccessibility, icon: Icons.accessibility_new_rounded, route: '/accessibility'),
-        PosSidebarItem(label: l10n.sidebarLocalization, icon: Icons.translate_rounded, route: '/settings/localization'),
-        PosSidebarItem(label: l10n.sidebarAutoUpdate, icon: Icons.system_update_rounded, route: '/auto-update'),
-        PosSidebarItem(label: l10n.sidebarSettings, icon: Icons.settings_rounded, route: '/settings'),
-        PosSidebarItem(label: l10n.sidebarSubscription, icon: Icons.card_membership_rounded, route: '/subscription/status'),
+        PosSidebarItem(
+          label: l10n.sidebarCompanionApp,
+          icon: Icons.phone_android_rounded,
+          route: '/companion',
+          permission: Permissions.companionView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarNiceToHave,
+          icon: Icons.auto_awesome_rounded,
+          route: '/nice-to-have',
+          permission: Permissions.niceToHaveView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarNotifications,
+          icon: Icons.notifications_rounded,
+          route: '/notifications',
+          permission: Permissions.notificationsView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarSecurity,
+          icon: Icons.security_rounded,
+          route: '/security',
+          permission: Permissions.securityViewDashboard,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarAccessibility,
+          icon: Icons.accessibility_new_rounded,
+          route: '/accessibility',
+          permission: Permissions.accessibilityManage,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarLocalization,
+          icon: Icons.translate_rounded,
+          route: '/settings/localization',
+          permission: Permissions.settingsLocalization,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarAutoUpdate,
+          icon: Icons.system_update_rounded,
+          route: '/auto-update',
+          permission: Permissions.autoUpdateView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarSettings,
+          icon: Icons.settings_rounded,
+          route: '/settings',
+          permission: Permissions.settingsView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarSubscription,
+          icon: Icons.card_membership_rounded,
+          route: '/subscription/status',
+          permission: Permissions.subscriptionView,
+        ),
         PosSidebarItem(
           label: l10n.sidebarSupport,
           icon: Icons.support_agent_rounded,
           route: '/support',
+          permission: Permissions.supportView,
           children: [
-            PosSidebarItem(label: l10n.sidebarTickets, icon: Icons.confirmation_number_rounded, route: '/support'),
-            PosSidebarItem(label: l10n.sidebarKnowledgeBase, icon: Icons.menu_book_rounded, route: '/support/kb'),
+            PosSidebarItem(
+              label: l10n.sidebarTickets,
+              icon: Icons.confirmation_number_rounded,
+              route: '/support',
+              permission: Permissions.supportView,
+            ),
+            PosSidebarItem(
+              label: l10n.sidebarKnowledgeBase,
+              icon: Icons.menu_book_rounded,
+              route: '/support/kb',
+              permission: Permissions.supportView,
+            ),
           ],
         ),
       ],

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/reports/models/report_filters.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
+import 'package:thawani_pos/features/reports/widgets/report_charts.dart';
+import 'package:thawani_pos/features/reports/widgets/report_filter_panel.dart';
 import 'package:thawani_pos/features/reports/widgets/report_widgets.dart';
 
 class StaffPerformancePage extends ConsumerStatefulWidget {
@@ -15,7 +17,7 @@ class StaffPerformancePage extends ConsumerStatefulWidget {
 }
 
 class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
-  DateTimeRange? _dateRange;
+  ReportFilters _filters = const ReportFilters();
 
   @override
   void initState() {
@@ -24,25 +26,12 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
   }
 
   void _loadData() {
-    ref
-        .read(staffPerformanceProvider.notifier)
-        .load(
-          dateFrom: _dateRange != null ? DateFormat('yyyy-MM-dd').format(_dateRange!.start) : null,
-          dateTo: _dateRange != null ? DateFormat('yyyy-MM-dd').format(_dateRange!.end) : null,
-        );
+    ref.read(staffPerformanceProvider.notifier).load(filters: _filters);
   }
 
-  Future<void> _pickDateRange() async {
-    final picked = await showDateRangePicker(
-      context: context,
-      firstDate: DateTime(2020),
-      lastDate: DateTime.now(),
-      initialDateRange: _dateRange,
-    );
-    if (picked != null) {
-      setState(() => _dateRange = picked);
-      _loadData();
-    }
+  void _onFiltersChanged(ReportFilters filters) {
+    setState(() => _filters = filters);
+    _loadData();
   }
 
   @override
@@ -51,13 +40,16 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
 
     return ReportPageScaffold(
       title: 'Staff Performance',
-      dateRange: _dateRange,
-      onPickDate: _pickDateRange,
-      onClearDate: () {
-        setState(() => _dateRange = null);
-        _loadData();
-      },
-      onRefresh: _loadData,
+      filterPanel: ReportFilterPanel(
+        filters: _filters,
+        onFiltersChanged: _onFiltersChanged,
+        onRefresh: _loadData,
+        showStaffFilter: true,
+        showPaymentMethodFilter: true,
+        showAmountRange: true,
+        showOrderStatus: true,
+        showSortOptions: true,
+      ),
       body: switch (state) {
         StaffPerformanceInitial() || StaffPerformanceLoading() => PosLoadingSkeleton.list(),
         StaffPerformanceError(:final message) => PosErrorState(message: message, onRetry: _loadData),
@@ -106,6 +98,23 @@ class _StaffList extends StatelessWidget {
             ),
           ],
         ),
+
+        // Bar Chart — Staff revenue comparison
+        if (staff.isNotEmpty) ...[
+          const SizedBox(height: 20),
+          const ReportSectionHeader(title: 'Revenue by Staff', icon: Icons.bar_chart_rounded),
+          ReportDataCard(
+            child: ReportBarChart(
+              data: staff.take(10).toList(),
+              labelKey: 'staff_name',
+              valueKey: 'total_revenue',
+              barColor: AppColors.primary,
+              secondaryValueKey: 'total_orders',
+              secondaryBarColor: AppColors.info,
+              horizontal: true,
+            ),
+          ),
+        ],
 
         const SizedBox(height: 24),
         const ReportSectionHeader(title: 'Staff Ranked by Revenue', icon: Icons.leaderboard_rounded),

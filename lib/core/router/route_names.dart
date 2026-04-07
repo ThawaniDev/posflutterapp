@@ -339,6 +339,11 @@ class Routes {
   static const String predefinedCatalog = '/predefined-catalog';
   static const String predefinedCatalogProducts = '/predefined-catalog/products';
 
+  // ─── Debits ─────────────────────────────────────────────
+  static const String debits = '/debits';
+  static const String debitsCreate = '/debits/create';
+  static const String debitsDetail = '/debits/detail'; // + /:id
+
   // ─── Role-Based Home Route ──────────────────────────────
   /// Returns the appropriate landing route for a given user role.
   /// Cashiers and kitchen staff go to POS checkout; everyone else to dashboard.

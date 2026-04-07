@@ -470,20 +470,22 @@ class ReportStatRow extends StatelessWidget {
 
 class ReportPageScaffold extends StatelessWidget {
   final String title;
+  final Widget? filterPanel;
   final DateTimeRange? dateRange;
-  final VoidCallback onPickDate;
-  final VoidCallback onClearDate;
-  final VoidCallback onRefresh;
+  final VoidCallback? onPickDate;
+  final VoidCallback? onClearDate;
+  final VoidCallback? onRefresh;
   final Widget body;
   final PreferredSizeWidget? bottom;
 
   const ReportPageScaffold({
     super.key,
     required this.title,
-    required this.dateRange,
-    required this.onPickDate,
-    required this.onClearDate,
-    required this.onRefresh,
+    this.filterPanel,
+    this.dateRange,
+    this.onPickDate,
+    this.onClearDate,
+    this.onRefresh,
     required this.body,
     this.bottom,
   });
@@ -501,7 +503,10 @@ class ReportPageScaffold extends StatelessWidget {
       ),
       body: Column(
         children: [
-          ReportDateBar(dateRange: dateRange, onPickDate: onPickDate, onClear: onClearDate, onRefresh: onRefresh),
+          if (filterPanel != null)
+            filterPanel!
+          else if (onPickDate != null && onClearDate != null && onRefresh != null)
+            ReportDateBar(dateRange: dateRange, onPickDate: onPickDate!, onClear: onClearDate!, onRefresh: onRefresh!),
           Expanded(child: body),
         ],
       ),

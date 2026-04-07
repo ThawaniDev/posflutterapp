@@ -4,6 +4,8 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminDeploymentReleaseListPage extends ConsumerStatefulWidget {
   const AdminDeploymentReleaseListPage({super.key});
@@ -15,20 +17,30 @@ class AdminDeploymentReleaseListPage extends ConsumerStatefulWidget {
 class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeploymentReleaseListPage> {
   String? _platformFilter;
   final _searchController = TextEditingController();
+  String? _storeId;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => _load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _load();
+    });
   }
 
   void _load() {
     final params = <String, dynamic>{};
+    if (_storeId != null) params['store_id'] = _storeId!;
     if (_platformFilter != null) params['platform'] = _platformFilter;
     if (_searchController.text.isNotEmpty) {
       params['search'] = _searchController.text;
     }
     ref.read(deploymentReleaseListProvider.notifier).load(params: params.isEmpty ? null : params);
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _load();
   }
 
   @override
@@ -55,6 +67,7 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
       ),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // Filters
           Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
@@ -137,7 +150,11 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
               ),
               child: Text(
                 isActive ? 'Active' : 'Inactive',
-                style: TextStyle(color: isActive ? AppColors.success : AppColors.textSecondary, fontSize: 12, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  color: isActive ? AppColors.success : AppColors.textSecondary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),

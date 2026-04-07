@@ -5,6 +5,8 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminSubscriptionListPage extends ConsumerStatefulWidget {
   const AdminSubscriptionListPage({super.key});
@@ -14,17 +16,26 @@ class AdminSubscriptionListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminSubscriptionListPageState extends ConsumerState<AdminSubscriptionListPage> {
+  String? _storeId;
   String? _statusFilter;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(subscriptionListProvider.notifier).loadSubscriptions());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(subscriptionListProvider.notifier).loadSubscriptions(storeId: _storeId);
+    });
   }
 
   void _onFilterChanged(String? status) {
     setState(() => _statusFilter = status);
-    ref.read(subscriptionListProvider.notifier).loadSubscriptions(status: status);
+    ref.read(subscriptionListProvider.notifier).loadSubscriptions(status: status, storeId: _storeId);
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    ref.read(subscriptionListProvider.notifier).loadSubscriptions(status: _statusFilter, storeId: _storeId);
   }
 
   @override
@@ -35,6 +46,7 @@ class _AdminSubscriptionListPageState extends ConsumerState<AdminSubscriptionLis
       appBar: AppBar(title: const Text('Subscriptions')),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // Status filter chips
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -68,7 +80,8 @@ class _AdminSubscriptionListPageState extends ConsumerState<AdminSubscriptionLis
                     PosButton(
                       label: 'Retry',
                       variant: PosButtonVariant.outline,
-                      onPressed: () => ref.read(subscriptionListProvider.notifier).loadSubscriptions(status: _statusFilter),
+                      onPressed: () =>
+                          ref.read(subscriptionListProvider.notifier).loadSubscriptions(status: _statusFilter, storeId: _storeId),
                     ),
                   ],
                 ),

@@ -13008,6 +13008,282 @@ abstract class AppLocalizations {
   /// **'App Version (optional)'**
   String get termFormVersionLabel;
 
+  /// No description provided for @termFormDeviceSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Hardware'**
+  String get termFormDeviceSection;
+
+  /// No description provided for @termFormDeviceSectionSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Physical device details'**
+  String get termFormDeviceSectionSub;
+
+  /// No description provided for @termFormDeviceModelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Model'**
+  String get termFormDeviceModelLabel;
+
+  /// No description provided for @termFormDeviceModelHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Samsung Galaxy A54'**
+  String get termFormDeviceModelHint;
+
+  /// No description provided for @termFormOsVersionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'OS Version'**
+  String get termFormOsVersionLabel;
+
+  /// No description provided for @termFormOsVersionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Android 14, iOS 17.4'**
+  String get termFormOsVersionHint;
+
+  /// No description provided for @termFormSerialNumberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial Number'**
+  String get termFormSerialNumberLabel;
+
+  /// No description provided for @termFormSerialNumberHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Device serial number'**
+  String get termFormSerialNumberHint;
+
+  /// No description provided for @termFormNfcCapable.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC Capable'**
+  String get termFormNfcCapable;
+
+  /// No description provided for @termFormNfcCapableSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Device supports contactless payments'**
+  String get termFormNfcCapableSub;
+
+  /// No description provided for @termFormSoftposSection.
+  ///
+  /// In en, this message translates to:
+  /// **'SoftPOS Configuration'**
+  String get termFormSoftposSection;
+
+  /// No description provided for @termFormSoftposSectionSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap-on-phone payment settings'**
+  String get termFormSoftposSectionSub;
+
+  /// No description provided for @termFormSoftposEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'SoftPOS Enabled'**
+  String get termFormSoftposEnabled;
+
+  /// No description provided for @termFormSoftposEnabledSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable tap-on-phone payments'**
+  String get termFormSoftposEnabledSub;
+
+  /// No description provided for @termFormNearpayTidLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'NearPay TID'**
+  String get termFormNearpayTidLabel;
+
+  /// No description provided for @termFormNearpayTidHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Terminal ID from NearPay'**
+  String get termFormNearpayTidHint;
+
+  /// No description provided for @termFormNearpayMidLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'NearPay MID'**
+  String get termFormNearpayMidLabel;
+
+  /// No description provided for @termFormNearpayMidHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Merchant ID from NearPay'**
+  String get termFormNearpayMidHint;
+
+  /// No description provided for @termFormAcquirerSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Acquirer Details'**
+  String get termFormAcquirerSection;
+
+  /// No description provided for @termFormAcquirerSectionSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment acquirer configuration'**
+  String get termFormAcquirerSectionSub;
+
+  /// No description provided for @termFormAcquirerSourceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Acquirer Source'**
+  String get termFormAcquirerSourceLabel;
+
+  /// No description provided for @termFormAcquirerSourceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select acquirer'**
+  String get termFormAcquirerSourceHint;
+
+  /// No description provided for @termFormAcquirerNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Acquirer Name'**
+  String get termFormAcquirerNameLabel;
+
+  /// No description provided for @termFormAcquirerNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom acquirer name'**
+  String get termFormAcquirerNameHint;
+
+  /// No description provided for @termFormAcquirerRefLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Acquirer Reference'**
+  String get termFormAcquirerRefLabel;
+
+  /// No description provided for @termFormAcquirerRefHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Acquirer reference ID'**
+  String get termFormAcquirerRefHint;
+
+  /// No description provided for @termFormSettlementSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Settlement'**
+  String get termFormSettlementSection;
+
+  /// No description provided for @termFormSettlementSectionSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank settlement configuration'**
+  String get termFormSettlementSectionSub;
+
+  /// No description provided for @termFormSettlementCycleLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Settlement Cycle'**
+  String get termFormSettlementCycleLabel;
+
+  /// No description provided for @termFormSettlementCycleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select cycle'**
+  String get termFormSettlementCycleHint;
+
+  /// No description provided for @termFormSettlementBankLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank Name'**
+  String get termFormSettlementBankLabel;
+
+  /// No description provided for @termFormSettlementBankHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Al Rajhi Bank'**
+  String get termFormSettlementBankHint;
+
+  /// No description provided for @termFormSettlementIbanLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'IBAN'**
+  String get termFormSettlementIbanLabel;
+
+  /// No description provided for @termFormSettlementIbanHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. SA0380000000608010167519'**
+  String get termFormSettlementIbanHint;
+
+  /// No description provided for @termFormNotesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get termFormNotesSection;
+
+  /// No description provided for @termFormNotesSectionSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Additional information'**
+  String get termFormNotesSectionSub;
+
+  /// No description provided for @termFormAdminNotesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin Notes'**
+  String get termFormAdminNotesLabel;
+
+  /// No description provided for @termFormAdminNotesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal notes about this terminal'**
+  String get termFormAdminNotesHint;
+
+  /// No description provided for @terminalsColDeviceModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Device'**
+  String get terminalsColDeviceModel;
+
+  /// No description provided for @terminalsColSerialNo.
+  ///
+  /// In en, this message translates to:
+  /// **'Serial #'**
+  String get terminalsColSerialNo;
+
+  /// No description provided for @terminalsColAcquirer.
+  ///
+  /// In en, this message translates to:
+  /// **'Acquirer'**
+  String get terminalsColAcquirer;
+
+  /// No description provided for @terminalsColNfc.
+  ///
+  /// In en, this message translates to:
+  /// **'NFC'**
+  String get terminalsColNfc;
+
+  /// No description provided for @terminalsColLastTxn.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Transaction'**
+  String get terminalsColLastTxn;
+
+  /// No description provided for @terminalsYes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get terminalsYes;
+
+  /// No description provided for @terminalsNo.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get terminalsNo;
+
+  /// No description provided for @terminalsNa.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get terminalsNa;
+
   /// No description provided for @terminalsActivate.
   ///
   /// In en, this message translates to:
@@ -13332,6 +13608,12 @@ abstract class AppLocalizations {
   /// **'Labels'**
   String get sidebarLabels;
 
+  /// No description provided for @sidebarPredefinedCatalog.
+  ///
+  /// In en, this message translates to:
+  /// **'Predefined Catalog'**
+  String get sidebarPredefinedCatalog;
+
   /// No description provided for @sidebarCustomers.
   ///
   /// In en, this message translates to:
@@ -13373,6 +13655,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Accounting'**
   String get sidebarAccounting;
+
+  /// No description provided for @sidebarDebits.
+  ///
+  /// In en, this message translates to:
+  /// **'Debits'**
+  String get sidebarDebits;
 
   /// No description provided for @sidebarReports.
   ///
@@ -14663,6 +14951,390 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Return {action} successfully.'**
   String supplierReturnActionSuccess(String action);
+
+  /// No description provided for @debitsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Debits'**
+  String get debitsTitle;
+
+  /// No description provided for @debitsCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Debit'**
+  String get debitsCreate;
+
+  /// No description provided for @debitsEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Debit'**
+  String get debitsEdit;
+
+  /// No description provided for @debitsDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Debit Details'**
+  String get debitsDetail;
+
+  /// No description provided for @debitsNoDebits.
+  ///
+  /// In en, this message translates to:
+  /// **'No debits'**
+  String get debitsNoDebits;
+
+  /// No description provided for @debitsNoDebitsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Debits will appear here once created.'**
+  String get debitsNoDebitsSubtitle;
+
+  /// No description provided for @debitsSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by reference, customer, description...'**
+  String get debitsSearchHint;
+
+  /// No description provided for @debitsFilterByStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by status'**
+  String get debitsFilterByStatus;
+
+  /// No description provided for @debitsFilterByType.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by type'**
+  String get debitsFilterByType;
+
+  /// No description provided for @debitsAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get debitsAll;
+
+  /// No description provided for @debitsReferenceNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference #'**
+  String get debitsReferenceNumber;
+
+  /// No description provided for @debitsCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get debitsCustomer;
+
+  /// No description provided for @debitsType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get debitsType;
+
+  /// No description provided for @debitsSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Source'**
+  String get debitsSource;
+
+  /// No description provided for @debitsAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get debitsAmount;
+
+  /// No description provided for @debitsRemainingBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining Balance'**
+  String get debitsRemainingBalance;
+
+  /// No description provided for @debitsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get debitsDescription;
+
+  /// No description provided for @debitsDescriptionAr.
+  ///
+  /// In en, this message translates to:
+  /// **'Description (Arabic)'**
+  String get debitsDescriptionAr;
+
+  /// No description provided for @debitsSelectCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Customer'**
+  String get debitsSelectCustomer;
+
+  /// No description provided for @debitsSelectType.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Type'**
+  String get debitsSelectType;
+
+  /// No description provided for @debitsSelectSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Source'**
+  String get debitsSelectSource;
+
+  /// No description provided for @debitsStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get debitsStatusPending;
+
+  /// No description provided for @debitsStatusPartiallyAllocated.
+  ///
+  /// In en, this message translates to:
+  /// **'Partially Allocated'**
+  String get debitsStatusPartiallyAllocated;
+
+  /// No description provided for @debitsStatusFullyAllocated.
+  ///
+  /// In en, this message translates to:
+  /// **'Fully Allocated'**
+  String get debitsStatusFullyAllocated;
+
+  /// No description provided for @debitsStatusReversed.
+  ///
+  /// In en, this message translates to:
+  /// **'Reversed'**
+  String get debitsStatusReversed;
+
+  /// No description provided for @debitsTypeCustomerCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Credit'**
+  String get debitsTypeCustomerCredit;
+
+  /// No description provided for @debitsTypeSupplierReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier Return'**
+  String get debitsTypeSupplierReturn;
+
+  /// No description provided for @debitsTypeInventoryAdjustment.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory Adjustment'**
+  String get debitsTypeInventoryAdjustment;
+
+  /// No description provided for @debitsTypeManualCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual Credit'**
+  String get debitsTypeManualCredit;
+
+  /// No description provided for @debitsSourcePosTerminal.
+  ///
+  /// In en, this message translates to:
+  /// **'POS Terminal'**
+  String get debitsSourcePosTerminal;
+
+  /// No description provided for @debitsSourceInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice'**
+  String get debitsSourceInvoice;
+
+  /// No description provided for @debitsSourceReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Return'**
+  String get debitsSourceReturn;
+
+  /// No description provided for @debitsSourceManual.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual'**
+  String get debitsSourceManual;
+
+  /// No description provided for @debitsSourceInventorySystem.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory System'**
+  String get debitsSourceInventorySystem;
+
+  /// No description provided for @debitsAllocate.
+  ///
+  /// In en, this message translates to:
+  /// **'Allocate'**
+  String get debitsAllocate;
+
+  /// No description provided for @debitsAllocateDebit.
+  ///
+  /// In en, this message translates to:
+  /// **'Allocate Debit'**
+  String get debitsAllocateDebit;
+
+  /// No description provided for @debitsAllocateToOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Allocate to Order'**
+  String get debitsAllocateToOrder;
+
+  /// No description provided for @debitsOrderId.
+  ///
+  /// In en, this message translates to:
+  /// **'Order ID'**
+  String get debitsOrderId;
+
+  /// No description provided for @debitsAllocateAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Allocation Amount'**
+  String get debitsAllocateAmount;
+
+  /// No description provided for @debitsReverse.
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse'**
+  String get debitsReverse;
+
+  /// No description provided for @debitsReverseDebit.
+  ///
+  /// In en, this message translates to:
+  /// **'Reverse Debit'**
+  String get debitsReverseDebit;
+
+  /// No description provided for @debitsReverseReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason for reversal'**
+  String get debitsReverseReason;
+
+  /// No description provided for @debitsReverseConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to reverse this debit?'**
+  String get debitsReverseConfirm;
+
+  /// No description provided for @debitsDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this debit?'**
+  String get debitsDeleteConfirm;
+
+  /// No description provided for @debitsCreatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Debit created successfully'**
+  String get debitsCreatedSuccess;
+
+  /// No description provided for @debitsUpdatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Debit updated successfully'**
+  String get debitsUpdatedSuccess;
+
+  /// No description provided for @debitsDeletedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Debit deleted successfully'**
+  String get debitsDeletedSuccess;
+
+  /// No description provided for @debitsAllocatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Debit allocated successfully'**
+  String get debitsAllocatedSuccess;
+
+  /// No description provided for @debitsReversedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Debit reversed successfully'**
+  String get debitsReversedSuccess;
+
+  /// No description provided for @debitsSummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Debits Summary'**
+  String get debitsSummaryTitle;
+
+  /// No description provided for @debitsSummaryTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Debits'**
+  String get debitsSummaryTotal;
+
+  /// No description provided for @debitsSummaryPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get debitsSummaryPending;
+
+  /// No description provided for @debitsSummaryPartially.
+  ///
+  /// In en, this message translates to:
+  /// **'Partially Allocated'**
+  String get debitsSummaryPartially;
+
+  /// No description provided for @debitsSummaryFully.
+  ///
+  /// In en, this message translates to:
+  /// **'Fully Allocated'**
+  String get debitsSummaryFully;
+
+  /// No description provided for @debitsSummaryReversed.
+  ///
+  /// In en, this message translates to:
+  /// **'Reversed'**
+  String get debitsSummaryReversed;
+
+  /// No description provided for @debitsSummaryAllocated.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Allocated'**
+  String get debitsSummaryAllocated;
+
+  /// No description provided for @debitsSummaryUnallocated.
+  ///
+  /// In en, this message translates to:
+  /// **'Unallocated'**
+  String get debitsSummaryUnallocated;
+
+  /// No description provided for @debitsAllocations.
+  ///
+  /// In en, this message translates to:
+  /// **'Allocations'**
+  String get debitsAllocations;
+
+  /// No description provided for @debitsNoAllocations.
+  ///
+  /// In en, this message translates to:
+  /// **'No allocations yet'**
+  String get debitsNoAllocations;
+
+  /// No description provided for @debitsCreatedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Created By'**
+  String get debitsCreatedBy;
+
+  /// No description provided for @debitsAllocatedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Allocated By'**
+  String get debitsAllocatedBy;
+
+  /// No description provided for @debitsAllocatedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Allocated At'**
+  String get debitsAllocatedAt;
+
+  /// No description provided for @debitsCreatedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Created At'**
+  String get debitsCreatedAt;
+
+  /// No description provided for @debitsOrderNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Order #'**
+  String get debitsOrderNumber;
 }
 
 class _AppLocalizationsDelegate

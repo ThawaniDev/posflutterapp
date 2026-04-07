@@ -210,12 +210,17 @@ class SalesSummaryNotifier extends StateNotifier<SalesSummaryState> {
     try {
       final res = await _repo.getSalesSummary(period: period, storeId: storeId);
       final d = res['data'] as Map<String, dynamic>? ?? res;
+      final summary = d['summary'] as Map<String, dynamic>? ?? d;
       final daily = (d['daily_breakdown'] as List<dynamic>?)?.map((e) => Map<String, dynamic>.from(e as Map)).toList() ?? [];
+      final periodData = d['period'];
+      final periodMap = periodData is Map<String, dynamic>
+          ? periodData
+          : <String, dynamic>{'label': periodData?.toString() ?? period};
       state = SalesSummaryLoaded(
-        period: d['period'] as String? ?? period,
-        totalRevenue: (d['total_revenue'] != null ? double.tryParse(d['total_revenue'].toString()) : null) ?? 0,
-        totalOrders: d['total_orders'] as int? ?? 0,
-        averageOrderValue: (d['average_order_value'] != null ? double.tryParse(d['average_order_value'].toString()) : null) ?? 0,
+        period: periodMap,
+        totalRevenue: (summary['total_revenue'] != null ? double.tryParse(summary['total_revenue'].toString()) : null) ?? 0,
+        totalOrders: summary['total_orders'] as int? ?? 0,
+        averageOrderValue: (summary['average_order'] != null ? double.tryParse(summary['average_order'].toString()) : null) ?? 0,
         dailyBreakdown: daily,
         raw: d,
       );

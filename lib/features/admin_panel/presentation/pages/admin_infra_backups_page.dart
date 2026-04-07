@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminInfraBackupsPage extends ConsumerStatefulWidget {
   const AdminInfraBackupsPage({super.key});
@@ -13,6 +15,7 @@ class AdminInfraBackupsPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminInfraBackupsPage> with SingleTickerProviderStateMixin {
+  String? _storeId;
   late final TabController _tabController;
 
   @override
@@ -20,9 +23,21 @@ class _State extends ConsumerState<AdminInfraBackupsPage> with SingleTickerProvi
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     Future.microtask(() {
-      ref.read(infraDatabaseBackupsProvider.notifier).load();
-      ref.read(infraProviderBackupsProvider.notifier).load();
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _loadData();
     });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _loadData();
+  }
+
+  void _loadData() {
+    final params = <String, dynamic>{};
+    if (_storeId != null) params['store_id'] = _storeId!;
+    ref.read(infraDatabaseBackupsProvider.notifier).load(params: params);
+    ref.read(infraProviderBackupsProvider.notifier).load(params: params);
   }
 
   @override
@@ -49,7 +64,14 @@ class _State extends ConsumerState<AdminInfraBackupsPage> with SingleTickerProvi
           ],
         ),
       ),
-      body: TabBarView(controller: _tabController, children: [_DatabaseBackupsTab(), _ProviderBackupsTab()]),
+      body: Column(
+        children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          Expanded(
+            child: TabBarView(controller: _tabController, children: [_DatabaseBackupsTab(), _ProviderBackupsTab()]),
+          ),
+        ],
+      ),
     );
   }
 }

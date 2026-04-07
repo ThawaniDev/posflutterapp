@@ -68,7 +68,7 @@ class CustomerApiService {
   Future<List<CustomerGroup>> listGroups() async {
     final response = await _dio.get(ApiEndpoints.customerGroups);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => CustomerGroup.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -111,7 +111,7 @@ class CustomerApiService {
   Future<List<LoyaltyTransaction>> getLoyaltyLog(String customerId) async {
     final response = await _dio.get('${ApiEndpoints.loyalty}/$customerId/log');
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => LoyaltyTransaction.fromJson(j as Map<String, dynamic>)).toList();
   }
 

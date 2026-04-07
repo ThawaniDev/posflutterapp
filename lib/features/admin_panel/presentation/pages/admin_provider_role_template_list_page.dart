@@ -6,6 +6,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminProviderRoleTemplateListPage extends ConsumerStatefulWidget {
   const AdminProviderRoleTemplateListPage({super.key});
@@ -15,10 +17,26 @@ class AdminProviderRoleTemplateListPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminProviderRoleTemplateListPage> {
+  String? _storeId;
+
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(providerRoleTemplateListProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _loadData();
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _loadData();
+  }
+
+  void _loadData() {
+    final params = <String, dynamic>{};
+    if (_storeId != null) params['store_id'] = _storeId!;
+    ref.read(providerRoleTemplateListProvider.notifier).load(params: params);
   }
 
   @override
@@ -30,21 +48,23 @@ class _State extends ConsumerState<AdminProviderRoleTemplateListPage> {
         title: const Text('Role Templates'),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => ref.read(providerRoleTemplateListProvider.notifier).load(),
+        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: () => _loadData())],
+      ),
+      body: Column(
+        children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          Expanded(
+            child: switch (state) {
+              ProviderRoleTemplateListLoading() => const Center(child: CircularProgressIndicator()),
+              ProviderRoleTemplateListLoaded(data: final resp) => _buildList(resp),
+              ProviderRoleTemplateListError(message: final msg) => Center(
+                child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
+              ),
+              _ => const Center(child: Text('Loading...')),
+            },
           ),
         ],
       ),
-      body: switch (state) {
-        ProviderRoleTemplateListLoading() => const Center(child: CircularProgressIndicator()),
-        ProviderRoleTemplateListLoaded(data: final resp) => _buildList(resp),
-        ProviderRoleTemplateListError(message: final msg) => Center(
-          child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
-        ),
-        _ => const Center(child: Text('Loading...')),
-      },
     );
   }
 
@@ -54,7 +74,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateListPage> {
     if (items.isEmpty) return const Center(child: Text('No role templates'));
 
     return RefreshIndicator(
-      onRefresh: () async => ref.read(providerRoleTemplateListProvider.notifier).load(),
+      onRefresh: () async => _loadData(),
       child: ListView.separated(
         padding: const EdgeInsets.all(AppSpacing.sm),
         itemCount: items.length,

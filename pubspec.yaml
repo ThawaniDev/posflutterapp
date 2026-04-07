@@ -46,6 +46,10 @@ dependencies:
   # Barcode
   barcode: ^2.2.8
 
+  # Barcode Scanning (PDA / DataWedge)
+  flutter_datawedge: ^3.2.0
+  android_intent_plus: ^5.1.0
+
   # ZATCA Crypto
   pointycastle: ^4.0.0
 

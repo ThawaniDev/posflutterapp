@@ -21,7 +21,7 @@ class JewelryApiService {
       queryParameters: {'per_page': perPage, if (metalType != null) 'metal_type': metalType},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => DailyMetalRate.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -41,7 +41,7 @@ class JewelryApiService {
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => JewelryProductDetail.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -67,7 +67,7 @@ class JewelryApiService {
       },
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List? ?? [];
+    final list = apiResponse.dataList;
     return list.map((j) => BuybackTransaction.fromJson(j as Map<String, dynamic>)).toList();
   }
 

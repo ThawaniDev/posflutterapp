@@ -189,8 +189,8 @@ class _LabelTemplateDetailPageState extends ConsumerState<LabelTemplateDetailPag
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: 160,
+                  Expanded(
+                    flex: 2,
                     child: Text(
                       entry.key,
                       style: AppTypography.labelSmall.copyWith(
@@ -199,7 +199,7 @@ class _LabelTemplateDetailPageState extends ConsumerState<LabelTemplateDetailPag
                     ),
                   ),
                   AppSpacing.gapW8,
-                  Expanded(child: Text(entry.value, style: AppTypography.bodySmall)),
+                  Expanded(flex: 3, child: Text(entry.value, style: AppTypography.bodySmall)),
                 ],
               ),
             ),
@@ -247,19 +247,16 @@ class _LabelTemplateDetailPageState extends ConsumerState<LabelTemplateDetailPag
             final f = Map<String, dynamic>.from(field);
             return Padding(
               padding: const EdgeInsets.only(bottom: 8),
-              child: Row(
+              child: Wrap(
+                spacing: 8,
+                runSpacing: 4,
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  SizedBox(
-                    width: 120,
-                    child: Text(f['field_key'] ?? '-', style: AppTypography.labelSmall.copyWith(fontFamily: 'monospace')),
-                  ),
-                  AppSpacing.gapW8,
+                  Text(f['field_key'] ?? '-', style: AppTypography.labelSmall.copyWith(fontFamily: 'monospace')),
                   Text('${f['x'] ?? 0}%, ${f['y'] ?? 0}%', style: AppTypography.micro),
-                  AppSpacing.gapW8,
                   Text('${f['w'] ?? 0}%×${f['h'] ?? 0}%', style: AppTypography.micro),
-                  AppSpacing.gapW8,
                   PosBadge(label: f['font_size']?.toString() ?? 'medium', variant: PosBadgeVariant.neutral),
-                  if (f['is_bold'] == true) ...[AppSpacing.gapW4, const PosBadge(label: 'Bold', variant: PosBadgeVariant.info)],
+                  if (f['is_bold'] == true) const PosBadge(label: 'Bold', variant: PosBadgeVariant.info),
                 ],
               ),
             );

@@ -6,6 +6,7 @@ import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/pos_terminal/models/register.dart';
 import 'package:thawani_pos/features/pos_terminal/providers/pos_terminal_providers.dart';
@@ -118,42 +119,64 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
   // ──────────────────────────────────────────────────────────
 
   Widget _buildToolbar(BuildContext context, bool isDark) {
+    final isMobile = context.isPhone;
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxxl, vertical: AppSpacing.lg),
-      child: Row(
-        children: [
-          // Page title + subtitle
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(AppLocalizations.of(context)!.terminalsTitle, style: AppTypography.headlineMedium),
-              Text(
-                AppLocalizations.of(context)!.terminalsSubtitle,
-                style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-              ),
-            ],
-          ),
-          const Spacer(),
-
-          // Search
-          SizedBox(
-            width: 280,
-            child: PosSearchField(
-              controller: _searchController,
-              hint: AppLocalizations.of(context)!.terminalsSearch,
-              onChanged: (q) => ref.read(terminalsProvider.notifier).search(q),
-            ),
-          ),
-          AppSpacing.gapW12,
-
-          // Add button
-          PosButton(
-            label: AppLocalizations.of(context)!.terminalsAdd,
-            icon: Icons.add_rounded,
-            onPressed: () => context.push(Routes.posTerminalAdd),
-          ),
-        ],
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? AppSpacing.md : AppSpacing.xxxl,
+        vertical: isMobile ? AppSpacing.md : AppSpacing.lg,
       ),
+      child: isMobile
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: Text(AppLocalizations.of(context)!.terminalsTitle, style: AppTypography.headlineSmall)),
+                    PosButton(
+                      label: AppLocalizations.of(context)!.terminalsAdd,
+                      icon: Icons.add_rounded,
+                      size: PosButtonSize.sm,
+                      onPressed: () => context.push(Routes.posTerminalAdd),
+                    ),
+                  ],
+                ),
+                AppSpacing.gapH8,
+                PosSearchField(
+                  controller: _searchController,
+                  hint: AppLocalizations.of(context)!.terminalsSearch,
+                  onChanged: (q) => ref.read(terminalsProvider.notifier).search(q),
+                ),
+              ],
+            )
+          : Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(AppLocalizations.of(context)!.terminalsTitle, style: AppTypography.headlineMedium),
+                    Text(
+                      AppLocalizations.of(context)!.terminalsSubtitle,
+                      style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                SizedBox(
+                  width: 280,
+                  child: PosSearchField(
+                    controller: _searchController,
+                    hint: AppLocalizations.of(context)!.terminalsSearch,
+                    onChanged: (q) => ref.read(terminalsProvider.notifier).search(q),
+                  ),
+                ),
+                AppSpacing.gapW12,
+                PosButton(
+                  label: AppLocalizations.of(context)!.terminalsAdd,
+                  icon: Icons.add_rounded,
+                  onPressed: () => context.push(Routes.posTerminalAdd),
+                ),
+              ],
+            ),
     );
   }
 
@@ -173,9 +196,14 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
         PosTableColumn(title: AppLocalizations.of(context)!.terminalsColName, flex: 2, sortable: false),
         PosTableColumn(title: AppLocalizations.of(context)!.terminalsColDeviceId, flex: 2),
         PosTableColumn(title: AppLocalizations.of(context)!.terminalsColPlatform, width: 110),
+        PosTableColumn(title: AppLocalizations.of(context)!.terminalsColDeviceModel, width: 140),
+        PosTableColumn(title: AppLocalizations.of(context)!.terminalsColSerialNo, width: 130),
         PosTableColumn(title: AppLocalizations.of(context)!.terminalsColSoftpos, width: 100),
+        PosTableColumn(title: AppLocalizations.of(context)!.terminalsColAcquirer, width: 110),
+        PosTableColumn(title: AppLocalizations.of(context)!.terminalsColNfc, width: 60, numeric: true),
         PosTableColumn(title: AppLocalizations.of(context)!.terminalsColVersion, width: 100),
         PosTableColumn(title: AppLocalizations.of(context)!.terminalsColLastSync, width: 150),
+        PosTableColumn(title: AppLocalizations.of(context)!.terminalsColLastTxn, width: 150),
         PosTableColumn(title: AppLocalizations.of(context)!.terminalsColOnline, width: 80, numeric: true),
         PosTableColumn(title: AppLocalizations.of(context)!.terminalsColStatus, width: 100),
       ],
@@ -251,7 +279,15 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
         );
       case 2: // Platform
         return _PlatformChip(platform: terminal.platform);
-      case 3: // SoftPOS
+      case 3: // Device Model
+        return Text(terminal.deviceModel ?? '—', style: AppTypography.bodySmall, overflow: TextOverflow.ellipsis);
+      case 4: // Serial Number
+        return Text(
+          terminal.serialNumber ?? '—',
+          style: AppTypography.bodySmall.copyWith(fontFamily: 'monospace'),
+          overflow: TextOverflow.ellipsis,
+        );
+      case 5: // SoftPOS
         if (!terminal.softposEnabled) {
           return PosBadge(label: AppLocalizations.of(context)!.terminalsOff, variant: PosBadgeVariant.neutral);
         }
@@ -263,14 +299,31 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
               ? PosBadgeVariant.error
               : PosBadgeVariant.warning,
         );
-      case 4: // App Version
+      case 6: // Acquirer
+        return Text(terminal.acquirerLabel, style: AppTypography.bodySmall);
+      case 7: // NFC
+        return Center(
+          child: Icon(
+            terminal.nfcCapable ? Icons.nfc_rounded : Icons.nfc_outlined,
+            size: 18,
+            color: terminal.nfcCapable ? AppColors.success : AppColors.textDisabledLight,
+          ),
+        );
+      case 8: // App Version
         return Text(terminal.appVersion ?? '—', style: AppTypography.bodySmall);
-      case 5: // Last Sync
+      case 9: // Last Sync
         return Text(
           terminal.lastSyncAt != null ? _formatDate(terminal.lastSyncAt!) : AppLocalizations.of(context)!.terminalsNever,
           style: AppTypography.bodySmall,
         );
-      case 6: // Online
+      case 10: // Last Transaction
+        return Text(
+          terminal.lastTransactionAt != null
+              ? _formatDate(terminal.lastTransactionAt!)
+              : AppLocalizations.of(context)!.terminalsNever,
+          style: AppTypography.bodySmall,
+        );
+      case 11: // Online
         return Center(
           child: Container(
             width: 10,
@@ -281,7 +334,7 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
             ),
           ),
         );
-      case 7: // Status
+      case 12: // Status
         return PosBadge(
           label: terminal.isActive
               ? AppLocalizations.of(context)!.terminalsActive

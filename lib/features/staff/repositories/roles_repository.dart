@@ -83,6 +83,12 @@ class RolesRepository {
     return _apiService.getUserPermissions(storeId);
   }
 
+  /// Get permissions + branch scope + accessible store IDs.
+  Future<Map<String, dynamic>> getMyPermissionsWithScope() async {
+    final storeId = await _getStoreId();
+    return _apiService.getUserPermissionsWithScope(storeId);
+  }
+
   // ─── Permissions Catalog ───────────────────────────────────────
 
   Future<List<Permission>> listPermissions() async {

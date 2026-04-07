@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminGatewayListPage extends ConsumerStatefulWidget {
   const AdminGatewayListPage({super.key});
@@ -13,12 +16,21 @@ class AdminGatewayListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
+  String? _storeId;
   String _envFilter = 'all';
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(gatewayListProvider.notifier).loadGateways());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(gatewayListProvider.notifier).loadGateways(storeId: _storeId);
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    ref.read(gatewayListProvider.notifier).loadGateways(environment: _envFilter == 'all' ? null : _envFilter, storeId: _storeId);
   }
 
   @override
@@ -34,6 +46,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
       ),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // Environment filter
           Padding(
             padding: const EdgeInsets.all(AppSpacing.sm),
@@ -78,7 +91,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
       selectedColor: AppColors.primary.withValues(alpha: 0.2),
       onSelected: (_) {
         setState(() => _envFilter = value);
-        ref.read(gatewayListProvider.notifier).loadGateways(environment: value == 'all' ? null : value);
+        ref.read(gatewayListProvider.notifier).loadGateways(environment: value == 'all' ? null : value, storeId: _storeId);
       },
     );
   }
@@ -103,7 +116,9 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: env == 'production' ? AppColors.success.withValues(alpha: 0.15) : AppColors.warning.withValues(alpha: 0.15),
+                    color: env == 'production'
+                        ? AppColors.success.withValues(alpha: 0.15)
+                        : AppColors.warning.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -112,7 +127,11 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
                   ),
                 ),
                 const SizedBox(width: 8),
-                Icon(isActive ? Icons.check_circle : Icons.cancel, color: isActive ? AppColors.success : AppColors.error, size: 20),
+                Icon(
+                  isActive ? Icons.check_circle : Icons.cancel,
+                  color: isActive ? AppColors.success : AppColors.error,
+                  size: 20,
+                ),
               ],
             ),
             const SizedBox(height: AppSpacing.xs),
@@ -129,8 +148,10 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
               ],
             ),
             const SizedBox(height: AppSpacing.sm),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+            Wrap(
+              alignment: WrapAlignment.end,
+              spacing: 4,
+              runSpacing: 4,
               children: [
                 TextButton.icon(
                   icon: const Icon(Icons.wifi_tethering, size: 16),
@@ -215,7 +236,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
                 'is_active': true,
               });
               if (ctx.mounted) Navigator.pop(ctx);
-              ref.read(gatewayListProvider.notifier).loadGateways();
+              ref.read(gatewayListProvider.notifier).loadGateways(storeId: _storeId);
             },
             child: const Text('Create'),
           ),
@@ -258,7 +279,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
                 'webhook_url': webhookCtrl.text,
               });
               if (ctx.mounted) Navigator.pop(ctx);
-              ref.read(gatewayListProvider.notifier).loadGateways();
+              ref.read(gatewayListProvider.notifier).loadGateways(storeId: _storeId);
             },
             child: const Text('Update'),
           ),
@@ -280,7 +301,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
             onPressed: () async {
               await ref.read(gatewayActionProvider.notifier).deleteGateway(id.toString());
               if (ctx.mounted) Navigator.pop(ctx);
-              ref.read(gatewayListProvider.notifier).loadGateways();
+              ref.read(gatewayListProvider.notifier).loadGateways(storeId: _storeId);
             },
             child: const Text('Delete', style: TextStyle(color: Colors.white)),
           ),

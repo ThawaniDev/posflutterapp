@@ -37,7 +37,7 @@ class MarketplaceApiService {
     if (perPage != null) queryParams['per_page'] = perPage;
     final response = await _dio.get(ApiEndpoints.marketplaceListings, queryParameters: queryParams);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => MarketplaceListing.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -52,7 +52,7 @@ class MarketplaceApiService {
   Future<List<MarketplaceCategory>> listCategories() async {
     final response = await _dio.get(ApiEndpoints.marketplaceCategories);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => MarketplaceCategory.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -73,7 +73,7 @@ class MarketplaceApiService {
   Future<List<TemplatePurchase>> myPurchases() async {
     final response = await _dio.get(ApiEndpoints.marketplaceMyPurchases);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => TemplatePurchase.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -92,7 +92,7 @@ class MarketplaceApiService {
   Future<List<MarketplaceInvoice>> myInvoices() async {
     final response = await _dio.get(ApiEndpoints.marketplaceMyInvoices);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => MarketplaceInvoice.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -107,7 +107,7 @@ class MarketplaceApiService {
   Future<List<TemplateReview>> listReviews({required String listingId}) async {
     final response = await _dio.get(ApiEndpoints.marketplaceListingReviews(listingId));
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => TemplateReview.fromJson(j as Map<String, dynamic>)).toList();
   }
 

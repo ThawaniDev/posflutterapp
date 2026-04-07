@@ -6,6 +6,8 @@ import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class ProviderNotesPage extends ConsumerStatefulWidget {
   final String organizationId;
@@ -18,11 +20,19 @@ class ProviderNotesPage extends ConsumerStatefulWidget {
 
 class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
   final _noteController = TextEditingController();
+  String? _storeId;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(providerNotesProvider.notifier).load(widget.organizationId));
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(providerNotesProvider.notifier).load(widget.organizationId);
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
   }
 
   @override
@@ -40,6 +50,7 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
       appBar: AppBar(title: const Text('Provider Notes')),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // ─── Add Note Bar ──────────────────────────────
           Container(
             padding: AppSpacing.paddingAll16,

@@ -1,0 +1,281 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/pos_input.dart';
+import 'package:thawani_pos/features/customers/models/customer.dart';
+import 'package:thawani_pos/features/customers/providers/customer_providers.dart';
+import 'package:thawani_pos/features/customers/providers/customer_state.dart';
+import 'package:thawani_pos/features/debits/enums/debit_enums.dart';
+import 'package:thawani_pos/features/debits/providers/debits_providers.dart';
+import 'package:thawani_pos/features/debits/repositories/debit_repository.dart';
+
+class DebitFormPage extends ConsumerStatefulWidget {
+  final String? debitId;
+
+  const DebitFormPage({super.key, this.debitId});
+
+  @override
+  ConsumerState<DebitFormPage> createState() => _DebitFormPageState();
+}
+
+class _DebitFormPageState extends ConsumerState<DebitFormPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _descriptionController = TextEditingController();
+  final _descriptionArController = TextEditingController();
+  final _amountController = TextEditingController();
+  final _notesController = TextEditingController();
+  final _referenceController = TextEditingController();
+
+  bool get _isEdit => widget.debitId != null;
+  bool _isLoading = false;
+  bool _isSaving = false;
+
+  String? _selectedCustomerId;
+  DebitType? _selectedType;
+  DebitSource? _selectedSource;
+
+  @override
+  void initState() {
+    super.initState();
+    // Load customers for picker
+    Future.microtask(() {
+      ref.read(customersProvider.notifier).load();
+      if (_isEdit) _loadExistingDebit();
+    });
+  }
+
+  Future<void> _loadExistingDebit() async {
+    setState(() => _isLoading = true);
+    try {
+      final debit = await ref.read(debitRepositoryProvider).getDebit(widget.debitId!);
+      if (mounted) {
+        setState(() {
+          _selectedCustomerId = debit.customerId;
+          _selectedType = DebitType.fromValue(debit.debitType);
+          _selectedSource = DebitSource.fromValue(debit.source);
+          _descriptionController.text = debit.description ?? '';
+          _descriptionArController.text = debit.descriptionAr ?? '';
+          _amountController.text = debit.amount.toStringAsFixed(2);
+          _notesController.text = debit.notes ?? '';
+          _referenceController.text = debit.referenceNumber ?? '';
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isLoading = false);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _descriptionController.dispose();
+    _descriptionArController.dispose();
+    _amountController.dispose();
+    _notesController.dispose();
+    _referenceController.dispose();
+    super.dispose();
+  }
+
+  String _typeLabel(DebitType type, AppLocalizations l10n) {
+    switch (type) {
+      case DebitType.customerCredit:
+        return l10n.debitsTypeCustomerCredit;
+      case DebitType.supplierReturn:
+        return l10n.debitsTypeSupplierReturn;
+      case DebitType.inventoryAdjustment:
+        return l10n.debitsTypeInventoryAdjustment;
+      case DebitType.manualCredit:
+        return l10n.debitsTypeManualCredit;
+    }
+  }
+
+  String _sourceLabel(DebitSource source, AppLocalizations l10n) {
+    switch (source) {
+      case DebitSource.posTerminal:
+        return l10n.debitsSourcePosTerminal;
+      case DebitSource.invoice:
+        return l10n.debitsSourceInvoice;
+      case DebitSource.returnSource:
+        return l10n.debitsSourceReturn;
+      case DebitSource.manual:
+        return l10n.debitsSourceManual;
+      case DebitSource.inventorySystem:
+        return l10n.debitsSourceInventorySystem;
+    }
+  }
+
+  Future<void> _handleSave() async {
+    if (!_formKey.currentState!.validate()) return;
+    if (_selectedCustomerId == null || _selectedType == null || _selectedSource == null) return;
+
+    setState(() => _isSaving = true);
+    final l10n = AppLocalizations.of(context)!;
+
+    try {
+      if (_isEdit) {
+        final data = <String, dynamic>{
+          'description': _descriptionController.text.isNotEmpty ? _descriptionController.text : null,
+          'description_ar': _descriptionArController.text.isNotEmpty ? _descriptionArController.text : null,
+          'notes': _notesController.text.isNotEmpty ? _notesController.text : null,
+          'reference_number': _referenceController.text.isNotEmpty ? _referenceController.text : null,
+        };
+        await ref.read(debitsProvider.notifier).updateDebit(widget.debitId!, data);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.debitsUpdatedSuccess)));
+          context.pop();
+        }
+      } else {
+        await ref
+            .read(debitsProvider.notifier)
+            .createDebit(
+              customerId: _selectedCustomerId!,
+              debitType: _selectedType!.value,
+              source: _selectedSource!.value,
+              amount: double.parse(_amountController.text),
+              description: _descriptionController.text.isNotEmpty ? _descriptionController.text : null,
+              descriptionAr: _descriptionArController.text.isNotEmpty ? _descriptionArController.text : null,
+              notes: _notesController.text.isNotEmpty ? _notesController.text : null,
+              referenceNumber: _referenceController.text.isNotEmpty ? _referenceController.text : null,
+            );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.debitsCreatedSuccess)));
+          context.pop();
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+      }
+    } finally {
+      if (mounted) setState(() => _isSaving = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final customersState = ref.watch(customersProvider);
+    final customers = customersState is CustomersLoaded ? customersState.customers : <Customer>[];
+
+    return Scaffold(
+      appBar: AppBar(title: Text(_isEdit ? l10n.debitsEdit : l10n.debitsCreate)),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(AppSpacing.lg),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Customer picker
+                    DropdownButtonFormField<String>(
+                      value: _selectedCustomerId,
+                      decoration: InputDecoration(labelText: l10n.debitsSelectCustomer, border: const OutlineInputBorder()),
+                      items: customers.map((c) => DropdownMenuItem(value: c.id, child: Text('${c.name} (${c.phone})'))).toList(),
+                      onChanged: _isEdit ? null : (v) => setState(() => _selectedCustomerId = v),
+                      validator: (v) => v == null ? l10n.debitsSelectCustomer : null,
+                    ),
+                    AppSpacing.gapH16,
+
+                    // Type & Source row
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DropdownButtonFormField<DebitType>(
+                            value: _selectedType,
+                            decoration: InputDecoration(labelText: l10n.debitsSelectType, border: const OutlineInputBorder()),
+                            items: DebitType.values
+                                .map((t) => DropdownMenuItem(value: t, child: Text(_typeLabel(t, l10n))))
+                                .toList(),
+                            onChanged: _isEdit ? null : (v) => setState(() => _selectedType = v),
+                            validator: (v) => v == null ? l10n.debitsSelectType : null,
+                          ),
+                        ),
+                        AppSpacing.gapW16,
+                        Expanded(
+                          child: DropdownButtonFormField<DebitSource>(
+                            value: _selectedSource,
+                            decoration: InputDecoration(labelText: l10n.debitsSelectSource, border: const OutlineInputBorder()),
+                            items: DebitSource.values
+                                .map((s) => DropdownMenuItem(value: s, child: Text(_sourceLabel(s, l10n))))
+                                .toList(),
+                            onChanged: _isEdit ? null : (v) => setState(() => _selectedSource = v),
+                            validator: (v) => v == null ? l10n.debitsSelectSource : null,
+                          ),
+                        ),
+                      ],
+                    ),
+                    AppSpacing.gapH16,
+
+                    // Amount
+                    PosTextField(
+                      controller: _amountController,
+                      label: l10n.debitsAmount,
+                      hint: '0.00',
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))],
+                      readOnly: _isEdit,
+                    ),
+                    AppSpacing.gapH16,
+
+                    // Reference number
+                    PosTextField(
+                      controller: _referenceController,
+                      label: l10n.debitsReferenceNumber,
+                      hint: l10n.debitsReferenceNumber,
+                    ),
+                    AppSpacing.gapH16,
+
+                    // Description
+                    PosTextField(
+                      controller: _descriptionController,
+                      label: l10n.debitsDescription,
+                      hint: l10n.debitsDescription,
+                      maxLines: 2,
+                    ),
+                    AppSpacing.gapH16,
+
+                    // Description Arabic
+                    PosTextField(
+                      controller: _descriptionArController,
+                      label: l10n.debitsDescriptionAr,
+                      hint: l10n.debitsDescriptionAr,
+                      maxLines: 2,
+                      textDirection: TextDirection.rtl,
+                    ),
+                    AppSpacing.gapH16,
+
+                    // Notes
+                    PosTextField(
+                      controller: _notesController,
+                      label: l10n.commonNotesOptional,
+                      hint: l10n.commonNotesOptional,
+                      maxLines: 3,
+                    ),
+                    AppSpacing.gapH32,
+
+                    // Save button
+                    SizedBox(
+                      height: 48,
+                      child: ElevatedButton(
+                        onPressed: _isSaving ? null : _handleSave,
+                        child: _isSaving
+                            ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
+                            : Text(_isEdit ? l10n.save : l10n.debitsCreate),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+    );
+  }
+}

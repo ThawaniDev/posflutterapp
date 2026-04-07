@@ -263,11 +263,12 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 120,
+          Expanded(
+            flex: 2,
             child: Text(label, style: TextStyle(color: AppColors.textMutedLight, fontSize: 13)),
           ),
           Expanded(
+            flex: 3,
             child: Text(value, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13)),
           ),
         ],
@@ -308,42 +309,51 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
   }
 
   Widget _buildMetricsContent(Map<String, dynamic> data, ThemeData theme) {
-    return SingleChildScrollView(
-      padding: AppSpacing.paddingAll16,
-      child: Wrap(
-        spacing: AppSpacing.md,
-        runSpacing: AppSpacing.md,
-        children: [
-          _metricCard(
-            theme,
-            label: 'Products',
-            value: '${data['products_count'] ?? 0}',
-            icon: Icons.inventory_2_outlined,
-            color: AppColors.info,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final cardWidth = (constraints.maxWidth - AppSpacing.md * 2 - AppSpacing.md) / 2;
+        return SingleChildScrollView(
+          padding: AppSpacing.paddingAll16,
+          child: Wrap(
+            spacing: AppSpacing.md,
+            runSpacing: AppSpacing.md,
+            children: [
+              _metricCard(
+                theme,
+                label: 'Products',
+                value: '${data['products_count'] ?? 0}',
+                icon: Icons.inventory_2_outlined,
+                color: AppColors.info,
+                width: cardWidth,
+              ),
+              _metricCard(
+                theme,
+                label: 'Orders',
+                value: '${data['orders_count'] ?? 0}',
+                icon: Icons.receipt_outlined,
+                color: AppColors.success,
+                width: cardWidth,
+              ),
+              _metricCard(
+                theme,
+                label: 'Staff',
+                value: '${data['staff_count'] ?? 0}',
+                icon: Icons.people_outlined,
+                color: AppColors.purple,
+                width: cardWidth,
+              ),
+              _metricCard(
+                theme,
+                label: 'Revenue',
+                value: '${data['revenue'] ?? 0}',
+                icon: Icons.attach_money,
+                color: AppColors.primary,
+                width: cardWidth,
+              ),
+            ],
           ),
-          _metricCard(
-            theme,
-            label: 'Orders',
-            value: '${data['orders_count'] ?? 0}',
-            icon: Icons.receipt_outlined,
-            color: AppColors.success,
-          ),
-          _metricCard(
-            theme,
-            label: 'Staff',
-            value: '${data['staff_count'] ?? 0}',
-            icon: Icons.people_outlined,
-            color: AppColors.purple,
-          ),
-          _metricCard(
-            theme,
-            label: 'Revenue',
-            value: '${data['revenue'] ?? 0}',
-            icon: Icons.attach_money,
-            color: AppColors.primary,
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -353,9 +363,10 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
     required String value,
     required IconData icon,
     required Color color,
+    double? width,
   }) {
     return SizedBox(
-      width: 150,
+      width: width ?? 150,
       child: Card(
         elevation: 0,
         shape: RoundedRectangleBorder(

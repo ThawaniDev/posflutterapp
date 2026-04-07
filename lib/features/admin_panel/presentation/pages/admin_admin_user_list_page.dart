@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminAdminUserListPage extends ConsumerStatefulWidget {
   const AdminAdminUserListPage({super.key});
@@ -14,17 +16,26 @@ class AdminAdminUserListPage extends ConsumerStatefulWidget {
 
 class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage> {
   final _searchController = TextEditingController();
+  String? _storeId;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(adminUserListProvider.notifier).loadAdmins());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(adminUserListProvider.notifier).loadAdmins(storeId: _storeId);
+    });
   }
 
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    ref.read(adminUserListProvider.notifier).loadAdmins(storeId: _storeId);
   }
 
   @override
@@ -46,6 +57,7 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
       ),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: AppSpacing.paddingAll16,
             child: TextField(
@@ -58,11 +70,12 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     _searchController.clear();
-                    ref.read(adminUserListProvider.notifier).loadAdmins();
+                    ref.read(adminUserListProvider.notifier).loadAdmins(storeId: _storeId);
                   },
                 ),
               ),
-              onSubmitted: (v) => ref.read(adminUserListProvider.notifier).loadAdmins(search: v.isEmpty ? null : v),
+              onSubmitted: (v) =>
+                  ref.read(adminUserListProvider.notifier).loadAdmins(search: v.isEmpty ? null : v, storeId: _storeId),
             ),
           ),
           Expanded(child: _buildContent(state)),

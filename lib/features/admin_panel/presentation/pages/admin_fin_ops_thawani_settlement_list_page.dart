@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminFinOpsThawaniSettlementListPage extends ConsumerStatefulWidget {
   const AdminFinOpsThawaniSettlementListPage({super.key});
@@ -13,6 +15,7 @@ class AdminFinOpsThawaniSettlementListPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminFinOpsThawaniSettlementListPage> with SingleTickerProviderStateMixin {
+  String? _storeId;
   late TabController _tabController;
 
   @override
@@ -20,10 +23,22 @@ class _State extends ConsumerState<AdminFinOpsThawaniSettlementListPage> with Si
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     Future.microtask(() {
-      ref.read(finOpsThawaniSettlementsProvider.notifier).load();
-      ref.read(finOpsThawaniOrdersProvider.notifier).load();
-      ref.read(finOpsThawaniStoreConfigsProvider.notifier).load();
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _loadData();
     });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _loadData();
+  }
+
+  void _loadData() {
+    final params = <String, dynamic>{};
+    if (_storeId != null) params['store_id'] = _storeId!;
+    ref.read(finOpsThawaniSettlementsProvider.notifier).load(params: params);
+    ref.read(finOpsThawaniOrdersProvider.notifier).load(params: params);
+    ref.read(finOpsThawaniStoreConfigsProvider.notifier).load(params: params);
   }
 
   @override
@@ -51,7 +66,14 @@ class _State extends ConsumerState<AdminFinOpsThawaniSettlementListPage> with Si
           ],
         ),
       ),
-      body: TabBarView(controller: _tabController, children: [_SettlementsTab(), _OrdersTab(), _StoreConfigsTab()]),
+      body: Column(
+        children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          Expanded(
+            child: TabBarView(controller: _tabController, children: [_SettlementsTab(), _OrdersTab(), _StoreConfigsTab()]),
+          ),
+        ],
+      ),
     );
   }
 }

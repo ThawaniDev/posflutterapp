@@ -60,7 +60,7 @@ class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage>
                 style: const TextStyle(color: Colors.grey),
               ),
             const SizedBox(height: AppSpacing.xs),
-            Text('Price: ${product.sellPrice.toStringAsFixed(3)} OMR', style: const TextStyle(fontWeight: FontWeight.w600)),
+            Text('Price: ${product.sellPrice.toStringAsFixed(2)} \u0081', style: const TextStyle(fontWeight: FontWeight.w600)),
           ],
         ),
         actions: [
@@ -281,12 +281,12 @@ class _ProductCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  '${product.sellPrice.toStringAsFixed(3)} OMR',
+                  '${product.sellPrice.toStringAsFixed(2)} \u0081',
                   style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, color: AppColors.primary),
                 ),
                 if (product.costPrice != null)
                   Text(
-                    'Cost: ${product.costPrice!.toStringAsFixed(3)}',
+                    'Cost: ${product.costPrice!.toStringAsFixed(2)} \u0081',
                     style: theme.textTheme.labelSmall?.copyWith(color: AppColors.textMutedLight),
                   ),
               ],

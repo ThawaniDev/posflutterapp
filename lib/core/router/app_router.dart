@@ -1,11 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/network/dio_client.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/widgets/app_shell.dart';
 import 'package:thawani_pos/features/auth/pages/login_page.dart';
 import 'package:thawani_pos/features/auth/pages/pin_login_page.dart';
 import 'package:thawani_pos/features/auth/pages/register_page.dart';
 import 'package:thawani_pos/features/auth/providers/auth_providers.dart';
 import 'package:thawani_pos/features/auth/providers/auth_state.dart';
+import 'package:thawani_pos/features/staff/providers/roles_providers.dart';
+import 'package:thawani_pos/core/constants/permission_constants.dart';
+import 'package:thawani_pos/core/widgets/permission_guard_page.dart';
+import 'package:thawani_pos/core/router/route_permissions.dart';
+import 'package:thawani_pos/features/hardware/widgets/global_barcode_scan_handler.dart';
 import 'package:thawani_pos/features/catalog/pages/category_list_page.dart';
 import 'package:thawani_pos/features/catalog/pages/product_form_page.dart';
 import 'package:thawani_pos/features/catalog/pages/product_list_page.dart';
@@ -31,6 +38,9 @@ import 'package:thawani_pos/features/onboarding/pages/onboarding_wizard_page.dar
 import 'package:thawani_pos/features/onboarding/pages/store_settings_page.dart';
 import 'package:thawani_pos/features/onboarding/pages/working_hours_page.dart';
 import 'package:thawani_pos/features/orders/pages/order_list_page.dart';
+import 'package:thawani_pos/features/debits/pages/debit_list_page.dart';
+import 'package:thawani_pos/features/debits/pages/debit_detail_page.dart';
+import 'package:thawani_pos/features/debits/pages/debit_form_page.dart';
 import 'package:thawani_pos/features/payments/pages/cash_sessions_page.dart';
 import 'package:thawani_pos/features/payments/pages/cash_management_page.dart';
 import 'package:thawani_pos/features/payments/pages/expenses_page.dart';
@@ -233,10 +243,44 @@ import 'package:thawani_pos/features/industry_restaurant/pages/restaurant_dashbo
 // Predefined Catalog
 import 'package:thawani_pos/features/predefined_catalog/pages/predefined_catalog_page.dart';
 import 'package:thawani_pos/features/predefined_catalog/pages/predefined_products_page.dart';
-import 'route_names.dart';
+import 'package:thawani_pos/core/router/route_names.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authProvider);
+
+  // Auto-load permissions when user becomes authenticated
+  ref.listen<AuthState>(authProvider, (previous, next) {
+    if (next is AuthAuthenticated) {
+      ref.read(userPermissionsProvider.notifier).load();
+      // Set initial branch context for Dio
+      ref.read(activeBranchStoreIdProvider.notifier).state = next.user.storeId;
+      ref.read(activeBranchIdProvider.notifier).state = next.user.storeId;
+    } else if (next is AuthUnauthenticated) {
+      ref.read(userPermissionsProvider.notifier).clear();
+      ref.read(activeBranchStoreIdProvider.notifier).state = null;
+      ref.read(activeBranchIdProvider.notifier).state = null;
+    }
+  });
+
+  // Keep Dio's branch header in sync whenever the active branch changes
+  ref.listen<String?>(activeBranchIdProvider, (previous, next) {
+    if (next != null) {
+      ref.read(activeBranchStoreIdProvider.notifier).state = next;
+    }
+  });
+
+  // Also load on initial session recovery (provider created while already authenticated)
+  if (authState is AuthAuthenticated) {
+    final permsState = ref.read(userPermissionsProvider);
+    if (!permsState.isLoaded) {
+      Future.microtask(() => ref.read(userPermissionsProvider.notifier).load());
+    }
+    // Ensure branch context is set on session recovery
+    if (ref.read(activeBranchStoreIdProvider) == null) {
+      ref.read(activeBranchStoreIdProvider.notifier).state = authState.user.storeId;
+      ref.read(activeBranchIdProvider.notifier).state = authState.user.storeId;
+    }
+  }
 
   return GoRouter(
     initialLocation: Routes.login,
@@ -273,7 +317,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
       // ─── Authenticated Shell (sidebar wrapper) ──
       ShellRoute(
-        builder: (context, state, child) => AppShell(child: child),
+        builder: (context, state, child) {
+          final perm = permissionForRoute(state.matchedLocation);
+          final guarded = perm != null ? PermissionGuardPage(permission: perm, child: child) : child;
+          return GlobalBarcodeScanHandler(child: AppShell(child: guarded));
+        },
         routes: [
           // ─── Main (protected) ─────────────────────────
           GoRoute(path: Routes.dashboard, name: 'dashboard', builder: (context, state) => const OwnerDashboardPage()),
@@ -281,7 +329,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
           // ─── Catalog ──────────────────────────────────
           GoRoute(path: Routes.products, name: 'products', builder: (context, state) => const ProductListPage()),
-          GoRoute(path: Routes.productsAdd, name: 'productsAdd', builder: (context, state) => const ProductFormPage()),
+          GoRoute(
+            path: Routes.productsAdd,
+            name: 'productsAdd',
+            builder: (context, state) => ProductFormPage(initialBarcode: state.uri.queryParameters['barcode']),
+          ),
           GoRoute(
             path: '${Routes.products}/:id',
             name: 'productsEdit',
@@ -1238,10 +1290,34 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               );
             },
           ),
+
+          // ─── Debits ───
+          GoRoute(path: Routes.debits, name: 'debits', builder: (context, state) => const DebitListPage()),
+          GoRoute(path: Routes.debitsCreate, name: 'debitsCreate', builder: (context, state) => const DebitFormPage()),
+          GoRoute(
+            path: '${Routes.debitsDetail}/:id',
+            name: 'debitsDetail',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return DebitDetailPage(debitId: id);
+            },
+          ),
+          GoRoute(
+            path: '${Routes.debits}/:id/edit',
+            name: 'debitsEdit',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return DebitFormPage(debitId: id);
+            },
+          ),
         ], // end ShellRoute routes
       ), // end ShellRoute
       // ─── POS Cashier (full-screen, no sidebar) ──
-      GoRoute(path: Routes.posCheckout, name: 'posCheckout', builder: (context, state) => const PosCashierPage()),
+      GoRoute(
+        path: Routes.posCheckout,
+        name: 'posCheckout',
+        builder: (context, state) => const PermissionGuardPage(permission: Permissions.posSell, child: PosCashierPage()),
+      ),
     ],
   );
 });

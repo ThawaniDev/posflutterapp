@@ -18,14 +18,14 @@ class LabelApiService {
   Future<List<LabelTemplate>> listTemplates() async {
     final response = await _dio.get(ApiEndpoints.labelTemplates);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => LabelTemplate.fromJson(j as Map<String, dynamic>)).toList();
   }
 
   Future<List<LabelTemplate>> getPresets() async {
     final response = await _dio.get(ApiEndpoints.labelPresets);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => LabelTemplate.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -54,7 +54,7 @@ class LabelApiService {
   Future<List<LabelPrintHistory>> getPrintHistory() async {
     final response = await _dio.get(ApiEndpoints.labelPrintHistory);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => LabelPrintHistory.fromJson(j as Map<String, dynamic>)).toList();
   }
 

@@ -111,7 +111,7 @@ class CompanionApiService {
   }
 
   Future<Map<String, dynamic>> toggleStoreAvailability({required bool isOpen}) async {
-    final res = await _dio.post(ApiEndpoints.companionStoreAvailability, data: {'is_open': isOpen});
+    final res = await _dio.put(ApiEndpoints.companionStoreAvailability, data: {'is_active': isOpen});
     return res.data as Map<String, dynamic>;
   }
 }

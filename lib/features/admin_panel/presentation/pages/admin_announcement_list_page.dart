@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminAnnouncementListPage extends ConsumerStatefulWidget {
   const AdminAnnouncementListPage({super.key});
@@ -14,11 +16,20 @@ class AdminAnnouncementListPage extends ConsumerStatefulWidget {
 class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementListPage> {
   final _searchController = TextEditingController();
   String? _selectedType;
+  String? _storeId;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(announcementListProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(announcementListProvider.notifier).load(storeId: _storeId);
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    ref.read(announcementListProvider.notifier).load(type: _selectedType, storeId: _storeId);
   }
 
   @override
@@ -45,6 +56,7 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
       ),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -59,7 +71,11 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
                     ),
                     onSubmitted: (_) => ref
                         .read(announcementListProvider.notifier)
-                        .load(search: _searchController.text.isNotEmpty ? _searchController.text : null, type: _selectedType),
+                        .load(
+                          search: _searchController.text.isNotEmpty ? _searchController.text : null,
+                          type: _selectedType,
+                          storeId: _storeId,
+                        ),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -75,7 +91,7 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
                   ],
                   onChanged: (v) {
                     setState(() => _selectedType = v);
-                    ref.read(announcementListProvider.notifier).load(type: v);
+                    ref.read(announcementListProvider.notifier).load(type: v, storeId: _storeId);
                   },
                 ),
               ],

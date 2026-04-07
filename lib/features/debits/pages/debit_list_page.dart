@@ -1,0 +1,453 @@
+import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/router/route_names.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/pos_badge.dart';
+import 'package:thawani_pos/core/widgets/pos_input.dart';
+import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/features/debits/enums/debit_enums.dart';
+import 'package:thawani_pos/features/debits/models/debit.dart';
+import 'package:thawani_pos/features/debits/providers/debits_providers.dart';
+import 'package:thawani_pos/features/debits/providers/debits_state.dart';
+
+class DebitListPage extends ConsumerStatefulWidget {
+  const DebitListPage({super.key});
+
+  @override
+  ConsumerState<DebitListPage> createState() => _DebitListPageState();
+}
+
+class _DebitListPageState extends ConsumerState<DebitListPage> {
+  final _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => ref.read(debitsProvider.notifier).load());
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  PosBadgeVariant _statusVariant(DebitStatus status) {
+    switch (status) {
+      case DebitStatus.pending:
+        return PosBadgeVariant.warning;
+      case DebitStatus.partiallyAllocated:
+        return PosBadgeVariant.info;
+      case DebitStatus.fullyAllocated:
+        return PosBadgeVariant.success;
+      case DebitStatus.reversed:
+        return PosBadgeVariant.error;
+    }
+  }
+
+  String _statusLabel(DebitStatus status, AppLocalizations l10n) {
+    switch (status) {
+      case DebitStatus.pending:
+        return l10n.debitsStatusPending;
+      case DebitStatus.partiallyAllocated:
+        return l10n.debitsStatusPartiallyAllocated;
+      case DebitStatus.fullyAllocated:
+        return l10n.debitsStatusFullyAllocated;
+      case DebitStatus.reversed:
+        return l10n.debitsStatusReversed;
+    }
+  }
+
+  String _typeLabel(DebitType type, AppLocalizations l10n) {
+    switch (type) {
+      case DebitType.customerCredit:
+        return l10n.debitsTypeCustomerCredit;
+      case DebitType.supplierReturn:
+        return l10n.debitsTypeSupplierReturn;
+      case DebitType.inventoryAdjustment:
+        return l10n.debitsTypeInventoryAdjustment;
+      case DebitType.manualCredit:
+        return l10n.debitsTypeManualCredit;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final state = ref.watch(debitsProvider);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(l10n.debitsTitle),
+        actions: [
+          PopupMenuButton<String?>(
+            icon: const Icon(Icons.filter_list),
+            tooltip: l10n.debitsFilterByStatus,
+            onSelected: (value) {
+              ref.read(debitsProvider.notifier).filterByStatus(value);
+            },
+            itemBuilder: (ctx) => [
+              PopupMenuItem(value: null, child: Text(l10n.debitsAll)),
+              PopupMenuItem(value: 'pending', child: Text(l10n.debitsStatusPending)),
+              PopupMenuItem(value: 'partially_allocated', child: Text(l10n.debitsStatusPartiallyAllocated)),
+              PopupMenuItem(value: 'fully_allocated', child: Text(l10n.debitsStatusFullyAllocated)),
+              PopupMenuItem(value: 'reversed', child: Text(l10n.debitsStatusReversed)),
+            ],
+          ),
+          PopupMenuButton<String?>(
+            icon: const Icon(Icons.category_outlined),
+            tooltip: l10n.debitsFilterByType,
+            onSelected: (value) {
+              ref.read(debitsProvider.notifier).filterByType(value);
+            },
+            itemBuilder: (ctx) => [
+              PopupMenuItem(value: null, child: Text(l10n.debitsAll)),
+              PopupMenuItem(value: 'customer_credit', child: Text(l10n.debitsTypeCustomerCredit)),
+              PopupMenuItem(value: 'supplier_return', child: Text(l10n.debitsTypeSupplierReturn)),
+              PopupMenuItem(value: 'inventory_adjustment', child: Text(l10n.debitsTypeInventoryAdjustment)),
+              PopupMenuItem(value: 'manual_credit', child: Text(l10n.debitsTypeManualCredit)),
+            ],
+          ),
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: l10n.commonRefresh,
+            onPressed: () => ref.read(debitsProvider.notifier).load(),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => context.push(Routes.debitsCreate),
+        child: const Icon(Icons.add),
+      ),
+      body: Column(
+        children: [
+          // Summary cards
+          if (state is DebitsLoaded && state.summary != null) _buildSummary(state.summary!, l10n),
+          // Search
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: PosTextField(
+              controller: _searchController,
+              hint: l10n.debitsSearchHint,
+              prefixIcon: Icons.search,
+              onSubmitted: (value) => ref.read(debitsProvider.notifier).search(value),
+            ),
+          ),
+          Expanded(child: _buildBody(state, l10n)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSummary(DebitSummary summary, AppLocalizations l10n) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, 0),
+      child: Builder(
+        builder: (context) {
+          if (context.isPhone) {
+            return Column(
+              children: [
+                Row(
+                  children: [
+                    _summaryCard(l10n.debitsSummaryTotal, summary.totalDebits.toString(), AppColors.primary),
+                    AppSpacing.gapW8,
+                    _summaryCard(l10n.debitsSummaryPending, summary.pendingAmount.toStringAsFixed(2), AppColors.warning),
+                  ],
+                ),
+                AppSpacing.gapH8,
+                Row(
+                  children: [
+                    _summaryCard(l10n.debitsSummaryAllocated, summary.totalAllocated.toStringAsFixed(2), AppColors.success),
+                    AppSpacing.gapW8,
+                    _summaryCard(l10n.debitsSummaryUnallocated, summary.unallocatedAmount.toStringAsFixed(2), AppColors.info),
+                  ],
+                ),
+              ],
+            );
+          }
+          return Row(
+            children: [
+              _summaryCard(l10n.debitsSummaryTotal, summary.totalDebits.toString(), AppColors.primary),
+              AppSpacing.gapW8,
+              _summaryCard(l10n.debitsSummaryPending, summary.pendingAmount.toStringAsFixed(2), AppColors.warning),
+              AppSpacing.gapW8,
+              _summaryCard(l10n.debitsSummaryAllocated, summary.totalAllocated.toStringAsFixed(2), AppColors.success),
+              AppSpacing.gapW8,
+              _summaryCard(l10n.debitsSummaryUnallocated, summary.unallocatedAmount.toStringAsFixed(2), AppColors.info),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _summaryCard(String title, String value, Color color) {
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.08),
+          borderRadius: AppRadius.borderMd,
+          border: Border.all(color: color.withValues(alpha: 0.2)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w600),
+            ),
+            AppSpacing.gapH4,
+            Text(
+              value,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: color),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBody(DebitsState state, AppLocalizations l10n) {
+    final isLoading = state is DebitsLoading || state is DebitsInitial;
+    final error = state is DebitsError ? state.message : null;
+    final debits = state is DebitsLoaded ? state.debits : <Debit>[];
+    final loaded = state is DebitsLoaded ? state : null;
+
+    return PosDataTable<Debit>(
+      columns: [
+        PosTableColumn(title: l10n.debitsReferenceNumber),
+        PosTableColumn(title: l10n.debitsCustomer),
+        PosTableColumn(title: l10n.debitsType),
+        PosTableColumn(title: l10n.commonStatus),
+        PosTableColumn(title: l10n.debitsAmount, numeric: true),
+        PosTableColumn(title: l10n.debitsRemainingBalance, numeric: true),
+        PosTableColumn(title: l10n.commonDate),
+      ],
+      items: debits,
+      isLoading: isLoading,
+      error: error,
+      onRetry: () => ref.read(debitsProvider.notifier).load(),
+      emptyConfig: PosTableEmptyConfig(
+        icon: Icons.account_balance_wallet_outlined,
+        title: l10n.debitsNoDebits,
+        subtitle: l10n.debitsNoDebitsSubtitle,
+      ),
+      actions: [
+        PosTableRowAction<Debit>(
+          label: l10n.debitsDetail,
+          icon: Icons.visibility_outlined,
+          onTap: (d) => context.push('${Routes.debitsDetail}/${d.id}'),
+        ),
+        PosTableRowAction<Debit>(
+          label: l10n.edit,
+          icon: Icons.edit_outlined,
+          isVisible: (d) => d.canEdit,
+          onTap: (d) => context.push('${Routes.debits}/${d.id}/edit'),
+        ),
+        PosTableRowAction<Debit>(
+          label: l10n.debitsAllocate,
+          icon: Icons.payments_outlined,
+          isVisible: (d) => d.canAllocate,
+          onTap: (d) => _showAllocateDialog(d),
+        ),
+        PosTableRowAction<Debit>(
+          label: l10n.debitsReverse,
+          icon: Icons.undo_outlined,
+          isDestructive: true,
+          isVisible: (d) => d.canReverse,
+          onTap: (d) => _showReverseDialog(d),
+        ),
+        PosTableRowAction<Debit>(
+          label: l10n.delete,
+          icon: Icons.delete_outlined,
+          isDestructive: true,
+          isVisible: (d) => d.canDelete,
+          onTap: (d) => _handleDelete(d),
+        ),
+      ],
+      cellBuilder: (debit, colIndex, col) {
+        switch (colIndex) {
+          case 0:
+            return Text(debit.referenceNumber ?? '-', style: const TextStyle(fontWeight: FontWeight.w600));
+          case 1:
+            return Text(debit.customer?.name ?? '-');
+          case 2:
+            return Text(_typeLabel(DebitType.fromValue(debit.debitType), l10n));
+          case 3:
+            return PosBadge(
+              label: _statusLabel(DebitStatus.fromValue(debit.status), l10n),
+              variant: _statusVariant(DebitStatus.fromValue(debit.status)),
+            );
+          case 4:
+            return Text(debit.amount.toStringAsFixed(2), style: const TextStyle(fontWeight: FontWeight.w600));
+          case 5:
+            return Text(debit.remainingBalance.toStringAsFixed(2));
+          case 6:
+            return Text(
+              debit.createdAt != null ? '${debit.createdAt!.day}/${debit.createdAt!.month}/${debit.createdAt!.year}' : '-',
+            );
+          default:
+            return const SizedBox.shrink();
+        }
+      },
+      currentPage: loaded?.currentPage,
+      totalPages: loaded?.lastPage,
+      totalItems: loaded?.total,
+      itemsPerPage: loaded?.perPage ?? 25,
+      onPreviousPage: loaded != null ? () => ref.read(debitsProvider.notifier).previousPage() : null,
+      onNextPage: loaded != null ? () => ref.read(debitsProvider.notifier).nextPage() : null,
+    );
+  }
+
+  Future<void> _showAllocateDialog(Debit debit) async {
+    final l10n = AppLocalizations.of(context)!;
+    final orderIdController = TextEditingController();
+    final amountController = TextEditingController();
+    final notesController = TextEditingController();
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.debitsAllocateDebit),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              PosTextField(controller: orderIdController, label: l10n.debitsOrderId, hint: l10n.debitsOrderId),
+              AppSpacing.gapH12,
+              PosTextField(
+                controller: amountController,
+                label: l10n.debitsAllocateAmount,
+                hint: debit.remainingBalance.toStringAsFixed(2),
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              ),
+              AppSpacing.gapH12,
+              PosTextField(
+                controller: notesController,
+                label: l10n.commonNotesOptional,
+                hint: l10n.commonNotesOptional,
+                maxLines: 2,
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
+          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(l10n.debitsAllocate)),
+        ],
+      ),
+    );
+
+    if (confirmed == true && mounted) {
+      try {
+        final amount = double.tryParse(amountController.text) ?? 0;
+        await ref
+            .read(debitsProvider.notifier)
+            .allocateDebit(
+              debitId: debit.id,
+              orderId: orderIdController.text.trim(),
+              amount: amount,
+              notes: notesController.text.isNotEmpty ? notesController.text : null,
+            );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.debitsAllocatedSuccess)));
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        }
+      }
+    }
+
+    orderIdController.dispose();
+    amountController.dispose();
+    notesController.dispose();
+  }
+
+  Future<void> _showReverseDialog(Debit debit) async {
+    final l10n = AppLocalizations.of(context)!;
+    final reasonController = TextEditingController();
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.debitsReverseDebit),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(l10n.debitsReverseConfirm),
+            AppSpacing.gapH12,
+            PosTextField(
+              controller: reasonController,
+              label: l10n.debitsReverseReason,
+              hint: l10n.debitsReverseReason,
+              maxLines: 2,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: TextButton.styleFrom(foregroundColor: AppColors.error),
+            child: Text(l10n.debitsReverse),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true && mounted) {
+      try {
+        await ref
+            .read(debitsProvider.notifier)
+            .reverseDebit(debit.id, reason: reasonController.text.isNotEmpty ? reasonController.text : null);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.debitsReversedSuccess)));
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        }
+      }
+    }
+
+    reasonController.dispose();
+  }
+
+  Future<void> _handleDelete(Debit debit) async {
+    final l10n = AppLocalizations.of(context)!;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.delete),
+        content: Text(l10n.debitsDeleteConfirm),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            style: TextButton.styleFrom(foregroundColor: AppColors.error),
+            child: Text(l10n.delete),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true && mounted) {
+      try {
+        await ref.read(debitsProvider.notifier).deleteDebit(debit.id);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.debitsDeletedSuccess)));
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        }
+      }
+    }
+  }
+}

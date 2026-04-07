@@ -5,6 +5,8 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminActivityLogPage extends ConsumerStatefulWidget {
   const AdminActivityLogPage({super.key});
@@ -14,6 +16,7 @@ class AdminActivityLogPage extends ConsumerStatefulWidget {
 }
 
 class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
+  String? _storeId;
   String? _actionFilter;
   String? _entityTypeFilter;
   int _currentPage = 1;
@@ -21,11 +24,21 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => _loadLogs());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _loadLogs();
+    });
   }
 
   void _loadLogs() {
-    ref.read(activityLogProvider.notifier).load(action: _actionFilter, entityType: _entityTypeFilter, page: _currentPage);
+    ref
+        .read(activityLogProvider.notifier)
+        .load(action: _actionFilter, entityType: _entityTypeFilter, storeId: _storeId, page: _currentPage);
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _loadLogs();
   }
 
   @override
@@ -37,7 +50,10 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
       appBar: AppBar(title: const Text('Activity Log')),
       body: Column(
         children: [
-          // ─── Filters ──────────────────────────────
+          AdminBranchBar(
+            selectedStoreId: _storeId,
+            onBranchChanged: _onBranchChanged,
+          ), // ─── Filters ──────────────────────────────
           Container(
             padding: AppSpacing.paddingAll16,
             decoration: BoxDecoration(

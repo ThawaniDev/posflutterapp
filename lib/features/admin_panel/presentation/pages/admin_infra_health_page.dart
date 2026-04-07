@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminInfraHealthPage extends ConsumerStatefulWidget {
   const AdminInfraHealthPage({super.key});
@@ -13,12 +15,20 @@ class AdminInfraHealthPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminInfraHealthPage> {
+  String? _storeId;
   String? _statusFilter;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(infraHealthChecksProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(infraHealthChecksProvider.notifier).load();
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
   }
 
   void _applyFilter() {
@@ -35,6 +45,7 @@ class _State extends ConsumerState<AdminInfraHealthPage> {
       appBar: AppBar(title: const Text('Health Checks'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.sm),
             child: DropdownButtonFormField<String>(

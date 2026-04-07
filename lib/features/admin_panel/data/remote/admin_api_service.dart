@@ -19,6 +19,7 @@ class AdminApiService {
     bool? isActive,
     String? businessType,
     String? organizationId,
+    String? storeId,
     int perPage = 15,
     int page = 1,
   }) async {
@@ -27,6 +28,7 @@ class AdminApiService {
     if (isActive != null) params['is_active'] = isActive;
     if (businessType != null) params['business_type'] = businessType;
     if (organizationId != null) params['organization_id'] = organizationId;
+    if (storeId != null) params['store_id'] = storeId;
 
     final response = await _dio.get(ApiEndpoints.adminStores, queryParameters: params);
     return response.data as Map<String, dynamic>;
@@ -115,10 +117,17 @@ class AdminApiService {
 
   // ─── Registrations ───────────────────────────────────────
 
-  Future<Map<String, dynamic>> listRegistrations({String? status, String? search, int perPage = 15, int page = 1}) async {
+  Future<Map<String, dynamic>> listRegistrations({
+    String? status,
+    String? search,
+    String? storeId,
+    int perPage = 15,
+    int page = 1,
+  }) async {
     final params = <String, dynamic>{'per_page': perPage, 'page': page};
     if (status != null) params['status'] = status;
     if (search != null) params['search'] = search;
+    if (storeId != null) params['store_id'] = storeId;
 
     final response = await _dio.get(ApiEndpoints.adminRegistrations, queryParameters: params);
     return response.data as Map<String, dynamic>;
@@ -209,6 +218,7 @@ class AdminApiService {
     String? search,
     bool? isActive,
     String? roleId,
+    String? storeId,
     int perPage = 15,
     int page = 1,
   }) async {
@@ -216,6 +226,7 @@ class AdminApiService {
     if (search != null) params['search'] = search;
     if (isActive != null) params['is_active'] = isActive;
     if (roleId != null) params['role_id'] = roleId;
+    if (storeId != null) params['store_id'] = storeId;
 
     final response = await _dio.get(ApiEndpoints.adminTeam, queryParameters: params);
     return response.data as Map<String, dynamic>;
@@ -291,6 +302,7 @@ class AdminApiService {
     String? entityType,
     String? dateFrom,
     String? dateTo,
+    String? storeId,
     int perPage = 25,
     int page = 1,
   }) async {
@@ -300,6 +312,7 @@ class AdminApiService {
     if (entityType != null) params['entity_type'] = entityType;
     if (dateFrom != null) params['date_from'] = dateFrom;
     if (dateTo != null) params['date_to'] = dateTo;
+    if (storeId != null) params['store_id'] = storeId;
 
     final response = await _dio.get(ApiEndpoints.adminActivityLog, queryParameters: params);
     return response.data as Map<String, dynamic>;
@@ -422,12 +435,13 @@ class AdminApiService {
 
   // ─── Invoices (P3) ────────────────────────────────────────
 
-  Future<Map<String, dynamic>> listInvoices({String? status, String? subscriptionId, int perPage = 15}) async {
+  Future<Map<String, dynamic>> listInvoices({String? status, String? subscriptionId, String? storeId, int perPage = 15}) async {
     final params = <String, dynamic>{'per_page': perPage};
     if (status != null) params['status'] = status;
     if (subscriptionId != null) {
       params['store_subscription_id'] = subscriptionId;
     }
+    if (storeId != null) params['store_id'] = storeId;
     final response = await _dio.get(ApiEndpoints.adminInvoices, queryParameters: params);
     return response.data as Map<String, dynamic>;
   }
@@ -439,8 +453,10 @@ class AdminApiService {
 
   // ─── Revenue Dashboard (P3) ───────────────────────────────
 
-  Future<Map<String, dynamic>> getRevenueDashboard() async {
-    final response = await _dio.get(ApiEndpoints.adminRevenueDashboard);
+  Future<Map<String, dynamic>> getRevenueDashboard({String? storeId}) async {
+    final params = <String, dynamic>{};
+    if (storeId != null) params['store_id'] = storeId;
+    final response = await _dio.get(ApiEndpoints.adminRevenueDashboard, queryParameters: params.isNotEmpty ? params : null);
     return response.data as Map<String, dynamic>;
   }
 
@@ -496,10 +512,11 @@ class AdminApiService {
 
   // ─── Admin Users ──────────────────────────────────────────
 
-  Future<Map<String, dynamic>> listAdminUsers({String? search, bool? isActive}) async {
+  Future<Map<String, dynamic>> listAdminUsers({String? search, bool? isActive, String? storeId}) async {
     final params = <String, dynamic>{};
     if (search != null) params['search'] = search;
     if (isActive != null) params['is_active'] = isActive;
+    if (storeId != null) params['store_id'] = storeId;
     final response = await _dio.get(ApiEndpoints.adminAdminUsers, queryParameters: params);
     return response.data as Map<String, dynamic>;
   }
@@ -585,8 +602,10 @@ class AdminApiService {
   }
 
   // Revenue dashboard
-  Future<Map<String, dynamic>> getBillingRevenue() async {
-    final response = await _dio.get(ApiEndpoints.adminBillingRevenue);
+  Future<Map<String, dynamic>> getBillingRevenue({String? storeId}) async {
+    final params = <String, dynamic>{};
+    if (storeId != null) params['store_id'] = storeId;
+    final response = await _dio.get(ApiEndpoints.adminBillingRevenue, queryParameters: params.isNotEmpty ? params : null);
     return response.data as Map<String, dynamic>;
   }
 
@@ -675,8 +694,10 @@ class AdminApiService {
 
   // ─── P6: Analytics & Reporting ────────────────────────────────
 
-  Future<Map<String, dynamic>> getAnalyticsDashboard() async {
-    final response = await _dio.get(ApiEndpoints.adminAnalyticsDashboard);
+  Future<Map<String, dynamic>> getAnalyticsDashboard({String? storeId}) async {
+    final params = <String, dynamic>{};
+    if (storeId != null) params['store_id'] = storeId;
+    final response = await _dio.get(ApiEndpoints.adminAnalyticsDashboard, queryParameters: params.isNotEmpty ? params : null);
     return response.data as Map<String, dynamic>;
   }
 
@@ -705,8 +726,10 @@ class AdminApiService {
     return response.data as Map<String, dynamic>;
   }
 
-  Future<Map<String, dynamic>> getAnalyticsSystemHealth() async {
-    final response = await _dio.get(ApiEndpoints.adminAnalyticsSystemHealth);
+  Future<Map<String, dynamic>> getAnalyticsSystemHealth({String? storeId}) async {
+    final params = <String, dynamic>{};
+    if (storeId != null) params['store_id'] = storeId;
+    final response = await _dio.get(ApiEndpoints.adminAnalyticsSystemHealth, queryParameters: params.isNotEmpty ? params : null);
     return response.data as Map<String, dynamic>;
   }
 
@@ -837,11 +860,12 @@ class AdminApiService {
   // ═══════════════════════════════════════════════════════════════
 
   // CMS Pages
-  Future<Map<String, dynamic>> getCmsPages({String? search, String? pageType, bool? isPublished}) async {
+  Future<Map<String, dynamic>> getCmsPages({String? search, String? pageType, bool? isPublished, String? storeId}) async {
     final params = <String, dynamic>{};
     if (search != null) params['search'] = search;
     if (pageType != null) params['page_type'] = pageType;
     if (isPublished != null) params['is_published'] = isPublished;
+    if (storeId != null) params['store_id'] = storeId;
     final response = await _dio.get(ApiEndpoints.adminCmsPages, queryParameters: params);
     return response.data as Map<String, dynamic>;
   }
@@ -872,13 +896,21 @@ class AdminApiService {
   }
 
   // Knowledge Base Articles
-  Future<Map<String, dynamic>> getArticles({String? search, String? category, bool? isPublished, int? page, int? perPage}) async {
+  Future<Map<String, dynamic>> getArticles({
+    String? search,
+    String? category,
+    bool? isPublished,
+    int? page,
+    int? perPage,
+    String? storeId,
+  }) async {
     final params = <String, dynamic>{};
     if (search != null) params['search'] = search;
     if (category != null) params['category'] = category;
     if (isPublished != null) params['is_published'] = isPublished;
     if (page != null) params['page'] = page;
     if (perPage != null) params['per_page'] = perPage;
+    if (storeId != null) params['store_id'] = storeId;
     final response = await _dio.get(ApiEndpoints.adminArticles, queryParameters: params);
     return response.data as Map<String, dynamic>;
   }
@@ -909,12 +941,13 @@ class AdminApiService {
   }
 
   // Platform Announcements
-  Future<Map<String, dynamic>> getAnnouncements({String? search, String? type, int? page, int? perPage}) async {
+  Future<Map<String, dynamic>> getAnnouncements({String? search, String? type, int? page, int? perPage, String? storeId}) async {
     final params = <String, dynamic>{};
     if (search != null) params['search'] = search;
     if (type != null) params['type'] = type;
     if (page != null) params['page'] = page;
     if (perPage != null) params['per_page'] = perPage;
+    if (storeId != null) params['store_id'] = storeId;
     final response = await _dio.get(ApiEndpoints.adminAnnouncements, queryParameters: params);
     return response.data as Map<String, dynamic>;
   }
@@ -940,11 +973,17 @@ class AdminApiService {
   }
 
   // Notification Templates
-  Future<Map<String, dynamic>> getNotificationTemplates({String? search, String? channel, bool? isActive}) async {
+  Future<Map<String, dynamic>> getNotificationTemplates({
+    String? search,
+    String? channel,
+    bool? isActive,
+    String? storeId,
+  }) async {
     final params = <String, dynamic>{};
     if (search != null) params['search'] = search;
     if (channel != null) params['channel'] = channel;
     if (isActive != null) params['is_active'] = isActive;
+    if (storeId != null) params['store_id'] = storeId;
     final response = await _dio.get(ApiEndpoints.adminNotificationTemplates, queryParameters: params);
     return response.data as Map<String, dynamic>;
   }
@@ -1033,8 +1072,10 @@ class AdminApiService {
 
   // ─── System Health ─────────────────────────────────────────
 
-  Future<Map<String, dynamic>> getHealthDashboard() async {
-    final response = await _dio.get(ApiEndpoints.adminHealthDashboard);
+  Future<Map<String, dynamic>> getHealthDashboard({String? storeId}) async {
+    final params = <String, dynamic>{};
+    if (storeId != null) params['store_id'] = storeId;
+    final response = await _dio.get(ApiEndpoints.adminHealthDashboard, queryParameters: params.isNotEmpty ? params : null);
     return response.data as Map<String, dynamic>;
   }
 
@@ -1218,8 +1259,10 @@ class AdminApiService {
   }
 
   // ─── P12  Deployment & Release Management ───────────────
-  Future<Map<String, dynamic>> getDeploymentOverview() async {
-    final response = await _dio.get(ApiEndpoints.adminDeploymentOverview);
+  Future<Map<String, dynamic>> getDeploymentOverview({String? storeId}) async {
+    final params = <String, dynamic>{};
+    if (storeId != null) params['store_id'] = storeId;
+    final response = await _dio.get(ApiEndpoints.adminDeploymentOverview, queryParameters: params.isNotEmpty ? params : null);
     return response.data as Map<String, dynamic>;
   }
 
@@ -1279,8 +1322,10 @@ class AdminApiService {
   }
 
   // ─── P13  Data Management & Migration ───────────────────
-  Future<Map<String, dynamic>> getDataManagementOverview() async {
-    final response = await _dio.get(ApiEndpoints.adminDataManagementOverview);
+  Future<Map<String, dynamic>> getDataManagementOverview({String? storeId}) async {
+    final params = <String, dynamic>{};
+    if (storeId != null) params['store_id'] = storeId;
+    final response = await _dio.get(ApiEndpoints.adminDataManagementOverview, queryParameters: params.isNotEmpty ? params : null);
     return response.data as Map<String, dynamic>;
   }
 
@@ -1355,8 +1400,10 @@ class AdminApiService {
   }
 
   // ─── P14  Security Center ──────────────────────────────────────────
-  Future<Map<String, dynamic>> getSecurityOverview() async {
-    final response = await _dio.get(ApiEndpoints.adminSecurityOverview);
+  Future<Map<String, dynamic>> getSecurityOverview({String? storeId}) async {
+    final params = <String, dynamic>{};
+    if (storeId != null) params['store_id'] = storeId;
+    final response = await _dio.get(ApiEndpoints.adminSecurityOverview, queryParameters: params.isNotEmpty ? params : null);
     return response.data as Map<String, dynamic>;
   }
 
@@ -1471,8 +1518,10 @@ class AdminApiService {
   }
 
   // ─── P15: Financial Operations ───────────────────────────
-  Future<Map<String, dynamic>> getFinOpsOverview() async {
-    final response = await _dio.get(ApiEndpoints.adminFinOpsOverview);
+  Future<Map<String, dynamic>> getFinOpsOverview({String? storeId}) async {
+    final params = <String, dynamic>{};
+    if (storeId != null) params['store_id'] = storeId;
+    final response = await _dio.get(ApiEndpoints.adminFinOpsOverview, queryParameters: params.isNotEmpty ? params : null);
     return response.data as Map<String, dynamic>;
   }
 
@@ -1738,8 +1787,10 @@ class AdminApiService {
   }
 
   // ─── P16: Infrastructure & Operations ────────────────────
-  Future<Map<String, dynamic>> getInfraOverview() async {
-    final response = await _dio.get(ApiEndpoints.adminInfraOverview);
+  Future<Map<String, dynamic>> getInfraOverview({String? storeId}) async {
+    final params = <String, dynamic>{};
+    if (storeId != null) params['store_id'] = storeId;
+    final response = await _dio.get(ApiEndpoints.adminInfraOverview, queryParameters: params.isNotEmpty ? params : null);
     return response.data as Map<String, dynamic>;
   }
 

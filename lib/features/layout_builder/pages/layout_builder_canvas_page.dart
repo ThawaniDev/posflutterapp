@@ -8,6 +8,7 @@ import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/core/widgets/pos_error_state.dart';
 import 'package:thawani_pos/core/widgets/pos_loading_skeleton.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/layout_builder/models/layout_widget.dart';
 import 'package:thawani_pos/features/layout_builder/models/widget_placement.dart';
 import 'package:thawani_pos/features/layout_builder/providers/layout_builder_providers.dart';
@@ -77,17 +78,142 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
           message: message,
           onRetry: () => ref.read(canvasBuilderProvider.notifier).load(),
         ),
-        CanvasBuilderLoaded(:final canvas, :final placements, :final versions) => Row(
+        CanvasBuilderLoaded(:final canvas, :final placements, :final versions) =>
+          context.isPhone
+              ? _buildMobileBody(canvas, placements, versions, canvasState as CanvasBuilderLoaded, catalogState, l10n, isDark)
+              : Row(
+                  children: [
+                    // Left panel: Widget catalog
+                    SizedBox(width: 260, child: _buildWidgetCatalog(catalogState, l10n, isDark)),
+                    // Center: Canvas grid
+                    Expanded(
+                      child: _buildCanvasGrid(
+                        canvas.gridColumns,
+                        canvas.gridRows,
+                        placements,
+                        canvasState as CanvasBuilderLoaded,
+                        isDark,
+                        l10n,
+                      ),
+                    ),
+                    // Right panel: Properties + versions
+                    SizedBox(
+                      width: 280,
+                      child: _buildPropertiesPanel(placements, versions, canvasState as CanvasBuilderLoaded, l10n, isDark),
+                    ),
+                  ],
+                ),
+      },
+    );
+  }
+
+  // ─── Mobile Body ──────────────────────────────────────────────
+
+  Widget _buildMobileBody(
+    dynamic canvas,
+    List<WidgetPlacement> placements,
+    List<dynamic> versions,
+    CanvasBuilderLoaded canvasState,
+    WidgetCatalogState catalogState,
+    AppLocalizations l10n,
+    bool isDark,
+  ) {
+    return Stack(
+      children: [
+        _buildCanvasGrid(canvas.gridColumns, canvas.gridRows, placements, canvasState, isDark, l10n),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+              border: Border(top: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
+            ),
+            child: SafeArea(
+              top: false,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: PosButton(
+                      label: l10n.layoutWidgetCatalog,
+                      icon: Icons.widgets_rounded,
+                      size: PosButtonSize.sm,
+                      variant: PosButtonVariant.outline,
+                      onPressed: () => _showCatalogSheet(catalogState, l10n, isDark),
+                    ),
+                  ),
+                  AppSpacing.gapW12,
+                  Expanded(
+                    child: PosButton(
+                      label: l10n.layoutProperties,
+                      icon: Icons.tune_rounded,
+                      size: PosButtonSize.sm,
+                      variant: PosButtonVariant.outline,
+                      onPressed: () => _showPropertiesSheet(placements, versions, canvasState, l10n, isDark),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showCatalogSheet(WidgetCatalogState catalogState, AppLocalizations l10n, bool isDark) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => DraggableScrollableSheet(
+        initialChildSize: 0.6,
+        minChildSize: 0.3,
+        maxChildSize: 0.85,
+        expand: false,
+        builder: (_, controller) => Column(
           children: [
-            // Left panel: Widget catalog
-            SizedBox(width: 260, child: _buildWidgetCatalog(catalogState, l10n, isDark)),
-            // Center: Canvas grid
-            Expanded(child: _buildCanvasGrid(canvas.gridColumns, canvas.gridRows, placements, canvasState, isDark, l10n)),
-            // Right panel: Properties + versions
-            SizedBox(width: 280, child: _buildPropertiesPanel(placements, versions, canvasState, l10n, isDark)),
+            Container(
+              margin: const EdgeInsets.only(top: 8),
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(color: AppColors.textMutedLight, borderRadius: BorderRadius.circular(2)),
+            ),
+            Expanded(child: _buildWidgetCatalog(catalogState, l10n, isDark)),
           ],
         ),
-      },
+      ),
+    );
+  }
+
+  void _showPropertiesSheet(
+    List<WidgetPlacement> placements,
+    List<dynamic> versions,
+    CanvasBuilderLoaded canvasState,
+    AppLocalizations l10n,
+    bool isDark,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => DraggableScrollableSheet(
+        initialChildSize: 0.5,
+        minChildSize: 0.3,
+        maxChildSize: 0.85,
+        expand: false,
+        builder: (_, controller) => Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 8),
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(color: AppColors.textMutedLight, borderRadius: BorderRadius.circular(2)),
+            ),
+            Expanded(child: _buildPropertiesPanel(placements, versions, canvasState, l10n, isDark)),
+          ],
+        ),
+      ),
     );
   }
 

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminNotificationTemplateListPage extends ConsumerStatefulWidget {
   const AdminNotificationTemplateListPage({super.key});
@@ -14,11 +16,20 @@ class AdminNotificationTemplateListPage extends ConsumerStatefulWidget {
 class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotificationTemplateListPage> {
   final _searchController = TextEditingController();
   String? _selectedChannel;
+  String? _storeId;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(notificationTemplateListProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(notificationTemplateListProvider.notifier).load(storeId: _storeId);
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _search();
   }
 
   @override
@@ -30,7 +41,11 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
   void _search() {
     ref
         .read(notificationTemplateListProvider.notifier)
-        .load(search: _searchController.text.isNotEmpty ? _searchController.text : null, channel: _selectedChannel);
+        .load(
+          search: _searchController.text.isNotEmpty ? _searchController.text : null,
+          channel: _selectedChannel,
+          storeId: _storeId,
+        );
   }
 
   Color _channelColor(String? channel) => switch (channel) {
@@ -53,6 +68,7 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
       ),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(

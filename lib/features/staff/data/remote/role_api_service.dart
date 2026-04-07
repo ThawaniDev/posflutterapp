@@ -70,10 +70,32 @@ class RoleApiService {
   }
 
   /// GET /staff/roles/user-permissions?store_id=xxx
-  Future<List<String>> getUserPermissions(String storeId) async {
+  /// Returns permissions, branch_scope, accessible_store_ids, and branch_roles.
+  Future<Map<String, dynamic>> getUserPermissionsWithScope(String storeId) async {
     final response = await _dio.get(ApiEndpoints.userPermissions, queryParameters: {'store_id': storeId});
-    final List perms = response.data['data']['permissions'] as List;
-    return perms.cast<String>();
+    final data = response.data['data'] as Map<String, dynamic>;
+    final List perms = data['permissions'] as List;
+    final String branchScope = (data['branch_scope'] as String?) ?? 'branch';
+    final List accessibleIds = (data['accessible_store_ids'] as List?) ?? [];
+
+    // Parse per-branch role map: { storeId: { role_name, display_name, display_name_ar, scope } }
+    final Map<String, dynamic> rawBranchRoles = (data['branch_roles'] as Map<String, dynamic>?) ?? {};
+    final Map<String, BranchRoleInfo> branchRoles = rawBranchRoles.map(
+      (storeId, info) => MapEntry(storeId, BranchRoleInfo.fromJson(info as Map<String, dynamic>)),
+    );
+
+    return {
+      'permissions': perms.cast<String>(),
+      'branch_scope': branchScope,
+      'accessible_store_ids': accessibleIds.cast<String>(),
+      'branch_roles': branchRoles,
+    };
+  }
+
+  /// Legacy: returns only the permissions list.
+  Future<List<String>> getUserPermissions(String storeId) async {
+    final result = await getUserPermissionsWithScope(storeId);
+    return result['permissions'] as List<String>;
   }
 
   /// GET /staff/permissions
@@ -124,5 +146,24 @@ class RoleApiService {
   Future<bool> checkPinRequired(String permissionCode) async {
     final response = await _dio.get(ApiEndpoints.pinOverrideCheck, queryParameters: {'permission_code': permissionCode});
     return response.data['data']['requires_pin'] as bool;
+  }
+}
+
+/// Per-branch role information returned by the user-permissions API.
+class BranchRoleInfo {
+  final String roleName;
+  final String displayName;
+  final String? displayNameAr;
+  final String scope;
+
+  const BranchRoleInfo({required this.roleName, required this.displayName, this.displayNameAr, required this.scope});
+
+  factory BranchRoleInfo.fromJson(Map<String, dynamic> json) {
+    return BranchRoleInfo(
+      roleName: json['role_name'] as String,
+      displayName: json['display_name'] as String,
+      displayNameAr: json['display_name_ar'] as String?,
+      scope: json['scope'] as String,
+    );
   }
 }

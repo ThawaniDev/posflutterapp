@@ -10,6 +10,7 @@ import 'package:thawani_pos/core/widgets/pos_table.dart';
 import 'package:thawani_pos/features/catalog/models/supplier.dart';
 import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
 import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 
 class SupplierListPage extends ConsumerStatefulWidget {
   const SupplierListPage({super.key});
@@ -59,7 +60,7 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
       builder: (ctx) => AlertDialog(
         title: Text(isEditing ? l10n.supplierEdit : l10n.supplierNew),
         content: SizedBox(
-          width: 500,
+          width: context.isPhone ? double.maxFinite : 500,
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -129,21 +130,31 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
                   maxLines: 2,
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                Row(
-                  children: [
-                    Expanded(
-                      child: PosTextField(controller: cityController, label: l10n.supplierCity),
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    Expanded(
-                      child: PosTextField(controller: countryController, label: l10n.supplierCountry),
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    Expanded(
-                      child: PosTextField(controller: postalCodeController, label: l10n.supplierPostalCode),
-                    ),
-                  ],
-                ),
+                context.isPhone
+                    ? Column(
+                        children: [
+                          PosTextField(controller: cityController, label: l10n.supplierCity),
+                          const SizedBox(height: AppSpacing.sm),
+                          PosTextField(controller: countryController, label: l10n.supplierCountry),
+                          const SizedBox(height: AppSpacing.sm),
+                          PosTextField(controller: postalCodeController, label: l10n.supplierPostalCode),
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          Expanded(
+                            child: PosTextField(controller: cityController, label: l10n.supplierCity),
+                          ),
+                          const SizedBox(width: AppSpacing.sm),
+                          Expanded(
+                            child: PosTextField(controller: countryController, label: l10n.supplierCountry),
+                          ),
+                          const SizedBox(width: AppSpacing.sm),
+                          Expanded(
+                            child: PosTextField(controller: postalCodeController, label: l10n.supplierPostalCode),
+                          ),
+                        ],
+                      ),
                 const SizedBox(height: AppSpacing.md),
                 Text(l10n.supplierBankingInfo, style: Theme.of(context).textTheme.titleSmall),
                 const SizedBox(height: AppSpacing.sm),
@@ -163,29 +174,47 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
                 const SizedBox(height: AppSpacing.md),
                 Text(l10n.supplierBusinessInfo, style: Theme.of(context).textTheme.titleSmall),
                 const SizedBox(height: AppSpacing.sm),
-                Row(
-                  children: [
-                    Expanded(
-                      child: PosTextField(controller: taxNumberController, label: l10n.supplierTaxNumber),
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    Expanded(
-                      child: PosTextField(
-                        controller: paymentTermsController,
-                        label: l10n.supplierPaymentTerms,
-                        hint: l10n.supplierPaymentTermsHint,
+                context.isPhone
+                    ? Column(
+                        children: [
+                          PosTextField(controller: taxNumberController, label: l10n.supplierTaxNumber),
+                          const SizedBox(height: AppSpacing.sm),
+                          PosTextField(
+                            controller: paymentTermsController,
+                            label: l10n.supplierPaymentTerms,
+                            hint: l10n.supplierPaymentTermsHint,
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          PosTextField(
+                            controller: creditLimitController,
+                            label: l10n.supplierCreditLimit,
+                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                          ),
+                        ],
+                      )
+                    : Row(
+                        children: [
+                          Expanded(
+                            child: PosTextField(controller: taxNumberController, label: l10n.supplierTaxNumber),
+                          ),
+                          const SizedBox(width: AppSpacing.sm),
+                          Expanded(
+                            child: PosTextField(
+                              controller: paymentTermsController,
+                              label: l10n.supplierPaymentTerms,
+                              hint: l10n.supplierPaymentTermsHint,
+                            ),
+                          ),
+                          const SizedBox(width: AppSpacing.sm),
+                          Expanded(
+                            child: PosTextField(
+                              controller: creditLimitController,
+                              label: l10n.supplierCreditLimit,
+                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(width: AppSpacing.sm),
-                    Expanded(
-                      child: PosTextField(
-                        controller: creditLimitController,
-                        label: l10n.supplierCreditLimit,
-                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      ),
-                    ),
-                  ],
-                ),
                 const SizedBox(height: AppSpacing.sm),
                 PosTextField(controller: notesController, label: l10n.commonNotes, hint: l10n.supplierNotesHint, maxLines: 2),
               ],

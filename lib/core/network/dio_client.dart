@@ -4,6 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/constants/app_constants.dart';
 import 'package:thawani_pos/features/auth/data/local/auth_local_storage.dart';
 
+/// Provider for the active branch store ID. Updated by branch context system.
+/// Dio reads this to attach X-Store-Id header to all API requests.
+final activeBranchStoreIdProvider = StateProvider<String?>((ref) => null);
+
 final dioClientProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(
@@ -16,7 +20,7 @@ final dioClientProvider = Provider<Dio>((ref) {
 
   final localStorage = ref.watch(authLocalStorageProvider);
 
-  // Auth interceptor — attaches Bearer token to every request
+  // Auth + Branch interceptor — attaches Bearer token and X-Store-Id to every request
   dio.interceptors.add(
     InterceptorsWrapper(
       onRequest: (options, handler) async {
@@ -24,6 +28,13 @@ final dioClientProvider = Provider<Dio>((ref) {
         if (token != null && token.isNotEmpty) {
           options.headers['Authorization'] = 'Bearer $token';
         }
+
+        // Attach branch context — the active store ID
+        final storeId = ref.read(activeBranchStoreIdProvider);
+        if (storeId != null && storeId.isNotEmpty) {
+          options.headers['X-Store-Id'] = storeId;
+        }
+
         return handler.next(options);
       },
       onError: (error, handler) async {

@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminFailedPaymentsPage extends ConsumerStatefulWidget {
   const AdminFailedPaymentsPage({super.key});
@@ -13,10 +15,20 @@ class AdminFailedPaymentsPage extends ConsumerStatefulWidget {
 }
 
 class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPage> {
+  String? _storeId;
+
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(failedPaymentsProvider.notifier).loadFailedPayments());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(failedPaymentsProvider.notifier).loadFailedPayments(storeId: _storeId);
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    ref.read(failedPaymentsProvider.notifier).loadFailedPayments(storeId: _storeId);
   }
 
   @override
@@ -31,32 +43,39 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: () => ref.read(failedPaymentsProvider.notifier).loadFailedPayments(),
+            onPressed: () => ref.read(failedPaymentsProvider.notifier).loadFailedPayments(storeId: _storeId),
           ),
         ],
       ),
-      body: switch (state) {
-        BillingInvoiceListLoading() => const Center(child: CircularProgressIndicator()),
-        BillingInvoiceListLoaded(invoices: final items) =>
-          items.isEmpty
-              ? const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.check_circle, size: 64, color: AppColors.success),
-                      SizedBox(height: 16),
-                      Text('No failed payments', style: TextStyle(fontSize: 18, color: AppColors.textSecondary)),
-                    ],
-                  ),
-                )
-              : ListView.builder(
-                  padding: const EdgeInsets.all(AppSpacing.sm),
-                  itemCount: items.length,
-                  itemBuilder: (context, index) => _failedPaymentCard(items[index]),
-                ),
-        BillingInvoiceListError(message: final msg) => Center(child: Text('Error: $msg')),
-        _ => const Center(child: CircularProgressIndicator()),
-      },
+      body: Column(
+        children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          Expanded(
+            child: switch (state) {
+              BillingInvoiceListLoading() => const Center(child: CircularProgressIndicator()),
+              BillingInvoiceListLoaded(invoices: final items) =>
+                items.isEmpty
+                    ? const Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.check_circle, size: 64, color: AppColors.success),
+                            SizedBox(height: 16),
+                            Text('No failed payments', style: TextStyle(fontSize: 18, color: AppColors.textSecondary)),
+                          ],
+                        ),
+                      )
+                    : ListView.builder(
+                        padding: const EdgeInsets.all(AppSpacing.sm),
+                        itemCount: items.length,
+                        itemBuilder: (context, index) => _failedPaymentCard(items[index]),
+                      ),
+              BillingInvoiceListError(message: final msg) => Center(child: Text('Error: $msg')),
+              _ => const Center(child: CircularProgressIndicator()),
+            },
+          ),
+        ],
+      ),
     );
   }
 
@@ -139,7 +158,7 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text('Payment retry initiated'), backgroundColor: AppColors.success));
-        ref.read(failedPaymentsProvider.notifier).loadFailedPayments();
+        ref.read(failedPaymentsProvider.notifier).loadFailedPayments(storeId: _storeId);
       }
     } catch (e) {
       if (mounted) {

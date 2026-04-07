@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
@@ -65,7 +66,8 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
   Widget _buildContent(BuildContext context, Map<String, dynamic> summary) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
-    final totalEarnings = (summary['total_earnings'] != null ? double.tryParse(summary['total_earnings'].toString()) : null) ?? 0.0;
+    final totalEarnings =
+        (summary['total_earnings'] != null ? double.tryParse(summary['total_earnings'].toString()) : null) ?? 0.0;
     final totalOrders = (summary['total_orders'] as num?)?.toInt() ?? 0;
     final avgPerOrder = (summary['avg_per_order'] != null ? double.tryParse(summary['avg_per_order'].toString()) : null) ?? 0.0;
 
@@ -86,39 +88,75 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
           ),
 
         // Summary cards
-        Row(
-          children: [
-            Expanded(
-              child: _SummaryCard(
-                title: l10n.staffTotalEarnings,
-                value: _currencyFormat.format(totalEarnings),
-                icon: Icons.attach_money,
-                color: AppColors.success,
-                isDark: isDark,
+        context.isPhone
+            ? Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _SummaryCard(
+                          title: l10n.staffTotalEarnings,
+                          value: _currencyFormat.format(totalEarnings),
+                          icon: Icons.attach_money,
+                          color: AppColors.success,
+                          isDark: isDark,
+                        ),
+                      ),
+                      AppSpacing.gapW12,
+                      Expanded(
+                        child: _SummaryCard(
+                          title: l10n.staffTotalOrders,
+                          value: totalOrders.toString(),
+                          icon: Icons.receipt_long,
+                          color: AppColors.info,
+                          isDark: isDark,
+                        ),
+                      ),
+                    ],
+                  ),
+                  AppSpacing.gapH12,
+                  _SummaryCard(
+                    title: l10n.staffAvgPerOrder,
+                    value: _currencyFormat.format(avgPerOrder),
+                    icon: Icons.trending_up,
+                    color: AppColors.purple,
+                    isDark: isDark,
+                  ),
+                ],
+              )
+            : Row(
+                children: [
+                  Expanded(
+                    child: _SummaryCard(
+                      title: l10n.staffTotalEarnings,
+                      value: _currencyFormat.format(totalEarnings),
+                      icon: Icons.attach_money,
+                      color: AppColors.success,
+                      isDark: isDark,
+                    ),
+                  ),
+                  AppSpacing.gapW12,
+                  Expanded(
+                    child: _SummaryCard(
+                      title: l10n.staffTotalOrders,
+                      value: totalOrders.toString(),
+                      icon: Icons.receipt_long,
+                      color: AppColors.info,
+                      isDark: isDark,
+                    ),
+                  ),
+                  AppSpacing.gapW12,
+                  Expanded(
+                    child: _SummaryCard(
+                      title: l10n.staffAvgPerOrder,
+                      value: _currencyFormat.format(avgPerOrder),
+                      icon: Icons.trending_up,
+                      color: AppColors.purple,
+                      isDark: isDark,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            AppSpacing.gapW12,
-            Expanded(
-              child: _SummaryCard(
-                title: l10n.staffTotalOrders,
-                value: totalOrders.toString(),
-                icon: Icons.receipt_long,
-                color: AppColors.info,
-                isDark: isDark,
-              ),
-            ),
-            AppSpacing.gapW12,
-            Expanded(
-              child: _SummaryCard(
-                title: l10n.staffAvgPerOrder,
-                value: _currencyFormat.format(avgPerOrder),
-                icon: Icons.trending_up,
-                color: AppColors.purple,
-                isDark: isDark,
-              ),
-            ),
-          ],
-        ),
         AppSpacing.gapH32,
 
         // Performance section

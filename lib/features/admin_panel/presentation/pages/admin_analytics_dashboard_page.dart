@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminAnalyticsDashboardPage extends ConsumerStatefulWidget {
   const AdminAnalyticsDashboardPage({super.key});
@@ -13,10 +15,20 @@ class AdminAnalyticsDashboardPage extends ConsumerStatefulWidget {
 }
 
 class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDashboardPage> {
+  String? _storeId;
+
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(analyticsDashboardProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(analyticsDashboardProvider.notifier).load(storeId: _storeId);
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    ref.read(analyticsDashboardProvider.notifier).load(storeId: _storeId);
   }
 
   @override
@@ -25,51 +37,61 @@ class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDash
 
     return Scaffold(
       appBar: AppBar(title: const Text('Analytics Dashboard'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: switch (state) {
-        AnalyticsDashboardLoading() => const Center(child: CircularProgressIndicator()),
-        AnalyticsDashboardLoaded(kpi: final kpi, recentActivity: final activity) => RefreshIndicator(
-          onRefresh: () => ref.read(analyticsDashboardProvider.notifier).load(),
-          child: ListView(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            children: [
-              // KPI Cards
-              const Text('Key Metrics', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              const SizedBox(height: AppSpacing.sm),
-              _buildKpiGrid(kpi),
-              const SizedBox(height: AppSpacing.lg),
+      body: Column(
+        children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          Expanded(
+            child: switch (state) {
+              AnalyticsDashboardLoading() => const Center(child: CircularProgressIndicator()),
+              AnalyticsDashboardLoaded(kpi: final kpi, recentActivity: final activity) => RefreshIndicator(
+                onRefresh: () => ref.read(analyticsDashboardProvider.notifier).load(storeId: _storeId),
+                child: ListView(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  children: [
+                    // KPI Cards
+                    const Text('Key Metrics', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: AppSpacing.sm),
+                    _buildKpiGrid(kpi),
+                    const SizedBox(height: AppSpacing.lg),
 
-              // Recent Activity
-              const Text('Recent Activity', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              const SizedBox(height: AppSpacing.sm),
-              ...activity.map(
-                (a) => Card(
-                  margin: const EdgeInsets.only(bottom: AppSpacing.xs),
-                  child: ListTile(
-                    leading: const Icon(Icons.history, color: AppColors.primary),
-                    title: Text(a['action'] as String? ?? ''),
-                    subtitle: Text(a['entity_type'] as String? ?? ''),
-                    trailing: Text(
-                      _formatDate(a['created_at']),
-                      style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                    // Recent Activity
+                    const Text('Recent Activity', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: AppSpacing.sm),
+                    ...activity.map(
+                      (a) => Card(
+                        margin: const EdgeInsets.only(bottom: AppSpacing.xs),
+                        child: ListTile(
+                          leading: const Icon(Icons.history, color: AppColors.primary),
+                          title: Text(a['action'] as String? ?? ''),
+                          subtitle: Text(a['entity_type'] as String? ?? ''),
+                          trailing: Text(
+                            _formatDate(a['created_at']),
+                            style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
-            ],
+              AnalyticsDashboardError(message: final msg) => Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Error: $msg'),
+                    const SizedBox(height: AppSpacing.sm),
+                    ElevatedButton(
+                      onPressed: () => ref.read(analyticsDashboardProvider.notifier).load(storeId: _storeId),
+                      child: const Text('Retry'),
+                    ),
+                  ],
+                ),
+              ),
+              _ => const Center(child: Text('Loading analytics...')),
+            },
           ),
-        ),
-        AnalyticsDashboardError(message: final msg) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Error: $msg'),
-              const SizedBox(height: AppSpacing.sm),
-              ElevatedButton(onPressed: () => ref.read(analyticsDashboardProvider.notifier).load(), child: const Text('Retry')),
-            ],
-          ),
-        ),
-        _ => const Center(child: Text('Loading analytics...')),
-      },
+        ],
+      ),
     );
   }
 

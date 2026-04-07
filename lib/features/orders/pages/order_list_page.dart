@@ -5,7 +5,9 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
+import 'package:thawani_pos/core/widgets/pos_mobile_data_list.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/orders/enums/order_status.dart';
 import 'package:thawani_pos/features/orders/models/order.dart';
 import 'package:thawani_pos/features/orders/providers/order_providers.dart';
@@ -117,6 +119,7 @@ class _OrderListPageState extends ConsumerState<OrderListPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(ordersProvider);
+    final isMobile = context.isPhone;
 
     return Scaffold(
       appBar: AppBar(
@@ -149,7 +152,7 @@ class _OrderListPageState extends ConsumerState<OrderListPage> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
+            padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.md),
             child: PosTextField(
               controller: _searchController,
               hint: l10n.ordersSearchByNumber,
@@ -157,9 +160,73 @@ class _OrderListPageState extends ConsumerState<OrderListPage> {
               onSubmitted: (value) => ref.read(ordersProvider.notifier).search(value),
             ),
           ),
-          Expanded(child: _buildBody(state)),
+          Expanded(child: isMobile ? _buildMobileBody(state) : _buildBody(state)),
         ],
       ),
+    );
+  }
+
+  Widget _buildMobileBody(OrdersState state) {
+    final l10n = AppLocalizations.of(context)!;
+    final isLoading = state is OrdersLoading || state is OrdersInitial;
+    final error = state is OrdersError ? state.message : null;
+    final orders = state is OrdersLoaded ? state.orders : <Order>[];
+    final loaded = state is OrdersLoaded ? state : null;
+
+    return PosMobileDataList<Order>(
+      items: orders,
+      isLoading: isLoading,
+      error: error,
+      onRetry: () => ref.read(ordersProvider.notifier).load(),
+      emptyConfig: PosTableEmptyConfig(
+        icon: Icons.receipt_long_outlined,
+        title: l10n.ordersNoOrders,
+        subtitle: l10n.ordersNoOrdersSubtitle,
+      ),
+      currentPage: loaded?.currentPage,
+      totalPages: loaded?.lastPage,
+      totalItems: loaded?.total,
+      onPreviousPage: loaded != null ? () => ref.read(ordersProvider.notifier).previousPage() : null,
+      onNextPage: loaded != null ? () => ref.read(ordersProvider.notifier).nextPage() : null,
+      onRefresh: () async => ref.read(ordersProvider.notifier).load(),
+      cardBuilder: (context, order, index) {
+        return MobileListCard(
+          title: Text(order.orderNumber, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700)),
+          subtitle: Text(
+            order.createdAt != null ? '${order.createdAt!.day}/${order.createdAt!.month}/${order.createdAt!.year}' : '-',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+          ),
+          badges: [
+            PosBadge(label: _statusLabel(order.status), variant: _statusVariant(order.status)),
+            PosBadge(label: order.source.value, variant: PosBadgeVariant.neutral),
+          ],
+          infoRows: [
+            MobileInfoRow(
+              label: l10n.ordersSubtotal,
+              value: '${order.subtotal.toStringAsFixed(2)} ﷼',
+              icon: Icons.receipt_outlined,
+            ),
+            MobileInfoRow(label: l10n.ordersTax, value: '${order.taxAmount.toStringAsFixed(2)} ﷼', icon: Icons.percent),
+            MobileInfoRow(
+              label: l10n.ordersTotal,
+              valueWidget: Text(
+                '${order.total.toStringAsFixed(2)} ﷼',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700, color: AppColors.primary),
+              ),
+              icon: Icons.payments_outlined,
+            ),
+          ],
+          trailing: (order.status != OrderStatus.voided && order.status != OrderStatus.cancelled)
+              ? IconButton(
+                  icon: const Icon(Icons.block_outlined, size: 18),
+                  onPressed: () => _handleVoid(order),
+                  tooltip: l10n.ordersVoid,
+                  color: AppColors.error,
+                  visualDensity: VisualDensity.compact,
+                )
+              : null,
+        );
+      },
     );
   }
 

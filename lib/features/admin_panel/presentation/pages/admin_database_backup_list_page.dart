@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/providers/branch_context_provider.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import '../../widgets/admin_branch_bar.dart';
 
 class AdminDatabaseBackupListPage extends ConsumerStatefulWidget {
   const AdminDatabaseBackupListPage({super.key});
@@ -13,10 +15,26 @@ class AdminDatabaseBackupListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminDatabaseBackupListPageState extends ConsumerState<AdminDatabaseBackupListPage> {
+  String? _storeId;
+
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(databaseBackupListProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _loadData();
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _loadData();
+  }
+
+  void _loadData() {
+    final params = <String, dynamic>{};
+    if (_storeId != null) params['store_id'] = _storeId!;
+    ref.read(databaseBackupListProvider.notifier).load(params: params);
   }
 
   @override
@@ -30,23 +48,30 @@ class _AdminDatabaseBackupListPageState extends ConsumerState<AdminDatabaseBacku
         foregroundColor: Colors.white,
         actions: [IconButton(icon: const Icon(Icons.add), onPressed: () => _showCreateDialog(context))],
       ),
-      body: switch (state) {
-        DatabaseBackupListLoading() => const Center(child: CircularProgressIndicator()),
-        DatabaseBackupListError(message: final msg) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.error_outline, size: 48, color: AppColors.error),
-              const SizedBox(height: AppSpacing.md),
-              Text(msg, textAlign: TextAlign.center),
-              const SizedBox(height: AppSpacing.md),
-              ElevatedButton(onPressed: () => ref.read(databaseBackupListProvider.notifier).load(), child: const Text('Retry')),
-            ],
+      body: Column(
+        children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          Expanded(
+            child: switch (state) {
+              DatabaseBackupListLoading() => const Center(child: CircularProgressIndicator()),
+              DatabaseBackupListError(message: final msg) => Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.error_outline, size: 48, color: AppColors.error),
+                    const SizedBox(height: AppSpacing.md),
+                    Text(msg, textAlign: TextAlign.center),
+                    const SizedBox(height: AppSpacing.md),
+                    ElevatedButton(onPressed: () => _loadData(), child: const Text('Retry')),
+                  ],
+                ),
+              ),
+              DatabaseBackupListLoaded(data: final data) => _buildList(data),
+              _ => const SizedBox.shrink(),
+            },
           ),
-        ),
-        DatabaseBackupListLoaded(data: final data) => _buildList(data),
-        _ => const SizedBox.shrink(),
-      },
+        ],
+      ),
     );
   }
 
@@ -56,7 +81,7 @@ class _AdminDatabaseBackupListPageState extends ConsumerState<AdminDatabaseBacku
       return const Center(child: Text('No backups found'));
     }
     return RefreshIndicator(
-      onRefresh: () => ref.read(databaseBackupListProvider.notifier).load(),
+      onRefresh: () async => _loadData(),
       child: ListView.builder(
         padding: const EdgeInsets.all(AppSpacing.md),
         itemCount: items.length,

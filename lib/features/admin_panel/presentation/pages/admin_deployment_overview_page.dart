@@ -4,6 +4,8 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminDeploymentOverviewPage extends ConsumerStatefulWidget {
   const AdminDeploymentOverviewPage({super.key});
@@ -13,10 +15,24 @@ class AdminDeploymentOverviewPage extends ConsumerStatefulWidget {
 }
 
 class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOverviewPage> {
+  String? _storeId;
+
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(deploymentOverviewProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _loadData();
+    });
+  }
+
+  void _loadData() {
+    ref.read(deploymentOverviewProvider.notifier).load(storeId: _storeId);
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _loadData();
   }
 
   @override
@@ -28,18 +44,23 @@ class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOve
         title: const Text('Deployment Overview'),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
-        actions: [
-          IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.read(deploymentOverviewProvider.notifier).load()),
+        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData)],
+      ),
+      body: Column(
+        children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          Expanded(
+            child: switch (state) {
+              DeploymentOverviewLoading() => const Center(child: CircularProgressIndicator()),
+              DeploymentOverviewError(message: final m) => Center(
+                child: Text(m, style: const TextStyle(color: AppColors.error)),
+              ),
+              DeploymentOverviewLoaded(data: final d) => _buildOverview(d),
+              _ => const Center(child: Text('Load overview')),
+            },
+          ),
         ],
       ),
-      body: switch (state) {
-        DeploymentOverviewLoading() => const Center(child: CircularProgressIndicator()),
-        DeploymentOverviewError(message: final m) => Center(
-          child: Text(m, style: const TextStyle(color: AppColors.error)),
-        ),
-        DeploymentOverviewLoaded(data: final d) => _buildOverview(d),
-        _ => const Center(child: Text('Load overview')),
-      },
     );
   }
 

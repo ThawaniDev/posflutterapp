@@ -113,7 +113,7 @@ class PromotionApiService {
       data: {'count': count, if (maxUses != null) 'max_uses': maxUses, if (prefix != null) 'prefix': prefix},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List;
+    final list = apiResponse.dataList;
     return list.map((j) => CouponCode.fromJson(j as Map<String, dynamic>)).toList();
   }
 

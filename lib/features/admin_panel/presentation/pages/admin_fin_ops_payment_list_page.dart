@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_payment_detail_page.dart';
 
 class AdminFinOpsPaymentListPage extends ConsumerStatefulWidget {
@@ -14,16 +16,26 @@ class AdminFinOpsPaymentListPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
+  String? _storeId;
   String? _methodFilter;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(finOpsPaymentsProvider.notifier).load());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _applyFilter();
+    });
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _applyFilter();
   }
 
   void _applyFilter() {
     final params = <String, dynamic>{};
+    if (_storeId != null) params['store_id'] = _storeId!;
     if (_methodFilter != null && _methodFilter!.isNotEmpty) params['method'] = _methodFilter;
     ref.read(finOpsPaymentsProvider.notifier).load(params: params);
   }
@@ -36,6 +48,7 @@ class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
       appBar: AppBar(title: const Text('Payments'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           _buildFilters(),
           Expanded(
             child: switch (state) {

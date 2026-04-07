@@ -5,10 +5,13 @@ import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/providers/app_settings_providers.dart';
 import 'package:thawani_pos/core/providers/sidebar_provider.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/branch_selector.dart';
 import 'package:thawani_pos/core/widgets/pos_sidebar.dart';
 import 'package:thawani_pos/features/auth/providers/auth_providers.dart';
 import 'package:thawani_pos/features/auth/providers/auth_state.dart';
 import 'package:thawani_pos/features/security/repositories/security_repository.dart';
+import 'package:thawani_pos/features/staff/providers/roles_providers.dart';
+import 'package:thawani_pos/features/staff/providers/roles_state.dart';
 
 /// Shell widget that wraps authenticated pages with a persistent sidebar.
 ///
@@ -30,8 +33,13 @@ class AppShell extends ConsumerWidget {
     final isDesktop = screenWidth >= _desktopBreakpoint;
     final l10n = AppLocalizations.of(context)!;
 
+    // Filter sidebar groups/items based on user permissions
+    final permsState = ref.watch(userPermissionsProvider);
+    final allGroups = PosSidebar.getDefaultGroups(l10n);
+    final filteredGroups = _filterGroups(allGroups, permsState);
+
     Widget sidebar = PosSidebar(
-      groups: PosSidebar.getDefaultGroups(l10n),
+      groups: filteredGroups,
       currentRoute: currentRoute,
       isCollapsed: isCollapsed,
       onToggleCollapse: () => ref.read(sidebarCollapsedProvider.notifier).state = !isCollapsed,
@@ -59,7 +67,7 @@ class AppShell extends ConsumerWidget {
                     child: Container(
                       height: 48,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(children: [const Spacer(), ...actions]),
+                      child: Row(children: [const BranchSelector(), const Spacer(), ...actions]),
                     ),
                   ),
                   Expanded(child: child),
@@ -77,7 +85,7 @@ class AppShell extends ConsumerWidget {
         leading: Builder(
           builder: (ctx) => IconButton(icon: const Icon(Icons.menu_rounded), onPressed: () => Scaffold.of(ctx).openDrawer()),
         ),
-        title: const Text('Wameed POS'),
+        title: const BranchSelector(),
         actions: actions,
       ),
       drawer: SizedBox(
@@ -86,6 +94,41 @@ class AppShell extends ConsumerWidget {
       ),
       body: child,
     );
+  }
+
+  /// Filters sidebar groups based on user permissions.
+  /// Removes items the user lacks permission for, and removes empty groups.
+  static List<PosSidebarGroup> _filterGroups(List<PosSidebarGroup> groups, UserPermissionsState permsState) {
+    final result = <PosSidebarGroup>[];
+    for (final group in groups) {
+      final filteredItems = _filterItems(group.items, permsState);
+      if (filteredItems.isNotEmpty) {
+        result.add(PosSidebarGroup(label: group.label, icon: group.icon, items: filteredItems));
+      }
+    }
+    return result;
+  }
+
+  /// Recursively filters sidebar items (and their children) by permission.
+  /// Items with null permission are always visible.
+  static List<PosSidebarItem> _filterItems(List<PosSidebarItem> items, UserPermissionsState permsState) {
+    final result = <PosSidebarItem>[];
+    for (final item in items) {
+      if (item.permission != null && !permsState.hasPermission(item.permission!)) {
+        continue;
+      }
+      final filteredChildren = item.children != null ? _filterItems(item.children!, permsState) : null;
+      result.add(
+        PosSidebarItem(
+          label: item.label,
+          icon: item.icon,
+          route: item.route,
+          permission: item.permission,
+          children: filteredChildren,
+        ),
+      );
+    }
+    return result;
   }
 
   List<Widget> _buildActions(BuildContext context, WidgetRef ref, AppLocalizations l10n) {

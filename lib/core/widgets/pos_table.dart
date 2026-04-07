@@ -265,12 +265,78 @@ class PosDataTable<T> extends StatelessWidget {
       return _buildContainer(context, child: _EmptyState(config: emptyConfig));
     }
 
-    // Data table + pagination
+    // Mobile: card-based list layout
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    if (screenWidth < AppSizes.breakpointTablet) {
+      return _buildMobileLayout(context);
+    }
+
+    // Desktop: traditional data table + pagination
     return Column(
       children: [
         Expanded(child: _buildTableContainer(context)),
         if (_hasPagination) _buildPagination(context),
       ],
+    );
+  }
+
+  // ── Mobile card layout ────────────────────────────────────
+
+  Widget _buildMobileLayout(BuildContext context) {
+    final visibleCols = _visibleColumns;
+
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.only(bottom: 80),
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final item = items[index];
+              final id = itemId?.call(item) ?? '';
+              final isSelected = selectable && selectedItems.contains(id);
+
+              return _MobileDataCard<T>(
+                item: item,
+                columns: visibleCols,
+                cellBuilder: cellBuilder,
+                actions: actions,
+                isSelected: isSelected,
+                onTap: onRowTap != null ? () => onRowTap!(item) : null,
+                onSelect: selectable && onSelectItem != null ? (selected) => onSelectItem!(item, selected) : null,
+              );
+            },
+          ),
+        ),
+        if (_hasPagination) _buildMobilePagination(context),
+      ],
+    );
+  }
+
+  Widget _buildMobilePagination(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        border: Border(top: BorderSide(color: Theme.of(context).dividerColor)),
+      ),
+      child: Row(
+        children: [
+          if (totalItems != null)
+            Text('$totalItems items', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor)),
+          const Spacer(),
+          IconButton(
+            icon: const Icon(Icons.chevron_left, size: 20),
+            onPressed: currentPage! > 1 ? onPreviousPage : null,
+            visualDensity: VisualDensity.compact,
+          ),
+          Text('$currentPage / $totalPages', style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
+          IconButton(
+            icon: const Icon(Icons.chevron_right, size: 20),
+            onPressed: currentPage! < totalPages! ? onNextPage : null,
+            visualDensity: VisualDensity.compact,
+          ),
+        ],
+      ),
     );
   }
 
@@ -652,6 +718,140 @@ class _EmptyState extends StatelessWidget {
           OutlinedButton(onPressed: config.action, child: Text(config.actionLabel ?? 'Get Started')),
         ],
       ],
+    );
+  }
+}
+
+// ═════════════════════════════════════════════════════════════
+// MOBILE DATA CARD — auto-generated card for each table row
+// ═════════════════════════════════════════════════════════════
+
+/// A card widget that renders a single data row in a mobile-friendly format.
+/// The first column is used as the title, remaining columns as info rows.
+class _MobileDataCard<T> extends StatelessWidget {
+  const _MobileDataCard({
+    super.key,
+    required this.item,
+    required this.columns,
+    required this.cellBuilder,
+    required this.actions,
+    this.isSelected = false,
+    this.onTap,
+    this.onSelect,
+  });
+
+  final T item;
+  final List<PosTableColumn> columns;
+  final Widget Function(T item, int colIndex, PosTableColumn column) cellBuilder;
+  final List<PosTableRowAction<T>> actions;
+  final bool isSelected;
+  final VoidCallback? onTap;
+  final void Function(bool selected)? onSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final theme = Theme.of(context);
+
+    // First visible column → title widget
+    // Remaining columns → info rows
+    final titleWidget = columns.isNotEmpty ? cellBuilder(item, 0, columns[0]) : const SizedBox.shrink();
+
+    // Filter visible actions
+    final visibleActions = actions.where((a) => a.isVisible?.call(item) ?? true).toList();
+
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
+      elevation: 0,
+      color: isSelected ? AppColors.primary10 : (isDark ? AppColors.cardDark : AppColors.cardLight),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        side: BorderSide(color: isSelected ? AppColors.primary : (isDark ? AppColors.borderDark : AppColors.borderLight)),
+      ),
+      child: InkWell(
+        onTap: onTap ?? (onSelect != null ? () => onSelect!(!isSelected) : null),
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Title row with actions
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (onSelect != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Checkbox(
+                          value: isSelected,
+                          onChanged: (v) => onSelect!(v ?? false),
+                          visualDensity: VisualDensity.compact,
+                        ),
+                      ),
+                    ),
+                  Expanded(child: titleWidget),
+                  if (visibleActions.isNotEmpty)
+                    PopupMenuButton<int>(
+                      icon: Icon(Icons.more_vert, size: 20, color: theme.hintColor),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                      onSelected: (idx) => visibleActions[idx].onTap(item),
+                      itemBuilder: (_) => [
+                        for (int i = 0; i < visibleActions.length; i++)
+                          PopupMenuItem<int>(
+                            value: i,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  visibleActions[i].icon,
+                                  size: 18,
+                                  color: visibleActions[i].isDestructive
+                                      ? AppColors.error
+                                      : (visibleActions[i].color ?? theme.iconTheme.color),
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  visibleActions[i].label,
+                                  style: TextStyle(color: visibleActions[i].isDestructive ? AppColors.error : null),
+                                ),
+                              ],
+                            ),
+                          ),
+                      ],
+                    ),
+                ],
+              ),
+              // Info rows for remaining columns
+              if (columns.length > 1) ...[
+                const SizedBox(height: 8),
+                const Divider(height: 1),
+                const SizedBox(height: 8),
+                ...List.generate(columns.length - 1, (i) {
+                  final colIdx = i + 1;
+                  final col = columns[colIdx];
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 100,
+                          child: Text(col.title, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+                        ),
+                        Expanded(child: cellBuilder(item, colIdx, col)),
+                      ],
+                    ),
+                  );
+                }),
+              ],
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

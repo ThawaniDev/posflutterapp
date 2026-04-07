@@ -8,6 +8,8 @@ import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminTeamListPage extends ConsumerStatefulWidget {
   const AdminTeamListPage({super.key});
@@ -18,13 +20,17 @@ class AdminTeamListPage extends ConsumerStatefulWidget {
 
 class _AdminTeamListPageState extends ConsumerState<AdminTeamListPage> {
   final _searchController = TextEditingController();
+  String? _storeId;
   bool? _activeFilter;
   int _currentPage = 1;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => _loadTeam());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      _loadTeam();
+    });
   }
 
   @override
@@ -39,8 +45,14 @@ class _AdminTeamListPageState extends ConsumerState<AdminTeamListPage> {
         .load(
           search: _searchController.text.isEmpty ? null : _searchController.text,
           isActive: _activeFilter,
+          storeId: _storeId,
           page: _currentPage,
         );
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _loadTeam();
   }
 
   @override
@@ -61,6 +73,7 @@ class _AdminTeamListPageState extends ConsumerState<AdminTeamListPage> {
       ),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // ─── Filter Bar ─────────────────────────────
           Container(
             padding: AppSpacing.paddingAll16,

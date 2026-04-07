@@ -3,8 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/reports/models/report_filters.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
+import 'package:thawani_pos/features/reports/widgets/report_charts.dart';
+import 'package:thawani_pos/features/reports/widgets/report_filter_panel.dart';
 import 'package:thawani_pos/features/reports/widgets/report_widgets.dart';
 
 class CustomerReportPage extends ConsumerStatefulWidget {
@@ -16,13 +19,14 @@ class CustomerReportPage extends ConsumerStatefulWidget {
 
 class _CustomerReportPageState extends ConsumerState<CustomerReportPage> with TickerProviderStateMixin {
   late final TabController _tabController;
+  ReportFilters _filters = const ReportFilters();
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(topCustomersProvider.notifier).load();
+      ref.read(topCustomersProvider.notifier).load(filters: _filters);
     });
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) _onTabChanged(_tabController.index);
@@ -32,10 +36,15 @@ class _CustomerReportPageState extends ConsumerState<CustomerReportPage> with Ti
   void _onTabChanged(int index) {
     switch (index) {
       case 0:
-        ref.read(topCustomersProvider.notifier).load();
+        ref.read(topCustomersProvider.notifier).load(filters: _filters);
       case 1:
-        ref.read(customerRetentionProvider.notifier).load();
+        ref.read(customerRetentionProvider.notifier).load(filters: _filters);
     }
+  }
+
+  void _onFiltersChanged(ReportFilters filters) {
+    setState(() => _filters = filters);
+    _onTabChanged(_tabController.index);
   }
 
   @override
@@ -62,7 +71,18 @@ class _CustomerReportPageState extends ConsumerState<CustomerReportPage> with Ti
           ],
         ),
       ),
-      body: TabBarView(controller: _tabController, children: const [_TopCustomersTab(), _RetentionTab()]),
+      body: Column(
+        children: [
+          ReportFilterPanel(
+            filters: _filters,
+            onFiltersChanged: _onFiltersChanged,
+            onRefresh: () => _onTabChanged(_tabController.index),
+          ),
+          Expanded(
+            child: TabBarView(controller: _tabController, children: const [_TopCustomersTab(), _RetentionTab()]),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -110,6 +130,22 @@ class _TopCustomersTab extends ConsumerWidget {
                       ),
                     ],
                   ),
+
+                  // Bar Chart — Top customers by spend
+                  if (customers.isNotEmpty) ...[
+                    const SizedBox(height: 20),
+                    const ReportSectionHeader(title: 'Spend by Customer', icon: Icons.bar_chart_rounded),
+                    ReportDataCard(
+                      child: ReportBarChart(
+                        data: customers.take(10).toList(),
+                        labelKey: 'name',
+                        valueKey: 'total_spend',
+                        barColor: AppColors.success,
+                        horizontal: true,
+                      ),
+                    ),
+                  ],
+
                   const SizedBox(height: 24),
                   const ReportSectionHeader(title: 'Ranked by Spend', icon: Icons.leaderboard_rounded),
                   ReportDataCard(
@@ -119,7 +155,8 @@ class _TopCustomersTab extends ConsumerWidget {
                         final c = customers[i];
                         final totalSpend = (c['total_spend'] != null ? double.tryParse(c['total_spend'].toString()) : null) ?? 0;
                         final visits = (c['visit_count'] as num?)?.toInt() ?? 0;
-                        final avgSpend = (c['avg_spend_per_visit'] != null ? double.tryParse(c['avg_spend_per_visit'].toString()) : null) ?? 0;
+                        final avgSpend =
+                            (c['avg_spend_per_visit'] != null ? double.tryParse(c['avg_spend_per_visit'].toString()) : null) ?? 0;
                         final loyalty = (c['loyalty_points'] as num?)?.toInt() ?? 0;
 
                         return Column(

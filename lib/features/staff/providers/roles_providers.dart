@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/features/staff/data/remote/role_api_service.dart';
 import 'package:thawani_pos/features/staff/providers/roles_state.dart';
 import 'package:thawani_pos/features/staff/repositories/roles_repository.dart';
 
@@ -164,8 +165,14 @@ class UserPermissionsNotifier extends StateNotifier<UserPermissionsState> {
 
   Future<void> load() async {
     try {
-      final permissions = await _repository.getMyPermissions();
-      state = UserPermissionsState(permissions: permissions, isLoaded: true);
+      final result = await _repository.getMyPermissionsWithScope();
+      state = UserPermissionsState(
+        permissions: result['permissions'] as List<String>,
+        isLoaded: true,
+        branchScope: result['branch_scope'] as String,
+        accessibleStoreIds: result['accessible_store_ids'] as List<String>,
+        branchRoles: result['branch_roles'] as Map<String, BranchRoleInfo>? ?? {},
+      );
     } catch (e) {
       state = UserPermissionsState(error: e.toString());
     }

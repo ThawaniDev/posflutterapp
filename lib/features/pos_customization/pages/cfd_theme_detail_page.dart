@@ -228,15 +228,15 @@ class _CfdThemeDetailPageState extends ConsumerState<CfdThemeDetailPage> {
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(
         children: [
-          SizedBox(
-            width: 180,
+          Expanded(
+            flex: 2,
             child: Text(
               label,
               style: AppTypography.labelSmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
             ),
           ),
           AppSpacing.gapW8,
-          Expanded(child: Text(value, style: AppTypography.bodySmall)),
+          Expanded(flex: 3, child: Text(value, style: AppTypography.bodySmall)),
         ],
       ),
     );

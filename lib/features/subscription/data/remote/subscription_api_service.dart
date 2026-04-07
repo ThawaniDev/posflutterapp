@@ -23,7 +23,7 @@ class SubscriptionApiService {
     final response = await _dio.get(ApiEndpoints.subscriptionPlans, queryParameters: {'active_only': activeOnly ? 1 : 0});
 
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    final list = apiResponse.data as List<dynamic>;
+    final list = apiResponse.dataList;
     return list.map((e) => SubscriptionPlan.fromJson(e as Map<String, dynamic>)).toList();
   }
 
@@ -99,7 +99,7 @@ class SubscriptionApiService {
 
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     if (apiResponse.data == null) return [];
-    final list = apiResponse.data as List<dynamic>;
+    final list = apiResponse.dataList;
     return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
   }
 
@@ -165,7 +165,7 @@ class SubscriptionApiService {
 
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     if (apiResponse.data == null) return [];
-    final list = apiResponse.data as List<dynamic>;
+    final list = apiResponse.dataList;
     return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
   }
 
@@ -177,7 +177,7 @@ class SubscriptionApiService {
 
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     if (apiResponse.data == null) return [];
-    final list = apiResponse.data as List<dynamic>;
+    final list = apiResponse.dataList;
     return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
   }
 }

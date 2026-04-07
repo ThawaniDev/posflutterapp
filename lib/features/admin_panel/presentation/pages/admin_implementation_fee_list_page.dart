@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminImplementationFeeListPage extends ConsumerStatefulWidget {
   const AdminImplementationFeeListPage({super.key});
@@ -13,19 +15,32 @@ class AdminImplementationFeeListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementationFeeListPage> {
+  String? _storeId;
   String _typeFilter = 'all';
   String _statusFilter = 'all';
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(implementationFeeListProvider.notifier).loadFees());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(implementationFeeListProvider.notifier).loadFees(storeId: _storeId);
+    });
   }
 
   void _applyFilters() {
     ref
         .read(implementationFeeListProvider.notifier)
-        .loadFees(feeType: _typeFilter == 'all' ? null : _typeFilter, status: _statusFilter == 'all' ? null : _statusFilter);
+        .loadFees(
+          feeType: _typeFilter == 'all' ? null : _typeFilter,
+          status: _statusFilter == 'all' ? null : _statusFilter,
+          storeId: _storeId,
+        );
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _applyFilters();
   }
 
   @override
@@ -41,6 +56,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
       ),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // Type filter
           Padding(
             padding: const EdgeInsets.fromLTRB(AppSpacing.sm, AppSpacing.sm, AppSpacing.sm, 0),

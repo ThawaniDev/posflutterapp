@@ -3,8 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/reports/models/report_filters.dart';
 import 'package:thawani_pos/features/reports/providers/report_providers.dart';
 import 'package:thawani_pos/features/reports/providers/report_state.dart';
+import 'package:thawani_pos/features/reports/widgets/report_charts.dart';
+import 'package:thawani_pos/features/reports/widgets/report_filter_panel.dart';
 import 'package:thawani_pos/features/reports/widgets/report_widgets.dart';
 
 class InventoryReportPage extends ConsumerStatefulWidget {
@@ -16,14 +19,15 @@ class InventoryReportPage extends ConsumerStatefulWidget {
 
 class _InventoryReportPageState extends ConsumerState<InventoryReportPage> with TickerProviderStateMixin {
   late final TabController _tabController;
+  ReportFilters _filters = const ReportFilters();
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(inventoryValuationProvider.notifier).load();
-      ref.read(inventoryLowStockProvider.notifier).load();
+      ref.read(inventoryValuationProvider.notifier).load(filters: _filters);
+      ref.read(inventoryLowStockProvider.notifier).load(filters: _filters);
     });
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) _onTabChanged(_tabController.index);
@@ -33,14 +37,19 @@ class _InventoryReportPageState extends ConsumerState<InventoryReportPage> with 
   void _onTabChanged(int index) {
     switch (index) {
       case 0:
-        ref.read(inventoryValuationProvider.notifier).load();
+        ref.read(inventoryValuationProvider.notifier).load(filters: _filters);
       case 1:
-        ref.read(inventoryTurnoverProvider.notifier).load();
+        ref.read(inventoryTurnoverProvider.notifier).load(filters: _filters);
       case 2:
-        ref.read(inventoryShrinkageProvider.notifier).load();
+        ref.read(inventoryShrinkageProvider.notifier).load(filters: _filters);
       case 3:
-        ref.read(inventoryLowStockProvider.notifier).load();
+        ref.read(inventoryLowStockProvider.notifier).load(filters: _filters);
     }
+  }
+
+  void _onFiltersChanged(ReportFilters filters) {
+    setState(() => _filters = filters);
+    _onTabChanged(_tabController.index);
   }
 
   @override
@@ -69,9 +78,21 @@ class _InventoryReportPageState extends ConsumerState<InventoryReportPage> with 
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [_ValuationTab(), _TurnoverTab(), _ShrinkageTab(), _LowStockTab()],
+      body: Column(
+        children: [
+          ReportFilterPanel(
+            filters: _filters,
+            onFiltersChanged: _onFiltersChanged,
+            onRefresh: () => _onTabChanged(_tabController.index),
+            showCategoryFilter: true,
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: const [_ValuationTab(), _TurnoverTab(), _ShrinkageTab(), _LowStockTab()],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -121,6 +142,20 @@ class _ValuationTab extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 24),
+            // Bar chart — Top products by stock value
+            if ((data['products'] as List?)?.isNotEmpty ?? false) ...[
+              const ReportSectionHeader(title: 'Stock Value Distribution', icon: Icons.bar_chart_rounded),
+              ReportDataCard(
+                child: ReportBarChart(
+                  data: (data['products'] as List).cast<Map<String, dynamic>>().take(10).toList(),
+                  labelKey: 'product_name',
+                  valueKey: 'stock_value',
+                  barColor: AppColors.success,
+                  horizontal: true,
+                ),
+              ),
+              const SizedBox(height: 24),
+            ],
             const ReportSectionHeader(title: 'Products', icon: Icons.list_rounded),
             if ((data['products'] as List?)?.isEmpty ?? true)
               const PosEmptyState(title: 'No stock data', icon: Icons.inventory_2)

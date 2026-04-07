@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminHardwareSaleListPage extends ConsumerStatefulWidget {
   const AdminHardwareSaleListPage({super.key});
@@ -14,12 +16,16 @@ class AdminHardwareSaleListPage extends ConsumerStatefulWidget {
 
 class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleListPage> {
   final _searchCtrl = TextEditingController();
+  String? _storeId;
   String _typeFilter = 'all';
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => ref.read(hardwareSaleListProvider.notifier).loadSales());
+    Future.microtask(() {
+      _storeId = ref.read(resolvedStoreIdProvider);
+      ref.read(hardwareSaleListProvider.notifier).loadSales(storeId: _storeId);
+    });
   }
 
   @override
@@ -34,7 +40,13 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
         .loadSales(
           search: _searchCtrl.text.isEmpty ? null : _searchCtrl.text,
           itemType: _typeFilter == 'all' ? null : _typeFilter,
+          storeId: _storeId,
         );
+  }
+
+  void _onBranchChanged(String? storeId) {
+    setState(() => _storeId = storeId);
+    _applyFilters();
   }
 
   @override
@@ -50,6 +62,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
       ),
       body: Column(
         children: [
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // Search
           Padding(
             padding: const EdgeInsets.all(AppSpacing.sm),
