@@ -4,6 +4,9 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 import '../models/flower_freshness_log.dart';
 import '../providers/florist_providers.dart';
+import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
 
 class FreshnessLogFormPage extends ConsumerStatefulWidget {
   final FlowerFreshnessLog? log;
@@ -17,7 +20,7 @@ class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
 
-  late final TextEditingController _productIdCtrl;
+  String? _selectedProductId;
   late final TextEditingController _expectedVaseLifeCtrl;
   late final TextEditingController _quantityCtrl;
   DateTime _receivedDate = DateTime.now();
@@ -26,15 +29,15 @@ class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
   void initState() {
     super.initState();
     final l = widget.log;
-    _productIdCtrl = TextEditingController(text: l?.productId ?? '');
+    _selectedProductId = l?.productId;
     _expectedVaseLifeCtrl = TextEditingController(text: l?.expectedVaseLifeDays.toString() ?? '');
     _quantityCtrl = TextEditingController(text: l?.quantity.toString() ?? '');
     if (l != null) _receivedDate = l.receivedDate;
+    Future.microtask(() => ref.read(productsProvider.notifier).load());
   }
 
   @override
   void dispose() {
-    _productIdCtrl.dispose();
     _expectedVaseLifeCtrl.dispose();
     _quantityCtrl.dispose();
     super.dispose();
@@ -55,7 +58,7 @@ class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
     setState(() => _saving = true);
 
     final data = <String, dynamic>{
-      'product_id': _productIdCtrl.text.trim(),
+      'product_id': _selectedProductId ?? '',
       'received_date': _receivedDate.toIso8601String().split('T').first,
       'expected_vase_life_days': int.parse(_expectedVaseLifeCtrl.text.trim()),
       'quantity': int.parse(_quantityCtrl.text.trim()),
@@ -70,6 +73,8 @@ class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final productsState = ref.watch(productsProvider);
+    final products = productsState is ProductsLoaded ? productsState.products : <Product>[];
     return Scaffold(
       appBar: AppBar(title: const Text('New Freshness Log')),
       bottomNavigationBar: Padding(
@@ -81,7 +86,13 @@ class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            PosTextField(controller: _productIdCtrl, label: 'Product ID', hint: 'Select flower product'),
+            PosSearchableDropdown<String>(
+              label: 'Product',
+              items: products.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
+              selectedValue: _selectedProductId,
+              onChanged: (v) => setState(() => _selectedProductId = v),
+              showSearch: true,
+            ),
             SizedBox(height: AppSpacing.md),
             GestureDetector(
               onTap: _pickDate,

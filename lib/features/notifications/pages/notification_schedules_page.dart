@@ -51,9 +51,7 @@ class _NotificationSchedulesPageState extends ConsumerState<NotificationSchedule
                   maxLines: 3,
                 ),
                 AppSpacing.gapH8,
-                DropdownButtonFormField<String>(
-                  value: category,
-                  decoration: InputDecoration(labelText: l10n.notifScheduleCategory, border: const OutlineInputBorder()),
+                PosSearchableDropdown<String>(
                   items: [
                     'order',
                     'inventory',
@@ -61,22 +59,30 @@ class _NotificationSchedulesPageState extends ConsumerState<NotificationSchedule
                     'system',
                     'payment',
                     'staff',
-                  ].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
-                  onChanged: (v) => setDialogState(() => category = v!),
+                  ].map((c) => PosDropdownItem(value: c, label: c)).toList(),
+                  selectedValue: category,
+                  onChanged: (v) => setDialogState(() => category = v ?? category),
+                  label: l10n.notifScheduleCategory,
+                  showSearch: false,
+                  clearable: false,
                 ),
                 AppSpacing.gapH8,
-                DropdownButtonFormField<String>(
-                  value: priority,
-                  decoration: InputDecoration(labelText: l10n.notifSchedulePriority, border: const OutlineInputBorder()),
-                  items: ['low', 'normal', 'high', 'urgent'].map((p) => DropdownMenuItem(value: p, child: Text(p))).toList(),
-                  onChanged: (v) => setDialogState(() => priority = v!),
+                PosSearchableDropdown<String>(
+                  items: ['low', 'normal', 'high', 'urgent'].map((p) => PosDropdownItem(value: p, label: p)).toList(),
+                  selectedValue: priority,
+                  onChanged: (v) => setDialogState(() => priority = v ?? priority),
+                  label: l10n.notifSchedulePriority,
+                  showSearch: false,
+                  clearable: false,
                 ),
                 AppSpacing.gapH8,
-                DropdownButtonFormField<String>(
-                  value: channel,
-                  decoration: InputDecoration(labelText: l10n.notifScheduleChannel, border: const OutlineInputBorder()),
-                  items: ['in_app', 'push', 'email'].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
-                  onChanged: (v) => setDialogState(() => channel = v!),
+                PosSearchableDropdown<String>(
+                  items: ['in_app', 'push', 'email'].map((c) => PosDropdownItem(value: c, label: c)).toList(),
+                  selectedValue: channel,
+                  onChanged: (v) => setDialogState(() => channel = v ?? channel),
+                  label: l10n.notifScheduleChannel,
+                  showSearch: false,
+                  clearable: false,
                 ),
                 AppSpacing.gapH8,
                 ListTile(

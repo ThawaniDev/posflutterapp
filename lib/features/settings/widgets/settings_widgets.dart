@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 
 /// Consistent section card used across all settings sub-pages.
 class SettingsSectionCard extends StatelessWidget {
@@ -93,7 +94,7 @@ class SettingsDropdownRow<T> extends StatelessWidget {
   final String label;
   final String? description;
   final T value;
-  final List<DropdownMenuItem<T>> items;
+  final List<PosDropdownItem<T>> items;
   final ValueChanged<T?> onChanged;
 
   const SettingsDropdownRow({
@@ -122,7 +123,16 @@ class SettingsDropdownRow<T> extends StatelessWidget {
               ],
             ),
           ),
-          DropdownButton<T>(value: value, items: items, onChanged: onChanged, underline: const SizedBox.shrink()),
+          SizedBox(
+            width: 140,
+            child: PosSearchableDropdown<T>(
+              items: items,
+              selectedValue: value,
+              onChanged: onChanged,
+              showSearch: false,
+              clearable: false,
+            ),
+          ),
         ],
       ),
     );

@@ -10,6 +10,7 @@ import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/core/widgets/pos_error_state.dart';
 import 'package:thawani_pos/core/widgets/pos_loading_skeleton.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/marketplace/models/template_review.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
@@ -252,9 +253,7 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
                   icon: Icons.download_rounded,
                   isFullWidth: true,
                   onPressed: () {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(l10n.marketplaceInstallSuccess), backgroundColor: AppColors.success));
+                    showPosSuccessSnackbar(context, l10n.marketplaceInstallSuccess);
                   },
                 ),
               ],
@@ -425,27 +424,18 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
 
   // ─── Purchase Confirmation ────────────────────────────────────
 
-  void _showPurchaseConfirmation(dynamic listing, AppLocalizations l10n) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.marketplacePurchaseConfirm),
-        content: Text(
-          listing.isFree
-              ? l10n.marketplacePurchaseFreeConfirm
-              : '${l10n.marketplacePurchaseChargeConfirm} ${listing.priceAmount}',
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.layoutCancel)),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              ref.read(marketplaceDetailProvider(widget.listingId).notifier).purchase({'listing_id': widget.listingId});
-            },
-            child: Text(l10n.marketplaceConfirm),
-          ),
-        ],
-      ),
+  void _showPurchaseConfirmation(dynamic listing, AppLocalizations l10n) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.marketplacePurchaseConfirm,
+      message: listing.isFree
+          ? l10n.marketplacePurchaseFreeConfirm
+          : '${l10n.marketplacePurchaseChargeConfirm} ${listing.priceAmount}',
+      confirmLabel: l10n.marketplaceConfirm,
+      cancelLabel: l10n.layoutCancel,
     );
+    if (confirmed == true) {
+      ref.read(marketplaceDetailProvider(widget.listingId).notifier).purchase({'listing_id': widget.listingId});
+    }
   }
 }

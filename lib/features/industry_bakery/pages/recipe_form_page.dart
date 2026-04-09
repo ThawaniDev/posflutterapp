@@ -4,6 +4,9 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 import '../models/bakery_recipe.dart';
 import '../providers/bakery_providers.dart';
+import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
 
 class RecipeFormPage extends ConsumerStatefulWidget {
   final BakeryRecipe? recipe;
@@ -19,7 +22,7 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
   bool _saving = false;
 
   late final TextEditingController _nameCtrl;
-  late final TextEditingController _productIdCtrl;
+  String? _selectedProductId;
   late final TextEditingController _expectedYieldCtrl;
   late final TextEditingController _prepTimeCtrl;
   late final TextEditingController _bakeTimeCtrl;
@@ -32,18 +35,18 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
     final r = widget.recipe;
     _isEditing = r != null;
     _nameCtrl = TextEditingController(text: r?.name ?? '');
-    _productIdCtrl = TextEditingController(text: r?.productId ?? '');
+    _selectedProductId = r?.productId;
     _expectedYieldCtrl = TextEditingController(text: r?.expectedYield.toString() ?? '');
     _prepTimeCtrl = TextEditingController(text: r?.prepTimeMinutes?.toString() ?? '');
     _bakeTimeCtrl = TextEditingController(text: r?.bakeTimeMinutes?.toString() ?? '');
     _bakeTempCtrl = TextEditingController(text: r?.bakeTemperatureC?.toString() ?? '');
     _instructionsCtrl = TextEditingController(text: r?.instructions ?? '');
+    Future.microtask(() => ref.read(productsProvider.notifier).load());
   }
 
   @override
   void dispose() {
     _nameCtrl.dispose();
-    _productIdCtrl.dispose();
     _expectedYieldCtrl.dispose();
     _prepTimeCtrl.dispose();
     _bakeTimeCtrl.dispose();
@@ -58,7 +61,7 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
 
     final data = <String, dynamic>{
       'name': _nameCtrl.text.trim(),
-      'product_id': _productIdCtrl.text.trim(),
+      'product_id': _selectedProductId ?? '',
       'expected_yield': int.parse(_expectedYieldCtrl.text.trim()),
       if (_prepTimeCtrl.text.isNotEmpty) 'prep_time_minutes': int.parse(_prepTimeCtrl.text.trim()),
       if (_bakeTimeCtrl.text.isNotEmpty) 'bake_time_minutes': int.parse(_bakeTimeCtrl.text.trim()),
@@ -79,6 +82,8 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final productsState = ref.watch(productsProvider);
+    final products = productsState is ProductsLoaded ? productsState.products : <Product>[];
     return Scaffold(
       appBar: AppBar(title: Text(_isEditing ? 'Edit Recipe' : 'New Recipe')),
       bottomNavigationBar: Padding(
@@ -97,7 +102,13 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
           children: [
             PosTextField(controller: _nameCtrl, label: 'Recipe Name', hint: 'Enter recipe name'),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _productIdCtrl, label: 'Product ID', hint: 'Associated product'),
+            PosSearchableDropdown<String>(
+              label: 'Product',
+              items: products.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
+              selectedValue: _selectedProductId,
+              onChanged: (v) => setState(() => _selectedProductId = v),
+              showSearch: true,
+            ),
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _expectedYieldCtrl,

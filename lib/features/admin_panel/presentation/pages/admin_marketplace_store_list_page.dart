@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/widgets/widgets.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -82,22 +83,20 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
-                  child: DropdownButtonFormField<String>(
-                    value: _connectedFilter,
-                    decoration: const InputDecoration(
-                      labelText: 'Status',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                    ),
-                    items: const [
-                      DropdownMenuItem(value: null, child: Text('All')),
-                      DropdownMenuItem(value: '1', child: Text('Connected')),
-                      DropdownMenuItem(value: '0', child: Text('Disconnected')),
+                  child: PosSearchableDropdown<String>(
+                    items: [
+                      PosDropdownItem(value: '1', label: 'Connected'),
+                      PosDropdownItem(value: '0', label: 'Disconnected'),
                     ],
+                    selectedValue: _connectedFilter,
                     onChanged: (v) {
                       setState(() => _connectedFilter = v);
                       _applyFilters();
                     },
+                    label: 'Status',
+                    hint: 'All',
+                    showSearch: false,
+                    clearable: true,
                   ),
                 ),
               ],

@@ -4,6 +4,7 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 
@@ -44,10 +45,10 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
     // Show snackbar on action success/error
     ref.listen<AdminActionState>(adminActionProvider, (prev, next) {
       if (next is AdminActionSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.success));
+        showPosSuccessSnackbar(context, next.message);
         ref.read(adminStoreDetailProvider.notifier).load(widget.storeId);
       } else if (next is AdminActionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, next.message);
       }
     });
 

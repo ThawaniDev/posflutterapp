@@ -20,6 +20,10 @@ class OwnerDashboardLoaded extends OwnerDashboardState {
   final List<Map<String, dynamic>> lowStock;
   final List<Map<String, dynamic>> activeCashiers;
   final List<Map<String, dynamic>> recentOrders;
+  final Map<String, dynamic> financialSummary;
+  final List<Map<String, dynamic>> hourlySales;
+  final List<Map<String, dynamic>> staffPerformance;
+  final List<Map<String, dynamic>> branches;
 
   const OwnerDashboardLoaded({
     required this.stats,
@@ -28,6 +32,10 @@ class OwnerDashboardLoaded extends OwnerDashboardState {
     required this.lowStock,
     required this.activeCashiers,
     required this.recentOrders,
+    required this.financialSummary,
+    required this.hourlySales,
+    required this.staffPerformance,
+    required this.branches,
   });
 }
 

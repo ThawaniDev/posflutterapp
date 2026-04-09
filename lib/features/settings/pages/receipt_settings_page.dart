@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/settings/models/store_settings.dart';
 import 'package:thawani_pos/features/settings/pages/settings_sub_page.dart';
 import 'package:thawani_pos/features/settings/widgets/settings_widgets.dart';
@@ -127,8 +128,8 @@ class _ReceiptSettingsPageState extends SettingsSubPageState<ReceiptSettingsPage
               label: l10n.settingsReceiptPaperSize,
               value: _paperSize,
               items: const [
-                DropdownMenuItem(value: '58mm', child: Text('58mm')),
-                DropdownMenuItem(value: '80mm', child: Text('80mm')),
+                PosDropdownItem(value: '58mm', label: '58mm'),
+                PosDropdownItem(value: '80mm', label: '80mm'),
               ],
               onChanged: (v) {
                 if (v != null) setState(() => _paperSize = v);
@@ -138,9 +139,9 @@ class _ReceiptSettingsPageState extends SettingsSubPageState<ReceiptSettingsPage
               label: l10n.settingsReceiptFontSize,
               value: _fontSize,
               items: [
-                DropdownMenuItem(value: 'small', child: Text(l10n.settingsFontSmall)),
-                DropdownMenuItem(value: 'normal', child: Text(l10n.settingsFontNormal)),
-                DropdownMenuItem(value: 'large', child: Text(l10n.settingsFontLarge)),
+                PosDropdownItem(value: 'small', label: l10n.settingsFontSmall),
+                PosDropdownItem(value: 'normal', label: l10n.settingsFontNormal),
+                PosDropdownItem(value: 'large', label: l10n.settingsFontLarge),
               ],
               onChanged: (v) {
                 if (v != null) setState(() => _fontSize = v);
@@ -150,9 +151,9 @@ class _ReceiptSettingsPageState extends SettingsSubPageState<ReceiptSettingsPage
               label: l10n.settingsReceiptLanguage,
               value: _language,
               items: [
-                DropdownMenuItem(value: 'ar', child: Text(l10n.settingsLangArabic)),
-                DropdownMenuItem(value: 'en', child: Text(l10n.settingsLangEnglish)),
-                DropdownMenuItem(value: 'both', child: Text(l10n.settingsLangBoth)),
+                PosDropdownItem(value: 'ar', label: l10n.settingsLangArabic),
+                PosDropdownItem(value: 'en', label: l10n.settingsLangEnglish),
+                PosDropdownItem(value: 'both', label: l10n.settingsLangBoth),
               ],
               onChanged: (v) {
                 if (v != null) setState(() => _language = v);

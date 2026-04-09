@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
@@ -92,18 +93,21 @@ class _AdminTeamListPageState extends ConsumerState<AdminTeamListPage> {
                   ),
                 ),
                 AppSpacing.gapW8,
-                DropdownButton<bool?>(
-                  value: _activeFilter,
-                  hint: const Text('Status'),
-                  items: const [
-                    DropdownMenuItem(value: null, child: Text('All')),
-                    DropdownMenuItem(value: true, child: Text('Active')),
-                    DropdownMenuItem(value: false, child: Text('Inactive')),
-                  ],
-                  onChanged: (val) {
-                    setState(() => _activeFilter = val);
-                    _loadTeam();
-                  },
+                Expanded(
+                  child: PosSearchableDropdown<bool>(
+                    items: [
+                      PosDropdownItem(value: true, label: 'Active'),
+                      PosDropdownItem(value: false, label: 'Inactive'),
+                    ],
+                    selectedValue: _activeFilter,
+                    onChanged: (val) {
+                      setState(() => _activeFilter = val);
+                      _loadTeam();
+                    },
+                    hint: 'Status',
+                    showSearch: false,
+                    clearable: true,
+                  ),
                 ),
               ],
             ),

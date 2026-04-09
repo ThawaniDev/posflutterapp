@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
@@ -12,6 +13,7 @@ class ActiveCashiersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return PosCard(
       child: Column(
@@ -21,13 +23,16 @@ class ActiveCashiersList extends StatelessWidget {
             children: [
               Icon(Icons.people_rounded, color: AppColors.info, size: 20),
               AppSpacing.gapW8,
-              Text('Active Cashiers', style: AppTypography.headlineSmall),
+              Text(l10n.dashboardActiveCashiers, style: AppTypography.headlineSmall),
               const Spacer(),
               if (cashiers.isNotEmpty)
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.1), borderRadius: AppRadius.borderSm),
-                  child: Text('${cashiers.length} online', style: AppTypography.labelSmall.copyWith(color: AppColors.success)),
+                  child: Text(
+                    '${cashiers.length} ${l10n.dashboardOnline}',
+                    style: AppTypography.labelSmall.copyWith(color: AppColors.success),
+                  ),
                 ),
             ],
           ),
@@ -37,7 +42,7 @@ class ActiveCashiersList extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Center(
                 child: Text(
-                  'No active sessions',
+                  l10n.dashboardNoActiveSessions,
                   style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                 ),
               ),
@@ -68,7 +73,7 @@ class ActiveCashiersList extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            'Since ${c['opened_at'] as String? ?? '-'}',
+                            '${l10n.dashboardSince} ${c['opened_at'] as String? ?? '-'}',
                             style: AppTypography.micro.copyWith(
                               color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                             ),

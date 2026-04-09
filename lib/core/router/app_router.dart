@@ -38,6 +38,8 @@ import 'package:thawani_pos/features/onboarding/pages/onboarding_wizard_page.dar
 import 'package:thawani_pos/features/onboarding/pages/store_settings_page.dart';
 import 'package:thawani_pos/features/onboarding/pages/working_hours_page.dart';
 import 'package:thawani_pos/features/orders/pages/order_list_page.dart';
+import 'package:thawani_pos/features/transactions/pages/transaction_explorer_page.dart';
+import 'package:thawani_pos/features/transactions/pages/transaction_detail_page.dart';
 import 'package:thawani_pos/features/debits/pages/debit_list_page.dart';
 import 'package:thawani_pos/features/debits/pages/debit_detail_page.dart';
 import 'package:thawani_pos/features/debits/pages/debit_form_page.dart';
@@ -397,6 +399,17 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 
           // ─── Orders ───────────────────────────────────
           GoRoute(path: Routes.orders, name: 'orders', builder: (context, state) => const OrderListPage()),
+
+          // ─── Transactions ─────────────────────────────
+          GoRoute(path: Routes.transactions, name: 'transactions', builder: (context, state) => const TransactionExplorerPage()),
+          GoRoute(
+            path: Routes.transactionDetail,
+            name: 'transactionDetail',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return TransactionDetailPage(transactionId: id);
+            },
+          ),
 
           // ─── Payments ─────────────────────────────────
           GoRoute(path: Routes.cashSessions, name: 'cashSessions', builder: (context, state) => const CashSessionsPage()),

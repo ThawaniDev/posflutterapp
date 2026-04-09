@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/constants/permission_constants.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import '../l10n/app_localizations.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
@@ -119,6 +120,12 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.receipt_long_rounded,
           route: '/orders',
           permission: Permissions.ordersView,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarTransactions,
+          icon: Icons.swap_horiz_rounded,
+          route: '/transactions',
+          permission: Permissions.transactionsView,
         ),
         PosSidebarItem(
           label: l10n.sidebarPayments,
@@ -560,12 +567,14 @@ class _PosSidebarState extends State<PosSidebar> {
       ),
       child: Column(
         children: [
+          context.isPhone ? const SizedBox(height: 50) : const SizedBox.shrink(),
           // ─ Header ─
           if (widget.headerWidget != null) widget.headerWidget!,
           if (widget.headerWidget == null) _DefaultHeader(isCollapsed: widget.isCollapsed),
 
           // ─ Collapse toggle ─
-          if (widget.onToggleCollapse != null) _CollapseToggle(isCollapsed: widget.isCollapsed, onTap: widget.onToggleCollapse!),
+          if (widget.onToggleCollapse != null && !context.isPhone)
+            _CollapseToggle(isCollapsed: widget.isCollapsed, onTap: widget.onToggleCollapse!),
 
           const Divider(height: 1),
 

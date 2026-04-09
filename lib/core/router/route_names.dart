@@ -42,6 +42,10 @@ class Routes {
   // Orders
   static const String orders = '/orders';
 
+  // Transactions
+  static const String transactions = '/transactions';
+  static const String transactionDetail = '/transactions/:id';
+
   // Payments
   static const String cashSessions = '/cash-sessions';
   static const String cashManagement = '/cash-management';

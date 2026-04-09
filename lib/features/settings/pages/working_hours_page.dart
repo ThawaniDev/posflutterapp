@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/auth/data/local/auth_local_storage.dart';
 import 'package:thawani_pos/features/settings/models/working_hour.dart';
 import 'package:thawani_pos/features/settings/providers/settings_providers.dart';
@@ -40,19 +41,11 @@ class _WorkingHoursPageState extends ConsumerState<WorkingHoursPage> {
     try {
       await ref.read(workingHoursProvider.notifier).update(_storeId!, _localHours!);
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.settingsSaved), behavior: SnackBarBehavior.floating));
+        showPosSuccessSnackbar(context, AppLocalizations.of(context)!.settingsSaved);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(e.toString()),
-            backgroundColor: Theme.of(context).colorScheme.error,
-            behavior: SnackBarBehavior.floating,
-          ),
-        );
+        showPosErrorSnackbar(context, e.toString());
       }
     } finally {
       if (mounted) setState(() => _saving = false);

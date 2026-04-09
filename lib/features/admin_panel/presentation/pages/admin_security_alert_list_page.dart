@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
@@ -88,34 +89,36 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
                   ),
                   onSubmitted: (_) => _applyFilters(),
                 );
-                final severityDropdown = DropdownButton<String>(
-                  value: _severityFilter,
-                  hint: const Text('Severity'),
-                  isExpanded: context.isPhone,
-                  items: const [
-                    DropdownMenuItem(value: 'critical', child: Text('Critical')),
-                    DropdownMenuItem(value: 'high', child: Text('High')),
-                    DropdownMenuItem(value: 'medium', child: Text('Medium')),
-                    DropdownMenuItem(value: 'low', child: Text('Low')),
+                final severityDropdown = PosSearchableDropdown<String>(
+                  items: [
+                    PosDropdownItem(value: 'critical', label: 'Critical'),
+                    PosDropdownItem(value: 'high', label: 'High'),
+                    PosDropdownItem(value: 'medium', label: 'Medium'),
+                    PosDropdownItem(value: 'low', label: 'Low'),
                   ],
+                  selectedValue: _severityFilter,
                   onChanged: (v) {
                     setState(() => _severityFilter = v);
                     _applyFilters();
                   },
+                  hint: 'Severity',
+                  showSearch: false,
+                  clearable: true,
                 );
-                final statusDropdown = DropdownButton<String>(
-                  value: _statusFilter,
-                  hint: const Text('Status'),
-                  isExpanded: context.isPhone,
-                  items: const [
-                    DropdownMenuItem(value: 'new', child: Text('New')),
-                    DropdownMenuItem(value: 'investigating', child: Text('Investigating')),
-                    DropdownMenuItem(value: 'resolved', child: Text('Resolved')),
+                final statusDropdown = PosSearchableDropdown<String>(
+                  items: [
+                    PosDropdownItem(value: 'new', label: 'New'),
+                    PosDropdownItem(value: 'investigating', label: 'Investigating'),
+                    PosDropdownItem(value: 'resolved', label: 'Resolved'),
                   ],
+                  selectedValue: _statusFilter,
                   onChanged: (v) {
                     setState(() => _statusFilter = v);
                     _applyFilters();
                   },
+                  hint: 'Status',
+                  showSearch: false,
+                  clearable: true,
                 );
                 if (context.isPhone) {
                   return Column(

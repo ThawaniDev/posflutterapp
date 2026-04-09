@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/onboarding/enums/onboarding_step.dart';
 import 'package:thawani_pos/features/onboarding/models/business_type_template.dart';
 import 'package:thawani_pos/features/onboarding/providers/store_onboarding_providers.dart';
@@ -90,7 +92,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+        showPosErrorSnackbar(context, AppLocalizations.of(context)!.genericError(e.toString()));
       }
     } finally {
       if (mounted) setState(() => _isSubmitting = false);
@@ -104,7 +106,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
       if (mounted) context.go(Routes.dashboard);
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+        showPosErrorSnackbar(context, AppLocalizations.of(context)!.genericError(e.toString()));
       }
     } finally {
       if (mounted) setState(() => _isSubmitting = false);

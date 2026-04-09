@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -224,11 +225,18 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
             mainAxisSize: MainAxisSize.min,
             children: [
               StatefulBuilder(
-                builder: (context, setInnerState) => DropdownButtonFormField<String>(
-                  value: feeType,
-                  items: ['setup', 'training', 'custom_dev'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+                builder: (context, setInnerState) => PosSearchableDropdown<String>(
+                  items: [
+                    PosDropdownItem(value: 'setup', label: 'Setup'),
+                    PosDropdownItem(value: 'training', label: 'Training'),
+                    PosDropdownItem(value: 'custom_dev', label: 'Custom Dev'),
+                  ],
+                  selectedValue: feeType,
                   onChanged: (v) => setInnerState(() => feeType = v ?? feeType),
-                  decoration: const InputDecoration(labelText: 'Fee Type'),
+                  label: 'Fee Type',
+                  hint: 'Select fee type',
+                  showSearch: false,
+                  clearable: false,
                 ),
               ),
               TextField(
@@ -308,25 +316,18 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
     );
   }
 
-  void _confirmDelete(int id) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Delete Fee'),
-        content: const Text('Are you sure you want to delete this implementation fee?'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            onPressed: () async {
-              await ref.read(implementationFeeActionProvider.notifier).deleteFee(id.toString());
-              if (ctx.mounted) Navigator.pop(ctx);
-              ref.read(implementationFeeListProvider.notifier).loadFees();
-            },
-            child: const Text('Delete', style: TextStyle(color: Colors.white)),
-          ),
-        ],
-      ),
+  void _confirmDelete(int id) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Delete Fee',
+      message: 'Are you sure you want to delete this implementation fee?',
+      confirmLabel: 'Delete',
+      cancelLabel: 'Cancel',
+      isDanger: true,
     );
+    if (confirmed == true) {
+      await ref.read(implementationFeeActionProvider.notifier).deleteFee(id.toString());
+      ref.read(implementationFeeListProvider.notifier).loadFees();
+    }
   }
 }

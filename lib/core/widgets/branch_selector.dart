@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/branches/models/store.dart';
 import 'package:thawani_pos/features/branches/providers/branch_providers.dart';
 import 'package:thawani_pos/features/branches/providers/branch_state.dart';
@@ -77,56 +78,27 @@ class _BranchSelectorState extends ConsumerState<BranchSelector> {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.3)),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: selectedBranch?.id ?? activeBranchId,
-          isDense: true,
-          icon: const Icon(Icons.store_rounded, size: 18),
-          items: branches.map((store) {
-            final roleInfo = permsState.roleForBranch(store.id);
-            final roleName = roleInfo != null
-                ? (isAr ? (roleInfo.displayNameAr ?? roleInfo.displayName) : roleInfo.displayName)
-                : null;
-            return DropdownMenuItem<String>(
-              value: store.id,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (store.isMainBranch)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 4),
-                          child: Icon(Icons.star_rounded, size: 14, color: Theme.of(context).colorScheme.primary),
-                        ),
-                      Text(store.name, style: const TextStyle(fontSize: 13), overflow: TextOverflow.ellipsis),
-                      if (roleName != null)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            roleName,
-                            style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant),
-                          ),
-                        ),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          }).toList(),
-          onChanged: (newId) {
-            if (newId != null && newId != activeBranchId) {
-              ref.read(activeBranchIdProvider.notifier).state = newId;
-            }
-          },
-        ),
+      child: PosSearchableDropdown<String>(
+        items: branches.map((store) {
+          final roleInfo = permsState.roleForBranch(store.id);
+          final roleName = roleInfo != null
+              ? (isAr ? (roleInfo.displayNameAr ?? roleInfo.displayName) : roleInfo.displayName)
+              : null;
+          return PosDropdownItem<String>(
+            value: store.id,
+            label: store.name,
+            subtitle: roleName,
+            icon: store.isMainBranch ? Icons.star_rounded : null,
+          );
+        }).toList(),
+        selectedValue: selectedBranch?.id ?? activeBranchId,
+        onChanged: (newId) {
+          if (newId != null && newId != activeBranchId) {
+            ref.read(activeBranchIdProvider.notifier).state = newId;
+          }
+        },
+        showSearch: true,
+        clearable: false,
       ),
     );
   }

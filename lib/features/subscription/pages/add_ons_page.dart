@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/subscription/providers/subscription_providers.dart';
@@ -144,56 +144,37 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> with SingleTickerProvid
     }
   }
 
-  void _confirmAddAddOn(Map<String, dynamic> addOn) {
+  void _confirmAddAddOn(Map<String, dynamic> addOn) async {
     final name = addOn['name']?.toString() ?? 'this add-on';
     final price = (addOn['price'] != null ? double.tryParse(addOn['price'].toString()) : null) ?? 0;
 
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('Add $name?'),
-        content: Text(
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Add $name?',
+      message:
           'This will add $name to your subscription.\n\n'
           'Cost: ${price.toStringAsFixed(2)} \u0081/${addOn['billing_cycle'] ?? 'month'}',
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(const SnackBar(content: Text('Add-on feature coming soon'), backgroundColor: AppColors.info));
-            },
-            child: const Text('Add'),
-          ),
-        ],
-      ),
+      confirmLabel: 'Add',
+      cancelLabel: 'Cancel',
     );
+    if (confirmed == true) {
+      showPosInfoSnackbar(context, AppLocalizations.of(context)!.addOnComingSoon);
+    }
   }
 
-  void _confirmRemoveAddOn(Map<String, dynamic> addOn) {
+  void _confirmRemoveAddOn(Map<String, dynamic> addOn) async {
     final name = addOn['name']?.toString() ?? addOn['plan_add_on']?['name']?.toString() ?? 'this add-on';
 
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('Remove $name?'),
-        content: Text('Are you sure you want to remove $name from your subscription?'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Keep')),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            onPressed: () {
-              Navigator.pop(ctx);
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(const SnackBar(content: Text('Remove add-on feature coming soon'), backgroundColor: AppColors.info));
-            },
-            child: const Text('Remove'),
-          ),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Remove $name?',
+      message: 'Are you sure you want to remove $name from your subscription?',
+      confirmLabel: 'Remove',
+      cancelLabel: 'Keep',
+      isDanger: true,
     );
+    if (confirmed == true) {
+      showPosInfoSnackbar(context, AppLocalizations.of(context)!.removeAddOnComingSoon);
+    }
   }
 }

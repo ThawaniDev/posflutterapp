@@ -76,7 +76,7 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
 
     ref.listen<NotificationActionState>(notificationActionProvider, (prev, next) {
       if (next is NotificationActionSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message)));
+        showPosInfoSnackbar(context, next.message);
         _reload();
         ref.read(unreadCountProvider.notifier).load();
         ref.read(notificationActionProvider.notifier).reset();

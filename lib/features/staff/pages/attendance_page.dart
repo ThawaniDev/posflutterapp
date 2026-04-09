@@ -50,10 +50,10 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
     // Listen for clock action results
     ref.listen<ClockActionState>(clockActionProvider, (prev, next) {
       if (next is ClockActionSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message)));
+        showPosSuccessSnackbar(context, next.message);
         _loadAttendance();
       } else if (next is ClockActionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message)));
+        showPosErrorSnackbar(context, next.message);
       }
     });
 
@@ -361,10 +361,12 @@ class _ClockDialogState extends ConsumerState<_ClockDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            DropdownButtonFormField<StaffUser>(
-              decoration: InputDecoration(labelText: '${l10n.staffMember} *', border: const OutlineInputBorder()),
-              items: staffList.map((s) => DropdownMenuItem(value: s, child: Text('${s.firstName} ${s.lastName}'))).toList(),
+            PosSearchableDropdown<StaffUser>(
+              label: '${l10n.staffMember} *',
+              items: staffList.map((s) => PosDropdownItem(value: s, label: '${s.firstName} ${s.lastName}')).toList(),
+              selectedValue: _selectedStaff,
               onChanged: (v) => setState(() => _selectedStaff = v),
+              showSearch: true,
             ),
             AppSpacing.gapH16,
             SegmentedButton<bool>(

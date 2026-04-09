@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
@@ -288,7 +289,7 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
             ElevatedButton(
               onPressed: () {
                 if (startController.text.isEmpty || endController.text.isEmpty) {
-                  ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(content: Text('Please select both dates')));
+                  showPosWarningSnackbar(ctx, AppLocalizations.of(ctx)!.pleaseSelectBothDates);
                   return;
                 }
                 Navigator.of(ctx).pop();

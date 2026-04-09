@@ -273,27 +273,17 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
                               },
                             ),
                             AppSpacing.gapH16,
-                            PosDropdown<String>(
+                            PosSearchableDropdown<String>(
                               label: AppLocalizations.of(context)!.termFormPlatformLabel,
-                              hint: AppLocalizations.of(context)!.termFormPlatformHint,
-                              value: _selectedPlatform,
-                              errorText: _platformError,
-                              items: _platforms
-                                  .map(
-                                    (p) => DropdownMenuItem(
-                                      value: p,
-                                      child: Row(
-                                        children: [Icon(_platformIcon(p), size: 16), AppSpacing.gapW8, Text(_platformLabel(p))],
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
+                              items: _platforms.map((p) => PosDropdownItem(value: p, label: _platformLabel(p))).toList(),
+                              selectedValue: _selectedPlatform,
                               onChanged: (v) {
                                 setState(() {
                                   _selectedPlatform = v;
                                   _platformError = null;
                                 });
                               },
+                              showSearch: false,
                             ),
                             AppSpacing.gapH16,
                             PosTextField(
@@ -394,14 +384,14 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
                           title: AppLocalizations.of(context)!.termFormAcquirerSection,
                           subtitle: AppLocalizations.of(context)!.termFormAcquirerSectionSub,
                           children: [
-                            PosDropdown<String>(
+                            PosSearchableDropdown<String>(
                               label: AppLocalizations.of(context)!.termFormAcquirerSourceLabel,
-                              hint: AppLocalizations.of(context)!.termFormAcquirerSourceHint,
-                              value: _selectedAcquirerSource,
                               items: _acquirerSources
-                                  .map((s) => DropdownMenuItem(value: s, child: Text(_acquirerSourceLabel(s))))
+                                  .map((s) => PosDropdownItem(value: s, label: _acquirerSourceLabel(s)))
                                   .toList(),
+                              selectedValue: _selectedAcquirerSource,
                               onChanged: (v) => setState(() => _selectedAcquirerSource = v),
+                              showSearch: false,
                             ),
                             if (_selectedAcquirerSource == 'other') ...[
                               AppSpacing.gapH16,
@@ -432,12 +422,12 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
                           title: AppLocalizations.of(context)!.termFormSettlementSection,
                           subtitle: AppLocalizations.of(context)!.termFormSettlementSectionSub,
                           children: [
-                            PosDropdown<String>(
+                            PosSearchableDropdown<String>(
                               label: AppLocalizations.of(context)!.termFormSettlementCycleLabel,
-                              hint: AppLocalizations.of(context)!.termFormSettlementCycleHint,
-                              value: _selectedSettlementCycle,
-                              items: _settlementCycles.map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+                              items: _settlementCycles.map((c) => PosDropdownItem(value: c, label: c)).toList(),
+                              selectedValue: _selectedSettlementCycle,
                               onChanged: (v) => setState(() => _selectedSettlementCycle = v),
+                              showSearch: false,
                             ),
                             AppSpacing.gapH16,
                             _buildFieldPair(

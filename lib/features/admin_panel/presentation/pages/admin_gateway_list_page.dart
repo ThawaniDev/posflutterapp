@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
@@ -180,11 +181,11 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
     try {
       await ref.read(gatewayActionProvider.notifier).testConnection(id.toString());
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Connection test successful')));
+        showPosSuccessSnackbar(context, AppLocalizations.of(context)!.connectionTestSuccessful);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Connection test failed: $e')));
+        showPosErrorSnackbar(context, AppLocalizations.of(context)!.connectionTestFailed(e.toString()));
       }
     }
   }
@@ -213,11 +214,17 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
               ),
               const SizedBox(height: 8),
               StatefulBuilder(
-                builder: (context, setInnerState) => DropdownButtonFormField<String>(
-                  value: env,
-                  items: ['sandbox', 'production'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+                builder: (context, setInnerState) => PosSearchableDropdown<String>(
+                  items: [
+                    PosDropdownItem(value: 'sandbox', label: 'Sandbox'),
+                    PosDropdownItem(value: 'production', label: 'Production'),
+                  ],
+                  selectedValue: env,
                   onChanged: (v) => setInnerState(() => env = v ?? env),
-                  decoration: const InputDecoration(labelText: 'Environment'),
+                  label: 'Environment',
+                  hint: 'Select environment',
+                  showSearch: false,
+                  clearable: false,
                 ),
               ),
             ],
@@ -288,25 +295,18 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
     );
   }
 
-  void _confirmDelete(int id) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Delete Gateway'),
-        content: const Text('Are you sure you want to delete this gateway?'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            onPressed: () async {
-              await ref.read(gatewayActionProvider.notifier).deleteGateway(id.toString());
-              if (ctx.mounted) Navigator.pop(ctx);
-              ref.read(gatewayListProvider.notifier).loadGateways(storeId: _storeId);
-            },
-            child: const Text('Delete', style: TextStyle(color: Colors.white)),
-          ),
-        ],
-      ),
+  void _confirmDelete(int id) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Delete Gateway',
+      message: 'Are you sure you want to delete this gateway?',
+      confirmLabel: 'Delete',
+      cancelLabel: 'Cancel',
+      isDanger: true,
     );
+    if (confirmed == true) {
+      await ref.read(gatewayActionProvider.notifier).deleteGateway(id.toString());
+      ref.read(gatewayListProvider.notifier).loadGateways(storeId: _storeId);
+    }
   }
 }

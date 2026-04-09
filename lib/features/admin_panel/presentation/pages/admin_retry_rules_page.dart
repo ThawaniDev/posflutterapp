@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -197,22 +199,18 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
     final grace = int.tryParse(_graceCtrl.text);
 
     if (maxRetries == null || interval == null || grace == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please enter valid numbers')));
+      showPosWarningSnackbar(context, AppLocalizations.of(context)!.pleaseEnterValidNumbers);
       return;
     }
 
     try {
       await ref.read(retryRulesProvider.notifier).updateRules(maxRetries, interval, grace);
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Retry rules updated successfully'), backgroundColor: AppColors.success));
+        showPosSuccessSnackbar(context, AppLocalizations.of(context)!.retryRulesUpdated);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Failed to save: $e'), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, AppLocalizations.of(context)!.failedToSave(e.toString()));
       }
     }
   }

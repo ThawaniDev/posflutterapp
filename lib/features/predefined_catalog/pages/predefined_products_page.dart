@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/pos_button.dart';
-import 'package:thawani_pos/core/widgets/pos_empty_state.dart';
-import 'package:thawani_pos/core/widgets/pos_error_state.dart';
-import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/features/predefined_catalog/models/predefined_product.dart';
 import 'package:thawani_pos/features/predefined_catalog/providers/predefined_catalog_providers.dart';
 import 'package:thawani_pos/features/predefined_catalog/providers/predefined_catalog_state.dart';
@@ -43,31 +41,15 @@ class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage>
   }
 
   Future<void> _handleCloneProduct(PredefinedProduct product) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Clone Product'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Clone "${product.name}" to your store?'),
-            const SizedBox(height: AppSpacing.sm),
-            if (product.nameAr != null)
-              Text(
-                product.nameAr!,
-                textDirection: TextDirection.rtl,
-                style: const TextStyle(color: Colors.grey),
-              ),
-            const SizedBox(height: AppSpacing.xs),
-            Text('Price: ${product.sellPrice.toStringAsFixed(2)} \u0081', style: const TextStyle(fontWeight: FontWeight.w600)),
-          ],
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
-          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Clone')),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Clone Product',
+      message:
+          'Clone "${product.name}" to your store?'
+          '${product.nameAr != null ? '\n${product.nameAr}' : ''}'
+          '\nPrice: ${product.sellPrice.toStringAsFixed(2)}',
+      confirmLabel: 'Clone',
+      cancelLabel: 'Cancel',
     );
 
     if (confirmed == true && mounted) {
@@ -75,11 +57,9 @@ class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage>
       final cloneState = ref.read(cloneProvider);
       if (mounted) {
         if (cloneState is CloneSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Product "${product.name}" cloned to your store.')));
+          showPosSuccessSnackbar(context, AppLocalizations.of(context)!.productClonedToStore(product.name));
         } else if (cloneState is CloneError) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(cloneState.message), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, cloneState.message);
         }
         ref.read(cloneProvider.notifier).reset();
       }

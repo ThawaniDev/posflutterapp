@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/hardware/enums/connection_type.dart';
 import 'package:thawani_pos/features/hardware/enums/hardware_device_type.dart';
 
@@ -170,15 +171,16 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
                     if (!widget.isEditing) ...[
                       Text('Device Type', style: theme.textTheme.labelLarge),
                       AppSpacing.gapH8,
-                      DropdownButtonFormField<HardwareDeviceType>(
-                        value: _selectedType,
+                      PosSearchableDropdown<HardwareDeviceType>(
                         items: HardwareDeviceType.values.map((t) {
-                          return DropdownMenuItem(value: t, child: Text(_deviceLabel(t)));
+                          return PosDropdownItem(value: t, label: _deviceLabel(t));
                         }).toList(),
+                        selectedValue: _selectedType,
                         onChanged: (v) {
                           if (v != null) setState(() => _selectedType = v);
                         },
-                        decoration: const InputDecoration(border: OutlineInputBorder(), isDense: true),
+                        showSearch: false,
+                        clearable: false,
                       ),
                       AppSpacing.gapH16,
                     ],
@@ -285,15 +287,16 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
         AppSpacing.gapH12,
         Text('Baud Rate', style: theme.textTheme.labelLarge),
         AppSpacing.gapH8,
-        DropdownButtonFormField<int>(
-          value: int.tryParse(_baudRateController.text) ?? 9600,
+        PosSearchableDropdown<int>(
           items: [2400, 4800, 9600, 19200, 38400, 57600, 115200].map((b) {
-            return DropdownMenuItem(value: b, child: Text('$b'));
+            return PosDropdownItem(value: b, label: '$b');
           }).toList(),
+          selectedValue: int.tryParse(_baudRateController.text) ?? 9600,
           onChanged: (v) {
             if (v != null) _baudRateController.text = v.toString();
           },
-          decoration: const InputDecoration(border: OutlineInputBorder(), isDense: true),
+          showSearch: false,
+          clearable: false,
         ),
         AppSpacing.gapH16,
       ]);

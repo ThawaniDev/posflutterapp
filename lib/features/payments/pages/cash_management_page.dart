@@ -4,6 +4,7 @@ import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/payments/providers/payment_providers.dart';
 import 'package:thawani_pos/features/payments/providers/payment_state.dart';
 import 'package:thawani_pos/features/payments/services/payment_calculation_service.dart';
@@ -496,18 +497,18 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
               autofocus: true,
             ),
             AppSpacing.gapH12,
-            DropdownButtonFormField<String>(
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(ctx)!.cashMgmtReason,
-                border: const OutlineInputBorder(),
-              ),
+            PosSearchableDropdown<String>(
               items:
                   (type == 'cash_out'
                           ? ['petty_cash', 'supplier_payment', 'bank_deposit', 'other']
                           : ['tips', 'change_replenish', 'other'])
-                      .map((r) => DropdownMenuItem(value: r, child: Text(r.replaceAll('_', ' '))))
+                      .map((r) => PosDropdownItem(value: r, label: r.replaceAll('_', ' ')))
                       .toList(),
+              selectedValue: reasonController.text.isEmpty ? null : reasonController.text,
               onChanged: (v) => reasonController.text = v ?? '',
+              label: AppLocalizations.of(ctx)!.cashMgmtReason,
+              showSearch: false,
+              clearable: false,
             ),
             AppSpacing.gapH12,
             TextField(

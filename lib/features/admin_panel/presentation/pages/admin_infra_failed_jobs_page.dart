@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -50,27 +51,24 @@ class _State extends ConsumerState<AdminInfraFailedJobsPage> {
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.sm),
-            child: DropdownButtonFormField<String>(
-              value: _queueFilter ?? '',
-              decoration: const InputDecoration(
-                labelText: 'Queue',
-                border: OutlineInputBorder(),
-                isDense: true,
-                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              ),
+            child: PosSearchableDropdown<String>(
               items: [
-                '',
-                'default',
-                'high',
-                'notifications',
-                'billing',
-                'sync',
-                'reports',
-              ].map((s) => DropdownMenuItem(value: s, child: Text(s.isEmpty ? 'All Queues' : s))).toList(),
+                PosDropdownItem(value: 'default', label: 'default'),
+                PosDropdownItem(value: 'high', label: 'high'),
+                PosDropdownItem(value: 'notifications', label: 'notifications'),
+                PosDropdownItem(value: 'billing', label: 'billing'),
+                PosDropdownItem(value: 'sync', label: 'sync'),
+                PosDropdownItem(value: 'reports', label: 'reports'),
+              ],
+              selectedValue: _queueFilter,
               onChanged: (v) {
                 setState(() => _queueFilter = v);
                 _applyFilter();
               },
+              label: 'Queue',
+              hint: 'All Queues',
+              showSearch: false,
+              clearable: true,
             ),
           ),
           Expanded(

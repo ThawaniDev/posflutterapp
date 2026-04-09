@@ -30,6 +30,7 @@ class ApiEndpoints {
   static const String transactions = '/pos/transactions';
   static const String heldCarts = '/pos/held-carts';
   static const String posTerminals = '/pos/terminals';
+  static const String posRegisters = '/pos/registers';
 
   // Orders
   static const String orders = '/orders';

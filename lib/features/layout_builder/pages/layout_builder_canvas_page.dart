@@ -9,6 +9,7 @@ import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/core/widgets/pos_error_state.dart';
 import 'package:thawani_pos/core/widgets/pos_loading_skeleton.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/layout_builder/models/layout_widget.dart';
 import 'package:thawani_pos/features/layout_builder/models/widget_placement.dart';
 import 'package:thawani_pos/features/layout_builder/providers/layout_builder_providers.dart';
@@ -673,9 +674,7 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
       'grid_rows': state.canvas.gridRows,
       'theme_overrides': state.canvas.themeOverrides,
     });
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.layoutSavedSuccess), backgroundColor: AppColors.success));
+    showPosSuccessSnackbar(context, AppLocalizations.of(context)!.layoutSavedSuccess);
   }
 
   void _showCreateVersionDialog(AppLocalizations l10n) {

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
@@ -57,6 +58,11 @@ class ConnectedDevicesPanel extends ConsumerWidget {
         _SummaryBar(totalConfigured: totalConfigured, totalConnected: totalConnected, isDark: isDark),
 
         AppSpacing.gapH16,
+
+        // ── Keyboard-wedge barcode scanner (always-visible on web) ──
+        _KeyboardWedgeScannerCard(isDark: isDark),
+
+        AppSpacing.gapH12,
 
         // ── Connection type groups ──
         if (byConnection.isEmpty)
@@ -479,6 +485,93 @@ class _DetectedDeviceRow extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
             decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.1), borderRadius: AppRadius.borderSm),
             child: Text(device.type.value.replaceAll('_', ' '), style: AppTypography.micro.copyWith(color: AppColors.info)),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─── Keyboard-wedge Barcode Scanner Card ───────────────────
+class _KeyboardWedgeScannerCard extends ConsumerWidget {
+  const _KeyboardWedgeScannerCard({required this.isDark});
+  final bool isDark;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scanner = ref.read(hardwareManagerProvider).barcodeScanner;
+    final isListening = scanner.isListening;
+
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+      color: isDark ? AppColors.surfaceDark : null,
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              color: const Color(0xFF5C6BC0).withValues(alpha: isDark ? 0.15 : 0.08),
+              border: Border(bottom: BorderSide(color: const Color(0xFF5C6BC0).withValues(alpha: 0.2))),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.qr_code_scanner, size: 20, color: Color(0xFF5C6BC0)),
+                AppSpacing.gapW8,
+                Expanded(
+                  child: Text(
+                    'Barcode Scanner (Keyboard Wedge)',
+                    style: AppTypography.titleSmall.copyWith(color: const Color(0xFF5C6BC0)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            child: Row(
+              children: [
+                Icon(Icons.keyboard, size: 22, color: isDark ? AppColors.textSecondary : Colors.grey.shade600),
+                AppSpacing.gapW8,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        kIsWeb ? 'USB HID Scanner' : 'USB / Keyboard Wedge',
+                        style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        isListening
+                            ? 'Listening for keyboard-wedge barcode input'
+                            : 'Not active — scanner will start when the app is ready',
+                        style: AppTypography.micro.copyWith(color: isDark ? AppColors.textSecondary : Colors.grey.shade500),
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      isListening ? Icons.circle : Icons.circle_outlined,
+                      size: isListening ? 8 : 12,
+                      color: isListening ? AppColors.success : AppColors.textSecondary,
+                    ),
+                    AppSpacing.gapW4,
+                    Text(
+                      isListening ? 'Listening' : 'Inactive',
+                      style: AppTypography.micro.copyWith(
+                        color: isListening ? AppColors.success : AppColors.textSecondary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),

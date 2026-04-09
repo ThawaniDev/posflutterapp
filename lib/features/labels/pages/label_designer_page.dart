@@ -8,6 +8,7 @@ import 'package:thawani_pos/core/widgets/pos_app_bar.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/labels/models/label_template.dart';
 import 'package:thawani_pos/features/labels/providers/label_providers.dart';
 import 'package:thawani_pos/features/labels/providers/label_state.dart';
@@ -583,7 +584,7 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
     final l10n = AppLocalizations.of(context)!;
     final name = _nameController.text.trim();
     if (name.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.labelNameRequired)));
+      showPosWarningSnackbar(context, l10n.labelNameRequired);
       return;
     }
 
@@ -609,10 +610,10 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
       setState(() => _isLoading = false);
       final state = ref.read(labelDetailProvider(_loadedTemplateId));
       if (state is LabelDetailSaved) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.labelSavedSuccess)));
+        showPosSuccessSnackbar(context, l10n.labelSavedSuccess);
         context.pop();
       } else if (state is LabelDetailError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
+        showPosErrorSnackbar(context, state.message);
       }
     }
   }
@@ -838,20 +839,19 @@ class _ElementPropertiesPanel extends StatelessWidget {
         if (element.type == 'barcode') ...[
           Text(l10n.labelBarcodeFormat, style: Theme.of(context).textTheme.labelMedium),
           const SizedBox(height: AppSpacing.xs),
-          DropdownButtonFormField<String>(
-            value: element.config['format'] as String? ?? 'code128',
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-            ),
+          PosSearchableDropdown<String>(
+            label: l10n.labelBarcodeFormat,
             items: const [
-              DropdownMenuItem(value: 'code128', child: Text('Code 128')),
-              DropdownMenuItem(value: 'ean13', child: Text('EAN-13')),
-              DropdownMenuItem(value: 'upc_a', child: Text('UPC-A')),
-              DropdownMenuItem(value: 'code39', child: Text('Code 39')),
-              DropdownMenuItem(value: 'itf', child: Text('ITF')),
+              PosDropdownItem(value: 'code128', label: 'Code 128'),
+              PosDropdownItem(value: 'ean13', label: 'EAN-13'),
+              PosDropdownItem(value: 'upc_a', label: 'UPC-A'),
+              PosDropdownItem(value: 'code39', label: 'Code 39'),
+              PosDropdownItem(value: 'itf', label: 'ITF'),
             ],
+            selectedValue: element.config['format'] as String? ?? 'code128',
             onChanged: (v) => onUpdate(element.copyWith(config: {...element.config, 'format': v})),
+            showSearch: false,
+            clearable: false,
           ),
         ],
 

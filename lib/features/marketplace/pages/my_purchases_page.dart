@@ -3,11 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
-import 'package:thawani_pos/core/widgets/pos_badge.dart';
-import 'package:thawani_pos/core/widgets/pos_table.dart';
-import 'package:thawani_pos/core/widgets/pos_empty_state.dart';
-import 'package:thawani_pos/core/widgets/pos_error_state.dart';
-import 'package:thawani_pos/core/widgets/pos_loading_skeleton.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/marketplace/models/marketplace_invoice.dart';
 import 'package:thawani_pos/features/marketplace/models/template_purchase.dart';
 import 'package:thawani_pos/features/marketplace/providers/marketplace_providers.dart';
@@ -154,24 +150,18 @@ class _MyPurchasesPageState extends ConsumerState<MyPurchasesPage> {
     );
   }
 
-  void _showCancelDialog(TemplatePurchase purchase, AppLocalizations l10n) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.marketplaceCancelPurchase),
-        content: Text(l10n.marketplaceCancelConfirm),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.layoutCancel)),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              ref.read(myPurchasesProvider.notifier).cancelPurchase(purchase.id);
-            },
-            child: Text(l10n.marketplaceConfirm, style: const TextStyle(color: AppColors.error)),
-          ),
-        ],
-      ),
+  void _showCancelDialog(TemplatePurchase purchase, AppLocalizations l10n) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.marketplaceCancelPurchase,
+      message: l10n.marketplaceCancelConfirm,
+      confirmLabel: l10n.marketplaceConfirm,
+      cancelLabel: l10n.layoutCancel,
+      isDanger: true,
     );
+    if (confirmed == true) {
+      ref.read(myPurchasesProvider.notifier).cancelPurchase(purchase.id);
+    }
   }
 
   String _formatDate(DateTime dt) {

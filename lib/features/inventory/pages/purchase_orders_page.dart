@@ -6,6 +6,7 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/catalog/models/product.dart';
 import 'package:thawani_pos/features/catalog/models/supplier.dart';
 import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
@@ -51,42 +52,35 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
       await ref.read(purchaseOrdersProvider.notifier).sendOrder(order.id);
       if (mounted) {
         final l10n = AppLocalizations.of(context)!;
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryPOSent)));
+        showPosSuccessSnackbar(context, l10n.inventoryPOSent);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, e.toString());
       }
     }
   }
 
   Future<void> _handleCancel(PurchaseOrder order) async {
     final l10n = AppLocalizations.of(context)!;
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.inventoryCancelPOTitle),
-        content: Text(l10n.purchaseOrderCancelConfirm(order.referenceNumber ?? order.id)),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonNo)),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: Text(l10n.inventoryCancelOrder),
-          ),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.inventoryCancelPOTitle,
+      message: l10n.purchaseOrderCancelConfirm(order.referenceNumber ?? order.id),
+      confirmLabel: l10n.inventoryCancelOrder,
+      cancelLabel: l10n.commonNo,
+      isDanger: true,
     );
 
     if (confirmed == true && mounted) {
       try {
         await ref.read(purchaseOrdersProvider.notifier).cancelOrder(order.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryPOCancelled)));
+          showPosSuccessSnackbar(context, l10n.inventoryPOCancelled);
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }
@@ -229,12 +223,14 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      DropdownButtonFormField<String>(
-                        value: selectedSupplierId,
-                        decoration: InputDecoration(labelText: l10n.inventorySupplier),
-                        isExpanded: true,
-                        items: supplierList.map((s) => DropdownMenuItem(value: s.id, child: Text(s.name))).toList(),
+                      PosSearchableDropdown<String>(
+                        items: supplierList.map((s) => PosDropdownItem(value: s.id, label: s.name)).toList(),
+                        selectedValue: selectedSupplierId,
                         onChanged: (v) => setDialogState(() => selectedSupplierId = v),
+                        label: l10n.inventorySupplier,
+                        hint: l10n.inventorySupplier,
+                        showSearch: true,
+                        clearable: false,
                         validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
@@ -245,12 +241,14 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
                       const Divider(height: 24),
                       Text(l10n.inventoryProduct, style: const TextStyle(fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
-                      DropdownButtonFormField<String>(
-                        value: selectedProductId,
-                        decoration: InputDecoration(labelText: l10n.inventoryProduct),
-                        isExpanded: true,
-                        items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
+                      PosSearchableDropdown<String>(
+                        items: productList.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
+                        selectedValue: selectedProductId,
                         onChanged: (v) => setDialogState(() => selectedProductId = v),
+                        label: l10n.inventoryProduct,
+                        hint: l10n.inventoryProduct,
+                        showSearch: true,
+                        clearable: false,
                         validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
@@ -310,11 +308,11 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
       try {
         await ref.read(purchaseOrdersProvider.notifier).createOrder(result);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryPOCreatedMsg)));
+          showPosSuccessSnackbar(context, l10n.inventoryPOCreatedMsg);
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }

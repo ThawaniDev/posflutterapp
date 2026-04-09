@@ -7,6 +7,7 @@ import 'package:thawani_pos/core/providers/sidebar_provider.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/branch_selector.dart';
 import 'package:thawani_pos/core/widgets/pos_sidebar.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/auth/providers/auth_providers.dart';
 import 'package:thawani_pos/features/auth/providers/auth_state.dart';
 import 'package:thawani_pos/features/security/repositories/security_repository.dart';
@@ -65,8 +66,8 @@ class AppShell extends ConsumerWidget {
                   Material(
                     elevation: 1,
                     child: Container(
-                      height: 48,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      height: 56,
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Row(children: [const BranchSelector(), const Spacer(), ...actions]),
                     ),
                   ),
@@ -82,10 +83,10 @@ class AppShell extends ConsumerWidget {
     // Mobile / tablet: use Drawer
     return Scaffold(
       appBar: AppBar(
-        leading: Builder(
-          builder: (ctx) => IconButton(icon: const Icon(Icons.menu_rounded), onPressed: () => Scaffold.of(ctx).openDrawer()),
-        ),
-        title: const BranchSelector(),
+        // leading: Builder(
+        //   builder: (ctx) => IconButton(icon: const Icon(Icons.menu_rounded), onPressed: () => Scaffold.of(ctx).openDrawer()),
+        // ),
+        title: SizedBox(height: 50, child: const BranchSelector()),
         actions: actions,
       ),
       drawer: SizedBox(
@@ -165,30 +166,23 @@ class AppShell extends ConsumerWidget {
     ];
   }
 
-  void _confirmLogout(BuildContext context, WidgetRef ref, AppLocalizations l10n) {
-    showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.logoutTitle),
-        content: Text(l10n.logoutConfirm),
-        actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(MaterialLocalizations.of(ctx).cancelButtonLabel)),
-          FilledButton(
-            onPressed: () {
-              Navigator.of(ctx).pop();
-              final authState = ref.read(authProvider);
-              if (authState is AuthAuthenticated && authState.user.storeId != null) {
-                ref
-                    .read(securityRepositoryProvider)
-                    .endAllSessions(storeId: authState.user.storeId!)
-                    .catchError((_) => <String, dynamic>{});
-              }
-              ref.read(authProvider.notifier).logout();
-            },
-            child: Text(l10n.logout),
-          ),
-        ],
-      ),
+  Future<void> _confirmLogout(BuildContext context, WidgetRef ref, AppLocalizations l10n) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.logoutTitle,
+      message: l10n.logoutConfirm,
+      confirmLabel: l10n.logout,
+      isDanger: true,
     );
+    if (confirmed == true) {
+      final authState = ref.read(authProvider);
+      if (authState is AuthAuthenticated && authState.user.storeId != null) {
+        ref
+            .read(securityRepositoryProvider)
+            .endAllSessions(storeId: authState.user.storeId!)
+            .catchError((_) => <String, dynamic>{});
+      }
+      ref.read(authProvider.notifier).logout();
+    }
   }
 }

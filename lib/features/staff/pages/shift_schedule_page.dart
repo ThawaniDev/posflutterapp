@@ -168,11 +168,11 @@ class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
             await ref.read(shiftProvider.notifier).createShift(data);
             if (mounted) {
               final l10n = AppLocalizations.of(context)!;
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.staffShiftCreated)));
+              showPosSuccessSnackbar(context, l10n.staffShiftCreated);
             }
           } catch (e) {
             if (mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+              showPosErrorSnackbar(context, AppLocalizations.of(context)!.genericError(e.toString()));
             }
           }
         },
@@ -182,31 +182,24 @@ class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
 
   Future<void> _confirmDeleteShift(BuildContext context, ShiftSchedule shift) async {
     final l10n = AppLocalizations.of(context)!;
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.staffDeleteShift),
-        content: Text(l10n.staffDeleteShiftConfirm),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
-          FilledButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            style: FilledButton.styleFrom(backgroundColor: AppColors.error),
-            child: Text(l10n.delete),
-          ),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.staffDeleteShift,
+      message: l10n.staffDeleteShiftConfirm,
+      confirmLabel: l10n.delete,
+      cancelLabel: l10n.cancel,
+      isDanger: true,
     );
 
     if (confirmed == true && mounted) {
       try {
         await ref.read(shiftProvider.notifier).deleteShift(shift.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.staffShiftDeleted)));
+          showPosSuccessSnackbar(context, l10n.staffShiftDeleted);
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+          showPosErrorSnackbar(context, l10n.genericError(e.toString()));
         }
       }
     }
@@ -370,18 +363,22 @@ class _CreateShiftDialogState extends ConsumerState<_CreateShiftDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            DropdownButtonFormField<StaffUser>(
-              decoration: InputDecoration(labelText: '${l10n.staffMember} *', border: const OutlineInputBorder()),
-              items: staffList.map((s) => DropdownMenuItem(value: s, child: Text('${s.firstName} ${s.lastName}'))).toList(),
+            PosSearchableDropdown<StaffUser>(
+              label: '${l10n.staffMember} *',
+              items: staffList.map((s) => PosDropdownItem(value: s, label: '${s.firstName} ${s.lastName}')).toList(),
+              selectedValue: _selectedStaff,
               onChanged: (v) => setState(() => _selectedStaff = v),
+              showSearch: true,
             ),
             AppSpacing.gapH16,
-            DropdownButtonFormField<ShiftTemplate>(
-              decoration: InputDecoration(labelText: '${l10n.staffShiftTemplate} *', border: const OutlineInputBorder()),
+            PosSearchableDropdown<ShiftTemplate>(
+              label: '${l10n.staffShiftTemplate} *',
               items: widget.templates
-                  .map((t) => DropdownMenuItem(value: t, child: Text('${t.name} (${t.startTime} - ${t.endTime})')))
+                  .map((t) => PosDropdownItem(value: t, label: '${t.name} (${t.startTime} - ${t.endTime})'))
                   .toList(),
+              selectedValue: _selectedTemplate,
               onChanged: (v) => setState(() => _selectedTemplate = v),
+              showSearch: true,
             ),
             AppSpacing.gapH16,
             ListTile(

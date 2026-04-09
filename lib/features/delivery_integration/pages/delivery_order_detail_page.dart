@@ -192,7 +192,7 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
         .updateStatus(id: widget.orderId, status: newStatus, rejectionReason: reason);
 
     if (mounted && success) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.deliveryStatusUpdated)));
+      showPosSuccessSnackbar(context, AppLocalizations.of(context)!.deliveryStatusUpdated);
     }
   }
 

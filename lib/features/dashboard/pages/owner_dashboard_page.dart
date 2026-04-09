@@ -8,10 +8,14 @@ import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/dashboard/providers/dashboard_providers.dart';
 import 'package:thawani_pos/features/dashboard/providers/dashboard_state.dart';
 import 'package:thawani_pos/features/dashboard/widgets/active_cashiers_list.dart';
+import 'package:thawani_pos/features/dashboard/widgets/branch_overview_card.dart';
 import 'package:thawani_pos/features/dashboard/widgets/dashboard_kpi_cards.dart';
+import 'package:thawani_pos/features/dashboard/widgets/financial_summary_card.dart';
+import 'package:thawani_pos/features/dashboard/widgets/hourly_sales_chart.dart';
 import 'package:thawani_pos/features/dashboard/widgets/low_stock_alerts.dart';
 import 'package:thawani_pos/features/dashboard/widgets/recent_orders_list.dart';
 import 'package:thawani_pos/features/dashboard/widgets/sales_trend_chart.dart';
+import 'package:thawani_pos/features/dashboard/widgets/staff_performance_card.dart';
 import 'package:thawani_pos/features/dashboard/widgets/top_products_table.dart';
 
 class OwnerDashboardPage extends ConsumerStatefulWidget {
@@ -70,6 +74,10 @@ class _OwnerDashboardPageState extends ConsumerState<OwnerDashboardPage> {
         :final lowStock,
         :final activeCashiers,
         :final recentOrders,
+        :final financialSummary,
+        :final hourlySales,
+        :final staffPerformance,
+        :final branches,
       ) =>
         RefreshIndicator(
           onRefresh: () => ref.read(ownerDashboardProvider.notifier).load(),
@@ -77,56 +85,84 @@ class _OwnerDashboardPageState extends ConsumerState<OwnerDashboardPage> {
             builder: (context, constraints) {
               final isWide = constraints.maxWidth > 900;
               final isMobile = context.isPhone;
+              final gap = isMobile ? 12.0 : 16.0;
               final padding = isMobile ? const EdgeInsets.all(12.0) : AppSpacing.paddingAll16;
 
               return ListView(
                 padding: padding,
                 children: [
-                  // KPI Cards
+                  // ─── KPI Cards ───────────────────────────────
                   DashboardKpiCards(stats: stats),
-                  SizedBox(height: isMobile ? 12 : 16),
+                  SizedBox(height: gap),
 
-                  // Sales Trend Chart (full width)
-                  SalesTrendChart(salesTrend: salesTrend),
-                  SizedBox(height: isMobile ? 12 : 16),
-
-                  // Two-column layout on wide screens, stacked on mobile
+                  // ─── Sales Trend + Hourly Sales ──────────────
                   if (isWide)
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Left column
-                        Expanded(
-                          flex: 3,
-                          child: Column(
-                            children: [
-                              TopProductsTable(products: topProducts),
-                              AppSpacing.gapH16,
-                              RecentOrdersList(orders: recentOrders),
-                            ],
-                          ),
-                        ),
-                        AppSpacing.gapW16,
-                        // Right column
-                        Expanded(
-                          flex: 2,
-                          child: Column(
-                            children: [
-                              LowStockAlerts(items: lowStock),
-                              AppSpacing.gapH16,
-                              ActiveCashiersList(cashiers: activeCashiers),
-                            ],
-                          ),
-                        ),
+                        Expanded(flex: 3, child: SalesTrendChart(salesTrend: salesTrend)),
+                        SizedBox(width: gap),
+                        Expanded(flex: 2, child: HourlySalesChart(data: hourlySales)),
                       ],
                     )
                   else ...[
+                    SalesTrendChart(salesTrend: salesTrend),
+                    SizedBox(height: gap),
+                    HourlySalesChart(data: hourlySales),
+                  ],
+                  SizedBox(height: gap),
+
+                  // ─── Financial Summary + Top Products ────────
+                  if (isWide)
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(child: FinancialSummaryCard(data: financialSummary)),
+                        SizedBox(width: gap),
+                        Expanded(child: TopProductsTable(products: topProducts)),
+                      ],
+                    )
+                  else ...[
+                    FinancialSummaryCard(data: financialSummary),
+                    SizedBox(height: gap),
                     TopProductsTable(products: topProducts),
-                    SizedBox(height: isMobile ? 12 : 16),
-                    LowStockAlerts(items: lowStock),
-                    SizedBox(height: isMobile ? 12 : 16),
+                  ],
+                  SizedBox(height: gap),
+
+                  // ─── Staff Performance + Active Cashiers ─────
+                  if (isWide)
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(flex: 3, child: StaffPerformanceCard(staff: staffPerformance)),
+                        SizedBox(width: gap),
+                        Expanded(flex: 2, child: ActiveCashiersList(cashiers: activeCashiers)),
+                      ],
+                    )
+                  else ...[
+                    StaffPerformanceCard(staff: staffPerformance),
+                    SizedBox(height: gap),
                     ActiveCashiersList(cashiers: activeCashiers),
-                    SizedBox(height: isMobile ? 12 : 16),
+                  ],
+                  SizedBox(height: gap),
+
+                  // ─── Branch Overview (only if multiple) ──────
+                  BranchOverviewCard(branches: branches),
+                  if (branches.length > 1) SizedBox(height: gap),
+
+                  // ─── Low Stock + Recent Orders ───────────────
+                  if (isWide)
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(child: LowStockAlerts(items: lowStock)),
+                        SizedBox(width: gap),
+                        Expanded(child: RecentOrdersList(orders: recentOrders)),
+                      ],
+                    )
+                  else ...[
+                    LowStockAlerts(items: lowStock),
+                    SizedBox(height: gap),
                     RecentOrdersList(orders: recentOrders),
                   ],
                 ],

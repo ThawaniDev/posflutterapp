@@ -39,6 +39,9 @@ String? permissionForRoute(String path) {
   // ── Orders ───────────────────────────────────────────
   if (path.startsWith('/orders')) return Permissions.ordersView;
 
+  // ── Transactions ────────────────────────────────────
+  if (path.startsWith('/transactions')) return Permissions.transactionsView;
+
   // ── Payments / Cash / Finance ────────────────────────
   if (path.startsWith('/cash-sessions')) return Permissions.cashViewSessions;
   if (path.startsWith('/cash-management')) return Permissions.cashManage;

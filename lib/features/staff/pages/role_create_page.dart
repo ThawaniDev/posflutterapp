@@ -4,6 +4,7 @@ import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/staff/models/permission.dart';
 import 'package:thawani_pos/features/staff/providers/roles_providers.dart';
 import 'package:thawani_pos/features/staff/providers/roles_state.dart';
@@ -57,12 +58,12 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
           );
       if (mounted) {
         final l10n = AppLocalizations.of(context)!;
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.staffRoleCreated)));
+        showPosSuccessSnackbar(context, l10n.staffRoleCreated);
         Navigator.pop(context);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, e.toString());
       }
     } finally {
       if (mounted) setState(() => _isSaving = false);

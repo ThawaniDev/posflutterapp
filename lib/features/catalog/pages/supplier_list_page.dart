@@ -7,6 +7,7 @@ import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/catalog/models/supplier.dart';
 import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
 import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
@@ -258,14 +259,14 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
       try {
         if (isEditing) {
           await ref.read(suppliersProvider.notifier).updateSupplier(supplier.id, result);
-          if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.supplierUpdated)));
+          if (mounted) showPosSuccessSnackbar(context, l10n.supplierUpdated);
         } else {
           await ref.read(suppliersProvider.notifier).createSupplier(result);
-          if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.supplierCreated)));
+          if (mounted) showPosSuccessSnackbar(context, l10n.supplierCreated);
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }
@@ -273,31 +274,24 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
 
   Future<void> _handleDelete(Supplier supplier) async {
     final l10n = AppLocalizations.of(context)!;
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.supplierDeleteTitle),
-        content: Text(l10n.supplierDeleteConfirm(supplier.name)),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonCancel)),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: Text(l10n.commonDelete),
-          ),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.supplierDeleteTitle,
+      message: l10n.supplierDeleteConfirm(supplier.name),
+      confirmLabel: l10n.commonDelete,
+      cancelLabel: l10n.commonCancel,
+      isDanger: true,
     );
 
     if (confirmed == true && mounted) {
       try {
         await ref.read(suppliersProvider.notifier).deleteSupplier(supplier.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.supplierDeleted(supplier.name))));
+          showPosSuccessSnackbar(context, l10n.supplierDeleted(supplier.name));
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }

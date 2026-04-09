@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 
 /// A lightweight branch selector bar for admin pages.
 ///
@@ -48,37 +49,15 @@ class AdminBranchBar extends ConsumerWidget {
           const SizedBox(width: 8),
           if (canSwitch)
             Expanded(
-              child: Container(
-                height: 34,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
-                  color: isDark ? AppColors.hoverDark : AppColors.backgroundLight,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: selectedStoreId,
-                    isExpanded: true,
-                    isDense: true,
-                    style: TextStyle(fontSize: 13, color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight),
-                    icon: Icon(
-                      Icons.expand_more_rounded,
-                      size: 18,
-                      color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-                    ),
-                    items: [
-                      const DropdownMenuItem<String>(
-                        value: null,
-                        child: Text('All Branches', style: TextStyle(fontWeight: FontWeight.w500)),
-                      ),
-                      ...branches.map(
-                        (id) => DropdownMenuItem<String>(value: id, child: Text(id.length > 12 ? '${id.substring(0, 8)}…' : id)),
-                      ),
-                    ],
-                    onChanged: (val) => onBranchChanged(val),
-                  ),
-                ),
+              child: PosSearchableDropdown<String?>(
+                items: branches
+                    .map((id) => PosDropdownItem<String?>(value: id, label: id.length > 12 ? '${id.substring(0, 8)}…' : id))
+                    .toList(),
+                selectedValue: selectedStoreId,
+                onChanged: (val) => onBranchChanged(val),
+                showSearch: true,
+                clearable: true,
+                hint: 'All Branches',
               ),
             )
           else

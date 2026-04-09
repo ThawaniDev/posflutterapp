@@ -180,10 +180,10 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
                   if (_frequency == 'monthly') ...[
                     const Text('Day of Month'),
                     AppSpacing.gapH8,
-                    DropdownButtonFormField<int>(
-                      value: _dayOfMonth.clamp(1, 28),
-                      decoration: const InputDecoration(border: OutlineInputBorder(), isDense: true),
-                      items: List.generate(28, (i) => DropdownMenuItem(value: i + 1, child: Text('${i + 1}'))),
+                    PosSearchableDropdown<int>(
+                      label: 'Day of Month',
+                      items: List.generate(28, (i) => PosDropdownItem(value: i + 1, label: '${i + 1}')),
+                      selectedValue: _dayOfMonth.clamp(1, 28),
                       onChanged: (val) {
                         if (val != null) {
                           setState(() {
@@ -192,6 +192,8 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
                           });
                         }
                       },
+                      showSearch: false,
+                      clearable: false,
                     ),
                   ],
 

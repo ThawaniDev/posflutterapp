@@ -37,10 +37,10 @@ class _PlanComparisonPageState extends ConsumerState<PlanComparisonPage> {
     // Listen for subscription action results
     ref.listen<SubscriptionState>(subscriptionProvider, (prev, next) {
       if (next is SubscriptionActionSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.success));
+        showPosSuccessSnackbar(context, next.message);
         context.go(Routes.subscriptionStatus);
       } else if (next is SubscriptionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, next.message);
       }
     });
 
@@ -117,29 +117,21 @@ class _PlanComparisonPageState extends ConsumerState<PlanComparisonPage> {
     return const SizedBox.shrink();
   }
 
-  void _onPlanSelected(plan) {
+  void _onPlanSelected(plan) async {
     final billingCycle = _isAnnual ? 'yearly' : 'monthly';
     final price = _isAnnual ? (plan.annualPrice ?? plan.monthlyPrice) : plan.monthlyPrice;
 
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('Subscribe to ${plan.name}?'),
-        content: Text(
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Subscribe to ${plan.name}?',
+      message:
           'You will be subscribed to ${plan.name} on a $billingCycle basis.\n\n'
           'Price: ${price.toStringAsFixed(2)} \u0081/$billingCycle',
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              ref.read(subscriptionProvider.notifier).subscribe(planId: plan.id, billingCycle: billingCycle);
-            },
-            child: const Text('Subscribe'),
-          ),
-        ],
-      ),
+      confirmLabel: 'Subscribe',
+      cancelLabel: 'Cancel',
     );
+    if (confirmed == true) {
+      ref.read(subscriptionProvider.notifier).subscribe(planId: plan.id, billingCycle: billingCycle);
+    }
   }
 }

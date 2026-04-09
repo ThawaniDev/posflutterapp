@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
@@ -79,20 +80,23 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
                   ),
                 ),
                 const SizedBox(width: 12),
-                DropdownButton<String?>(
-                  value: _selectedType,
-                  hint: const Text('Type'),
-                  items: const [
-                    DropdownMenuItem(value: null, child: Text('All')),
-                    DropdownMenuItem(value: 'info', child: Text('Info')),
-                    DropdownMenuItem(value: 'warning', child: Text('Warning')),
-                    DropdownMenuItem(value: 'maintenance', child: Text('Maintenance')),
-                    DropdownMenuItem(value: 'update', child: Text('Update')),
-                  ],
-                  onChanged: (v) {
-                    setState(() => _selectedType = v);
-                    ref.read(announcementListProvider.notifier).load(type: v, storeId: _storeId);
-                  },
+                Expanded(
+                  child: PosSearchableDropdown<String>(
+                    items: [
+                      PosDropdownItem(value: 'info', label: 'Info'),
+                      PosDropdownItem(value: 'warning', label: 'Warning'),
+                      PosDropdownItem(value: 'maintenance', label: 'Maintenance'),
+                      PosDropdownItem(value: 'update', label: 'Update'),
+                    ],
+                    selectedValue: _selectedType,
+                    onChanged: (v) {
+                      setState(() => _selectedType = v);
+                      ref.read(announcementListProvider.notifier).load(type: v, storeId: _storeId);
+                    },
+                    hint: 'Type',
+                    showSearch: false,
+                    clearable: true,
+                  ),
                 ),
               ],
             ),

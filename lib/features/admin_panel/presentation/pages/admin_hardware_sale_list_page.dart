@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -215,16 +216,19 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
             mainAxisSize: MainAxisSize.min,
             children: [
               StatefulBuilder(
-                builder: (context, setInnerState) => DropdownButtonFormField<String>(
-                  value: itemType,
+                builder: (context, setInnerState) => PosSearchableDropdown<String>(
                   items: [
-                    'terminal',
-                    'printer',
-                    'scanner',
-                    'other',
-                  ].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+                    PosDropdownItem(value: 'terminal', label: 'Terminal'),
+                    PosDropdownItem(value: 'printer', label: 'Printer'),
+                    PosDropdownItem(value: 'scanner', label: 'Scanner'),
+                    PosDropdownItem(value: 'other', label: 'Other'),
+                  ],
+                  selectedValue: itemType,
                   onChanged: (v) => setInnerState(() => itemType = v ?? itemType),
-                  decoration: const InputDecoration(labelText: 'Item Type'),
+                  label: 'Item Type',
+                  hint: 'Select item type',
+                  showSearch: false,
+                  clearable: false,
                 ),
               ),
               TextField(
@@ -319,25 +323,18 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
     );
   }
 
-  void _confirmDelete(int id) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Delete Sale'),
-        content: const Text('Are you sure you want to delete this hardware sale?'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            onPressed: () async {
-              await ref.read(hardwareSaleActionProvider.notifier).deleteSale(id.toString());
-              if (ctx.mounted) Navigator.pop(ctx);
-              ref.read(hardwareSaleListProvider.notifier).loadSales();
-            },
-            child: const Text('Delete', style: TextStyle(color: Colors.white)),
-          ),
-        ],
-      ),
+  void _confirmDelete(int id) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Delete Sale',
+      message: 'Are you sure you want to delete this hardware sale?',
+      confirmLabel: 'Delete',
+      cancelLabel: 'Cancel',
+      isDanger: true,
     );
+    if (confirmed == true) {
+      await ref.read(hardwareSaleActionProvider.notifier).deleteSale(id.toString());
+      ref.read(hardwareSaleListProvider.notifier).loadSales();
+    }
   }
 }

@@ -664,7 +664,7 @@ class _LinkedUserSectionState extends ConsumerState<_LinkedUserSection> {
     } catch (e) {
       if (mounted) {
         Navigator.of(context).pop(); // dismiss loading
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, e.toString());
       }
       return;
     }
@@ -673,7 +673,7 @@ class _LinkedUserSectionState extends ConsumerState<_LinkedUserSection> {
     Navigator.of(context).pop(); // dismiss loading
 
     if (users.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(widget.l10n.staffLinkNoUsers)));
+      showPosWarningSnackbar(context, widget.l10n.staffLinkNoUsers);
       return;
     }
 
@@ -691,13 +691,11 @@ class _LinkedUserSectionState extends ConsumerState<_LinkedUserSection> {
       await repo.linkUser(widget.staff.id, selectedUserId);
       if (mounted) {
         ref.read(staffDetailProvider(widget.staff.id).notifier).load();
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(widget.l10n.staffLinkSuccess), backgroundColor: AppColors.success));
+        showPosSuccessSnackbar(context, widget.l10n.staffLinkSuccess);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, e.toString());
       }
     } finally {
       if (mounted) setState(() => _isLinking = false);
@@ -705,20 +703,13 @@ class _LinkedUserSectionState extends ConsumerState<_LinkedUserSection> {
   }
 
   Future<void> _unlinkUser() async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      useRootNavigator: false,
-      builder: (ctx) => AlertDialog(
-        title: Text(widget.l10n.staffUnlinkTitle),
-        content: Text(widget.l10n.staffUnlinkConfirm),
-        actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(false), child: Text(widget.l10n.cancel)),
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(true),
-            child: Text(widget.l10n.staffUnlink, style: const TextStyle(color: AppColors.error)),
-          ),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: widget.l10n.staffUnlinkTitle,
+      message: widget.l10n.staffUnlinkConfirm,
+      confirmLabel: widget.l10n.staffUnlink,
+      cancelLabel: widget.l10n.cancel,
+      isDanger: true,
     );
 
     if (confirmed != true || !mounted) return;
@@ -728,13 +719,11 @@ class _LinkedUserSectionState extends ConsumerState<_LinkedUserSection> {
       await ref.read(staffRepositoryProvider).unlinkUser(widget.staff.id);
       if (mounted) {
         ref.read(staffDetailProvider(widget.staff.id).notifier).load();
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(widget.l10n.staffUnlinkSuccess), backgroundColor: AppColors.success));
+        showPosSuccessSnackbar(context, widget.l10n.staffUnlinkSuccess);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, e.toString());
       }
     } finally {
       if (mounted) setState(() => _isLinking = false);

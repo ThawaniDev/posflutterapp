@@ -40,12 +40,12 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
 
     ref.listen<ThawaniActionState>(thawaniActionProvider, (prev, next) {
       if (next is ThawaniActionSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message)));
+        showPosSuccessSnackbar(context, next.message);
         ref.read(thawaniActionProvider.notifier).reset();
         ref.read(thawaniStatsProvider.notifier).load();
         ref.read(thawaniConfigProvider.notifier).load();
       } else if (next is ThawaniActionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, next.message);
       }
     });
 

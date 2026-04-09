@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/core/widgets/pos_mobile_data_list.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
@@ -42,34 +44,26 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
   }
 
   Future<void> _handleDelete(Product product) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Delete Product'),
-        content: Text(
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Delete Product',
+      message:
           'Are you sure you want to delete "${product.name}"?\n'
           'This action will soft-delete the product.',
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Delete'),
-          ),
-        ],
-      ),
+      confirmLabel: 'Delete',
+      cancelLabel: 'Cancel',
+      isDanger: true,
     );
 
     if (confirmed == true && mounted) {
       try {
         await ref.read(productsProvider.notifier).deleteProduct(product.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Product "${product.name}" deleted.')));
+          showPosSuccessSnackbar(context, AppLocalizations.of(context)!.productDeleted(product.name));
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }
@@ -79,11 +73,11 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
     try {
       await ref.read(productsProvider.notifier).duplicateProduct(product.id);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Product "${product.name}" duplicated.')));
+        showPosSuccessSnackbar(context, AppLocalizations.of(context)!.productDuplicated(product.name));
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, e.toString());
       }
     }
   }
@@ -92,11 +86,11 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
     try {
       await ref.read(productsProvider.notifier).bulkAction(action);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Bulk $action completed.')));
+        showPosSuccessSnackbar(context, AppLocalizations.of(context)!.bulkActionCompleted(action));
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, e.toString());
       }
     }
   }
@@ -497,20 +491,13 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
           const SizedBox(width: AppSpacing.sm),
           // Category filter
           SizedBox(
-            width: 180,
-            child: DropdownButtonFormField<String>(
-              value: state is ProductsLoaded ? state.selectedCategoryId : null,
-              decoration: InputDecoration(
-                hintText: 'All categories',
-                isDense: true,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-              ),
-              items: [
-                const DropdownMenuItem<String>(value: null, child: Text('All categories')),
-                ...categories.map((c) => DropdownMenuItem<String>(value: c.id, child: Text(c.name))),
-              ],
+            width: 220,
+            child: PosSearchableDropdown<String>(
+              selectedValue: state is ProductsLoaded ? state.selectedCategoryId : null,
+              items: categories.map((c) => PosDropdownItem(value: c.id, label: c.name)).toList(),
               onChanged: (id) => ref.read(productsProvider.notifier).filterByCategory(id),
+              hint: 'All categories',
+              clearable: true,
             ),
           ),
           const Spacer(),

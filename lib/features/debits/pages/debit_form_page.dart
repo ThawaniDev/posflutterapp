@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/customers/models/customer.dart';
 import 'package:thawani_pos/features/customers/providers/customer_providers.dart';
 import 'package:thawani_pos/features/customers/providers/customer_state.dart';
@@ -68,7 +68,7 @@ class _DebitFormPageState extends ConsumerState<DebitFormPage> {
     } catch (e) {
       if (mounted) {
         setState(() => _isLoading = false);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, e.toString());
       }
     }
   }
@@ -128,7 +128,7 @@ class _DebitFormPageState extends ConsumerState<DebitFormPage> {
         };
         await ref.read(debitsProvider.notifier).updateDebit(widget.debitId!, data);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.debitsUpdatedSuccess)));
+          showPosSuccessSnackbar(context, l10n.debitsUpdatedSuccess);
           context.pop();
         }
       } else {
@@ -145,13 +145,13 @@ class _DebitFormPageState extends ConsumerState<DebitFormPage> {
               referenceNumber: _referenceController.text.isNotEmpty ? _referenceController.text : null,
             );
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.debitsCreatedSuccess)));
+          showPosSuccessSnackbar(context, l10n.debitsCreatedSuccess);
           context.pop();
         }
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, e.toString());
       }
     } finally {
       if (mounted) setState(() => _isSaving = false);
@@ -176,11 +176,15 @@ class _DebitFormPageState extends ConsumerState<DebitFormPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Customer picker
-                    DropdownButtonFormField<String>(
-                      value: _selectedCustomerId,
-                      decoration: InputDecoration(labelText: l10n.debitsSelectCustomer, border: const OutlineInputBorder()),
-                      items: customers.map((c) => DropdownMenuItem(value: c.id, child: Text('${c.name} (${c.phone})'))).toList(),
+                    PosSearchableDropdown<String>(
+                      items: customers.map((c) => PosDropdownItem(value: c.id, label: c.name, subtitle: c.phone)).toList(),
+                      selectedValue: _selectedCustomerId,
                       onChanged: _isEdit ? null : (v) => setState(() => _selectedCustomerId = v),
+                      label: l10n.debitsSelectCustomer,
+                      hint: l10n.debitsSelectCustomer,
+                      showSearch: true,
+                      clearable: false,
+                      enabled: !_isEdit,
                       validator: (v) => v == null ? l10n.debitsSelectCustomer : null,
                     ),
                     AppSpacing.gapH16,
@@ -189,25 +193,31 @@ class _DebitFormPageState extends ConsumerState<DebitFormPage> {
                     Row(
                       children: [
                         Expanded(
-                          child: DropdownButtonFormField<DebitType>(
-                            value: _selectedType,
-                            decoration: InputDecoration(labelText: l10n.debitsSelectType, border: const OutlineInputBorder()),
-                            items: DebitType.values
-                                .map((t) => DropdownMenuItem(value: t, child: Text(_typeLabel(t, l10n))))
-                                .toList(),
+                          child: PosSearchableDropdown<DebitType>(
+                            items: DebitType.values.map((t) => PosDropdownItem(value: t, label: _typeLabel(t, l10n))).toList(),
+                            selectedValue: _selectedType,
                             onChanged: _isEdit ? null : (v) => setState(() => _selectedType = v),
+                            label: l10n.debitsSelectType,
+                            hint: l10n.debitsSelectType,
+                            showSearch: false,
+                            clearable: false,
+                            enabled: !_isEdit,
                             validator: (v) => v == null ? l10n.debitsSelectType : null,
                           ),
                         ),
                         AppSpacing.gapW16,
                         Expanded(
-                          child: DropdownButtonFormField<DebitSource>(
-                            value: _selectedSource,
-                            decoration: InputDecoration(labelText: l10n.debitsSelectSource, border: const OutlineInputBorder()),
+                          child: PosSearchableDropdown<DebitSource>(
                             items: DebitSource.values
-                                .map((s) => DropdownMenuItem(value: s, child: Text(_sourceLabel(s, l10n))))
+                                .map((s) => PosDropdownItem(value: s, label: _sourceLabel(s, l10n)))
                                 .toList(),
+                            selectedValue: _selectedSource,
                             onChanged: _isEdit ? null : (v) => setState(() => _selectedSource = v),
+                            label: l10n.debitsSelectSource,
+                            hint: l10n.debitsSelectSource,
+                            showSearch: false,
+                            clearable: false,
+                            enabled: !_isEdit,
                             validator: (v) => v == null ? l10n.debitsSelectSource : null,
                           ),
                         ),

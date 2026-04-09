@@ -6,6 +6,9 @@ import '../../customers/enums/condition_grade.dart';
 import '../enums/device_imei_status.dart';
 import '../models/device_imei_record.dart';
 import '../providers/electronics_providers.dart';
+import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
 
 class ImeiRecordFormPage extends ConsumerStatefulWidget {
   final DeviceImeiRecord? record;
@@ -20,7 +23,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
   bool _saving = false;
   bool get _isEditing => widget.record != null;
 
-  late final TextEditingController _productIdCtrl;
+  String? _selectedProductId;
   late final TextEditingController _imeiCtrl;
   late final TextEditingController _imei2Ctrl;
   late final TextEditingController _serialNumberCtrl;
@@ -34,7 +37,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
   void initState() {
     super.initState();
     final r = widget.record;
-    _productIdCtrl = TextEditingController(text: r?.productId ?? '');
+    _selectedProductId = r?.productId;
     _imeiCtrl = TextEditingController(text: r?.imei ?? '');
     _imei2Ctrl = TextEditingController(text: r?.imei2 ?? '');
     _serialNumberCtrl = TextEditingController(text: r?.serialNumber ?? '');
@@ -43,11 +46,11 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
     _status = r?.status;
     _warrantyEndDate = r?.warrantyEndDate;
     _storeWarrantyEndDate = r?.storeWarrantyEndDate;
+    Future.microtask(() => ref.read(productsProvider.notifier).load());
   }
 
   @override
   void dispose() {
-    _productIdCtrl.dispose();
     _imeiCtrl.dispose();
     _imei2Ctrl.dispose();
     _serialNumberCtrl.dispose();
@@ -84,7 +87,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
     setState(() => _saving = true);
 
     final data = <String, dynamic>{
-      'product_id': _productIdCtrl.text.trim(),
+      'product_id': _selectedProductId ?? '',
       'imei': _imeiCtrl.text.trim(),
       if (_imei2Ctrl.text.isNotEmpty) 'imei2': _imei2Ctrl.text.trim(),
       if (_serialNumberCtrl.text.isNotEmpty) 'serial_number': _serialNumberCtrl.text.trim(),
@@ -108,6 +111,8 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final productsState = ref.watch(productsProvider);
+    final products = productsState is ProductsLoaded ? productsState.products : <Product>[];
     return Scaffold(
       appBar: AppBar(title: Text(_isEditing ? 'Edit IMEI Record' : 'New IMEI Record')),
       bottomNavigationBar: Padding(
@@ -124,7 +129,13 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            PosTextField(controller: _productIdCtrl, label: 'Product ID', hint: 'Select product'),
+            PosSearchableDropdown<String>(
+              label: 'Product',
+              items: products.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
+              selectedValue: _selectedProductId,
+              onChanged: _isEditing ? null : (v) => setState(() => _selectedProductId = v),
+              showSearch: true,
+            ),
             SizedBox(height: AppSpacing.md),
             PosTextField(controller: _imeiCtrl, label: 'IMEI', hint: '15-digit IMEI number', keyboardType: TextInputType.number),
             SizedBox(height: AppSpacing.md),
@@ -137,12 +148,13 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
             SizedBox(height: AppSpacing.md),
             PosTextField(controller: _serialNumberCtrl, label: 'Serial Number (optional)', hint: 'Device serial number'),
             SizedBox(height: AppSpacing.md),
-            PosDropdown<ConditionGrade>(
+            PosSearchableDropdown<ConditionGrade>(
               label: 'Condition Grade',
-              hint: 'Select grade',
-              value: _conditionGrade,
+              items: ConditionGrade.values.map((g) => PosDropdownItem(value: g, label: 'Grade ${g.value}')).toList(),
+              selectedValue: _conditionGrade,
               onChanged: (v) => setState(() => _conditionGrade = v),
-              items: ConditionGrade.values.map((g) => DropdownMenuItem(value: g, child: Text('Grade ${g.value}'))).toList(),
+              showSearch: false,
+              clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
             PosTextField(
@@ -153,12 +165,13 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
             ),
             if (_isEditing) ...[
               SizedBox(height: AppSpacing.md),
-              PosDropdown<DeviceImeiStatus>(
+              PosSearchableDropdown<DeviceImeiStatus>(
                 label: 'Status',
-                hint: 'Select status',
-                value: _status,
+                items: DeviceImeiStatus.values.map((s) => PosDropdownItem(value: s, label: s.value)).toList(),
+                selectedValue: _status,
                 onChanged: (v) => setState(() => _status = v),
-                items: DeviceImeiStatus.values.map((s) => DropdownMenuItem(value: s, child: Text(s.value))).toList(),
+                showSearch: false,
+                clearable: false,
               ),
             ],
             SizedBox(height: AppSpacing.md),

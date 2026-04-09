@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -66,30 +67,30 @@ class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
   }
 
   Widget _buildFilters() {
-    const methods = ['', 'cash', 'card_mada', 'card_visa', 'card_mastercard', 'store_credit', 'gift_card', 'mobile_payment'];
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.sm),
       child: Row(
         children: [
           Expanded(
-            child: DropdownButtonFormField<String>(
-              value: _methodFilter ?? '',
-              decoration: const InputDecoration(
-                labelText: 'Method',
-                border: OutlineInputBorder(),
-                isDense: true,
-                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              ),
-              items: methods
-                  .map(
-                    (m) =>
-                        DropdownMenuItem(value: m, child: Text(m.isEmpty ? 'All Methods' : m.replaceAll('_', ' ').toUpperCase())),
-                  )
-                  .toList(),
+            child: PosSearchableDropdown<String>(
+              items: [
+                PosDropdownItem(value: 'cash', label: 'CASH'),
+                PosDropdownItem(value: 'card_mada', label: 'CARD MADA'),
+                PosDropdownItem(value: 'card_visa', label: 'CARD VISA'),
+                PosDropdownItem(value: 'card_mastercard', label: 'CARD MASTERCARD'),
+                PosDropdownItem(value: 'store_credit', label: 'STORE CREDIT'),
+                PosDropdownItem(value: 'gift_card', label: 'GIFT CARD'),
+                PosDropdownItem(value: 'mobile_payment', label: 'MOBILE PAYMENT'),
+              ],
+              selectedValue: _methodFilter,
               onChanged: (v) {
                 setState(() => _methodFilter = v);
                 _applyFilter();
               },
+              label: 'Method',
+              hint: 'All Methods',
+              showSearch: false,
+              clearable: true,
             ),
           ),
         ],

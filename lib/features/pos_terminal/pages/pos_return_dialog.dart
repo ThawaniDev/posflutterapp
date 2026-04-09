@@ -212,19 +212,13 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
                     Text(AppLocalizations.of(context)!.posRefundTo, style: AppTypography.labelSmall),
                     AppSpacing.gapW12,
                     Expanded(
-                      child: DropdownButtonFormField<PaymentMethod>(
-                        value: _refundMethod,
-                        decoration: const InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                          isDense: true,
-                        ),
+                      child: PosSearchableDropdown<PaymentMethod>(
                         items: [PaymentMethod.cash, PaymentMethod.card, PaymentMethod.storeCredit].map((m) {
-                          return DropdownMenuItem(
-                            value: m,
-                            child: Text(m.label, style: AppTypography.bodySmall),
-                          );
+                          return PosDropdownItem(value: m, label: m.label);
                         }).toList(),
+                        selectedValue: _refundMethod,
                         onChanged: (v) => setState(() => _refundMethod = v ?? PaymentMethod.cash),
+                        showSearch: false,
                       ),
                     ),
                   ],

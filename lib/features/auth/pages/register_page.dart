@@ -7,6 +7,7 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/utils/validators.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/auth/providers/auth_providers.dart';
 import 'package:thawani_pos/features/auth/providers/auth_state.dart';
 
@@ -69,7 +70,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
       if (next is AuthAuthenticated) {
         context.go(Routes.dashboard);
       } else if (next is AuthError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, next.message);
       }
     });
 
@@ -165,18 +166,16 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                     const SizedBox(height: AppSpacing.md),
 
                     // Country Selector
-                    DropdownButtonFormField<String>(
-                      value: _selectedCountry,
-                      decoration: InputDecoration(
-                        labelText: l10n.authCountry,
-                        prefixIcon: const Icon(Icons.flag_outlined),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                      ),
+                    PosSearchableDropdown<String>(
+                      label: l10n.authCountry,
                       items: [
-                        DropdownMenuItem(value: 'OM', child: Text(l10n.authCountryOman)),
-                        DropdownMenuItem(value: 'SA', child: Text(l10n.authCountrySaudiArabia)),
+                        PosDropdownItem(value: 'OM', label: l10n.authCountryOman),
+                        PosDropdownItem(value: 'SA', label: l10n.authCountrySaudiArabia),
                       ],
+                      selectedValue: _selectedCountry,
                       onChanged: isLoading ? null : (v) => setState(() => _selectedCountry = v ?? 'SA'),
+                      showSearch: false,
+                      clearable: false,
                     ),
                     const SizedBox(height: AppSpacing.xl),
 

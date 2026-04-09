@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/auto_update/services/update_scheduler_service.dart';
 
 /// Settings page for auto-update configuration:
@@ -48,7 +49,7 @@ class _UpdateSettingsPageState extends ConsumerState<UpdateSettingsPage> {
       updateChannel: _updateChannel,
     );
     if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.settingsSaved)));
+      showPosSuccessSnackbar(context, AppLocalizations.of(context)!.settingsSaved);
     }
   }
 
@@ -102,41 +103,45 @@ class _UpdateSettingsPageState extends ConsumerState<UpdateSettingsPage> {
                 ListTile(
                   leading: const Icon(Icons.schedule),
                   title: Text(l10n.autoUpdateWindowStart),
-                  trailing: DropdownButton<int>(
-                    value: _maintenanceStart,
-                    underline: const SizedBox.shrink(),
-                    items: List.generate(
-                      24,
-                      (i) => DropdownMenuItem(value: i, child: Text('${i.toString().padLeft(2, '0')}:00')),
-                    ),
-                    onChanged: _autoUpdateEnabled
-                        ? (val) {
-                            if (val != null) {
-                              setState(() => _maintenanceStart = val);
-                              _savePreferences();
+                  trailing: SizedBox(
+                    width: 120,
+                    child: PosSearchableDropdown<int>(
+                      items: List.generate(24, (i) => PosDropdownItem(value: i, label: '${i.toString().padLeft(2, '0')}:00')),
+                      selectedValue: _maintenanceStart,
+                      onChanged: _autoUpdateEnabled
+                          ? (val) {
+                              if (val != null) {
+                                setState(() => _maintenanceStart = val);
+                                _savePreferences();
+                              }
                             }
-                          }
-                        : null,
+                          : null,
+                      showSearch: false,
+                      clearable: false,
+                      enabled: _autoUpdateEnabled,
+                    ),
                   ),
                 ),
                 ListTile(
                   leading: const Icon(Icons.schedule),
                   title: Text(l10n.autoUpdateWindowEnd),
-                  trailing: DropdownButton<int>(
-                    value: _maintenanceEnd,
-                    underline: const SizedBox.shrink(),
-                    items: List.generate(
-                      24,
-                      (i) => DropdownMenuItem(value: i, child: Text('${i.toString().padLeft(2, '0')}:00')),
-                    ),
-                    onChanged: _autoUpdateEnabled
-                        ? (val) {
-                            if (val != null) {
-                              setState(() => _maintenanceEnd = val);
-                              _savePreferences();
+                  trailing: SizedBox(
+                    width: 120,
+                    child: PosSearchableDropdown<int>(
+                      items: List.generate(24, (i) => PosDropdownItem(value: i, label: '${i.toString().padLeft(2, '0')}:00')),
+                      selectedValue: _maintenanceEnd,
+                      onChanged: _autoUpdateEnabled
+                          ? (val) {
+                              if (val != null) {
+                                setState(() => _maintenanceEnd = val);
+                                _savePreferences();
+                              }
                             }
-                          }
-                        : null,
+                          : null,
+                      showSearch: false,
+                      clearable: false,
+                      enabled: _autoUpdateEnabled,
+                    ),
                   ),
                 ),
                 Padding(

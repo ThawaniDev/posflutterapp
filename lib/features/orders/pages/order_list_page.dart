@@ -8,6 +8,7 @@ import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/core/widgets/pos_mobile_data_list.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/orders/enums/order_status.dart';
 import 'package:thawani_pos/features/orders/models/order.dart';
 import 'package:thawani_pos/features/orders/providers/order_providers.dart';
@@ -85,31 +86,24 @@ class _OrderListPageState extends ConsumerState<OrderListPage> {
 
   Future<void> _handleVoid(Order order) async {
     final l10n = AppLocalizations.of(context)!;
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.ordersVoidOrder),
-        content: Text(l10n.ordersVoidConfirm(order.orderNumber)),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: Text(l10n.ordersVoid),
-          ),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.ordersVoidOrder,
+      message: l10n.ordersVoidConfirm(order.orderNumber),
+      confirmLabel: l10n.ordersVoid,
+      cancelLabel: l10n.cancel,
+      isDanger: true,
     );
 
     if (confirmed == true && mounted) {
       try {
         await ref.read(ordersProvider.notifier).voidOrder(order.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.ordersVoided2)));
+          showPosSuccessSnackbar(context, l10n.ordersVoided2);
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }

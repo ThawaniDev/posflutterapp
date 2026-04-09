@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -52,24 +53,26 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.sm),
-            child: DropdownButtonFormField<String>(
-              value: _groupFilter ?? '',
-              decoration: const InputDecoration(
-                labelText: 'Group',
-                border: OutlineInputBorder(),
-                isDense: true,
-                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              ),
-              items: ['', 'orders', 'products', 'stores', 'staff', 'reports', 'settings', 'customers', 'payments']
-                  .map(
-                    (s) =>
-                        DropdownMenuItem(value: s, child: Text(s.isEmpty ? 'All Groups' : s[0].toUpperCase() + s.substring(1))),
-                  )
-                  .toList(),
+            child: PosSearchableDropdown<String>(
+              items: [
+                PosDropdownItem(value: 'orders', label: 'Orders'),
+                PosDropdownItem(value: 'products', label: 'Products'),
+                PosDropdownItem(value: 'stores', label: 'Stores'),
+                PosDropdownItem(value: 'staff', label: 'Staff'),
+                PosDropdownItem(value: 'reports', label: 'Reports'),
+                PosDropdownItem(value: 'settings', label: 'Settings'),
+                PosDropdownItem(value: 'customers', label: 'Customers'),
+                PosDropdownItem(value: 'payments', label: 'Payments'),
+              ],
+              selectedValue: _groupFilter,
               onChanged: (v) {
                 setState(() => _groupFilter = v);
                 _applyFilter();
               },
+              label: 'Group',
+              hint: 'All Groups',
+              showSearch: false,
+              clearable: true,
             ),
           ),
           Expanded(

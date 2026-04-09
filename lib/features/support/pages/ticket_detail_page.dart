@@ -9,6 +9,7 @@ import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/core/widgets/pos_error_state.dart';
 import 'package:thawani_pos/core/widgets/pos_loading_skeleton.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/support/enums/ticket_status.dart';
 import 'package:thawani_pos/features/support/models/support_ticket.dart';
 import 'package:thawani_pos/features/support/providers/support_providers.dart';
@@ -70,12 +71,12 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
 
     ref.listen<TicketActionState>(ticketActionProvider, (prev, next) {
       if (next is TicketActionSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.success));
+        showPosSuccessSnackbar(context, next.message);
         ref.read(ticketActionProvider.notifier).reset();
         ref.read(ticketDetailProvider.notifier).load(widget.ticketId);
         _scrollToBottom();
       } else if (next is TicketActionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, next.message);
       }
     });
 
@@ -131,24 +132,18 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
     );
   }
 
-  void _confirmCloseTicket(AppLocalizations l10n) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.supportCloseTicket),
-        content: Text(l10n.supportCloseConfirmation),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.supportCancel)),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              ref.read(ticketActionProvider.notifier).closeTicket(widget.ticketId);
-            },
-            child: Text(l10n.supportClose, style: TextStyle(color: AppColors.error)),
-          ),
-        ],
-      ),
+  void _confirmCloseTicket(AppLocalizations l10n) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.supportCloseTicket,
+      message: l10n.supportCloseConfirmation,
+      confirmLabel: l10n.supportClose,
+      cancelLabel: l10n.supportCancel,
+      isDanger: true,
     );
+    if (confirmed == true) {
+      ref.read(ticketActionProvider.notifier).closeTicket(widget.ticketId);
+    }
   }
 
   Widget _buildHeader(SupportTicket ticket, bool isDark, AppLocalizations l10n) {

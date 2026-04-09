@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/widgets/widgets.dart';
 import '../../../../core/providers/branch_context_provider.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
@@ -116,23 +117,16 @@ class _AdminDatabaseBackupListPageState extends ConsumerState<AdminDatabaseBacku
     _ => AppColors.textSecondary,
   };
 
-  void _showCreateDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Create Backup'),
-        content: const Text('Start a new manual database backup?'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              ref.read(databaseBackupActionProvider.notifier).create({'backup_type': 'manual'});
-            },
-            child: const Text('Create'),
-          ),
-        ],
-      ),
+  void _showCreateDialog(BuildContext context) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Create Backup',
+      message: 'Start a new manual database backup?',
+      confirmLabel: 'Create',
+      cancelLabel: 'Cancel',
     );
+    if (confirmed == true) {
+      ref.read(databaseBackupActionProvider.notifier).create({'backup_type': 'manual'});
+    }
   }
 }

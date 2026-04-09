@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/widgets.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -81,36 +82,38 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
                   ),
                   onSubmitted: (_) => _applyFilters(),
                 );
-                final channelDropdown = DropdownButton<String>(
-                  value: _channelFilter,
-                  hint: const Text('Channel'),
-                  isExpanded: context.isPhone,
-                  items: const [
-                    DropdownMenuItem(value: 'push', child: Text('Push')),
-                    DropdownMenuItem(value: 'email', child: Text('Email')),
-                    DropdownMenuItem(value: 'sms', child: Text('SMS')),
-                    DropdownMenuItem(value: 'whatsapp', child: Text('WhatsApp')),
-                    DropdownMenuItem(value: 'in_app', child: Text('In-App')),
+                final channelDropdown = PosSearchableDropdown<String>(
+                  items: [
+                    PosDropdownItem(value: 'push', label: 'Push'),
+                    PosDropdownItem(value: 'email', label: 'Email'),
+                    PosDropdownItem(value: 'sms', label: 'SMS'),
+                    PosDropdownItem(value: 'whatsapp', label: 'WhatsApp'),
+                    PosDropdownItem(value: 'in_app', label: 'In-App'),
                   ],
+                  selectedValue: _channelFilter,
                   onChanged: (v) {
                     setState(() => _channelFilter = v);
                     _applyFilters();
                   },
+                  hint: 'Channel',
+                  showSearch: false,
+                  clearable: true,
                 );
-                final statusDropdown = DropdownButton<String>(
-                  value: _statusFilter,
-                  hint: const Text('Status'),
-                  isExpanded: context.isPhone,
-                  items: const [
-                    DropdownMenuItem(value: 'pending', child: Text('Pending')),
-                    DropdownMenuItem(value: 'sent', child: Text('Sent')),
-                    DropdownMenuItem(value: 'delivered', child: Text('Delivered')),
-                    DropdownMenuItem(value: 'failed', child: Text('Failed')),
+                final statusDropdown = PosSearchableDropdown<String>(
+                  items: [
+                    PosDropdownItem(value: 'pending', label: 'Pending'),
+                    PosDropdownItem(value: 'sent', label: 'Sent'),
+                    PosDropdownItem(value: 'delivered', label: 'Delivered'),
+                    PosDropdownItem(value: 'failed', label: 'Failed'),
                   ],
+                  selectedValue: _statusFilter,
                   onChanged: (v) {
                     setState(() => _statusFilter = v);
                     _applyFilters();
                   },
+                  hint: 'Status',
+                  showSearch: false,
+                  clearable: true,
                 );
                 if (context.isPhone) {
                   return Column(

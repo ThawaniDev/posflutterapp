@@ -3,6 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 import '../providers/restaurant_providers.dart';
+import '../models/restaurant_table.dart';
+import '../providers/restaurant_state.dart';
+import 'package:thawani_pos/features/orders/models/order.dart';
+import 'package:thawani_pos/features/orders/providers/order_providers.dart';
+import 'package:thawani_pos/features/orders/providers/order_state.dart';
 
 class OpenTabFormPage extends ConsumerStatefulWidget {
   const OpenTabFormPage({super.key});
@@ -15,23 +20,23 @@ class _OpenTabFormPageState extends ConsumerState<OpenTabFormPage> {
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
 
-  late final TextEditingController _orderIdCtrl;
+  String? _selectedOrderId;
   late final TextEditingController _customerNameCtrl;
-  late final TextEditingController _tableIdCtrl;
+  String? _selectedTableId;
 
   @override
   void initState() {
     super.initState();
-    _orderIdCtrl = TextEditingController();
     _customerNameCtrl = TextEditingController();
-    _tableIdCtrl = TextEditingController();
+    Future.microtask(() {
+      ref.read(restaurantProvider.notifier).load();
+      ref.read(ordersProvider.notifier).load();
+    });
   }
 
   @override
   void dispose() {
-    _orderIdCtrl.dispose();
     _customerNameCtrl.dispose();
-    _tableIdCtrl.dispose();
     super.dispose();
   }
 
@@ -40,9 +45,9 @@ class _OpenTabFormPageState extends ConsumerState<OpenTabFormPage> {
     setState(() => _saving = true);
 
     final data = <String, dynamic>{
-      'order_id': _orderIdCtrl.text.trim(),
+      'order_id': _selectedOrderId ?? '',
       'customer_name': _customerNameCtrl.text.trim(),
-      if (_tableIdCtrl.text.isNotEmpty) 'table_id': _tableIdCtrl.text.trim(),
+      if (_selectedTableId != null && _selectedTableId!.isNotEmpty) 'table_id': _selectedTableId,
     };
 
     await ref.read(restaurantProvider.notifier).openTab(data);
@@ -53,6 +58,10 @@ class _OpenTabFormPageState extends ConsumerState<OpenTabFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final restState = ref.watch(restaurantProvider);
+    final tables = restState is RestaurantLoaded ? restState.tables : <RestaurantTable>[];
+    final ordersState = ref.watch(ordersProvider);
+    final orders = ordersState is OrdersLoaded ? ordersState.orders : <Order>[];
     return Scaffold(
       appBar: AppBar(title: const Text('Open Tab')),
       bottomNavigationBar: Padding(
@@ -66,9 +75,21 @@ class _OpenTabFormPageState extends ConsumerState<OpenTabFormPage> {
           children: [
             PosTextField(controller: _customerNameCtrl, label: 'Customer Name', hint: 'Tab owner name'),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _orderIdCtrl, label: 'Order ID', hint: 'Associated order'),
+            PosSearchableDropdown<String>(
+              label: 'Order',
+              items: orders.map((o) => PosDropdownItem(value: o.id, label: o.orderNumber)).toList(),
+              selectedValue: _selectedOrderId,
+              onChanged: (v) => setState(() => _selectedOrderId = v),
+              showSearch: true,
+            ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _tableIdCtrl, label: 'Table (optional)', hint: 'Assign to table'),
+            PosSearchableDropdown<String>(
+              label: 'Table (optional)',
+              items: tables.map((t) => PosDropdownItem(value: t.id, label: t.displayName ?? 'Table ${t.tableNumber}')).toList(),
+              selectedValue: _selectedTableId,
+              onChanged: (v) => setState(() => _selectedTableId = v),
+              showSearch: true,
+            ),
           ],
         ),
       ),

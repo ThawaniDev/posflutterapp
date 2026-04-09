@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
@@ -298,19 +299,13 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
     try {
       final pdfUrl = await ref.read(invoiceDetailProvider(widget.invoiceId).notifier).getInvoicePdfUrl();
       if (pdfUrl != null && mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('PDF URL: $pdfUrl'), backgroundColor: AppColors.success));
+        showPosSuccessSnackbar(context, 'PDF URL: $pdfUrl');
       } else if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('PDF not available for this invoice'), backgroundColor: AppColors.warning));
+        showPosWarningSnackbar(context, AppLocalizations.of(context)!.pdfNotAvailable);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Failed to download PDF: $e'), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, AppLocalizations.of(context)!.failedToDownloadPdf(e.toString()));
       }
     } finally {
       if (mounted) setState(() => _isDownloadingPdf = false);

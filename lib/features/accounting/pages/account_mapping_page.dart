@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
@@ -221,7 +222,7 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
     }
 
     if (mappings.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please fill in at least one mapping')));
+      showPosWarningSnackbar(context, AppLocalizations.of(context)!.pleaseFillOneMapping);
       return;
     }
 
@@ -229,24 +230,17 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
     setState(() => _hasUnsavedChanges = false);
   }
 
-  void _deleteMapping(String id) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Delete Mapping'),
-        content: const Text('Are you sure you want to remove this mapping?'),
-        actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(ctx).pop();
-              ref.read(accountMappingProvider.notifier).deleteMapping(id);
-            },
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            child: const Text('Delete', style: TextStyle(color: Colors.white)),
-          ),
-        ],
-      ),
+  void _deleteMapping(String id) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Delete Mapping',
+      message: 'Are you sure you want to remove this mapping?',
+      confirmLabel: 'Delete',
+      cancelLabel: 'Cancel',
+      isDanger: true,
     );
+    if (confirmed == true) {
+      ref.read(accountMappingProvider.notifier).deleteMapping(id);
+    }
   }
 }

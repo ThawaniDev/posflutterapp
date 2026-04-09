@@ -31,10 +31,10 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
 
     ref.listen<AccountingActionState>(accountingActionProvider, (prev, next) {
       if (next is AccountingActionSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message)));
+        showPosSuccessSnackbar(context, next.message);
         ref.read(accountingConnectionProvider.notifier).loadStatus();
       } else if (next is AccountingActionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, next.message);
       }
     });
 
@@ -338,28 +338,20 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
     );
   }
 
-  void _showDisconnectDialog() {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Disconnect Provider'),
-        content: const Text(
+  void _showDisconnectDialog() async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Disconnect Provider',
+      message:
           'Are you sure you want to disconnect your accounting provider? '
           'Existing mappings and export history will be preserved.',
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(ctx).pop();
-              ref.read(accountingActionProvider.notifier).disconnect();
-            },
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            child: const Text('Disconnect', style: TextStyle(color: Colors.white)),
-          ),
-        ],
-      ),
+      confirmLabel: 'Disconnect',
+      cancelLabel: 'Cancel',
+      isDanger: true,
     );
+    if (confirmed == true) {
+      ref.read(accountingActionProvider.notifier).disconnect();
+    }
   }
 
   String _providerDisplayName(String provider) {

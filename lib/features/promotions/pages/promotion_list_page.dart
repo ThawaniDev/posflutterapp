@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/promotions/enums/promotion_type.dart';
 import 'package:thawani_pos/features/promotions/models/promotion.dart';
 import 'package:thawani_pos/features/promotions/providers/promotion_providers.dart';
@@ -162,25 +164,25 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
           children: [
             Text('Filter Promotions', style: Theme.of(ctx).textTheme.titleMedium),
             const SizedBox(height: 16),
-            DropdownButtonFormField<String?>(
-              initialValue: _typeFilter,
-              decoration: const InputDecoration(labelText: 'Type', border: OutlineInputBorder()),
-              items: [
-                const DropdownMenuItem(value: null, child: Text('All Types')),
-                ...PromotionType.values.map((t) => DropdownMenuItem(value: t.value, child: Text(t.label))),
-              ],
+            PosSearchableDropdown<String>(
+              label: 'Type',
+              items: PromotionType.values.map((t) => PosDropdownItem(value: t.value, label: t.label)).toList(),
+              selectedValue: _typeFilter,
               onChanged: (v) => setState(() => _typeFilter = v),
+              showSearch: false,
+              clearable: true,
             ),
             const SizedBox(height: 12),
-            DropdownButtonFormField<bool?>(
-              initialValue: _activeFilter,
-              decoration: const InputDecoration(labelText: 'Status', border: OutlineInputBorder()),
+            PosSearchableDropdown<bool>(
+              label: 'Status',
               items: const [
-                DropdownMenuItem(value: null, child: Text('All')),
-                DropdownMenuItem(value: true, child: Text('Active')),
-                DropdownMenuItem(value: false, child: Text('Inactive')),
+                PosDropdownItem(value: true, label: 'Active'),
+                PosDropdownItem(value: false, label: 'Inactive'),
               ],
+              selectedValue: _activeFilter,
               onChanged: (v) => setState(() => _activeFilter = v),
+              showSearch: false,
+              clearable: true,
             ),
             const SizedBox(height: 20),
             SizedBox(
@@ -343,7 +345,7 @@ class _PromotionCard extends ConsumerWidget {
               final maxUses = maxUsesController.text.isNotEmpty ? int.tryParse(maxUsesController.text) : null;
               ref.read(promotionRepositoryProvider).generateCoupons(promotion.id, count: count, prefix: prefix, maxUses: maxUses);
               Navigator.pop(ctx);
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Generating $count coupons...')));
+              showPosInfoSnackbar(context, AppLocalizations.of(context)!.generatingCoupons(count.toString()));
             },
             child: const Text('Generate'),
           ),
@@ -352,25 +354,18 @@ class _PromotionCard extends ConsumerWidget {
     );
   }
 
-  void _confirmDelete(BuildContext context, WidgetRef ref) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Delete Promotion'),
-        content: Text('Delete "${promotion.name}"? This action cannot be undone.'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          FilledButton(
-            style: FilledButton.styleFrom(backgroundColor: Theme.of(ctx).colorScheme.error),
-            onPressed: () {
-              Navigator.pop(ctx);
-              ref.read(promotionsProvider.notifier).deletePromotion(promotion.id);
-            },
-            child: const Text('Delete'),
-          ),
-        ],
-      ),
+  void _confirmDelete(BuildContext context, WidgetRef ref) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Delete Promotion',
+      message: 'Delete "${promotion.name}"? This action cannot be undone.',
+      confirmLabel: 'Delete',
+      cancelLabel: 'Cancel',
+      isDanger: true,
     );
+    if (confirmed == true) {
+      ref.read(promotionsProvider.notifier).deletePromotion(promotion.id);
+    }
   }
 }
 
@@ -480,11 +475,13 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
               maxLines: 2,
             ),
             const SizedBox(height: 14),
-            DropdownButtonFormField<PromotionType>(
-              initialValue: _selectedType,
-              decoration: const InputDecoration(labelText: 'Type *', border: OutlineInputBorder()),
-              items: PromotionType.values.map((t) => DropdownMenuItem(value: t, child: Text(t.label))).toList(),
+            PosSearchableDropdown<PromotionType>(
+              label: 'Type *',
+              items: PromotionType.values.map((t) => PosDropdownItem(value: t, label: t.label)).toList(),
+              selectedValue: _selectedType,
               onChanged: (v) => setState(() => _selectedType = v!),
+              showSearch: false,
+              clearable: false,
             ),
             const SizedBox(height: 14),
 

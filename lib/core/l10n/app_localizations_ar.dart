@@ -7898,4 +7898,452 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get debitsOrderNumber => 'رقم الطلب';
+
+  @override
+  String get searchDropdownHint => 'بحث...';
+
+  @override
+  String get noResultsFound => 'لا توجد نتائج';
+
+  @override
+  String get selectOption => 'اختر...';
+
+  @override
+  String get createNew => 'إنشاء جديد';
+
+  @override
+  String genericError(String message) {
+    return 'خطأ: $message';
+  }
+
+  @override
+  String genericErrorSaving(String message) {
+    return 'خطأ في الحفظ: $message';
+  }
+
+  @override
+  String get workingHoursSaved => 'تم حفظ ساعات العمل.';
+
+  @override
+  String get settingsSavedSuccessfully => 'تم حفظ الإعدادات بنجاح.';
+
+  @override
+  String get productUpdated => 'تم تحديث المنتج.';
+
+  @override
+  String get productCreated => 'تم إنشاء المنتج.';
+
+  @override
+  String generatedBarcode(String barcode) {
+    return 'تم إنشاء الباركود: $barcode';
+  }
+
+  @override
+  String get allSuppliersAlreadyLinked => 'جميع الموردين مرتبطون بالفعل.';
+
+  @override
+  String productDeleted(String name) {
+    return 'تم حذف المنتج \"$name\".';
+  }
+
+  @override
+  String productDuplicated(String name) {
+    return 'تم تكرار المنتج \"$name\".';
+  }
+
+  @override
+  String bulkActionCompleted(String action) {
+    return 'تم إكمال $action بالجملة.';
+  }
+
+  @override
+  String get categoryUpdated => 'تم تحديث الفئة.';
+
+  @override
+  String get categoryCreated => 'تم إنشاء الفئة.';
+
+  @override
+  String categoryDeleted(String name) {
+    return 'تم حذف الفئة \"$name\".';
+  }
+
+  @override
+  String productClonedToStore(String name) {
+    return 'تم نسخ المنتج \"$name\" إلى متجرك.';
+  }
+
+  @override
+  String get selectBusinessTypeFirst => 'يرجى اختيار نوع النشاط أولاً.';
+
+  @override
+  String clonedCategoriesAndProducts(String cats, String prods) {
+    return 'تم نسخ $cats فئة و $prods منتج إلى متجرك.';
+  }
+
+  @override
+  String categoryClonedSuccessfully(String name) {
+    return 'تم نسخ الفئة \"$name\" بنجاح.';
+  }
+
+  @override
+  String get pleaseFillOneMapping => 'يرجى ملء ربط واحد على الأقل.';
+
+  @override
+  String get pleaseSelectBothDates => 'يرجى اختيار كلا التاريخين.';
+
+  @override
+  String get storeExportInitiated => 'تم بدء تصدير المتجر.';
+
+  @override
+  String get connectionTestSuccessful => 'اختبار الاتصال ناجح.';
+
+  @override
+  String connectionTestFailed(String message) {
+    return 'فشل اختبار الاتصال: $message';
+  }
+
+  @override
+  String get pleaseEnterValidNumbers => 'يرجى إدخال أرقام صحيحة.';
+
+  @override
+  String get retryRulesUpdated => 'تم تحديث قواعد إعادة المحاولة بنجاح.';
+
+  @override
+  String failedToSave(String message) {
+    return 'فشل الحفظ: $message';
+  }
+
+  @override
+  String get paymentRetryInitiated => 'تم بدء إعادة محاولة الدفع.';
+
+  @override
+  String retryFailed(String message) {
+    return 'فشلت إعادة المحاولة: $message';
+  }
+
+  @override
+  String get pdfNotAvailable => 'ملف PDF غير متاح لهذه الفاتورة.';
+
+  @override
+  String failedToDownloadPdf(String message) {
+    return 'فشل تحميل PDF: $message';
+  }
+
+  @override
+  String get addOnComingSoon => 'ميزة الإضافات قريباً.';
+
+  @override
+  String get removeAddOnComingSoon => 'ميزة إزالة الإضافات قريباً.';
+
+  @override
+  String get copied => 'تم النسخ';
+
+  @override
+  String get pleaseEnterValidOtp => 'يرجى إدخال رمز OTP صحيح مكون من 6 أرقام.';
+
+  @override
+  String generatingCoupons(String count) {
+    return 'جاري إنشاء $count كوبون...';
+  }
+
+  @override
+  String staffPinError(String message) {
+    return 'خطأ: $message';
+  }
+
+  @override
+  String get sidebarTransactions => 'المعاملات';
+
+  @override
+  String get txExplorerTitle => 'مستعرض المعاملات';
+
+  @override
+  String get txDetailTitle => 'تفاصيل المعاملة';
+
+  @override
+  String get txToggleAnalytics => 'تبديل التحليلات';
+
+  @override
+  String get txSearchHint => 'البحث برقم المعاملة…';
+
+  @override
+  String get txFilterType => 'النوع';
+
+  @override
+  String get txFilterStatus => 'الحالة';
+
+  @override
+  String get txDateRange => 'نطاق التاريخ';
+
+  @override
+  String get txClearFilters => 'مسح الفلاتر';
+
+  @override
+  String get txAllTypes => 'جميع الأنواع';
+
+  @override
+  String get txAllStatuses => 'جميع الحالات';
+
+  @override
+  String get txTypeSale => 'بيع';
+
+  @override
+  String get txTypeReturn => 'إرجاع';
+
+  @override
+  String get txTypeVoid => 'إلغاء';
+
+  @override
+  String get txTypeExchange => 'تبديل';
+
+  @override
+  String get txStatusCompleted => 'مكتمل';
+
+  @override
+  String get txStatusVoided => 'ملغي';
+
+  @override
+  String get txStatusPending => 'قيد الانتظار';
+
+  @override
+  String get txColNumber => 'رقم المعاملة';
+
+  @override
+  String get txColType => 'النوع';
+
+  @override
+  String get txColStatus => 'الحالة';
+
+  @override
+  String get txColSubtotal => 'المجموع الفرعي';
+
+  @override
+  String get txColTax => 'الضريبة';
+
+  @override
+  String get txColTotal => 'الإجمالي';
+
+  @override
+  String get txColDate => 'التاريخ';
+
+  @override
+  String get txNoTransactions => 'لا توجد معاملات';
+
+  @override
+  String get txNoTransactionsSubtitle =>
+      'عدّل الفلاتر أو نطاق التاريخ للعثور على المعاملات';
+
+  @override
+  String get txStatsTotalSales => 'إجمالي المبيعات';
+
+  @override
+  String get txStatsTotalTransactions => 'المعاملات';
+
+  @override
+  String get txStatsAvgBasket => 'متوسط السلة';
+
+  @override
+  String get txStatsReturnsVoids => 'الإرجاعات والإلغاءات';
+
+  @override
+  String get txStatsNetRevenue => 'صافي الإيرادات';
+
+  @override
+  String get txStatsTax => 'الضريبة';
+
+  @override
+  String get txReturns => 'إرجاعات';
+
+  @override
+  String get txVoids => 'إلغاءات';
+
+  @override
+  String get txPaymentBreakdown => 'تفصيل طرق الدفع';
+
+  @override
+  String get txHourlyDistribution => 'التوزيع بالساعة';
+
+  @override
+  String get txDailySalesTrend => 'اتجاه المبيعات اليومي';
+
+  @override
+  String get txNoDataAvailable => 'لا تتوفر بيانات';
+
+  @override
+  String get txInfoTitle => 'معلومات المعاملة';
+
+  @override
+  String get txInfoDate => 'التاريخ والوقت';
+
+  @override
+  String get txInfoCashier => 'الكاشير';
+
+  @override
+  String get txInfoRegister => 'السجل';
+
+  @override
+  String get txInfoSession => 'جلسة نقطة البيع';
+
+  @override
+  String get txInfoStore => 'المتجر';
+
+  @override
+  String get txInfoCustomer => 'العميل';
+
+  @override
+  String get txInfoExternalType => 'النوع الخارجي';
+
+  @override
+  String get txInfoExternalId => 'المعرف الخارجي';
+
+  @override
+  String get txInfoReturnRef => 'مرجع الإرجاع';
+
+  @override
+  String get txInfoSyncStatus => 'حالة المزامنة';
+
+  @override
+  String get txItemsTitle => 'الأصناف';
+
+  @override
+  String get txItemsCount => 'صنف';
+
+  @override
+  String get txPaymentsTitle => 'المدفوعات';
+
+  @override
+  String get txTotalsTitle => 'الإجماليات';
+
+  @override
+  String get txTotalsSubtotal => 'المجموع الفرعي';
+
+  @override
+  String get txTotalsDiscount => 'الخصم';
+
+  @override
+  String get txTotalsTax => 'الضريبة';
+
+  @override
+  String get txTotalsTip => 'البقشيش';
+
+  @override
+  String get txTotalsTotal => 'الإجمالي';
+
+  @override
+  String get txZatcaTitle => 'توافق هيئة الزكاة والضريبة';
+
+  @override
+  String get txZatcaUuid => 'المعرف الفريد';
+
+  @override
+  String get txZatcaHash => 'الهاش';
+
+  @override
+  String get txZatcaStatus => 'الحالة';
+
+  @override
+  String get txNotesTitle => 'الملاحظات';
+
+  @override
+  String get txVoidConfirmTitle => 'إلغاء المعاملة';
+
+  @override
+  String get txVoidConfirmMessage =>
+      'هل أنت متأكد من إلغاء هذه المعاملة؟ لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get txVoidAction => 'إلغاء';
+
+  @override
+  String get dashboardTodaysSales => 'مبيعات اليوم';
+
+  @override
+  String get dashboardTransactions => 'المعاملات';
+
+  @override
+  String get dashboardAvgBasket => 'متوسط السلة';
+
+  @override
+  String get dashboardNetProfit => 'صافي الربح';
+
+  @override
+  String get dashboardVsYesterday => 'مقارنة بالأمس';
+
+  @override
+  String get dashboardSalesTrend => 'اتجاه المبيعات';
+
+  @override
+  String get dashboardThisPeriod => 'الفترة الحالية';
+
+  @override
+  String get dashboardPreviousPeriod => 'الفترة السابقة';
+
+  @override
+  String get dashboardTopProducts => 'أفضل المنتجات';
+
+  @override
+  String get dashboardProduct => 'المنتج';
+
+  @override
+  String get dashboardQty => 'الكمية';
+
+  @override
+  String get dashboardRevenue => 'الإيرادات';
+
+  @override
+  String get dashboardNoSalesData => 'لا توجد بيانات مبيعات';
+
+  @override
+  String get dashboardLowStockAlerts => 'تنبيهات المخزون المنخفض';
+
+  @override
+  String get dashboardAllWellStocked => 'جميع المنتجات متوفرة';
+
+  @override
+  String get dashboardActiveCashiers => 'الكاشيرات النشطة';
+
+  @override
+  String get dashboardOnline => 'متصل';
+
+  @override
+  String get dashboardNoActiveSessions => 'لا توجد جلسات نشطة';
+
+  @override
+  String get dashboardSince => 'منذ';
+
+  @override
+  String get dashboardRecentOrders => 'الطلبات الأخيرة';
+
+  @override
+  String get dashboardNoOrders => 'لا توجد طلبات';
+
+  @override
+  String get dashboardWalkIn => 'زبون عابر';
+
+  @override
+  String get dashboardFinancialSummary => 'الملخص المالي';
+
+  @override
+  String get dashboardTotalRevenue => 'إجمالي الإيرادات';
+
+  @override
+  String get dashboardTotalCost => 'إجمالي التكلفة';
+
+  @override
+  String get dashboardTotalTax => 'إجمالي الضريبة';
+
+  @override
+  String get dashboardTotalDiscount => 'إجمالي الخصم';
+
+  @override
+  String get dashboardPaymentBreakdown => 'توزيع وسائل الدفع';
+
+  @override
+  String get dashboardHourlySales => 'المبيعات بالساعة';
+
+  @override
+  String get dashboardStaffPerformance => 'أداء الموظفين';
+
+  @override
+  String get dashboardBranchOverview => 'نظرة عامة على الفروع';
 }

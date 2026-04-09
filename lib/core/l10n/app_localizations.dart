@@ -15335,6 +15335,834 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Order #'**
   String get debitsOrderNumber;
+
+  /// No description provided for @searchDropdownHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search...'**
+  String get searchDropdownHint;
+
+  /// No description provided for @noResultsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No results found'**
+  String get noResultsFound;
+
+  /// No description provided for @selectOption.
+  ///
+  /// In en, this message translates to:
+  /// **'Select...'**
+  String get selectOption;
+
+  /// No description provided for @createNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Create new'**
+  String get createNew;
+
+  /// No description provided for @genericError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {message}'**
+  String genericError(String message);
+
+  /// No description provided for @genericErrorSaving.
+  ///
+  /// In en, this message translates to:
+  /// **'Error saving: {message}'**
+  String genericErrorSaving(String message);
+
+  /// No description provided for @workingHoursSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Working hours saved.'**
+  String get workingHoursSaved;
+
+  /// No description provided for @settingsSavedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings saved successfully.'**
+  String get settingsSavedSuccessfully;
+
+  /// No description provided for @productUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Product updated.'**
+  String get productUpdated;
+
+  /// No description provided for @productCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Product created.'**
+  String get productCreated;
+
+  /// No description provided for @generatedBarcode.
+  ///
+  /// In en, this message translates to:
+  /// **'Generated barcode: {barcode}'**
+  String generatedBarcode(String barcode);
+
+  /// No description provided for @allSuppliersAlreadyLinked.
+  ///
+  /// In en, this message translates to:
+  /// **'All suppliers are already linked.'**
+  String get allSuppliersAlreadyLinked;
+
+  /// No description provided for @productDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Product \"{name}\" deleted.'**
+  String productDeleted(String name);
+
+  /// No description provided for @productDuplicated.
+  ///
+  /// In en, this message translates to:
+  /// **'Product \"{name}\" duplicated.'**
+  String productDuplicated(String name);
+
+  /// No description provided for @bulkActionCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulk {action} completed.'**
+  String bulkActionCompleted(String action);
+
+  /// No description provided for @categoryUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Category updated.'**
+  String get categoryUpdated;
+
+  /// No description provided for @categoryCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Category created.'**
+  String get categoryCreated;
+
+  /// No description provided for @categoryDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Category \"{name}\" deleted.'**
+  String categoryDeleted(String name);
+
+  /// No description provided for @productClonedToStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Product \"{name}\" cloned to your store.'**
+  String productClonedToStore(String name);
+
+  /// No description provided for @selectBusinessTypeFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a business type first.'**
+  String get selectBusinessTypeFirst;
+
+  /// No description provided for @clonedCategoriesAndProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Cloned {cats} categories and {prods} products to your store.'**
+  String clonedCategoriesAndProducts(String cats, String prods);
+
+  /// No description provided for @categoryClonedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Category \"{name}\" cloned successfully.'**
+  String categoryClonedSuccessfully(String name);
+
+  /// No description provided for @pleaseFillOneMapping.
+  ///
+  /// In en, this message translates to:
+  /// **'Please fill in at least one mapping.'**
+  String get pleaseFillOneMapping;
+
+  /// No description provided for @pleaseSelectBothDates.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select both dates.'**
+  String get pleaseSelectBothDates;
+
+  /// No description provided for @storeExportInitiated.
+  ///
+  /// In en, this message translates to:
+  /// **'Store export initiated.'**
+  String get storeExportInitiated;
+
+  /// No description provided for @connectionTestSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection test successful.'**
+  String get connectionTestSuccessful;
+
+  /// No description provided for @connectionTestFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection test failed: {message}'**
+  String connectionTestFailed(String message);
+
+  /// No description provided for @pleaseEnterValidNumbers.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter valid numbers.'**
+  String get pleaseEnterValidNumbers;
+
+  /// No description provided for @retryRulesUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry rules updated successfully.'**
+  String get retryRulesUpdated;
+
+  /// No description provided for @failedToSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to save: {message}'**
+  String failedToSave(String message);
+
+  /// No description provided for @paymentRetryInitiated.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment retry initiated.'**
+  String get paymentRetryInitiated;
+
+  /// No description provided for @retryFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry failed: {message}'**
+  String retryFailed(String message);
+
+  /// No description provided for @pdfNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF not available for this invoice.'**
+  String get pdfNotAvailable;
+
+  /// No description provided for @failedToDownloadPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to download PDF: {message}'**
+  String failedToDownloadPdf(String message);
+
+  /// No description provided for @addOnComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Add-on feature coming soon.'**
+  String get addOnComingSoon;
+
+  /// No description provided for @removeAddOnComingSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove add-on feature coming soon.'**
+  String get removeAddOnComingSoon;
+
+  /// No description provided for @copied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied'**
+  String get copied;
+
+  /// No description provided for @pleaseEnterValidOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid 6-digit OTP.'**
+  String get pleaseEnterValidOtp;
+
+  /// No description provided for @generatingCoupons.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating {count} coupons...'**
+  String generatingCoupons(String count);
+
+  /// No description provided for @staffPinError.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {message}'**
+  String staffPinError(String message);
+
+  /// No description provided for @sidebarTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get sidebarTransactions;
+
+  /// No description provided for @txExplorerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Explorer'**
+  String get txExplorerTitle;
+
+  /// No description provided for @txDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Detail'**
+  String get txDetailTitle;
+
+  /// No description provided for @txToggleAnalytics.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle Analytics'**
+  String get txToggleAnalytics;
+
+  /// No description provided for @txSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by transaction number…'**
+  String get txSearchHint;
+
+  /// No description provided for @txFilterType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get txFilterType;
+
+  /// No description provided for @txFilterStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get txFilterStatus;
+
+  /// No description provided for @txDateRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Date Range'**
+  String get txDateRange;
+
+  /// No description provided for @txClearFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear Filters'**
+  String get txClearFilters;
+
+  /// No description provided for @txAllTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'All Types'**
+  String get txAllTypes;
+
+  /// No description provided for @txAllStatuses.
+  ///
+  /// In en, this message translates to:
+  /// **'All Statuses'**
+  String get txAllStatuses;
+
+  /// No description provided for @txTypeSale.
+  ///
+  /// In en, this message translates to:
+  /// **'Sale'**
+  String get txTypeSale;
+
+  /// No description provided for @txTypeReturn.
+  ///
+  /// In en, this message translates to:
+  /// **'Return'**
+  String get txTypeReturn;
+
+  /// No description provided for @txTypeVoid.
+  ///
+  /// In en, this message translates to:
+  /// **'Void'**
+  String get txTypeVoid;
+
+  /// No description provided for @txTypeExchange.
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange'**
+  String get txTypeExchange;
+
+  /// No description provided for @txStatusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get txStatusCompleted;
+
+  /// No description provided for @txStatusVoided.
+  ///
+  /// In en, this message translates to:
+  /// **'Voided'**
+  String get txStatusVoided;
+
+  /// No description provided for @txStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get txStatusPending;
+
+  /// No description provided for @txColNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction #'**
+  String get txColNumber;
+
+  /// No description provided for @txColType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get txColType;
+
+  /// No description provided for @txColStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get txColStatus;
+
+  /// No description provided for @txColSubtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get txColSubtotal;
+
+  /// No description provided for @txColTax.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get txColTax;
+
+  /// No description provided for @txColTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get txColTotal;
+
+  /// No description provided for @txColDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get txColDate;
+
+  /// No description provided for @txNoTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions found'**
+  String get txNoTransactions;
+
+  /// No description provided for @txNoTransactionsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Adjust your filters or date range to find transactions'**
+  String get txNoTransactionsSubtitle;
+
+  /// No description provided for @txStatsTotalSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Sales'**
+  String get txStatsTotalSales;
+
+  /// No description provided for @txStatsTotalTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get txStatsTotalTransactions;
+
+  /// No description provided for @txStatsAvgBasket.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Basket'**
+  String get txStatsAvgBasket;
+
+  /// No description provided for @txStatsReturnsVoids.
+  ///
+  /// In en, this message translates to:
+  /// **'Returns & Voids'**
+  String get txStatsReturnsVoids;
+
+  /// No description provided for @txStatsNetRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Net Revenue'**
+  String get txStatsNetRevenue;
+
+  /// No description provided for @txStatsTax.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get txStatsTax;
+
+  /// No description provided for @txReturns.
+  ///
+  /// In en, this message translates to:
+  /// **'returns'**
+  String get txReturns;
+
+  /// No description provided for @txVoids.
+  ///
+  /// In en, this message translates to:
+  /// **'voids'**
+  String get txVoids;
+
+  /// No description provided for @txPaymentBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Breakdown'**
+  String get txPaymentBreakdown;
+
+  /// No description provided for @txHourlyDistribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Hourly Distribution'**
+  String get txHourlyDistribution;
+
+  /// No description provided for @txDailySalesTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Sales Trend'**
+  String get txDailySalesTrend;
+
+  /// No description provided for @txNoDataAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No data available'**
+  String get txNoDataAvailable;
+
+  /// No description provided for @txInfoTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Information'**
+  String get txInfoTitle;
+
+  /// No description provided for @txInfoDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date & Time'**
+  String get txInfoDate;
+
+  /// No description provided for @txInfoCashier.
+  ///
+  /// In en, this message translates to:
+  /// **'Cashier'**
+  String get txInfoCashier;
+
+  /// No description provided for @txInfoRegister.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get txInfoRegister;
+
+  /// No description provided for @txInfoSession.
+  ///
+  /// In en, this message translates to:
+  /// **'POS Session'**
+  String get txInfoSession;
+
+  /// No description provided for @txInfoStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Store'**
+  String get txInfoStore;
+
+  /// No description provided for @txInfoCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get txInfoCustomer;
+
+  /// No description provided for @txInfoExternalType.
+  ///
+  /// In en, this message translates to:
+  /// **'External Type'**
+  String get txInfoExternalType;
+
+  /// No description provided for @txInfoExternalId.
+  ///
+  /// In en, this message translates to:
+  /// **'External ID'**
+  String get txInfoExternalId;
+
+  /// No description provided for @txInfoReturnRef.
+  ///
+  /// In en, this message translates to:
+  /// **'Return Reference'**
+  String get txInfoReturnRef;
+
+  /// No description provided for @txInfoSyncStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync Status'**
+  String get txInfoSyncStatus;
+
+  /// No description provided for @txItemsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Items'**
+  String get txItemsTitle;
+
+  /// No description provided for @txItemsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'items'**
+  String get txItemsCount;
+
+  /// No description provided for @txPaymentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get txPaymentsTitle;
+
+  /// No description provided for @txTotalsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Totals'**
+  String get txTotalsTitle;
+
+  /// No description provided for @txTotalsSubtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get txTotalsSubtotal;
+
+  /// No description provided for @txTotalsDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get txTotalsDiscount;
+
+  /// No description provided for @txTotalsTax.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get txTotalsTax;
+
+  /// No description provided for @txTotalsTip.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip'**
+  String get txTotalsTip;
+
+  /// No description provided for @txTotalsTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get txTotalsTotal;
+
+  /// No description provided for @txZatcaTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'ZATCA Compliance'**
+  String get txZatcaTitle;
+
+  /// No description provided for @txZatcaUuid.
+  ///
+  /// In en, this message translates to:
+  /// **'UUID'**
+  String get txZatcaUuid;
+
+  /// No description provided for @txZatcaHash.
+  ///
+  /// In en, this message translates to:
+  /// **'Hash'**
+  String get txZatcaHash;
+
+  /// No description provided for @txZatcaStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get txZatcaStatus;
+
+  /// No description provided for @txNotesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get txNotesTitle;
+
+  /// No description provided for @txVoidConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Void Transaction'**
+  String get txVoidConfirmTitle;
+
+  /// No description provided for @txVoidConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to void this transaction? This action cannot be undone.'**
+  String get txVoidConfirmMessage;
+
+  /// No description provided for @txVoidAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Void'**
+  String get txVoidAction;
+
+  /// No description provided for @dashboardTodaysSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Sales'**
+  String get dashboardTodaysSales;
+
+  /// No description provided for @dashboardTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get dashboardTransactions;
+
+  /// No description provided for @dashboardAvgBasket.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Basket'**
+  String get dashboardAvgBasket;
+
+  /// No description provided for @dashboardNetProfit.
+  ///
+  /// In en, this message translates to:
+  /// **'Net Profit'**
+  String get dashboardNetProfit;
+
+  /// No description provided for @dashboardVsYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'vs yesterday'**
+  String get dashboardVsYesterday;
+
+  /// No description provided for @dashboardSalesTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales Trend'**
+  String get dashboardSalesTrend;
+
+  /// No description provided for @dashboardThisPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'This Period'**
+  String get dashboardThisPeriod;
+
+  /// No description provided for @dashboardPreviousPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get dashboardPreviousPeriod;
+
+  /// No description provided for @dashboardTopProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Products'**
+  String get dashboardTopProducts;
+
+  /// No description provided for @dashboardProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Product'**
+  String get dashboardProduct;
+
+  /// No description provided for @dashboardQty.
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get dashboardQty;
+
+  /// No description provided for @dashboardRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue'**
+  String get dashboardRevenue;
+
+  /// No description provided for @dashboardNoSalesData.
+  ///
+  /// In en, this message translates to:
+  /// **'No sales data yet'**
+  String get dashboardNoSalesData;
+
+  /// No description provided for @dashboardLowStockAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Low Stock Alerts'**
+  String get dashboardLowStockAlerts;
+
+  /// No description provided for @dashboardAllWellStocked.
+  ///
+  /// In en, this message translates to:
+  /// **'All items are well-stocked'**
+  String get dashboardAllWellStocked;
+
+  /// No description provided for @dashboardActiveCashiers.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Cashiers'**
+  String get dashboardActiveCashiers;
+
+  /// No description provided for @dashboardOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'online'**
+  String get dashboardOnline;
+
+  /// No description provided for @dashboardNoActiveSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'No active sessions'**
+  String get dashboardNoActiveSessions;
+
+  /// No description provided for @dashboardSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Since'**
+  String get dashboardSince;
+
+  /// No description provided for @dashboardRecentOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Orders'**
+  String get dashboardRecentOrders;
+
+  /// No description provided for @dashboardNoOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'No orders yet'**
+  String get dashboardNoOrders;
+
+  /// No description provided for @dashboardWalkIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk-in'**
+  String get dashboardWalkIn;
+
+  /// No description provided for @dashboardFinancialSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial Summary'**
+  String get dashboardFinancialSummary;
+
+  /// No description provided for @dashboardTotalRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Revenue'**
+  String get dashboardTotalRevenue;
+
+  /// No description provided for @dashboardTotalCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Cost'**
+  String get dashboardTotalCost;
+
+  /// No description provided for @dashboardTotalTax.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Tax'**
+  String get dashboardTotalTax;
+
+  /// No description provided for @dashboardTotalDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Discount'**
+  String get dashboardTotalDiscount;
+
+  /// No description provided for @dashboardPaymentBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Breakdown'**
+  String get dashboardPaymentBreakdown;
+
+  /// No description provided for @dashboardHourlySales.
+  ///
+  /// In en, this message translates to:
+  /// **'Hourly Sales'**
+  String get dashboardHourlySales;
+
+  /// No description provided for @dashboardStaffPerformance.
+  ///
+  /// In en, this message translates to:
+  /// **'Staff Performance'**
+  String get dashboardStaffPerformance;
+
+  /// No description provided for @dashboardBranchOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch Overview'**
+  String get dashboardBranchOverview;
 }
 
 class _AppLocalizationsDelegate

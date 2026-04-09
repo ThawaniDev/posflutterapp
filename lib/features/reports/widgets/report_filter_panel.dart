@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/reports/models/report_filters.dart';
 
 /// Comprehensive filter panel with date presets, branch selector,
@@ -227,37 +227,14 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
   // ── Branch Dropdown ──
 
   Widget _buildBranchDropdown(bool isDark, List<String> branches) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.cardDark : AppColors.backgroundLight,
-        borderRadius: BorderRadius.circular(AppRadius.sm),
-        border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: widget.filters.branchId,
-          hint: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.store_rounded, size: 16, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-              const SizedBox(width: 6),
-              Text('All Branches', style: TextStyle(fontSize: 13)),
-            ],
-          ),
-          isDense: true,
-          items: [
-            DropdownMenuItem(value: null, child: Text('All Branches', style: TextStyle(fontSize: 13))),
-            ...branches.map(
-              (id) => DropdownMenuItem(
-                value: id,
-                child: Text(id.substring(0, 8), style: TextStyle(fontSize: 13)),
-              ),
-            ),
-          ],
-          onChanged: (val) => _update(widget.filters.copyWith(branchId: () => val)),
-        ),
-      ),
+    return PosSearchableDropdown<String?>(
+      items: branches.map((id) => PosDropdownItem<String?>(value: id, label: id.substring(0, 8))).toList(),
+      selectedValue: widget.filters.branchId,
+      onChanged: (val) => _update(widget.filters.copyWith(branchId: () => val)),
+      hint: 'All Branches',
+      prefixIcon: Icons.store_rounded,
+      showSearch: true,
+      clearable: true,
     );
   }
 
@@ -487,36 +464,14 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
   }) {
     return Container(
       constraints: const BoxConstraints(maxWidth: 200),
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.cardDark : AppColors.backgroundLight,
-        borderRadius: BorderRadius.circular(AppRadius.sm),
-        border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String?>(
-          value: value,
-          hint: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: 14, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-              const SizedBox(width: 6),
-              Text(label, style: TextStyle(fontSize: 12, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight)),
-            ],
-          ),
-          isDense: true,
-          isExpanded: true,
-          items: [
-            DropdownMenuItem(value: null, child: Text('All $label', style: TextStyle(fontSize: 12))),
-            ...options.map(
-              (o) => DropdownMenuItem(
-                value: o.value,
-                child: Text(o.label, style: TextStyle(fontSize: 12), overflow: TextOverflow.ellipsis),
-              ),
-            ),
-          ],
-          onChanged: onChanged,
-        ),
+      child: PosSearchableDropdown<String?>(
+        items: options.map((o) => PosDropdownItem<String?>(value: o.value, label: o.label)).toList(),
+        selectedValue: value,
+        onChanged: onChanged,
+        hint: label,
+        prefixIcon: icon,
+        showSearch: true,
+        clearable: true,
       ),
     );
   }
@@ -578,40 +533,18 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
       children: [
         Container(
           constraints: const BoxConstraints(maxWidth: 150),
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          decoration: BoxDecoration(
-            color: isDark ? AppColors.cardDark : AppColors.backgroundLight,
-            borderRadius: BorderRadius.circular(AppRadius.sm),
-            border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-          ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: sortBy,
-              isDense: true,
-              items: const [
-                DropdownMenuItem(
-                  value: 'revenue',
-                  child: Text('Revenue', style: TextStyle(fontSize: 12)),
-                ),
-                DropdownMenuItem(
-                  value: 'quantity',
-                  child: Text('Quantity', style: TextStyle(fontSize: 12)),
-                ),
-                DropdownMenuItem(
-                  value: 'profit',
-                  child: Text('Profit', style: TextStyle(fontSize: 12)),
-                ),
-                DropdownMenuItem(
-                  value: 'orders',
-                  child: Text('Orders', style: TextStyle(fontSize: 12)),
-                ),
-                DropdownMenuItem(
-                  value: 'name',
-                  child: Text('Name', style: TextStyle(fontSize: 12)),
-                ),
-              ],
-              onChanged: (val) => _update(widget.filters.copyWith(sortBy: () => val)),
-            ),
+          child: PosSearchableDropdown<String>(
+            items: const [
+              PosDropdownItem(value: 'revenue', label: 'Revenue'),
+              PosDropdownItem(value: 'quantity', label: 'Quantity'),
+              PosDropdownItem(value: 'profit', label: 'Profit'),
+              PosDropdownItem(value: 'orders', label: 'Orders'),
+              PosDropdownItem(value: 'name', label: 'Name'),
+            ],
+            selectedValue: sortBy,
+            onChanged: (val) => _update(widget.filters.copyWith(sortBy: () => val)),
+            showSearch: false,
+            clearable: false,
           ),
         ),
         const SizedBox(width: 4),

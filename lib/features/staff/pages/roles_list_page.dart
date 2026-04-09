@@ -6,6 +6,7 @@ import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/staff/models/role.dart';
 import 'package:thawani_pos/features/staff/providers/roles_providers.dart';
 import 'package:thawani_pos/features/staff/providers/roles_state.dart';
@@ -27,31 +28,24 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
 
   Future<void> _handleDelete(Role role) async {
     final l10n = AppLocalizations.of(context)!;
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.delete),
-        content: Text('${l10n.deleteConfirmation} "${role.displayName}"?'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: Text(l10n.delete),
-          ),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.delete,
+      message: '${l10n.deleteConfirmation} "${role.displayName}"?',
+      confirmLabel: l10n.delete,
+      cancelLabel: l10n.cancel,
+      isDanger: true,
     );
 
     if (confirmed == true && mounted) {
       try {
         await ref.read(rolesProvider.notifier).deleteRole(role.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('${role.displayName} ${l10n.deleted}')));
+          showPosSuccessSnackbar(context, '${role.displayName} ${l10n.deleted}');
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }

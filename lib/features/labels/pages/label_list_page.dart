@@ -8,6 +8,7 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_app_bar.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
 import 'package:thawani_pos/features/labels/models/label_template.dart';
 import 'package:thawani_pos/features/labels/providers/label_providers.dart';
@@ -152,19 +153,13 @@ class _LabelListPageState extends ConsumerState<LabelListPage> {
 
   Future<void> _handleDelete(LabelTemplate template) async {
     final l10n = AppLocalizations.of(context)!;
-    final confirm = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.labelDeleteTitle),
-        content: Text(l10n.labelDeleteConfirm(template.name)),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.labelCancel)),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            child: Text(l10n.labelDelete, style: const TextStyle(color: AppColors.error)),
-          ),
-        ],
-      ),
+    final confirm = await showPosConfirmDialog(
+      context,
+      title: l10n.labelDeleteTitle,
+      message: l10n.labelDeleteConfirm(template.name),
+      confirmLabel: l10n.labelDelete,
+      cancelLabel: l10n.labelCancel,
+      isDanger: true,
     );
     if (confirm == true && mounted) {
       ref.read(labelTemplatesProvider.notifier).deleteTemplate(template.id);

@@ -9,10 +9,14 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/debits/enums/debit_enums.dart';
 import 'package:thawani_pos/features/debits/models/debit.dart';
 import 'package:thawani_pos/features/debits/providers/debits_providers.dart';
 import 'package:thawani_pos/features/debits/providers/debits_state.dart';
+import 'package:thawani_pos/features/orders/models/order.dart';
+import 'package:thawani_pos/features/orders/providers/order_providers.dart';
+import 'package:thawani_pos/features/orders/providers/order_state.dart';
 
 class DebitListPage extends ConsumerStatefulWidget {
   const DebitListPage({super.key});
@@ -306,40 +310,55 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
 
   Future<void> _showAllocateDialog(Debit debit) async {
     final l10n = AppLocalizations.of(context)!;
-    final orderIdController = TextEditingController();
+    String? selectedOrderId;
     final amountController = TextEditingController();
     final notesController = TextEditingController();
 
+    // Ensure orders are loaded for the picker
+    ref.read(ordersProvider.notifier).load();
+
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.debitsAllocateDebit),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              PosTextField(controller: orderIdController, label: l10n.debitsOrderId, hint: l10n.debitsOrderId),
-              AppSpacing.gapH12,
-              PosTextField(
-                controller: amountController,
-                label: l10n.debitsAllocateAmount,
-                hint: debit.remainingBalance.toStringAsFixed(2),
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setDialogState) {
+          final ordersState = ref.watch(ordersProvider);
+          final orders = ordersState is OrdersLoaded ? ordersState.orders : <Order>[];
+          return AlertDialog(
+            title: Text(l10n.debitsAllocateDebit),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  PosSearchableDropdown<String>(
+                    label: l10n.debitsOrderId,
+                    items: orders.map((o) => PosDropdownItem(value: o.id, label: o.orderNumber)).toList(),
+                    selectedValue: selectedOrderId,
+                    onChanged: (v) => setDialogState(() => selectedOrderId = v),
+                    showSearch: true,
+                  ),
+                  AppSpacing.gapH12,
+                  PosTextField(
+                    controller: amountController,
+                    label: l10n.debitsAllocateAmount,
+                    hint: debit.remainingBalance.toStringAsFixed(2),
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  ),
+                  AppSpacing.gapH12,
+                  PosTextField(
+                    controller: notesController,
+                    label: l10n.commonNotesOptional,
+                    hint: l10n.commonNotesOptional,
+                    maxLines: 2,
+                  ),
+                ],
               ),
-              AppSpacing.gapH12,
-              PosTextField(
-                controller: notesController,
-                label: l10n.commonNotesOptional,
-                hint: l10n.commonNotesOptional,
-                maxLines: 2,
-              ),
+            ),
+            actions: [
+              TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
+              TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(l10n.debitsAllocate)),
             ],
-          ),
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(l10n.debitsAllocate)),
-        ],
+          );
+        },
       ),
     );
 
@@ -350,21 +369,20 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
             .read(debitsProvider.notifier)
             .allocateDebit(
               debitId: debit.id,
-              orderId: orderIdController.text.trim(),
+              orderId: selectedOrderId ?? '',
               amount: amount,
               notes: notesController.text.isNotEmpty ? notesController.text : null,
             );
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.debitsAllocatedSuccess)));
+          showPosSuccessSnackbar(context, l10n.debitsAllocatedSuccess);
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }
 
-    orderIdController.dispose();
     amountController.dispose();
     notesController.dispose();
   }
@@ -407,11 +425,11 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
             .read(debitsProvider.notifier)
             .reverseDebit(debit.id, reason: reasonController.text.isNotEmpty ? reasonController.text : null);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.debitsReversedSuccess)));
+          showPosSuccessSnackbar(context, l10n.debitsReversedSuccess);
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }
@@ -421,31 +439,24 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
 
   Future<void> _handleDelete(Debit debit) async {
     final l10n = AppLocalizations.of(context)!;
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.delete),
-        content: Text(l10n.debitsDeleteConfirm),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: Text(l10n.delete),
-          ),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.delete,
+      message: l10n.debitsDeleteConfirm,
+      confirmLabel: l10n.delete,
+      cancelLabel: l10n.cancel,
+      isDanger: true,
     );
 
     if (confirmed == true && mounted) {
       try {
         await ref.read(debitsProvider.notifier).deleteDebit(debit.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.debitsDeletedSuccess)));
+          showPosSuccessSnackbar(context, l10n.debitsDeletedSuccess);
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }

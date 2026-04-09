@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
@@ -85,21 +86,24 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
                   ),
                 ),
                 const SizedBox(width: 12),
-                DropdownButton<String?>(
-                  value: _selectedChannel,
-                  hint: const Text('Channel'),
-                  items: const [
-                    DropdownMenuItem(value: null, child: Text('All')),
-                    DropdownMenuItem(value: 'push', child: Text('Push')),
-                    DropdownMenuItem(value: 'email', child: Text('Email')),
-                    DropdownMenuItem(value: 'sms', child: Text('SMS')),
-                    DropdownMenuItem(value: 'in_app', child: Text('In-App')),
-                    DropdownMenuItem(value: 'whatsapp', child: Text('WhatsApp')),
-                  ],
-                  onChanged: (v) {
-                    setState(() => _selectedChannel = v);
-                    _search();
-                  },
+                Expanded(
+                  child: PosSearchableDropdown<String>(
+                    items: [
+                      PosDropdownItem(value: 'push', label: 'Push'),
+                      PosDropdownItem(value: 'email', label: 'Email'),
+                      PosDropdownItem(value: 'sms', label: 'SMS'),
+                      PosDropdownItem(value: 'in_app', label: 'In-App'),
+                      PosDropdownItem(value: 'whatsapp', label: 'WhatsApp'),
+                    ],
+                    selectedValue: _selectedChannel,
+                    onChanged: (v) {
+                      setState(() => _selectedChannel = v);
+                      _search();
+                    },
+                    hint: 'Channel',
+                    showSearch: false,
+                    clearable: true,
+                  ),
                 ),
               ],
             ),

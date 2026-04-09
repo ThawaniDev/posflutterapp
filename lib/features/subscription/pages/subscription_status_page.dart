@@ -37,12 +37,12 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
     // Listen for action results
     ref.listen<SubscriptionState>(subscriptionProvider, (prev, next) {
       if (next is SubscriptionActionSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.success));
+        showPosSuccessSnackbar(context, next.message);
         // Reload data
         ref.read(subscriptionProvider.notifier).loadCurrent();
         ref.read(usageProvider.notifier).loadUsage();
       } else if (next is SubscriptionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, next.message);
       }
     });
 

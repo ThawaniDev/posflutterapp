@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
@@ -76,22 +77,25 @@ class _AdminArticleListPageState extends ConsumerState<AdminArticleListPage> {
                   ),
                 ),
                 const SizedBox(width: 12),
-                DropdownButton<String?>(
-                  value: _selectedCategory,
-                  hint: const Text('Category'),
-                  items: const [
-                    DropdownMenuItem(value: null, child: Text('All')),
-                    DropdownMenuItem(value: 'getting_started', child: Text('Getting Started')),
-                    DropdownMenuItem(value: 'pos_usage', child: Text('POS Usage')),
-                    DropdownMenuItem(value: 'inventory', child: Text('Inventory')),
-                    DropdownMenuItem(value: 'delivery', child: Text('Delivery')),
-                    DropdownMenuItem(value: 'billing', child: Text('Billing')),
-                    DropdownMenuItem(value: 'troubleshooting', child: Text('Troubleshooting')),
-                  ],
-                  onChanged: (v) {
-                    setState(() => _selectedCategory = v);
-                    _search();
-                  },
+                Expanded(
+                  child: PosSearchableDropdown<String>(
+                    items: [
+                      PosDropdownItem(value: 'getting_started', label: 'Getting Started'),
+                      PosDropdownItem(value: 'pos_usage', label: 'POS Usage'),
+                      PosDropdownItem(value: 'inventory', label: 'Inventory'),
+                      PosDropdownItem(value: 'delivery', label: 'Delivery'),
+                      PosDropdownItem(value: 'billing', label: 'Billing'),
+                      PosDropdownItem(value: 'troubleshooting', label: 'Troubleshooting'),
+                    ],
+                    selectedValue: _selectedCategory,
+                    onChanged: (v) {
+                      setState(() => _selectedCategory = v);
+                      _search();
+                    },
+                    hint: 'Category',
+                    showSearch: false,
+                    clearable: true,
+                  ),
                 ),
               ],
             ),

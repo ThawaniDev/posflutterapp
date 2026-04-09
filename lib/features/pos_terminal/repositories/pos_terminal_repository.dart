@@ -66,6 +66,7 @@ class PosTerminalRepository {
   Future<void> deleteHeldCart(String id) => _apiService.deleteHeldCart(id);
 
   // Terminals (Registers)
+  Future<List<Register>> listActiveRegisters() => _apiService.listActiveRegisters();
   Future<PaginatedResult<Register>> listTerminals({int page = 1, int perPage = 20, String? search}) =>
       _apiService.listTerminals(page: page, perPage: perPage, search: search);
   Future<Register> createTerminal(Map<String, dynamic> data) => _apiService.createTerminal(data);

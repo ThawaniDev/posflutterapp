@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_card.dart';
-import 'package:thawani_pos/core/widgets/pos_input.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/support/providers/support_providers.dart';
 import 'package:thawani_pos/features/support/providers/support_state.dart';
 
@@ -50,11 +49,11 @@ class _CreateTicketPageState extends ConsumerState<CreateTicketPage> {
 
     ref.listen<TicketActionState>(ticketActionProvider, (prev, next) {
       if (next is TicketActionSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.success));
+        showPosSuccessSnackbar(context, next.message);
         ref.read(ticketActionProvider.notifier).reset();
         context.pop();
       } else if (next is TicketActionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, next.message);
       }
     });
 
@@ -72,30 +71,32 @@ class _CreateTicketPageState extends ConsumerState<CreateTicketPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  PosDropdown<String>(
+                  PosSearchableDropdown<String>(
                     label: l10n.supportCategory,
-                    value: _category,
                     items: [
-                      DropdownMenuItem(value: 'general', child: Text(l10n.supportCategoryGeneral)),
-                      DropdownMenuItem(value: 'billing', child: Text(l10n.supportCategoryBilling)),
-                      DropdownMenuItem(value: 'technical', child: Text(l10n.supportCategoryTechnical)),
-                      DropdownMenuItem(value: 'zatca', child: Text(l10n.supportCategoryZatca)),
-                      DropdownMenuItem(value: 'feature_request', child: Text(l10n.supportCategoryFeatureRequest)),
-                      DropdownMenuItem(value: 'hardware', child: Text(l10n.supportCategoryHardware)),
+                      PosDropdownItem(value: 'general', label: l10n.supportCategoryGeneral),
+                      PosDropdownItem(value: 'billing', label: l10n.supportCategoryBilling),
+                      PosDropdownItem(value: 'technical', label: l10n.supportCategoryTechnical),
+                      PosDropdownItem(value: 'zatca', label: l10n.supportCategoryZatca),
+                      PosDropdownItem(value: 'feature_request', label: l10n.supportCategoryFeatureRequest),
+                      PosDropdownItem(value: 'hardware', label: l10n.supportCategoryHardware),
                     ],
+                    selectedValue: _category,
                     onChanged: (v) => setState(() => _category = v!),
+                    showSearch: false,
                   ),
                   AppSpacing.gapH16,
-                  PosDropdown<String>(
+                  PosSearchableDropdown<String>(
                     label: l10n.supportPriority,
-                    value: _priority,
                     items: [
-                      DropdownMenuItem(value: 'low', child: Text(l10n.supportPriorityLow)),
-                      DropdownMenuItem(value: 'medium', child: Text(l10n.supportPriorityMedium)),
-                      DropdownMenuItem(value: 'high', child: Text(l10n.supportPriorityHigh)),
-                      DropdownMenuItem(value: 'critical', child: Text(l10n.supportPriorityCritical)),
+                      PosDropdownItem(value: 'low', label: l10n.supportPriorityLow),
+                      PosDropdownItem(value: 'medium', label: l10n.supportPriorityMedium),
+                      PosDropdownItem(value: 'high', label: l10n.supportPriorityHigh),
+                      PosDropdownItem(value: 'critical', label: l10n.supportPriorityCritical),
                     ],
+                    selectedValue: _priority,
                     onChanged: (v) => setState(() => _priority = v!),
+                    showSearch: false,
                   ),
                 ],
               ),

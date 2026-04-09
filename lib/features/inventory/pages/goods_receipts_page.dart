@@ -7,6 +7,7 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/inventory/models/goods_receipt.dart';
 import 'package:thawani_pos/features/inventory/enums/goods_receipt_status.dart';
 import 'package:thawani_pos/features/inventory/providers/inventory_providers.dart';
@@ -28,27 +29,23 @@ class _GoodsReceiptsPageState extends ConsumerState<GoodsReceiptsPage> {
 
   Future<void> _handleConfirm(GoodsReceipt receipt) async {
     final l10n = AppLocalizations.of(context)!;
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.inventoryConfirmReceiptTitle),
-        content: Text(l10n.goodsReceiptConfirm(receipt.referenceNumber ?? receipt.id)),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonCancel)),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(l10n.inventoryConfirmReceiptTitle)),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.inventoryConfirmReceiptTitle,
+      message: l10n.goodsReceiptConfirm(receipt.referenceNumber ?? receipt.id),
+      confirmLabel: l10n.inventoryConfirmReceiptTitle,
+      cancelLabel: l10n.commonCancel,
     );
 
     if (confirmed == true && mounted) {
       try {
         await ref.read(goodsReceiptsProvider.notifier).confirmReceipt(receipt.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryReceiptConfirmedMsg)));
+          showPosSuccessSnackbar(context, l10n.inventoryReceiptConfirmedMsg);
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }

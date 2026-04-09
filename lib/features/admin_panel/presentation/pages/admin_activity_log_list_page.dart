@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/widgets.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -74,28 +75,24 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
                   ),
                 ),
                 const SizedBox(width: 12),
-                DropdownButton<String>(
-                  value: _actionFilter,
-                  hint: const Text('Action'),
-                  items: const [
-                    DropdownMenuItem(value: 'login', child: Text('Login')),
-                    DropdownMenuItem(value: 'create', child: Text('Create')),
-                    DropdownMenuItem(value: 'update', child: Text('Update')),
-                    DropdownMenuItem(value: 'delete', child: Text('Delete')),
-                  ],
-                  onChanged: (v) {
-                    setState(() => _actionFilter = v);
-                    _applyFilters();
-                  },
-                ),
-                if (_actionFilter != null)
-                  IconButton(
-                    icon: const Icon(Icons.clear, size: 18),
-                    onPressed: () {
-                      setState(() => _actionFilter = null);
+                Expanded(
+                  child: PosSearchableDropdown<String>(
+                    items: [
+                      PosDropdownItem(value: 'login', label: 'Login'),
+                      PosDropdownItem(value: 'create', label: 'Create'),
+                      PosDropdownItem(value: 'update', label: 'Update'),
+                      PosDropdownItem(value: 'delete', label: 'Delete'),
+                    ],
+                    selectedValue: _actionFilter,
+                    onChanged: (v) {
+                      setState(() => _actionFilter = v);
                       _applyFilters();
                     },
+                    hint: 'Action',
+                    showSearch: false,
+                    clearable: true,
                   ),
+                ),
               ],
             ),
           ),

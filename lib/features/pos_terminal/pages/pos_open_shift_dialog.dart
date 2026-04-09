@@ -6,9 +6,9 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/pos_terminal/models/register.dart';
 import 'package:thawani_pos/features/pos_terminal/providers/pos_cashier_providers.dart';
 import 'package:thawani_pos/features/pos_terminal/providers/pos_terminal_providers.dart';
-import 'package:thawani_pos/features/pos_terminal/providers/pos_terminal_state.dart';
 
 class PosOpenShiftDialog extends ConsumerStatefulWidget {
   const PosOpenShiftDialog({super.key});
@@ -26,9 +26,8 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      ref.read(terminalsProvider.notifier).load();
-    });
+    // Invalidate so we get a fresh list of active registers
+    Future.microtask(() => ref.invalidate(activeRegistersProvider));
   }
 
   @override
@@ -68,7 +67,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final terminalsState = ref.watch(terminalsProvider);
+    final registersAsync = ref.watch(activeRegistersProvider);
 
     return Dialog(
       insetPadding: const EdgeInsets.all(24),
@@ -115,7 +114,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
                 style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
               ),
               AppSpacing.gapH4,
-              _buildRegisterDropdown(terminalsState, isDark),
+              _buildRegisterDropdown(registersAsync, isDark),
               AppSpacing.gapH16,
 
               // Opening cash
@@ -209,39 +208,49 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
     );
   }
 
-  Widget _buildRegisterDropdown(TerminalsState terminalsState, bool isDark) {
-    final terminals = terminalsState is TerminalsLoaded ? terminalsState.terminals : [];
-    final isLoading = terminalsState is TerminalsLoading;
-
-    if (isLoading) {
-      return Container(
+  Widget _buildRegisterDropdown(AsyncValue<List<Register>> registersAsync, bool isDark) {
+    return registersAsync.when(
+      loading: () => Container(
         padding: AppSpacing.paddingAll12,
         child: const Center(child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))),
-      );
-    }
-
-    if (terminals.isEmpty) {
-      return Container(
+      ),
+      error: (e, _) => Container(
         padding: AppSpacing.paddingAll12,
-        decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.08), borderRadius: AppRadius.borderMd),
+        decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.08), borderRadius: AppRadius.borderMd),
         child: Row(
           children: [
-            const Icon(Icons.warning_amber_rounded, color: AppColors.warning, size: 18),
+            const Icon(Icons.error_outline, color: AppColors.error, size: 18),
             AppSpacing.gapW8,
-            Expanded(child: Text(AppLocalizations.of(context)!.posNoRegistersFound, style: AppTypography.bodySmall)),
+            Expanded(
+              child: Text(e.toString(), style: AppTypography.bodySmall.copyWith(color: AppColors.error)),
+            ),
           ],
         ),
-      );
-    }
-
-    return DropdownButtonFormField<String>(
-      value: _selectedRegisterId,
-      decoration: const InputDecoration(contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10), isDense: true),
-      hint: Text(AppLocalizations.of(context)!.posSelectRegister),
-      items: terminals.map((t) {
-        return DropdownMenuItem<String>(value: t.id, child: Text(t.name));
-      }).toList(),
-      onChanged: (val) => setState(() => _selectedRegisterId = val),
+      ),
+      data: (registers) {
+        if (registers.isEmpty) {
+          return Container(
+            padding: AppSpacing.paddingAll12,
+            decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.08), borderRadius: AppRadius.borderMd),
+            child: Row(
+              children: [
+                const Icon(Icons.warning_amber_rounded, color: AppColors.warning, size: 18),
+                AppSpacing.gapW8,
+                Expanded(child: Text(AppLocalizations.of(context)!.posNoRegistersFound, style: AppTypography.bodySmall)),
+              ],
+            ),
+          );
+        }
+        return PosSearchableDropdown<String>(
+          label: AppLocalizations.of(context)!.posSelectRegister,
+          items: registers.map((t) {
+            return PosDropdownItem<String>(value: t.id, label: t.name);
+          }).toList(),
+          selectedValue: _selectedRegisterId,
+          onChanged: (val) => setState(() => _selectedRegisterId = val),
+          showSearch: true,
+        );
+      },
     );
   }
 }

@@ -5,6 +5,9 @@ import '../../../core/widgets/widgets.dart';
 import '../enums/flower_subscription_frequency.dart';
 import '../models/flower_subscription.dart';
 import '../providers/florist_providers.dart';
+import 'package:thawani_pos/features/customers/models/customer.dart';
+import 'package:thawani_pos/features/customers/providers/customer_providers.dart';
+import 'package:thawani_pos/features/customers/providers/customer_state.dart';
 
 class SubscriptionFormPage extends ConsumerStatefulWidget {
   final FlowerSubscription? subscription;
@@ -19,7 +22,7 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
   bool _saving = false;
   bool get _isEditing => widget.subscription != null;
 
-  late final TextEditingController _customerIdCtrl;
+  String? _selectedCustomerId;
   late final TextEditingController _arrangementTemplateIdCtrl;
   late final TextEditingController _deliveryDayCtrl;
   late final TextEditingController _deliveryAddressCtrl;
@@ -31,7 +34,7 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
   void initState() {
     super.initState();
     final s = widget.subscription;
-    _customerIdCtrl = TextEditingController(text: s?.customerId ?? '');
+    _selectedCustomerId = s?.customerId;
     _arrangementTemplateIdCtrl = TextEditingController(text: s?.arrangementTemplateId ?? '');
     _deliveryDayCtrl = TextEditingController(text: s?.deliveryDay ?? '');
     _deliveryAddressCtrl = TextEditingController(text: s?.deliveryAddress ?? '');
@@ -40,11 +43,11 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
       _frequency = s.frequency;
       _nextDeliveryDate = s.nextDeliveryDate;
     }
+    Future.microtask(() => ref.read(customersProvider.notifier).load());
   }
 
   @override
   void dispose() {
-    _customerIdCtrl.dispose();
     _arrangementTemplateIdCtrl.dispose();
     _deliveryDayCtrl.dispose();
     _deliveryAddressCtrl.dispose();
@@ -67,7 +70,7 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
     setState(() => _saving = true);
 
     final data = <String, dynamic>{
-      'customer_id': _customerIdCtrl.text.trim(),
+      'customer_id': _selectedCustomerId ?? '',
       'frequency': _frequency.value,
       'delivery_address': _deliveryAddressCtrl.text.trim(),
       'price_per_delivery': double.parse(_pricePerDeliveryCtrl.text.trim()),
@@ -89,6 +92,8 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final customersState = ref.watch(customersProvider);
+    final customers = customersState is CustomersLoaded ? customersState.customers : <Customer>[];
     return Scaffold(
       appBar: AppBar(title: Text(_isEditing ? 'Edit Subscription' : 'New Subscription')),
       bottomNavigationBar: Padding(
@@ -105,7 +110,13 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            PosTextField(controller: _customerIdCtrl, label: 'Customer ID', hint: 'Select customer'),
+            PosSearchableDropdown<String>(
+              label: 'Customer',
+              items: customers.map((c) => PosDropdownItem(value: c.id, label: c.name)).toList(),
+              selectedValue: _selectedCustomerId,
+              onChanged: (v) => setState(() => _selectedCustomerId = v),
+              showSearch: true,
+            ),
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _arrangementTemplateIdCtrl,
@@ -113,21 +124,19 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
               hint: 'Select template arrangement',
             ),
             SizedBox(height: AppSpacing.md),
-            PosDropdown<FlowerSubscriptionFrequency>(
+            PosSearchableDropdown<FlowerSubscriptionFrequency>(
               label: 'Frequency',
-              hint: 'Select frequency',
-              value: _frequency,
+              items: FlowerSubscriptionFrequency.values.map((f) => PosDropdownItem(value: f, label: f.value)).toList(),
+              selectedValue: _frequency,
               onChanged: (v) {
                 if (v != null) setState(() => _frequency = v);
               },
-              items: FlowerSubscriptionFrequency.values.map((f) => DropdownMenuItem(value: f, child: Text(f.value))).toList(),
+              showSearch: false,
+              clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
-            PosDropdown<String>(
+            PosSearchableDropdown<String>(
               label: 'Delivery Day',
-              hint: 'Preferred day',
-              value: _deliveryDayCtrl.text.isEmpty ? null : _deliveryDayCtrl.text,
-              onChanged: (v) => setState(() => _deliveryDayCtrl.text = v ?? ''),
               items: [
                 'monday',
                 'tuesday',
@@ -136,7 +145,11 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
                 'friday',
                 'saturday',
                 'sunday',
-              ].map((d) => DropdownMenuItem(value: d, child: Text(d[0].toUpperCase() + d.substring(1)))).toList(),
+              ].map((d) => PosDropdownItem(value: d, label: d[0].toUpperCase() + d.substring(1))).toList(),
+              selectedValue: _deliveryDayCtrl.text.isEmpty ? null : _deliveryDayCtrl.text,
+              onChanged: (v) => setState(() => _deliveryDayCtrl.text = v ?? ''),
+              showSearch: false,
+              clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
             PosTextField(controller: _deliveryAddressCtrl, label: 'Delivery Address', hint: 'Full delivery address', maxLines: 2),

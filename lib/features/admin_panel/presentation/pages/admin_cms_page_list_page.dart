@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
@@ -76,19 +77,22 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
                   ),
                 ),
                 const SizedBox(width: 12),
-                DropdownButton<String?>(
-                  value: _selectedType,
-                  hint: const Text('Type'),
-                  items: const [
-                    DropdownMenuItem(value: null, child: Text('All Types')),
-                    DropdownMenuItem(value: 'legal', child: Text('Legal')),
-                    DropdownMenuItem(value: 'marketing', child: Text('Marketing')),
-                    DropdownMenuItem(value: 'general', child: Text('General')),
-                  ],
-                  onChanged: (v) {
-                    setState(() => _selectedType = v);
-                    _search();
-                  },
+                Expanded(
+                  child: PosSearchableDropdown<String>(
+                    items: [
+                      PosDropdownItem(value: 'legal', label: 'Legal'),
+                      PosDropdownItem(value: 'marketing', label: 'Marketing'),
+                      PosDropdownItem(value: 'general', label: 'General'),
+                    ],
+                    selectedValue: _selectedType,
+                    onChanged: (v) {
+                      setState(() => _selectedType = v);
+                      _search();
+                    },
+                    hint: 'Type',
+                    showSearch: false,
+                    clearable: true,
+                  ),
                 ),
               ],
             ),

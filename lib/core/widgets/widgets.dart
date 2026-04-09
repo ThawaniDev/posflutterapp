@@ -16,6 +16,7 @@ export 'pos_input.dart';
 export 'pos_loading_skeleton.dart';
 export 'pos_mobile_data_list.dart';
 export 'pos_scaffold.dart';
+export 'pos_searchable_dropdown.dart';
 export 'pos_sidebar.dart';
 export 'pos_status_badge.dart';
 export 'pos_table.dart';

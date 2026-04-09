@@ -6,6 +6,9 @@ import '../enums/making_charges_type.dart';
 import '../enums/metal_type.dart';
 import '../models/jewelry_product_detail.dart';
 import '../providers/jewelry_providers.dart';
+import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
 
 class ProductDetailFormPage extends ConsumerStatefulWidget {
   final JewelryProductDetail? detail;
@@ -20,7 +23,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
   bool _saving = false;
   bool get _isEditing => widget.detail != null;
 
-  late final TextEditingController _productIdCtrl;
+  String? _selectedProductId;
   late final TextEditingController _karatCtrl;
   late final TextEditingController _grossWeightCtrl;
   late final TextEditingController _netWeightCtrl;
@@ -37,7 +40,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
   void initState() {
     super.initState();
     final d = widget.detail;
-    _productIdCtrl = TextEditingController(text: d?.productId ?? '');
+    _selectedProductId = d?.productId;
     _karatCtrl = TextEditingController(text: d?.karat ?? '');
     _grossWeightCtrl = TextEditingController(text: d?.grossWeightG.toStringAsFixed(2) ?? '');
     _netWeightCtrl = TextEditingController(text: d?.netWeightG.toStringAsFixed(2) ?? '');
@@ -50,11 +53,11 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
       _metalType = d.metalType;
       _makingChargesType = d.makingChargesType;
     }
+    Future.microtask(() => ref.read(productsProvider.notifier).load());
   }
 
   @override
   void dispose() {
-    _productIdCtrl.dispose();
     _karatCtrl.dispose();
     _grossWeightCtrl.dispose();
     _netWeightCtrl.dispose();
@@ -71,7 +74,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
     setState(() => _saving = true);
 
     final data = <String, dynamic>{
-      'product_id': _productIdCtrl.text.trim(),
+      'product_id': _selectedProductId ?? '',
       'metal_type': _metalType.value,
       'gross_weight_g': double.parse(_grossWeightCtrl.text.trim()),
       'net_weight_g': double.parse(_netWeightCtrl.text.trim()),
@@ -97,6 +100,8 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final productsState = ref.watch(productsProvider);
+    final products = productsState is ProductsLoaded ? productsState.products : <Product>[];
     return Scaffold(
       appBar: AppBar(title: Text(_isEditing ? 'Edit Product Detail' : 'New Jewelry Detail')),
       bottomNavigationBar: Padding(
@@ -113,18 +118,25 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            PosTextField(controller: _productIdCtrl, label: 'Product ID', hint: 'Select product', readOnly: _isEditing),
+            PosSearchableDropdown<String>(
+              label: 'Product',
+              items: products.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
+              selectedValue: _selectedProductId,
+              onChanged: _isEditing ? null : (v) => setState(() => _selectedProductId = v),
+              showSearch: true,
+            ),
             SizedBox(height: AppSpacing.md),
-            PosDropdown<MetalType>(
+            PosSearchableDropdown<MetalType>(
               label: 'Metal Type',
-              hint: 'Select metal',
-              value: _metalType,
+              items: MetalType.values
+                  .map((m) => PosDropdownItem(value: m, label: m.value[0].toUpperCase() + m.value.substring(1)))
+                  .toList(),
+              selectedValue: _metalType,
               onChanged: (v) {
                 if (v != null) setState(() => _metalType = v);
               },
-              items: MetalType.values
-                  .map((m) => DropdownMenuItem(value: m, child: Text(m.value[0].toUpperCase() + m.value.substring(1))))
-                  .toList(),
+              showSearch: false,
+              clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
             PosTextField(controller: _karatCtrl, label: 'Karat', hint: 'e.g. 24K, 22K, 18K'),
@@ -151,14 +163,15 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
               ],
             ),
             SizedBox(height: AppSpacing.md),
-            PosDropdown<MakingChargesType>(
+            PosSearchableDropdown<MakingChargesType>(
               label: 'Making Charges Type',
-              hint: 'Select type',
-              value: _makingChargesType,
-              onChanged: (v) => setState(() => _makingChargesType = v),
               items: MakingChargesType.values
-                  .map((t) => DropdownMenuItem(value: t, child: Text(t.value[0].toUpperCase() + t.value.substring(1))))
+                  .map((t) => PosDropdownItem(value: t, label: t.value[0].toUpperCase() + t.value.substring(1)))
                   .toList(),
+              selectedValue: _makingChargesType,
+              onChanged: (v) => setState(() => _makingChargesType = v),
+              showSearch: false,
+              clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
             PosTextField(

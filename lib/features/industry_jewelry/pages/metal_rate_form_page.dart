@@ -84,16 +84,17 @@ class _MetalRateFormPageState extends ConsumerState<MetalRateFormPage> {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            PosDropdown<MetalType>(
+            PosSearchableDropdown<MetalType>(
               label: 'Metal Type',
-              hint: 'Select metal',
-              value: _metalType,
+              items: MetalType.values
+                  .map((m) => PosDropdownItem(value: m, label: m.value[0].toUpperCase() + m.value.substring(1)))
+                  .toList(),
+              selectedValue: _metalType,
               onChanged: (v) {
                 if (v != null) setState(() => _metalType = v);
               },
-              items: MetalType.values
-                  .map((m) => DropdownMenuItem(value: m, child: Text(m.value[0].toUpperCase() + m.value.substring(1))))
-                  .toList(),
+              showSearch: false,
+              clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
             PosTextField(controller: _karatCtrl, label: 'Karat (optional)', hint: 'e.g. 24K, 22K, 18K'),

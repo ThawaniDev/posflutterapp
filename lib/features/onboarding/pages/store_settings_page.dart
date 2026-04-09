@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/onboarding/models/store_settings.dart';
 import 'package:thawani_pos/features/onboarding/providers/store_onboarding_providers.dart';
 import 'package:thawani_pos/features/onboarding/providers/store_onboarding_state.dart';
@@ -136,11 +138,11 @@ class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
       await ref.read(storeSettingsProvider(widget.storeId).notifier).update(data);
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Settings saved successfully.')));
+        showPosSuccessSnackbar(context, AppLocalizations.of(context)!.settingsSavedSuccessfully);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error saving: $e')));
+        showPosErrorSnackbar(context, AppLocalizations.of(context)!.genericErrorSaving(e.toString()));
       }
     } finally {
       if (mounted) setState(() => _isSaving = false);

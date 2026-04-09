@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/features/catalog/enums/product_unit.dart';
 import 'package:thawani_pos/features/catalog/models/category.dart';
@@ -259,10 +261,11 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
     // Navigate back on save
     ref.listen(productDetailProvider(widget.productId), (prev, next) {
       if (next is ProductDetailSaved) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(_isEditing ? 'Product updated.' : 'Product created.')));
+        final l10n = AppLocalizations.of(context)!;
+        showPosSuccessSnackbar(context, _isEditing ? l10n.productUpdated : l10n.productCreated);
         context.pop();
       } else if (next is ProductDetailError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, next.message);
       }
     });
 
@@ -340,45 +343,24 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
 
         _sectionHeader('Classification'),
         // Category dropdown
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Category', style: Theme.of(context).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w600)),
-            const SizedBox(height: 4),
-            DropdownButtonFormField<String>(
-              value: _selectedCategoryId,
-              decoration: InputDecoration(
-                hintText: 'Select category',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-              ),
-              items: [
-                const DropdownMenuItem(value: null, child: Text('No category')),
-                ...categories.map((c) => DropdownMenuItem(value: c.id, child: Text(c.name))),
-              ],
-              onChanged: (value) => setState(() => _selectedCategoryId = value),
-            ),
-          ],
+        PosSearchableDropdown<String>(
+          selectedValue: _selectedCategoryId,
+          items: categories.map((c) => PosDropdownItem(value: c.id, label: c.name)).toList(),
+          onChanged: (value) => setState(() => _selectedCategoryId = value),
+          label: 'Category',
+          hint: 'Select category',
+          clearable: true,
         ),
         const SizedBox(height: AppSpacing.md),
 
         // Unit type
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Unit Type', style: Theme.of(context).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w600)),
-            const SizedBox(height: 4),
-            DropdownButtonFormField<ProductUnit>(
-              value: _selectedUnit,
-              decoration: InputDecoration(
-                hintText: 'Select unit',
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-              ),
-              items: ProductUnit.values.map((u) => DropdownMenuItem(value: u, child: Text(u.value))).toList(),
-              onChanged: (value) => setState(() => _selectedUnit = value),
-            ),
-          ],
+        PosSearchableDropdown<ProductUnit>(
+          selectedValue: _selectedUnit,
+          items: ProductUnit.values.map((u) => PosDropdownItem(value: u, label: u.value)).toList(),
+          onChanged: (value) => setState(() => _selectedUnit = value),
+          label: 'Unit Type',
+          hint: 'Select unit',
+          showSearch: false,
         ),
         const SizedBox(height: AppSpacing.lg),
 
@@ -987,11 +969,11 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
       final barcode = await ref.read(catalogRepositoryProvider).generateBarcode(widget.productId!);
       if (mounted) {
         setState(() => _barcodeController.text = barcode);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Generated barcode: $barcode')));
+        showPosInfoSnackbar(context, AppLocalizations.of(context)!.generatedBarcode(barcode));
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, e.toString());
       }
     }
   }
@@ -1096,7 +1078,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
     final available = suppliers.where((s) => !linkedIds.contains(s.id)).toList();
 
     if (available.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('All suppliers are already linked.')));
+      showPosWarningSnackbar(context, AppLocalizations.of(context)!.allSuppliersAlreadyLinked);
       return;
     }
 
@@ -1110,15 +1092,12 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                DropdownButtonFormField<String>(
-                  value: selectedSupplierId,
-                  decoration: InputDecoration(
-                    labelText: 'Supplier *',
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                  ),
-                  items: available.map((s) => DropdownMenuItem(value: s.id, child: Text(s.name))).toList(),
+                PosSearchableDropdown<String>(
+                  selectedValue: selectedSupplierId,
+                  items: available.map((s) => PosDropdownItem(value: s.id, label: s.name)).toList(),
                   onChanged: (v) => setDialogState(() => selectedSupplierId = v),
+                  label: 'Supplier *',
+                  hint: 'Select supplier',
                 ),
                 const SizedBox(height: AppSpacing.md),
                 PosTextField(controller: supplierSkuController, label: 'Supplier SKU', hint: "Supplier's product code"),

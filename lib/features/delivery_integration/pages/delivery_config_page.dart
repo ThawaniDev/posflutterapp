@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/delivery_integration/enums/delivery_config_platform.dart';
 import 'package:thawani_pos/features/delivery_integration/providers/delivery_providers.dart';
 import 'package:thawani_pos/features/delivery_integration/providers/delivery_state.dart';
@@ -295,7 +296,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
     final l10n = AppLocalizations.of(context)!;
     if (!_formKey.currentState!.validate()) return;
     if (_selectedPlatformSlug == null && !_isEditing) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.deliverySelectPlatform)));
+      showPosWarningSnackbar(context, l10n.deliverySelectPlatform);
       return;
     }
 
@@ -319,7 +320,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
 
     if (mounted) {
       setState(() => _isSaving = false);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.deliveryConfigSaved)));
+      showPosSuccessSnackbar(context, l10n.deliveryConfigSaved);
       context.pop();
     }
   }

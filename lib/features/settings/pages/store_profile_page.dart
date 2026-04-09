@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/settings/models/store_settings.dart';
 import 'package:thawani_pos/features/settings/pages/settings_sub_page.dart';
 import 'package:thawani_pos/features/settings/widgets/settings_widgets.dart';
@@ -73,9 +74,9 @@ class _StoreProfilePageState extends SettingsSubPageState<StoreProfilePage> {
               label: l10n.settingsProfileThousandSep,
               value: _thousandSeparator,
               items: const [
-                DropdownMenuItem(value: ',', child: Text(',')),
-                DropdownMenuItem(value: '.', child: Text('.')),
-                DropdownMenuItem(value: ' ', child: Text('Space')),
+                PosDropdownItem(value: ',', label: ','),
+                PosDropdownItem(value: '.', label: '.'),
+                PosDropdownItem(value: ' ', label: 'Space'),
               ],
               onChanged: (v) {
                 if (v != null) setState(() => _thousandSeparator = v);
@@ -85,8 +86,8 @@ class _StoreProfilePageState extends SettingsSubPageState<StoreProfilePage> {
               label: l10n.settingsProfileDecimalSep,
               value: _decimalSeparator,
               items: const [
-                DropdownMenuItem(value: '.', child: Text('.')),
-                DropdownMenuItem(value: ',', child: Text(',')),
+                PosDropdownItem(value: '.', label: '.'),
+                PosDropdownItem(value: ',', label: ','),
               ],
               onChanged: (v) {
                 if (v != null) setState(() => _decimalSeparator = v);

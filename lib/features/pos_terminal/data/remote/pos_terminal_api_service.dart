@@ -192,6 +192,15 @@ class PosTerminalApiService {
     await _dio.delete('${ApiEndpoints.heldCarts}/$cartId');
   }
 
+  // ─── Active Registers (for cashier shift opening) ──────────────
+
+  Future<List<Register>> listActiveRegisters() async {
+    final response = await _dio.get(ApiEndpoints.posRegisters);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final list = apiResponse.data as List;
+    return list.map((j) => Register.fromJson(j as Map<String, dynamic>)).toList();
+  }
+
   // ─── Terminals (Registers) ────────────────────────────────────
 
   Future<PaginatedResult<Register>> listTerminals({int page = 1, int perPage = 20, String? search}) async {

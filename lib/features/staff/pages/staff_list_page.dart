@@ -187,30 +187,16 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-      child: DropdownButtonFormField<String?>(
-        value: _selectedStoreId,
-        decoration: InputDecoration(
-          labelText: l10n.staffSelectStore,
-          prefixIcon: const Icon(Icons.store_outlined),
-          border: const OutlineInputBorder(),
-          filled: true,
-          fillColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-        ),
-        isExpanded: true,
-        items: [
-          DropdownMenuItem<String?>(value: null, child: Text(l10n.staffAllStores)),
-          ...stores.map(
-            (s) => DropdownMenuItem<String?>(
-              value: s.id,
-              child: Text(s.name, overflow: TextOverflow.ellipsis),
-            ),
-          ),
-        ],
+      child: PosSearchableDropdown<String>(
+        label: l10n.staffSelectStore,
+        items: stores.map((s) => PosDropdownItem<String>(value: s.id, label: s.name)).toList(),
+        selectedValue: _selectedStoreId,
         onChanged: (value) {
           setState(() => _selectedStoreId = value);
           _loadStaff();
         },
+        showSearch: true,
+        clearable: true,
       ),
     );
   }
@@ -225,34 +211,25 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
   }
 
   Future<void> _confirmDelete(BuildContext context, StaffUser staff) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) {
-        final l10n = AppLocalizations.of(context)!;
-        return AlertDialog(
-          title: Text(l10n.staffDeleteTitle),
-          content: Text('${l10n.staffDeleteConfirm} ${staff.firstName} ${staff.lastName}?'),
-          actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
-            FilledButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              style: FilledButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.error),
-              child: Text(l10n.delete),
-            ),
-          ],
-        );
-      },
+    final l10n = AppLocalizations.of(context)!;
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.staffDeleteTitle,
+      message: '${l10n.staffDeleteConfirm} ${staff.firstName} ${staff.lastName}?',
+      confirmLabel: l10n.delete,
+      cancelLabel: l10n.cancel,
+      isDanger: true,
     );
 
     if (confirmed == true && mounted) {
       try {
         await ref.read(staffListProvider.notifier).deleteStaff(staff.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context)!.staffDeleted)));
+          showPosSuccessSnackbar(context, AppLocalizations.of(context)!.staffDeleted);
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+          showPosErrorSnackbar(context, AppLocalizations.of(context)!.genericError(e.toString()));
         }
       }
     }

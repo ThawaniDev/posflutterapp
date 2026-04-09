@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -48,25 +49,22 @@ class _State extends ConsumerState<AdminInfraHealthPage> {
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.sm),
-            child: DropdownButtonFormField<String>(
-              value: _statusFilter ?? '',
-              decoration: const InputDecoration(
-                labelText: 'Status',
-                border: OutlineInputBorder(),
-                isDense: true,
-                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              ),
+            child: PosSearchableDropdown<String>(
               items: [
-                '',
-                'ok',
-                'warning',
-                'critical',
-                'unknown',
-              ].map((s) => DropdownMenuItem(value: s, child: Text(s.isEmpty ? 'All Statuses' : s.toUpperCase()))).toList(),
+                PosDropdownItem(value: 'ok', label: 'OK'),
+                PosDropdownItem(value: 'warning', label: 'WARNING'),
+                PosDropdownItem(value: 'critical', label: 'CRITICAL'),
+                PosDropdownItem(value: 'unknown', label: 'UNKNOWN'),
+              ],
+              selectedValue: _statusFilter,
               onChanged: (v) {
                 setState(() => _statusFilter = v);
                 _applyFilter();
               },
+              label: 'Status',
+              hint: 'All Statuses',
+              showSearch: false,
+              clearable: true,
             ),
           ),
           Expanded(

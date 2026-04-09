@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
@@ -12,6 +13,7 @@ class LowStockAlerts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return PosCard(
       child: Column(
@@ -21,7 +23,7 @@ class LowStockAlerts extends StatelessWidget {
             children: [
               Icon(Icons.warning_amber_rounded, color: AppColors.warning, size: 20),
               AppSpacing.gapW8,
-              Text('Low Stock Alerts', style: AppTypography.headlineSmall),
+              Text(l10n.dashboardLowStockAlerts, style: AppTypography.headlineSmall),
               const Spacer(),
               if (items.isNotEmpty)
                 Container(
@@ -37,7 +39,7 @@ class LowStockAlerts extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Center(
                 child: Text(
-                  'All items are well-stocked',
+                  l10n.dashboardAllWellStocked,
                   style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                 ),
               ),

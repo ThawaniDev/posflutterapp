@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/features/pos_terminal/models/register.dart';
 import 'package:thawani_pos/features/pos_terminal/providers/pos_terminal_state.dart';
 import 'package:thawani_pos/features/pos_terminal/repositories/pos_terminal_repository.dart';
 
@@ -168,6 +169,13 @@ String _extractError(DioException e) {
   }
   return e.message ?? 'Unknown error';
 }
+
+// ─── Active Registers Provider (for cashier shift opening) ──────
+
+final activeRegistersProvider = FutureProvider<List<Register>>((ref) async {
+  final repo = ref.watch(posTerminalRepositoryProvider);
+  return repo.listActiveRegisters();
+});
 
 // ─── Terminals Provider ─────────────────────────────────────────
 

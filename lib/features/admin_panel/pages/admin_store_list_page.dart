@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -380,6 +382,6 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
 
   void _exportStores() {
     ref.read(adminActionProvider.notifier).reset();
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Store export initiated')));
+    showPosInfoSnackbar(context, AppLocalizations.of(context)!.storeExportInitiated);
   }
 }

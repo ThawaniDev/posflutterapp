@@ -5,6 +5,9 @@ import '../../../core/widgets/widgets.dart';
 import '../enums/drug_schedule_type.dart';
 import '../models/drug_schedule.dart';
 import '../providers/pharmacy_providers.dart';
+import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
+import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
 
 class DrugScheduleFormPage extends ConsumerStatefulWidget {
   final DrugSchedule? schedule;
@@ -19,7 +22,7 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
   bool _saving = false;
   bool get _isEditing => widget.schedule != null;
 
-  late final TextEditingController _productIdCtrl;
+  String? _selectedProductId;
   late final TextEditingController _activeIngredientCtrl;
   late final TextEditingController _dosageFormCtrl;
   late final TextEditingController _strengthCtrl;
@@ -31,7 +34,7 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
   void initState() {
     super.initState();
     final s = widget.schedule;
-    _productIdCtrl = TextEditingController(text: s?.productId ?? '');
+    _selectedProductId = s?.productId;
     _activeIngredientCtrl = TextEditingController(text: s?.activeIngredient ?? '');
     _dosageFormCtrl = TextEditingController(text: s?.dosageForm ?? '');
     _strengthCtrl = TextEditingController(text: s?.strength ?? '');
@@ -40,11 +43,11 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
       _scheduleType = s.scheduleType;
       _requiresPrescription = s.requiresPrescription ?? false;
     }
+    Future.microtask(() => ref.read(productsProvider.notifier).load());
   }
 
   @override
   void dispose() {
-    _productIdCtrl.dispose();
     _activeIngredientCtrl.dispose();
     _dosageFormCtrl.dispose();
     _strengthCtrl.dispose();
@@ -57,7 +60,7 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
     setState(() => _saving = true);
 
     final data = <String, dynamic>{
-      'product_id': _productIdCtrl.text.trim(),
+      'product_id': _selectedProductId ?? '',
       'schedule_type': _scheduleType.value,
       'requires_prescription': _requiresPrescription,
       if (_activeIngredientCtrl.text.isNotEmpty) 'active_ingredient': _activeIngredientCtrl.text.trim(),
@@ -79,6 +82,8 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final productsState = ref.watch(productsProvider);
+    final products = productsState is ProductsLoaded ? productsState.products : <Product>[];
     return Scaffold(
       appBar: AppBar(title: Text(_isEditing ? 'Edit Drug Schedule' : 'New Drug Schedule')),
       bottomNavigationBar: Padding(
@@ -95,12 +100,25 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            PosTextField(controller: _productIdCtrl, label: 'Product ID', hint: 'Select product', readOnly: _isEditing),
+            PosSearchableDropdown<String>(
+              label: 'Product',
+              items: products.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
+              selectedValue: _selectedProductId,
+              onChanged: _isEditing ? null : (v) => setState(() => _selectedProductId = v),
+              showSearch: true,
+            ),
             SizedBox(height: AppSpacing.md),
-            PosDropdown<DrugScheduleType>(
+            PosSearchableDropdown<DrugScheduleType>(
               label: 'Schedule Type',
-              hint: 'Select type',
-              value: _scheduleType,
+              items: DrugScheduleType.values.map((t) {
+                final label = switch (t) {
+                  DrugScheduleType.otc => 'OTC (Over-the-Counter)',
+                  DrugScheduleType.prescriptionOnly => 'Prescription Only',
+                  DrugScheduleType.controlled => 'Controlled Substance',
+                };
+                return PosDropdownItem(value: t, label: label);
+              }).toList(),
+              selectedValue: _scheduleType,
               onChanged: (v) {
                 if (v != null) {
                   setState(() {
@@ -111,14 +129,8 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
                   });
                 }
               },
-              items: DrugScheduleType.values.map((t) {
-                final label = switch (t) {
-                  DrugScheduleType.otc => 'OTC (Over-the-Counter)',
-                  DrugScheduleType.prescriptionOnly => 'Prescription Only',
-                  DrugScheduleType.controlled => 'Controlled Substance',
-                };
-                return DropdownMenuItem(value: t, child: Text(label));
-              }).toList(),
+              showSearch: false,
+              clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
             PosTextField(controller: _activeIngredientCtrl, label: 'Active Ingredient', hint: 'e.g. Paracetamol'),

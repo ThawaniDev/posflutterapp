@@ -19,6 +19,11 @@ abstract final class Permissions {
   static const ordersVoid = 'orders.void';
   static const ordersReturn = 'orders.return';
 
+  // ── Transactions ─────────────────────────────────────
+  static const transactionsView = 'transactions.view';
+  static const transactionsExport = 'transactions.export';
+  static const transactionsVoid = 'transactions.void';
+
   // ── Products ─────────────────────────────────────────
   static const productsView = 'products.view';
   static const productsManage = 'products.manage';
@@ -233,6 +238,8 @@ abstract final class Permissions {
     posVoidTransaction, posReturn, posHoldRecall, posManageTerminals,
     // orders
     ordersView, ordersManage, ordersUpdateStatus, ordersVoid, ordersReturn,
+    // transactions
+    transactionsView, transactionsExport, transactionsVoid,
     // products
     productsView, productsManage, productsManageCategories,
     productsManageSuppliers, productsManagePricing, productsUsePredefined,

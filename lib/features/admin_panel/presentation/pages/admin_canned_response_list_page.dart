@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/widgets/widgets.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -82,25 +83,23 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
-                  child: DropdownButtonFormField<String>(
-                    value: _categoryFilter,
-                    decoration: const InputDecoration(
-                      labelText: 'Category',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                    ),
-                    items: const [
-                      DropdownMenuItem(value: null, child: Text('All')),
-                      DropdownMenuItem(value: 'billing', child: Text('Billing')),
-                      DropdownMenuItem(value: 'technical', child: Text('Technical')),
-                      DropdownMenuItem(value: 'zatca', child: Text('ZATCA')),
-                      DropdownMenuItem(value: 'feature_request', child: Text('Feature')),
-                      DropdownMenuItem(value: 'general', child: Text('General')),
+                  child: PosSearchableDropdown<String>(
+                    items: [
+                      PosDropdownItem(value: 'billing', label: 'Billing'),
+                      PosDropdownItem(value: 'technical', label: 'Technical'),
+                      PosDropdownItem(value: 'zatca', label: 'ZATCA'),
+                      PosDropdownItem(value: 'feature_request', label: 'Feature'),
+                      PosDropdownItem(value: 'general', label: 'General'),
                     ],
+                    selectedValue: _categoryFilter,
                     onChanged: (v) {
                       setState(() => _categoryFilter = v);
                       _applyFilters();
                     },
+                    label: 'Category',
+                    hint: 'All',
+                    showSearch: false,
+                    clearable: true,
                   ),
                 ),
               ],

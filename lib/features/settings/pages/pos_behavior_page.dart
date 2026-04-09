@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/settings/models/store_settings.dart';
 import 'package:thawani_pos/features/settings/pages/settings_sub_page.dart';
 import 'package:thawani_pos/features/settings/widgets/settings_widgets.dart';
@@ -105,9 +106,9 @@ class _PosBehaviorPageState extends SettingsSubPageState<PosBehaviorPage> {
               label: l10n.settingsPosDefaultSaleType,
               value: _defaultSaleType,
               items: [
-                DropdownMenuItem(value: 'dine_in', child: Text(l10n.settingsPosDineIn)),
-                DropdownMenuItem(value: 'takeaway', child: Text(l10n.settingsPosTakeaway)),
-                DropdownMenuItem(value: 'delivery', child: Text(l10n.settingsPosDelivery)),
+                PosDropdownItem(value: 'dine_in', label: l10n.settingsPosDineIn),
+                PosDropdownItem(value: 'takeaway', label: l10n.settingsPosTakeaway),
+                PosDropdownItem(value: 'delivery', label: l10n.settingsPosDelivery),
               ],
               onChanged: (v) {
                 if (v != null) setState(() => _defaultSaleType = v);
@@ -304,9 +305,9 @@ class _PosBehaviorPageState extends SettingsSubPageState<PosBehaviorPage> {
               label: l10n.settingsPosTheme,
               value: _themeMode,
               items: [
-                DropdownMenuItem(value: 'light', child: Text(l10n.settingsPosThemeLight)),
-                DropdownMenuItem(value: 'dark', child: Text(l10n.settingsPosThemeDark)),
-                DropdownMenuItem(value: 'system', child: Text(l10n.settingsPosThemeSystem)),
+                PosDropdownItem(value: 'light', label: l10n.settingsPosThemeLight),
+                PosDropdownItem(value: 'dark', label: l10n.settingsPosThemeDark),
+                PosDropdownItem(value: 'system', label: l10n.settingsPosThemeSystem),
               ],
               onChanged: (v) {
                 if (v != null) setState(() => _themeMode = v);

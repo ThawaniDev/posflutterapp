@@ -5,6 +5,9 @@ import '../../../core/widgets/widgets.dart';
 import '../enums/buyback_payment_method.dart';
 import '../enums/metal_type.dart';
 import '../providers/jewelry_providers.dart';
+import 'package:thawani_pos/features/staff/models/staff_user.dart';
+import 'package:thawani_pos/features/staff/providers/staff_providers.dart';
+import 'package:thawani_pos/features/staff/providers/staff_state.dart';
 
 class BuybackFormPage extends ConsumerStatefulWidget {
   const BuybackFormPage({super.key});
@@ -23,7 +26,7 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
   late final TextEditingController _karatCtrl;
   late final TextEditingController _weightCtrl;
   late final TextEditingController _ratePerGramCtrl;
-  late final TextEditingController _staffUserIdCtrl;
+  String? _selectedStaffUserId;
   late final TextEditingController _notesCtrl;
 
   @override
@@ -32,8 +35,8 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
     _karatCtrl = TextEditingController();
     _weightCtrl = TextEditingController();
     _ratePerGramCtrl = TextEditingController();
-    _staffUserIdCtrl = TextEditingController();
     _notesCtrl = TextEditingController();
+    Future.microtask(() => ref.read(staffListProvider.notifier).load());
   }
 
   @override
@@ -41,7 +44,6 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
     _karatCtrl.dispose();
     _weightCtrl.dispose();
     _ratePerGramCtrl.dispose();
-    _staffUserIdCtrl.dispose();
     _notesCtrl.dispose();
     super.dispose();
   }
@@ -63,7 +65,7 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
       'rate_per_gram': double.parse(_ratePerGramCtrl.text.trim()),
       'total_amount': _totalAmount,
       'payment_method': _paymentMethod.value,
-      'staff_user_id': _staffUserIdCtrl.text.trim(),
+      'staff_user_id': _selectedStaffUserId ?? '',
       if (_notesCtrl.text.isNotEmpty) 'notes': _notesCtrl.text.trim(),
     };
 
@@ -75,6 +77,8 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final staffState = ref.watch(staffListProvider);
+    final staffList = staffState is StaffListLoaded ? staffState.staff : <StaffUser>[];
     return Scaffold(
       appBar: AppBar(title: const Text('New Buyback')),
       bottomNavigationBar: Padding(
@@ -86,16 +90,17 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            PosDropdown<MetalType>(
+            PosSearchableDropdown<MetalType>(
               label: 'Metal Type',
-              hint: 'Select metal',
-              value: _metalType,
+              items: MetalType.values
+                  .map((m) => PosDropdownItem(value: m, label: m.value[0].toUpperCase() + m.value.substring(1)))
+                  .toList(),
+              selectedValue: _metalType,
               onChanged: (v) {
                 if (v != null) setState(() => _metalType = v);
               },
-              items: MetalType.values
-                  .map((m) => DropdownMenuItem(value: m, child: Text(m.value[0].toUpperCase() + m.value.substring(1))))
-                  .toList(),
+              showSearch: false,
+              clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
             PosTextField(controller: _karatCtrl, label: 'Karat', hint: 'e.g. 24K, 22K, 18K'),
@@ -132,17 +137,24 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
               ),
             ),
             SizedBox(height: AppSpacing.md),
-            PosDropdown<BuybackPaymentMethod>(
+            PosSearchableDropdown<BuybackPaymentMethod>(
               label: 'Payment Method',
-              hint: 'Select method',
-              value: _paymentMethod,
+              items: BuybackPaymentMethod.values.map((m) => PosDropdownItem(value: m, label: m.value)).toList(),
+              selectedValue: _paymentMethod,
               onChanged: (v) {
                 if (v != null) setState(() => _paymentMethod = v);
               },
-              items: BuybackPaymentMethod.values.map((m) => DropdownMenuItem(value: m, child: Text(m.value))).toList(),
+              showSearch: false,
+              clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _staffUserIdCtrl, label: 'Staff User ID', hint: 'Assessing staff member'),
+            PosSearchableDropdown<String>(
+              label: 'Staff Member',
+              items: staffList.map((s) => PosDropdownItem(value: s.id, label: '${s.firstName} ${s.lastName}')).toList(),
+              selectedValue: _selectedStaffUserId,
+              onChanged: (v) => setState(() => _selectedStaffUserId = v),
+              showSearch: true,
+            ),
             SizedBox(height: AppSpacing.md),
             PosTextField(controller: _notesCtrl, label: 'Notes (optional)', hint: 'Additional details...', maxLines: 3),
           ],

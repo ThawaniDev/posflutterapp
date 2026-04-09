@@ -6,6 +6,7 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/branches/models/store.dart';
 import 'package:thawani_pos/features/branches/providers/branch_providers.dart';
 import 'package:thawani_pos/features/branches/providers/branch_state.dart';
@@ -60,16 +61,13 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
         ? l10n.inventoryReceive
         : l10n.commonCancel;
 
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.stockTransferActionTitle(actionLabel)),
-        content: Text(msg),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonCancel)),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(actionLabel)),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.stockTransferActionTitle(actionLabel),
+      message: msg,
+      confirmLabel: actionLabel,
+      cancelLabel: l10n.commonCancel,
+      isDanger: action == 'cancel',
     );
 
     if (confirmed != true || !mounted) return;
@@ -84,11 +82,11 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
         await notifier.cancelTransfer(transfer.id);
       }
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.stockTransferActionSuccess(action))));
+        showPosSuccessSnackbar(context, l10n.stockTransferActionSuccess(action));
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, e.toString());
       }
     }
   }
@@ -216,30 +214,36 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      DropdownButtonFormField<String>(
-                        value: selectedFromStoreId,
-                        decoration: InputDecoration(labelText: l10n.inventoryFromStore),
-                        isExpanded: true,
-                        items: branches.map((b) => DropdownMenuItem(value: b.id, child: Text(b.name))).toList(),
+                      PosSearchableDropdown<String>(
+                        items: branches.map((b) => PosDropdownItem(value: b.id, label: b.name)).toList(),
+                        selectedValue: selectedFromStoreId,
                         onChanged: (v) => setDialogState(() => selectedFromStoreId = v),
+                        label: l10n.inventoryFromStore,
+                        hint: l10n.inventoryFromStore,
+                        showSearch: true,
+                        clearable: false,
                         validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
-                      DropdownButtonFormField<String>(
-                        value: selectedToStoreId,
-                        decoration: InputDecoration(labelText: l10n.inventoryToStore),
-                        isExpanded: true,
-                        items: branches.map((b) => DropdownMenuItem(value: b.id, child: Text(b.name))).toList(),
+                      PosSearchableDropdown<String>(
+                        items: branches.map((b) => PosDropdownItem(value: b.id, label: b.name)).toList(),
+                        selectedValue: selectedToStoreId,
                         onChanged: (v) => setDialogState(() => selectedToStoreId = v),
+                        label: l10n.inventoryToStore,
+                        hint: l10n.inventoryToStore,
+                        showSearch: true,
+                        clearable: false,
                         validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
-                      DropdownButtonFormField<String>(
-                        value: selectedProductId,
-                        decoration: InputDecoration(labelText: l10n.inventoryProduct),
-                        isExpanded: true,
-                        items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
+                      PosSearchableDropdown<String>(
+                        items: productList.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
+                        selectedValue: selectedProductId,
                         onChanged: (v) => setDialogState(() => selectedProductId = v),
+                        label: l10n.inventoryProduct,
+                        hint: l10n.inventoryProduct,
+                        showSearch: true,
+                        clearable: false,
                         validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
@@ -290,11 +294,11 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
       try {
         await ref.read(stockTransfersProvider.notifier).createTransfer(result);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryTransferCreated)));
+          showPosSuccessSnackbar(context, l10n.inventoryTransferCreated);
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }

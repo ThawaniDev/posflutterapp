@@ -323,7 +323,7 @@ class _DeliveryDashboardPageState extends ConsumerState<DeliveryDashboardPage> w
       _ => null,
     };
     if (msg != null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+      showPosInfoSnackbar(context, msg);
     }
   }
 

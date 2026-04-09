@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
@@ -13,19 +14,20 @@ class TopProductsTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return PosCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Top Products', style: AppTypography.headlineSmall),
+          Text(l10n.dashboardTopProducts, style: AppTypography.headlineSmall),
           AppSpacing.gapH12,
           if (products.isEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: Center(
                 child: Text(
-                  'No sales data yet',
+                  l10n.dashboardNoSalesData,
                   style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                 ),
               ),
@@ -53,7 +55,7 @@ class TopProductsTable extends StatelessWidget {
                           Expanded(
                             flex: 3,
                             child: Text(
-                              'Product',
+                              l10n.dashboardProduct,
                               style: AppTypography.labelSmall.copyWith(
                                 color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                               ),
@@ -62,7 +64,7 @@ class TopProductsTable extends StatelessWidget {
                           if (!isPhone)
                             Expanded(
                               child: Text(
-                                'Qty',
+                                l10n.dashboardQty,
                                 style: AppTypography.labelSmall.copyWith(
                                   color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                                 ),
@@ -71,7 +73,7 @@ class TopProductsTable extends StatelessWidget {
                             ),
                           Expanded(
                             child: Text(
-                              'Revenue',
+                              l10n.dashboardRevenue,
                               style: AppTypography.labelSmall.copyWith(
                                 color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                               ),

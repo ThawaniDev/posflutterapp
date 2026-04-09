@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -50,24 +51,21 @@ class _State extends ConsumerState<AdminFinOpsRefundListPage> {
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.sm),
-            child: DropdownButtonFormField<String>(
-              value: _statusFilter ?? '',
-              decoration: const InputDecoration(
-                labelText: 'Status',
-                border: OutlineInputBorder(),
-                isDense: true,
-                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              ),
-              items: ['', 'pending', 'completed', 'failed']
-                  .map(
-                    (s) =>
-                        DropdownMenuItem(value: s, child: Text(s.isEmpty ? 'All Statuses' : s[0].toUpperCase() + s.substring(1))),
-                  )
-                  .toList(),
+            child: PosSearchableDropdown<String>(
+              items: [
+                PosDropdownItem(value: 'pending', label: 'Pending'),
+                PosDropdownItem(value: 'completed', label: 'Completed'),
+                PosDropdownItem(value: 'failed', label: 'Failed'),
+              ],
+              selectedValue: _statusFilter,
               onChanged: (v) {
                 setState(() => _statusFilter = v);
                 _applyFilter();
               },
+              label: 'Status',
+              hint: 'All Statuses',
+              showSearch: false,
+              clearable: true,
             ),
           ),
           Expanded(

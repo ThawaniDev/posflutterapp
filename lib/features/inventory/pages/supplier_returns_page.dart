@@ -9,6 +9,7 @@ import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/inventory/enums/supplier_return_status.dart';
 import 'package:thawani_pos/features/inventory/models/supplier_return.dart';
 import 'package:thawani_pos/features/inventory/providers/inventory_providers.dart';
@@ -64,16 +65,13 @@ class _SupplierReturnsPageState extends ConsumerState<SupplierReturnsPage> {
     final notifier = ref.read(supplierReturnsProvider.notifier);
     final label = ret.referenceNumber ?? ret.id.substring(0, 8);
 
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('$action "$label"?'),
-        content: Text(l10n.supplierReturnActionConfirm(action, label)),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonCancel)),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(action)),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: '$action "$label"?',
+      message: l10n.supplierReturnActionConfirm(action, label),
+      confirmLabel: action,
+      cancelLabel: l10n.commonCancel,
+      isDanger: action == 'Cancel' || action == 'Delete',
     );
 
     if (confirmed != true || !mounted) return;
@@ -92,11 +90,11 @@ class _SupplierReturnsPageState extends ConsumerState<SupplierReturnsPage> {
           await notifier.deleteReturn(ret.id);
       }
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.supplierReturnActionSuccess(action))));
+        showPosSuccessSnackbar(context, l10n.supplierReturnActionSuccess(action));
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, e.toString());
       }
     }
   }
@@ -143,19 +141,21 @@ class _SupplierReturnsPageState extends ConsumerState<SupplierReturnsPage> {
                   ),
                 ),
                 const SizedBox(width: AppSpacing.md),
-                DropdownButton<String?>(
-                  value: _selectedStatus,
-                  hint: Text(l10n.inventoryFilterByStatus),
-                  items: [
-                    DropdownMenuItem<String?>(value: null, child: Text(l10n.inventoryAll)),
-                    ...SupplierReturnStatus.values.map(
-                      (s) => DropdownMenuItem(value: s.value, child: Text(_statusLabel(s, l10n))),
-                    ),
-                  ],
-                  onChanged: (v) {
-                    setState(() => _selectedStatus = v);
-                    ref.read(supplierReturnsProvider.notifier).filterByStatus(v);
-                  },
+                SizedBox(
+                  width: 180,
+                  child: PosSearchableDropdown<String?>(
+                    items: SupplierReturnStatus.values
+                        .map((s) => PosDropdownItem<String?>(value: s.value, label: _statusLabel(s, l10n)))
+                        .toList(),
+                    selectedValue: _selectedStatus,
+                    onChanged: (v) {
+                      setState(() => _selectedStatus = v);
+                      ref.read(supplierReturnsProvider.notifier).filterByStatus(v);
+                    },
+                    hint: l10n.inventoryFilterByStatus,
+                    showSearch: false,
+                    clearable: true,
+                  ),
                 ),
               ],
             ),

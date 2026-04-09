@@ -31,12 +31,7 @@ class MenuSyncPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.deliveryMenuSync),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => ref.invalidate(_syncLogsProvider),
-          ),
-        ],
+        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.invalidate(_syncLogsProvider))],
       ),
       body: ListView(
         padding: AppSpacing.paddingAll16,
@@ -47,36 +42,36 @@ class MenuSyncPage extends ConsumerWidget {
             configsState: configsState,
             onSync: (platform) {
               // trigger sync with dummy products payload — the API expects product list
-              ref.read(deliveryMenuSyncProvider.notifier).sync(
-                platform: platform,
-                products: [
-                  {'name': 'Full menu sync', 'price': 0, 'is_available': true},
-                ],
-              );
+              ref
+                  .read(deliveryMenuSyncProvider.notifier)
+                  .sync(
+                    platform: platform,
+                    products: [
+                      {'name': 'Full menu sync', 'price': 0, 'is_available': true},
+                    ],
+                  );
             },
           ),
           AppSpacing.gapH24,
 
           // Sync history
-          Text(
-            l10n.deliverySyncHistory,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-          ),
+          Text(l10n.deliverySyncHistory, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
           AppSpacing.gapH12,
           logsAsync.when(
             data: (logs) => logs.isEmpty
                 ? PosEmptyState(title: l10n.deliveryNoSyncLogs, icon: Icons.sync_disabled)
                 : Column(
-                    children: logs.map((log) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: MenuSyncStatusCard(syncLog: log),
-                    )).toList(),
+                    children: logs
+                        .map(
+                          (log) => Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: MenuSyncStatusCard(syncLog: log),
+                          ),
+                        )
+                        .toList(),
                   ),
             loading: () => PosLoadingSkeleton.list(),
-            error: (e, _) => PosErrorState(
-              message: e.toString(),
-              onRetry: () => ref.invalidate(_syncLogsProvider),
-            ),
+            error: (e, _) => PosErrorState(message: e.toString(), onRetry: () => ref.invalidate(_syncLogsProvider)),
           ),
         ],
       ),
@@ -89,11 +84,7 @@ class _SyncTriggerSection extends StatefulWidget {
   final DeliveryConfigsState configsState;
   final void Function(String? platform) onSync;
 
-  const _SyncTriggerSection({
-    required this.syncState,
-    required this.configsState,
-    required this.onSync,
-  });
+  const _SyncTriggerSection({required this.syncState, required this.configsState, required this.onSync});
 
   @override
   State<_SyncTriggerSection> createState() => _SyncTriggerSectionState();
@@ -110,9 +101,7 @@ class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
     // Get enabled platforms from configs
     final enabledPlatforms = <Map<String, dynamic>>[];
     if (widget.configsState is DeliveryConfigsLoaded) {
-      enabledPlatforms.addAll(
-        (widget.configsState as DeliveryConfigsLoaded).configs.where((c) => c['is_enabled'] == true),
-      );
+      enabledPlatforms.addAll((widget.configsState as DeliveryConfigsLoaded).configs.where((c) => c['is_enabled'] == true));
     }
 
     return Card(
@@ -135,10 +124,7 @@ class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(l10n.deliveryTriggerSync, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
-                      Text(
-                        l10n.deliveryTriggerSyncDesc,
-                        style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
-                      ),
+                      Text(l10n.deliveryTriggerSyncDesc, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
                     ],
                   ),
                 ),
@@ -148,33 +134,18 @@ class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
 
             // Platform selector
             if (enabledPlatforms.isNotEmpty) ...[
-              DropdownButtonFormField<String>(
-                value: _selectedPlatform,
-                decoration: InputDecoration(
-                  labelText: l10n.deliverySelectPlatform,
-                  border: const OutlineInputBorder(),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                ),
-                items: [
-                  DropdownMenuItem(value: null, child: Text(l10n.deliveryAllPlatforms)),
-                  ...enabledPlatforms.map((c) {
-                    final slug = c['platform'] as String? ?? '';
-                    final platform = DeliveryConfigPlatform.tryFromValue(slug);
-                    return DropdownMenuItem(
-                      value: slug,
-                      child: Row(
-                        children: [
-                          if (platform != null) ...[
-                            Icon(platform.icon, size: 16, color: platform.color),
-                            AppSpacing.gapW8,
-                          ],
-                          Text(platform?.label ?? slug),
-                        ],
-                      ),
-                    );
-                  }),
-                ],
+              PosSearchableDropdown<String?>(
+                items: enabledPlatforms.map((c) {
+                  final slug = c['platform'] as String? ?? '';
+                  final platform = DeliveryConfigPlatform.tryFromValue(slug);
+                  return PosDropdownItem<String?>(value: slug, label: platform?.label ?? slug, icon: platform?.icon);
+                }).toList(),
+                selectedValue: _selectedPlatform,
                 onChanged: (v) => setState(() => _selectedPlatform = v),
+                label: l10n.deliverySelectPlatform,
+                hint: l10n.deliveryAllPlatforms,
+                showSearch: false,
+                clearable: true,
               ),
               AppSpacing.gapH12,
             ],
@@ -183,17 +154,12 @@ class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
             SizedBox(
               width: double.infinity,
               child: FilledButton.icon(
-                onPressed: isLoading || enabledPlatforms.isEmpty
-                    ? null
-                    : () => widget.onSync(_selectedPlatform),
+                onPressed: isLoading || enabledPlatforms.isEmpty ? null : () => widget.onSync(_selectedPlatform),
                 icon: isLoading
                     ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                     : const Icon(Icons.sync),
                 label: Text(isLoading ? l10n.deliverySyncing : l10n.deliverySyncNow),
-                style: FilledButton.styleFrom(
-                  backgroundColor: AppColors.info,
-                  padding: AppSpacing.paddingV12,
-                ),
+                style: FilledButton.styleFrom(backgroundColor: AppColors.info, padding: AppSpacing.paddingV12),
               ),
             ),
 
@@ -245,10 +211,7 @@ class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
 
             if (enabledPlatforms.isEmpty) ...[
               AppSpacing.gapH12,
-              Text(
-                l10n.deliveryNoPlatformsForSync,
-                style: TextStyle(fontSize: 12, color: AppColors.warning),
-              ),
+              Text(l10n.deliveryNoPlatformsForSync, style: TextStyle(fontSize: 12, color: AppColors.warning)),
             ],
           ],
         ),

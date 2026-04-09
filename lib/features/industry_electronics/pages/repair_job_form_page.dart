@@ -4,6 +4,9 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 import '../models/repair_job.dart';
 import '../providers/electronics_providers.dart';
+import 'package:thawani_pos/features/staff/models/staff_user.dart';
+import 'package:thawani_pos/features/staff/providers/staff_providers.dart';
+import 'package:thawani_pos/features/staff/providers/staff_state.dart';
 
 class RepairJobFormPage extends ConsumerStatefulWidget {
   final RepairJob? job;
@@ -25,7 +28,7 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
   late final TextEditingController _repairNotesCtrl;
   late final TextEditingController _estimatedCostCtrl;
   late final TextEditingController _finalCostCtrl;
-  late final TextEditingController _staffUserIdCtrl;
+  String? _selectedStaffUserId;
 
   @override
   void initState() {
@@ -38,7 +41,8 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
     _repairNotesCtrl = TextEditingController(text: j?.repairNotes ?? '');
     _estimatedCostCtrl = TextEditingController(text: j?.estimatedCost?.toStringAsFixed(2) ?? '');
     _finalCostCtrl = TextEditingController(text: j?.finalCost?.toStringAsFixed(2) ?? '');
-    _staffUserIdCtrl = TextEditingController(text: j?.staffUserId ?? '');
+    _selectedStaffUserId = j?.staffUserId;
+    Future.microtask(() => ref.read(staffListProvider.notifier).load());
   }
 
   @override
@@ -50,7 +54,6 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
     _repairNotesCtrl.dispose();
     _estimatedCostCtrl.dispose();
     _finalCostCtrl.dispose();
-    _staffUserIdCtrl.dispose();
     super.dispose();
   }
 
@@ -61,7 +64,7 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
     final data = <String, dynamic>{
       'device_description': _deviceDescCtrl.text.trim(),
       'issue_description': _issueDescCtrl.text.trim(),
-      'staff_user_id': _staffUserIdCtrl.text.trim(),
+      'staff_user_id': _selectedStaffUserId ?? '',
       if (_imeiCtrl.text.isNotEmpty) 'imei': _imeiCtrl.text.trim(),
       if (_estimatedCostCtrl.text.isNotEmpty) 'estimated_cost': double.parse(_estimatedCostCtrl.text.trim()),
       if (_finalCostCtrl.text.isNotEmpty) 'final_cost': double.parse(_finalCostCtrl.text.trim()),
@@ -82,6 +85,8 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final staffState = ref.watch(staffListProvider);
+    final staffList = staffState is StaffListLoaded ? staffState.staff : <StaffUser>[];
     return Scaffold(
       appBar: AppBar(title: Text(_isEditing ? 'Edit Repair Job' : 'New Repair Job')),
       bottomNavigationBar: Padding(
@@ -114,7 +119,13 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
             SizedBox(height: AppSpacing.md),
             PosTextField(controller: _issueDescCtrl, label: 'Issue Description', hint: 'Describe the issue...', maxLines: 3),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _staffUserIdCtrl, label: 'Staff User ID', hint: 'Assigned technician'),
+            PosSearchableDropdown<String>(
+              label: 'Assigned Technician',
+              items: staffList.map((s) => PosDropdownItem(value: s.id, label: '${s.firstName} ${s.lastName}')).toList(),
+              selectedValue: _selectedStaffUserId,
+              onChanged: (v) => setState(() => _selectedStaffUserId = v),
+              showSearch: true,
+            ),
             SizedBox(height: AppSpacing.md),
             Row(
               children: [

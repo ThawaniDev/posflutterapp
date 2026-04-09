@@ -76,31 +76,22 @@ class BranchDetailPage extends ConsumerWidget {
         final success = await ref.read(branchListProvider.notifier).toggleActive(branch.id);
         if (success && context.mounted) {
           ref.read(branchDetailProvider(branchId).notifier).load(branchId);
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(branch.isActive ? l10n.branchesDeactivated : l10n.branchesActivated)));
+          showPosInfoSnackbar(context, branch.isActive ? l10n.branchesDeactivated : l10n.branchesActivated);
         }
         break;
       case 'delete':
-        final confirmed = await showDialog<bool>(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: Text(l10n.branchesDeleteBranch),
-            content: Text(l10n.branchesDeleteConfirm),
-            actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
-              TextButton(
-                onPressed: () => Navigator.pop(ctx, true),
-                style: TextButton.styleFrom(foregroundColor: AppColors.error),
-                child: const Text('Delete'),
-              ),
-            ],
-          ),
+        final confirmed = await showPosConfirmDialog(
+          context,
+          title: l10n.branchesDeleteBranch,
+          message: l10n.branchesDeleteConfirm,
+          confirmLabel: 'Delete',
+          cancelLabel: 'Cancel',
+          isDanger: true,
         );
         if (confirmed == true && context.mounted) {
           final success = await ref.read(branchListProvider.notifier).deleteBranch(branch.id);
           if (success && context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.branchesDeleted)));
+            showPosSuccessSnackbar(context, l10n.branchesDeleted);
             context.pop();
           }
         }

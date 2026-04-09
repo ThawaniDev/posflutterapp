@@ -4,6 +4,8 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 import '../models/table_reservation.dart';
 import '../providers/restaurant_providers.dart';
+import '../models/restaurant_table.dart';
+import '../providers/restaurant_state.dart';
 
 class ReservationFormPage extends ConsumerStatefulWidget {
   final TableReservation? reservation;
@@ -24,7 +26,7 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
   late final TextEditingController _reservationTimeCtrl;
   late final TextEditingController _durationCtrl;
   late final TextEditingController _notesCtrl;
-  late final TextEditingController _tableIdCtrl;
+  String? _selectedTableId;
   DateTime _reservationDate = DateTime.now().add(const Duration(days: 1));
 
   @override
@@ -37,8 +39,9 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
     _reservationTimeCtrl = TextEditingController(text: r?.reservationTime ?? '');
     _durationCtrl = TextEditingController(text: r?.durationMinutes?.toString() ?? '60');
     _notesCtrl = TextEditingController(text: r?.notes ?? '');
-    _tableIdCtrl = TextEditingController(text: r?.tableId ?? '');
+    _selectedTableId = r?.tableId;
     if (r != null) _reservationDate = r.reservationDate;
+    Future.microtask(() => ref.read(restaurantProvider.notifier).load());
   }
 
   @override
@@ -49,7 +52,6 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
     _reservationTimeCtrl.dispose();
     _durationCtrl.dispose();
     _notesCtrl.dispose();
-    _tableIdCtrl.dispose();
     super.dispose();
   }
 
@@ -85,7 +87,7 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
       if (_customerPhoneCtrl.text.isNotEmpty) 'customer_phone': _customerPhoneCtrl.text.trim(),
       if (_durationCtrl.text.isNotEmpty) 'duration_minutes': int.parse(_durationCtrl.text.trim()),
       if (_notesCtrl.text.isNotEmpty) 'notes': _notesCtrl.text.trim(),
-      if (_tableIdCtrl.text.isNotEmpty) 'table_id': _tableIdCtrl.text.trim(),
+      if (_selectedTableId != null && _selectedTableId!.isNotEmpty) 'table_id': _selectedTableId,
     };
 
     final notifier = ref.read(restaurantProvider.notifier);
@@ -101,6 +103,8 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final restState = ref.watch(restaurantProvider);
+    final tables = restState is RestaurantLoaded ? restState.tables : <RestaurantTable>[];
     return Scaffold(
       appBar: AppBar(title: Text(_isEditing ? 'Edit Reservation' : 'New Reservation')),
       bottomNavigationBar: Padding(
@@ -157,7 +161,13 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
             SizedBox(height: AppSpacing.md),
             PosTextField(controller: _durationCtrl, label: 'Duration (minutes)', hint: '60', keyboardType: TextInputType.number),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _tableIdCtrl, label: 'Table (optional)', hint: 'Assign table'),
+            PosSearchableDropdown<String>(
+              label: 'Table (optional)',
+              items: tables.map((t) => PosDropdownItem(value: t.id, label: t.displayName ?? 'Table ${t.tableNumber}')).toList(),
+              selectedValue: _selectedTableId,
+              onChanged: (v) => setState(() => _selectedTableId = v),
+              showSearch: true,
+            ),
             SizedBox(height: AppSpacing.md),
             PosTextField(controller: _notesCtrl, label: 'Notes (optional)', hint: 'Special requests, allergies...', maxLines: 3),
           ],

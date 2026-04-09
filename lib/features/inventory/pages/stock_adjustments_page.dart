@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/catalog/models/product.dart';
 import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
 import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
@@ -139,12 +139,14 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
                         },
                       ),
                       const SizedBox(height: AppSpacing.md),
-                      DropdownButtonFormField<String>(
-                        value: selectedProductId,
-                        decoration: InputDecoration(labelText: l10n.inventoryProduct),
-                        isExpanded: true,
-                        items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
+                      PosSearchableDropdown<String>(
+                        items: productList.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
+                        selectedValue: selectedProductId,
                         onChanged: (v) => setDialogState(() => selectedProductId = v),
+                        label: l10n.inventoryProduct,
+                        hint: l10n.inventoryProduct,
+                        showSearch: true,
+                        clearable: false,
                         validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
@@ -159,14 +161,14 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
                         },
                       ),
                       const SizedBox(height: AppSpacing.sm),
-                      DropdownButtonFormField<String>(
-                        value: selectedReason,
-                        decoration: InputDecoration(labelText: l10n.reason),
-                        isExpanded: true,
-                        items: reasonOptions
-                            .map((r) => DropdownMenuItem(value: r, child: Text(_localizedReason(l10n, r))))
-                            .toList(),
+                      PosSearchableDropdown<String>(
+                        items: reasonOptions.map((r) => PosDropdownItem(value: r, label: _localizedReason(l10n, r))).toList(),
+                        selectedValue: selectedReason,
                         onChanged: (v) => setDialogState(() => selectedReason = v),
+                        label: l10n.reason,
+                        hint: l10n.reason,
+                        showSearch: false,
+                        clearable: false,
                         validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
@@ -206,11 +208,11 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
       try {
         await ref.read(stockAdjustmentsProvider.notifier).createAdjustment(result);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryAdjustmentCreated)));
+          showPosSuccessSnackbar(context, l10n.inventoryAdjustmentCreated);
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }

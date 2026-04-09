@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/catalog/models/product.dart';
 import 'package:thawani_pos/features/catalog/models/supplier.dart';
 import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
@@ -66,9 +66,7 @@ class _SupplierReturnFormPageState extends ConsumerState<SupplierReturnFormPage>
   Future<void> _handleSave() async {
     if (!_formKey.currentState!.validate()) return;
     if (_supplierId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.supplierReturnSelectSupplier), backgroundColor: AppColors.error),
-      );
+      showPosErrorSnackbar(context, AppLocalizations.of(context)!.supplierReturnSelectSupplier);
       return;
     }
 
@@ -86,12 +84,12 @@ class _SupplierReturnFormPageState extends ConsumerState<SupplierReturnFormPage>
     try {
       await ref.read(supplierReturnsProvider.notifier).createReturn(data);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.supplierReturnCreated)));
+        showPosSuccessSnackbar(context, l10n.supplierReturnCreated);
         Navigator.pop(context, true);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, e.toString());
       }
     } finally {
       if (mounted) setState(() => _isSaving = false);
@@ -113,12 +111,14 @@ class _SupplierReturnFormPageState extends ConsumerState<SupplierReturnFormPage>
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            DropdownButtonFormField<String>(
-              value: _supplierId,
-              decoration: InputDecoration(labelText: '${l10n.inventorySupplier} *'),
-              isExpanded: true,
-              items: supplierList.map((s) => DropdownMenuItem(value: s.id, child: Text(s.name))).toList(),
+            PosSearchableDropdown<String>(
+              items: supplierList.map((s) => PosDropdownItem(value: s.id, label: s.name)).toList(),
+              selectedValue: _supplierId,
               onChanged: (v) => setState(() => _supplierId = v),
+              label: l10n.inventorySupplier,
+              hint: l10n.inventorySupplier,
+              showSearch: true,
+              clearable: false,
               validator: (v) => v == null ? l10n.supplierReturnSelectSupplier : null,
             ),
             const SizedBox(height: AppSpacing.md),
@@ -153,12 +153,14 @@ class _SupplierReturnFormPageState extends ConsumerState<SupplierReturnFormPage>
                         ],
                       ),
                       const SizedBox(height: AppSpacing.sm),
-                      DropdownButtonFormField<String>(
-                        value: item.productId,
-                        decoration: InputDecoration(labelText: l10n.inventoryProduct),
-                        isExpanded: true,
-                        items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
+                      PosSearchableDropdown<String>(
+                        items: productList.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
+                        selectedValue: item.productId,
                         onChanged: (v) => setState(() => item.productId = v),
+                        label: l10n.inventoryProduct,
+                        hint: l10n.inventoryProduct,
+                        showSearch: true,
+                        clearable: false,
                         validator: (v) => v == null ? l10n.supplierReturnSelectProduct : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),

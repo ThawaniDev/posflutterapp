@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/payments/enums/expense_category.dart';
 import 'package:thawani_pos/features/payments/providers/payment_providers.dart';
 import 'package:thawani_pos/features/payments/providers/payment_state.dart';
@@ -158,23 +159,15 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
                   autofocus: true,
                 ),
                 AppSpacing.gapH16,
-                DropdownButtonFormField<ExpenseCategory>(
-                  decoration: const InputDecoration(labelText: 'Category', border: OutlineInputBorder()),
+                PosSearchableDropdown<ExpenseCategory>(
                   items: ExpenseCategory.values
-                      .map(
-                        (c) => DropdownMenuItem(
-                          value: c,
-                          child: Row(
-                            children: [
-                              Icon(_categoryIcon(c), size: 18, color: _categoryColor(c)),
-                              AppSpacing.gapW8,
-                              Text(c.value.replaceAll('_', ' ')),
-                            ],
-                          ),
-                        ),
-                      )
+                      .map((c) => PosDropdownItem(value: c, label: c.value.replaceAll('_', ' '), icon: _categoryIcon(c)))
                       .toList(),
+                  selectedValue: selectedCategory,
                   onChanged: (v) => setDialogState(() => selectedCategory = v),
+                  label: 'Category',
+                  showSearch: false,
+                  clearable: false,
                 ),
                 AppSpacing.gapH16,
                 TextField(

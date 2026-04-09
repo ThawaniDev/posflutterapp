@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 
@@ -128,24 +129,18 @@ class _AdminRoleDetailPageState extends ConsumerState<AdminRoleDetailPage> {
     );
   }
 
-  void _confirmDelete(String roleId) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Delete Role'),
-        content: const Text('Are you sure you want to delete this role? This cannot be undone.'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              ref.read(roleActionProvider.notifier).deleteRole(roleId);
-              Navigator.pop(context);
-            },
-            child: const Text('Delete', style: TextStyle(color: AppColors.error)),
-          ),
-        ],
-      ),
+  void _confirmDelete(String roleId) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Delete Role',
+      message: 'Are you sure you want to delete this role? This cannot be undone.',
+      confirmLabel: 'Delete',
+      cancelLabel: 'Cancel',
+      isDanger: true,
     );
+    if (confirmed == true) {
+      ref.read(roleActionProvider.notifier).deleteRole(roleId);
+      Navigator.pop(context);
+    }
   }
 }

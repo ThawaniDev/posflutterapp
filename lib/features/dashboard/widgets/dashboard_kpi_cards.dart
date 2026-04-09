@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
@@ -12,6 +13,7 @@ class DashboardKpiCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -32,40 +34,40 @@ class DashboardKpiCards extends StatelessWidget {
               icon: Icons.trending_up_rounded,
               iconColor: AppColors.primary,
               iconBgColor: AppColors.primary.withValues(alpha: 0.1),
-              label: "Today's Sales",
+              label: l10n.dashboardTodaysSales,
               value: '\u0081 ${_formatNum(stats['today_sales'])}',
               trend: _toDouble(stats['sales_trend']),
-              trendLabel: 'vs yesterday',
+              trendLabel: l10n.dashboardVsYesterday,
               isDark: isDark,
             ),
             _KpiTile(
               icon: Icons.receipt_long_rounded,
               iconColor: AppColors.info,
               iconBgColor: AppColors.info.withValues(alpha: 0.1),
-              label: 'Transactions',
+              label: l10n.dashboardTransactions,
               value: '${stats['today_transactions'] ?? 0}',
               trend: _toDouble(stats['transactions_trend']),
-              trendLabel: 'vs yesterday',
+              trendLabel: l10n.dashboardVsYesterday,
               isDark: isDark,
             ),
             _KpiTile(
               icon: Icons.shopping_basket_rounded,
               iconColor: AppColors.warning,
               iconBgColor: AppColors.warning.withValues(alpha: 0.1),
-              label: 'Avg Basket',
+              label: l10n.dashboardAvgBasket,
               value: '\u0081 ${_formatNum(stats['avg_basket'])}',
               trend: _toDouble(stats['basket_trend']),
-              trendLabel: 'vs yesterday',
+              trendLabel: l10n.dashboardVsYesterday,
               isDark: isDark,
             ),
             _KpiTile(
               icon: Icons.account_balance_wallet_rounded,
               iconColor: AppColors.success,
               iconBgColor: AppColors.success.withValues(alpha: 0.1),
-              label: 'Net Profit',
+              label: l10n.dashboardNetProfit,
               value: '\u0081 ${_formatNum(stats['net_profit'])}',
               trend: _toDouble(stats['profit_trend']),
-              trendLabel: 'vs yesterday',
+              trendLabel: l10n.dashboardVsYesterday,
               isDark: isDark,
             ),
           ],

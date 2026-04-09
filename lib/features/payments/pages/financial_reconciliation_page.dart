@@ -4,6 +4,7 @@ import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/payments/providers/payment_providers.dart';
 import 'package:thawani_pos/features/payments/providers/payment_state.dart';
 import 'package:thawani_pos/features/payments/services/payment_calculation_service.dart';
@@ -539,24 +540,16 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     }
   }
 
-  void _confirmReconciliation(BuildContext context) {
+  void _confirmReconciliation(BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.finReconConfirmRecon),
-        content: Text(l10n.finReconConfirmMessage),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(MaterialLocalizations.of(ctx).cancelButtonLabel)),
-          FilledButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.finReconConfirmed)));
-            },
-            child: Text(l10n.commonConfirm),
-          ),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.finReconConfirmRecon,
+      message: l10n.finReconConfirmMessage,
+      confirmLabel: l10n.commonConfirm,
     );
+    if (confirmed == true) {
+      showPosSuccessSnackbar(context, l10n.finReconConfirmed);
+    }
   }
 }

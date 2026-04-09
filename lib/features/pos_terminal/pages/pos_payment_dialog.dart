@@ -385,28 +385,15 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
           // Method dropdown
           Expanded(
             flex: 2,
-            child: DropdownButtonFormField<PaymentMethod>(
-              value: leg.method,
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                isDense: true,
-              ),
+            child: PosSearchableDropdown<PaymentMethod>(
               items: _availableMethods.map((m) {
-                return DropdownMenuItem(
-                  value: m,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(_methodIcon(m), size: 18, color: mutedColor),
-                      AppSpacing.gapW8,
-                      Text(m.label, style: AppTypography.bodySmall),
-                    ],
-                  ),
-                );
+                return PosDropdownItem(value: m, label: m.label);
               }).toList(),
+              selectedValue: leg.method,
               onChanged: (v) {
                 if (v != null) _updateLegMethod(index, v);
               },
+              showSearch: false,
             ),
           ),
           AppSpacing.gapW8,

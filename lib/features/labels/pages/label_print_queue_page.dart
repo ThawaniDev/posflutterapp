@@ -9,6 +9,7 @@ import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/labels/models/label_template.dart';
 import 'package:thawani_pos/features/labels/providers/label_providers.dart';
 import 'package:thawani_pos/features/labels/providers/label_state.dart';
@@ -97,15 +98,12 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                DropdownButtonFormField<String>(
-                  value: _selectedTemplateId,
-                  decoration: InputDecoration(
-                    labelText: l10n.labelTemplate,
-                    border: const OutlineInputBorder(),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                  ),
-                  items: templates.map((t) => DropdownMenuItem(value: t.id, child: Text(t.name))).toList(),
+                PosSearchableDropdown<String>(
+                  label: l10n.labelTemplate,
+                  items: templates.map((t) => PosDropdownItem(value: t.id, label: t.name)).toList(),
+                  selectedValue: _selectedTemplateId,
                   onChanged: (v) => setState(() => _selectedTemplateId = v),
+                  showSearch: true,
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Row(
@@ -407,15 +405,12 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                       Row(
                         children: [
                           Expanded(
-                            child: DropdownButtonFormField<String>(
-                              value: _selectedTemplateId,
-                              decoration: InputDecoration(
-                                labelText: l10n.labelTemplate,
-                                border: const OutlineInputBorder(),
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                              ),
-                              items: templates.map((t) => DropdownMenuItem(value: t.id, child: Text(t.name))).toList(),
+                            child: PosSearchableDropdown<String>(
+                              label: l10n.labelTemplate,
+                              items: templates.map((t) => PosDropdownItem(value: t.id, label: t.name)).toList(),
+                              selectedValue: _selectedTemplateId,
                               onChanged: (v) => setState(() => _selectedTemplateId = v),
+                              showSearch: true,
                             ),
                           ),
                           const SizedBox(width: AppSpacing.md),
@@ -690,7 +685,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
   Future<void> _handlePrint() async {
     if (_selectedTemplateId == null) {
       final l10n = AppLocalizations.of(context)!;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.labelSelectTemplate)));
+      showPosWarningSnackbar(context, l10n.labelSelectTemplate);
       return;
     }
 
@@ -708,7 +703,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
       await ref.read(labelRepositoryProvider).recordPrint(data);
       if (mounted) {
         final l10n = AppLocalizations.of(context)!;
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.labelPrintSuccess)));
+        showPosSuccessSnackbar(context, l10n.labelPrintSuccess);
         setState(() {
           _isPrinting = false;
           _queueItems.clear();
@@ -717,7 +712,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
     } catch (e) {
       if (mounted) {
         setState(() => _isPrinting = false);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
+        showPosErrorSnackbar(context, e.toString());
       }
     }
   }

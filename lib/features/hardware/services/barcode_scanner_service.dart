@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -84,11 +83,13 @@ class BarcodeScannerService {
 
   /// Start listening for barcode scans via keyboard-wedge (HID) and DataWedge (PDA)
   void startListening() {
+    if (_isListening) return; // prevent double handler registration
     _isListening = true;
     HardwareKeyboard.instance.addHandler(_handleKeyEvent);
+    debugPrint('BarcodeScannerService: Started keyboard-wedge listener (web: $kIsWeb)');
 
     // Initialize DataWedge for PDA devices (Android only)
-    if (!kIsWeb && Platform.isAndroid) {
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
       _initDataWedge();
     }
   }
@@ -121,12 +122,14 @@ class BarcodeScannerService {
 
   /// Stop listening
   void stopListening() {
+    if (!_isListening) return;
     _isListening = false;
     HardwareKeyboard.instance.removeHandler(_handleKeyEvent);
     _scanTimer?.cancel();
     _buffer = '';
     _dataWedgeSub?.cancel();
     _dataWedgeSub = null;
+    debugPrint('BarcodeScannerService: Stopped listening');
   }
 
   /// Handle a keyboard event — distinguish scanner input from human typing
@@ -143,12 +146,21 @@ class BarcodeScannerService {
       _buffer = '';
     }
 
-    final character = event.character;
+    // Try to get the character from the event
+    // On web, event.character can be null in some cases — fall back to keyLabel
+    String? character = event.character;
+    if ((character == null || character.isEmpty) && event.logicalKey.keyLabel.length == 1) {
+      character = event.logicalKey.keyLabel;
+    }
 
     // Enter key — finalize the barcode
     if (event.logicalKey == LogicalKeyboardKey.enter || event.logicalKey == LogicalKeyboardKey.numpadEnter) {
+      final hadBuffer = _buffer.isNotEmpty;
+      if (hadBuffer) {
+        debugPrint('BarcodeScannerService: Enter received, processing buffer "${_buffer}"');
+      }
       _processBuffer();
-      return _buffer.isNotEmpty; // consume the event only if we had a buffer
+      return hadBuffer; // consume the event only if we had a buffer
     }
 
     // Accumulate characters
@@ -159,6 +171,7 @@ class BarcodeScannerService {
       _scanTimer?.cancel();
       _scanTimer = Timer(Duration(milliseconds: _config.scannerTimeout * 2), () {
         // If no Enter received within timeout, try processing anyway
+        debugPrint('BarcodeScannerService: Timeout — processing buffer "$_buffer" without Enter');
         _processBuffer();
       });
 

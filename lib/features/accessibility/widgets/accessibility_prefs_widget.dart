@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/accessibility/providers/accessibility_providers.dart';
 import 'package:thawani_pos/features/accessibility/providers/accessibility_state.dart';
 
@@ -66,18 +67,22 @@ class AccessibilityPrefsWidget extends ConsumerWidget {
                 ListTile(
                   leading: const Icon(Icons.color_lens),
                   title: Text(l10n.accessibilityColorBlind),
-                  trailing: DropdownButton<String>(
-                    value: s.colorBlindMode,
-                    underline: const SizedBox.shrink(),
-                    items: const [
-                      DropdownMenuItem(value: 'none', child: Text('None')),
-                      DropdownMenuItem(value: 'protanopia', child: Text('Protanopia')),
-                      DropdownMenuItem(value: 'deuteranopia', child: Text('Deuteranopia')),
-                      DropdownMenuItem(value: 'tritanopia', child: Text('Tritanopia')),
-                    ],
-                    onChanged: (val) {
-                      if (val != null) _updatePref(ref, {'color_blind_mode': val});
-                    },
+                  trailing: SizedBox(
+                    width: 160,
+                    child: PosSearchableDropdown<String>(
+                      items: const [
+                        PosDropdownItem(value: 'none', label: 'None'),
+                        PosDropdownItem(value: 'protanopia', label: 'Protanopia'),
+                        PosDropdownItem(value: 'deuteranopia', label: 'Deuteranopia'),
+                        PosDropdownItem(value: 'tritanopia', label: 'Tritanopia'),
+                      ],
+                      selectedValue: s.colorBlindMode,
+                      onChanged: (val) {
+                        if (val != null) _updatePref(ref, {'color_blind_mode': val});
+                      },
+                      showSearch: false,
+                      clearable: false,
+                    ),
                   ),
                 ),
                 SwitchListTile(

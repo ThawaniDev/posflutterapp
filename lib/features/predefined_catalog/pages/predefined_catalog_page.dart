@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/pos_button.dart';
-import 'package:thawani_pos/core/widgets/pos_empty_state.dart';
-import 'package:thawani_pos/core/widgets/pos_error_state.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/predefined_catalog/models/predefined_category.dart';
 import 'package:thawani_pos/features/predefined_catalog/providers/predefined_catalog_providers.dart';
 import 'package:thawani_pos/features/predefined_catalog/providers/predefined_catalog_state.dart';
@@ -39,23 +38,18 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
 
   Future<void> _handleCloneAll() async {
     if (_selectedBusinessTypeId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please select a business type first.')));
+      showPosWarningSnackbar(context, AppLocalizations.of(context)!.selectBusinessTypeFirst);
       return;
     }
 
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Clone All Products'),
-        content: const Text(
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Clone All Products',
+      message:
           'This will clone all predefined categories and products for the '
           'selected business type to your store. Continue?',
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
-          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Clone All')),
-        ],
-      ),
+      confirmLabel: 'Clone All',
+      cancelLabel: 'Cancel',
     );
 
     if (confirmed == true && mounted) {
@@ -65,13 +59,9 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
         if (cloneState is CloneSuccess) {
           final cats = cloneState.result['categories_cloned'] ?? 0;
           final prods = cloneState.result['products_cloned'] ?? 0;
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text('Cloned $cats categories and $prods products to your store.')));
+          showPosSuccessSnackbar(context, AppLocalizations.of(context)!.clonedCategoriesAndProducts(cats, prods));
         } else if (cloneState is CloneError) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(cloneState.message), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, cloneState.message);
         }
         ref.read(cloneProvider.notifier).reset();
       }
@@ -79,16 +69,12 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
   }
 
   Future<void> _handleCloneCategory(PredefinedCategory category) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Clone Category'),
-        content: Text('Clone "${category.name}" and all its products to your store?'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
-          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Clone')),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Clone Category',
+      message: 'Clone "${category.name}" and all its products to your store?',
+      confirmLabel: 'Clone',
+      cancelLabel: 'Cancel',
     );
 
     if (confirmed == true && mounted) {
@@ -96,11 +82,9 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
       final cloneState = ref.read(cloneProvider);
       if (mounted) {
         if (cloneState is CloneSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Category "${category.name}" cloned successfully.')));
+          showPosSuccessSnackbar(context, AppLocalizations.of(context)!.categoryClonedSuccessfully(category.name));
         } else if (cloneState is CloneError) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(cloneState.message), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, cloneState.message);
         }
         ref.read(cloneProvider.notifier).reset();
       }

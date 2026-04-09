@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -155,14 +157,12 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
     try {
       await ref.read(billingInvoiceActionProvider.notifier).retryPayment(invoiceId.toString());
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Payment retry initiated'), backgroundColor: AppColors.success));
+        showPosSuccessSnackbar(context, AppLocalizations.of(context)!.paymentRetryInitiated);
         ref.read(failedPaymentsProvider.notifier).loadFailedPayments(storeId: _storeId);
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Retry failed: $e'), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, AppLocalizations.of(context)!.retryFailed(e.toString()));
       }
     }
   }

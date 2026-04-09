@@ -7927,4 +7927,452 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get debitsOrderNumber => 'Order #';
+
+  @override
+  String get searchDropdownHint => 'Search...';
+
+  @override
+  String get noResultsFound => 'No results found';
+
+  @override
+  String get selectOption => 'Select...';
+
+  @override
+  String get createNew => 'Create new';
+
+  @override
+  String genericError(String message) {
+    return 'Error: $message';
+  }
+
+  @override
+  String genericErrorSaving(String message) {
+    return 'Error saving: $message';
+  }
+
+  @override
+  String get workingHoursSaved => 'Working hours saved.';
+
+  @override
+  String get settingsSavedSuccessfully => 'Settings saved successfully.';
+
+  @override
+  String get productUpdated => 'Product updated.';
+
+  @override
+  String get productCreated => 'Product created.';
+
+  @override
+  String generatedBarcode(String barcode) {
+    return 'Generated barcode: $barcode';
+  }
+
+  @override
+  String get allSuppliersAlreadyLinked => 'All suppliers are already linked.';
+
+  @override
+  String productDeleted(String name) {
+    return 'Product \"$name\" deleted.';
+  }
+
+  @override
+  String productDuplicated(String name) {
+    return 'Product \"$name\" duplicated.';
+  }
+
+  @override
+  String bulkActionCompleted(String action) {
+    return 'Bulk $action completed.';
+  }
+
+  @override
+  String get categoryUpdated => 'Category updated.';
+
+  @override
+  String get categoryCreated => 'Category created.';
+
+  @override
+  String categoryDeleted(String name) {
+    return 'Category \"$name\" deleted.';
+  }
+
+  @override
+  String productClonedToStore(String name) {
+    return 'Product \"$name\" cloned to your store.';
+  }
+
+  @override
+  String get selectBusinessTypeFirst => 'Please select a business type first.';
+
+  @override
+  String clonedCategoriesAndProducts(String cats, String prods) {
+    return 'Cloned $cats categories and $prods products to your store.';
+  }
+
+  @override
+  String categoryClonedSuccessfully(String name) {
+    return 'Category \"$name\" cloned successfully.';
+  }
+
+  @override
+  String get pleaseFillOneMapping => 'Please fill in at least one mapping.';
+
+  @override
+  String get pleaseSelectBothDates => 'Please select both dates.';
+
+  @override
+  String get storeExportInitiated => 'Store export initiated.';
+
+  @override
+  String get connectionTestSuccessful => 'Connection test successful.';
+
+  @override
+  String connectionTestFailed(String message) {
+    return 'Connection test failed: $message';
+  }
+
+  @override
+  String get pleaseEnterValidNumbers => 'Please enter valid numbers.';
+
+  @override
+  String get retryRulesUpdated => 'Retry rules updated successfully.';
+
+  @override
+  String failedToSave(String message) {
+    return 'Failed to save: $message';
+  }
+
+  @override
+  String get paymentRetryInitiated => 'Payment retry initiated.';
+
+  @override
+  String retryFailed(String message) {
+    return 'Retry failed: $message';
+  }
+
+  @override
+  String get pdfNotAvailable => 'PDF not available for this invoice.';
+
+  @override
+  String failedToDownloadPdf(String message) {
+    return 'Failed to download PDF: $message';
+  }
+
+  @override
+  String get addOnComingSoon => 'Add-on feature coming soon.';
+
+  @override
+  String get removeAddOnComingSoon => 'Remove add-on feature coming soon.';
+
+  @override
+  String get copied => 'Copied';
+
+  @override
+  String get pleaseEnterValidOtp => 'Please enter a valid 6-digit OTP.';
+
+  @override
+  String generatingCoupons(String count) {
+    return 'Generating $count coupons...';
+  }
+
+  @override
+  String staffPinError(String message) {
+    return 'Error: $message';
+  }
+
+  @override
+  String get sidebarTransactions => 'Transactions';
+
+  @override
+  String get txExplorerTitle => 'Transaction Explorer';
+
+  @override
+  String get txDetailTitle => 'Transaction Detail';
+
+  @override
+  String get txToggleAnalytics => 'Toggle Analytics';
+
+  @override
+  String get txSearchHint => 'Search by transaction number…';
+
+  @override
+  String get txFilterType => 'Type';
+
+  @override
+  String get txFilterStatus => 'Status';
+
+  @override
+  String get txDateRange => 'Date Range';
+
+  @override
+  String get txClearFilters => 'Clear Filters';
+
+  @override
+  String get txAllTypes => 'All Types';
+
+  @override
+  String get txAllStatuses => 'All Statuses';
+
+  @override
+  String get txTypeSale => 'Sale';
+
+  @override
+  String get txTypeReturn => 'Return';
+
+  @override
+  String get txTypeVoid => 'Void';
+
+  @override
+  String get txTypeExchange => 'Exchange';
+
+  @override
+  String get txStatusCompleted => 'Completed';
+
+  @override
+  String get txStatusVoided => 'Voided';
+
+  @override
+  String get txStatusPending => 'Pending';
+
+  @override
+  String get txColNumber => 'Transaction #';
+
+  @override
+  String get txColType => 'Type';
+
+  @override
+  String get txColStatus => 'Status';
+
+  @override
+  String get txColSubtotal => 'Subtotal';
+
+  @override
+  String get txColTax => 'Tax';
+
+  @override
+  String get txColTotal => 'Total';
+
+  @override
+  String get txColDate => 'Date';
+
+  @override
+  String get txNoTransactions => 'No transactions found';
+
+  @override
+  String get txNoTransactionsSubtitle =>
+      'Adjust your filters or date range to find transactions';
+
+  @override
+  String get txStatsTotalSales => 'Total Sales';
+
+  @override
+  String get txStatsTotalTransactions => 'Transactions';
+
+  @override
+  String get txStatsAvgBasket => 'Avg Basket';
+
+  @override
+  String get txStatsReturnsVoids => 'Returns & Voids';
+
+  @override
+  String get txStatsNetRevenue => 'Net Revenue';
+
+  @override
+  String get txStatsTax => 'Tax';
+
+  @override
+  String get txReturns => 'returns';
+
+  @override
+  String get txVoids => 'voids';
+
+  @override
+  String get txPaymentBreakdown => 'Payment Breakdown';
+
+  @override
+  String get txHourlyDistribution => 'Hourly Distribution';
+
+  @override
+  String get txDailySalesTrend => 'Daily Sales Trend';
+
+  @override
+  String get txNoDataAvailable => 'No data available';
+
+  @override
+  String get txInfoTitle => 'Transaction Information';
+
+  @override
+  String get txInfoDate => 'Date & Time';
+
+  @override
+  String get txInfoCashier => 'Cashier';
+
+  @override
+  String get txInfoRegister => 'Register';
+
+  @override
+  String get txInfoSession => 'POS Session';
+
+  @override
+  String get txInfoStore => 'Store';
+
+  @override
+  String get txInfoCustomer => 'Customer';
+
+  @override
+  String get txInfoExternalType => 'External Type';
+
+  @override
+  String get txInfoExternalId => 'External ID';
+
+  @override
+  String get txInfoReturnRef => 'Return Reference';
+
+  @override
+  String get txInfoSyncStatus => 'Sync Status';
+
+  @override
+  String get txItemsTitle => 'Items';
+
+  @override
+  String get txItemsCount => 'items';
+
+  @override
+  String get txPaymentsTitle => 'Payments';
+
+  @override
+  String get txTotalsTitle => 'Totals';
+
+  @override
+  String get txTotalsSubtotal => 'Subtotal';
+
+  @override
+  String get txTotalsDiscount => 'Discount';
+
+  @override
+  String get txTotalsTax => 'Tax';
+
+  @override
+  String get txTotalsTip => 'Tip';
+
+  @override
+  String get txTotalsTotal => 'Total';
+
+  @override
+  String get txZatcaTitle => 'ZATCA Compliance';
+
+  @override
+  String get txZatcaUuid => 'UUID';
+
+  @override
+  String get txZatcaHash => 'Hash';
+
+  @override
+  String get txZatcaStatus => 'Status';
+
+  @override
+  String get txNotesTitle => 'Notes';
+
+  @override
+  String get txVoidConfirmTitle => 'Void Transaction';
+
+  @override
+  String get txVoidConfirmMessage =>
+      'Are you sure you want to void this transaction? This action cannot be undone.';
+
+  @override
+  String get txVoidAction => 'Void';
+
+  @override
+  String get dashboardTodaysSales => 'Today\'s Sales';
+
+  @override
+  String get dashboardTransactions => 'Transactions';
+
+  @override
+  String get dashboardAvgBasket => 'Avg Basket';
+
+  @override
+  String get dashboardNetProfit => 'Net Profit';
+
+  @override
+  String get dashboardVsYesterday => 'vs yesterday';
+
+  @override
+  String get dashboardSalesTrend => 'Sales Trend';
+
+  @override
+  String get dashboardThisPeriod => 'This Period';
+
+  @override
+  String get dashboardPreviousPeriod => 'Previous';
+
+  @override
+  String get dashboardTopProducts => 'Top Products';
+
+  @override
+  String get dashboardProduct => 'Product';
+
+  @override
+  String get dashboardQty => 'Qty';
+
+  @override
+  String get dashboardRevenue => 'Revenue';
+
+  @override
+  String get dashboardNoSalesData => 'No sales data yet';
+
+  @override
+  String get dashboardLowStockAlerts => 'Low Stock Alerts';
+
+  @override
+  String get dashboardAllWellStocked => 'All items are well-stocked';
+
+  @override
+  String get dashboardActiveCashiers => 'Active Cashiers';
+
+  @override
+  String get dashboardOnline => 'online';
+
+  @override
+  String get dashboardNoActiveSessions => 'No active sessions';
+
+  @override
+  String get dashboardSince => 'Since';
+
+  @override
+  String get dashboardRecentOrders => 'Recent Orders';
+
+  @override
+  String get dashboardNoOrders => 'No orders yet';
+
+  @override
+  String get dashboardWalkIn => 'Walk-in';
+
+  @override
+  String get dashboardFinancialSummary => 'Financial Summary';
+
+  @override
+  String get dashboardTotalRevenue => 'Total Revenue';
+
+  @override
+  String get dashboardTotalCost => 'Total Cost';
+
+  @override
+  String get dashboardTotalTax => 'Total Tax';
+
+  @override
+  String get dashboardTotalDiscount => 'Total Discount';
+
+  @override
+  String get dashboardPaymentBreakdown => 'Payment Breakdown';
+
+  @override
+  String get dashboardHourlySales => 'Hourly Sales';
+
+  @override
+  String get dashboardStaffPerformance => 'Staff Performance';
+
+  @override
+  String get dashboardBranchOverview => 'Branch Overview';
 }

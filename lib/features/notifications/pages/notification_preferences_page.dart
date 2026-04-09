@@ -153,18 +153,22 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
                   leading: const Icon(Icons.email_outlined),
                   title: Text(l10n.notificationsEmailDigest),
                   subtitle: Text(l10n.notificationsEmailDigestSubtitle),
-                  trailing: DropdownButton<String>(
-                    value: _emailDigest,
-                    underline: const SizedBox.shrink(),
-                    items: [
-                      DropdownMenuItem(value: 'none', child: Text(l10n.notificationsDigestNone)),
-                      DropdownMenuItem(value: 'daily', child: Text(l10n.notificationsDigestDaily)),
-                      DropdownMenuItem(value: 'weekly', child: Text(l10n.notificationsDigestWeekly)),
-                    ],
-                    onChanged: (v) => setState(() {
-                      _emailDigest = v ?? 'none';
-                      _hasChanges = true;
-                    }),
+                  trailing: SizedBox(
+                    width: 140,
+                    child: PosSearchableDropdown<String>(
+                      items: [
+                        PosDropdownItem(value: 'none', label: l10n.notificationsDigestNone),
+                        PosDropdownItem(value: 'daily', label: l10n.notificationsDigestDaily),
+                        PosDropdownItem(value: 'weekly', label: l10n.notificationsDigestWeekly),
+                      ],
+                      selectedValue: _emailDigest,
+                      onChanged: (v) => setState(() {
+                        _emailDigest = v ?? 'none';
+                        _hasChanges = true;
+                      }),
+                      showSearch: false,
+                      clearable: false,
+                    ),
                   ),
                 ),
               ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
@@ -63,20 +64,17 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: DropdownButton<String?>(
-                    value: _actionFilter,
-                    isExpanded: true,
-                    hint: const Text('Action'),
-                    items: const [
-                      DropdownMenuItem(value: null, child: Text('All Actions')),
-                      DropdownMenuItem(value: 'role.created', child: Text('Role Created')),
-                      DropdownMenuItem(value: 'role.updated', child: Text('Role Updated')),
-                      DropdownMenuItem(value: 'role.deleted', child: Text('Role Deleted')),
-                      DropdownMenuItem(value: 'user.created', child: Text('User Created')),
-                      DropdownMenuItem(value: 'user.updated', child: Text('User Updated')),
-                      DropdownMenuItem(value: 'user.deactivated', child: Text('User Deactivated')),
-                      DropdownMenuItem(value: 'user.activated', child: Text('User Activated')),
+                  child: PosSearchableDropdown<String>(
+                    items: [
+                      PosDropdownItem(value: 'role.created', label: 'Role Created'),
+                      PosDropdownItem(value: 'role.updated', label: 'Role Updated'),
+                      PosDropdownItem(value: 'role.deleted', label: 'Role Deleted'),
+                      PosDropdownItem(value: 'user.created', label: 'User Created'),
+                      PosDropdownItem(value: 'user.updated', label: 'User Updated'),
+                      PosDropdownItem(value: 'user.deactivated', label: 'User Deactivated'),
+                      PosDropdownItem(value: 'user.activated', label: 'User Activated'),
                     ],
+                    selectedValue: _actionFilter,
                     onChanged: (val) {
                       setState(() {
                         _actionFilter = val;
@@ -84,19 +82,19 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
                       });
                       _loadLogs();
                     },
+                    hint: 'All Actions',
+                    showSearch: false,
+                    clearable: true,
                   ),
                 ),
                 AppSpacing.gapW8,
                 Expanded(
-                  child: DropdownButton<String?>(
-                    value: _entityTypeFilter,
-                    isExpanded: true,
-                    hint: const Text('Entity'),
-                    items: const [
-                      DropdownMenuItem(value: null, child: Text('All Entities')),
-                      DropdownMenuItem(value: 'admin_role', child: Text('Roles')),
-                      DropdownMenuItem(value: 'admin_user', child: Text('Users')),
+                  child: PosSearchableDropdown<String>(
+                    items: [
+                      PosDropdownItem(value: 'admin_role', label: 'Roles'),
+                      PosDropdownItem(value: 'admin_user', label: 'Users'),
                     ],
+                    selectedValue: _entityTypeFilter,
                     onChanged: (val) {
                       setState(() {
                         _entityTypeFilter = val;
@@ -104,6 +102,9 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
                       });
                       _loadLogs();
                     },
+                    hint: 'All Entities',
+                    showSearch: false,
+                    clearable: true,
                   ),
                 ),
               ],

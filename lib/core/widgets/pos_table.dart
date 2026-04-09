@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_typography.dart';
+import 'package:thawani_pos/core/widgets/pos_searchable_dropdown.dart';
 
 // ═════════════════════════════════════════════════════════════
 // POS TABLE COLUMN DEFINITION
@@ -474,16 +475,15 @@ class PosDataTable<T> extends StatelessWidget {
           if (onPerPageChanged != null) ...[
             Text('Rows: ', style: AppTypography.bodySmall.copyWith(color: mutedColor)),
             SizedBox(
-              height: 32,
-              child: DropdownButton<int>(
-                value: itemsPerPage,
-                underline: const SizedBox.shrink(),
-                isDense: true,
-                style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight),
-                items: perPageOptions.map((n) => DropdownMenuItem(value: n, child: Text('$n'))).toList(),
+              width: 100,
+              child: PosSearchableDropdown<int>(
+                items: perPageOptions.map((n) => PosDropdownItem(value: n, label: '$n')).toList(),
+                selectedValue: itemsPerPage,
                 onChanged: (v) {
                   if (v != null) onPerPageChanged!(v);
                 },
+                showSearch: false,
+                clearable: false,
               ),
             ),
             const SizedBox(width: 16),

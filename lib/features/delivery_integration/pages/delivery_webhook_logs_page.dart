@@ -57,19 +57,15 @@ class _DeliveryWebhookLogsPageState extends ConsumerState<DeliveryWebhookLogsPag
                 Text(l10n.deliveryPlatform, style: const TextStyle(fontWeight: FontWeight.w500)),
                 AppSpacing.gapW12,
                 Expanded(
-                  child: DropdownButtonFormField<String?>(
-                    value: _selectedPlatform,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                      isDense: true,
-                      hintText: l10n.deliveryAllPlatforms,
-                    ),
-                    items: [
-                      DropdownMenuItem(value: null, child: Text(l10n.deliveryAllPlatforms)),
-                      ...DeliveryConfigPlatform.values.map((p) => DropdownMenuItem(value: p.value, child: Text(p.label))),
-                    ],
+                  child: PosSearchableDropdown<String?>(
+                    items: DeliveryConfigPlatform.values
+                        .map((p) => PosDropdownItem<String?>(value: p.value, label: p.label))
+                        .toList(),
+                    selectedValue: _selectedPlatform,
                     onChanged: _onPlatformChanged,
+                    hint: l10n.deliveryAllPlatforms,
+                    showSearch: false,
+                    clearable: true,
                   ),
                 ),
               ],
@@ -261,9 +257,7 @@ class _JsonSection extends StatelessWidget {
               constraints: const BoxConstraints(),
               onPressed: () {
                 Clipboard.setData(ClipboardData(text: jsonStr));
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(const SnackBar(content: Text('Copied'), duration: Duration(seconds: 1)));
+                showPosInfoSnackbar(context, AppLocalizations.of(context)!.copied);
               },
             ),
           ],

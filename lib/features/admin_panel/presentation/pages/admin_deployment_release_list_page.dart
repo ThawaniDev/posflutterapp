@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/widgets/widgets.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -86,20 +87,23 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
                   ),
                 ),
                 const SizedBox(width: AppSpacing.sm),
-                DropdownButton<String?>(
-                  value: _platformFilter,
-                  hint: const Text('Platform'),
-                  items: const [
-                    DropdownMenuItem(value: null, child: Text('All')),
-                    DropdownMenuItem(value: 'ios', child: Text('iOS')),
-                    DropdownMenuItem(value: 'android', child: Text('Android')),
-                    DropdownMenuItem(value: 'windows', child: Text('Windows')),
-                    DropdownMenuItem(value: 'macos', child: Text('macOS')),
-                  ],
-                  onChanged: (v) {
-                    setState(() => _platformFilter = v);
-                    _load();
-                  },
+                Expanded(
+                  child: PosSearchableDropdown<String>(
+                    items: [
+                      PosDropdownItem(value: 'ios', label: 'iOS'),
+                      PosDropdownItem(value: 'android', label: 'Android'),
+                      PosDropdownItem(value: 'windows', label: 'Windows'),
+                      PosDropdownItem(value: 'macos', label: 'macOS'),
+                    ],
+                    selectedValue: _platformFilter,
+                    onChanged: (v) {
+                      setState(() => _platformFilter = v);
+                      _load();
+                    },
+                    hint: 'Platform',
+                    showSearch: false,
+                    clearable: true,
+                  ),
                 ),
               ],
             ),

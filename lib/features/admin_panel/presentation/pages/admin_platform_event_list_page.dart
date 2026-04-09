@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
@@ -90,37 +91,39 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
                   ),
                   onSubmitted: (_) => _applyFilters(),
                 );
-                final levelDropdown = DropdownButton<String>(
-                  value: _levelFilter,
-                  hint: const Text('Level'),
-                  isExpanded: context.isPhone,
-                  items: const [
-                    DropdownMenuItem(value: 'debug', child: Text('Debug')),
-                    DropdownMenuItem(value: 'info', child: Text('Info')),
-                    DropdownMenuItem(value: 'warning', child: Text('Warning')),
-                    DropdownMenuItem(value: 'error', child: Text('Error')),
-                    DropdownMenuItem(value: 'critical', child: Text('Critical')),
+                final levelDropdown = PosSearchableDropdown<String>(
+                  items: [
+                    PosDropdownItem(value: 'debug', label: 'Debug'),
+                    PosDropdownItem(value: 'info', label: 'Info'),
+                    PosDropdownItem(value: 'warning', label: 'Warning'),
+                    PosDropdownItem(value: 'error', label: 'Error'),
+                    PosDropdownItem(value: 'critical', label: 'Critical'),
                   ],
+                  selectedValue: _levelFilter,
                   onChanged: (v) {
                     setState(() => _levelFilter = v);
                     _applyFilters();
                   },
+                  hint: 'Level',
+                  showSearch: false,
+                  clearable: true,
                 );
-                final typeDropdown = DropdownButton<String>(
-                  value: _eventTypeFilter,
-                  hint: const Text('Type'),
-                  isExpanded: context.isPhone,
-                  items: const [
-                    DropdownMenuItem(value: 'deployment', child: Text('Deployment')),
-                    DropdownMenuItem(value: 'config_change', child: Text('Config Change')),
-                    DropdownMenuItem(value: 'cron_job', child: Text('Cron Job')),
-                    DropdownMenuItem(value: 'maintenance', child: Text('Maintenance')),
-                    DropdownMenuItem(value: 'error', child: Text('Error')),
+                final typeDropdown = PosSearchableDropdown<String>(
+                  items: [
+                    PosDropdownItem(value: 'deployment', label: 'Deployment'),
+                    PosDropdownItem(value: 'config_change', label: 'Config Change'),
+                    PosDropdownItem(value: 'cron_job', label: 'Cron Job'),
+                    PosDropdownItem(value: 'maintenance', label: 'Maintenance'),
+                    PosDropdownItem(value: 'error', label: 'Error'),
                   ],
+                  selectedValue: _eventTypeFilter,
                   onChanged: (v) {
                     setState(() => _eventTypeFilter = v);
                     _applyFilters();
                   },
+                  hint: 'Type',
+                  showSearch: false,
+                  clearable: true,
                 );
                 if (context.isPhone) {
                   return Column(

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -30,14 +31,13 @@ class GlobalBarcodeScanHandler extends ConsumerStatefulWidget {
 class _GlobalBarcodeScanHandlerState extends ConsumerState<GlobalBarcodeScanHandler> {
   StreamSubscription<BarcodeScanResult>? _scanSubscription;
   bool _isProcessing = false;
+  final FocusNode _focusNode = FocusNode(debugLabel: 'GlobalBarcodeScanHandler');
 
   @override
   void initState() {
     super.initState();
-    // Start the barcode scanner (keyboard-wedge + DataWedge) and listen for scans
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _startListening();
-    });
+    // Start the barcode scanner immediately — no need to wait for a frame
+    _startListening();
   }
 
   void _startListening() {
@@ -52,11 +52,13 @@ class _GlobalBarcodeScanHandlerState extends ConsumerState<GlobalBarcodeScanHand
     // Subscribe to barcode scan stream
     _scanSubscription?.cancel();
     _scanSubscription = scanner.onScan.listen(_onBarcodeScanned);
+    debugPrint('GlobalBarcodeScanHandler: Listening for barcode scans (web: $kIsWeb, isListening: ${scanner.isListening})');
   }
 
   @override
   void dispose() {
     _scanSubscription?.cancel();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -118,6 +120,11 @@ class _GlobalBarcodeScanHandlerState extends ConsumerState<GlobalBarcodeScanHand
 
   @override
   Widget build(BuildContext context) {
+    // On web, wrap in Focus to help maintain keyboard focus on the Flutter canvas.
+    // HardwareKeyboard.instance.addHandler receives events only when Flutter has focus.
+    if (kIsWeb) {
+      return Focus(focusNode: _focusNode, autofocus: true, child: widget.child);
+    }
     return widget.child;
   }
 }

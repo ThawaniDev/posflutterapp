@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/branches/models/store.dart';
 import 'package:thawani_pos/features/branches/providers/branch_providers.dart';
 import 'package:thawani_pos/features/branches/providers/branch_state.dart';
@@ -126,10 +127,10 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
     // Listen for form state
     ref.listen<StaffFormState>(staffFormProvider, (prev, next) {
       if (next is StaffFormSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(_isEditing ? l10n.staffUpdated : l10n.staffCreated)));
+        showPosSuccessSnackbar(context, _isEditing ? l10n.staffUpdated : l10n.staffCreated);
         Navigator.of(context).pop(true);
       } else if (next is StaffFormError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message)));
+        showPosErrorSnackbar(context, next.message);
       }
     });
 
@@ -235,36 +236,28 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
             // Employment Section
             _buildSectionTitle(context, l10n.staffEmploymentDetails, Icons.work_outline, isDark),
             AppSpacing.gapH12,
-            DropdownButtonFormField<EmploymentType>(
-              value: _employmentType,
-              decoration: InputDecoration(
-                labelText: '${l10n.staffEmploymentType} *',
-                border: const OutlineInputBorder(),
-                filled: true,
-                fillColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
-              ),
+            PosSearchableDropdown<EmploymentType>(
+              label: '${l10n.staffEmploymentType} *',
               items: EmploymentType.values
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e.value.replaceAll('_', ' ').toUpperCase())))
+                  .map((e) => PosDropdownItem(value: e, label: e.value.replaceAll('_', ' ').toUpperCase()))
                   .toList(),
+              selectedValue: _employmentType,
               onChanged: (v) {
                 if (v != null) setState(() => _employmentType = v);
               },
+              showSearch: false,
             ),
             AppSpacing.gapH16,
-            DropdownButtonFormField<SalaryType>(
-              value: _salaryType,
-              decoration: InputDecoration(
-                labelText: '${l10n.staffSalaryType} *',
-                border: const OutlineInputBorder(),
-                filled: true,
-                fillColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
-              ),
+            PosSearchableDropdown<SalaryType>(
+              label: '${l10n.staffSalaryType} *',
               items: SalaryType.values
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e.value.replaceAll('_', ' ').toUpperCase())))
+                  .map((e) => PosDropdownItem(value: e, label: e.value.replaceAll('_', ' ').toUpperCase()))
                   .toList(),
+              selectedValue: _salaryType,
               onChanged: (v) {
                 if (v != null) setState(() => _salaryType = v);
               },
+              showSearch: false,
             ),
             AppSpacing.gapH16,
             if (_salaryType == SalaryType.hourly) ...[
@@ -281,20 +274,16 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
               ),
               AppSpacing.gapH16,
             ],
-            DropdownButtonFormField<StaffStatus>(
-              value: _status,
-              decoration: InputDecoration(
-                labelText: '${l10n.staffStatus} *',
-                border: const OutlineInputBorder(),
-                filled: true,
-                fillColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
-              ),
+            PosSearchableDropdown<StaffStatus>(
+              label: '${l10n.staffStatus} *',
               items: StaffStatus.values
-                  .map((e) => DropdownMenuItem(value: e, child: Text(e.value.replaceAll('_', ' ').toUpperCase())))
+                  .map((e) => PosDropdownItem(value: e, label: e.value.replaceAll('_', ' ').toUpperCase()))
                   .toList(),
+              selectedValue: _status,
               onChanged: (v) {
                 if (v != null) setState(() => _status = v);
               },
+              showSearch: false,
             ),
             AppSpacing.gapH16,
             // Hire Date Picker
@@ -410,28 +399,14 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
     final branchState = ref.watch(branchListProvider);
     final stores = branchState is BranchListLoaded ? branchState.branches : <Store>[];
 
-    return DropdownButtonFormField<String>(
-      value: _selectedStoreId,
-      decoration: InputDecoration(
-        labelText: '${l10n.staffSelectStore} *',
-        prefixIcon: const Icon(Icons.store_outlined),
-        border: const OutlineInputBorder(),
-        filled: true,
-        fillColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
-      ),
-      isExpanded: true,
-      items: stores
-          .map(
-            (s) => DropdownMenuItem<String>(
-              value: s.id,
-              child: Text(s.name, overflow: TextOverflow.ellipsis),
-            ),
-          )
-          .toList(),
-      validator: (v) => v == null || v.isEmpty ? l10n.staffRequired : null,
+    return PosSearchableDropdown<String>(
+      label: '${l10n.staffSelectStore} *',
+      items: stores.map((s) => PosDropdownItem<String>(value: s.id, label: s.name)).toList(),
+      selectedValue: _selectedStoreId,
       onChanged: (v) {
         if (v != null) setState(() => _selectedStoreId = v);
       },
+      showSearch: true,
     );
   }
 
@@ -474,20 +449,14 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
         ),
         if (_createUserAccount) ...[
           AppSpacing.gapH12,
-          DropdownButtonFormField<UserRole>(
-            value: _userRole,
-            decoration: InputDecoration(
-              labelText: '${l10n.staffUserRole} *',
-              prefixIcon: const Icon(Icons.admin_panel_settings_outlined),
-              border: const OutlineInputBorder(),
-              filled: true,
-              fillColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
-            ),
-            items: UserRole.values.map((r) => DropdownMenuItem(value: r, child: Text(r.label))).toList(),
+          PosSearchableDropdown<UserRole>(
+            label: '${l10n.staffUserRole} *',
+            items: UserRole.values.map((r) => PosDropdownItem(value: r, label: r.label)).toList(),
+            selectedValue: _userRole,
             onChanged: (v) {
               if (v != null) setState(() => _userRole = v);
             },
-            validator: (v) => _createUserAccount && v == null ? l10n.staffRequired : null,
+            showSearch: false,
           ),
           AppSpacing.gapH16,
           TextFormField(
@@ -566,11 +535,11 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
                 try {
                   await ref.read(staffRepositoryProvider).setPin(widget.staffId!, pinController.text);
                   if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.staffPinUpdated)));
+                    showPosSuccessSnackbar(context, l10n.staffPinUpdated);
                   }
                 } catch (e) {
                   if (mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+                    showPosErrorSnackbar(context, l10n.staffPinError(e.toString()));
                   }
                 }
               }

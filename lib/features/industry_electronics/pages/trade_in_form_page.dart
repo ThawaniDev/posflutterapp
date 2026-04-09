@@ -4,6 +4,9 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 import '../models/trade_in_record.dart';
 import '../providers/electronics_providers.dart';
+import 'package:thawani_pos/features/staff/models/staff_user.dart';
+import 'package:thawani_pos/features/staff/providers/staff_providers.dart';
+import 'package:thawani_pos/features/staff/providers/staff_state.dart';
 
 class TradeInFormPage extends ConsumerStatefulWidget {
   final TradeInRecord? record;
@@ -21,7 +24,7 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
   late final TextEditingController _imeiCtrl;
   late final TextEditingController _conditionGradeCtrl;
   late final TextEditingController _assessedValueCtrl;
-  late final TextEditingController _staffUserIdCtrl;
+  String? _selectedStaffUserId;
 
   @override
   void initState() {
@@ -31,7 +34,8 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
     _imeiCtrl = TextEditingController(text: r?.imei ?? '');
     _conditionGradeCtrl = TextEditingController(text: r?.conditionGrade ?? '');
     _assessedValueCtrl = TextEditingController(text: r?.assessedValue.toStringAsFixed(2) ?? '');
-    _staffUserIdCtrl = TextEditingController(text: r?.staffUserId ?? '');
+    _selectedStaffUserId = r?.staffUserId;
+    Future.microtask(() => ref.read(staffListProvider.notifier).load());
   }
 
   @override
@@ -40,7 +44,6 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
     _imeiCtrl.dispose();
     _conditionGradeCtrl.dispose();
     _assessedValueCtrl.dispose();
-    _staffUserIdCtrl.dispose();
     super.dispose();
   }
 
@@ -52,7 +55,7 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
       'device_description': _deviceDescCtrl.text.trim(),
       'condition_grade': _conditionGradeCtrl.text.trim(),
       'assessed_value': double.parse(_assessedValueCtrl.text.trim()),
-      'staff_user_id': _staffUserIdCtrl.text.trim(),
+      'staff_user_id': _selectedStaffUserId ?? '',
       if (_imeiCtrl.text.isNotEmpty) 'imei': _imeiCtrl.text.trim(),
     };
 
@@ -65,6 +68,8 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final staffState = ref.watch(staffListProvider);
+    final staffList = staffState is StaffListLoaded ? staffState.staff : <StaffUser>[];
     return Scaffold(
       appBar: AppBar(title: const Text('New Trade-In')),
       bottomNavigationBar: Padding(
@@ -95,12 +100,13 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: AppSpacing.md),
-            PosDropdown<String>(
+            PosSearchableDropdown<String>(
               label: 'Condition Grade',
-              hint: 'Select grade',
-              value: _conditionGradeCtrl.text.isEmpty ? null : _conditionGradeCtrl.text,
+              items: ['A', 'B', 'C', 'D'].map((g) => PosDropdownItem(value: g, label: 'Grade $g')).toList(),
+              selectedValue: _conditionGradeCtrl.text.isEmpty ? null : _conditionGradeCtrl.text,
               onChanged: (v) => setState(() => _conditionGradeCtrl.text = v ?? ''),
-              items: ['A', 'B', 'C', 'D'].map((g) => DropdownMenuItem(value: g, child: Text('Grade $g'))).toList(),
+              showSearch: false,
+              clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
             PosTextField(
@@ -110,7 +116,13 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _staffUserIdCtrl, label: 'Staff User ID', hint: 'Assessing staff member'),
+            PosSearchableDropdown<String>(
+              label: 'Staff Member',
+              items: staffList.map((s) => PosDropdownItem(value: s.id, label: '${s.firstName} ${s.lastName}')).toList(),
+              selectedValue: _selectedStaffUserId,
+              onChanged: (v) => setState(() => _selectedStaffUserId = v),
+              showSearch: true,
+            ),
           ],
         ),
       ),

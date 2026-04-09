@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/features/catalog/models/category.dart';
 import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
@@ -87,22 +89,15 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
                   const SizedBox(height: AppSpacing.md),
 
                   // Parent category dropdown
-                  Text('Parent Category', style: Theme.of(ctx).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w600)),
-                  const SizedBox(height: 4),
-                  DropdownButtonFormField<String>(
-                    value: selectedParentId,
-                    decoration: InputDecoration(
-                      hintText: 'None (root level)',
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                    ),
-                    items: [
-                      const DropdownMenuItem<String>(value: null, child: Text('None (root level)')),
-                      ...availableParents.map(
-                        (c) => DropdownMenuItem<String>(value: c.id, child: Text(_buildCategoryPath(c, allCategories))),
-                      ),
-                    ],
+                  PosSearchableDropdown<String>(
+                    selectedValue: selectedParentId,
+                    items: availableParents
+                        .map((c) => PosDropdownItem(value: c.id, label: _buildCategoryPath(c, allCategories)))
+                        .toList(),
                     onChanged: (v) => setDialogState(() => selectedParentId = v),
+                    label: 'Parent Category',
+                    hint: 'None (root level)',
+                    clearable: true,
                   ),
                   const SizedBox(height: AppSpacing.md),
 
@@ -156,17 +151,17 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
         if (isEditing) {
           await ref.read(categoriesProvider.notifier).updateCategory(category.id, result);
           if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Category updated.')));
+            showPosSuccessSnackbar(context, AppLocalizations.of(context)!.categoryUpdated);
           }
         } else {
           await ref.read(categoriesProvider.notifier).createCategory(result);
           if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Category created.')));
+            showPosSuccessSnackbar(context, AppLocalizations.of(context)!.categoryCreated);
           }
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }
@@ -178,59 +173,26 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
     final allCats = catState is CategoriesLoaded ? catState.categories : <Category>[];
     final childCount = allCats.where((c) => c.parentId == category.id).length;
 
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Delete Category'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Are you sure you want to delete "${category.name}"?'),
-            if (childCount > 0) ...[
-              const SizedBox(height: AppSpacing.sm),
-              Container(
-                padding: const EdgeInsets.all(AppSpacing.sm),
-                decoration: BoxDecoration(
-                  color: AppColors.warning.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    Icon(Icons.warning_amber_rounded, color: AppColors.warning, size: 20),
-                    const SizedBox(width: AppSpacing.sm),
-                    Expanded(
-                      child: Text(
-                        'This category has $childCount subcategories that will also be removed.',
-                        style: TextStyle(color: AppColors.warning),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ],
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Delete'),
-          ),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: 'Delete Category',
+      message:
+          'Are you sure you want to delete "${category.name}"?'
+          '${childCount > 0 ? '\nThis category has $childCount subcategories that will also be removed.' : ''}',
+      confirmLabel: 'Delete',
+      cancelLabel: 'Cancel',
+      isDanger: true,
     );
 
     if (confirmed == true && mounted) {
       try {
         await ref.read(categoriesProvider.notifier).deleteCategory(category.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Category "${category.name}" deleted.')));
+          showPosSuccessSnackbar(context, AppLocalizations.of(context)!.categoryDeleted(category.name));
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }

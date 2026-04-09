@@ -55,7 +55,7 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> w
 
     ref.listen<SecurityActionState>(securityActionProvider, (prev, next) {
       if (next is SecurityActionSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message)));
+        showPosSuccessSnackbar(context, next.message);
         // Refresh relevant data
         final sid = _storeId;
         if (sid != null) {
@@ -66,7 +66,7 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> w
         }
         ref.read(securityActionProvider.notifier).reset();
       } else if (next is SecurityActionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, next.message);
         ref.read(securityActionProvider.notifier).reset();
       }
     });

@@ -6,6 +6,7 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/inventory/models/stock_level.dart';
 import 'package:thawani_pos/features/inventory/providers/inventory_providers.dart';
 import 'package:thawani_pos/features/inventory/providers/inventory_state.dart';
@@ -76,11 +77,11 @@ class _StockLevelsPageState extends ConsumerState<StockLevelsPage> {
               .read(stockLevelsProvider.notifier)
               .setReorderPoint(level.id, reorderPoint: reorderPoint, maxStockLevel: maxLevel);
           if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryReorderPointSaved)));
+            showPosSuccessSnackbar(context, l10n.inventoryReorderPointSaved);
           }
         } catch (e) {
           if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+            showPosErrorSnackbar(context, e.toString());
           }
         }
       }

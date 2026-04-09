@@ -3,6 +3,7 @@ import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/widgets/widgets.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -111,134 +112,122 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
                 context.isPhone
                     ? Column(
                         children: [
-                          DropdownButtonFormField<String>(
-                            value: _statusFilter,
-                            decoration: const InputDecoration(
-                              labelText: 'Status',
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                            ),
-                            items: const [
-                              DropdownMenuItem(value: null, child: Text('All')),
-                              DropdownMenuItem(value: 'open', child: Text('Open')),
-                              DropdownMenuItem(value: 'in_progress', child: Text('In Progress')),
-                              DropdownMenuItem(value: 'resolved', child: Text('Resolved')),
-                              DropdownMenuItem(value: 'closed', child: Text('Closed')),
+                          PosSearchableDropdown<String>(
+                            items: [
+                              PosDropdownItem(value: 'open', label: 'Open'),
+                              PosDropdownItem(value: 'in_progress', label: 'In Progress'),
+                              PosDropdownItem(value: 'resolved', label: 'Resolved'),
+                              PosDropdownItem(value: 'closed', label: 'Closed'),
                             ],
+                            selectedValue: _statusFilter,
                             onChanged: (v) {
                               setState(() => _statusFilter = v);
                               _applyFilters();
                             },
+                            label: 'Status',
+                            hint: 'All',
+                            showSearch: false,
+                            clearable: true,
                           ),
                           const SizedBox(height: AppSpacing.sm),
-                          DropdownButtonFormField<String>(
-                            value: _priorityFilter,
-                            decoration: const InputDecoration(
-                              labelText: 'Priority',
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                            ),
-                            items: const [
-                              DropdownMenuItem(value: null, child: Text('All')),
-                              DropdownMenuItem(value: 'low', child: Text('Low')),
-                              DropdownMenuItem(value: 'medium', child: Text('Medium')),
-                              DropdownMenuItem(value: 'high', child: Text('High')),
-                              DropdownMenuItem(value: 'critical', child: Text('Critical')),
+                          PosSearchableDropdown<String>(
+                            items: [
+                              PosDropdownItem(value: 'low', label: 'Low'),
+                              PosDropdownItem(value: 'medium', label: 'Medium'),
+                              PosDropdownItem(value: 'high', label: 'High'),
+                              PosDropdownItem(value: 'critical', label: 'Critical'),
                             ],
+                            selectedValue: _priorityFilter,
                             onChanged: (v) {
                               setState(() => _priorityFilter = v);
                               _applyFilters();
                             },
+                            label: 'Priority',
+                            hint: 'All',
+                            showSearch: false,
+                            clearable: true,
                           ),
                           const SizedBox(height: AppSpacing.sm),
-                          DropdownButtonFormField<String>(
-                            value: _categoryFilter,
-                            decoration: const InputDecoration(
-                              labelText: 'Category',
-                              border: OutlineInputBorder(),
-                              contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                            ),
-                            items: const [
-                              DropdownMenuItem(value: null, child: Text('All')),
-                              DropdownMenuItem(value: 'billing', child: Text('Billing')),
-                              DropdownMenuItem(value: 'technical', child: Text('Technical')),
-                              DropdownMenuItem(value: 'zatca', child: Text('ZATCA')),
-                              DropdownMenuItem(value: 'feature_request', child: Text('Feature')),
-                              DropdownMenuItem(value: 'general', child: Text('General')),
+                          PosSearchableDropdown<String>(
+                            items: [
+                              PosDropdownItem(value: 'billing', label: 'Billing'),
+                              PosDropdownItem(value: 'technical', label: 'Technical'),
+                              PosDropdownItem(value: 'zatca', label: 'ZATCA'),
+                              PosDropdownItem(value: 'feature_request', label: 'Feature'),
+                              PosDropdownItem(value: 'general', label: 'General'),
                             ],
+                            selectedValue: _categoryFilter,
                             onChanged: (v) {
                               setState(() => _categoryFilter = v);
                               _applyFilters();
                             },
+                            label: 'Category',
+                            hint: 'All',
+                            showSearch: false,
+                            clearable: true,
                           ),
                         ],
                       )
                     : Row(
                         children: [
                           Expanded(
-                            child: DropdownButtonFormField<String>(
-                              value: _statusFilter,
-                              decoration: const InputDecoration(
-                                labelText: 'Status',
-                                border: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                              ),
-                              items: const [
-                                DropdownMenuItem(value: null, child: Text('All')),
-                                DropdownMenuItem(value: 'open', child: Text('Open')),
-                                DropdownMenuItem(value: 'in_progress', child: Text('In Progress')),
-                                DropdownMenuItem(value: 'resolved', child: Text('Resolved')),
-                                DropdownMenuItem(value: 'closed', child: Text('Closed')),
+                            child: PosSearchableDropdown<String>(
+                              items: [
+                                PosDropdownItem(value: 'open', label: 'Open'),
+                                PosDropdownItem(value: 'in_progress', label: 'In Progress'),
+                                PosDropdownItem(value: 'resolved', label: 'Resolved'),
+                                PosDropdownItem(value: 'closed', label: 'Closed'),
                               ],
+                              selectedValue: _statusFilter,
                               onChanged: (v) {
                                 setState(() => _statusFilter = v);
                                 _applyFilters();
                               },
+                              label: 'Status',
+                              hint: 'All',
+                              showSearch: false,
+                              clearable: true,
                             ),
                           ),
                           const SizedBox(width: AppSpacing.sm),
                           Expanded(
-                            child: DropdownButtonFormField<String>(
-                              value: _priorityFilter,
-                              decoration: const InputDecoration(
-                                labelText: 'Priority',
-                                border: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                              ),
-                              items: const [
-                                DropdownMenuItem(value: null, child: Text('All')),
-                                DropdownMenuItem(value: 'low', child: Text('Low')),
-                                DropdownMenuItem(value: 'medium', child: Text('Medium')),
-                                DropdownMenuItem(value: 'high', child: Text('High')),
-                                DropdownMenuItem(value: 'critical', child: Text('Critical')),
+                            child: PosSearchableDropdown<String>(
+                              items: [
+                                PosDropdownItem(value: 'low', label: 'Low'),
+                                PosDropdownItem(value: 'medium', label: 'Medium'),
+                                PosDropdownItem(value: 'high', label: 'High'),
+                                PosDropdownItem(value: 'critical', label: 'Critical'),
                               ],
+                              selectedValue: _priorityFilter,
                               onChanged: (v) {
                                 setState(() => _priorityFilter = v);
                                 _applyFilters();
                               },
+                              label: 'Priority',
+                              hint: 'All',
+                              showSearch: false,
+                              clearable: true,
                             ),
                           ),
                           const SizedBox(width: AppSpacing.sm),
                           Expanded(
-                            child: DropdownButtonFormField<String>(
-                              value: _categoryFilter,
-                              decoration: const InputDecoration(
-                                labelText: 'Category',
-                                border: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-                              ),
-                              items: const [
-                                DropdownMenuItem(value: null, child: Text('All')),
-                                DropdownMenuItem(value: 'billing', child: Text('Billing')),
-                                DropdownMenuItem(value: 'technical', child: Text('Technical')),
-                                DropdownMenuItem(value: 'zatca', child: Text('ZATCA')),
-                                DropdownMenuItem(value: 'feature_request', child: Text('Feature')),
-                                DropdownMenuItem(value: 'general', child: Text('General')),
+                            child: PosSearchableDropdown<String>(
+                              items: [
+                                PosDropdownItem(value: 'billing', label: 'Billing'),
+                                PosDropdownItem(value: 'technical', label: 'Technical'),
+                                PosDropdownItem(value: 'zatca', label: 'ZATCA'),
+                                PosDropdownItem(value: 'feature_request', label: 'Feature'),
+                                PosDropdownItem(value: 'general', label: 'General'),
                               ],
+                              selectedValue: _categoryFilter,
                               onChanged: (v) {
                                 setState(() => _categoryFilter = v);
                                 _applyFilters();
                               },
+                              label: 'Category',
+                              hint: 'All',
+                              showSearch: false,
+                              clearable: true,
                             ),
                           ),
                         ],

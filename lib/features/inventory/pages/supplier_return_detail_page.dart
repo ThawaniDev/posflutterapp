@@ -6,6 +6,7 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_card.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/inventory/enums/supplier_return_status.dart';
 import 'package:thawani_pos/features/inventory/models/supplier_return.dart';
 import 'package:thawani_pos/features/inventory/providers/inventory_providers.dart';
@@ -78,16 +79,13 @@ class _SupplierReturnDetailPageState extends ConsumerState<SupplierReturnDetailP
     final notifier = ref.read(supplierReturnsProvider.notifier);
     final label = _returnData?.referenceNumber ?? widget.returnId.substring(0, 8);
 
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text('$action "$label"?'),
-        content: Text(l10n.supplierReturnActionConfirm(action, label)),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonCancel)),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(action)),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: '$action "$label"?',
+      message: l10n.supplierReturnActionConfirm(action, label),
+      confirmLabel: action,
+      cancelLabel: l10n.commonCancel,
+      isDanger: action == 'Cancel',
     );
 
     if (confirmed != true || !mounted) return;
@@ -104,12 +102,12 @@ class _SupplierReturnDetailPageState extends ConsumerState<SupplierReturnDetailP
           await notifier.cancelReturn(widget.returnId);
       }
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.supplierReturnActionSuccess(action))));
+        showPosSuccessSnackbar(context, l10n.supplierReturnActionSuccess(action));
         _loadDetail();
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, e.toString());
       }
     }
   }

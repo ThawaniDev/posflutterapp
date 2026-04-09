@@ -23,6 +23,10 @@ class OwnerDashboardNotifier extends StateNotifier<OwnerDashboardState> {
         _repo.getLowStock(limit: 10),
         _repo.getActiveCashiers(),
         _repo.getRecentOrders(limit: 10),
+        _repo.getFinancialSummary(days: days),
+        _repo.getHourlySales(),
+        _repo.getStaffPerformance(days: days),
+        _repo.getBranches(),
       ]);
       state = OwnerDashboardLoaded(
         stats: results[0] as Map<String, dynamic>,
@@ -31,6 +35,10 @@ class OwnerDashboardNotifier extends StateNotifier<OwnerDashboardState> {
         lowStock: results[3] as List<Map<String, dynamic>>,
         activeCashiers: results[4] as List<Map<String, dynamic>>,
         recentOrders: results[5] as List<Map<String, dynamic>>,
+        financialSummary: results[6] as Map<String, dynamic>,
+        hourlySales: results[7] as List<Map<String, dynamic>>,
+        staffPerformance: results[8] as List<Map<String, dynamic>>,
+        branches: results[9] as List<Map<String, dynamic>>,
       );
     } catch (e) {
       if (state is! OwnerDashboardLoaded) state = OwnerDashboardError(message: e.toString());

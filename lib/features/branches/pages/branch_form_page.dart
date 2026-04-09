@@ -5,6 +5,7 @@ import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/branches/enums/business_type.dart';
 import 'package:thawani_pos/features/branches/models/store.dart';
 import 'package:thawani_pos/features/branches/providers/branch_providers.dart';
@@ -293,12 +294,12 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> with SingleTick
 
     ref.listen<BranchFormState>(branchFormProvider, (prev, next) {
       if (next is BranchFormSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message)));
+        showPosSuccessSnackbar(context, next.message);
         ref.read(branchListProvider.notifier).load();
         ref.read(branchFormProvider.notifier).reset();
         context.pop();
       } else if (next is BranchFormError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
+        showPosErrorSnackbar(context, next.message);
       }
     });
 
@@ -574,44 +575,14 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> with SingleTick
   }
 
   Widget _dropdown(String label) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.md),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              fontWeight: FontWeight.w600,
-              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          DropdownButtonFormField<BusinessType>(
-            value: _businessType,
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(AppSpacing.sm),
-                borderSide: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(AppSpacing.sm),
-                borderSide: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(AppSpacing.sm),
-                borderSide: const BorderSide(color: AppColors.primary, width: 2),
-              ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
-              isDense: true,
-            ),
-            items: BusinessType.values.map((t) => DropdownMenuItem(value: t, child: Text(t.value))).toList(),
-            onChanged: (v) => setState(() => _businessType = v),
-          ),
-        ],
+      child: PosSearchableDropdown<BusinessType>(
+        label: label,
+        items: BusinessType.values.map((t) => PosDropdownItem(value: t, label: t.value)).toList(),
+        selectedValue: _businessType,
+        onChanged: (v) => setState(() => _businessType = v),
+        showSearch: false,
       ),
     );
   }

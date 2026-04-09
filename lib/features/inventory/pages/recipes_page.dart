@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_button.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/catalog/models/product.dart';
 import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
 import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
@@ -29,31 +29,24 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
 
   Future<void> _handleDelete(Recipe recipe) async {
     final l10n = AppLocalizations.of(context)!;
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.inventoryDeleteRecipeTitle),
-        content: Text(l10n.recipeDeleteConfirm(recipe.name ?? recipe.productName ?? recipe.productId)),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonCancel)),
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: Text(l10n.commonDelete),
-          ),
-        ],
-      ),
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.inventoryDeleteRecipeTitle,
+      message: l10n.recipeDeleteConfirm(recipe.name ?? recipe.productName ?? recipe.productId),
+      confirmLabel: l10n.commonDelete,
+      cancelLabel: l10n.commonCancel,
+      isDanger: true,
     );
 
     if (confirmed == true && mounted) {
       try {
         await ref.read(recipesProvider.notifier).deleteRecipe(recipe.id);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryRecipeDeleted)));
+          showPosSuccessSnackbar(context, l10n.inventoryRecipeDeleted);
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }
@@ -170,12 +163,14 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      DropdownButtonFormField<String>(
-                        value: selectedProductId,
-                        decoration: InputDecoration(labelText: l10n.inventoryOutputProduct),
-                        isExpanded: true,
-                        items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
+                      PosSearchableDropdown<String>(
+                        items: productList.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
+                        selectedValue: selectedProductId,
                         onChanged: (v) => setDialogState(() => selectedProductId = v),
+                        label: l10n.inventoryOutputProduct,
+                        hint: l10n.inventoryOutputProduct,
+                        showSearch: true,
+                        clearable: false,
                         validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
@@ -192,12 +187,14 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
                       const Divider(height: 24),
                       Text(l10n.inventoryIngredient, style: const TextStyle(fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
-                      DropdownButtonFormField<String>(
-                        value: selectedIngredientId,
-                        decoration: InputDecoration(labelText: l10n.inventoryIngredientProduct),
-                        isExpanded: true,
-                        items: productList.map((p) => DropdownMenuItem(value: p.id, child: Text(p.name))).toList(),
+                      PosSearchableDropdown<String>(
+                        items: productList.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
+                        selectedValue: selectedIngredientId,
                         onChanged: (v) => setDialogState(() => selectedIngredientId = v),
+                        label: l10n.inventoryIngredientProduct,
+                        hint: l10n.inventoryIngredientProduct,
+                        showSearch: true,
+                        clearable: false,
                         validator: (v) => v == null ? l10n.commonRequired : null,
                       ),
                       const SizedBox(height: AppSpacing.sm),
@@ -252,11 +249,11 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
       try {
         await ref.read(recipesProvider.notifier).createRecipe(result);
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.inventoryRecipeCreated)));
+          showPosSuccessSnackbar(context, l10n.inventoryRecipeCreated);
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()), backgroundColor: AppColors.error));
+          showPosErrorSnackbar(context, e.toString());
         }
       }
     }

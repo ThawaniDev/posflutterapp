@@ -194,26 +194,108 @@ Future<T?> showPosFullScreenDialog<T>(
 // ALERT SNACKBAR
 // ─────────────────────────────────────────────────────────────
 
-/// Show a themed snackbar with optional icon + action.
+/// Snackbar severity level — determines icon, color, and styling.
+enum PosSnackbarLevel { success, error, warning, info }
+
+/// Show a fully-themed snackbar with icon, colored accent bar, and optional action.
+///
+/// The snackbar uses a left accent border, matching icon, and theme-aware colors.
+/// Use the convenience helpers below instead of calling this directly.
 void showPosSnackbar(
   BuildContext context, {
   required String message,
+  PosSnackbarLevel level = PosSnackbarLevel.info,
   IconData? icon,
   Color? iconColor,
   String? actionLabel,
   VoidCallback? onAction,
   Duration duration = const Duration(seconds: 3),
 }) {
+  final isDark = Theme.of(context).brightness == Brightness.dark;
+
+  final resolvedIcon = icon ?? _iconForLevel(level);
+  final accentColor = iconColor ?? _colorForLevel(level);
+  final bgColor = isDark ? accentColor.withValues(alpha: 0.15) : accentColor.withValues(alpha: 0.08);
+  final borderColor = accentColor.withValues(alpha: isDark ? 0.40 : 0.25);
+  final textColor = isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;
+
   final snackBar = SnackBar(
+    elevation: 0,
+    backgroundColor: Colors.transparent,
+    padding: EdgeInsets.zero,
     duration: duration,
-    content: Row(
-      children: [
-        if (icon != null) ...[Icon(icon, color: iconColor ?? Colors.white, size: 20), AppSpacing.gapW8],
-        Expanded(child: Text(message)),
-      ],
+    behavior: SnackBarBehavior.floating,
+    width: 480,
+    content: Container(
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
+        borderRadius: AppRadius.borderMd,
+        border: Border.all(color: borderColor),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.08), blurRadius: 12, offset: const Offset(0, 4))],
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            // Color accent bar
+            Container(
+              width: 4,
+              decoration: BoxDecoration(
+                color: accentColor,
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), bottomLeft: Radius.circular(8)),
+              ),
+            ),
+            // Icon
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(color: bgColor, shape: BoxShape.circle),
+                child: Icon(resolvedIcon, color: accentColor, size: 18),
+              ),
+            ),
+            // Message
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                child: Text(
+                  message,
+                  style: AppTypography.bodySmall.copyWith(color: textColor, fontWeight: FontWeight.w500),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+            // Action or close
+            if (actionLabel != null)
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: TextButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                    onAction?.call();
+                  },
+                  style: TextButton.styleFrom(foregroundColor: accentColor, padding: const EdgeInsets.symmetric(horizontal: 12)),
+                  child: Text(actionLabel, style: AppTypography.labelSmall.copyWith(fontWeight: FontWeight.w700)),
+                ),
+              )
+            else
+              Padding(
+                padding: const EdgeInsets.only(right: 4),
+                child: IconButton(
+                  icon: Icon(Icons.close_rounded, size: 16, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+                  splashRadius: 16,
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                ),
+              ),
+          ],
+        ),
+      ),
     ),
     action: actionLabel != null
-        ? SnackBarAction(label: actionLabel, textColor: AppColors.primary, onPressed: onAction ?? () {})
+        ? SnackBarAction(label: '', onPressed: () {}) // invisible — custom action above
         : null,
   );
   ScaffoldMessenger.of(context)
@@ -221,12 +303,49 @@ void showPosSnackbar(
     ..showSnackBar(snackBar);
 }
 
-/// Convenience: success snackbar.
-void showPosSuccessSnackbar(BuildContext context, String message) {
-  showPosSnackbar(context, message: message, icon: Icons.check_circle_rounded, iconColor: AppColors.success);
+IconData _iconForLevel(PosSnackbarLevel level) => switch (level) {
+  PosSnackbarLevel.success => Icons.check_circle_rounded,
+  PosSnackbarLevel.error => Icons.error_rounded,
+  PosSnackbarLevel.warning => Icons.warning_amber_rounded,
+  PosSnackbarLevel.info => Icons.info_rounded,
+};
+
+Color _colorForLevel(PosSnackbarLevel level) => switch (level) {
+  PosSnackbarLevel.success => AppColors.success,
+  PosSnackbarLevel.error => AppColors.error,
+  PosSnackbarLevel.warning => AppColors.warning,
+  PosSnackbarLevel.info => AppColors.info,
+};
+
+/// Success snackbar (green).
+void showPosSuccessSnackbar(BuildContext context, String message, {String? actionLabel, VoidCallback? onAction}) {
+  showPosSnackbar(context, message: message, level: PosSnackbarLevel.success, actionLabel: actionLabel, onAction: onAction);
 }
 
-/// Convenience: error snackbar.
-void showPosErrorSnackbar(BuildContext context, String message) {
-  showPosSnackbar(context, message: message, icon: Icons.error_rounded, iconColor: AppColors.error);
+/// Error snackbar (red).
+void showPosErrorSnackbar(
+  BuildContext context,
+  String message, {
+  String? actionLabel,
+  VoidCallback? onAction,
+  Duration duration = const Duration(seconds: 5),
+}) {
+  showPosSnackbar(
+    context,
+    message: message,
+    level: PosSnackbarLevel.error,
+    actionLabel: actionLabel,
+    onAction: onAction,
+    duration: duration,
+  );
+}
+
+/// Warning snackbar (amber).
+void showPosWarningSnackbar(BuildContext context, String message, {String? actionLabel, VoidCallback? onAction}) {
+  showPosSnackbar(context, message: message, level: PosSnackbarLevel.warning, actionLabel: actionLabel, onAction: onAction);
+}
+
+/// Info snackbar (blue).
+void showPosInfoSnackbar(BuildContext context, String message, {String? actionLabel, VoidCallback? onAction}) {
+  showPosSnackbar(context, message: message, level: PosSnackbarLevel.info, actionLabel: actionLabel, onAction: onAction);
 }
