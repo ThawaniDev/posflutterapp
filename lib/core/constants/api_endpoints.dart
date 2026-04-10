@@ -817,7 +817,7 @@ class ApiEndpoints {
   static const String wameedAIPersonalizedPromotions = '/wameed-ai/customers/personalized-promotions';
   static const String wameedAISpendingPatterns = '/wameed-ai/customers/spending-patterns';
   static const String wameedAISentimentAnalysis = '/wameed-ai/customers/sentiment-analysis';
-  static const String wameedAISmartSearch = '/wameed-ai/smart-search';
+  static const String wameedAISmartSearch = '/wameed-ai/operations/smart-search';
   static const String wameedAIStaffPerformance = '/wameed-ai/operations/staff-performance';
   static const String wameedAICashierErrors = '/wameed-ai/operations/cashier-errors';
   static const String wameedAIEfficiencyScore = '/wameed-ai/operations/efficiency-score';
