@@ -161,12 +161,7 @@ class AIStoreFeatureConfig {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'is_enabled': isEnabled,
-      'daily_limit': dailyLimit,
-      'monthly_limit': monthlyLimit,
-      'custom_config': customConfig,
-    };
+    return {'is_enabled': isEnabled, 'daily_limit': dailyLimit, 'monthly_limit': monthlyLimit, 'custom_config': customConfig};
   }
 
   @override

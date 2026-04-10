@@ -35,10 +35,7 @@ class _AIDashboardWidgetState extends ConsumerState<AIDashboardWidget> {
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              AppColors.primary.withValues(alpha: 0.08),
-              AppColors.primary.withValues(alpha: 0.02),
-            ],
+            colors: [AppColors.primary.withValues(alpha: 0.08), AppColors.primary.withValues(alpha: 0.02)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -65,7 +62,10 @@ class _AIDashboardWidgetState extends ConsumerState<AIDashboardWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(l10n.wameedAI, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
-                      Text(l10n.wameedAIInsights, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor)),
+                      Text(
+                        l10n.wameedAIInsights,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+                      ),
                     ],
                   ),
                 ),
@@ -76,64 +76,72 @@ class _AIDashboardWidgetState extends ConsumerState<AIDashboardWidget> {
             switch (suggestionsState) {
               AISuggestionsLoading() => const LinearProgressIndicator(),
               AISuggestionsLoaded(:final suggestions, :final total) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        _miniStat(context, Icons.lightbulb_outline, '$total', l10n.wameedAIPendingSuggestions, AppColors.warning),
-                        const SizedBox(width: 16),
-                        _miniStat(
-                          context,
-                          Icons.priority_high,
-                          '${suggestions.where((s) => s.priority.value == 'high' || s.priority.value == 'critical').length}',
-                          l10n.wameedAIHighPriority,
-                          AppColors.error,
-                        ),
-                      ],
-                    ),
-                    if (suggestions.isNotEmpty) ...[
-                      const SizedBox(height: 12),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: suggestions.take(3).map((s) => Padding(
-                            padding: const EdgeInsets.only(bottom: 4),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 6,
-                                  height: 6,
-                                  decoration: BoxDecoration(
-                                    color: s.priority.value == 'high' || s.priority.value == 'critical'
-                                        ? AppColors.error
-                                        : (s.priority.value == 'medium' ? AppColors.warning : AppColors.success),
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Expanded(
-                                  child: Text(
-                                    s.title ?? s.featureSlug,
-                                    style: Theme.of(context).textTheme.bodySmall,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )).toList(),
-                        ),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      _miniStat(context, Icons.lightbulb_outline, '$total', l10n.wameedAIPendingSuggestions, AppColors.warning),
+                      const SizedBox(width: 16),
+                      _miniStat(
+                        context,
+                        Icons.priority_high,
+                        '${suggestions.where((s) => s.priority.value == 'high' || s.priority.value == 'critical').length}',
+                        l10n.wameedAIHighPriority,
+                        AppColors.error,
                       ),
                     ],
+                  ),
+                  if (suggestions.isNotEmpty) ...[
+                    const SizedBox(height: 12),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: suggestions
+                            .take(3)
+                            .map(
+                              (s) => Padding(
+                                padding: const EdgeInsets.only(bottom: 4),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 6,
+                                      height: 6,
+                                      decoration: BoxDecoration(
+                                        color: s.priority.value == 'high' || s.priority.value == 'critical'
+                                            ? AppColors.error
+                                            : (s.priority.value == 'medium' ? AppColors.warning : AppColors.success),
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        s.title ?? s.featureSlug,
+                                        style: Theme.of(context).textTheme.bodySmall,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ),
                   ],
-                ),
-              _ => Text(l10n.wameedAITapToExplore, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor)),
+                ],
+              ),
+              _ => Text(
+                l10n.wameedAITapToExplore,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+              ),
             },
           ],
         ),
@@ -150,8 +158,14 @@ class _AIDashboardWidgetState extends ConsumerState<AIDashboardWidget> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(value, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800, color: color)),
-              Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 10, color: Theme.of(context).hintColor)),
+              Text(
+                value,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w800, color: color),
+              ),
+              Text(
+                label,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 10, color: Theme.of(context).hintColor),
+              ),
             ],
           ),
         ],

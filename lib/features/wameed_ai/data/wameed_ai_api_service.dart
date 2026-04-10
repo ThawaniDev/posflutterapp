@@ -42,7 +42,12 @@ class WameedAIApiService {
 
   // ─── Suggestions ──────────────────────────────────────────────
 
-  Future<PaginatedResult<AISuggestion>> getSuggestions({int page = 1, int perPage = 20, String? featureSlug, String? status}) async {
+  Future<PaginatedResult<AISuggestion>> getSuggestions({
+    int page = 1,
+    int perPage = 20,
+    String? featureSlug,
+    String? status,
+  }) async {
     final response = await _dio.get(
       ApiEndpoints.wameedAISuggestions,
       queryParameters: {
@@ -65,10 +70,7 @@ class WameedAIApiService {
   }
 
   Future<AISuggestion> updateSuggestionStatus(String suggestionId, String status) async {
-    final response = await _dio.patch(
-      '${ApiEndpoints.wameedAISuggestions}/$suggestionId/status',
-      data: {'status': status},
-    );
+    final response = await _dio.patch('${ApiEndpoints.wameedAISuggestions}/$suggestionId/status', data: {'status': status});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return AISuggestion.fromJson(apiResponse.data as Map<String, dynamic>);
   }
@@ -106,11 +108,7 @@ class WameedAIApiService {
   // ─── AI Features ──────────────────────────────────────────────
 
   Future<AIFeatureResult> invokeFeature(String endpoint, {Map<String, dynamic>? data, Map<String, dynamic>? queryParams}) async {
-    final response = await _dio.post(
-      endpoint,
-      data: data ?? {},
-      queryParameters: queryParams,
-    );
+    final response = await _dio.post(endpoint, data: data ?? {}, queryParameters: queryParams);
     return AIFeatureResult.fromJson(response.data as Map<String, dynamic>);
   }
 
@@ -124,7 +122,8 @@ class WameedAIApiService {
 
   // ── Sales
   Future<AIFeatureResult> dailySummary() => invokeFeature(ApiEndpoints.wameedAIDailySummary);
-  Future<AIFeatureResult> salesForecast({int days = 7}) => invokeFeature(ApiEndpoints.wameedAISalesForecast, queryParams: {'days': days});
+  Future<AIFeatureResult> salesForecast({int days = 7}) =>
+      invokeFeature(ApiEndpoints.wameedAISalesForecast, queryParams: {'days': days});
   Future<AIFeatureResult> peakHours() => invokeFeature(ApiEndpoints.wameedAIPeakHours);
   Future<AIFeatureResult> pricingOptimization() => invokeFeature(ApiEndpoints.wameedAIPricingOptimization);
   Future<AIFeatureResult> bundleSuggestions() => invokeFeature(ApiEndpoints.wameedAIBundleSuggestions);
@@ -132,10 +131,12 @@ class WameedAIApiService {
 
   // ── Catalog
   Future<AIFeatureResult> productCategorization() => invokeFeature(ApiEndpoints.wameedAIProductCategorization);
-  Future<AIFeatureResult> invoiceOCR(String imageBase64) => invokeFeature(ApiEndpoints.wameedAIInvoiceOCR, data: {'image': imageBase64});
+  Future<AIFeatureResult> invoiceOCR(String imageBase64) =>
+      invokeFeature(ApiEndpoints.wameedAIInvoiceOCR, data: {'image': imageBase64});
   Future<AIFeatureResult> productDescription(String productId, {String tone = 'professional', String language = 'both'}) =>
       invokeFeature(ApiEndpoints.wameedAIProductDescription, data: {'product_id': productId, 'tone': tone, 'language': language});
-  Future<AIFeatureResult> barcodeEnrichment(String barcode) => invokeFeature(ApiEndpoints.wameedAIBarcodeEnrichment, data: {'barcode': barcode});
+  Future<AIFeatureResult> barcodeEnrichment(String barcode) =>
+      invokeFeature(ApiEndpoints.wameedAIBarcodeEnrichment, data: {'barcode': barcode});
 
   // ── Customer Intelligence
   Future<AIFeatureResult> customerSegmentation() => invokeFeature(ApiEndpoints.wameedAICustomerSegmentation);
@@ -155,8 +156,10 @@ class WameedAIApiService {
   // ── Communication
   Future<AIFeatureResult> marketingGenerator(String type, Map<String, dynamic> context) =>
       invokeFeature(ApiEndpoints.wameedAIMarketingGenerator, data: {'type': type, 'context': context});
-  Future<AIFeatureResult> socialContent(String platform, String topic, {List<String>? productIds}) =>
-      invokeFeature(ApiEndpoints.wameedAISocialContent, data: {'platform': platform, 'topic': topic, if (productIds != null) 'product_ids': productIds});
+  Future<AIFeatureResult> socialContent(String platform, String topic, {List<String>? productIds}) => invokeFeature(
+    ApiEndpoints.wameedAISocialContent,
+    data: {'platform': platform, 'topic': topic, if (productIds != null) 'product_ids': productIds},
+  );
   Future<AIFeatureResult> translate(List<String> texts, {String from = 'ar', String to = 'en'}) =>
       invokeFeature(ApiEndpoints.wameedAITranslation, data: {'texts': texts, 'from': from, 'to': to});
 

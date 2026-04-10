@@ -25,19 +25,12 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
 
   Future<void> _pickImage(ImageSource source) async {
     final picker = ImagePicker();
-    final image = await picker.pickImage(
-      source: source,
-      maxWidth: 2048,
-      maxHeight: 2048,
-      imageQuality: 85,
-    );
+    final image = await picker.pickImage(source: source, maxWidth: 2048, maxHeight: 2048, imageQuality: 85);
     if (image == null) return;
 
     final bytes = await image.readAsBytes();
     final sizeKB = bytes.length / 1024;
-    final sizeLabel = sizeKB > 1024
-        ? '${(sizeKB / 1024).toStringAsFixed(1)} MB'
-        : '${sizeKB.toStringAsFixed(0)} KB';
+    final sizeLabel = sizeKB > 1024 ? '${(sizeKB / 1024).toStringAsFixed(1)} MB' : '${sizeKB.toStringAsFixed(0)} KB';
 
     setState(() {
       _selectedImage = image;
@@ -51,10 +44,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
     try {
       final bytes = await _selectedImage!.readAsBytes();
       final base64Image = base64Encode(bytes);
-      ref.read(aiFeatureResultProvider.notifier).invoke(
-        'invoice_ocr',
-        params: {'image': base64Image},
-      );
+      ref.read(aiFeatureResultProvider.notifier).invoke('invoice_ocr', params: {'image': base64Image});
     } finally {
       setState(() => _isProcessing = false);
     }
@@ -91,10 +81,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ─── Image Upload Zone ───────────────────────────────
-            if (_selectedImage == null)
-              _buildUploadZone(l10n, isDark)
-            else
-              _buildImagePreview(l10n, isMobile, isDark),
+            if (_selectedImage == null) _buildUploadZone(l10n, isDark) else _buildImagePreview(l10n, isMobile, isDark),
 
             const SizedBox(height: 20),
 
@@ -103,12 +90,8 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
               SizedBox(
                 width: double.infinity,
                 child: PosButton(
-                  label: state is AIFeatureResultLoaded
-                      ? l10n.wameedAIRescanInvoice
-                      : l10n.wameedAIExtractData,
-                  icon: state is AIFeatureResultLoaded
-                      ? Icons.refresh
-                      : Icons.auto_awesome,
+                  label: state is AIFeatureResultLoaded ? l10n.wameedAIRescanInvoice : l10n.wameedAIExtractData,
+                  icon: state is AIFeatureResultLoaded ? Icons.refresh : Icons.auto_awesome,
                   onPressed: _isProcessing ? null : _processImage,
                 ),
               ),
@@ -117,81 +100,77 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
 
             // ─── Results ─────────────────────────────────────────
             switch (state) {
-              AIFeatureResultInitial() => _selectedImage == null
-                  ? Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(40),
-                        child: Column(
-                          children: [
-                            Icon(Icons.receipt_long_outlined, size: 56, color: Theme.of(context).hintColor.withValues(alpha: 0.5)),
-                            const SizedBox(height: 12),
-                            Text(
-                              l10n.wameedAIUploadInvoicePrompt,
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).hintColor),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  : const SizedBox.shrink(),
-              AIFeatureResultLoading() => Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(40),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: 56,
-                          height: 56,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 3,
-                            color: AppColors.primary,
+              AIFeatureResultInitial() =>
+                _selectedImage == null
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(40),
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.receipt_long_outlined,
+                                size: 56,
+                                color: Theme.of(context).hintColor.withValues(alpha: 0.5),
+                              ),
+                              const SizedBox(height: 12),
+                              Text(
+                                l10n.wameedAIUploadInvoicePrompt,
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).hintColor),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        Text(
-                          l10n.wameedAIProcessingInvoice,
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          l10n.wameedAIOCRProcessingHint,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
-                          textAlign: TextAlign.center,
+                      )
+                    : const SizedBox.shrink(),
+              AIFeatureResultLoading() => Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(40),
+                  child: Column(
+                    children: [
+                      SizedBox(width: 56, height: 56, child: CircularProgressIndicator(strokeWidth: 3, color: AppColors.primary)),
+                      const SizedBox(height: 20),
+                      Text(
+                        l10n.wameedAIProcessingInvoice,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        l10n.wameedAIOCRProcessingHint,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              AIFeatureResultError(:final message) => Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: AppColors.error.withValues(alpha: 0.08),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: AppColors.error.withValues(alpha: 0.2)),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.error_outline, color: AppColors.error),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(message, style: const TextStyle(color: AppColors.error)),
                         ),
                       ],
                     ),
                   ),
-                ),
-              AIFeatureResultError(:final message) => Column(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: AppColors.error.withValues(alpha: 0.08),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppColors.error.withValues(alpha: 0.2)),
-                      ),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.error_outline, color: AppColors.error),
-                          const SizedBox(width: 12),
-                          Expanded(child: Text(message, style: const TextStyle(color: AppColors.error))),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      width: double.infinity,
-                      child: PosButton(
-                        label: l10n.commonRetry,
-                        icon: Icons.refresh,
-                        onPressed: _processImage,
-                      ),
-                    ),
-                  ],
-                ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: PosButton(label: l10n.commonRetry, icon: Icons.refresh, onPressed: _processImage),
+                  ),
+                ],
+              ),
               AIFeatureResultLoaded(:final result) => _buildOcrResults(result.data, isMobile, l10n),
             },
           ],
@@ -220,10 +199,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
             Container(
               width: 72,
               height: 72,
-              decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(20),
-              ),
+              decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(20)),
               child: const Icon(Icons.add_a_photo_outlined, size: 36, color: AppColors.primary),
             ),
             const SizedBox(height: 20),
@@ -266,7 +242,10 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
             children: [
               Icon(icon, size: 20, color: AppColors.primary),
               const SizedBox(width: 8),
-              Text(label, style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600)),
+              Text(
+                label,
+                style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600),
+              ),
             ],
           ),
         ),
@@ -281,9 +260,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8, offset: const Offset(0, 2)),
-        ],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8, offset: const Offset(0, 2))],
       ),
       child: Column(
         children: [
@@ -292,11 +269,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
             borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
             child: ConstrainedBox(
               constraints: BoxConstraints(maxHeight: isMobile ? 250 : 350),
-              child: Image.file(
-                File(_selectedImage!.path),
-                width: double.infinity,
-                fit: BoxFit.contain,
-              ),
+              child: Image.file(File(_selectedImage!.path), width: double.infinity, fit: BoxFit.contain),
             ),
           ),
           // Image info bar
@@ -320,10 +293,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
                       ),
                       Text(
                         '${_selectedImage!.name}${_imageSizeLabel != null ? ' · $_imageSizeLabel' : ''}',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).hintColor,
-                          fontSize: 11,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor, fontSize: 11),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -362,9 +332,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
   void _showImageSourceSheet(AppLocalizations l10n) {
     showModalBottomSheet(
       context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (ctx) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),
@@ -454,7 +422,12 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
                 children: [
                   const Icon(Icons.check_circle, color: AppColors.success, size: 20),
                   const SizedBox(width: 8),
-                  Text(l10n.wameedAIInvoiceExtracted, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, color: AppColors.success)),
+                  Text(
+                    l10n.wameedAIInvoiceExtracted,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, color: AppColors.success),
+                  ),
                 ],
               ),
               const Divider(height: 20),
@@ -490,10 +463,34 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
                   ),
                   child: Row(
                     children: [
-                      Expanded(flex: 3, child: Text(l10n.wameedAIProduct, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w700))),
-                      Expanded(child: Text(l10n.wameedAIQty, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w700), textAlign: TextAlign.center)),
-                      Expanded(child: Text(l10n.wameedAIPrice, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w700), textAlign: TextAlign.end)),
-                      Expanded(child: Text(l10n.wameedAITotal, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w700), textAlign: TextAlign.end)),
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          l10n.wameedAIProduct,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          l10n.wameedAIQty,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w700),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          l10n.wameedAIPrice,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w700),
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          l10n.wameedAITotal,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w700),
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -506,10 +503,34 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
                     ),
                     child: Row(
                       children: [
-                        Expanded(flex: 3, child: Text(item['name']?.toString() ?? item['description']?.toString() ?? '', style: Theme.of(context).textTheme.bodySmall)),
-                        Expanded(child: Text('${item['quantity'] ?? item['qty'] ?? ''}', style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.center)),
-                        Expanded(child: Text('\$${item['unit_price'] ?? item['price'] ?? ''}', style: Theme.of(context).textTheme.bodySmall, textAlign: TextAlign.end)),
-                        Expanded(child: Text('\$${item['total'] ?? item['line_total'] ?? ''}', style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600), textAlign: TextAlign.end)),
+                        Expanded(
+                          flex: 3,
+                          child: Text(
+                            item['name']?.toString() ?? item['description']?.toString() ?? '',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            '${item['quantity'] ?? item['qty'] ?? ''}',
+                            style: Theme.of(context).textTheme.bodySmall,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            '\$${item['unit_price'] ?? item['price'] ?? ''}',
+                            style: Theme.of(context).textTheme.bodySmall,
+                            textAlign: TextAlign.end,
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            '\$${item['total'] ?? item['line_total'] ?? ''}',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
+                            textAlign: TextAlign.end,
+                          ),
+                        ),
                       ],
                     ),
                   );
@@ -550,8 +571,17 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(key, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: isBold ? null : Theme.of(context).hintColor, fontWeight: isBold ? FontWeight.w700 : null)),
-          Text(value, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: isBold ? FontWeight.w800 : FontWeight.w600)),
+          Text(
+            key,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: isBold ? null : Theme.of(context).hintColor,
+              fontWeight: isBold ? FontWeight.w700 : null,
+            ),
+          ),
+          Text(
+            value,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: isBold ? FontWeight.w800 : FontWeight.w600),
+          ),
         ],
       ),
     );

@@ -56,12 +56,7 @@ void main() {
             'created_at': '2024-06-01 14:30',
           },
         ],
-        financialSummary: {
-          'gross_revenue': 12450.0,
-          'net_revenue': 11200.0,
-          'tax_collected': 625.0,
-          'refunds': 0.0,
-        },
+        financialSummary: {'gross_revenue': 12450.0, 'net_revenue': 11200.0, 'tax_collected': 625.0, 'refunds': 0.0},
         hourlySales: [
           {'hour': 9, 'revenue': 800.0, 'transactions': 12},
           {'hour': 12, 'revenue': 2400.0, 'transactions': 28},

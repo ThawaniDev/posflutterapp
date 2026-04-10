@@ -22,18 +22,8 @@ void main() {
 
     test('AIFeaturesLoaded holds features list', () {
       final features = [
-        AIFeatureDefinition(
-          id: 'f1',
-          slug: 'smart_reorder',
-          name: 'Smart Reorder',
-          category: AIFeatureCategory.inventory,
-        ),
-        AIFeatureDefinition(
-          id: 'f2',
-          slug: 'daily_summary',
-          name: 'Daily Summary',
-          category: AIFeatureCategory.sales,
-        ),
+        AIFeatureDefinition(id: 'f1', slug: 'smart_reorder', name: 'Smart Reorder', category: AIFeatureCategory.inventory),
+        AIFeatureDefinition(id: 'f2', slug: 'daily_summary', name: 'Daily Summary', category: AIFeatureCategory.sales),
       ];
       final state = AIFeaturesLoaded(features: features);
       expect(state.features, hasLength(2));
@@ -101,9 +91,7 @@ void main() {
 
     test('AISuggestionsLoaded holds paginated data', () {
       final state = AISuggestionsLoaded(
-        suggestions: [
-          AISuggestion(id: 's1', storeId: 'st1', featureSlug: 'smart_reorder'),
-        ],
+        suggestions: [AISuggestion(id: 's1', storeId: 'st1', featureSlug: 'smart_reorder')],
         total: 50,
         currentPage: 1,
         lastPage: 3,
@@ -120,13 +108,7 @@ void main() {
     });
 
     test('AISuggestionsLoaded hasMore false on last page', () {
-      const state = AISuggestionsLoaded(
-        suggestions: [],
-        total: 10,
-        currentPage: 1,
-        lastPage: 1,
-        perPage: 20,
-      );
+      const state = AISuggestionsLoaded(suggestions: [], total: 10, currentPage: 1, lastPage: 1, perPage: 20);
       expect(state.hasMore, false);
       expect(state.featureFilter, isNull);
     });

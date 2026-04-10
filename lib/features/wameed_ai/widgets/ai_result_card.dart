@@ -41,7 +41,9 @@ class AIResultCard extends StatelessWidget {
                 icon: const Icon(Icons.copy, size: 16),
                 tooltip: l10n.wameedAICopyResult,
                 onPressed: () {
-                  final text = result.data != null ? const JsonEncoder.withIndent('  ').convert(result.data) : result.message ?? '';
+                  final text = result.data != null
+                      ? const JsonEncoder.withIndent('  ').convert(result.data)
+                      : result.message ?? '';
                   Clipboard.setData(ClipboardData(text: text));
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.wameedAICopied)));
                 },
@@ -52,10 +54,7 @@ class AIResultCard extends StatelessWidget {
             const SizedBox(height: 12),
             Text(result.message!, style: Theme.of(context).textTheme.bodyMedium),
           ],
-          if (result.data != null) ...[
-            const SizedBox(height: 12),
-            _buildDataSection(context, result.data!),
-          ],
+          if (result.data != null) ...[const SizedBox(height: 12), _buildDataSection(context, result.data!)],
           if (result.tokensUsed != null || result.cost != null) ...[
             const SizedBox(height: 12),
             Row(
@@ -115,7 +114,12 @@ class AIResultCard extends StatelessWidget {
         children: [
           SizedBox(
             width: 140,
-            child: Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600, color: Theme.of(context).hintColor)),
+            child: Text(
+              label,
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600, color: Theme.of(context).hintColor),
+            ),
           ),
           Expanded(child: Text('$value', style: Theme.of(context).textTheme.bodyMedium)),
         ],
@@ -137,10 +141,7 @@ class AIResultCard extends StatelessWidget {
             return Container(
               margin: const EdgeInsets.only(bottom: 8, left: 8),
               padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                borderRadius: BorderRadius.circular(8),
-              ),
+              decoration: BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor, borderRadius: BorderRadius.circular(8)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: item.entries.map((e) => _buildKeyValue(context, e.key, e.value)).toList(),
@@ -158,7 +159,11 @@ class AIResultCard extends StatelessWidget {
             ),
           );
         }),
-        if (items.length > 20) Padding(padding: const EdgeInsets.only(left: 8), child: Text('...and ${items.length - 20} more', style: Theme.of(context).textTheme.bodySmall)),
+        if (items.length > 20)
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Text('...and ${items.length - 20} more', style: Theme.of(context).textTheme.bodySmall),
+          ),
       ],
     );
   }
@@ -175,10 +180,7 @@ class AIResultCard extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(left: 8),
           padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            borderRadius: BorderRadius.circular(8),
-          ),
+          decoration: BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor, borderRadius: BorderRadius.circular(8)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: map.entries.map((e) {

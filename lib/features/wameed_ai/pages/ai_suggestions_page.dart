@@ -52,9 +52,7 @@ class _AISuggestionsPageState extends ConsumerState<AISuggestionsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.wameedAISuggestions),
-        actions: [
-          IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.read(aiSuggestionsProvider.notifier).load()),
-        ],
+        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.read(aiSuggestionsProvider.notifier).load())],
       ),
       body: Padding(
         padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.md),
@@ -86,7 +84,10 @@ class _AISuggestionsPageState extends ConsumerState<AISuggestionsPage> {
             isAr ? (suggestion.titleAr ?? suggestion.title ?? '') : (suggestion.title ?? ''),
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
           ),
-          subtitle: Text(suggestion.featureSlug, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor)),
+          subtitle: Text(
+            suggestion.featureSlug,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+          ),
           badges: [
             PosBadge(label: suggestion.priority.value, variant: _priorityVariant(suggestion.priority.value)),
             PosBadge(label: suggestion.status.value, variant: _statusVariant(suggestion.status.value)),
@@ -126,7 +127,7 @@ class _AISuggestionsPageState extends ConsumerState<AISuggestionsPage> {
         PosTableColumn(title: l10n.wameedAIStatus),
         PosTableColumn(title: l10n.wameedAIActions),
       ],
-      rows: suggestions,
+      items: suggestions,
       isLoading: isLoading,
       error: error,
       onRetry: () => ref.read(aiSuggestionsProvider.notifier).load(),
@@ -145,20 +146,20 @@ class _AISuggestionsPageState extends ConsumerState<AISuggestionsPage> {
           2 => PosBadge(label: suggestion.priority.value, variant: _priorityVariant(suggestion.priority.value)),
           3 => PosBadge(label: suggestion.status.value, variant: _statusVariant(suggestion.status.value)),
           4 => Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.check_circle_outline, size: 18, color: Colors.green),
-                  onPressed: () => ref.read(aiSuggestionsProvider.notifier).updateStatus(suggestion.id, 'accepted'),
-                  tooltip: l10n.wameedAIAccept,
-                ),
-                IconButton(
-                  icon: const Icon(Icons.cancel_outlined, size: 18, color: Colors.grey),
-                  onPressed: () => ref.read(aiSuggestionsProvider.notifier).updateStatus(suggestion.id, 'dismissed'),
-                  tooltip: l10n.wameedAIDismiss,
-                ),
-              ],
-            ),
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.check_circle_outline, size: 18, color: Colors.green),
+                onPressed: () => ref.read(aiSuggestionsProvider.notifier).updateStatus(suggestion.id, 'accepted'),
+                tooltip: l10n.wameedAIAccept,
+              ),
+              IconButton(
+                icon: const Icon(Icons.cancel_outlined, size: 18, color: Colors.grey),
+                onPressed: () => ref.read(aiSuggestionsProvider.notifier).updateStatus(suggestion.id, 'dismissed'),
+                tooltip: l10n.wameedAIDismiss,
+              ),
+            ],
+          ),
           _ => const SizedBox.shrink(),
         };
       },

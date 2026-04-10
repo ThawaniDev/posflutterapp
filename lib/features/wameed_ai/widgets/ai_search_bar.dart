@@ -55,7 +55,10 @@ class _AISearchBarState extends ConsumerState<AISearchBar> {
                 children: [
                   const Icon(Icons.auto_awesome, color: AppColors.primary, size: 20),
                   const SizedBox(width: 8),
-                  Text(l10n.wameedAISmartSearch, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
+                  Text(
+                    l10n.wameedAISmartSearch,
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+                  ),
                 ],
               ),
               const SizedBox(height: 12),
@@ -99,7 +102,10 @@ class _AISearchBarState extends ConsumerState<AISearchBar> {
                     children: [
                       const Icon(Icons.auto_awesome, size: 16, color: AppColors.primary),
                       const SizedBox(width: 8),
-                      Text(l10n.wameedAISearchResults, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+                      Text(
+                        l10n.wameedAISearchResults,
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                      ),
                       const Spacer(),
                       IconButton(
                         icon: const Icon(Icons.close, size: 16),
@@ -130,11 +136,21 @@ class _AISearchBarState extends ConsumerState<AISearchBar> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(entry.key.replaceAll('_', ' '), style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
-              ...(entry.value as List).take(5).map((item) => Padding(
-                padding: const EdgeInsets.only(left: 8, top: 4),
-                child: Text('• ${item is Map ? (item['name'] ?? item.toString()) : item}', style: Theme.of(context).textTheme.bodySmall),
-              )),
+              Text(
+                entry.key.replaceAll('_', ' '),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
+              ),
+              ...(entry.value as List)
+                  .take(5)
+                  .map(
+                    (item) => Padding(
+                      padding: const EdgeInsets.only(left: 8, top: 4),
+                      child: Text(
+                        '• ${item is Map ? (item['name'] ?? item.toString()) : item}',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                  ),
               const SizedBox(height: 8),
             ],
           );
@@ -143,7 +159,10 @@ class _AISearchBarState extends ConsumerState<AISearchBar> {
           padding: const EdgeInsets.only(bottom: 4),
           child: Row(
             children: [
-              Text('${entry.key.replaceAll('_', ' ')}: ', style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
+              Text(
+                '${entry.key.replaceAll('_', ' ')}: ',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
+              ),
               Flexible(child: Text('${entry.value}', style: Theme.of(context).textTheme.bodySmall)),
             ],
           ),

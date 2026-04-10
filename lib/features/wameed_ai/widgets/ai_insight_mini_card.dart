@@ -41,10 +41,7 @@ class AIInsightMiniCard extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: cardColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+                  decoration: BoxDecoration(color: cardColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
                   child: Icon(icon, size: 18, color: cardColor),
                 ),
                 const Spacer(),
@@ -52,17 +49,16 @@ class AIInsightMiniCard extends StatelessWidget {
                   Text(
                     trend!,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: trend!.startsWith('+') ? AppColors.success : (trend!.startsWith('-') ? AppColors.error : Theme.of(context).hintColor),
+                      color: trend!.startsWith('+')
+                          ? AppColors.success
+                          : (trend!.startsWith('-') ? AppColors.error : Theme.of(context).hintColor),
                       fontWeight: FontWeight.w600,
                     ),
                   ),
               ],
             ),
             const SizedBox(height: 10),
-            Text(
-              value,
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
-            ),
+            Text(value, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
             const SizedBox(height: 2),
             Text(
               title,

@@ -138,12 +138,7 @@ class AIFeedback {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'ai_usage_log_id': aiUsageLogId,
-      'rating': rating,
-      'feedback_text': feedbackText,
-      'is_helpful': isHelpful,
-    };
+    return {'ai_usage_log_id': aiUsageLogId, 'rating': rating, 'feedback_text': feedbackText, 'is_helpful': isHelpful};
   }
 
   @override

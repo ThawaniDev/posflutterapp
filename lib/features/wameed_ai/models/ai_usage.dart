@@ -3,11 +3,7 @@ class AIUsageSummary {
   final AIUsageMonthly monthly;
   final List<AIUsageByFeature> byFeature;
 
-  const AIUsageSummary({
-    required this.today,
-    required this.monthly,
-    this.byFeature = const [],
-  });
+  const AIUsageSummary({required this.today, required this.monthly, this.byFeature = const []});
 
   factory AIUsageSummary.fromJson(Map<String, dynamic> json) {
     return AIUsageSummary(
@@ -25,11 +21,7 @@ class AIUsageToday {
   final double totalCost;
   final int totalTokens;
 
-  const AIUsageToday({
-    this.requestCount = 0,
-    this.totalCost = 0,
-    this.totalTokens = 0,
-  });
+  const AIUsageToday({this.requestCount = 0, this.totalCost = 0, this.totalTokens = 0});
 
   factory AIUsageToday.fromJson(Map<String, dynamic> json) {
     return AIUsageToday(
@@ -45,11 +37,7 @@ class AIUsageMonthly {
   final double totalCost;
   final int totalTokens;
 
-  const AIUsageMonthly({
-    this.requestCount = 0,
-    this.totalCost = 0,
-    this.totalTokens = 0,
-  });
+  const AIUsageMonthly({this.requestCount = 0, this.totalCost = 0, this.totalTokens = 0});
 
   factory AIUsageMonthly.fromJson(Map<String, dynamic> json) {
     return AIUsageMonthly(
@@ -65,11 +53,7 @@ class AIUsageByFeature {
   final int requestCount;
   final double totalCost;
 
-  const AIUsageByFeature({
-    required this.featureSlug,
-    this.requestCount = 0,
-    this.totalCost = 0,
-  });
+  const AIUsageByFeature({required this.featureSlug, this.requestCount = 0, this.totalCost = 0});
 
   factory AIUsageByFeature.fromJson(Map<String, dynamic> json) {
     return AIUsageByFeature(

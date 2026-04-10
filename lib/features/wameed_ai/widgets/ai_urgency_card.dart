@@ -53,13 +53,7 @@ class AIUrgencyCard extends StatelessWidget {
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(12),
           border: Border(left: BorderSide(color: _urgencyColor, width: 4)),
-          boxShadow: [
-            BoxShadow(
-              color: _urgencyColor.withValues(alpha: 0.08),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
+          boxShadow: [BoxShadow(color: _urgencyColor.withValues(alpha: 0.08), blurRadius: 8, offset: const Offset(0, 2))],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,10 +61,7 @@ class AIUrgencyCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                if (icon != null) ...[
-                  Icon(icon, size: 20, color: _urgencyColor),
-                  const SizedBox(width: 8),
-                ],
+                if (icon != null) ...[Icon(icon, size: 20, color: _urgencyColor), const SizedBox(width: 8)],
                 Expanded(
                   child: Text(
                     title,
@@ -81,23 +72,15 @@ class AIUrgencyCard extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: _urgencyColor.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
+                  decoration: BoxDecoration(color: _urgencyColor.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(6)),
                   child: Text(
                     _urgencyLabel,
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: _urgencyColor,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 10,
-                    ),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.labelSmall?.copyWith(color: _urgencyColor, fontWeight: FontWeight.w700, fontSize: 10),
                   ),
                 ),
-                if (trailing != null) ...[
-                  const SizedBox(width: 8),
-                  trailing!,
-                ],
+                if (trailing != null) ...[const SizedBox(width: 8), trailing!],
               ],
             ),
             if (subtitle != null) ...[
@@ -109,10 +92,7 @@ class AIUrgencyCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ],
-            if (children != null && children!.isNotEmpty) ...[
-              const SizedBox(height: 10),
-              ...children!,
-            ],
+            if (children != null && children!.isNotEmpty) ...[const SizedBox(height: 10), ...children!],
           ],
         ),
       ),

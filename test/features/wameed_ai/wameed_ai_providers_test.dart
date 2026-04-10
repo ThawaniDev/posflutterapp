@@ -120,27 +120,33 @@ void main() {
 
   group('WameedAIHomePage', () {
     testWidgets('shows loading indicator in initial/loading state', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const Scaffold(body: Center(child: CircularProgressIndicator())),
-        overrides: [
-          aiFeaturesProvider.overrideWith((_) => MockAIFeaturesNotifier(const AIFeaturesLoading())),
-          aiUsageProvider.overrideWith((_) => MockAIUsageNotifier(const AIUsageInitial())),
-          aiSmartSearchProvider.overrideWith((_) => MockAISmartSearchNotifier(const AISmartSearchInitial())),
-        ],
-      ));
+      await tester.pumpWidget(
+        _wrap(
+          const Scaffold(body: Center(child: CircularProgressIndicator())),
+          overrides: [
+            aiFeaturesProvider.overrideWith((_) => MockAIFeaturesNotifier(const AIFeaturesLoading())),
+            aiUsageProvider.overrideWith((_) => MockAIUsageNotifier(const AIUsageInitial())),
+            aiSmartSearchProvider.overrideWith((_) => MockAISmartSearchNotifier(const AISmartSearchInitial())),
+          ],
+        ),
+      );
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
     testWidgets('shows error message on AIFeaturesError', (tester) async {
-      await tester.pumpWidget(_wrap(
-        const Scaffold(body: Center(child: Text('Failed to load AI features'))),
-        overrides: [
-          aiFeaturesProvider.overrideWith((_) => MockAIFeaturesNotifier(const AIFeaturesError(message: 'Failed to load AI features'))),
-          aiUsageProvider.overrideWith((_) => MockAIUsageNotifier(const AIUsageInitial())),
-          aiSmartSearchProvider.overrideWith((_) => MockAISmartSearchNotifier(const AISmartSearchInitial())),
-        ],
-      ));
+      await tester.pumpWidget(
+        _wrap(
+          const Scaffold(body: Center(child: Text('Failed to load AI features'))),
+          overrides: [
+            aiFeaturesProvider.overrideWith(
+              (_) => MockAIFeaturesNotifier(const AIFeaturesError(message: 'Failed to load AI features')),
+            ),
+            aiUsageProvider.overrideWith((_) => MockAIUsageNotifier(const AIUsageInitial())),
+            aiSmartSearchProvider.overrideWith((_) => MockAISmartSearchNotifier(const AISmartSearchInitial())),
+          ],
+        ),
+      );
 
       await tester.pumpAndSettle();
       expect(find.text('Failed to load AI features'), findsOneWidget);
@@ -160,36 +166,32 @@ void main() {
         cost: 0.001,
       );
 
-      await tester.pumpWidget(_wrap(
-        Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                // Simulate the result card's content
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Row(
-                        children: [
-                          Icon(Icons.auto_awesome, size: 20),
-                          SizedBox(width: 8),
-                          Text('AI Result'),
-                        ],
-                      ),
-                      if (result.cached) const Row(children: [Icon(Icons.cached, size: 14), Text('Cached')]),
-                      if (result.message != null) Text(result.message!),
-                      if (result.tokensUsed != null) Text('${result.tokensUsed} tokens'),
-                      if (result.cost != null) Text('\$${result.cost!.toStringAsFixed(6)}'),
-                    ],
+      await tester.pumpWidget(
+        _wrap(
+          Scaffold(
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // Simulate the result card's content
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Row(children: [Icon(Icons.auto_awesome, size: 20), SizedBox(width: 8), Text('AI Result')]),
+                        if (result.cached) const Row(children: [Icon(Icons.cached, size: 14), Text('Cached')]),
+                        if (result.message != null) Text(result.message!),
+                        if (result.tokensUsed != null) Text('${result.tokensUsed} tokens'),
+                        if (result.cost != null) Text('\$${result.cost!.toStringAsFixed(6)}'),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
-      ));
+      );
 
       await tester.pumpAndSettle();
       expect(find.text('Analysis complete'), findsOneWidget);
@@ -201,15 +203,7 @@ void main() {
     testWidgets('renders error result', (tester) async {
       final result = AIFeatureResult.error('Rate limit exceeded');
 
-      await tester.pumpWidget(_wrap(
-        Scaffold(
-          body: Column(
-            children: [
-              if (!result.success) Text(result.message ?? 'Error'),
-            ],
-          ),
-        ),
-      ));
+      await tester.pumpWidget(_wrap(Scaffold(body: Column(children: [if (!result.success) Text(result.message ?? 'Error')]))));
 
       await tester.pumpAndSettle();
       expect(find.text('Rate limit exceeded'), findsOneWidget);
@@ -220,20 +214,20 @@ void main() {
 
   group('AIUsageBanner widget behavior', () {
     testWidgets('shows nothing when state is not loaded', (tester) async {
-      await tester.pumpWidget(_wrap(
-        Scaffold(
-          body: Consumer(
-            builder: (context, ref, _) {
-              final state = ref.watch(aiUsageProvider);
-              if (state is! AIUsageLoaded) return const SizedBox.shrink();
-              return const Text('Usage loaded');
-            },
+      await tester.pumpWidget(
+        _wrap(
+          Scaffold(
+            body: Consumer(
+              builder: (context, ref, _) {
+                final state = ref.watch(aiUsageProvider);
+                if (state is! AIUsageLoaded) return const SizedBox.shrink();
+                return const Text('Usage loaded');
+              },
+            ),
           ),
+          overrides: [aiUsageProvider.overrideWith((_) => MockAIUsageNotifier(const AIUsageInitial()))],
         ),
-        overrides: [
-          aiUsageProvider.overrideWith((_) => MockAIUsageNotifier(const AIUsageInitial())),
-        ],
-      ));
+      );
 
       await tester.pumpAndSettle();
       expect(find.text('Usage loaded'), findsNothing);
@@ -241,27 +235,27 @@ void main() {
     });
 
     testWidgets('shows usage stats when loaded', (tester) async {
-      await tester.pumpWidget(_wrap(
-        Scaffold(
-          body: Consumer(
-            builder: (context, ref, _) {
-              final state = ref.watch(aiUsageProvider);
-              if (state is! AIUsageLoaded) return const SizedBox.shrink();
-              final summary = state.summary;
-              return Column(
-                children: [
-                  Text('Today: ${summary.today.requestCount}'),
-                  Text('Cost: \$${summary.today.totalCost.toStringAsFixed(4)}'),
-                  Text('Monthly: ${summary.monthly.requestCount}'),
-                ],
-              );
-            },
+      await tester.pumpWidget(
+        _wrap(
+          Scaffold(
+            body: Consumer(
+              builder: (context, ref, _) {
+                final state = ref.watch(aiUsageProvider);
+                if (state is! AIUsageLoaded) return const SizedBox.shrink();
+                final summary = state.summary;
+                return Column(
+                  children: [
+                    Text('Today: ${summary.today.requestCount}'),
+                    Text('Cost: \$${summary.today.totalCost.toStringAsFixed(4)}'),
+                    Text('Monthly: ${summary.monthly.requestCount}'),
+                  ],
+                );
+              },
+            ),
           ),
+          overrides: [aiUsageProvider.overrideWith((_) => MockAIUsageNotifier(const AIUsageLoaded(summary: _testUsageSummary)))],
         ),
-        overrides: [
-          aiUsageProvider.overrideWith((_) => MockAIUsageNotifier(const AIUsageLoaded(summary: _testUsageSummary))),
-        ],
-      ));
+      );
 
       await tester.pumpAndSettle();
       expect(find.text('Today: 42'), findsOneWidget);
@@ -293,9 +287,7 @@ void main() {
     });
 
     test('AIFeatureResultNotifier reset returns to initial', () {
-      final notifier = MockAIFeatureResultNotifier(
-        const AIFeatureResultLoaded(result: AIFeatureResult(success: true)),
-      );
+      final notifier = MockAIFeatureResultNotifier(const AIFeatureResultLoaded(result: AIFeatureResult(success: true)));
       expect(notifier.state, isA<AIFeatureResultLoaded>());
       notifier.reset();
       expect(notifier.state, isA<AIFeatureResultInitial>());
@@ -388,7 +380,9 @@ void main() {
       final states = <AIUsageState>[
         const AIUsageInitial(),
         const AIUsageLoading(),
-        const AIUsageLoaded(summary: AIUsageSummary(today: AIUsageToday(), monthly: AIUsageMonthly())),
+        const AIUsageLoaded(
+          summary: AIUsageSummary(today: AIUsageToday(), monthly: AIUsageMonthly()),
+        ),
         const AIUsageError(message: 'err'),
       ];
 

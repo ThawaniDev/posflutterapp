@@ -49,12 +49,7 @@ void main() {
     });
 
     test('fromJson uses defaults for missing fields', () {
-      final minimal = AIFeatureDefinition.fromJson({
-        'id': 'f1',
-        'slug': 'test',
-        'name': 'Test',
-        'category': 'sales',
-      });
+      final minimal = AIFeatureDefinition.fromJson({'id': 'f1', 'slug': 'test', 'name': 'Test', 'category': 'sales'});
       expect(minimal.isActive, true);
       expect(minimal.isPremium, false);
       expect(minimal.dailyLimit, 50);
@@ -115,10 +110,7 @@ void main() {
     });
 
     test('invalid category throws', () {
-      expect(
-        () => AIFeatureCategory.fromValue('nonexistent'),
-        throwsA(isA<ArgumentError>()),
-      );
+      expect(() => AIFeatureCategory.fromValue('nonexistent'), throwsA(isA<ArgumentError>()));
     });
 
     test('tryFromValue returns null for invalid', () {
@@ -150,13 +142,7 @@ void main() {
     });
 
     test('toJson only includes configurable fields', () {
-      final config = AIStoreFeatureConfig(
-        id: 'cfg-1',
-        storeId: 'store-1',
-        featureId: 'feat-1',
-        isEnabled: true,
-        dailyLimit: 100,
-      );
+      final config = AIStoreFeatureConfig(id: 'cfg-1', storeId: 'store-1', featureId: 'feat-1', isEnabled: true, dailyLimit: 100);
       final output = config.toJson();
       expect(output['is_enabled'], true);
       expect(output['daily_limit'], 100);
@@ -180,7 +166,7 @@ void main() {
         'message': 'Analysis complete',
         'data': {
           'suggestions': [
-            {'product': 'Rice', 'qty': 100}
+            {'product': 'Rice', 'qty': 100},
           ],
           'cached': true,
           'tokens_used': 500,
@@ -196,10 +182,7 @@ void main() {
     });
 
     test('fromJson handles missing data', () {
-      final result = AIFeatureResult.fromJson({
-        'success': false,
-        'message': 'Rate limited',
-      });
+      final result = AIFeatureResult.fromJson({'success': false, 'message': 'Rate limited'});
       expect(result.success, false);
       expect(result.data, isNull);
       expect(result.cached, false);
@@ -270,11 +253,7 @@ void main() {
     });
 
     test('fromJson uses defaults for missing priority/status', () {
-      final minimal = AISuggestion.fromJson({
-        'id': 's1',
-        'store_id': 'st1',
-        'feature_slug': 'test',
-      });
+      final minimal = AISuggestion.fromJson({'id': 's1', 'store_id': 'st1', 'feature_slug': 'test'});
       expect(minimal.priority, AISuggestionPriority.medium);
       expect(minimal.status, AISuggestionStatus.pending);
     });
@@ -328,12 +307,7 @@ void main() {
     });
 
     test('fromJson with nullable fields', () {
-      final feedback = AIFeedback.fromJson({
-        'id': 'fb-2',
-        'ai_usage_log_id': 'log-2',
-        'store_id': 'store-2',
-        'rating': 3,
-      });
+      final feedback = AIFeedback.fromJson({'id': 'fb-2', 'ai_usage_log_id': 'log-2', 'store_id': 'store-2', 'rating': 3});
       expect(feedback.isHelpful, isNull);
       expect(feedback.feedbackText, isNull);
       expect(feedback.userId, isNull);
@@ -345,16 +319,8 @@ void main() {
   group('AIUsageSummary', () {
     test('fromJson parses complete summary', () {
       final summary = AIUsageSummary.fromJson({
-        'today': {
-          'request_count': 42,
-          'total_cost': 0.0315,
-          'total_tokens': 15000,
-        },
-        'monthly': {
-          'request_count': 1200,
-          'total_cost': 0.95,
-          'total_tokens': 500000,
-        },
+        'today': {'request_count': 42, 'total_cost': 0.0315, 'total_tokens': 15000},
+        'monthly': {'request_count': 1200, 'total_cost': 0.95, 'total_tokens': 500000},
         'by_feature': [
           {'feature_slug': 'smart_reorder', 'request_count': 20, 'total_cost': 0.015},
           {'feature_slug': 'daily_summary', 'request_count': 22, 'total_cost': 0.016},
@@ -390,11 +356,7 @@ void main() {
     });
 
     test('fromJson handles integer cost as double', () {
-      final today = AIUsageToday.fromJson({
-        'request_count': 10,
-        'total_cost': 1,
-        'total_tokens': 5000,
-      });
+      final today = AIUsageToday.fromJson({'request_count': 10, 'total_cost': 1, 'total_tokens': 5000});
       expect(today.totalCost, 1.0);
       expect(today.totalCost, isA<double>());
     });
@@ -425,10 +387,7 @@ void main() {
     });
 
     test('fromJson uses defaults for missing counts', () {
-      final daily = AIDailyUsage.fromJson({
-        'date': '2024-01-15',
-        'feature_slug': 'test',
-      });
+      final daily = AIDailyUsage.fromJson({'date': '2024-01-15', 'feature_slug': 'test'});
       expect(daily.requestCount, 0);
       expect(daily.cachedCount, 0);
       expect(daily.errorCount, 0);

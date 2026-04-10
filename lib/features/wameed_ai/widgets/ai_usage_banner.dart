@@ -28,18 +28,41 @@ class AIUsageBanner extends ConsumerWidget {
         children: [
           _usageStat(context, l10n.wameedAITodayRequests, '${summary.today.requestCount}', Icons.today, AppColors.primary),
           _divider(context),
-          _usageStat(context, l10n.wameedAITodayCost, '\$${summary.today.totalCost.toStringAsFixed(4)}', Icons.attach_money, Colors.green),
+          _usageStat(
+            context,
+            l10n.wameedAITodayCost,
+            '\$${summary.today.totalCost.toStringAsFixed(4)}',
+            Icons.attach_money,
+            Colors.green,
+          ),
           _divider(context),
-          _usageStat(context, l10n.wameedAIMonthlyRequests, '${summary.monthly.requestCount}', Icons.calendar_month, AppColors.primary),
+          _usageStat(
+            context,
+            l10n.wameedAIMonthlyRequests,
+            '${summary.monthly.requestCount}',
+            Icons.calendar_month,
+            AppColors.primary,
+          ),
           _divider(context),
-          _usageStat(context, l10n.wameedAIMonthlyCost, '\$${summary.monthly.totalCost.toStringAsFixed(4)}', Icons.account_balance_wallet, Colors.green),
+          _usageStat(
+            context,
+            l10n.wameedAIMonthlyCost,
+            '\$${summary.monthly.totalCost.toStringAsFixed(4)}',
+            Icons.account_balance_wallet,
+            Colors.green,
+          ),
         ],
       ),
     );
   }
 
   Widget _divider(BuildContext context) {
-    return Container(width: 1, height: 40, margin: const EdgeInsets.symmetric(horizontal: 12), color: Theme.of(context).dividerColor);
+    return Container(
+      width: 1,
+      height: 40,
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      color: Theme.of(context).dividerColor,
+    );
   }
 
   Widget _usageStat(BuildContext context, String label, String value, IconData icon, Color color) {
@@ -48,9 +71,16 @@ class AIUsageBanner extends ConsumerWidget {
         children: [
           Icon(icon, color: color, size: 20),
           const SizedBox(height: 4),
-          Text(value, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, color: color)),
+          Text(
+            value,
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, color: color),
+          ),
           const SizedBox(height: 2),
-          Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor), textAlign: TextAlign.center),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
     );

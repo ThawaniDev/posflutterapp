@@ -6,14 +6,7 @@ class AIFeatureResult {
   final int? tokensUsed;
   final double? cost;
 
-  const AIFeatureResult({
-    required this.success,
-    this.message,
-    this.data,
-    this.cached = false,
-    this.tokensUsed,
-    this.cost,
-  });
+  const AIFeatureResult({required this.success, this.message, this.data, this.cached = false, this.tokensUsed, this.cost});
 
   factory AIFeatureResult.fromJson(Map<String, dynamic> json) {
     final innerData = json['data'] as Map<String, dynamic>?;

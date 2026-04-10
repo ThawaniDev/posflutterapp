@@ -1351,22 +1351,53 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
           // ─── Wameed AI ───
           GoRoute(path: Routes.wameedAI, name: 'wameedAI', builder: (context, state) => const WameedAIHomePage()),
-          GoRoute(path: Routes.wameedAISmartReorder, name: 'wameedAISmartReorder', builder: (context, state) => const SmartReorderPage()),
-          GoRoute(path: Routes.wameedAIExpiryManager, name: 'wameedAIExpiryManager', builder: (context, state) => const ExpiryManagerPage()),
-          GoRoute(path: Routes.wameedAIDailySummary, name: 'wameedAIDailySummary', builder: (context, state) => const ai.DailySummaryPage()),
-          GoRoute(path: Routes.wameedAICustomerSegments, name: 'wameedAICustomerSegments', builder: (context, state) => const CustomerSegmentsPage()),
-          GoRoute(path: Routes.wameedAIInvoiceOCR, name: 'wameedAIInvoiceOCR', builder: (context, state) => const InvoiceOcrPage()),
-          GoRoute(path: Routes.wameedAIStaffPerformance, name: 'wameedAIStaffPerformance', builder: (context, state) => const ai.StaffPerformancePage()),
-          GoRoute(path: Routes.wameedAIEfficiencyScore, name: 'wameedAIEfficiencyScore', builder: (context, state) => const EfficiencyScorePage()),
+          GoRoute(
+            path: Routes.wameedAISmartReorder,
+            name: 'wameedAISmartReorder',
+            builder: (context, state) => const SmartReorderPage(),
+          ),
+          GoRoute(
+            path: Routes.wameedAIExpiryManager,
+            name: 'wameedAIExpiryManager',
+            builder: (context, state) => const ExpiryManagerPage(),
+          ),
+          GoRoute(
+            path: Routes.wameedAIDailySummary,
+            name: 'wameedAIDailySummary',
+            builder: (context, state) => const ai.DailySummaryPage(),
+          ),
+          GoRoute(
+            path: Routes.wameedAICustomerSegments,
+            name: 'wameedAICustomerSegments',
+            builder: (context, state) => const CustomerSegmentsPage(),
+          ),
+          GoRoute(
+            path: Routes.wameedAIInvoiceOCR,
+            name: 'wameedAIInvoiceOCR',
+            builder: (context, state) => const InvoiceOcrPage(),
+          ),
+          GoRoute(
+            path: Routes.wameedAIStaffPerformance,
+            name: 'wameedAIStaffPerformance',
+            builder: (context, state) => const ai.StaffPerformancePage(),
+          ),
+          GoRoute(
+            path: Routes.wameedAIEfficiencyScore,
+            name: 'wameedAIEfficiencyScore',
+            builder: (context, state) => const EfficiencyScorePage(),
+          ),
           GoRoute(
             path: '${Routes.wameedAI}/:slug',
             name: 'wameedAIFeature',
             builder: (context, state) => AIFeatureDetailPage(featureSlug: state.pathParameters['slug']!),
           ),
-          GoRoute(path: Routes.wameedAISuggestions, name: 'wameedAISuggestions', builder: (context, state) => const AISuggestionsPage()),
+          GoRoute(
+            path: Routes.wameedAISuggestions,
+            name: 'wameedAISuggestions',
+            builder: (context, state) => const AISuggestionsPage(),
+          ),
           GoRoute(path: Routes.wameedAIUsage, name: 'wameedAIUsage', builder: (context, state) => const AIUsagePage()),
           GoRoute(path: Routes.wameedAISettings, name: 'wameedAISettings', builder: (context, state) => const AISettingsPage()),
-
         ], // end ShellRoute routes
       ), // end ShellRoute
       // ─── POS Cashier (full-screen, no sidebar) ──

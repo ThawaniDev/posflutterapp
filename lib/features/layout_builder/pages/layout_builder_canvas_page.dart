@@ -87,21 +87,9 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
                     // Left panel: Widget catalog
                     SizedBox(width: 260, child: _buildWidgetCatalog(catalogState, l10n, isDark)),
                     // Center: Canvas grid
-                    Expanded(
-                      child: _buildCanvasGrid(
-                        canvas.gridColumns,
-                        canvas.gridRows,
-                        placements,
-                        canvasState,
-                        isDark,
-                        l10n,
-                      ),
-                    ),
+                    Expanded(child: _buildCanvasGrid(canvas.gridColumns, canvas.gridRows, placements, canvasState, isDark, l10n)),
                     // Right panel: Properties + versions
-                    SizedBox(
-                      width: 280,
-                      child: _buildPropertiesPanel(placements, versions, canvasState, l10n, isDark),
-                    ),
+                    SizedBox(width: 280, child: _buildPropertiesPanel(placements, versions, canvasState, l10n, isDark)),
                   ],
                 ),
       },

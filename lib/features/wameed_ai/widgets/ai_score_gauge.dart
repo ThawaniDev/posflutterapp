@@ -7,13 +7,7 @@ class AIScoreGauge extends StatelessWidget {
   final String label;
   final double size;
 
-  const AIScoreGauge({
-    super.key,
-    required this.score,
-    this.maxScore = 100,
-    this.label = '',
-    this.size = 120,
-  });
+  const AIScoreGauge({super.key, required this.score, this.maxScore = 100, this.label = '', this.size = 120});
 
   Color get _color {
     final pct = score / maxScore;
@@ -49,10 +43,7 @@ class AIScoreGauge extends StatelessWidget {
             children: [
               Text(
                 score.toStringAsFixed(0),
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: _color,
-                ),
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w800, color: _color),
               ),
               if (label.isNotEmpty)
                 Text(

@@ -30,39 +30,37 @@ class _AISettingsPageState extends ConsumerState<AISettingsPage> {
     final isMobile = context.isPhone;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.wameedAISettings),
-      ),
+      appBar: AppBar(title: Text(l10n.wameedAISettings)),
       body: switch (state) {
         AIFeaturesInitial() || AIFeaturesLoading() => const Center(child: CircularProgressIndicator()),
         AIFeaturesError(:final message) => Center(child: Text(message)),
         AIFeaturesLoaded(:final features) => ListView.builder(
-            padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
-            itemCount: features.length,
-            itemBuilder: (context, index) {
-              final feature = features[index];
-              final isAr = Localizations.localeOf(context).languageCode == 'ar';
-              final name = isAr ? (feature.nameAr ?? feature.name) : feature.name;
-              final desc = isAr ? (feature.descriptionAr ?? feature.description ?? '') : (feature.description ?? '');
-              final isEnabled = feature.storeConfig?.isEnabled ?? true;
+          padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+          itemCount: features.length,
+          itemBuilder: (context, index) {
+            final feature = features[index];
+            final isAr = Localizations.localeOf(context).languageCode == 'ar';
+            final name = isAr ? (feature.nameAr ?? feature.name) : feature.name;
+            final desc = isAr ? (feature.descriptionAr ?? feature.description ?? '') : (feature.description ?? '');
+            final isEnabled = feature.storeConfig?.isEnabled ?? true;
 
-              return Card(
-                margin: const EdgeInsets.only(bottom: 8),
-                child: ListTile(
-                  leading: Icon(Icons.auto_awesome, color: isEnabled ? AppColors.primary : Colors.grey),
-                  title: Text(name, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
-                  subtitle: Text(desc, maxLines: 1, overflow: TextOverflow.ellipsis),
-                  trailing: Switch(
-                    value: isEnabled,
-                    activeColor: AppColors.primary,
-                    onChanged: (value) {
-                      ref.read(aiFeaturesProvider.notifier).updateFeatureConfig(feature.id, isEnabled: value);
-                    },
-                  ),
+            return Card(
+              margin: const EdgeInsets.only(bottom: 8),
+              child: ListTile(
+                leading: Icon(Icons.auto_awesome, color: isEnabled ? AppColors.primary : Colors.grey),
+                title: Text(name, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
+                subtitle: Text(desc, maxLines: 1, overflow: TextOverflow.ellipsis),
+                trailing: Switch(
+                  value: isEnabled,
+                  activeColor: AppColors.primary,
+                  onChanged: (value) {
+                    ref.read(aiFeaturesProvider.notifier).updateFeatureConfig(feature.id, isEnabled: value);
+                  },
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
+        ),
       },
     );
   }

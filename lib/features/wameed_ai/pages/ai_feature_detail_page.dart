@@ -86,7 +86,11 @@ class _AIFeatureDetailPageState extends ConsumerState<AIFeatureDetailPage> {
   }
 
   String _featureTitle() {
-    return widget.featureSlug.replaceAll('_', ' ').split(' ').map((w) => w.isNotEmpty ? '${w[0].toUpperCase()}${w.substring(1)}' : '').join(' ');
+    return widget.featureSlug
+        .replaceAll('_', ' ')
+        .split(' ')
+        .map((w) => w.isNotEmpty ? '${w[0].toUpperCase()}${w.substring(1)}' : '')
+        .join(' ');
   }
 
   @override
@@ -114,16 +118,18 @@ class _AIFeatureDetailPageState extends ConsumerState<AIFeatureDetailPage> {
             if (_params.isNotEmpty) ...[
               Text(l10n.wameedAIParameters, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
               const SizedBox(height: 12),
-              ..._params.map((p) => Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: PosTextField(
-                  controller: _paramControllers[p.key]!,
-                  label: p.label,
-                  hint: p.defaultValue.isNotEmpty ? p.defaultValue : p.label,
-                  keyboardType: p.inputType,
-                  maxLines: p.inputType == TextInputType.multiline ? 3 : 1,
+              ..._params.map(
+                (p) => Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: PosTextField(
+                    controller: _paramControllers[p.key]!,
+                    label: p.label,
+                    hint: p.defaultValue.isNotEmpty ? p.defaultValue : p.label,
+                    keyboardType: p.inputType,
+                    maxLines: p.inputType == TextInputType.multiline ? 3 : 1,
+                  ),
                 ),
-              )),
+              ),
               const SizedBox(height: 8),
             ],
             SizedBox(
@@ -139,31 +145,26 @@ class _AIFeatureDetailPageState extends ConsumerState<AIFeatureDetailPage> {
             switch (resultState) {
               AIFeatureResultInitial() => const SizedBox.shrink(),
               AIFeatureResultLoading() => const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(40),
-                    child: Column(
-                      children: [
-                        CircularProgressIndicator(),
-                        SizedBox(height: 16),
-                        Text('AI is analyzing your data...'),
-                      ],
-                    ),
+                child: Padding(
+                  padding: EdgeInsets.all(40),
+                  child: Column(
+                    children: [CircularProgressIndicator(), SizedBox(height: 16), Text('AI is analyzing your data...')],
                   ),
                 ),
+              ),
               AIFeatureResultError(:final message) => Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: AppColors.error.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.error_outline, color: AppColors.error),
-                      const SizedBox(width: 12),
-                      Expanded(child: Text(message, style: const TextStyle(color: AppColors.error))),
-                    ],
-                  ),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                child: Row(
+                  children: [
+                    const Icon(Icons.error_outline, color: AppColors.error),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(message, style: const TextStyle(color: AppColors.error)),
+                    ),
+                  ],
                 ),
+              ),
               AIFeatureResultLoaded(:final result) => AIResultCard(result: result, featureSlug: widget.featureSlug),
             },
           ],

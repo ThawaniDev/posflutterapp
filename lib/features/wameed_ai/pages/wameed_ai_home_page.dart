@@ -114,15 +114,15 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
       body: switch (state) {
         AIFeaturesInitial() || AIFeaturesLoading() => const Center(child: CircularProgressIndicator()),
         AIFeaturesError(:final message) => Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(message, style: Theme.of(context).textTheme.bodyLarge),
-                const SizedBox(height: 16),
-                PosButton(label: l10n.commonRetry, onPressed: () => ref.read(aiFeaturesProvider.notifier).load()),
-              ],
-            ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(message, style: Theme.of(context).textTheme.bodyLarge),
+              const SizedBox(height: 16),
+              PosButton(label: l10n.commonRetry, onPressed: () => ref.read(aiFeaturesProvider.notifier).load()),
+            ],
           ),
+        ),
         AIFeaturesLoaded(:final features) => _buildBody(features, isMobile, l10n),
       },
     );
@@ -149,7 +149,12 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
     );
   }
 
-  Widget _buildCategorySection(AIFeatureCategory category, List<AIFeatureDefinition> features, bool isMobile, AppLocalizations l10n) {
+  Widget _buildCategorySection(
+    AIFeatureCategory category,
+    List<AIFeatureDefinition> features,
+    bool isMobile,
+    AppLocalizations l10n,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -202,10 +207,7 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
             Row(
               children: [
                 Icon(Icons.auto_awesome, size: 18, color: AppColors.primary),
-                if (feature.isPremium) ...[
-                  const SizedBox(width: 4),
-                  const Icon(Icons.star, size: 14, color: Colors.amber),
-                ],
+                if (feature.isPremium) ...[const SizedBox(width: 4), const Icon(Icons.star, size: 14, color: Colors.amber)],
                 const Spacer(),
                 if (feature.storeConfig != null)
                   Icon(
@@ -216,10 +218,20 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
               ],
             ),
             const SizedBox(height: 8),
-            Text(name, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis),
+            Text(
+              name,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
             const SizedBox(height: 4),
             Expanded(
-              child: Text(desc, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor), maxLines: 2, overflow: TextOverflow.ellipsis),
+              child: Text(
+                desc,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),
