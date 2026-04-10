@@ -76,14 +76,14 @@ void main() {
   group('SalesSummaryState', () {
     test('SalesSummaryLoaded holds breakdown data', () {
       const state = SalesSummaryLoaded(
-        period: 'week',
+        period: {'type': 'week'},
         totalRevenue: 10000.0,
         totalOrders: 80,
         averageOrderValue: 125.0,
         dailyBreakdown: [],
         raw: {},
       );
-      expect(state.period, 'week');
+      expect(state.period, {'type': 'week'});
       expect(state.totalRevenue, 10000.0);
       expect(state.averageOrderValue, 125.0);
     });

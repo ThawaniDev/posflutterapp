@@ -1,0 +1,270 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_providers.dart';
+import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_state.dart';
+import 'package:thawani_pos/features/wameed_ai/widgets/ai_score_gauge.dart';
+
+class EfficiencyScorePage extends ConsumerStatefulWidget {
+  const EfficiencyScorePage({super.key});
+
+  @override
+  ConsumerState<EfficiencyScorePage> createState() => _EfficiencyScorePageState();
+}
+
+class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      ref.read(aiFeatureResultProvider.notifier).invoke('efficiency_score');
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final state = ref.watch(aiFeatureResultProvider);
+    final isMobile = context.isPhone;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          children: [
+            const Icon(Icons.speed, color: AppColors.primary),
+            const SizedBox(width: 8),
+            Text(l10n.wameedAIEfficiencyScore),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: l10n.commonRefresh,
+            onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('efficiency_score'),
+          ),
+        ],
+      ),
+      body: switch (state) {
+        AIFeatureResultInitial() || AIFeatureResultLoading() => const Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [CircularProgressIndicator(), SizedBox(height: 16), Text('Calculating efficiency score...')],
+          ),
+        ),
+        AIFeatureResultError(:final message) => Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.error_outline, color: AppColors.error, size: 48),
+              const SizedBox(height: 16),
+              Text(message, textAlign: TextAlign.center),
+              const SizedBox(height: 16),
+              PosButton(
+                label: l10n.commonRetry,
+                onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('efficiency_score'),
+              ),
+            ],
+          ),
+        ),
+        AIFeatureResultLoaded(:final result) => _buildContent(result.data, isMobile, l10n),
+      },
+    );
+  }
+
+  Widget _buildContent(Map<String, dynamic>? data, bool isMobile, AppLocalizations l10n) {
+    if (data == null) {
+      return Center(
+        child: PosEmptyState(title: l10n.wameedAINoResults, icon: Icons.speed),
+      );
+    }
+
+    final overallScore = (data['overall_score'] as num?)?.toDouble() ?? 0;
+    final subscores = data['sub_scores'] as Map<String, dynamic>? ?? data['breakdown'] as Map<String, dynamic>? ?? {};
+    final improvements = (data['improvements'] as List?)?.cast<String>() ?? data['suggestions'] as List? ?? [];
+    final strengths = (data['strengths'] as List?)?.cast<String>() ?? [];
+
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Main gauge
+          Center(
+            child: Container(
+              padding: const EdgeInsets.all(32),
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Theme.of(context).dividerColor),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    l10n.wameedAIOverallScore,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600, color: Theme.of(context).hintColor),
+                  ),
+                  const SizedBox(height: 16),
+                  AIScoreGauge(score: overallScore, size: 160, label: '/100'),
+                  const SizedBox(height: 16),
+                  Text(
+                    _scoreLabel(overallScore),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700, color: _scoreColor(overallScore)),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // Sub-scores
+          if (subscores.isNotEmpty) ...[
+            const SizedBox(height: 24),
+            Text(
+              l10n.wameedAIScoreBreakdown,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: 12),
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: isMobile ? 2 : 4,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+                childAspectRatio: 1.0,
+              ),
+              itemCount: subscores.length,
+              itemBuilder: (context, index) {
+                final entry = subscores.entries.elementAt(index);
+                final score = (entry.value is num) ? (entry.value as num).toDouble() : 0.0;
+                final label = entry.key.replaceAll('_', ' ');
+                return Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Theme.of(context).dividerColor),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AIScoreGauge(score: score, size: 70),
+                      const SizedBox(height: 8),
+                      Text(
+                        label,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
+
+          // Strengths
+          if (strengths.isNotEmpty) ...[
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                const Icon(Icons.thumb_up_alt_outlined, size: 20, color: AppColors.success),
+                const SizedBox(width: 8),
+                Text(
+                  l10n.wameedAIStrengths,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            ...strengths.map(
+              (s) => Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Icon(Icons.check_circle, size: 16, color: AppColors.success),
+                    const SizedBox(width: 8),
+                    Expanded(child: Text('$s', style: Theme.of(context).textTheme.bodyMedium)),
+                  ],
+                ),
+              ),
+            ),
+          ],
+
+          // Improvement suggestions
+          if (improvements.isNotEmpty) ...[
+            const SizedBox(height: 24),
+            Row(
+              children: [
+                const Icon(Icons.trending_up, size: 20, color: AppColors.warning),
+                const SizedBox(width: 8),
+                Text(
+                  l10n.wameedAIImprovements,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            ...improvements.asMap().entries.map(
+              (entry) => Container(
+                width: double.infinity,
+                margin: const EdgeInsets.only(bottom: 8),
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppColors.warning.withValues(alpha: 0.05),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: AppColors.warning.withValues(alpha: 0.15)),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 24,
+                      height: 24,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppColors.warning.withValues(alpha: 0.15),
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Text(
+                        '${entry.key + 1}',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w700, color: AppColors.warning),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(child: Text('${entry.value}', style: Theme.of(context).textTheme.bodyMedium)),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  String _scoreLabel(double score) {
+    if (score >= 90) return 'Excellent';
+    if (score >= 75) return 'Good';
+    if (score >= 60) return 'Average';
+    if (score >= 40) return 'Below Average';
+    return 'Needs Improvement';
+  }
+
+  Color _scoreColor(double score) {
+    if (score >= 80) return AppColors.success;
+    if (score >= 60) return AppColors.warning;
+    return AppColors.error;
+  }
+}

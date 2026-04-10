@@ -281,7 +281,6 @@ class ReportPieChart extends StatelessWidget {
   Widget build(BuildContext context) {
     if (data.isEmpty) return _EmptyChart(height: height);
 
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final total = data.fold<double>(0, (sum, d) => sum + ((d[valueKey] as num?)?.toDouble() ?? 0));
     final maxItems = data.length > 8 ? 8 : data.length;
     final items = data.sublist(0, maxItems);

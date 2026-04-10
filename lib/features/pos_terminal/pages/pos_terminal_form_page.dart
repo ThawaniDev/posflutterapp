@@ -59,7 +59,6 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
   bool _isSaving = false;
   String? _nameError;
   String? _deviceIdError;
-  String? _platformError;
 
   static const _platforms = ['windows', 'macos', 'ios', 'android'];
   static const _acquirerSources = ['hala', 'bank_rajhi', 'bank_snb', 'geidea', 'other'];
@@ -137,7 +136,6 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
     setState(() {
       _nameError = null;
       _deviceIdError = null;
-      _platformError = null;
     });
 
     // Client-side validation
@@ -151,7 +149,6 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
       valid = false;
     }
     if (_selectedPlatform == null) {
-      setState(() => _platformError = AppLocalizations.of(context)!.termFormPlatformRequired);
       valid = false;
     }
     if (!valid) return;
@@ -280,7 +277,6 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
                               onChanged: (v) {
                                 setState(() {
                                   _selectedPlatform = v;
-                                  _platformError = null;
                                 });
                               },
                               showSearch: false,
@@ -519,21 +515,6 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
               ),
             ),
     );
-  }
-
-  IconData _platformIcon(String platform) {
-    switch (platform) {
-      case 'windows':
-        return Icons.laptop_windows_outlined;
-      case 'macos':
-        return Icons.laptop_mac_outlined;
-      case 'ios':
-        return Icons.phone_iphone_outlined;
-      case 'android':
-        return Icons.android_outlined;
-      default:
-        return Icons.device_unknown_outlined;
-    }
   }
 
   String _platformLabel(String platform) {

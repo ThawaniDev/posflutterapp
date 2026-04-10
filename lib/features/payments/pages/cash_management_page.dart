@@ -484,41 +484,44 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(type == 'cash_in' ? AppLocalizations.of(ctx)!.cashMgmtCashIn : AppLocalizations.of(ctx)!.cashMgmtCashOut),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: amountController,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(ctx)!.cashMgmtAmountSar,
-                border: const OutlineInputBorder(),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: amountController,
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(ctx)!.cashMgmtAmountSar,
+                  border: const OutlineInputBorder(),
+                ),
+                autofocus: true,
               ),
-              autofocus: true,
-            ),
-            AppSpacing.gapH12,
-            PosSearchableDropdown<String>(
-              items:
-                  (type == 'cash_out'
-                          ? ['petty_cash', 'supplier_payment', 'bank_deposit', 'other']
-                          : ['tips', 'change_replenish', 'other'])
-                      .map((r) => PosDropdownItem(value: r, label: r.replaceAll('_', ' ')))
-                      .toList(),
-              selectedValue: reasonController.text.isEmpty ? null : reasonController.text,
-              onChanged: (v) => reasonController.text = v ?? '',
-              label: AppLocalizations.of(ctx)!.cashMgmtReason,
-              showSearch: false,
-              clearable: false,
-            ),
-            AppSpacing.gapH12,
-            TextField(
-              controller: notesController,
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(ctx)!.cashMgmtNotesOptional,
-                border: const OutlineInputBorder(),
+              AppSpacing.gapH12,
+              PosSearchableDropdown<String>(
+                items:
+                    (type == 'cash_out'
+                            ? ['petty_cash', 'supplier_payment', 'bank_deposit', 'other']
+                            : ['tips', 'change_replenish', 'other'])
+                        .map((r) => PosDropdownItem(value: r, label: r.replaceAll('_', ' ')))
+                        .toList(),
+                selectedValue: reasonController.text.isEmpty ? null : reasonController.text,
+                onChanged: (v) => reasonController.text = v ?? '',
+                label: AppLocalizations.of(ctx)!.cashMgmtReason,
+                showSearch: false,
+                clearable: false,
               ),
-            ),
-          ],
+              AppSpacing.gapH12,
+              TextField(
+                controller: notesController,
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(ctx)!.cashMgmtNotesOptional,
+                  border: const OutlineInputBorder(),
+                ),
+              ),
+            ],
+          ),
         ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx), child: Text(AppLocalizations.of(ctx)!.posCancel)),

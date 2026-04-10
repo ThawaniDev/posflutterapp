@@ -17,6 +17,7 @@ import 'package:thawani_pos/features/dashboard/widgets/recent_orders_list.dart';
 import 'package:thawani_pos/features/dashboard/widgets/sales_trend_chart.dart';
 import 'package:thawani_pos/features/dashboard/widgets/staff_performance_card.dart';
 import 'package:thawani_pos/features/dashboard/widgets/top_products_table.dart';
+import 'package:thawani_pos/features/wameed_ai/widgets/ai_dashboard_widget.dart';
 
 class OwnerDashboardPage extends ConsumerStatefulWidget {
   const OwnerDashboardPage({super.key});
@@ -93,6 +94,10 @@ class _OwnerDashboardPageState extends ConsumerState<OwnerDashboardPage> {
                 children: [
                   // ─── KPI Cards ───────────────────────────────
                   DashboardKpiCards(stats: stats),
+                  SizedBox(height: gap),
+
+                  // ─── Wameed AI Insights ──────────────────────
+                  const AIDashboardWidget(),
                   SizedBox(height: gap),
 
                   // ─── Sales Trend + Hourly Sales ──────────────

@@ -787,4 +787,46 @@ class ApiEndpoints {
   static String installmentCancel(String id) => '/installments/$id/cancel';
   static String installmentFail(String id) => '/installments/$id/fail';
   static String installmentById(String id) => '/installments/$id';
+
+  // ─── Wameed AI ─────────────────────────────────────────
+  static const String wameedAIFeatures = '/wameed-ai/features';
+  static const String wameedAIStoreConfig = '/wameed-ai/store-config';
+  static const String wameedAISuggestions = '/wameed-ai/suggestions';
+  static String wameedAISuggestionStatus(String id) => '/wameed-ai/suggestions/$id/status';
+  static const String wameedAIFeedback = '/wameed-ai/feedback';
+  static const String wameedAIUsage = '/wameed-ai/usage';
+  static const String wameedAIUsageHistory = '/wameed-ai/usage/history';
+  static const String wameedAISmartReorder = '/wameed-ai/inventory/smart-reorder';
+  static const String wameedAIDailySummary = '/wameed-ai/sales/daily-summary';
+  static const String wameedAISalesForecast = '/wameed-ai/sales/forecast';
+  static const String wameedAIPeakHours = '/wameed-ai/sales/peak-hours';
+  static const String wameedAIPricingOptimization = '/wameed-ai/sales/pricing-optimization';
+  static const String wameedAIBundleSuggestions = '/wameed-ai/sales/bundle-suggestions';
+  static const String wameedAIRevenueAnomaly = '/wameed-ai/sales/revenue-anomaly';
+  static const String wameedAIExpiryManager = '/wameed-ai/inventory/expiry-manager';
+  static const String wameedAIDeadStock = '/wameed-ai/inventory/dead-stock';
+  static const String wameedAIShrinkageDetection = '/wameed-ai/inventory/shrinkage-detection';
+  static const String wameedAISupplierAnalysis = '/wameed-ai/inventory/supplier-analysis';
+  static const String wameedAISeasonalPlanning = '/wameed-ai/inventory/seasonal-planning';
+  static const String wameedAIProductCategorization = '/wameed-ai/catalog/product-categorization';
+  static const String wameedAIInvoiceOCR = '/wameed-ai/catalog/invoice-ocr';
+  static const String wameedAIProductDescription = '/wameed-ai/catalog/product-description';
+  static const String wameedAIBarcodeEnrichment = '/wameed-ai/catalog/barcode-enrichment';
+  static const String wameedAICustomerSegmentation = '/wameed-ai/customers/segmentation';
+  static const String wameedAIChurnPrediction = '/wameed-ai/customers/churn-prediction';
+  static const String wameedAIPersonalizedPromotions = '/wameed-ai/customers/personalized-promotions';
+  static const String wameedAISpendingPatterns = '/wameed-ai/customers/spending-patterns';
+  static const String wameedAISentimentAnalysis = '/wameed-ai/customers/sentiment-analysis';
+  static const String wameedAISmartSearch = '/wameed-ai/smart-search';
+  static const String wameedAIStaffPerformance = '/wameed-ai/operations/staff-performance';
+  static const String wameedAICashierErrors = '/wameed-ai/operations/cashier-errors';
+  static const String wameedAIEfficiencyScore = '/wameed-ai/operations/efficiency-score';
+  static const String wameedAIMarketingGenerator = '/wameed-ai/communication/marketing-generator';
+  static const String wameedAISocialContent = '/wameed-ai/communication/social-content';
+  static const String wameedAITranslation = '/wameed-ai/communication/translation';
+  static const String wameedAIMarginAnalyzer = '/wameed-ai/financial/margin-analyzer';
+  static const String wameedAIExpenseAnalysis = '/wameed-ai/financial/expense-analysis';
+  static const String wameedAICashFlowPrediction = '/wameed-ai/financial/cashflow-prediction';
+  static const String wameedAIStoreHealth = '/wameed-ai/platform/store-health';
+  static const String wameedAIPlatformTrends = '/wameed-ai/platform/trends';
 }

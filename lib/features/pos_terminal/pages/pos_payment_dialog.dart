@@ -488,37 +488,4 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
     if (roundUp100 > total && !denominations.contains(roundUp100)) denominations.add(roundUp100);
     return denominations.take(4).toList();
   }
-
-  IconData _methodIcon(PaymentMethod method) {
-    switch (method) {
-      case PaymentMethod.cash:
-        return Icons.money_rounded;
-      case PaymentMethod.card:
-      case PaymentMethod.cardMada:
-      case PaymentMethod.cardVisa:
-      case PaymentMethod.cardMastercard:
-        return Icons.credit_card_rounded;
-      case PaymentMethod.mada:
-        return Icons.credit_card_rounded;
-      case PaymentMethod.applePay:
-        return Icons.phone_iphone_rounded;
-      case PaymentMethod.stcPay:
-        return Icons.phone_android_rounded;
-      case PaymentMethod.storeCredit:
-        return Icons.account_balance_wallet_rounded;
-      case PaymentMethod.giftCard:
-        return Icons.card_giftcard_rounded;
-      case PaymentMethod.loyaltyPoints:
-        return Icons.stars_rounded;
-      case PaymentMethod.mobilePayment:
-        return Icons.smartphone_rounded;
-      case PaymentMethod.bankTransfer:
-        return Icons.account_balance_rounded;
-      case PaymentMethod.tabby:
-      case PaymentMethod.tamara:
-      case PaymentMethod.mispay:
-      case PaymentMethod.madfu:
-        return Icons.credit_score_rounded;
-    }
-  }
 }

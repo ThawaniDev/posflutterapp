@@ -16565,6 +16565,678 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Register on {provider}'**
   String registerOn(String provider);
+
+  /// No description provided for @wameedAI.
+  ///
+  /// In en, this message translates to:
+  /// **'Wameed AI'**
+  String get wameedAI;
+
+  /// No description provided for @wameedAIUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Usage'**
+  String get wameedAIUsage;
+
+  /// No description provided for @wameedAISuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Suggestions'**
+  String get wameedAISuggestions;
+
+  /// No description provided for @wameedAISettings.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Settings'**
+  String get wameedAISettings;
+
+  /// No description provided for @wameedAICategoryInventory.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get wameedAICategoryInventory;
+
+  /// No description provided for @wameedAICategorySales.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales'**
+  String get wameedAICategorySales;
+
+  /// No description provided for @wameedAICategoryOperations.
+  ///
+  /// In en, this message translates to:
+  /// **'Operations'**
+  String get wameedAICategoryOperations;
+
+  /// No description provided for @wameedAICategoryCatalog.
+  ///
+  /// In en, this message translates to:
+  /// **'Catalog'**
+  String get wameedAICategoryCatalog;
+
+  /// No description provided for @wameedAICategoryCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers'**
+  String get wameedAICategoryCustomer;
+
+  /// No description provided for @wameedAICategoryCommunication.
+  ///
+  /// In en, this message translates to:
+  /// **'Communication'**
+  String get wameedAICategoryCommunication;
+
+  /// No description provided for @wameedAICategoryFinancial.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial'**
+  String get wameedAICategoryFinancial;
+
+  /// No description provided for @wameedAICategoryPlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform'**
+  String get wameedAICategoryPlatform;
+
+  /// No description provided for @wameedAISmartSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Search'**
+  String get wameedAISmartSearch;
+
+  /// No description provided for @wameedAISmartSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask anything about your store data...'**
+  String get wameedAISmartSearchHint;
+
+  /// No description provided for @wameedAISearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get wameedAISearch;
+
+  /// No description provided for @wameedAISearchResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Results'**
+  String get wameedAISearchResults;
+
+  /// No description provided for @wameedAITodayRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Requests'**
+  String get wameedAITodayRequests;
+
+  /// No description provided for @wameedAITodayCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Cost'**
+  String get wameedAITodayCost;
+
+  /// No description provided for @wameedAIMonthlyRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Requests'**
+  String get wameedAIMonthlyRequests;
+
+  /// No description provided for @wameedAIMonthlyCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly Cost'**
+  String get wameedAIMonthlyCost;
+
+  /// No description provided for @wameedAIParameters.
+  ///
+  /// In en, this message translates to:
+  /// **'Parameters'**
+  String get wameedAIParameters;
+
+  /// No description provided for @wameedAIRunFeature.
+  ///
+  /// In en, this message translates to:
+  /// **'Run AI'**
+  String get wameedAIRunFeature;
+
+  /// No description provided for @wameedAIResult.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Result'**
+  String get wameedAIResult;
+
+  /// No description provided for @wameedAICached.
+  ///
+  /// In en, this message translates to:
+  /// **'Cached'**
+  String get wameedAICached;
+
+  /// No description provided for @wameedAICopyResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy Result'**
+  String get wameedAICopyResult;
+
+  /// No description provided for @wameedAICopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard'**
+  String get wameedAICopied;
+
+  /// No description provided for @wameedAITokens.
+  ///
+  /// In en, this message translates to:
+  /// **'tokens'**
+  String get wameedAITokens;
+
+  /// No description provided for @wameedAINoSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'No suggestions yet'**
+  String get wameedAINoSuggestions;
+
+  /// No description provided for @wameedAINoSuggestionsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AI suggestions will appear here as they are generated'**
+  String get wameedAINoSuggestionsSubtitle;
+
+  /// No description provided for @wameedAISuggestionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get wameedAISuggestionBody;
+
+  /// No description provided for @wameedAIAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get wameedAIAccept;
+
+  /// No description provided for @wameedAIDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get wameedAIDismiss;
+
+  /// No description provided for @wameedAIFeature.
+  ///
+  /// In en, this message translates to:
+  /// **'Feature'**
+  String get wameedAIFeature;
+
+  /// No description provided for @wameedAISuggestionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get wameedAISuggestionTitle;
+
+  /// No description provided for @wameedAIPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority'**
+  String get wameedAIPriority;
+
+  /// No description provided for @wameedAIStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get wameedAIStatus;
+
+  /// No description provided for @wameedAIActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get wameedAIActions;
+
+  /// No description provided for @wameedAIUsageOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage Overview'**
+  String get wameedAIUsageOverview;
+
+  /// No description provided for @wameedAIUsageByFeature.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage by Feature'**
+  String get wameedAIUsageByFeature;
+
+  /// No description provided for @wameedAIRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'requests'**
+  String get wameedAIRequests;
+
+  /// No description provided for @sidebarWameedAI.
+  ///
+  /// In en, this message translates to:
+  /// **'Wameed AI'**
+  String get sidebarWameedAI;
+
+  /// No description provided for @sidebarGroupWameedAI.
+  ///
+  /// In en, this message translates to:
+  /// **'Wameed AI'**
+  String get sidebarGroupWameedAI;
+
+  /// No description provided for @wameedAISmartReorder.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Reorder'**
+  String get wameedAISmartReorder;
+
+  /// No description provided for @wameedAIExpiryManager.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry Manager'**
+  String get wameedAIExpiryManager;
+
+  /// No description provided for @wameedAIDailySummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Summary'**
+  String get wameedAIDailySummary;
+
+  /// No description provided for @wameedAICustomerSegments.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Segments'**
+  String get wameedAICustomerSegments;
+
+  /// No description provided for @wameedAIInvoiceOCR.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice OCR'**
+  String get wameedAIInvoiceOCR;
+
+  /// No description provided for @wameedAIStaffPerformance.
+  ///
+  /// In en, this message translates to:
+  /// **'Staff Performance'**
+  String get wameedAIStaffPerformance;
+
+  /// No description provided for @wameedAIEfficiencyScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Efficiency Score'**
+  String get wameedAIEfficiencyScore;
+
+  /// No description provided for @wameedAINoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No results available'**
+  String get wameedAINoResults;
+
+  /// No description provided for @wameedAIReorderSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Reorder Suggestions'**
+  String get wameedAIReorderSuggestions;
+
+  /// No description provided for @wameedAINoReorderNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'All stock levels are healthy'**
+  String get wameedAINoReorderNeeded;
+
+  /// No description provided for @wameedAIRecommendations.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Recommendations'**
+  String get wameedAIRecommendations;
+
+  /// No description provided for @wameedAIExpiringProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiring Products'**
+  String get wameedAIExpiringProducts;
+
+  /// No description provided for @wameedAINoExpiringProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'No expiring products found'**
+  String get wameedAINoExpiringProducts;
+
+  /// No description provided for @wameedAIExpiringToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiring Today'**
+  String get wameedAIExpiringToday;
+
+  /// No description provided for @wameedAIExpiringThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get wameedAIExpiringThisWeek;
+
+  /// No description provided for @wameedAIExpiringThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This Month'**
+  String get wameedAIExpiringThisMonth;
+
+  /// No description provided for @wameedAIAtRiskValue.
+  ///
+  /// In en, this message translates to:
+  /// **'At Risk Value'**
+  String get wameedAIAtRiskValue;
+
+  /// No description provided for @wameedAIExpiresOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires on'**
+  String get wameedAIExpiresOn;
+
+  /// No description provided for @wameedAIActionSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Action Suggestions'**
+  String get wameedAIActionSuggestions;
+
+  /// No description provided for @wameedAITotalRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Revenue'**
+  String get wameedAITotalRevenue;
+
+  /// No description provided for @wameedAITransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get wameedAITransactions;
+
+  /// No description provided for @wameedAIAvgBasket.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Basket'**
+  String get wameedAIAvgBasket;
+
+  /// No description provided for @wameedAIItemsSold.
+  ///
+  /// In en, this message translates to:
+  /// **'Items Sold'**
+  String get wameedAIItemsSold;
+
+  /// No description provided for @wameedAISummary.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Summary'**
+  String get wameedAISummary;
+
+  /// No description provided for @wameedAIHighlights.
+  ///
+  /// In en, this message translates to:
+  /// **'Highlights'**
+  String get wameedAIHighlights;
+
+  /// No description provided for @wameedAIConcerns.
+  ///
+  /// In en, this message translates to:
+  /// **'Concerns'**
+  String get wameedAIConcerns;
+
+  /// No description provided for @wameedAITotalCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Customers'**
+  String get wameedAITotalCustomers;
+
+  /// No description provided for @wameedAISegments.
+  ///
+  /// In en, this message translates to:
+  /// **'segments'**
+  String get wameedAISegments;
+
+  /// No description provided for @wameedAIAvgSpend.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Spend'**
+  String get wameedAIAvgSpend;
+
+  /// No description provided for @wameedAICharacteristics.
+  ///
+  /// In en, this message translates to:
+  /// **'Characteristics'**
+  String get wameedAICharacteristics;
+
+  /// No description provided for @wameedAITopProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Products'**
+  String get wameedAITopProducts;
+
+  /// No description provided for @wameedAIPromotionIdeas.
+  ///
+  /// In en, this message translates to:
+  /// **'Promotion Ideas'**
+  String get wameedAIPromotionIdeas;
+
+  /// No description provided for @wameedAISelectInvoiceImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an invoice image to scan'**
+  String get wameedAISelectInvoiceImage;
+
+  /// No description provided for @wameedAIImageSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'Image selected'**
+  String get wameedAIImageSelected;
+
+  /// No description provided for @wameedAICamera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get wameedAICamera;
+
+  /// No description provided for @wameedAIGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get wameedAIGallery;
+
+  /// No description provided for @wameedAIUploadInvoicePrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo or select an invoice image to extract data'**
+  String get wameedAIUploadInvoicePrompt;
+
+  /// No description provided for @wameedAIExtractData.
+  ///
+  /// In en, this message translates to:
+  /// **'Extract Invoice Data'**
+  String get wameedAIExtractData;
+
+  /// No description provided for @wameedAIRescanInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Rescan Invoice'**
+  String get wameedAIRescanInvoice;
+
+  /// No description provided for @wameedAIChangeImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Change image'**
+  String get wameedAIChangeImage;
+
+  /// No description provided for @wameedAIRemoveImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove image'**
+  String get wameedAIRemoveImage;
+
+  /// No description provided for @wameedAIProcessingInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Analyzing Invoice...'**
+  String get wameedAIProcessingInvoice;
+
+  /// No description provided for @wameedAIOCRProcessingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'AI is reading and extracting data from your invoice. This may take a few seconds.'**
+  String get wameedAIOCRProcessingHint;
+
+  /// No description provided for @wameedAICameraTakePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo of the invoice'**
+  String get wameedAICameraTakePhoto;
+
+  /// No description provided for @wameedAIGallerySelectPhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from your photo library'**
+  String get wameedAIGallerySelectPhoto;
+
+  /// No description provided for @wameedAIInvoiceExtracted.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Data Extracted'**
+  String get wameedAIInvoiceExtracted;
+
+  /// No description provided for @wameedAIInvoiceNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice #'**
+  String get wameedAIInvoiceNumber;
+
+  /// No description provided for @wameedAIInvoiceDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get wameedAIInvoiceDate;
+
+  /// No description provided for @wameedAIVendor.
+  ///
+  /// In en, this message translates to:
+  /// **'Vendor'**
+  String get wameedAIVendor;
+
+  /// No description provided for @wameedAIPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get wameedAIPhone;
+
+  /// No description provided for @wameedAILineItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Line Items'**
+  String get wameedAILineItems;
+
+  /// No description provided for @wameedAIProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Product'**
+  String get wameedAIProduct;
+
+  /// No description provided for @wameedAIQty.
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get wameedAIQty;
+
+  /// No description provided for @wameedAIPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get wameedAIPrice;
+
+  /// No description provided for @wameedAITotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get wameedAITotal;
+
+  /// No description provided for @wameedAISubtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get wameedAISubtotal;
+
+  /// No description provided for @wameedAITax.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get wameedAITax;
+
+  /// No description provided for @wameedAIDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get wameedAIDiscount;
+
+  /// No description provided for @wameedAIGrandTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Grand Total'**
+  String get wameedAIGrandTotal;
+
+  /// No description provided for @wameedAILeaderboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Leaderboard'**
+  String get wameedAILeaderboard;
+
+  /// No description provided for @wameedAITeamInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'Team Insights'**
+  String get wameedAITeamInsights;
+
+  /// No description provided for @wameedAICoachingTips.
+  ///
+  /// In en, this message translates to:
+  /// **'Coaching Tips'**
+  String get wameedAICoachingTips;
+
+  /// No description provided for @wameedAIOverallScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Overall Efficiency'**
+  String get wameedAIOverallScore;
+
+  /// No description provided for @wameedAIScoreBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Score Breakdown'**
+  String get wameedAIScoreBreakdown;
+
+  /// No description provided for @wameedAIStrengths.
+  ///
+  /// In en, this message translates to:
+  /// **'Strengths'**
+  String get wameedAIStrengths;
+
+  /// No description provided for @wameedAIImprovements.
+  ///
+  /// In en, this message translates to:
+  /// **'Areas for Improvement'**
+  String get wameedAIImprovements;
+
+  /// No description provided for @wameedAIInsights.
+  ///
+  /// In en, this message translates to:
+  /// **'AI-powered insights'**
+  String get wameedAIInsights;
+
+  /// No description provided for @wameedAIPendingSuggestions.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get wameedAIPendingSuggestions;
+
+  /// No description provided for @wameedAIHighPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'High Priority'**
+  String get wameedAIHighPriority;
+
+  /// No description provided for @wameedAITapToExplore.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to explore AI features'**
+  String get wameedAITapToExplore;
 }
 
 class _AppLocalizationsDelegate

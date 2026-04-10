@@ -8554,4 +8554,344 @@ class AppLocalizationsAr extends AppLocalizations {
   String registerOn(String provider) {
     return 'التسجيل في $provider';
   }
+
+  @override
+  String get wameedAI => 'وميض AI';
+
+  @override
+  String get wameedAIUsage => 'استخدام AI';
+
+  @override
+  String get wameedAISuggestions => 'اقتراحات AI';
+
+  @override
+  String get wameedAISettings => 'إعدادات AI';
+
+  @override
+  String get wameedAICategoryInventory => 'المخزون';
+
+  @override
+  String get wameedAICategorySales => 'المبيعات';
+
+  @override
+  String get wameedAICategoryOperations => 'العمليات';
+
+  @override
+  String get wameedAICategoryCatalog => 'الكتالوج';
+
+  @override
+  String get wameedAICategoryCustomer => 'العملاء';
+
+  @override
+  String get wameedAICategoryCommunication => 'التواصل';
+
+  @override
+  String get wameedAICategoryFinancial => 'المالية';
+
+  @override
+  String get wameedAICategoryPlatform => 'المنصة';
+
+  @override
+  String get wameedAISmartSearch => 'البحث الذكي';
+
+  @override
+  String get wameedAISmartSearchHint => 'اسأل أي شيء عن بيانات متجرك...';
+
+  @override
+  String get wameedAISearch => 'بحث';
+
+  @override
+  String get wameedAISearchResults => 'نتائج البحث';
+
+  @override
+  String get wameedAITodayRequests => 'طلبات اليوم';
+
+  @override
+  String get wameedAITodayCost => 'تكلفة اليوم';
+
+  @override
+  String get wameedAIMonthlyRequests => 'الطلبات الشهرية';
+
+  @override
+  String get wameedAIMonthlyCost => 'التكلفة الشهرية';
+
+  @override
+  String get wameedAIParameters => 'المعاملات';
+
+  @override
+  String get wameedAIRunFeature => 'تشغيل AI';
+
+  @override
+  String get wameedAIResult => 'نتيجة AI';
+
+  @override
+  String get wameedAICached => 'مخزن مؤقتاً';
+
+  @override
+  String get wameedAICopyResult => 'نسخ النتيجة';
+
+  @override
+  String get wameedAICopied => 'تم النسخ';
+
+  @override
+  String get wameedAITokens => 'رموز';
+
+  @override
+  String get wameedAINoSuggestions => 'لا توجد اقتراحات بعد';
+
+  @override
+  String get wameedAINoSuggestionsSubtitle =>
+      'ستظهر اقتراحات AI هنا عند إنشائها';
+
+  @override
+  String get wameedAISuggestionBody => 'التفاصيل';
+
+  @override
+  String get wameedAIAccept => 'قبول';
+
+  @override
+  String get wameedAIDismiss => 'رفض';
+
+  @override
+  String get wameedAIFeature => 'الميزة';
+
+  @override
+  String get wameedAISuggestionTitle => 'العنوان';
+
+  @override
+  String get wameedAIPriority => 'الأولوية';
+
+  @override
+  String get wameedAIStatus => 'الحالة';
+
+  @override
+  String get wameedAIActions => 'الإجراءات';
+
+  @override
+  String get wameedAIUsageOverview => 'نظرة عامة على الاستخدام';
+
+  @override
+  String get wameedAIUsageByFeature => 'الاستخدام حسب الميزة';
+
+  @override
+  String get wameedAIRequests => 'طلبات';
+
+  @override
+  String get sidebarWameedAI => 'وميض AI';
+
+  @override
+  String get sidebarGroupWameedAI => 'وميض AI';
+
+  @override
+  String get wameedAISmartReorder => 'إعادة الطلب الذكي';
+
+  @override
+  String get wameedAIExpiryManager => 'إدارة الصلاحية';
+
+  @override
+  String get wameedAIDailySummary => 'الملخص اليومي';
+
+  @override
+  String get wameedAICustomerSegments => 'شرائح العملاء';
+
+  @override
+  String get wameedAIInvoiceOCR => 'مسح الفواتير';
+
+  @override
+  String get wameedAIStaffPerformance => 'أداء الموظفين';
+
+  @override
+  String get wameedAIEfficiencyScore => 'مؤشر الكفاءة';
+
+  @override
+  String get wameedAINoResults => 'لا توجد نتائج متاحة';
+
+  @override
+  String get wameedAIReorderSuggestions => 'اقتراحات إعادة الطلب';
+
+  @override
+  String get wameedAINoReorderNeeded => 'جميع مستويات المخزون صحية';
+
+  @override
+  String get wameedAIRecommendations => 'توصيات الذكاء الاصطناعي';
+
+  @override
+  String get wameedAIExpiringProducts => 'المنتجات قاربت على الانتهاء';
+
+  @override
+  String get wameedAINoExpiringProducts =>
+      'لم يتم العثور على منتجات منتهية الصلاحية';
+
+  @override
+  String get wameedAIExpiringToday => 'تنتهي اليوم';
+
+  @override
+  String get wameedAIExpiringThisWeek => 'هذا الأسبوع';
+
+  @override
+  String get wameedAIExpiringThisMonth => 'هذا الشهر';
+
+  @override
+  String get wameedAIAtRiskValue => 'القيمة المعرضة للخطر';
+
+  @override
+  String get wameedAIExpiresOn => 'ينتهي في';
+
+  @override
+  String get wameedAIActionSuggestions => 'اقتراحات الإجراءات';
+
+  @override
+  String get wameedAITotalRevenue => 'إجمالي الإيرادات';
+
+  @override
+  String get wameedAITransactions => 'المعاملات';
+
+  @override
+  String get wameedAIAvgBasket => 'متوسط السلة';
+
+  @override
+  String get wameedAIItemsSold => 'العناصر المباعة';
+
+  @override
+  String get wameedAISummary => 'ملخص الذكاء الاصطناعي';
+
+  @override
+  String get wameedAIHighlights => 'أبرز النقاط';
+
+  @override
+  String get wameedAIConcerns => 'الملاحظات';
+
+  @override
+  String get wameedAITotalCustomers => 'إجمالي العملاء';
+
+  @override
+  String get wameedAISegments => 'شرائح';
+
+  @override
+  String get wameedAIAvgSpend => 'متوسط الإنفاق';
+
+  @override
+  String get wameedAICharacteristics => 'الخصائص';
+
+  @override
+  String get wameedAITopProducts => 'أفضل المنتجات';
+
+  @override
+  String get wameedAIPromotionIdeas => 'أفكار الترويج';
+
+  @override
+  String get wameedAISelectInvoiceImage => 'اختر صورة فاتورة للمسح';
+
+  @override
+  String get wameedAIImageSelected => 'تم اختيار الصورة';
+
+  @override
+  String get wameedAICamera => 'الكاميرا';
+
+  @override
+  String get wameedAIGallery => 'المعرض';
+
+  @override
+  String get wameedAIUploadInvoicePrompt =>
+      'التقط صورة أو اختر صورة فاتورة لاستخراج البيانات';
+
+  @override
+  String get wameedAIExtractData => 'استخراج بيانات الفاتورة';
+
+  @override
+  String get wameedAIRescanInvoice => 'إعادة مسح الفاتورة';
+
+  @override
+  String get wameedAIChangeImage => 'تغيير الصورة';
+
+  @override
+  String get wameedAIRemoveImage => 'إزالة الصورة';
+
+  @override
+  String get wameedAIProcessingInvoice => 'جاري تحليل الفاتورة...';
+
+  @override
+  String get wameedAIOCRProcessingHint =>
+      'يقوم الذكاء الاصطناعي بقراءة واستخراج البيانات من فاتورتك. قد يستغرق ذلك بضع ثوانٍ.';
+
+  @override
+  String get wameedAICameraTakePhoto => 'التقط صورة للفاتورة';
+
+  @override
+  String get wameedAIGallerySelectPhoto => 'اختر من مكتبة الصور';
+
+  @override
+  String get wameedAIInvoiceExtracted => 'تم استخراج بيانات الفاتورة';
+
+  @override
+  String get wameedAIInvoiceNumber => 'رقم الفاتورة';
+
+  @override
+  String get wameedAIInvoiceDate => 'التاريخ';
+
+  @override
+  String get wameedAIVendor => 'المورد';
+
+  @override
+  String get wameedAIPhone => 'الهاتف';
+
+  @override
+  String get wameedAILineItems => 'بنود الفاتورة';
+
+  @override
+  String get wameedAIProduct => 'المنتج';
+
+  @override
+  String get wameedAIQty => 'الكمية';
+
+  @override
+  String get wameedAIPrice => 'السعر';
+
+  @override
+  String get wameedAITotal => 'الإجمالي';
+
+  @override
+  String get wameedAISubtotal => 'المجموع الفرعي';
+
+  @override
+  String get wameedAITax => 'الضريبة';
+
+  @override
+  String get wameedAIDiscount => 'الخصم';
+
+  @override
+  String get wameedAIGrandTotal => 'المجموع الكلي';
+
+  @override
+  String get wameedAILeaderboard => 'لوحة المتصدرين';
+
+  @override
+  String get wameedAITeamInsights => 'رؤى الفريق';
+
+  @override
+  String get wameedAICoachingTips => 'نصائح التدريب';
+
+  @override
+  String get wameedAIOverallScore => 'الكفاءة العامة';
+
+  @override
+  String get wameedAIScoreBreakdown => 'تفصيل النتائج';
+
+  @override
+  String get wameedAIStrengths => 'نقاط القوة';
+
+  @override
+  String get wameedAIImprovements => 'مجالات التحسين';
+
+  @override
+  String get wameedAIInsights => 'رؤى مدعومة بالذكاء الاصطناعي';
+
+  @override
+  String get wameedAIPendingSuggestions => 'معلّقة';
+
+  @override
+  String get wameedAIHighPriority => 'أولوية عالية';
+
+  @override
+  String get wameedAITapToExplore => 'اضغط لاستكشاف ميزات الذكاء الاصطناعي';
 }

@@ -68,7 +68,12 @@ class AppShell extends ConsumerWidget {
                     child: Container(
                       height: 56,
                       padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Row(children: [const BranchSelector(), const Spacer(), ...actions]),
+                      child: Row(
+                        children: [
+                          const Expanded(child: BranchSelector()),
+                          ...actions,
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(child: child),
@@ -86,7 +91,7 @@ class AppShell extends ConsumerWidget {
         // leading: Builder(
         //   builder: (ctx) => IconButton(icon: const Icon(Icons.menu_rounded), onPressed: () => Scaffold.of(ctx).openDrawer()),
         // ),
-        title: SizedBox(height: 50, child: const BranchSelector()),
+        title: const BranchSelector(),
         actions: actions,
       ),
       drawer: SizedBox(

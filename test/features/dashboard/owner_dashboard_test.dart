@@ -56,6 +56,22 @@ void main() {
             'created_at': '2024-06-01 14:30',
           },
         ],
+        financialSummary: {
+          'gross_revenue': 12450.0,
+          'net_revenue': 11200.0,
+          'tax_collected': 625.0,
+          'refunds': 0.0,
+        },
+        hourlySales: [
+          {'hour': 9, 'revenue': 800.0, 'transactions': 12},
+          {'hour': 12, 'revenue': 2400.0, 'transactions': 28},
+        ],
+        staffPerformance: [
+          {'name': 'Ahmed', 'sales': 5000.0, 'transactions': 45},
+        ],
+        branches: [
+          {'name': 'Main Branch', 'revenue': 12450.0},
+        ],
       );
 
       expect(state.stats['today_sales'], 12450.0);

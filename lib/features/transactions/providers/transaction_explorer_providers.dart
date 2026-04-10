@@ -249,9 +249,9 @@ class TransactionStatsNotifier extends StateNotifier<TransactionStatsState> {
         _api.getSalesTrend(dateFrom: dfStr, dateTo: dtStr, days: days ?? 7),
       ]);
 
-      final financial = results[0] as Map<String, dynamic>;
-      final dashboard = results[1] as Map<String, dynamic>;
-      final trend = results[2] as Map<String, dynamic>;
+      final financial = results[0];
+      final dashboard = results[1];
+      final trend = results[2];
 
       // Parse payment method breakdown
       final paymentRaw = financial['payment_methods'] as Map<String, dynamic>? ?? {};

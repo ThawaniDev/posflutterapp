@@ -422,6 +422,32 @@ class PosSidebar extends StatefulWidget {
       icon: Icons.settings_rounded,
       items: [
         PosSidebarItem(
+          label: l10n.sidebarWameedAI,
+          icon: Icons.auto_awesome_rounded,
+          route: '/wameed-ai',
+          permission: Permissions.wameedAiView,
+          children: [
+            PosSidebarItem(
+              label: l10n.wameedAISuggestions,
+              icon: Icons.lightbulb_rounded,
+              route: '/wameed-ai/suggestions',
+              permission: Permissions.wameedAiView,
+            ),
+            PosSidebarItem(
+              label: l10n.wameedAIUsage,
+              icon: Icons.bar_chart_rounded,
+              route: '/wameed-ai/usage',
+              permission: Permissions.wameedAiView,
+            ),
+            PosSidebarItem(
+              label: l10n.wameedAISettings,
+              icon: Icons.settings_rounded,
+              route: '/wameed-ai/settings',
+              permission: Permissions.wameedAiManage,
+            ),
+          ],
+        ),
+        PosSidebarItem(
           label: l10n.sidebarPosCustomize,
           icon: Icons.tune_rounded,
           route: '/customization',

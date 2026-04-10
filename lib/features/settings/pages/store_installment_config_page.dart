@@ -23,17 +23,17 @@ const _brandMap = <String, _ProviderBrand>{
   'tabby': _ProviderBrand(primary: Color(0xFF3DFAB4), light: Color(0xFFE8FFF5), asset: 'assets/images/tabby.png'),
   'tamara': _ProviderBrand(primary: Color(0xFFE88B5A), light: Color(0xFFFFF3EC), asset: 'assets/images/tamara.png'),
   'mispay': _ProviderBrand(primary: Color(0xFF7C3AED), light: Color(0xFFF3EEFF), asset: 'assets/images/mispay.png'),
-  'madfu': _ProviderBrand(primary: Color(0xFF0A1A6E), light: Color(0xFFECEEF8), asset: 'assets/images/madfu.png'),
+  'madfu': _ProviderBrand(primary: Color.fromARGB(255, 30, 57, 189), light: Color(0xFFECEEF8), asset: 'assets/images/madfu.png'),
 };
 
 _ProviderBrand _getBrand(String provider) =>
     _brandMap[provider] ?? const _ProviderBrand(primary: AppColors.primary, light: Color(0xFFFFF7ED), asset: '');
 
 const _registrationUrls = <String, String>{
-  'tabby': 'https://tabby.ai/en-AE/business',
-  'tamara': 'https://tamara.co/en/business',
-  'mispay': 'https://mispay.co/merchants',
-  'madfu': 'https://madfu.com.sa/en/merchants',
+  'tabby': 'https://tabby.ai/ar-SA/business',
+  'tamara': 'https://partners.tamara.co/onboarding?locale=ar_SA',
+  'mispay': 'https://www.mispay.co/business/',
+  'madfu': 'https://madfu.com.sa/ar/be-partner',
 };
 
 /// Store-level page for configuring installment payment provider credentials.

@@ -13,6 +13,18 @@ import 'package:thawani_pos/core/constants/permission_constants.dart';
 import 'package:thawani_pos/core/widgets/permission_guard_page.dart';
 import 'package:thawani_pos/core/router/route_permissions.dart';
 import 'package:thawani_pos/features/hardware/widgets/global_barcode_scan_handler.dart';
+import 'package:thawani_pos/features/wameed_ai/pages/wameed_ai_home_page.dart';
+import 'package:thawani_pos/features/wameed_ai/pages/ai_feature_detail_page.dart';
+import 'package:thawani_pos/features/wameed_ai/pages/ai_suggestions_page.dart';
+import 'package:thawani_pos/features/wameed_ai/pages/ai_usage_page.dart';
+import 'package:thawani_pos/features/wameed_ai/pages/ai_settings_page.dart';
+import 'package:thawani_pos/features/wameed_ai/pages/smart_reorder_page.dart';
+import 'package:thawani_pos/features/wameed_ai/pages/expiry_manager_page.dart';
+import 'package:thawani_pos/features/wameed_ai/pages/daily_summary_page.dart' as ai;
+import 'package:thawani_pos/features/wameed_ai/pages/customer_segments_page.dart';
+import 'package:thawani_pos/features/wameed_ai/pages/invoice_ocr_page.dart';
+import 'package:thawani_pos/features/wameed_ai/pages/staff_performance_page.dart' as ai;
+import 'package:thawani_pos/features/wameed_ai/pages/efficiency_score_page.dart';
 import 'package:thawani_pos/features/catalog/pages/category_list_page.dart';
 import 'package:thawani_pos/features/catalog/pages/product_form_page.dart';
 import 'package:thawani_pos/features/catalog/pages/product_list_page.dart';
@@ -1337,6 +1349,24 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               return DebitFormPage(debitId: id);
             },
           ),
+          // ─── Wameed AI ───
+          GoRoute(path: Routes.wameedAI, name: 'wameedAI', builder: (context, state) => const WameedAIHomePage()),
+          GoRoute(path: Routes.wameedAISmartReorder, name: 'wameedAISmartReorder', builder: (context, state) => const SmartReorderPage()),
+          GoRoute(path: Routes.wameedAIExpiryManager, name: 'wameedAIExpiryManager', builder: (context, state) => const ExpiryManagerPage()),
+          GoRoute(path: Routes.wameedAIDailySummary, name: 'wameedAIDailySummary', builder: (context, state) => const ai.DailySummaryPage()),
+          GoRoute(path: Routes.wameedAICustomerSegments, name: 'wameedAICustomerSegments', builder: (context, state) => const CustomerSegmentsPage()),
+          GoRoute(path: Routes.wameedAIInvoiceOCR, name: 'wameedAIInvoiceOCR', builder: (context, state) => const InvoiceOcrPage()),
+          GoRoute(path: Routes.wameedAIStaffPerformance, name: 'wameedAIStaffPerformance', builder: (context, state) => const ai.StaffPerformancePage()),
+          GoRoute(path: Routes.wameedAIEfficiencyScore, name: 'wameedAIEfficiencyScore', builder: (context, state) => const EfficiencyScorePage()),
+          GoRoute(
+            path: '${Routes.wameedAI}/:slug',
+            name: 'wameedAIFeature',
+            builder: (context, state) => AIFeatureDetailPage(featureSlug: state.pathParameters['slug']!),
+          ),
+          GoRoute(path: Routes.wameedAISuggestions, name: 'wameedAISuggestions', builder: (context, state) => const AISuggestionsPage()),
+          GoRoute(path: Routes.wameedAIUsage, name: 'wameedAIUsage', builder: (context, state) => const AIUsagePage()),
+          GoRoute(path: Routes.wameedAISettings, name: 'wameedAISettings', builder: (context, state) => const AISettingsPage()),
+
         ], // end ShellRoute routes
       ), // end ShellRoute
       // ─── POS Cashier (full-screen, no sidebar) ──

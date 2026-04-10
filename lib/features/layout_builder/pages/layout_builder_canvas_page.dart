@@ -81,7 +81,7 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
         ),
         CanvasBuilderLoaded(:final canvas, :final placements, :final versions) =>
           context.isPhone
-              ? _buildMobileBody(canvas, placements, versions, canvasState as CanvasBuilderLoaded, catalogState, l10n, isDark)
+              ? _buildMobileBody(canvas, placements, versions, canvasState, catalogState, l10n, isDark)
               : Row(
                   children: [
                     // Left panel: Widget catalog
@@ -92,7 +92,7 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
                         canvas.gridColumns,
                         canvas.gridRows,
                         placements,
-                        canvasState as CanvasBuilderLoaded,
+                        canvasState,
                         isDark,
                         l10n,
                       ),
@@ -100,7 +100,7 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
                     // Right panel: Properties + versions
                     SizedBox(
                       width: 280,
-                      child: _buildPropertiesPanel(placements, versions, canvasState as CanvasBuilderLoaded, l10n, isDark),
+                      child: _buildPropertiesPanel(placements, versions, canvasState, l10n, isDark),
                     ),
                   ],
                 ),

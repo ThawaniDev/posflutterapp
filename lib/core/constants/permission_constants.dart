@@ -236,6 +236,11 @@ abstract final class Permissions {
   static const restaurantReservations = 'restaurant.reservations';
   static const restaurantTabs = 'restaurant.tabs';
 
+  // ── Wameed AI ────────────────────────────────────────
+  static const wameedAiView = 'wameed_ai.view';
+  static const wameedAiManage = 'wameed_ai.manage';
+  static const wameedAiUse = 'wameed_ai.use';
+
   /// All permission codes as a flat list (useful for validation / debugging).
   static const List<String> all = [
     // pos
@@ -335,5 +340,7 @@ abstract final class Permissions {
     // restaurant
     restaurantView, restaurantTables, restaurantKds, restaurantReservations,
     restaurantTabs,
+    // wameed_ai
+    wameedAiView, wameedAiManage, wameedAiUse,
   ];
 }

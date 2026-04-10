@@ -8585,4 +8585,343 @@ class AppLocalizationsEn extends AppLocalizations {
   String registerOn(String provider) {
     return 'Register on $provider';
   }
+
+  @override
+  String get wameedAI => 'Wameed AI';
+
+  @override
+  String get wameedAIUsage => 'AI Usage';
+
+  @override
+  String get wameedAISuggestions => 'AI Suggestions';
+
+  @override
+  String get wameedAISettings => 'AI Settings';
+
+  @override
+  String get wameedAICategoryInventory => 'Inventory';
+
+  @override
+  String get wameedAICategorySales => 'Sales';
+
+  @override
+  String get wameedAICategoryOperations => 'Operations';
+
+  @override
+  String get wameedAICategoryCatalog => 'Catalog';
+
+  @override
+  String get wameedAICategoryCustomer => 'Customers';
+
+  @override
+  String get wameedAICategoryCommunication => 'Communication';
+
+  @override
+  String get wameedAICategoryFinancial => 'Financial';
+
+  @override
+  String get wameedAICategoryPlatform => 'Platform';
+
+  @override
+  String get wameedAISmartSearch => 'Smart Search';
+
+  @override
+  String get wameedAISmartSearchHint => 'Ask anything about your store data...';
+
+  @override
+  String get wameedAISearch => 'Search';
+
+  @override
+  String get wameedAISearchResults => 'Search Results';
+
+  @override
+  String get wameedAITodayRequests => 'Today\'s Requests';
+
+  @override
+  String get wameedAITodayCost => 'Today\'s Cost';
+
+  @override
+  String get wameedAIMonthlyRequests => 'Monthly Requests';
+
+  @override
+  String get wameedAIMonthlyCost => 'Monthly Cost';
+
+  @override
+  String get wameedAIParameters => 'Parameters';
+
+  @override
+  String get wameedAIRunFeature => 'Run AI';
+
+  @override
+  String get wameedAIResult => 'AI Result';
+
+  @override
+  String get wameedAICached => 'Cached';
+
+  @override
+  String get wameedAICopyResult => 'Copy Result';
+
+  @override
+  String get wameedAICopied => 'Copied to clipboard';
+
+  @override
+  String get wameedAITokens => 'tokens';
+
+  @override
+  String get wameedAINoSuggestions => 'No suggestions yet';
+
+  @override
+  String get wameedAINoSuggestionsSubtitle =>
+      'AI suggestions will appear here as they are generated';
+
+  @override
+  String get wameedAISuggestionBody => 'Details';
+
+  @override
+  String get wameedAIAccept => 'Accept';
+
+  @override
+  String get wameedAIDismiss => 'Dismiss';
+
+  @override
+  String get wameedAIFeature => 'Feature';
+
+  @override
+  String get wameedAISuggestionTitle => 'Title';
+
+  @override
+  String get wameedAIPriority => 'Priority';
+
+  @override
+  String get wameedAIStatus => 'Status';
+
+  @override
+  String get wameedAIActions => 'Actions';
+
+  @override
+  String get wameedAIUsageOverview => 'Usage Overview';
+
+  @override
+  String get wameedAIUsageByFeature => 'Usage by Feature';
+
+  @override
+  String get wameedAIRequests => 'requests';
+
+  @override
+  String get sidebarWameedAI => 'Wameed AI';
+
+  @override
+  String get sidebarGroupWameedAI => 'Wameed AI';
+
+  @override
+  String get wameedAISmartReorder => 'Smart Reorder';
+
+  @override
+  String get wameedAIExpiryManager => 'Expiry Manager';
+
+  @override
+  String get wameedAIDailySummary => 'Daily Summary';
+
+  @override
+  String get wameedAICustomerSegments => 'Customer Segments';
+
+  @override
+  String get wameedAIInvoiceOCR => 'Invoice OCR';
+
+  @override
+  String get wameedAIStaffPerformance => 'Staff Performance';
+
+  @override
+  String get wameedAIEfficiencyScore => 'Efficiency Score';
+
+  @override
+  String get wameedAINoResults => 'No results available';
+
+  @override
+  String get wameedAIReorderSuggestions => 'Reorder Suggestions';
+
+  @override
+  String get wameedAINoReorderNeeded => 'All stock levels are healthy';
+
+  @override
+  String get wameedAIRecommendations => 'AI Recommendations';
+
+  @override
+  String get wameedAIExpiringProducts => 'Expiring Products';
+
+  @override
+  String get wameedAINoExpiringProducts => 'No expiring products found';
+
+  @override
+  String get wameedAIExpiringToday => 'Expiring Today';
+
+  @override
+  String get wameedAIExpiringThisWeek => 'This Week';
+
+  @override
+  String get wameedAIExpiringThisMonth => 'This Month';
+
+  @override
+  String get wameedAIAtRiskValue => 'At Risk Value';
+
+  @override
+  String get wameedAIExpiresOn => 'Expires on';
+
+  @override
+  String get wameedAIActionSuggestions => 'Action Suggestions';
+
+  @override
+  String get wameedAITotalRevenue => 'Total Revenue';
+
+  @override
+  String get wameedAITransactions => 'Transactions';
+
+  @override
+  String get wameedAIAvgBasket => 'Avg Basket';
+
+  @override
+  String get wameedAIItemsSold => 'Items Sold';
+
+  @override
+  String get wameedAISummary => 'AI Summary';
+
+  @override
+  String get wameedAIHighlights => 'Highlights';
+
+  @override
+  String get wameedAIConcerns => 'Concerns';
+
+  @override
+  String get wameedAITotalCustomers => 'Total Customers';
+
+  @override
+  String get wameedAISegments => 'segments';
+
+  @override
+  String get wameedAIAvgSpend => 'Avg Spend';
+
+  @override
+  String get wameedAICharacteristics => 'Characteristics';
+
+  @override
+  String get wameedAITopProducts => 'Top Products';
+
+  @override
+  String get wameedAIPromotionIdeas => 'Promotion Ideas';
+
+  @override
+  String get wameedAISelectInvoiceImage => 'Select an invoice image to scan';
+
+  @override
+  String get wameedAIImageSelected => 'Image selected';
+
+  @override
+  String get wameedAICamera => 'Camera';
+
+  @override
+  String get wameedAIGallery => 'Gallery';
+
+  @override
+  String get wameedAIUploadInvoicePrompt =>
+      'Take a photo or select an invoice image to extract data';
+
+  @override
+  String get wameedAIExtractData => 'Extract Invoice Data';
+
+  @override
+  String get wameedAIRescanInvoice => 'Rescan Invoice';
+
+  @override
+  String get wameedAIChangeImage => 'Change image';
+
+  @override
+  String get wameedAIRemoveImage => 'Remove image';
+
+  @override
+  String get wameedAIProcessingInvoice => 'Analyzing Invoice...';
+
+  @override
+  String get wameedAIOCRProcessingHint =>
+      'AI is reading and extracting data from your invoice. This may take a few seconds.';
+
+  @override
+  String get wameedAICameraTakePhoto => 'Take a photo of the invoice';
+
+  @override
+  String get wameedAIGallerySelectPhoto => 'Choose from your photo library';
+
+  @override
+  String get wameedAIInvoiceExtracted => 'Invoice Data Extracted';
+
+  @override
+  String get wameedAIInvoiceNumber => 'Invoice #';
+
+  @override
+  String get wameedAIInvoiceDate => 'Date';
+
+  @override
+  String get wameedAIVendor => 'Vendor';
+
+  @override
+  String get wameedAIPhone => 'Phone';
+
+  @override
+  String get wameedAILineItems => 'Line Items';
+
+  @override
+  String get wameedAIProduct => 'Product';
+
+  @override
+  String get wameedAIQty => 'Qty';
+
+  @override
+  String get wameedAIPrice => 'Price';
+
+  @override
+  String get wameedAITotal => 'Total';
+
+  @override
+  String get wameedAISubtotal => 'Subtotal';
+
+  @override
+  String get wameedAITax => 'Tax';
+
+  @override
+  String get wameedAIDiscount => 'Discount';
+
+  @override
+  String get wameedAIGrandTotal => 'Grand Total';
+
+  @override
+  String get wameedAILeaderboard => 'Leaderboard';
+
+  @override
+  String get wameedAITeamInsights => 'Team Insights';
+
+  @override
+  String get wameedAICoachingTips => 'Coaching Tips';
+
+  @override
+  String get wameedAIOverallScore => 'Overall Efficiency';
+
+  @override
+  String get wameedAIScoreBreakdown => 'Score Breakdown';
+
+  @override
+  String get wameedAIStrengths => 'Strengths';
+
+  @override
+  String get wameedAIImprovements => 'Areas for Improvement';
+
+  @override
+  String get wameedAIInsights => 'AI-powered insights';
+
+  @override
+  String get wameedAIPendingSuggestions => 'Pending';
+
+  @override
+  String get wameedAIHighPriority => 'High Priority';
+
+  @override
+  String get wameedAITapToExplore => 'Tap to explore AI features';
 }

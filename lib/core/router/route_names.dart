@@ -350,6 +350,19 @@ class Routes {
   static const String debitsCreate = '/debits/create';
   static const String debitsDetail = '/debits/detail'; // + /:id
 
+  // ─── Wameed AI ──────────────────────────────────────────
+  static const String wameedAI = '/wameed-ai';
+  static const String wameedAISuggestions = '/wameed-ai/suggestions';
+  static const String wameedAIUsage = '/wameed-ai/usage';
+  static const String wameedAISettings = '/wameed-ai/settings';
+  static const String wameedAISmartReorder = '/wameed-ai/smart-reorder';
+  static const String wameedAIExpiryManager = '/wameed-ai/expiry-manager';
+  static const String wameedAIDailySummary = '/wameed-ai/daily-summary';
+  static const String wameedAICustomerSegments = '/wameed-ai/customer-segments';
+  static const String wameedAIInvoiceOCR = '/wameed-ai/invoice-ocr';
+  static const String wameedAIStaffPerformance = '/wameed-ai/staff-performance';
+  static const String wameedAIEfficiencyScore = '/wameed-ai/efficiency-score';
+
   // ─── Role-Based Home Route ──────────────────────────────
   /// Returns the appropriate landing route for a given user role.
   /// Cashiers and kitchen staff go to POS checkout; everyone else to dashboard.
