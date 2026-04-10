@@ -8,7 +8,9 @@ import 'package:thawani_pos/core/theme/app_typography.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/auth/providers/auth_providers.dart';
+import 'package:thawani_pos/features/auth/providers/auth_state.dart';
 import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:thawani_pos/features/security/repositories/security_repository.dart';
 import 'package:thawani_pos/features/pos_terminal/models/cart_item.dart';
 import 'package:thawani_pos/features/pos_terminal/models/pos_session.dart';
 import 'package:thawani_pos/features/pos_terminal/providers/pos_cashier_providers.dart';
@@ -318,6 +320,27 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
     });
   }
 
+  Future<void> _handleLogout() async {
+    final l10n = AppLocalizations.of(context)!;
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.logoutTitle,
+      message: l10n.logoutConfirm,
+      confirmLabel: l10n.logout,
+      isDanger: true,
+    );
+    if (confirmed == true) {
+      final authState = ref.read(authProvider);
+      if (authState is AuthAuthenticated && authState.user.storeId != null) {
+        ref
+            .read(securityRepositoryProvider)
+            .endAllSessions(storeId: authState.user.storeId!)
+            .catchError((_) => <String, dynamic>{});
+      }
+      ref.read(authProvider.notifier).logout();
+    }
+  }
+
   // ─── Build ────────────────────────────────────────────────────
 
   @override
@@ -439,6 +462,8 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                     barrierDismissible: false,
                     builder: (_) => PosCloseShiftDialog(session: session),
                   );
+                case 'logout':
+                  _handleLogout();
               }
             },
             itemBuilder: (context) => [
@@ -466,6 +491,15 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                 child: ListTile(
                   leading: const Icon(Icons.logout_rounded, size: 20, color: AppColors.error),
                   title: Text(AppLocalizations.of(context)!.posEndShift, style: const TextStyle(color: AppColors.error)),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              PopupMenuItem(
+                value: 'logout',
+                child: ListTile(
+                  leading: const Icon(Icons.power_settings_new_rounded, size: 20),
+                  title: Text(AppLocalizations.of(context)!.logout),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -679,6 +713,15 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                     onPressed: () =>
                         showDialog(context: context, barrierDismissible: false, builder: (_) => const PosOpenShiftDialog()),
                   ),
+                AppSpacing.gapH12,
+                PosButton(
+                  label: AppLocalizations.of(context)!.logout,
+                  icon: Icons.power_settings_new_rounded,
+                  variant: PosButtonVariant.outline,
+                  size: PosButtonSize.md,
+                  isFullWidth: true,
+                  onPressed: _handleLogout,
+                ),
               ],
             ),
           ),
@@ -766,6 +809,14 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
               barrierDismissible: false,
               builder: (_) => PosCloseShiftDialog(session: session),
             ),
+          ),
+          AppSpacing.gapW8,
+          PosButton(
+            label: AppLocalizations.of(context)!.logout,
+            icon: Icons.power_settings_new_rounded,
+            variant: PosButtonVariant.outline,
+            size: PosButtonSize.md,
+            onPressed: _handleLogout,
           ),
         ],
       ),

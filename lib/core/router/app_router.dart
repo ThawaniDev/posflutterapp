@@ -48,6 +48,8 @@ import 'package:thawani_pos/features/payments/pages/cash_management_page.dart';
 import 'package:thawani_pos/features/payments/pages/expenses_page.dart';
 import 'package:thawani_pos/features/payments/pages/gift_cards_page.dart';
 import 'package:thawani_pos/features/payments/pages/financial_reconciliation_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_installment_providers_page.dart';
+import 'package:thawani_pos/features/settings/pages/store_installment_config_page.dart';
 import 'package:thawani_pos/features/payments/pages/daily_summary_page.dart';
 import 'package:thawani_pos/features/pos_terminal/pages/pos_sessions_page.dart';
 import 'package:thawani_pos/features/pos_terminal/pages/pos_terminal_form_page.dart';
@@ -576,6 +578,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: Routes.adminFinOpsSalesReports,
             name: 'adminFinOpsSalesReports',
             builder: (context, state) => const AdminFinOpsDailySalesPage(),
+          ),
+
+          // ─── Admin Panel – Installment Providers ───
+          GoRoute(
+            path: Routes.adminInstallmentProviders,
+            name: 'adminInstallmentProviders',
+            builder: (context, state) => const AdminInstallmentProvidersPage(),
           ),
 
           // ─── Admin Panel – P16: Infrastructure ────────
@@ -1107,6 +1116,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const StoreProfilePage(),
           ),
           GoRoute(path: Routes.settingsAbout, name: 'settingsAbout', builder: (context, state) => const AboutPage()),
+          GoRoute(
+            path: Routes.settingsInstallments,
+            name: 'settingsInstallments',
+            builder: (context, state) => const StoreInstallmentConfigPage(),
+          ),
 
           // ─── Reports ───
           GoRoute(path: Routes.reports, name: 'reports', builder: (context, state) => const reports.DashboardPage()),

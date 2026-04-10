@@ -11,7 +11,11 @@ enum PaymentMethod {
   giftCard('gift_card'),
   mobilePayment('mobile_payment'),
   loyaltyPoints('loyalty_points'),
-  bankTransfer('bank_transfer');
+  bankTransfer('bank_transfer'),
+  tabby('tabby'),
+  tamara('tamara'),
+  mispay('mispay'),
+  madfu('madfu');
 
   const PaymentMethod(this.value);
   final String value;
@@ -60,6 +64,14 @@ enum PaymentMethod {
         return 'Loyalty Points';
       case PaymentMethod.bankTransfer:
         return 'Bank Transfer';
+      case PaymentMethod.tabby:
+        return 'Tabby';
+      case PaymentMethod.tamara:
+        return 'Tamara';
+      case PaymentMethod.mispay:
+        return 'MisPay';
+      case PaymentMethod.madfu:
+        return 'Madfu';
     }
   }
 
@@ -69,4 +81,7 @@ enum PaymentMethod {
       this == PaymentMethod.cardVisa ||
       this == PaymentMethod.cardMastercard ||
       this == PaymentMethod.mada;
+
+  bool get isInstallment =>
+      this == PaymentMethod.tabby || this == PaymentMethod.tamara || this == PaymentMethod.mispay || this == PaymentMethod.madfu;
 }

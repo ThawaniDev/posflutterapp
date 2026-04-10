@@ -6,6 +6,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/theme/app_typography.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/payments/models/installment_payment.dart';
+import 'package:thawani_pos/features/payments/pages/installment_payment_dialog.dart';
 import 'package:thawani_pos/features/pos_terminal/enums/payment_method.dart';
 import 'package:thawani_pos/features/pos_terminal/providers/pos_cashier_providers.dart';
 import 'package:thawani_pos/features/pos_terminal/providers/pos_cashier_state.dart';
@@ -94,6 +96,31 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
       return (_cashTendered - widget.totalAmount).clamp(0, double.infinity);
     }
     return 0;
+  }
+
+  Future<void> _openInstallmentPayment() async {
+    final result = await showDialog<InstallmentPayment>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => InstallmentPaymentDialog(amount: widget.totalAmount, currency: 'SAR'),
+    );
+
+    if (result != null && mounted) {
+      // Installment payment completed — record it as the payment method
+      final providerMethod = PaymentMethod.tryFromValue(result.provider.value);
+      if (providerMethod != null) {
+        setState(() {
+          // Replace all legs with a single installment leg
+          for (final l in _legs) {
+            l.dispose();
+          }
+          _legs.clear();
+          _legs.add(_PaymentLeg(method: providerMethod, amount: widget.totalAmount));
+        });
+        // Auto-complete the sale
+        await _completePayment();
+      }
+    }
   }
 
   Future<void> _completePayment() async {
@@ -243,6 +270,17 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                       style: TextButton.styleFrom(foregroundColor: AppColors.primary),
                     ),
                   ),
+
+                // Installment payment button
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: TextButton.icon(
+                    onPressed: isProcessing ? null : _openInstallmentPayment,
+                    icon: const Icon(Icons.credit_score_rounded, size: 18),
+                    label: Text(AppLocalizations.of(context)!.payWithInstallments),
+                    style: TextButton.styleFrom(foregroundColor: AppColors.info),
+                  ),
+                ),
 
                 AppSpacing.gapH16,
 
@@ -476,6 +514,11 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
         return Icons.smartphone_rounded;
       case PaymentMethod.bankTransfer:
         return Icons.account_balance_rounded;
+      case PaymentMethod.tabby:
+      case PaymentMethod.tamara:
+      case PaymentMethod.mispay:
+      case PaymentMethod.madfu:
+        return Icons.credit_score_rounded;
     }
   }
 }

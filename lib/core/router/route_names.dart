@@ -84,6 +84,7 @@ class Routes {
   static const String settingsWorkingHours = '/settings/working-hours';
   static const String settingsStoreProfile = '/settings/store-profile';
   static const String settingsAbout = '/settings/about';
+  static const String settingsInstallments = '/settings/installments';
 
   // Branches
   static const String branches = '/branches';
@@ -206,6 +207,7 @@ class Routes {
   static const String adminFinOpsAccounting = '/admin/financial-operations/accounting';
   static const String adminFinOpsThawani = '/admin/financial-operations/thawani';
   static const String adminFinOpsSalesReports = '/admin/financial-operations/sales-reports';
+  static const String adminInstallmentProviders = '/admin/installment-providers';
 
   // ─── P16: Infrastructure & Operations ───────────────────────────
   static const String adminInfrastructure = '/admin/infrastructure';

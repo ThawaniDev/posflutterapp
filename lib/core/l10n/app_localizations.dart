@@ -13578,6 +13578,12 @@ abstract class AppLocalizations {
   /// **'Payments'**
   String get sidebarPayments;
 
+  /// No description provided for @sidebarInstallments.
+  ///
+  /// In en, this message translates to:
+  /// **'Installments'**
+  String get sidebarInstallments;
+
   /// No description provided for @sidebarProducts.
   ///
   /// In en, this message translates to:
@@ -16163,6 +16169,366 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Branch Overview'**
   String get dashboardBranchOverview;
+
+  /// No description provided for @installmentProviders.
+  ///
+  /// In en, this message translates to:
+  /// **'Installment Providers'**
+  String get installmentProviders;
+
+  /// No description provided for @installmentPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Installment Payments'**
+  String get installmentPayments;
+
+  /// No description provided for @installmentPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Installment Payment'**
+  String get installmentPayment;
+
+  /// No description provided for @installments.
+  ///
+  /// In en, this message translates to:
+  /// **'Installments'**
+  String get installments;
+
+  /// No description provided for @noInstallmentProviders.
+  ///
+  /// In en, this message translates to:
+  /// **'No installment providers found'**
+  String get noInstallmentProviders;
+
+  /// No description provided for @noInstallmentProvidersAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No installment providers available'**
+  String get noInstallmentProvidersAvailable;
+
+  /// No description provided for @noInstallmentProvidersForAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'No installment providers available for this amount'**
+  String get noInstallmentProvidersForAmount;
+
+  /// No description provided for @selectInstallmentProvider.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Installment Provider'**
+  String get selectInstallmentProvider;
+
+  /// No description provided for @payWithInstallments.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay with Installments'**
+  String get payWithInstallments;
+
+  /// No description provided for @installmentCredentialsNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Credentials are encrypted and stored securely'**
+  String get installmentCredentialsNote;
+
+  /// No description provided for @installmentPaymentSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Successful'**
+  String get installmentPaymentSuccess;
+
+  /// No description provided for @installmentPaymentFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Installment payment failed'**
+  String get installmentPaymentFailed;
+
+  /// No description provided for @installmentPaymentCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Cancelled'**
+  String get installmentPaymentCancelled;
+
+  /// No description provided for @cancelPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Payment'**
+  String get cancelPayment;
+
+  /// No description provided for @cancelPaymentConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to cancel this payment?'**
+  String get cancelPaymentConfirm;
+
+  /// No description provided for @goBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back'**
+  String get goBack;
+
+  /// No description provided for @checkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Checkout'**
+  String get checkout;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
+  /// No description provided for @yes.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get yes;
+
+  /// No description provided for @no.
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get no;
+
+  /// No description provided for @enable.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable'**
+  String get enable;
+
+  /// No description provided for @disable.
+  ///
+  /// In en, this message translates to:
+  /// **'Disable'**
+  String get disable;
+
+  /// No description provided for @enabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled'**
+  String get enabled;
+
+  /// No description provided for @disabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Disabled'**
+  String get disabled;
+
+  /// No description provided for @maintenance.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance'**
+  String get maintenance;
+
+  /// No description provided for @setMaintenance.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Maintenance'**
+  String get setMaintenance;
+
+  /// No description provided for @endMaintenance.
+  ///
+  /// In en, this message translates to:
+  /// **'End Maintenance'**
+  String get endMaintenance;
+
+  /// No description provided for @endMaintenanceConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Provider will be available again. Continue?'**
+  String get endMaintenanceConfirm;
+
+  /// No description provided for @maintenanceMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance Message (EN)'**
+  String get maintenanceMessage;
+
+  /// No description provided for @maintenanceMessageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter maintenance message in English'**
+  String get maintenanceMessageHint;
+
+  /// No description provided for @maintenanceMessageAr.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance Message (AR)'**
+  String get maintenanceMessageAr;
+
+  /// No description provided for @maintenanceMessageHintAr.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter maintenance message in Arabic'**
+  String get maintenanceMessageHintAr;
+
+  /// No description provided for @configured.
+  ///
+  /// In en, this message translates to:
+  /// **'Configured'**
+  String get configured;
+
+  /// No description provided for @notConfigured.
+  ///
+  /// In en, this message translates to:
+  /// **'Not Configured'**
+  String get notConfigured;
+
+  /// No description provided for @setupCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Setup Credentials'**
+  String get setupCredentials;
+
+  /// No description provided for @editCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Credentials'**
+  String get editCredentials;
+
+  /// No description provided for @credentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Credentials'**
+  String get credentials;
+
+  /// No description provided for @editProvider.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Provider'**
+  String get editProvider;
+
+  /// No description provided for @removeProvider.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Provider'**
+  String get removeProvider;
+
+  /// No description provided for @removeProviderConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove all credentials for {provider}? This cannot be undone.'**
+  String removeProviderConfirm(String provider);
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @nameAr.
+  ///
+  /// In en, this message translates to:
+  /// **'Name (Arabic)'**
+  String get nameAr;
+
+  /// No description provided for @descriptionAr.
+  ///
+  /// In en, this message translates to:
+  /// **'Description (Arabic)'**
+  String get descriptionAr;
+
+  /// No description provided for @logoUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Logo URL'**
+  String get logoUrl;
+
+  /// No description provided for @currencies.
+  ///
+  /// In en, this message translates to:
+  /// **'Currencies'**
+  String get currencies;
+
+  /// No description provided for @minAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Min Amount'**
+  String get minAmount;
+
+  /// No description provided for @maxAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Max Amount'**
+  String get maxAmount;
+
+  /// No description provided for @publicKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Public Key'**
+  String get publicKey;
+
+  /// No description provided for @secretKey.
+  ///
+  /// In en, this message translates to:
+  /// **'Secret Key'**
+  String get secretKey;
+
+  /// No description provided for @merchantCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Merchant Code'**
+  String get merchantCode;
+
+  /// No description provided for @apiToken.
+  ///
+  /// In en, this message translates to:
+  /// **'API Token'**
+  String get apiToken;
+
+  /// No description provided for @appId.
+  ///
+  /// In en, this message translates to:
+  /// **'App ID'**
+  String get appId;
+
+  /// No description provided for @appSecret.
+  ///
+  /// In en, this message translates to:
+  /// **'App Secret'**
+  String get appSecret;
+
+  /// No description provided for @apiKey.
+  ///
+  /// In en, this message translates to:
+  /// **'API Key'**
+  String get apiKey;
+
+  /// No description provided for @appCode.
+  ///
+  /// In en, this message translates to:
+  /// **'App Code'**
+  String get appCode;
+
+  /// No description provided for @authorization.
+  ///
+  /// In en, this message translates to:
+  /// **'Authorization'**
+  String get authorization;
+
+  /// No description provided for @username.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get username;
+
+  /// No description provided for @sandbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Sandbox'**
+  String get sandbox;
+
+  /// No description provided for @production.
+  ///
+  /// In en, this message translates to:
+  /// **'Production'**
+  String get production;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
 }
 
 class _AppLocalizationsDelegate

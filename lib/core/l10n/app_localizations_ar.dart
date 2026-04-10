@@ -7000,6 +7000,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sidebarPayments => 'المدفوعات';
 
   @override
+  String get sidebarInstallments => 'الأقساط';
+
+  @override
   String get sidebarProducts => 'المنتجات';
 
   @override
@@ -8346,4 +8349,189 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get dashboardBranchOverview => 'نظرة عامة على الفروع';
+
+  @override
+  String get installmentProviders => 'مزودو التقسيط';
+
+  @override
+  String get installmentPayments => 'مدفوعات التقسيط';
+
+  @override
+  String get installmentPayment => 'دفع بالتقسيط';
+
+  @override
+  String get installments => 'الأقساط';
+
+  @override
+  String get noInstallmentProviders => 'لم يتم العثور على مزودي تقسيط';
+
+  @override
+  String get noInstallmentProvidersAvailable => 'لا يوجد مزودو تقسيط متاحون';
+
+  @override
+  String get noInstallmentProvidersForAmount =>
+      'لا يوجد مزودو تقسيط متاحون لهذا المبلغ';
+
+  @override
+  String get selectInstallmentProvider => 'اختر مزود التقسيط';
+
+  @override
+  String get payWithInstallments => 'الدفع بالتقسيط';
+
+  @override
+  String get installmentCredentialsNote =>
+      'يتم تشفير بيانات الاعتماد وتخزينها بشكل آمن';
+
+  @override
+  String get installmentPaymentSuccess => 'تم الدفع بنجاح';
+
+  @override
+  String get installmentPaymentFailed => 'فشل الدفع بالتقسيط';
+
+  @override
+  String get installmentPaymentCancelled => 'تم إلغاء الدفع';
+
+  @override
+  String get cancelPayment => 'إلغاء الدفع';
+
+  @override
+  String get cancelPaymentConfirm => 'هل أنت متأكد من إلغاء هذا الدفع؟';
+
+  @override
+  String get goBack => 'رجوع';
+
+  @override
+  String get checkout => 'الدفع';
+
+  @override
+  String get done => 'تم';
+
+  @override
+  String get yes => 'نعم';
+
+  @override
+  String get no => 'لا';
+
+  @override
+  String get enable => 'تفعيل';
+
+  @override
+  String get disable => 'تعطيل';
+
+  @override
+  String get enabled => 'مفعّل';
+
+  @override
+  String get disabled => 'معطّل';
+
+  @override
+  String get maintenance => 'صيانة';
+
+  @override
+  String get setMaintenance => 'وضع الصيانة';
+
+  @override
+  String get endMaintenance => 'إنهاء الصيانة';
+
+  @override
+  String get endMaintenanceConfirm =>
+      'سيكون المزود متاحاً مرة أخرى. هل تريد المتابعة؟';
+
+  @override
+  String get maintenanceMessage => 'رسالة الصيانة (EN)';
+
+  @override
+  String get maintenanceMessageHint => 'أدخل رسالة الصيانة بالإنجليزية';
+
+  @override
+  String get maintenanceMessageAr => 'رسالة الصيانة (AR)';
+
+  @override
+  String get maintenanceMessageHintAr => 'أدخل رسالة الصيانة بالعربية';
+
+  @override
+  String get configured => 'تم الإعداد';
+
+  @override
+  String get notConfigured => 'لم يتم الإعداد';
+
+  @override
+  String get setupCredentials => 'إعداد بيانات الاعتماد';
+
+  @override
+  String get editCredentials => 'تعديل بيانات الاعتماد';
+
+  @override
+  String get credentials => 'بيانات الاعتماد';
+
+  @override
+  String get editProvider => 'تعديل المزود';
+
+  @override
+  String get removeProvider => 'إزالة المزود';
+
+  @override
+  String removeProviderConfirm(String provider) {
+    return 'إزالة جميع بيانات الاعتماد لـ $provider؟ لا يمكن التراجع عن هذا.';
+  }
+
+  @override
+  String get name => 'الاسم';
+
+  @override
+  String get nameAr => 'الاسم (عربي)';
+
+  @override
+  String get descriptionAr => 'الوصف (عربي)';
+
+  @override
+  String get logoUrl => 'رابط الشعار';
+
+  @override
+  String get currencies => 'العملات';
+
+  @override
+  String get minAmount => 'الحد الأدنى';
+
+  @override
+  String get maxAmount => 'الحد الأقصى';
+
+  @override
+  String get publicKey => 'المفتاح العام';
+
+  @override
+  String get secretKey => 'المفتاح السري';
+
+  @override
+  String get merchantCode => 'رمز التاجر';
+
+  @override
+  String get apiToken => 'رمز API';
+
+  @override
+  String get appId => 'معرف التطبيق';
+
+  @override
+  String get appSecret => 'سر التطبيق';
+
+  @override
+  String get apiKey => 'مفتاح API';
+
+  @override
+  String get appCode => 'رمز التطبيق';
+
+  @override
+  String get authorization => 'التفويض';
+
+  @override
+  String get username => 'اسم المستخدم';
+
+  @override
+  String get sandbox => 'تجريبي';
+
+  @override
+  String get production => 'إنتاجي';
+
+  @override
+  String get remove => 'إزالة';
 }

@@ -89,6 +89,7 @@ String? permissionForRoute(String path) {
   if (path == '/reports') return Permissions.reportsView;
 
   // ── Settings ─────────────────────────────────────────
+  if (path == '/settings/installments') return Permissions.installmentsConfigure;
   if (path == '/settings/localization') return Permissions.settingsLocalization;
   if (path == '/settings' || path == '/settings/about') return Permissions.settingsView;
   if (path.startsWith('/settings/')) return Permissions.settingsManage;

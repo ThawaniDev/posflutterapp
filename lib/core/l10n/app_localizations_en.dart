@@ -7025,6 +7025,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sidebarPayments => 'Payments';
 
   @override
+  String get sidebarInstallments => 'Installments';
+
+  @override
   String get sidebarProducts => 'Products';
 
   @override
@@ -8375,4 +8378,191 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dashboardBranchOverview => 'Branch Overview';
+
+  @override
+  String get installmentProviders => 'Installment Providers';
+
+  @override
+  String get installmentPayments => 'Installment Payments';
+
+  @override
+  String get installmentPayment => 'Installment Payment';
+
+  @override
+  String get installments => 'Installments';
+
+  @override
+  String get noInstallmentProviders => 'No installment providers found';
+
+  @override
+  String get noInstallmentProvidersAvailable =>
+      'No installment providers available';
+
+  @override
+  String get noInstallmentProvidersForAmount =>
+      'No installment providers available for this amount';
+
+  @override
+  String get selectInstallmentProvider => 'Select Installment Provider';
+
+  @override
+  String get payWithInstallments => 'Pay with Installments';
+
+  @override
+  String get installmentCredentialsNote =>
+      'Credentials are encrypted and stored securely';
+
+  @override
+  String get installmentPaymentSuccess => 'Payment Successful';
+
+  @override
+  String get installmentPaymentFailed => 'Installment payment failed';
+
+  @override
+  String get installmentPaymentCancelled => 'Payment Cancelled';
+
+  @override
+  String get cancelPayment => 'Cancel Payment';
+
+  @override
+  String get cancelPaymentConfirm =>
+      'Are you sure you want to cancel this payment?';
+
+  @override
+  String get goBack => 'Go Back';
+
+  @override
+  String get checkout => 'Checkout';
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String get yes => 'Yes';
+
+  @override
+  String get no => 'No';
+
+  @override
+  String get enable => 'Enable';
+
+  @override
+  String get disable => 'Disable';
+
+  @override
+  String get enabled => 'Enabled';
+
+  @override
+  String get disabled => 'Disabled';
+
+  @override
+  String get maintenance => 'Maintenance';
+
+  @override
+  String get setMaintenance => 'Set Maintenance';
+
+  @override
+  String get endMaintenance => 'End Maintenance';
+
+  @override
+  String get endMaintenanceConfirm =>
+      'Provider will be available again. Continue?';
+
+  @override
+  String get maintenanceMessage => 'Maintenance Message (EN)';
+
+  @override
+  String get maintenanceMessageHint => 'Enter maintenance message in English';
+
+  @override
+  String get maintenanceMessageAr => 'Maintenance Message (AR)';
+
+  @override
+  String get maintenanceMessageHintAr => 'Enter maintenance message in Arabic';
+
+  @override
+  String get configured => 'Configured';
+
+  @override
+  String get notConfigured => 'Not Configured';
+
+  @override
+  String get setupCredentials => 'Setup Credentials';
+
+  @override
+  String get editCredentials => 'Edit Credentials';
+
+  @override
+  String get credentials => 'Credentials';
+
+  @override
+  String get editProvider => 'Edit Provider';
+
+  @override
+  String get removeProvider => 'Remove Provider';
+
+  @override
+  String removeProviderConfirm(String provider) {
+    return 'Remove all credentials for $provider? This cannot be undone.';
+  }
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get nameAr => 'Name (Arabic)';
+
+  @override
+  String get descriptionAr => 'Description (Arabic)';
+
+  @override
+  String get logoUrl => 'Logo URL';
+
+  @override
+  String get currencies => 'Currencies';
+
+  @override
+  String get minAmount => 'Min Amount';
+
+  @override
+  String get maxAmount => 'Max Amount';
+
+  @override
+  String get publicKey => 'Public Key';
+
+  @override
+  String get secretKey => 'Secret Key';
+
+  @override
+  String get merchantCode => 'Merchant Code';
+
+  @override
+  String get apiToken => 'API Token';
+
+  @override
+  String get appId => 'App ID';
+
+  @override
+  String get appSecret => 'App Secret';
+
+  @override
+  String get apiKey => 'API Key';
+
+  @override
+  String get appCode => 'App Code';
+
+  @override
+  String get authorization => 'Authorization';
+
+  @override
+  String get username => 'Username';
+
+  @override
+  String get sandbox => 'Sandbox';
+
+  @override
+  String get production => 'Production';
+
+  @override
+  String get remove => 'Remove';
 }

@@ -766,4 +766,25 @@ class ApiEndpoints {
   static String debitReverse(String id) => '/debits/$id/reverse';
   static String debitCustomerBalance(String customerId) => '/debits/customer/$customerId/balance';
   static String debitCustomerDebits(String customerId) => '/debits/customer/$customerId';
+
+  // Installment Providers (Platform Admin)
+  static const String adminInstallmentProviders = '/admin/installment-providers';
+  static String adminInstallmentProviderById(String id) => '/admin/installment-providers/$id';
+  static String adminInstallmentProviderToggle(String id) => '/admin/installment-providers/$id/toggle';
+  static String adminInstallmentProviderMaintenance(String id) => '/admin/installment-providers/$id/maintenance';
+
+  // Installment Config (Store Admin)
+  static const String installmentConfigAvailable = '/installments/config/available';
+  static const String installmentConfig = '/installments/config';
+  static String installmentConfigByProvider(String provider) => '/installments/config/$provider';
+  static String installmentConfigToggle(String provider) => '/installments/config/$provider/toggle';
+
+  // Installment Checkout (POS)
+  static const String installmentProviders = '/installments/providers';
+  static const String installmentTamaraPreCheck = '/installments/tamara-precheck';
+  static const String installmentCheckout = '/installments/checkout';
+  static String installmentConfirm(String id) => '/installments/$id/confirm';
+  static String installmentCancel(String id) => '/installments/$id/cancel';
+  static String installmentFail(String id) => '/installments/$id/fail';
+  static String installmentById(String id) => '/installments/$id';
 }

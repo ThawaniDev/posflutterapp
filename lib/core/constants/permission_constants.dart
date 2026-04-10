@@ -54,6 +54,11 @@ abstract final class Permissions {
   static const paymentsProcess = 'payments.process';
   static const paymentsRefund = 'payments.refund';
 
+  // ── Installments ─────────────────────────────────────
+  static const installmentsConfigure = 'installments.configure';
+  static const installmentsUse = 'installments.use';
+  static const installmentsViewHistory = 'installments.view_history';
+
   // ── Cash ─────────────────────────────────────────────
   static const cashViewSessions = 'cash.view_sessions';
   static const cashManage = 'cash.manage';
@@ -252,6 +257,8 @@ abstract final class Permissions {
     customersManageCredit, customersManageDebits,
     // payments
     paymentsProcess, paymentsRefund,
+    // installments
+    installmentsConfigure, installmentsUse, installmentsViewHistory,
     // cash
     cashViewSessions, cashManage, cashViewDailySummary, cashReconciliation,
     // finance

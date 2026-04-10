@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/constants/permission_constants.dart';
+import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import '../l10n/app_localizations.dart';
 import '../theme/app_colors.dart';
@@ -246,6 +247,12 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.local_offer_rounded,
           route: '/promotions',
           permission: Permissions.promotionsManage,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarInstallments,
+          icon: Icons.calendar_month_rounded,
+          route: Routes.settingsInstallments,
+          permission: Permissions.installmentsConfigure,
         ),
       ],
     ),

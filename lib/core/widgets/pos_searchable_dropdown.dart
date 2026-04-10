@@ -621,7 +621,6 @@ class _PosSearchableDropdownState<T> extends State<PosSearchableDropdown<T>> {
     final hasValue = item != null;
 
     return Row(
-      mainAxisSize: MainAxisSize.min,
       children: [
         if (widget.prefixIcon != null)
           Padding(
@@ -664,7 +663,6 @@ class _PosSearchableDropdownState<T> extends State<PosSearchableDropdown<T>> {
     final items = _selectedItems;
 
     return Row(
-      mainAxisSize: MainAxisSize.min,
       children: [
         if (widget.prefixIcon != null)
           Padding(
