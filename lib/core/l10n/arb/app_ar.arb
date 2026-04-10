@@ -3149,6 +3149,7 @@
   "selectInstallmentProvider": "اختر مزود التقسيط",
   "payWithInstallments": "الدفع بالتقسيط",
   "installmentCredentialsNote": "يتم تشفير بيانات الاعتماد وتخزينها بشكل آمن",
+  "months": "أشهر",
   "installmentPaymentSuccess": "تم الدفع بنجاح",
   "installmentPaymentFailed": "فشل الدفع بالتقسيط",
   "installmentPaymentCancelled": "تم إلغاء الدفع",
@@ -3199,5 +3200,11 @@
   "username": "اسم المستخدم",
   "sandbox": "تجريبي",
   "production": "إنتاجي",
-  "remove": "إزالة"
+  "remove": "إزالة",
+  "testConnection": "اختبار",
+  "testingConnection": "جارٍ اختبار الاتصال…",
+  "connectionSuccessful": "تم الاتصال بنجاح",
+  "connectionFailed": "فشل الاتصال",
+  "registerOn": "التسجيل في {provider}",
+  "@registerOn": { "placeholders": { "provider": { "type": "String" } } }
 }

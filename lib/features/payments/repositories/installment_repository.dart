@@ -28,6 +28,7 @@ class InstallmentRepository {
   Future<StoreInstallmentConfig> upsertStoreConfig(Map<String, dynamic> data) => _apiService.upsertStoreConfig(data);
   Future<StoreInstallmentConfig> toggleStoreConfig(String provider) => _apiService.toggleStoreConfig(provider);
   Future<void> deleteStoreConfig(String provider) => _apiService.deleteStoreConfig(provider);
+  Future<Map<String, dynamic>> testConnection(String provider) => _apiService.testConnection(provider);
 
   // ─── POS Checkout ──────────────────────────────────────────────
   Future<List<CheckoutProviderOption>> getCheckoutProviders({required double amount, String currency = 'SAR'}) =>

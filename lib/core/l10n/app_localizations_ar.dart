@@ -8383,6 +8383,9 @@ class AppLocalizationsAr extends AppLocalizations {
       'يتم تشفير بيانات الاعتماد وتخزينها بشكل آمن';
 
   @override
+  String get months => 'أشهر';
+
+  @override
   String get installmentPaymentSuccess => 'تم الدفع بنجاح';
 
   @override
@@ -8534,4 +8537,21 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get remove => 'إزالة';
+
+  @override
+  String get testConnection => 'اختبار';
+
+  @override
+  String get testingConnection => 'جارٍ اختبار الاتصال…';
+
+  @override
+  String get connectionSuccessful => 'تم الاتصال بنجاح';
+
+  @override
+  String get connectionFailed => 'فشل الاتصال';
+
+  @override
+  String registerOn(String provider) {
+    return 'التسجيل في $provider';
+  }
 }

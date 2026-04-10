@@ -130,6 +130,16 @@ class StoreInstallmentConfigNotifier extends StateNotifier<StoreInstallmentConfi
     }
   }
 
+  Future<Map<String, dynamic>> testConnection(String provider) async {
+    try {
+      return await _repo.testConnection(provider);
+    } on DioException catch (e) {
+      return {'success': false, 'message': _extractError(e)};
+    } catch (e) {
+      return {'success': false, 'message': e.toString()};
+    }
+  }
+
   String _extractError(DioException e) {
     final data = e.response?.data;
     if (data is Map<String, dynamic>) {

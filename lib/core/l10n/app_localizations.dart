@@ -16230,6 +16230,12 @@ abstract class AppLocalizations {
   /// **'Credentials are encrypted and stored securely'**
   String get installmentCredentialsNote;
 
+  /// No description provided for @months.
+  ///
+  /// In en, this message translates to:
+  /// **'months'**
+  String get months;
+
   /// No description provided for @installmentPaymentSuccess.
   ///
   /// In en, this message translates to:
@@ -16529,6 +16535,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove'**
   String get remove;
+
+  /// No description provided for @testConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Test'**
+  String get testConnection;
+
+  /// No description provided for @testingConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'Testing Connection…'**
+  String get testingConnection;
+
+  /// No description provided for @connectionSuccessful.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection Successful'**
+  String get connectionSuccessful;
+
+  /// No description provided for @connectionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection Failed'**
+  String get connectionFailed;
+
+  /// No description provided for @registerOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Register on {provider}'**
+  String registerOn(String provider);
 }
 
 class _AppLocalizationsDelegate

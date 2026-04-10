@@ -90,6 +90,12 @@ class InstallmentApiService {
     await _dio.delete('/installments/config/$provider');
   }
 
+  Future<Map<String, dynamic>> testConnection(String provider) async {
+    final response = await _dio.post('/installments/config/$provider/test');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return apiResponse.data as Map<String, dynamic>? ?? {};
+  }
+
   // ═══════════════════════════════════════════════════════════════
   // POS Checkout — Installment Payments
   // ═══════════════════════════════════════════════════════════════

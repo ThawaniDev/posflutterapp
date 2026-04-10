@@ -3307,6 +3307,7 @@
   "selectInstallmentProvider": "Select Installment Provider",
   "payWithInstallments": "Pay with Installments",
   "installmentCredentialsNote": "Credentials are encrypted and stored securely",
+  "months": "months",
   "installmentPaymentSuccess": "Payment Successful",
   "installmentPaymentFailed": "Installment payment failed",
   "installmentPaymentCancelled": "Payment Cancelled",
@@ -3357,5 +3358,11 @@
   "username": "Username",
   "sandbox": "Sandbox",
   "production": "Production",
-  "remove": "Remove"
+  "remove": "Remove",
+  "testConnection": "Test",
+  "testingConnection": "Testing Connection…",
+  "connectionSuccessful": "Connection Successful",
+  "connectionFailed": "Connection Failed",
+  "registerOn": "Register on {provider}",
+  "@registerOn": { "placeholders": { "provider": { "type": "String" } } }
 }

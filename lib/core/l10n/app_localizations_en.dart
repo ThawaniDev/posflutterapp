@@ -8413,6 +8413,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Credentials are encrypted and stored securely';
 
   @override
+  String get months => 'months';
+
+  @override
   String get installmentPaymentSuccess => 'Payment Successful';
 
   @override
@@ -8565,4 +8568,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get remove => 'Remove';
+
+  @override
+  String get testConnection => 'Test';
+
+  @override
+  String get testingConnection => 'Testing Connection…';
+
+  @override
+  String get connectionSuccessful => 'Connection Successful';
+
+  @override
+  String get connectionFailed => 'Connection Failed';
+
+  @override
+  String registerOn(String provider) {
+    return 'Register on $provider';
+  }
 }
