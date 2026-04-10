@@ -83,9 +83,23 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
     }
 
     final overallScore = (data['overall_score'] as num?)?.toDouble() ?? 0;
+    final grade = data['grade']?.toString() ?? '';
     final subscores = data['sub_scores'] as Map<String, dynamic>? ?? data['breakdown'] as Map<String, dynamic>? ?? {};
-    final improvements = (data['improvements'] as List?)?.cast<String>() ?? data['suggestions'] as List? ?? [];
-    final strengths = (data['strengths'] as List?)?.cast<String>() ?? [];
+    // Backend returns 'improvements_ar' as array of objects {area, current_score, target, action_ar}
+    final rawImprovements =
+        data['improvements_ar'] as List? ?? data['improvements'] as List? ?? data['suggestions'] as List? ?? [];
+    final improvements = rawImprovements.map((item) {
+      if (item is Map) {
+        // Extract action_ar from object, or build a description
+        final action = item['action_ar'] ?? item['action'] ?? '';
+        final area = item['area'] ?? '';
+        if (action.toString().isNotEmpty) return '$area: $action';
+        return item.toString();
+      }
+      return item.toString();
+    }).toList();
+    // Backend returns 'summary_ar' as a string
+    final summaryText = data['summary_ar']?.toString() ?? '';
 
     return SingleChildScrollView(
       padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
@@ -113,7 +127,7 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
                   AIScoreGauge(score: overallScore, size: 160, label: '/100'),
                   const SizedBox(height: 16),
                   Text(
-                    _scoreLabel(overallScore),
+                    grade.isNotEmpty ? '$grade - ${_scoreLabel(overallScore)}' : _scoreLabel(overallScore),
                     style: Theme.of(
                       context,
                     ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700, color: _scoreColor(overallScore)),
@@ -171,32 +185,18 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
             ),
           ],
 
-          // Strengths
-          if (strengths.isNotEmpty) ...[
+          // AI Summary
+          if (summaryText.isNotEmpty) ...[
             const SizedBox(height: 24),
-            Row(
-              children: [
-                const Icon(Icons.thumb_up_alt_outlined, size: 20, color: AppColors.success),
-                const SizedBox(width: 8),
-                Text(
-                  l10n.wameedAIStrengths,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            ...strengths.map(
-              (s) => Padding(
-                padding: const EdgeInsets.only(bottom: 6),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(Icons.check_circle, size: 16, color: AppColors.success),
-                    const SizedBox(width: 8),
-                    Expanded(child: Text('$s', style: Theme.of(context).textTheme.bodyMedium)),
-                  ],
-                ),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.05),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
               ),
+              child: SelectableText(summaryText, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
             ),
           ],
 

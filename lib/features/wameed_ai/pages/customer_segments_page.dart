@@ -87,7 +87,11 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
     }
 
     final segments = (data['segments'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    final totalCustomers = data['total_customers'] ?? 0;
+    // Backend doesn't return total_customers — compute from segments
+    final totalCustomers =
+        data['total_customers'] ?? segments.fold<num>(0, (sum, s) => sum + ((s['customer_count'] ?? s['count'] ?? 0) as num));
+    // Backend returns 'summary_ar' as a string
+    final summaryText = data['summary_ar']?.toString() ?? '';
 
     return SingleChildScrollView(
       padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
@@ -129,7 +133,22 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
               ],
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
+
+          // AI summary
+          if (summaryText.isNotEmpty) ...[
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.05),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
+              ),
+              child: SelectableText(summaryText, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
+            ),
+            const SizedBox(height: 16),
+          ],
 
           // Segment cards
           Text(
@@ -168,7 +187,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
     final name = segment['name'] ?? segment['segment_name'] ?? 'Segment ${index + 1}';
     final count = segment['customer_count'] ?? segment['count'] ?? 0;
     final avgSpend = segment['avg_spend'] ?? segment['average_spend'] ?? 0;
-    final description = segment['description'] ?? '';
+    final description = segment['description'] ?? segment['marketing_strategy_ar'] ?? '';
     final isSelected = _selectedSegment == name;
     final colors = [AppColors.primary, AppColors.success, AppColors.info, AppColors.warning, AppColors.error];
     final color = colors[index % colors.length];
@@ -240,8 +259,10 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
     if (segment.isEmpty) return const SizedBox.shrink();
 
     final characteristics = (segment['characteristics'] as List?)?.cast<String>() ?? [];
+    final marketingStrategy = segment['marketing_strategy_ar']?.toString() ?? '';
     final promotionIdeas = (segment['promotion_ideas'] as List?)?.cast<String>() ?? segment['suggestions'] as List? ?? [];
     final topProducts = (segment['top_products'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+    final avgVisits = segment['avg_visits'];
 
     return Container(
       width: double.infinity,
@@ -255,7 +276,41 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(_selectedSegment!, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
+          if (avgVisits != null) ...[
+            const SizedBox(height: 4),
+            Text(
+              'Avg visits: $avgVisits',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+            ),
+          ],
           const SizedBox(height: 16),
+
+          // Marketing strategy from AI
+          if (marketingStrategy.isNotEmpty) ...[
+            Text(
+              l10n.wameedAIPromotionIdeas,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(height: 8),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AppColors.warning.withValues(alpha: 0.05),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: AppColors.warning.withValues(alpha: 0.15)),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(Icons.campaign_outlined, size: 16, color: AppColors.warning),
+                  const SizedBox(width: 8),
+                  Expanded(child: SelectableText(marketingStrategy, style: Theme.of(context).textTheme.bodyMedium)),
+                ],
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
 
           if (characteristics.isNotEmpty) ...[
             Text(

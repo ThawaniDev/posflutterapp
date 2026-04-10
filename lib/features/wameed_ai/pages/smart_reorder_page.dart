@@ -82,36 +82,38 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
       );
     }
 
-    final suggestions = (data['suggestions'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    final summary = data['summary'] as Map<String, dynamic>? ?? {};
+    // Backend returns 'recommendations' as main list, or 'suggestions' for no-data fallback
+    final suggestions =
+        (data['suggestions'] as List?)?.cast<Map<String, dynamic>>() ??
+        (data['recommendations'] as List?)?.cast<Map<String, dynamic>>() ??
+        [];
+    // Backend returns 'summary' as a string (Arabic), not a map
+    final summaryText = data['summary']?.toString() ?? data['summary_ar']?.toString() ?? '';
 
     return SingleChildScrollView(
       padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Summary cards
-          if (summary.isNotEmpty) ...[
-            Wrap(
-              spacing: 12,
-              runSpacing: 12,
-              children: [
-                _summaryChip(
-                  context,
-                  Icons.warning_amber,
-                  'Low Stock',
-                  '${summary['low_stock_count'] ?? suggestions.length}',
-                  AppColors.warning,
-                ),
-                _summaryChip(context, Icons.trending_down, 'Critical', '${summary['critical_count'] ?? 0}', AppColors.error),
-                _summaryChip(
-                  context,
-                  Icons.attach_money,
-                  'Est. Value',
-                  '\$${summary['estimated_value'] ?? 'N/A'}',
-                  AppColors.info,
-                ),
-              ],
+          // Summary chips
+          Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: [_summaryChip(context, Icons.warning_amber, 'Low Stock', '${suggestions.length}', AppColors.warning)],
+          ),
+          const SizedBox(height: 20),
+
+          // AI summary text
+          if (summaryText.isNotEmpty) ...[
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.05),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
+              ),
+              child: SelectableText(summaryText, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
             ),
             const SizedBox(height: 20),
           ],
@@ -132,13 +134,15 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
               separatorBuilder: (_, __) => const SizedBox(height: 10),
               itemBuilder: (context, index) {
                 final item = suggestions[index];
-                final productName = item['product_name'] ?? item['product'] ?? 'Unknown Product';
+                final productName = item['product_name'] ?? item['name'] ?? item['product'] ?? 'Unknown Product';
                 final currentStock = item['current_stock'] ?? item['stock_level'] ?? 0;
-                final recommendedQty = item['recommended_quantity'] ?? item['reorder_qty'] ?? 0;
+                final recommendedQty =
+                    item['suggested_order_quantity'] ?? item['recommended_quantity'] ?? item['reorder_qty'] ?? 0;
                 final urgency = item['urgency'] ?? 'medium';
                 final reason = item['reason'] ?? '';
                 final avgDailySales = item['avg_daily_sales'] ?? item['daily_sales'];
                 final daysOfStock = item['days_of_stock'] ?? item['stock_days'];
+                final supplier = item['preferred_supplier'] ?? item['supplier'];
 
                 return AIUrgencyCard(
                   title: '$productName',
@@ -146,42 +150,21 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
                   urgency: urgency.toString(),
                   icon: Icons.inventory_2_outlined,
                   children: [
-                    Row(
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 6,
                       children: [
                         _infoChip(context, 'Stock: $currentStock'),
-                        const SizedBox(width: 8),
                         _infoChip(context, 'Order: $recommendedQty', highlight: true),
-                        if (avgDailySales != null) ...[const SizedBox(width: 8), _infoChip(context, 'Avg/day: $avgDailySales')],
-                        if (daysOfStock != null) ...[const SizedBox(width: 8), _infoChip(context, '$daysOfStock days left')],
+                        if (avgDailySales != null) _infoChip(context, 'Avg/day: $avgDailySales'),
+                        if (daysOfStock != null) _infoChip(context, '$daysOfStock days left'),
+                        if (supplier != null) _infoChip(context, '$supplier'),
                       ],
                     ),
                   ],
                 );
               },
             ),
-
-          // AI recommendations
-          if (data['recommendations'] != null) ...[
-            const SizedBox(height: 24),
-            Text(
-              l10n.wameedAIRecommendations,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 12),
-            ...(data['recommendations'] as List).map(
-              (rec) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(Icons.lightbulb_outline, size: 18, color: AppColors.warning),
-                    const SizedBox(width: 8),
-                    Expanded(child: Text('$rec', style: Theme.of(context).textTheme.bodyMedium)),
-                  ],
-                ),
-              ),
-            ),
-          ],
         ],
       ),
     );

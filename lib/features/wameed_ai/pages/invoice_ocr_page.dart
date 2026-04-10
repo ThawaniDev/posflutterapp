@@ -398,10 +398,26 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
     if (data == null) return const SizedBox.shrink();
 
     final vendor = data['vendor'] ?? data['supplier'] ?? {};
-    final lineItems = (data['line_items'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    final totals = data['totals'] as Map<String, dynamic>? ?? {};
+    // Backend returns 'items' from AI, fallback to 'line_items'
+    final lineItems =
+        (data['items'] as List?)?.cast<Map<String, dynamic>>() ??
+        (data['line_items'] as List?)?.cast<Map<String, dynamic>>() ??
+        [];
+    // Backend returns totals as flat keys at root, or nested in 'totals'
+    final totals = data['totals'] as Map<String, dynamic>? ?? <String, dynamic>{};
+    // If totals is empty, construct from flat root keys
+    final effectiveTotals = totals.isNotEmpty
+        ? totals
+        : <String, dynamic>{
+            if (data['subtotal'] != null) 'subtotal': data['subtotal'],
+            if (data['tax'] != null) 'tax': data['tax'],
+            if (data['discount'] != null) 'discount': data['discount'],
+            if (data['total'] != null) 'total': data['total'],
+          };
     final invoiceNumber = data['invoice_number'] ?? data['number'] ?? '';
     final invoiceDate = data['invoice_date'] ?? data['date'] ?? '';
+    final currency = data['currency']?.toString() ?? '\$';
+    final notes = data['notes']?.toString() ?? '';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -541,7 +557,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
         ],
 
         // Totals
-        if (totals.isNotEmpty) ...[
+        if (effectiveTotals.isNotEmpty) ...[
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(16),
@@ -552,11 +568,38 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
             ),
             child: Column(
               children: [
-                if (totals['subtotal'] != null) _kvRow(l10n.wameedAISubtotal, '\$${totals['subtotal']}'),
-                if (totals['tax'] != null) _kvRow(l10n.wameedAITax, '\$${totals['tax']}'),
-                if (totals['discount'] != null) _kvRow(l10n.wameedAIDiscount, '-\$${totals['discount']}'),
+                if (effectiveTotals['subtotal'] != null) _kvRow(l10n.wameedAISubtotal, '$currency${effectiveTotals['subtotal']}'),
+                if (effectiveTotals['tax'] != null) _kvRow(l10n.wameedAITax, '$currency${effectiveTotals['tax']}'),
+                if (effectiveTotals['discount'] != null)
+                  _kvRow(l10n.wameedAIDiscount, '-$currency${effectiveTotals['discount']}'),
                 const Divider(height: 16),
-                _kvRow(l10n.wameedAIGrandTotal, '\$${totals['total'] ?? totals['grand_total'] ?? 'N/A'}', isBold: true),
+                _kvRow(
+                  l10n.wameedAIGrandTotal,
+                  '$currency${effectiveTotals['total'] ?? effectiveTotals['grand_total'] ?? 'N/A'}',
+                  isBold: true,
+                ),
+              ],
+            ),
+          ),
+        ],
+
+        // Notes
+        if (notes.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: AppColors.info.withValues(alpha: 0.05),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: AppColors.info.withValues(alpha: 0.15)),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(Icons.note_outlined, size: 16, color: AppColors.info),
+                const SizedBox(width: 8),
+                Expanded(child: Text(notes, style: Theme.of(context).textTheme.bodySmall)),
               ],
             ),
           ),

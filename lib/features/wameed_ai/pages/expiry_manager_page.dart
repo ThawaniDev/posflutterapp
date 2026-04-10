@@ -82,51 +82,48 @@ class _ExpiryManagerPageState extends ConsumerState<ExpiryManagerPage> {
       );
     }
 
-    final expiringProducts = (data['expiring_products'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    final summary = data['summary'] as Map<String, dynamic>? ?? {};
-    final suggestions = data['action_suggestions'] as List? ?? data['suggestions'] as List? ?? [];
+    // Backend returns 'alerts' array from AI, or 'alerts' (empty) for no-data fallback
+    final expiringProducts =
+        (data['alerts'] as List?)?.cast<Map<String, dynamic>>() ??
+        (data['expiring_products'] as List?)?.cast<Map<String, dynamic>>() ??
+        [];
+    // Backend returns 'summary_ar' as a string, not a Map
+    final summaryText = data['summary_ar']?.toString() ?? data['summary']?.toString() ?? '';
 
     return SingleChildScrollView(
       padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Summary
-          if (summary.isNotEmpty)
-            Wrap(
-              spacing: 12,
-              runSpacing: 12,
-              children: [
-                _summaryCard(
-                  context,
-                  Icons.warning,
-                  l10n.wameedAIExpiringToday,
-                  '${summary['expiring_today'] ?? 0}',
-                  AppColors.error,
-                ),
-                _summaryCard(
-                  context,
-                  Icons.schedule,
-                  l10n.wameedAIExpiringThisWeek,
-                  '${summary['expiring_this_week'] ?? 0}',
-                  AppColors.warning,
-                ),
-                _summaryCard(
-                  context,
-                  Icons.event,
-                  l10n.wameedAIExpiringThisMonth,
-                  '${summary['expiring_this_month'] ?? 0}',
-                  AppColors.info,
-                ),
-                _summaryCard(
-                  context,
-                  Icons.attach_money,
-                  l10n.wameedAIAtRiskValue,
-                  '\$${summary['at_risk_value'] ?? 'N/A'}',
-                  AppColors.error,
-                ),
-              ],
+          // Summary chip showing count
+          Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: [
+              _summaryCard(
+                context,
+                Icons.warning,
+                l10n.wameedAIExpiringProducts,
+                '${expiringProducts.length}',
+                expiringProducts.isEmpty ? AppColors.success : AppColors.error,
+              ),
+            ],
+          ),
+
+          // AI summary text
+          if (summaryText.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.05),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
+              ),
+              child: SelectableText(summaryText, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
             ),
+          ],
 
           const SizedBox(height: 24),
           Text(
@@ -146,58 +143,38 @@ class _ExpiryManagerPageState extends ConsumerState<ExpiryManagerPage> {
               itemBuilder: (context, index) {
                 final item = expiringProducts[index];
                 final productName = item['product_name'] ?? item['name'] ?? 'Unknown';
-                final daysLeft = item['days_until_expiry'] ?? item['days_left'] ?? 0;
-                final quantity = item['quantity'] ?? item['stock'] ?? 0;
+                final daysLeft = item['days_remaining'] ?? item['days_until_expiry'] ?? item['days_left'] ?? 0;
+                final quantity = item['current_stock'] ?? item['quantity'] ?? item['stock'] ?? 0;
                 final expiryDate = item['expiry_date'] ?? '';
-                final suggestedDiscount = item['suggested_discount'] ?? item['discount_suggestion'];
-                final urgency = (daysLeft as num).toInt() <= 3
-                    ? 'critical'
-                    : ((daysLeft as num).toInt() <= 7 ? 'high' : 'medium');
+                final batchNumber = item['batch_number'] ?? '';
+                final suggestedAction = item['suggested_action'] ?? '';
+                final suggestedDiscount = item['suggested_discount_pct'] ?? item['suggested_discount'];
+                final daysInt = (daysLeft is num) ? daysLeft.toInt() : 0;
+                final urgency = daysInt <= 3 ? 'critical' : (daysInt <= 7 ? 'high' : 'medium');
 
                 return AIUrgencyCard(
                   title: productName.toString(),
-                  subtitle: '${l10n.wameedAIExpiresOn}: $expiryDate',
+                  subtitle: suggestedAction.toString().isNotEmpty
+                      ? suggestedAction.toString()
+                      : '${l10n.wameedAIExpiresOn}: $expiryDate',
                   urgency: urgency,
                   icon: Icons.timer_outlined,
                   children: [
-                    Row(
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 6,
                       children: [
                         _countdownChip(context, daysLeft),
-                        const SizedBox(width: 8),
                         _infoChip(context, 'Qty: $quantity'),
-                        if (suggestedDiscount != null) ...[
-                          const SizedBox(width: 8),
-                          _discountChip(context, '$suggestedDiscount% off'),
-                        ],
+                        if (batchNumber.toString().isNotEmpty) _infoChip(context, 'Batch: $batchNumber'),
+                        if (expiryDate.toString().isNotEmpty) _infoChip(context, expiryDate.toString()),
+                        if (suggestedDiscount != null) _discountChip(context, '$suggestedDiscount% off'),
                       ],
                     ),
                   ],
                 );
               },
             ),
-
-          // Action suggestions
-          if (suggestions.isNotEmpty) ...[
-            const SizedBox(height: 24),
-            Text(
-              l10n.wameedAIActionSuggestions,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 12),
-            ...suggestions.map(
-              (s) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(Icons.tips_and_updates, size: 18, color: AppColors.warning),
-                    const SizedBox(width: 8),
-                    Expanded(child: Text('$s', style: Theme.of(context).textTheme.bodyMedium)),
-                  ],
-                ),
-              ),
-            ),
-          ],
         ],
       ),
     );

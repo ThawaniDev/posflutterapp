@@ -48,7 +48,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
             onPressed: () {
               final s = ref.read(aiFeatureResultProvider);
               if (s is AIFeatureResultLoaded) {
-                final text = s.result.data?['summary']?.toString() ?? s.result.message ?? '';
+                final text = s.result.data?['narrative_ar']?.toString() ?? s.result.message ?? '';
                 Clipboard.setData(ClipboardData(text: text));
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.wameedAICopied)));
               }
@@ -95,64 +95,118 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
       );
     }
 
-    final summary = data['summary']?.toString() ?? '';
-    final kpis = data['kpis'] as Map<String, dynamic>? ?? {};
-    final highlights = (data['highlights'] as List?)?.cast<String>() ?? [];
-    final concerns = (data['concerns'] as List?)?.cast<String>() ?? [];
-    final recommendations = (data['recommendations'] as List?)?.cast<String>() ?? [];
+    final headlineAr = data['headline_ar']?.toString() ?? '';
+    final revenue = (data['revenue'] as num?)?.toDouble() ?? 0;
+    final transactionCount = (data['transaction_count'] as num?)?.toInt() ?? 0;
+    final avgBasket = (data['avg_basket'] as num?)?.toDouble() ?? 0;
+    final narrativeAr = data['narrative_ar']?.toString() ?? '';
+    final topProducts = (data['top_products'] as List?) ?? [];
+    final alerts = (data['alerts'] as List?) ?? [];
+    final comparison = data['comparison_yesterday'] as Map<String, dynamic>? ?? {};
+    final recommendationsAr = (data['recommendations_ar'] as List?)?.cast<String>() ?? [];
+
+    // No data case — show empty state with message
+    if (transactionCount == 0 && revenue == 0) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.receipt_long_outlined, size: 64, color: AppColors.textSecondary.withValues(alpha: 0.5)),
+              const SizedBox(height: 16),
+              if (headlineAr.isNotEmpty)
+                Text(
+                  headlineAr,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                  textAlign: TextAlign.center,
+                ),
+              if (narrativeAr.isNotEmpty) ...[
+                const SizedBox(height: 12),
+                Text(
+                  narrativeAr,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ],
+          ),
+        ),
+      );
+    }
+
+    // Revenue change percentage
+    String? revenueChange;
+    if (comparison['revenue_change'] != null) {
+      final change = (comparison['revenue_change'] as num).toDouble();
+      revenueChange = '${change >= 0 ? '+' : ''}${change.toStringAsFixed(1)}%';
+    } else if (comparison['revenue_change_pct'] != null) {
+      final change = (comparison['revenue_change_pct'] as num).toDouble();
+      revenueChange = '${change >= 0 ? '+' : ''}${change.toStringAsFixed(1)}%';
+    }
+
+    String? txnChange;
+    if (comparison['transaction_count_change'] != null) {
+      final change = (comparison['transaction_count_change'] as num).toDouble();
+      txnChange = '${change >= 0 ? '+' : ''}${change.toStringAsFixed(1)}%';
+    } else if (comparison['transaction_count_change_pct'] != null) {
+      final change = (comparison['transaction_count_change_pct'] as num).toDouble();
+      txnChange = '${change >= 0 ? '+' : ''}${change.toStringAsFixed(1)}%';
+    }
 
     return SingleChildScrollView(
       padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // KPI cards
-          if (kpis.isNotEmpty) ...[
-            GridView.count(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: isMobile ? 2 : 4,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-              childAspectRatio: isMobile ? 1.5 : 1.8,
-              children: [
-                if (kpis['total_revenue'] != null)
-                  AIInsightMiniCard(
-                    title: l10n.wameedAITotalRevenue,
-                    value: '\$${kpis['total_revenue']}',
-                    icon: Icons.attach_money,
-                    color: AppColors.success,
-                    trend: kpis['revenue_change']?.toString(),
-                  ),
-                if (kpis['total_transactions'] != null)
-                  AIInsightMiniCard(
-                    title: l10n.wameedAITransactions,
-                    value: '${kpis['total_transactions']}',
-                    icon: Icons.receipt_long,
-                    color: AppColors.info,
-                    trend: kpis['transactions_change']?.toString(),
-                  ),
-                if (kpis['avg_basket'] != null)
-                  AIInsightMiniCard(
-                    title: l10n.wameedAIAvgBasket,
-                    value: '\$${kpis['avg_basket']}',
-                    icon: Icons.shopping_basket,
-                    color: AppColors.primary,
-                  ),
-                if (kpis['items_sold'] != null)
-                  AIInsightMiniCard(
-                    title: l10n.wameedAIItemsSold,
-                    value: '${kpis['items_sold']}',
-                    icon: Icons.inventory,
-                    color: AppColors.warning,
-                  ),
-              ],
-            ),
-            const SizedBox(height: 24),
+          // Headline
+          if (headlineAr.isNotEmpty) ...[
+            Text(headlineAr, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
+            const SizedBox(height: 16),
           ],
 
-          // Summary text
-          if (summary.isNotEmpty) ...[
+          // KPI cards
+          GridView.count(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisCount: isMobile ? 2 : 4,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            childAspectRatio: isMobile ? 1.5 : 1.8,
+            children: [
+              AIInsightMiniCard(
+                title: l10n.wameedAITotalRevenue,
+                value: '${revenue.toStringAsFixed(2)}',
+                icon: Icons.attach_money,
+                color: AppColors.success,
+                trend: revenueChange,
+              ),
+              AIInsightMiniCard(
+                title: l10n.wameedAITransactions,
+                value: '$transactionCount',
+                icon: Icons.receipt_long,
+                color: AppColors.info,
+                trend: txnChange,
+              ),
+              AIInsightMiniCard(
+                title: l10n.wameedAIAvgBasket,
+                value: '${avgBasket.toStringAsFixed(2)}',
+                icon: Icons.shopping_basket,
+                color: AppColors.primary,
+              ),
+              if (topProducts.isNotEmpty)
+                AIInsightMiniCard(
+                  title: l10n.wameedAIItemsSold,
+                  value: '${topProducts.length}',
+                  icon: Icons.inventory,
+                  color: AppColors.warning,
+                ),
+            ],
+          ),
+          const SizedBox(height: 24),
+
+          // AI Narrative
+          if (narrativeAr.isNotEmpty) ...[
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
@@ -175,34 +229,40 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                     ],
                   ),
                   const SizedBox(height: 12),
-                  SelectableText(summary, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
+                  SelectableText(narrativeAr, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
                 ],
               ),
             ),
             const SizedBox(height: 20),
           ],
 
-          // Highlights
-          if (highlights.isNotEmpty) ...[
+          // Top Products
+          if (topProducts.isNotEmpty) ...[
             _sectionTitle(context, Icons.star_outline, l10n.wameedAIHighlights, AppColors.success),
             const SizedBox(height: 8),
-            ...highlights.map((h) => _bulletItem(context, h, AppColors.success)),
+            ...topProducts.take(10).map((p) {
+              final product = p as Map<String, dynamic>;
+              final name = product['name_ar']?.toString() ?? product['name']?.toString() ?? '';
+              final qty = (product['qty_sold'] as num?)?.toStringAsFixed(0) ?? '';
+              final rev = (product['revenue'] as num?)?.toStringAsFixed(2) ?? '';
+              return _bulletItem(context, '$name — $qty ${l10n.wameedAIItemsSold}, $rev', AppColors.success);
+            }),
             const SizedBox(height: 20),
           ],
 
-          // Concerns
-          if (concerns.isNotEmpty) ...[
+          // Alerts / Concerns
+          if (alerts.isNotEmpty) ...[
             _sectionTitle(context, Icons.warning_amber_outlined, l10n.wameedAIConcerns, AppColors.warning),
             const SizedBox(height: 8),
-            ...concerns.map((c) => _bulletItem(context, c, AppColors.warning)),
+            ...alerts.map((a) => _bulletItem(context, a.toString(), AppColors.warning)),
             const SizedBox(height: 20),
           ],
 
           // Recommendations
-          if (recommendations.isNotEmpty) ...[
+          if (recommendationsAr.isNotEmpty) ...[
             _sectionTitle(context, Icons.lightbulb_outline, l10n.wameedAIRecommendations, AppColors.info),
             const SizedBox(height: 8),
-            ...recommendations.map((r) => _bulletItem(context, r, AppColors.info)),
+            ...recommendationsAr.map((r) => _bulletItem(context, r, AppColors.info)),
           ],
         ],
       ),

@@ -81,9 +81,14 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
       );
     }
 
-    final staff = (data['staff'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    final teamInsights = (data['team_insights'] as List?)?.cast<String>() ?? data['insights'] as List? ?? [];
-    final coachingTips = (data['coaching_tips'] as List?)?.cast<String>() ?? [];
+    // Backend returns 'rankings' array from AI, fallback to 'staff'
+    final staff =
+        (data['rankings'] as List?)?.cast<Map<String, dynamic>>() ?? (data['staff'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+    // Backend returns 'team_summary_ar' as a string, not a list
+    final teamSummary = data['team_summary_ar']?.toString() ?? '';
+    // Backend returns 'improvement_areas_ar' as a list
+    final improvementAreas =
+        (data['improvement_areas_ar'] as List?)?.cast<String>() ?? (data['coaching_tips'] as List?)?.cast<String>() ?? [];
 
     // Sort by performance score descending
     staff.sort(
@@ -96,6 +101,37 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Team summary
+          if (teamSummary.isNotEmpty) ...[
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.05),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Icon(Icons.insights, size: 20, color: AppColors.info),
+                      const SizedBox(width: 8),
+                      Text(
+                        l10n.wameedAITeamInsights,
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  SelectableText(teamSummary, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
+
           // Leaderboard
           Text(l10n.wameedAILeaderboard, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
           const SizedBox(height: 12),
@@ -114,41 +150,8 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
               },
             ),
 
-          // Team insights
-          if (teamInsights.isNotEmpty) ...[
-            const SizedBox(height: 24),
-            Row(
-              children: [
-                const Icon(Icons.insights, size: 20, color: AppColors.info),
-                const SizedBox(width: 8),
-                Text(
-                  l10n.wameedAITeamInsights,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            ...teamInsights.map(
-              (insight) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: 6,
-                      height: 6,
-                      margin: const EdgeInsets.only(top: 6, right: 10),
-                      decoration: const BoxDecoration(color: AppColors.info, shape: BoxShape.circle),
-                    ),
-                    Expanded(child: Text('$insight', style: Theme.of(context).textTheme.bodyMedium)),
-                  ],
-                ),
-              ),
-            ),
-          ],
-
-          // Coaching tips
-          if (coachingTips.isNotEmpty) ...[
+          // Improvement areas
+          if (improvementAreas.isNotEmpty) ...[
             const SizedBox(height: 24),
             Row(
               children: [
@@ -161,7 +164,7 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
               ],
             ),
             const SizedBox(height: 12),
-            ...coachingTips.map(
+            ...improvementAreas.map(
               (tip) => Container(
                 width: double.infinity,
                 margin: const EdgeInsets.only(bottom: 8),
@@ -190,10 +193,13 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
   Widget _buildStaffCard(Map<String, dynamic> member, int rank, AppLocalizations l10n) {
     final name = member['name'] ?? member['staff_name'] ?? 'Staff ${rank + 1}';
     final score = (member['score'] ?? member['performance_score'] ?? 0) as num;
-    final totalSales = member['total_sales'] ?? member['sales_count'] ?? 0;
-    final revenue = member['revenue'] ?? member['total_revenue'] ?? 0;
-    final avgTransaction = member['avg_transaction'] ?? member['avg_basket'] ?? 0;
-    final feedback = member['feedback'] ?? member['coaching'] ?? '';
+    // Backend returns 'sales_total' and 'txn_count', fallback to old keys
+    final totalSales = member['sales_total'] ?? member['total_sales'] ?? member['sales_count'] ?? 0;
+    final txnCount = member['txn_count'] ?? member['revenue'] ?? member['total_revenue'] ?? 0;
+    final avgBasket = member['avg_basket'] ?? member['avg_transaction'] ?? 0;
+    final voidRate = member['void_rate'];
+    final attendancePct = member['attendance_pct'];
+    final feedback = member['feedback_ar'] ?? member['feedback'] ?? member['coaching'] ?? '';
 
     final medalColors = [Colors.amber, Colors.grey.shade400, const Color(0xFFCD7F32)];
     final medalIcons = [Icons.emoji_events, Icons.emoji_events, Icons.emoji_events];
@@ -238,15 +244,15 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
               children: [
                 Text(name.toString(), style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700)),
                 const SizedBox(height: 4),
-                Row(
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 4,
                   children: [
-                    _metricChip(context, Icons.receipt, '$totalSales sales'),
-                    const SizedBox(width: 8),
-                    _metricChip(context, Icons.attach_money, '\$$revenue'),
-                    if (avgTransaction != 0) ...[
-                      const SizedBox(width: 8),
-                      _metricChip(context, Icons.shopping_basket, 'Avg: \$$avgTransaction'),
-                    ],
+                    _metricChip(context, Icons.attach_money, '$totalSales sales'),
+                    _metricChip(context, Icons.receipt, '$txnCount txns'),
+                    if (avgBasket != 0) _metricChip(context, Icons.shopping_basket, 'Avg: $avgBasket'),
+                    if (voidRate != null) _metricChip(context, Icons.cancel_outlined, 'Void: $voidRate%'),
+                    if (attendancePct != null) _metricChip(context, Icons.access_time, '$attendancePct%'),
                   ],
                 ),
                 if (feedback.toString().isNotEmpty) ...[
