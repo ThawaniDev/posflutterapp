@@ -362,6 +362,7 @@ class Routes {
   static const String wameedAIInvoiceOCR = '/wameed-ai/invoice-ocr';
   static const String wameedAIStaffPerformance = '/wameed-ai/staff-performance';
   static const String wameedAIEfficiencyScore = '/wameed-ai/efficiency-score';
+  static const String wameedAIChat = '/wameed-ai/chat';
 
   // ─── Role-Based Home Route ──────────────────────────────
   /// Returns the appropriate landing route for a given user role.

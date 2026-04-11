@@ -25,6 +25,7 @@ import 'package:thawani_pos/features/wameed_ai/pages/customer_segments_page.dart
 import 'package:thawani_pos/features/wameed_ai/pages/invoice_ocr_page.dart';
 import 'package:thawani_pos/features/wameed_ai/pages/staff_performance_page.dart' as ai;
 import 'package:thawani_pos/features/wameed_ai/pages/efficiency_score_page.dart';
+import 'package:thawani_pos/features/wameed_ai/pages/ai_chat_page.dart';
 import 'package:thawani_pos/features/catalog/pages/category_list_page.dart';
 import 'package:thawani_pos/features/catalog/pages/product_form_page.dart';
 import 'package:thawani_pos/features/catalog/pages/product_list_page.dart';
@@ -1351,6 +1352,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
           // ─── Wameed AI ───
           GoRoute(path: Routes.wameedAI, name: 'wameedAI', builder: (context, state) => const WameedAIHomePage()),
+          GoRoute(
+            path: '${Routes.wameedAIChat}/:chatId',
+            name: 'wameedAIChat',
+            builder: (context, state) => AIChatPage(chatId: state.pathParameters['chatId']),
+          ),
           GoRoute(
             path: Routes.wameedAISmartReorder,
             name: 'wameedAISmartReorder',

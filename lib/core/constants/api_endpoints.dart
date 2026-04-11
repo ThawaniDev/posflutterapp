@@ -829,4 +829,13 @@ class ApiEndpoints {
   static const String wameedAICashFlowPrediction = '/wameed-ai/financial/cashflow-prediction';
   static const String wameedAIStoreHealth = '/wameed-ai/platform/store-health';
   static const String wameedAIPlatformTrends = '/wameed-ai/platform/trends';
+
+  // ─── Wameed AI Chat ─────────────────────────────────────────
+  static const String wameedAIModels = '/wameed-ai/models';
+  static const String wameedAIFeatureCards = '/wameed-ai/features/cards';
+  static const String wameedAIChats = '/wameed-ai/chats';
+  static String wameedAIChat(String id) => '/wameed-ai/chats/$id';
+  static String wameedAIChatMessages(String id) => '/wameed-ai/chats/$id/messages';
+  static String wameedAIChatFeature(String id) => '/wameed-ai/chats/$id/feature';
+  static String wameedAIChatModel(String id) => '/wameed-ai/chats/$id/model';
 }

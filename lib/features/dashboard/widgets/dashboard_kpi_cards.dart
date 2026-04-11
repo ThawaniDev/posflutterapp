@@ -28,7 +28,7 @@ class DashboardKpiCards extends StatelessWidget {
           crossAxisCount: crossAxisCount,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
-          childAspectRatio: 2,
+          childAspectRatio: 1.7,
           children: [
             _KpiTile(
               icon: Icons.trending_up_rounded,

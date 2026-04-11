@@ -16,7 +16,21 @@ class DashboardApiService {
     final params = <String, dynamic>{};
     if (days != null) params['days'] = days;
     final response = await _dio.get(ApiEndpoints.ownerDashboardStats, queryParameters: params);
-    return response.data['data'] as Map<String, dynamic>;
+    final raw = response.data['data'] as Map<String, dynamic>;
+
+    // Flatten nested {value, change} structure into flat keys the UI expects
+    return {
+      'today_sales': _extractValue(raw['today_sales']),
+      'sales_trend': _extractChange(raw['today_sales']),
+      'today_transactions': _extractValue(raw['transactions']),
+      'transactions_trend': _extractChange(raw['transactions']),
+      'avg_basket': _extractValue(raw['avg_basket']),
+      'basket_trend': _extractChange(raw['avg_basket']),
+      'net_profit': _extractValue(raw['net_profit']),
+      'profit_trend': _extractChange(raw['net_profit']),
+      'unique_customers': raw['unique_customers'] ?? 0,
+      'total_refunds': raw['total_refunds'] ?? 0,
+    };
   }
 
   Future<Map<String, dynamic>> getSalesTrend({String? dateFrom, String? dateTo, int? days}) async {
@@ -63,7 +77,29 @@ class DashboardApiService {
     if (dateTo != null) params['date_to'] = dateTo;
     if (days != null) params['days'] = days;
     final response = await _dio.get(ApiEndpoints.ownerDashboardFinancialSummary, queryParameters: params);
-    return response.data['data'] as Map<String, dynamic>;
+    final raw = response.data['data'] as Map<String, dynamic>;
+    final revenue = raw['revenue'] as Map<String, dynamic>? ?? {};
+    final payments = raw['payments'] as List? ?? [];
+
+    // Flatten nested revenue structure into flat keys the UI expects
+    final paymentMethods = <String, dynamic>{};
+    for (final p in payments) {
+      if (p is Map<String, dynamic>) {
+        paymentMethods[p['method']?.toString() ?? 'other'] = p['total'] ?? 0;
+      }
+    }
+
+    return {
+      'total_revenue': revenue['total'] ?? 0,
+      'total_cost': revenue['cost'] ?? 0,
+      'net_profit': revenue['net'] ?? 0,
+      'total_tax': revenue['tax'] ?? 0,
+      'total_discount': revenue['discounts'] ?? 0,
+      'total_refunds': revenue['refunds'] ?? 0,
+      'payment_methods': paymentMethods,
+      'period': raw['period'],
+      'daily': raw['daily'],
+    };
   }
 
   Future<List<Map<String, dynamic>>> getHourlySales({String? dateFrom, String? dateTo}) async {
@@ -86,5 +122,15 @@ class DashboardApiService {
     if (days != null) params['days'] = days;
     final response = await _dio.get(ApiEndpoints.ownerDashboardStaffPerformance, queryParameters: params);
     return (response.data['data'] as List).cast<Map<String, dynamic>>();
+  }
+
+  dynamic _extractValue(dynamic field) {
+    if (field is Map) return field['value'];
+    return field;
+  }
+
+  dynamic _extractChange(dynamic field) {
+    if (field is Map) return field['change'];
+    return null;
   }
 }
