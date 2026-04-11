@@ -9,6 +9,8 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_chat.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/ai_chat_providers.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/ai_chat_state.dart';
+import 'package:thawani_pos/features/wameed_ai/models/ai_feature_params.dart';
+import 'package:thawani_pos/features/wameed_ai/widgets/ai_feature_input_panel.dart';
 import 'package:thawani_pos/features/wameed_ai/widgets/ai_feature_overlay.dart';
 import 'package:thawani_pos/features/wameed_ai/widgets/ai_model_selector.dart';
 import 'package:thawani_pos/features/wameed_ai/widgets/ai_message_bubble.dart';
@@ -28,6 +30,11 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   final _focusNode = FocusNode();
   String? _imageBase64;
   String? _imageName;
+
+  // Feature input panel state
+  String? _pendingFeatureSlug;
+  String? _pendingFeatureName;
+  FeatureInputConfig? _pendingFeatureConfig;
 
   @override
   void initState() {
@@ -166,11 +173,21 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           // ─── Messages Area ───
           Expanded(child: isNewChat ? _buildWelcomeView(theme) : _buildMessageList(chatState, theme)),
 
+          // ─── Feature Input Panel ───
+          if (_pendingFeatureConfig != null)
+            AIFeatureInputPanel(
+              featureSlug: _pendingFeatureSlug!,
+              featureName: _pendingFeatureName!,
+              config: _pendingFeatureConfig!,
+              onSubmit: (params, prompt, imageBase64) => _submitFeature(params, prompt, imageBase64),
+              onDismiss: _clearPendingFeature,
+            ),
+
           // ─── Image Preview ───
-          if (_imageBase64 != null) _buildImagePreview(theme),
+          if (_imageBase64 != null && _pendingFeatureConfig == null) _buildImagePreview(theme),
 
           // ─── Input Area ───
-          _buildInputBar(chatState, theme),
+          if (_pendingFeatureConfig == null) _buildInputBar(chatState, theme),
         ],
       ),
     );
@@ -241,40 +258,23 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
 
   Widget _buildQuickStartCard(AIFeatureCard feature, ThemeData theme) {
     return InkWell(
-      onTap: () async {
-        // Create chat and invoke feature
-        final chatState = ref.read(aiActiveChatProvider);
-        if (chatState is! AIChatLoaded) {
-          final chat = await ref.read(aiChatListProvider.notifier).createChat(title: feature.displayName);
-          if (chat != null) {
-            ref.read(aiActiveChatProvider.notifier).setChat(chat);
-            await ref
-                .read(aiActiveChatProvider.notifier)
-                .sendMessage(message: 'Run ${feature.displayName} analysis for my store', featureSlug: feature.slug);
-          }
-        } else {
-          await ref
-              .read(aiActiveChatProvider.notifier)
-              .sendMessage(message: 'Run ${feature.displayName} analysis for my store', featureSlug: feature.slug);
-        }
-        _scrollToBottom();
-      },
+      onTap: () => _onFeatureSelected(feature.slug, feature.displayName),
       borderRadius: BorderRadius.circular(12),
       child: Container(
-        width: 160,
+        width: 180,
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
           color: theme.cardColor,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: theme.dividerColor),
+          // border: Border.all(color: theme.dividerColor),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Icon(_categoryIcon(feature.category), size: 20, color: AppColors.primary),
             // const SizedBox(height: 8),
             Text(
-              feature.displayName,
+              feature.displayName + '\n',
               style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -418,26 +418,83 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (ctx) => AIFeatureOverlay(
-        onFeatureSelected: (slug, name) async {
+        onFeatureSelected: (slug, name) {
           Navigator.of(ctx).pop();
-          final chatState = ref.read(aiActiveChatProvider);
-          if (chatState is! AIChatLoaded) {
-            final chat = await ref.read(aiChatListProvider.notifier).createChat(title: name);
-            if (chat != null) {
-              ref.read(aiActiveChatProvider.notifier).setChat(chat);
-              await ref
-                  .read(aiActiveChatProvider.notifier)
-                  .sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
-            }
-          } else {
-            await ref
-                .read(aiActiveChatProvider.notifier)
-                .sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
-          }
-          _scrollToBottom();
+          _onFeatureSelected(slug, name);
         },
       ),
     );
+  }
+
+  /// Central handler for feature selection — shows input panel if feature has params,
+  /// otherwise invokes immediately.
+  void _onFeatureSelected(String slug, String name) {
+    final config = FeatureInputConfig.featureInputConfigs[slug];
+    if (config != null && config.fields.isNotEmpty) {
+      // Show the input panel
+      setState(() {
+        _pendingFeatureSlug = slug;
+        _pendingFeatureName = name;
+        _pendingFeatureConfig = config;
+      });
+    } else {
+      // No inputs needed — invoke immediately
+      _invokeFeatureDirectly(slug, name);
+    }
+  }
+
+  Future<void> _invokeFeatureDirectly(String slug, String name) async {
+    final chatState = ref.read(aiActiveChatProvider);
+    if (chatState is! AIChatLoaded) {
+      final chat = await ref.read(aiChatListProvider.notifier).createChat(title: name);
+      if (chat != null) {
+        ref.read(aiActiveChatProvider.notifier).setChat(chat);
+        await ref
+            .read(aiActiveChatProvider.notifier)
+            .sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
+      }
+    } else {
+      await ref
+          .read(aiActiveChatProvider.notifier)
+          .sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
+    }
+    _scrollToBottom();
+  }
+
+  Future<void> _submitFeature(Map<String, dynamic> params, String prompt, String? imageBase64) async {
+    final slug = _pendingFeatureSlug!;
+    final name = _pendingFeatureName!;
+    _clearPendingFeature();
+
+    final chatState = ref.read(aiActiveChatProvider);
+    if (chatState is! AIChatLoaded) {
+      final chat = await ref.read(aiChatListProvider.notifier).createChat(title: name);
+      if (chat != null) {
+        ref.read(aiActiveChatProvider.notifier).setChat(chat);
+        await ref.read(aiActiveChatProvider.notifier).sendMessage(
+              message: prompt,
+              featureSlug: slug,
+              featureData: params,
+              imageBase64: imageBase64,
+            );
+      }
+    } else {
+      await ref.read(aiActiveChatProvider.notifier).sendMessage(
+            message: prompt,
+            featureSlug: slug,
+            featureData: params,
+            imageBase64: imageBase64,
+          );
+    }
+    _scrollToBottom();
+  }
+
+  void _clearPendingFeature() {
+    setState(() {
+      _pendingFeatureSlug = null;
+      _pendingFeatureName = null;
+      _pendingFeatureConfig = null;
+    });
   }
 
   void _showRenameDialog(String currentTitle) {
