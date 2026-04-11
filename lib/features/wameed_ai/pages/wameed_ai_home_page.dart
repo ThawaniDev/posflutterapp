@@ -8,6 +8,7 @@ import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_chat.dart';
+import 'package:thawani_pos/features/wameed_ai/data/ai_chat_repository.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/ai_chat_providers.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/ai_chat_state.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_providers.dart';
@@ -193,6 +194,7 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
 
     return InkWell(
       onTap: () => _openChat(chat.id),
+      onLongPress: () => _showChatOptionsSheet(chat),
       borderRadius: BorderRadius.circular(12),
       child: Container(
         padding: const EdgeInsets.all(16),
@@ -255,5 +257,78 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
     if (diff.inHours < 24) return '${diff.inHours}h ago';
     if (diff.inDays < 7) return '${diff.inDays}d ago';
     return '${dateTime.month}/${dateTime.day}';
+  }
+
+  void _showChatOptionsSheet(AIChat chat) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.edit_outlined),
+              title: const Text('Rename'),
+              onTap: () {
+                Navigator.of(ctx).pop();
+                _showRenameChatDialog(chat);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete_outline, color: Colors.red),
+              title: const Text('Delete', style: TextStyle(color: Colors.red)),
+              onTap: () {
+                Navigator.of(ctx).pop();
+                ref.read(aiChatListProvider.notifier).deleteChat(chat.id);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showRenameChatDialog(AIChat chat) {
+    final controller = TextEditingController(text: chat.title);
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Rename Chat'),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          maxLength: 255,
+          decoration: const InputDecoration(hintText: 'Enter chat title'),
+          onSubmitted: (value) {
+            final title = value.trim();
+            if (title.isNotEmpty) {
+              ref.read(aiActiveChatProvider.notifier).loadChat(chat.id);
+              Future.delayed(const Duration(milliseconds: 200), () {
+                ref.read(aiActiveChatProvider.notifier).renameChat(title);
+                ref.read(aiChatListProvider.notifier).load();
+              });
+            }
+            Navigator.of(ctx).pop();
+          },
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () {
+              final title = controller.text.trim();
+              if (title.isNotEmpty) {
+                // Use repository directly to rename without loading chat
+                ref.read(aiChatRepositoryProvider).renameChat(chatId: chat.id, title: title).then((_) {
+                  ref.read(aiChatListProvider.notifier).load();
+                });
+              }
+              Navigator.of(ctx).pop();
+            },
+            child: const Text('Rename'),
+          ),
+        ],
+      ),
+    ).then((_) => controller.dispose());
   }
 }

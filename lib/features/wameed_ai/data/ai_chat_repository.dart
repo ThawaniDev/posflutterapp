@@ -45,4 +45,7 @@ class AIChatRepository {
 
   Future<AIChat> changeModel({required String chatId, required String llmModelId}) =>
       _api.changeModel(chatId: chatId, llmModelId: llmModelId);
+
+  Future<AIChat> renameChat({required String chatId, required String title}) =>
+      _api.renameChat(chatId: chatId, title: title);
 }

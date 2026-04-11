@@ -112,6 +112,15 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     final theme = Theme.of(context);
     final isNewChat = chatState is! AIChatLoaded || (chatState).chat.messages.isEmpty;
 
+    // Show error message as snackbar when present
+    ref.listen<AIChatState>(aiActiveChatProvider, (prev, next) {
+      if (next is AIChatLoaded && next.errorMessage != null) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(next.errorMessage!), backgroundColor: Colors.red.shade700));
+      }
+    });
+
     // Auto-scroll when messages change
     if (chatState is AIChatLoaded) {
       _scrollToBottom();
@@ -119,15 +128,23 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.auto_awesome, color: AppColors.primary, size: 22),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(chatState is AIChatLoaded ? chatState.chat.title : 'Wameed AI', overflow: TextOverflow.ellipsis),
-            ),
-          ],
+        title: GestureDetector(
+          onTap: chatState is AIChatLoaded ? () => _showRenameDialog(chatState.chat.title) : null,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.auto_awesome, color: AppColors.primary, size: 22),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(chatState is AIChatLoaded ? chatState.chat.title : 'Wameed AI', overflow: TextOverflow.ellipsis),
+              ),
+              if (chatState is AIChatLoaded)
+                Padding(
+                  padding: const EdgeInsets.only(left: 4),
+                  child: Icon(Icons.edit_outlined, size: 14, color: Theme.of(context).hintColor),
+                ),
+            ],
+          ),
         ),
         actions: [
           // Model selector
@@ -254,13 +271,14 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(_categoryIcon(feature.category), size: 20, color: AppColors.primary),
-            const SizedBox(height: 8),
+            // Icon(_categoryIcon(feature.category), size: 20, color: AppColors.primary),
+            // const SizedBox(height: 8),
             Text(
               feature.displayName,
               style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
             ),
           ],
         ),
@@ -339,13 +357,13 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     final isSending = chatState is AIChatLoaded && chatState.isSending;
 
     return Container(
-      padding: EdgeInsets.only(left: 12, right: 8, top: 8, bottom: MediaQuery.of(context).padding.bottom + 8),
+      padding: EdgeInsets.only(left: 12, right: 8, top: 8, bottom: MediaQuery.of(context).padding.bottom + 20),
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
         border: Border(top: BorderSide(color: theme.dividerColor)),
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // Feature overlay button
           IconButton(
@@ -355,13 +373,14 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           ),
           // Image button
           IconButton(icon: const Icon(Icons.image_outlined, size: 24), color: theme.hintColor, onPressed: _pickImage),
+          const SizedBox(width: 10),
           // Input field
           Expanded(
             child: Container(
               constraints: const BoxConstraints(maxHeight: 120),
               decoration: BoxDecoration(
                 color: theme.cardColor,
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: theme.dividerColor),
               ),
               child: TextField(
@@ -379,7 +398,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               ),
             ),
           ),
-          const SizedBox(width: 4),
+          const SizedBox(width: 10),
           // Send button
           Container(
             decoration: BoxDecoration(color: isSending ? Colors.grey : AppColors.primary, shape: BoxShape.circle),
@@ -419,6 +438,44 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
         },
       ),
     );
+  }
+
+  void _showRenameDialog(String currentTitle) {
+    final renameController = TextEditingController(text: currentTitle);
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Rename Chat'),
+        content: TextField(
+          controller: renameController,
+          autofocus: true,
+          maxLength: 255,
+          decoration: const InputDecoration(hintText: 'Enter chat title'),
+          onSubmitted: (value) {
+            final title = value.trim();
+            if (title.isNotEmpty) {
+              ref.read(aiActiveChatProvider.notifier).renameChat(title);
+              ref.read(aiChatListProvider.notifier).load();
+            }
+            Navigator.of(ctx).pop();
+          },
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () {
+              final title = renameController.text.trim();
+              if (title.isNotEmpty) {
+                ref.read(aiActiveChatProvider.notifier).renameChat(title);
+                ref.read(aiChatListProvider.notifier).load();
+              }
+              Navigator.of(ctx).pop();
+            },
+            child: const Text('Rename'),
+          ),
+        ],
+      ),
+    ).then((_) => renameController.dispose());
   }
 
   IconData _categoryIcon(String category) {

@@ -110,4 +110,10 @@ class AIChatApiService {
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return AIChat.fromJson(apiResponse.data as Map<String, dynamic>);
   }
-}
+  // ─── Rename Chat ───────────────────────────────────────
+
+  Future<AIChat> renameChat({required String chatId, required String title}) async {
+    final response = await _dio.put(ApiEndpoints.wameedAIChatTitle(chatId), data: {'title': title});
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return AIChat.fromJson(apiResponse.data as Map<String, dynamic>);
+  }}

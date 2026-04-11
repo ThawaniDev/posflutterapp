@@ -123,11 +123,10 @@ class AIChatNotifier extends StateNotifier<AIChatState> {
 
       state = AIChatLoaded(chat: updatedChat.copyWith(messages: allMessages), isSending: false);
     } on DioException catch (e) {
-      // Remove temp message and show error
-      state = AIChatLoaded(chat: currentState.chat, isSending: false);
-      state = AIChatError(message: _extractError(e));
+      // Keep state as AIChatLoaded to avoid page navigation issues — surface error inline
+      state = AIChatLoaded(chat: currentState.chat, isSending: false, errorMessage: _extractError(e));
     } catch (e) {
-      state = AIChatLoaded(chat: currentState.chat, isSending: false);
+      state = AIChatLoaded(chat: currentState.chat, isSending: false, errorMessage: e.toString());
     }
   }
 
@@ -147,8 +146,7 @@ class AIChatNotifier extends StateNotifier<AIChatState> {
 
       state = AIChatLoaded(chat: updatedChat.copyWith(messages: allMessages), isSending: false);
     } on DioException catch (e) {
-      state = AIChatLoaded(chat: currentState.chat, isSending: false);
-      state = AIChatError(message: _extractError(e));
+      state = AIChatLoaded(chat: currentState.chat, isSending: false, errorMessage: _extractError(e));
     }
   }
 
@@ -160,7 +158,23 @@ class AIChatNotifier extends StateNotifier<AIChatState> {
       final updatedChat = await _repo.changeModel(chatId: currentState.chat.id, llmModelId: llmModelId);
       state = AIChatLoaded(chat: updatedChat.copyWith(messages: currentState.chat.messages));
     } on DioException catch (e) {
-      state = AIChatError(message: _extractError(e));
+      state = AIChatLoaded(chat: currentState.chat, errorMessage: _extractError(e));
+    }
+  }
+
+  Future<void> renameChat(String title) async {
+    final currentState = state;
+    if (currentState is! AIChatLoaded) return;
+
+    // Optimistic update
+    state = AIChatLoaded(chat: currentState.chat.copyWith(title: title));
+
+    try {
+      final updatedChat = await _repo.renameChat(chatId: currentState.chat.id, title: title);
+      state = AIChatLoaded(chat: updatedChat.copyWith(messages: currentState.chat.messages));
+    } on DioException {
+      // Revert on failure
+      state = AIChatLoaded(chat: currentState.chat);
     }
   }
 }

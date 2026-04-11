@@ -838,4 +838,5 @@ class ApiEndpoints {
   static String wameedAIChatMessages(String id) => '/wameed-ai/chats/$id/messages';
   static String wameedAIChatFeature(String id) => '/wameed-ai/chats/$id/feature';
   static String wameedAIChatModel(String id) => '/wameed-ai/chats/$id/model';
+  static String wameedAIChatTitle(String id) => '/wameed-ai/chats/$id/title';
 }

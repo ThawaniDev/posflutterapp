@@ -1,3 +1,16 @@
+double _toDouble(dynamic v) {
+  if (v == null) return 0;
+  if (v is num) return v.toDouble();
+  return double.tryParse(v.toString()) ?? 0;
+}
+
+int _toInt(dynamic v) {
+  if (v == null) return 0;
+  if (v is int) return v;
+  if (v is num) return v.toInt();
+  return int.tryParse(v.toString()) ?? 0;
+}
+
 class LlmModel {
   final String id;
   final String provider;
@@ -87,9 +100,9 @@ class AIChat {
     title: json['title'] as String? ?? 'New Chat',
     llmModelId: json['llm_model_id'] as String?,
     llmModel: json['llm_model'] != null ? LlmModel.fromJson(json['llm_model'] as Map<String, dynamic>) : null,
-    messageCount: json['message_count'] as int? ?? 0,
-    totalTokens: json['total_tokens'] as int? ?? 0,
-    totalCostUsd: (json['total_cost_usd'] as num?)?.toDouble() ?? 0,
+    messageCount: _toInt(json['message_count']),
+    totalTokens: _toInt(json['total_tokens']),
+    totalCostUsd: _toDouble(json['total_cost_usd']),
     lastMessageAt: json['last_message_at'] != null ? DateTime.tryParse(json['last_message_at'] as String) : null,
     messages: (json['messages'] as List<dynamic>?)?.map((m) => AIChatMessage.fromJson(m as Map<String, dynamic>)).toList() ?? [],
   );
@@ -150,10 +163,10 @@ class AIChatMessage {
     featureData: json['feature_data'] as Map<String, dynamic>?,
     attachments: json['attachments'] as List<dynamic>?,
     modelUsed: json['model_used'] as String?,
-    inputTokens: json['input_tokens'] as int? ?? 0,
-    outputTokens: json['output_tokens'] as int? ?? 0,
-    costUsd: (json['cost_usd'] as num?)?.toDouble() ?? 0,
-    latencyMs: json['latency_ms'] as int? ?? 0,
+    inputTokens: _toInt(json['input_tokens']),
+    outputTokens: _toInt(json['output_tokens']),
+    costUsd: _toDouble(json['cost_usd']),
+    latencyMs: _toInt(json['latency_ms']),
     createdAt: json['created_at'] != null ? DateTime.tryParse(json['created_at'] as String) : null,
   );
 

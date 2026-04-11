@@ -41,7 +41,8 @@ class AIChatLoading extends AIChatState {
 class AIChatLoaded extends AIChatState {
   final AIChat chat;
   final bool isSending;
-  const AIChatLoaded({required this.chat, this.isSending = false});
+  final String? errorMessage;
+  const AIChatLoaded({required this.chat, this.isSending = false, this.errorMessage});
 }
 
 class AIChatError extends AIChatState {
