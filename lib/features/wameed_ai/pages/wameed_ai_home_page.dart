@@ -108,17 +108,14 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
                       children: [
                         Text(
                           'Wameed AI Assistant',
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.primary,
-                              ),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           'Ask anything about your business — sales, inventory, customers, and more.',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Theme.of(context).hintColor,
-                              ),
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
                         ),
                       ],
                     ),
@@ -131,16 +128,12 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
             SizedBox(height: isMobile ? 16 : AppSpacing.lg),
 
             // Chat history
-            Text(
-              'Recent Chats',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
-            ),
+            Text('Recent Chats', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
             const SizedBox(height: 12),
             switch (chatListState) {
-              AIChatListInitial() || AIChatListLoading() => const Center(child: Padding(
-                padding: EdgeInsets.all(32),
-                child: CircularProgressIndicator(),
-              )),
+              AIChatListInitial() || AIChatListLoading() => const Center(
+                child: Padding(padding: EdgeInsets.all(32), child: CircularProgressIndicator()),
+              ),
               AIChatListError(:final message) => Center(
                 child: Column(
                   children: [
@@ -150,9 +143,7 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
                   ],
                 ),
               ),
-              AIChatListLoaded(:final chats) => chats.isEmpty
-                  ? _buildEmptyState()
-                  : _buildChatList(chats, isMobile),
+              AIChatListLoaded(:final chats) => chats.isEmpty ? _buildEmptyState() : _buildChatList(chats, isMobile),
             },
           ],
         ),
@@ -198,9 +189,7 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
 
   Widget _buildChatTile(AIChat chat) {
     final theme = Theme.of(context);
-    final timeAgo = chat.lastMessageAt != null
-        ? _formatTimeAgo(chat.lastMessageAt!)
-        : '';
+    final timeAgo = chat.lastMessageAt != null ? _formatTimeAgo(chat.lastMessageAt!) : '';
 
     return InkWell(
       onTap: () => _openChat(chat.id),
@@ -234,18 +223,12 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
                   Row(
                     children: [
                       if (chat.llmModel != null) ...[
-                        Text(
-                          chat.llmModel!.displayName,
-                          style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor),
-                        ),
+                        Text(chat.llmModel!.displayName, style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor)),
                         const SizedBox(width: 8),
                         Text('•', style: TextStyle(color: theme.hintColor)),
                         const SizedBox(width: 8),
                       ],
-                      Text(
-                        '${chat.messageCount} messages',
-                        style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor),
-                      ),
+                      Text('${chat.messageCount} messages', style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor)),
                     ],
                   ),
                 ],

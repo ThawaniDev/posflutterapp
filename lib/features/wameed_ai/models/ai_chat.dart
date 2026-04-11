@@ -24,17 +24,17 @@ class LlmModel {
   });
 
   factory LlmModel.fromJson(Map<String, dynamic> json) => LlmModel(
-        id: json['id'] as String,
-        provider: json['provider'] as String,
-        modelId: json['model_id'] as String,
-        displayName: json['display_name'] as String,
-        description: json['description'] as String?,
-        supportsVision: json['supports_vision'] == true,
-        supportsJsonMode: json['supports_json_mode'] == true,
-        maxContextTokens: json['max_context_tokens'] as int? ?? 128000,
-        maxOutputTokens: json['max_output_tokens'] as int? ?? 4096,
-        isDefault: json['is_default'] == true,
-      );
+    id: json['id'] as String,
+    provider: json['provider'] as String,
+    modelId: json['model_id'] as String,
+    displayName: json['display_name'] as String,
+    description: json['description'] as String?,
+    supportsVision: json['supports_vision'] == true,
+    supportsJsonMode: json['supports_json_mode'] == true,
+    maxContextTokens: json['max_context_tokens'] as int? ?? 128000,
+    maxOutputTokens: json['max_output_tokens'] as int? ?? 4096,
+    isDefault: json['is_default'] == true,
+  );
 
   String get providerLabel {
     switch (provider) {
@@ -80,48 +80,34 @@ class AIChat {
   });
 
   factory AIChat.fromJson(Map<String, dynamic> json) => AIChat(
-        id: json['id'] as String,
-        organizationId: json['organization_id'] as String,
-        storeId: json['store_id'] as String,
-        userId: json['user_id'] as String,
-        title: json['title'] as String? ?? 'New Chat',
-        llmModelId: json['llm_model_id'] as String?,
-        llmModel: json['llm_model'] != null
-            ? LlmModel.fromJson(json['llm_model'] as Map<String, dynamic>)
-            : null,
-        messageCount: json['message_count'] as int? ?? 0,
-        totalTokens: json['total_tokens'] as int? ?? 0,
-        totalCostUsd: (json['total_cost_usd'] as num?)?.toDouble() ?? 0,
-        lastMessageAt: json['last_message_at'] != null
-            ? DateTime.tryParse(json['last_message_at'] as String)
-            : null,
-        messages: (json['messages'] as List<dynamic>?)
-                ?.map((m) =>
-                    AIChatMessage.fromJson(m as Map<String, dynamic>))
-                .toList() ??
-            [],
-      );
+    id: json['id'] as String,
+    organizationId: json['organization_id'] as String,
+    storeId: json['store_id'] as String,
+    userId: json['user_id'] as String,
+    title: json['title'] as String? ?? 'New Chat',
+    llmModelId: json['llm_model_id'] as String?,
+    llmModel: json['llm_model'] != null ? LlmModel.fromJson(json['llm_model'] as Map<String, dynamic>) : null,
+    messageCount: json['message_count'] as int? ?? 0,
+    totalTokens: json['total_tokens'] as int? ?? 0,
+    totalCostUsd: (json['total_cost_usd'] as num?)?.toDouble() ?? 0,
+    lastMessageAt: json['last_message_at'] != null ? DateTime.tryParse(json['last_message_at'] as String) : null,
+    messages: (json['messages'] as List<dynamic>?)?.map((m) => AIChatMessage.fromJson(m as Map<String, dynamic>)).toList() ?? [],
+  );
 
-  AIChat copyWith({
-    String? title,
-    LlmModel? llmModel,
-    int? messageCount,
-    List<AIChatMessage>? messages,
-  }) =>
-      AIChat(
-        id: id,
-        organizationId: organizationId,
-        storeId: storeId,
-        userId: userId,
-        title: title ?? this.title,
-        llmModelId: llmModelId,
-        llmModel: llmModel ?? this.llmModel,
-        messageCount: messageCount ?? this.messageCount,
-        totalTokens: totalTokens,
-        totalCostUsd: totalCostUsd,
-        lastMessageAt: lastMessageAt,
-        messages: messages ?? this.messages,
-      );
+  AIChat copyWith({String? title, LlmModel? llmModel, int? messageCount, List<AIChatMessage>? messages}) => AIChat(
+    id: id,
+    organizationId: organizationId,
+    storeId: storeId,
+    userId: userId,
+    title: title ?? this.title,
+    llmModelId: llmModelId,
+    llmModel: llmModel ?? this.llmModel,
+    messageCount: messageCount ?? this.messageCount,
+    totalTokens: totalTokens,
+    totalCostUsd: totalCostUsd,
+    lastMessageAt: lastMessageAt,
+    messages: messages ?? this.messages,
+  );
 }
 
 class AIChatMessage {
@@ -156,22 +142,20 @@ class AIChatMessage {
   });
 
   factory AIChatMessage.fromJson(Map<String, dynamic> json) => AIChatMessage(
-        id: json['id'] as String,
-        chatId: json['chat_id'] as String? ?? '',
-        role: json['role'] as String,
-        content: json['content'] as String? ?? '',
-        featureSlug: json['feature_slug'] as String?,
-        featureData: json['feature_data'] as Map<String, dynamic>?,
-        attachments: json['attachments'] as List<dynamic>?,
-        modelUsed: json['model_used'] as String?,
-        inputTokens: json['input_tokens'] as int? ?? 0,
-        outputTokens: json['output_tokens'] as int? ?? 0,
-        costUsd: (json['cost_usd'] as num?)?.toDouble() ?? 0,
-        latencyMs: json['latency_ms'] as int? ?? 0,
-        createdAt: json['created_at'] != null
-            ? DateTime.tryParse(json['created_at'] as String)
-            : null,
-      );
+    id: json['id'] as String,
+    chatId: json['chat_id'] as String? ?? '',
+    role: json['role'] as String,
+    content: json['content'] as String? ?? '',
+    featureSlug: json['feature_slug'] as String?,
+    featureData: json['feature_data'] as Map<String, dynamic>?,
+    attachments: json['attachments'] as List<dynamic>?,
+    modelUsed: json['model_used'] as String?,
+    inputTokens: json['input_tokens'] as int? ?? 0,
+    outputTokens: json['output_tokens'] as int? ?? 0,
+    costUsd: (json['cost_usd'] as num?)?.toDouble() ?? 0,
+    latencyMs: json['latency_ms'] as int? ?? 0,
+    createdAt: json['created_at'] != null ? DateTime.tryParse(json['created_at'] as String) : null,
+  );
 
   bool get isUser => role == 'user';
   bool get isAssistant => role == 'assistant';
@@ -195,11 +179,11 @@ class AIFeatureCard {
   });
 
   factory AIFeatureCard.fromJson(Map<String, dynamic> json) => AIFeatureCard(
-        id: json['id'] as String,
-        slug: json['slug'] as String,
-        displayName: json['display_name'] as String,
-        description: json['description'] as String?,
-        category: json['category'] as String,
-        icon: json['icon'] as String?,
-      );
+    id: json['id'] as String,
+    slug: json['slug'] as String,
+    displayName: json['display_name'] as String,
+    description: json['description'] as String?,
+    category: json['category'] as String,
+    icon: json['icon'] as String?,
+  );
 }

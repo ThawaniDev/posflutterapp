@@ -14,8 +14,7 @@ String _extractError(DioException e) {
 
 // ─── Chat List Provider ─────────────────────────────────────────
 
-final aiChatListProvider =
-    StateNotifierProvider<AIChatListNotifier, AIChatListState>((ref) {
+final aiChatListProvider = StateNotifierProvider<AIChatListNotifier, AIChatListState>((ref) {
   return AIChatListNotifier(ref.watch(aiChatRepositoryProvider));
 });
 
@@ -60,8 +59,7 @@ class AIChatListNotifier extends StateNotifier<AIChatListState> {
 
 // ─── Active Chat Provider ───────────────────────────────────────
 
-final aiActiveChatProvider =
-    StateNotifierProvider<AIChatNotifier, AIChatState>((ref) {
+final aiActiveChatProvider = StateNotifierProvider<AIChatNotifier, AIChatState>((ref) {
   return AIChatNotifier(ref.watch(aiChatRepositoryProvider));
 });
 
@@ -106,10 +104,7 @@ class AIChatNotifier extends StateNotifier<AIChatState> {
     );
 
     final updatedMessages = [...currentState.chat.messages, tempUserMsg];
-    state = AIChatLoaded(
-      chat: currentState.chat.copyWith(messages: updatedMessages),
-      isSending: true,
-    );
+    state = AIChatLoaded(chat: currentState.chat.copyWith(messages: updatedMessages), isSending: true);
 
     try {
       final result = await _repo.sendMessage(
@@ -124,55 +119,33 @@ class AIChatNotifier extends StateNotifier<AIChatState> {
       final updatedChat = result['chat'] as AIChat;
 
       // Replace temp message with real messages and add assistant response
-      final allMessages = [
-        ...currentState.chat.messages,
-        ...newMessages,
-      ];
+      final allMessages = [...currentState.chat.messages, ...newMessages];
 
-      state = AIChatLoaded(
-        chat: updatedChat.copyWith(messages: allMessages),
-        isSending: false,
-      );
+      state = AIChatLoaded(chat: updatedChat.copyWith(messages: allMessages), isSending: false);
     } on DioException catch (e) {
       // Remove temp message and show error
-      state = AIChatLoaded(
-        chat: currentState.chat,
-        isSending: false,
-      );
+      state = AIChatLoaded(chat: currentState.chat, isSending: false);
       state = AIChatError(message: _extractError(e));
     } catch (e) {
-      state = AIChatLoaded(
-        chat: currentState.chat,
-        isSending: false,
-      );
+      state = AIChatLoaded(chat: currentState.chat, isSending: false);
     }
   }
 
-  Future<void> invokeFeature({
-    required String featureSlug,
-    Map<String, dynamic>? params,
-  }) async {
+  Future<void> invokeFeature({required String featureSlug, Map<String, dynamic>? params}) async {
     final currentState = state;
     if (currentState is! AIChatLoaded) return;
 
     state = AIChatLoaded(chat: currentState.chat, isSending: true);
 
     try {
-      final result = await _repo.invokeFeatureInChat(
-        chatId: currentState.chat.id,
-        featureSlug: featureSlug,
-        params: params,
-      );
+      final result = await _repo.invokeFeatureInChat(chatId: currentState.chat.id, featureSlug: featureSlug, params: params);
 
       final newMessages = result['messages'] as List<AIChatMessage>;
       final updatedChat = result['chat'] as AIChat;
 
       final allMessages = [...currentState.chat.messages, ...newMessages];
 
-      state = AIChatLoaded(
-        chat: updatedChat.copyWith(messages: allMessages),
-        isSending: false,
-      );
+      state = AIChatLoaded(chat: updatedChat.copyWith(messages: allMessages), isSending: false);
     } on DioException catch (e) {
       state = AIChatLoaded(chat: currentState.chat, isSending: false);
       state = AIChatError(message: _extractError(e));
@@ -184,13 +157,8 @@ class AIChatNotifier extends StateNotifier<AIChatState> {
     if (currentState is! AIChatLoaded) return;
 
     try {
-      final updatedChat = await _repo.changeModel(
-        chatId: currentState.chat.id,
-        llmModelId: llmModelId,
-      );
-      state = AIChatLoaded(
-        chat: updatedChat.copyWith(messages: currentState.chat.messages),
-      );
+      final updatedChat = await _repo.changeModel(chatId: currentState.chat.id, llmModelId: llmModelId);
+      state = AIChatLoaded(chat: updatedChat.copyWith(messages: currentState.chat.messages));
     } on DioException catch (e) {
       state = AIChatError(message: _extractError(e));
     }
@@ -199,8 +167,7 @@ class AIChatNotifier extends StateNotifier<AIChatState> {
 
 // ─── LLM Models Provider ───────────────────────────────────────
 
-final aiModelsProvider =
-    StateNotifierProvider<AIModelsNotifier, AIModelsState>((ref) {
+final aiModelsProvider = StateNotifierProvider<AIModelsNotifier, AIModelsState>((ref) {
   return AIModelsNotifier(ref.watch(aiChatRepositoryProvider));
 });
 
@@ -224,8 +191,7 @@ class AIModelsNotifier extends StateNotifier<AIModelsState> {
 
 // ─── Feature Cards Provider ─────────────────────────────────────
 
-final aiFeatureCardsProvider =
-    StateNotifierProvider<AIFeatureCardsNotifier, AIFeatureCardsState>((ref) {
+final aiFeatureCardsProvider = StateNotifierProvider<AIFeatureCardsNotifier, AIFeatureCardsState>((ref) {
   return AIFeatureCardsNotifier(ref.watch(aiChatRepositoryProvider));
 });
 

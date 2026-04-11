@@ -74,10 +74,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
         _imageBase64 = null;
         _imageName = null;
       });
-      await ref.read(aiActiveChatProvider.notifier).sendMessage(
-            message: text,
-            imageBase64: img,
-          );
+      await ref.read(aiActiveChatProvider.notifier).sendMessage(message: text, imageBase64: img);
       _scrollToBottom();
     } else {
       // Create a new chat first, then send message
@@ -90,10 +87,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           _imageBase64 = null;
           _imageName = null;
         });
-        await ref.read(aiActiveChatProvider.notifier).sendMessage(
-              message: text,
-              imageBase64: img,
-            );
+        await ref.read(aiActiveChatProvider.notifier).sendMessage(message: text, imageBase64: img);
         _scrollToBottom();
       }
     }
@@ -131,10 +125,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
             const Icon(Icons.auto_awesome, color: AppColors.primary, size: 22),
             const SizedBox(width: 8),
             Flexible(
-              child: Text(
-                chatState is AIChatLoaded ? chatState.chat.title : 'Wameed AI',
-                overflow: TextOverflow.ellipsis,
-              ),
+              child: Text(chatState is AIChatLoaded ? chatState.chat.title : 'Wameed AI', overflow: TextOverflow.ellipsis),
             ),
           ],
         ),
@@ -156,9 +147,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       body: Column(
         children: [
           // ─── Messages Area ───
-          Expanded(
-            child: isNewChat ? _buildWelcomeView(theme) : _buildMessageList(chatState, theme),
-          ),
+          Expanded(child: isNewChat ? _buildWelcomeView(theme) : _buildMessageList(chatState, theme)),
 
           // ─── Image Preview ───
           if (_imageBase64 != null) _buildImagePreview(theme),
@@ -192,16 +181,10 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
             const SizedBox(height: 24),
             Text(
               'Wameed AI',
-              style: theme.textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: AppColors.primary,
-              ),
+              style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
             ),
             const SizedBox(height: 8),
-            Text(
-              'Your intelligent business assistant',
-              style: theme.textTheme.bodyLarge?.copyWith(color: theme.hintColor),
-            ),
+            Text('Your intelligent business assistant', style: theme.textTheme.bodyLarge?.copyWith(color: theme.hintColor)),
             const SizedBox(height: 32),
             _buildFeatureCardsGrid(theme),
           ],
@@ -245,21 +228,17 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
         // Create chat and invoke feature
         final chatState = ref.read(aiActiveChatProvider);
         if (chatState is! AIChatLoaded) {
-          final chat = await ref.read(aiChatListProvider.notifier).createChat(
-                title: feature.displayName,
-              );
+          final chat = await ref.read(aiChatListProvider.notifier).createChat(title: feature.displayName);
           if (chat != null) {
             ref.read(aiActiveChatProvider.notifier).setChat(chat);
-            await ref.read(aiActiveChatProvider.notifier).sendMessage(
-                  message: 'Run ${feature.displayName} analysis for my store',
-                  featureSlug: feature.slug,
-                );
+            await ref
+                .read(aiActiveChatProvider.notifier)
+                .sendMessage(message: 'Run ${feature.displayName} analysis for my store', featureSlug: feature.slug);
           }
         } else {
-          await ref.read(aiActiveChatProvider.notifier).sendMessage(
-                message: 'Run ${feature.displayName} analysis for my store',
-                featureSlug: feature.slug,
-              );
+          await ref
+              .read(aiActiveChatProvider.notifier)
+              .sendMessage(message: 'Run ${feature.displayName} analysis for my store', featureSlug: feature.slug);
         }
         _scrollToBottom();
       },
@@ -312,14 +291,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: AppColors.primary,
-                        ),
-                      ),
+                      SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary)),
                       const SizedBox(width: 8),
                       Text('Thinking...', style: theme.textTheme.bodySmall?.copyWith(color: AppColors.primary)),
                     ],
@@ -344,19 +316,12 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           Container(
             width: 48,
             height: 48,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(8),
-            ),
+            decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
             child: const Icon(Icons.image, color: AppColors.primary),
           ),
           const SizedBox(width: 8),
           Expanded(
-            child: Text(
-              _imageName ?? 'Image attached',
-              style: theme.textTheme.bodySmall,
-              overflow: TextOverflow.ellipsis,
-            ),
+            child: Text(_imageName ?? 'Image attached', style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
           ),
           IconButton(
             icon: const Icon(Icons.close, size: 18),
@@ -374,12 +339,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     final isSending = chatState is AIChatLoaded && chatState.isSending;
 
     return Container(
-      padding: EdgeInsets.only(
-        left: 12,
-        right: 8,
-        top: 8,
-        bottom: MediaQuery.of(context).padding.bottom + 8,
-      ),
+      padding: EdgeInsets.only(left: 12, right: 8, top: 8, bottom: MediaQuery.of(context).padding.bottom + 8),
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
         border: Border(top: BorderSide(color: theme.dividerColor)),
@@ -394,11 +354,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
             onPressed: () => _showFeatureOverlay(),
           ),
           // Image button
-          IconButton(
-            icon: const Icon(Icons.image_outlined, size: 24),
-            color: theme.hintColor,
-            onPressed: _pickImage,
-          ),
+          IconButton(icon: const Icon(Icons.image_outlined, size: 24), color: theme.hintColor, onPressed: _pickImage),
           // Input field
           Expanded(
             child: Container(
@@ -426,10 +382,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           const SizedBox(width: 4),
           // Send button
           Container(
-            decoration: BoxDecoration(
-              color: isSending ? Colors.grey : AppColors.primary,
-              shape: BoxShape.circle,
-            ),
+            decoration: BoxDecoration(color: isSending ? Colors.grey : AppColors.primary, shape: BoxShape.circle),
             child: IconButton(
               icon: Icon(isSending ? Icons.hourglass_top : Icons.arrow_upward, color: Colors.white, size: 22),
               onPressed: isSending ? null : _sendMessage,
@@ -444,9 +397,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (ctx) => AIFeatureOverlay(
         onFeatureSelected: (slug, name) async {
           Navigator.of(ctx).pop();
@@ -455,16 +406,14 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
             final chat = await ref.read(aiChatListProvider.notifier).createChat(title: name);
             if (chat != null) {
               ref.read(aiActiveChatProvider.notifier).setChat(chat);
-              await ref.read(aiActiveChatProvider.notifier).sendMessage(
-                    message: 'Run $name analysis for my store',
-                    featureSlug: slug,
-                  );
+              await ref
+                  .read(aiActiveChatProvider.notifier)
+                  .sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
             }
           } else {
-            await ref.read(aiActiveChatProvider.notifier).sendMessage(
-                  message: 'Run $name analysis for my store',
-                  featureSlug: slug,
-                );
+            await ref
+                .read(aiActiveChatProvider.notifier)
+                .sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
           }
           _scrollToBottom();
         },

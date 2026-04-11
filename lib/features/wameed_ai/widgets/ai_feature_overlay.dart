@@ -47,10 +47,7 @@ class AIFeatureOverlay extends ConsumerWidget {
                   children: [
                     const Icon(Icons.auto_awesome, color: AppColors.primary, size: 22),
                     const SizedBox(width: 8),
-                    Text(
-                      'AI Features',
-                      style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                    ),
+                    Text('AI Features', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
                   ],
                 ),
               ),
@@ -59,11 +56,9 @@ class AIFeatureOverlay extends ConsumerWidget {
               // Content
               Expanded(
                 child: switch (cardsState) {
-                  AIFeatureCardsInitial() || AIFeatureCardsLoading() =>
-                    const Center(child: CircularProgressIndicator()),
+                  AIFeatureCardsInitial() || AIFeatureCardsLoading() => const Center(child: CircularProgressIndicator()),
                   AIFeatureCardsError(:final message) => Center(child: Text(message)),
-                  AIFeatureCardsLoaded(:final categories) =>
-                    _buildCategoriesList(categories, scrollController, theme),
+                  AIFeatureCardsLoaded(:final categories) => _buildCategoriesList(categories, scrollController, theme),
                 },
               ),
             ],
@@ -73,11 +68,7 @@ class AIFeatureOverlay extends ConsumerWidget {
     );
   }
 
-  Widget _buildCategoriesList(
-    List<Map<String, dynamic>> categories,
-    ScrollController scrollController,
-    ThemeData theme,
-  ) {
+  Widget _buildCategoriesList(List<Map<String, dynamic>> categories, ScrollController scrollController, ThemeData theme) {
     return ListView.builder(
       controller: scrollController,
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -98,10 +89,7 @@ class AIFeatureOverlay extends ConsumerWidget {
                   const SizedBox(width: 8),
                   Text(
                     _formatCategoryName(categoryName),
-                    style: theme.textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primary,
-                    ),
+                    style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, color: AppColors.primary),
                   ),
                 ],
               ),

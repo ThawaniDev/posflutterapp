@@ -31,9 +31,7 @@ class AIMessageBubble extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: isUser
-                    ? AppColors.primary
-                    : theme.cardColor,
+                color: isUser ? AppColors.primary : theme.cardColor,
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(18),
                   topRight: const Radius.circular(18),
@@ -50,9 +48,7 @@ class AIMessageBubble extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                       decoration: BoxDecoration(
-                        color: isUser
-                            ? Colors.white.withValues(alpha: 0.2)
-                            : AppColors.primary.withValues(alpha: 0.1),
+                        color: isUser ? Colors.white.withValues(alpha: 0.2) : AppColors.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
@@ -82,28 +78,22 @@ class AIMessageBubble extends StatelessWidget {
                         if (message.modelUsed != null)
                           Text(
                             message.modelUsed!,
-                            style: theme.textTheme.labelSmall?.copyWith(
-                              color: theme.hintColor,
-                              fontSize: 10,
-                            ),
+                            style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor, fontSize: 10),
                           ),
                         if (message.latencyMs > 0) ...[
                           const SizedBox(width: 8),
                           Text(
                             '${(message.latencyMs / 1000).toStringAsFixed(1)}s',
-                            style: theme.textTheme.labelSmall?.copyWith(
-                              color: theme.hintColor,
-                              fontSize: 10,
-                            ),
+                            style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor, fontSize: 10),
                           ),
                         ],
                         const SizedBox(width: 8),
                         InkWell(
                           onTap: () {
                             Clipboard.setData(ClipboardData(text: message.content));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Copied to clipboard'), duration: Duration(seconds: 1)),
-                            );
+                            ScaffoldMessenger.of(
+                              context,
+                            ).showSnackBar(const SnackBar(content: Text('Copied to clipboard'), duration: Duration(seconds: 1)));
                           },
                           child: Icon(Icons.copy, size: 14, color: theme.hintColor),
                         ),
@@ -121,6 +111,10 @@ class AIMessageBubble extends StatelessWidget {
   }
 
   String _formatFeatureName(String slug) {
-    return slug.replaceAll('_', ' ').split(' ').map((w) => w.isNotEmpty ? '${w[0].toUpperCase()}${w.substring(1)}' : '').join(' ');
+    return slug
+        .replaceAll('_', ' ')
+        .split(' ')
+        .map((w) => w.isNotEmpty ? '${w[0].toUpperCase()}${w.substring(1)}' : '')
+        .join(' ');
   }
 }

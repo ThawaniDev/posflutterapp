@@ -35,10 +35,7 @@ class AIChatApiService {
   // ─── Chats ──────────────────────────────────────────────────
 
   Future<List<AIChat>> listChats({int page = 1, int perPage = 20}) async {
-    final response = await _dio.get(
-      ApiEndpoints.wameedAIChats,
-      queryParameters: {'page': page, 'per_page': perPage},
-    );
+    final response = await _dio.get(ApiEndpoints.wameedAIChats, queryParameters: {'page': page, 'per_page': perPage});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final chatsData = (apiResponse.data as Map<String, dynamic>)['chats'] as List;
     return chatsData.map((j) => AIChat.fromJson(j as Map<String, dynamic>)).toList();
@@ -47,10 +44,7 @@ class AIChatApiService {
   Future<AIChat> createChat({String? llmModelId, String? title}) async {
     final response = await _dio.post(
       ApiEndpoints.wameedAIChats,
-      data: {
-        if (llmModelId != null) 'llm_model_id': llmModelId,
-        if (title != null) 'title': title,
-      },
+      data: {if (llmModelId != null) 'llm_model_id': llmModelId, if (title != null) 'title': title},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return AIChat.fromJson(apiResponse.data as Map<String, dynamic>);
@@ -87,9 +81,7 @@ class AIChatApiService {
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final data = apiResponse.data as Map<String, dynamic>;
     return {
-      'messages': (data['messages'] as List)
-          .map((m) => AIChatMessage.fromJson(m as Map<String, dynamic>))
-          .toList(),
+      'messages': (data['messages'] as List).map((m) => AIChatMessage.fromJson(m as Map<String, dynamic>)).toList(),
       'chat': AIChat.fromJson(data['chat'] as Map<String, dynamic>),
     };
   }
@@ -101,31 +93,20 @@ class AIChatApiService {
   }) async {
     final response = await _dio.post(
       ApiEndpoints.wameedAIChatFeature(chatId),
-      data: {
-        'feature_slug': featureSlug,
-        if (params != null) 'params': params,
-      },
+      data: {'feature_slug': featureSlug, if (params != null) 'params': params},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final data = apiResponse.data as Map<String, dynamic>;
     return {
-      'messages': (data['messages'] as List)
-          .map((m) => AIChatMessage.fromJson(m as Map<String, dynamic>))
-          .toList(),
+      'messages': (data['messages'] as List).map((m) => AIChatMessage.fromJson(m as Map<String, dynamic>)).toList(),
       'chat': AIChat.fromJson(data['chat'] as Map<String, dynamic>),
     };
   }
 
   // ─── Model Change ──────────────────────────────────────────
 
-  Future<AIChat> changeModel({
-    required String chatId,
-    required String llmModelId,
-  }) async {
-    final response = await _dio.put(
-      ApiEndpoints.wameedAIChatModel(chatId),
-      data: {'llm_model_id': llmModelId},
-    );
+  Future<AIChat> changeModel({required String chatId, required String llmModelId}) async {
+    final response = await _dio.put(ApiEndpoints.wameedAIChatModel(chatId), data: {'llm_model_id': llmModelId});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return AIChat.fromJson(apiResponse.data as Map<String, dynamic>);
   }

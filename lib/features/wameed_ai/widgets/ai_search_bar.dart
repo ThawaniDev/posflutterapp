@@ -131,9 +131,7 @@ class _AISearchBarState extends ConsumerState<AISearchBar> {
   Widget _buildResultData(Map<String, dynamic> data) {
     // Filter out internal metadata keys
     final display = Map.fromEntries(
-      data.entries.where((e) => !const {
-        'cached', 'tokens_used', 'cost', 'intent',
-      }.contains(e.key)),
+      data.entries.where((e) => !const {'cached', 'tokens_used', 'cost', 'intent'}.contains(e.key)),
     );
 
     return Column(
@@ -153,19 +151,16 @@ class _AISearchBarState extends ConsumerState<AISearchBar> {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                _formatKey(entry.key),
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
-              ),
+              Text(_formatKey(entry.key), style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
               const SizedBox(height: 4),
-              ...list.take(10).map(
-                (item) => Padding(
-                  padding: const EdgeInsets.only(left: 8, top: 4),
-                  child: item is Map
-                      ? _buildMapItem(item)
-                      : Text('• $item', style: Theme.of(context).textTheme.bodySmall),
-                ),
-              ),
+              ...list
+                  .take(10)
+                  .map(
+                    (item) => Padding(
+                      padding: const EdgeInsets.only(left: 8, top: 4),
+                      child: item is Map ? _buildMapItem(item) : Text('• $item', style: Theme.of(context).textTheme.bodySmall),
+                    ),
+                  ),
               const SizedBox(height: 8),
             ],
           );
@@ -199,7 +194,10 @@ class _AISearchBarState extends ConsumerState<AISearchBar> {
         if (details.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(left: 14),
-            child: Text(details, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor, fontSize: 11)),
+            child: Text(
+              details,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor, fontSize: 11),
+            ),
           ),
       ],
     );
