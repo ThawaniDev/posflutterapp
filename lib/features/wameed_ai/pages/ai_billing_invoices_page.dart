@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
@@ -35,10 +34,7 @@ class _AIBillingInvoicesPageState extends ConsumerState<AIBillingInvoicesPage> {
       appBar: AppBar(
         title: Text(l10n.wameedAIBillingInvoices),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => ref.read(aiBillingInvoicesProvider.notifier).load(),
-          ),
+          IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.read(aiBillingInvoicesProvider.notifier).load()),
         ],
       ),
       body: switch (state) {
@@ -56,12 +52,7 @@ class _AIBillingInvoicesPageState extends ConsumerState<AIBillingInvoicesPage> {
         AIBillingInvoicesLoaded(:final invoices, :final currentPage, :final lastPage, :final total, :final perPage) => Padding(
           padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
           child: isMobile
-              ? _MobileInvoiceList(
-                  invoices: invoices,
-                  currentPage: currentPage,
-                  lastPage: lastPage,
-                  total: total,
-                )
+              ? _MobileInvoiceList(invoices: invoices, currentPage: currentPage, lastPage: lastPage, total: total)
               : PosDataTable<AIBillingInvoicePreview>(
                   columns: [
                     PosTableColumn(title: l10n.wameedAIBillingInvoiceNumber, flex: 2),
@@ -74,20 +65,22 @@ class _AIBillingInvoicesPageState extends ConsumerState<AIBillingInvoicesPage> {
                   cellBuilder: (item, colIndex, _) => switch (colIndex) {
                     0 => Text(item.invoiceNumber, style: const TextStyle(fontWeight: FontWeight.w600)),
                     1 => Text('${_monthName(item.month)} ${item.year}'),
-                    2 => Text('\$${item.billedAmountUsd.toStringAsFixed(3)}',
-                        style: const TextStyle(fontWeight: FontWeight.w600)),
+                    2 => Text(
+                      '\$${item.billedAmountUsd.toStringAsFixed(3)}',
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
                     3 => PosStatusBadge(
-                        label: switch (item.status) {
-                          'paid' => l10n.wameedAIBillingPaid,
-                          'overdue' => l10n.wameedAIBillingOverdue,
-                          _ => l10n.wameedAIBillingPending,
-                        },
-                        variant: switch (item.status) {
-                          'paid' => PosStatusBadgeVariant.success,
-                          'overdue' => PosStatusBadgeVariant.error,
-                          _ => PosStatusBadgeVariant.warning,
-                        },
-                      ),
+                      label: switch (item.status) {
+                        'paid' => l10n.wameedAIBillingPaid,
+                        'overdue' => l10n.wameedAIBillingOverdue,
+                        _ => l10n.wameedAIBillingPending,
+                      },
+                      variant: switch (item.status) {
+                        'paid' => PosStatusBadgeVariant.success,
+                        'overdue' => PosStatusBadgeVariant.error,
+                        _ => PosStatusBadgeVariant.warning,
+                      },
+                    ),
                     4 => Text(item.dueDate),
                     _ => const SizedBox.shrink(),
                   },
@@ -103,10 +96,7 @@ class _AIBillingInvoicesPageState extends ConsumerState<AIBillingInvoicesPage> {
                       ? () => ref.read(aiBillingInvoicesProvider.notifier).load(page: currentPage + 1)
                       : null,
                   onPageChanged: (page) => ref.read(aiBillingInvoicesProvider.notifier).load(page: page),
-                  emptyConfig: PosTableEmptyConfig(
-                    icon: Icons.receipt_long_outlined,
-                    title: l10n.wameedAIBillingNoInvoices,
-                  ),
+                  emptyConfig: PosTableEmptyConfig(icon: Icons.receipt_long_outlined, title: l10n.wameedAIBillingNoInvoices),
                 ),
         ),
       },
@@ -125,12 +115,7 @@ class _MobileInvoiceList extends ConsumerWidget {
   final int lastPage;
   final int total;
 
-  const _MobileInvoiceList({
-    required this.invoices,
-    required this.currentPage,
-    required this.lastPage,
-    required this.total,
-  });
+  const _MobileInvoiceList({required this.invoices, required this.currentPage, required this.lastPage, required this.total});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -172,8 +157,7 @@ class _MobileInvoiceList extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text('\$${inv.billedAmountUsd.toStringAsFixed(3)}',
-                        style: const TextStyle(fontWeight: FontWeight.w600)),
+                    Text('\$${inv.billedAmountUsd.toStringAsFixed(3)}', style: const TextStyle(fontWeight: FontWeight.w600)),
                     const SizedBox(height: 4),
                     PosStatusBadge(
                       label: switch (inv.status) {

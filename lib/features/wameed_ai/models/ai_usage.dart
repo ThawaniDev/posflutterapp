@@ -88,12 +88,14 @@ class AIDailyUsage {
   factory AIDailyUsage.fromJson(Map<String, dynamic> json) {
     return AIDailyUsage(
       date: json['date'] as String,
-      featureSlug: json['feature_slug'] as String,
-      requestCount: (json['request_count'] as num?)?.toInt() ?? 0,
-      cachedCount: (json['cached_count'] as num?)?.toInt() ?? 0,
-      errorCount: (json['error_count'] as num?)?.toInt() ?? 0,
-      totalTokens: (json['total_tokens'] as num?)?.toInt() ?? 0,
-      totalCost: (json['total_cost'] as num?)?.toDouble() ?? 0,
+      featureSlug: json['feature_slug'] as String? ?? '',
+      requestCount: (json['request_count'] ?? json['total_requests'] as num?)?.toInt() ?? 0,
+      cachedCount: (json['cached_count'] ?? json['cached_requests'] as num?)?.toInt() ?? 0,
+      errorCount: (json['error_count'] ?? json['failed_requests'] as num?)?.toInt() ?? 0,
+      totalTokens:
+          (json['total_tokens'] as num?)?.toInt() ??
+          ((json['total_input_tokens'] as num?)?.toInt() ?? 0) + ((json['total_output_tokens'] as num?)?.toInt() ?? 0),
+      totalCost: (json['total_cost'] ?? json['total_estimated_cost_usd'] as num?)?.toDouble() ?? 0,
       avgResponseMs: (json['avg_response_ms'] as num?)?.toInt() ?? 0,
     );
   }

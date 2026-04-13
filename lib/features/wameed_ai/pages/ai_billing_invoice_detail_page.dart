@@ -41,8 +41,7 @@ class _AIBillingInvoiceDetailPageState extends ConsumerState<AIBillingInvoiceDet
         ],
       ),
       body: switch (state) {
-        AIBillingInvoiceDetailInitial() || AIBillingInvoiceDetailLoading() =>
-          const Center(child: CircularProgressIndicator()),
+        AIBillingInvoiceDetailInitial() || AIBillingInvoiceDetailLoading() => const Center(child: CircularProgressIndicator()),
         AIBillingInvoiceDetailError(:final message) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -117,8 +116,7 @@ class _InvoiceDetailContent extends StatelessWidget {
                 const Divider(height: 24),
                 _DetailRow(label: l10n.wameedAIBillingPeriod, value: '${invoice.periodStart} – ${invoice.periodEnd}'),
                 _DetailRow(label: l10n.wameedAIBillingDueDate, value: invoice.dueDate),
-                if (invoice.paidAt != null)
-                  _DetailRow(label: l10n.wameedAIBillingPaidAt, value: invoice.paidAt!),
+                if (invoice.paidAt != null) _DetailRow(label: l10n.wameedAIBillingPaidAt, value: invoice.paidAt!),
               ],
             ),
           ),
@@ -183,8 +181,7 @@ class _InvoiceDetailContent extends StatelessWidget {
                   1 => Text('${item.requestCount}'),
                   2 => Text(_formatTokens(item.totalTokens)),
                   3 => Text('\$${item.rawCostUsd.toStringAsFixed(3)}'),
-                  4 => Text('\$${item.billedCostUsd.toStringAsFixed(3)}',
-                      style: const TextStyle(fontWeight: FontWeight.w600)),
+                  4 => Text('\$${item.billedCostUsd.toStringAsFixed(3)}', style: const TextStyle(fontWeight: FontWeight.w600)),
                   _ => const SizedBox.shrink(),
                 },
               ),
@@ -260,8 +257,12 @@ class _MobileLineItem extends StatelessWidget {
           const SizedBox(height: 8),
           Row(
             children: [
-              Expanded(child: _MiniStat(label: l10n.wameedAIBillingRequests, value: '${item.requestCount}')),
-              Expanded(child: _MiniStat(label: l10n.wameedAIBillingRawCost, value: '\$${item.rawCostUsd.toStringAsFixed(3)}')),
+              Expanded(
+                child: _MiniStat(label: l10n.wameedAIBillingRequests, value: '${item.requestCount}'),
+              ),
+              Expanded(
+                child: _MiniStat(label: l10n.wameedAIBillingRawCost, value: '\$${item.rawCostUsd.toStringAsFixed(3)}'),
+              ),
               Expanded(
                 child: _MiniStat(
                   label: l10n.wameedAIBillingBilledCost,
@@ -290,9 +291,10 @@ class _MiniStat extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey, fontSize: 11)),
-        Text(value, style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-          fontWeight: bold ? FontWeight.w600 : FontWeight.normal,
-        )),
+        Text(
+          value,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: bold ? FontWeight.w600 : FontWeight.normal),
+        ),
       ],
     );
   }
@@ -309,10 +311,7 @@ class _PaymentListTile extends StatelessWidget {
       leading: const Icon(Icons.payment, color: Colors.green),
       title: Text('\$${payment.amountUsd.toStringAsFixed(3)}'),
       subtitle: Text('${payment.paymentMethod}${payment.reference != null ? ' · ${payment.reference}' : ''}'),
-      trailing: Text(
-        payment.createdAt,
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey),
-      ),
+      trailing: Text(payment.createdAt, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey)),
     );
   }
 }

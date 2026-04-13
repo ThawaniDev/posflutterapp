@@ -40,10 +40,7 @@ class _AIBillingPageState extends ConsumerState<AIBillingPage> {
             tooltip: l10n.wameedAIBillingInvoices,
             onPressed: () => context.push(Routes.wameedAIBillingInvoices),
           ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => ref.read(aiBillingSummaryProvider.notifier).load(),
-          ),
+          IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.read(aiBillingSummaryProvider.notifier).load()),
         ],
       ),
       body: switch (state) {
@@ -132,11 +129,13 @@ class _BillingContent extends StatelessWidget {
               ),
               PosKpiCard(
                 label: l10n.wameedAIBillingLimitUsage,
-                value: month.limitUsd > 0
-                    ? '${month.limitPercentage.toStringAsFixed(1)}%'
-                    : l10n.wameedAIBillingNoLimit,
+                value: month.limitUsd > 0 ? '${month.limitPercentage.toStringAsFixed(1)}%' : l10n.wameedAIBillingNoLimit,
                 icon: Icons.speed,
-                iconColor: month.limitPercentage >= 90 ? Colors.red : month.limitPercentage >= 70 ? Colors.orange : Colors.green,
+                iconColor: month.limitPercentage >= 90
+                    ? Colors.red
+                    : month.limitPercentage >= 70
+                    ? Colors.orange
+                    : Colors.green,
                 subtitle: month.limitUsd > 0
                     ? '\$${month.billedCostUsd.toStringAsFixed(3)} / \$${month.limitUsd.toStringAsFixed(2)}'
                     : null,
@@ -176,8 +175,7 @@ class _BillingContent extends StatelessWidget {
                   1 => Text('${item.requestCount}'),
                   2 => Text(_formatTokens(item.totalTokens)),
                   3 => Text('\$${item.rawCostUsd.toStringAsFixed(3)}'),
-                  4 => Text('\$${item.billedCostUsd.toStringAsFixed(3)}',
-                      style: const TextStyle(fontWeight: FontWeight.w600)),
+                  4 => Text('\$${item.billedCostUsd.toStringAsFixed(3)}', style: const TextStyle(fontWeight: FontWeight.w600)),
                   _ => const SizedBox.shrink(),
                 },
               ),
@@ -193,10 +191,7 @@ class _BillingContent extends StatelessWidget {
                   l10n.wameedAIBillingRecentInvoices,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
                 ),
-                TextButton(
-                  onPressed: () => context.push(Routes.wameedAIBillingInvoices),
-                  child: Text(l10n.commonViewAll),
-                ),
+                TextButton(onPressed: () => context.push(Routes.wameedAIBillingInvoices), child: Text('View All')),
               ],
             ),
             const SizedBox(height: 12),

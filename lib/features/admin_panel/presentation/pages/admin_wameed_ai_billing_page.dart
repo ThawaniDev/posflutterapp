@@ -6,7 +6,7 @@ import 'package:thawani_pos/core/theme/app_typography.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
-import 'package:thawani_pos/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 
 class AdminWameedAIBillingPage extends ConsumerStatefulWidget {
   const AdminWameedAIBillingPage({super.key});
@@ -38,10 +38,9 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerPr
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final actionState = ref.watch(wameedAIAdminActionProvider);
     ref.listen(wameedAIAdminActionProvider, (_, next) {
       if (next is WameedAIAdminActionSuccess) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.success));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.success), backgroundColor: AppColors.success));
         ref.read(wameedAIAdminActionProvider.notifier).reset();
         _refreshAll();
       } else if (next is WameedAIAdminActionError) {
@@ -67,14 +66,7 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerPr
           ],
         ),
       ),
-      body: TabBarView(
-        controller: _tabCtrl,
-        children: [
-          _overviewTab(l10n),
-          _invoicesTab(l10n),
-          _storesTab(l10n),
-        ],
-      ),
+      body: TabBarView(controller: _tabCtrl, children: [_overviewTab(l10n), _invoicesTab(l10n), _storesTab(l10n)]),
     );
   }
 
@@ -91,14 +83,17 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerPr
       WameedAIAdminDashboardLoading() => const Center(child: PosLoading()),
       WameedAIAdminDashboardLoaded(data: final resp) => _buildOverview(resp, l10n),
       WameedAIAdminDashboardError(message: final msg) => PosErrorState(
-          title: l10n.errorLoadingData, message: msg, onRetry: () => ref.read(wameedAIAdminBillingDashboardProvider.notifier).load()),
+        message: msg,
+        onRetry: () => ref.read(wameedAIAdminBillingDashboardProvider.notifier).load(),
+      ),
       _ => Center(child: Text(l10n.loading)),
     };
   }
 
   Widget _buildOverview(Map<String, dynamic> resp, AppLocalizations l10n) {
     final d = resp['data'] as Map<String, dynamic>? ?? resp;
-    final summary = d['summary'] as Map<String, dynamic>? ?? {};
+    final invoiceStats = d['invoice_stats'] as Map<String, dynamic>? ?? {};
+    final storeStats = d['store_stats'] as Map<String, dynamic>? ?? {};
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.md),
       children: [
@@ -111,32 +106,33 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerPr
           childAspectRatio: 2.5,
           children: [
             PosKpiCard(
-              title: l10n.adminWameedAITotalRevenue,
-              value: '\$${_fmt(summary['total_revenue'] ?? summary['total_invoiced_amount'])}',
+              label: l10n.adminWameedAITotalRevenue,
+              value: '\$${_fmt(invoiceStats['total_billed_usd'] ?? invoiceStats['total_collected_usd'])}',
               subtitle: l10n.adminWameedAIAllTime,
               icon: Icons.attach_money_rounded,
-              color: AppColors.success,
+              iconColor: AppColors.success,
             ),
             PosKpiCard(
-              title: l10n.adminWameedAIOutstanding,
-              value: '\$${_fmt(summary['outstanding'] ?? summary['unpaid_amount'])}',
-              subtitle: '${summary['unpaid_count'] ?? summary['pending_invoices'] ?? 0} ${l10n.invoices}',
+              label: l10n.adminWameedAIOutstanding,
+              value:
+                  '\$${_fmt((invoiceStats['total_billed_usd'] as num? ?? 0).toDouble() - (invoiceStats['total_collected_usd'] as num? ?? 0).toDouble())}',
+              subtitle: '${invoiceStats['pending_count'] ?? 0} ${l10n.invoices}',
               icon: Icons.pending_actions_rounded,
-              color: AppColors.warning,
+              iconColor: AppColors.warning,
             ),
             PosKpiCard(
-              title: l10n.adminWameedAIOverdue,
-              value: '\$${_fmt(summary['overdue_amount'] ?? 0)}',
-              subtitle: '${summary['overdue_count'] ?? summary['overdue_invoices'] ?? 0} ${l10n.invoices}',
+              label: l10n.adminWameedAIOverdue,
+              value: '${invoiceStats['overdue_count'] ?? 0}',
+              subtitle: '${invoiceStats['total_invoices'] ?? 0} ${l10n.invoices}',
               icon: Icons.warning_amber_rounded,
-              color: AppColors.error,
+              iconColor: AppColors.error,
             ),
             PosKpiCard(
-              title: l10n.adminWameedAIBillingStores,
-              value: '${summary['active_stores'] ?? summary['total_stores'] ?? 0}',
-              subtitle: '${summary['stores_with_billing'] ?? 0} ${l10n.adminWameedAIWithBilling}',
+              label: l10n.adminWameedAIBillingStores,
+              value: '${storeStats['enabled_stores'] ?? storeStats['total_stores'] ?? 0}',
+              subtitle: '${storeStats['total_stores'] ?? 0} ${l10n.stores}',
               icon: Icons.store_rounded,
-              color: AppColors.info,
+              iconColor: AppColors.info,
             ),
           ],
         ),
@@ -185,20 +181,27 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerPr
       WameedAIAdminListLoading() => const Center(child: PosLoading()),
       WameedAIAdminListLoaded(data: final resp) => _buildInvoices(resp, l10n),
       WameedAIAdminListError(message: final msg) => PosErrorState(
-          title: l10n.errorLoadingData, message: msg, onRetry: () => ref.read(wameedAIAdminBillingInvoicesProvider.notifier).load()),
+        message: msg,
+        onRetry: () => ref.read(wameedAIAdminBillingInvoicesProvider.notifier).load(),
+      ),
       _ => Center(child: Text(l10n.loading)),
     };
   }
 
   Widget _buildInvoices(Map<String, dynamic> resp, AppLocalizations l10n) {
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
-    final invoices = (data['invoices'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+    final invoices =
+        (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? (data['invoices'] as List?)?.cast<Map<String, dynamic>>() ?? [];
 
     return Column(
       children: [
         Expanded(
           child: invoices.isEmpty
-              ? PosEmptyState(title: l10n.noInvoicesFound, message: l10n.adminWameedAIGenerateInvoicesHint, icon: Icons.receipt_long_rounded)
+              ? PosEmptyState(
+                  title: l10n.noInvoicesFound,
+                  subtitle: l10n.adminWameedAIGenerateInvoicesHint,
+                  icon: Icons.receipt_long_rounded,
+                )
               : SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: DataTable(
@@ -207,7 +210,7 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerPr
                       DataColumn(label: Text(l10n.store, style: AppTypography.labelSmall)),
                       DataColumn(label: Text(l10n.invoiceNumber, style: AppTypography.labelSmall)),
                       DataColumn(label: Text(l10n.period, style: AppTypography.labelSmall)),
-                      DataColumn(label: Text(l10n.amount, style: AppTypography.labelSmall)),
+                      DataColumn(label: Text('Amount', style: AppTypography.labelSmall)),
                       DataColumn(label: Text(l10n.status, style: AppTypography.labelSmall)),
                       DataColumn(label: Text(l10n.dueDate, style: AppTypography.labelSmall)),
                       DataColumn(label: Text(l10n.actions, style: AppTypography.labelSmall)),
@@ -217,27 +220,49 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerPr
                       final status = inv['status']?.toString() ?? '';
                       final isPaid = status == 'paid';
                       final isOverdue = status == 'overdue';
-                      return DataRow(cells: [
-                        DataCell(Text(storeName.toString(), style: AppTypography.bodySmall)),
-                        DataCell(Text(inv['invoice_number']?.toString() ?? '-', style: AppTypography.bodySmall)),
-                        DataCell(Text('${_fmtDate(inv['period_start']?.toString() ?? '')} — ${_fmtDate(inv['period_end']?.toString() ?? '')}', style: AppTypography.bodySmall)),
-                        DataCell(Text('\$${_fmt(inv['total_amount'] ?? inv['amount'])}', style: AppTypography.bodySmall)),
-                        DataCell(PosBadge(
-                          label: status.toUpperCase(),
-                          color: isPaid ? AppColors.success : isOverdue ? AppColors.error : AppColors.warning,
-                        )),
-                        DataCell(Text(_fmtDate(inv['due_date']?.toString() ?? ''), style: AppTypography.bodySmall)),
-                        DataCell(
-                          isPaid
-                              ? const Icon(Icons.check_circle, color: AppColors.success, size: 20)
-                              : PosButton(
-                                  label: l10n.markPaid,
-                                  onPressed: () => ref.read(wameedAIAdminActionProvider.notifier).markInvoicePaid(inv['id']?.toString() ?? ''),
-                                  size: PosButtonSize.sm,
-                                  variant: PosButtonVariant.success,
-                                ),
-                        ),
-                      ]);
+                      return DataRow(
+                        cells: [
+                          DataCell(Text(storeName.toString(), style: AppTypography.bodySmall)),
+                          DataCell(Text(inv['invoice_number']?.toString() ?? '-', style: AppTypography.bodySmall)),
+                          DataCell(
+                            Text(
+                              inv['period_start'] != null
+                                  ? '${_fmtDate(inv['period_start']?.toString() ?? '')} — ${_fmtDate(inv['period_end']?.toString() ?? '')}'
+                                  : '${inv['year'] ?? ''}/${inv['month']?.toString().padLeft(2, '0') ?? ''}',
+                              style: AppTypography.bodySmall,
+                            ),
+                          ),
+                          DataCell(
+                            Text(
+                              '\$${_fmt(inv['billed_amount_usd'] ?? inv['total_amount'] ?? inv['amount'])}',
+                              style: AppTypography.bodySmall,
+                            ),
+                          ),
+                          DataCell(
+                            PosBadge(
+                              label: status.toUpperCase(),
+                              customColor: isPaid
+                                  ? AppColors.success
+                                  : isOverdue
+                                  ? AppColors.error
+                                  : AppColors.warning,
+                            ),
+                          ),
+                          DataCell(Text(_fmtDate(inv['due_date']?.toString() ?? ''), style: AppTypography.bodySmall)),
+                          DataCell(
+                            isPaid
+                                ? const Icon(Icons.check_circle, color: AppColors.success, size: 20)
+                                : PosButton(
+                                    label: l10n.markPaid,
+                                    onPressed: () => ref
+                                        .read(wameedAIAdminActionProvider.notifier)
+                                        .markInvoicePaid(inv['id']?.toString() ?? '', {}),
+                                    size: PosButtonSize.sm,
+                                    variant: PosButtonVariant.primary,
+                                  ),
+                          ),
+                        ],
+                      );
                     }).toList(),
                   ),
                 ),
@@ -253,31 +278,35 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerPr
       WameedAIAdminListLoading() => const Center(child: PosLoading()),
       WameedAIAdminListLoaded(data: final resp) => _buildStores(resp, l10n),
       WameedAIAdminListError(message: final msg) => PosErrorState(
-          title: l10n.errorLoadingData, message: msg, onRetry: () => ref.read(wameedAIAdminBillingStoresProvider.notifier).load()),
+        message: msg,
+        onRetry: () => ref.read(wameedAIAdminBillingStoresProvider.notifier).load(),
+      ),
       _ => Center(child: Text(l10n.loading)),
     };
   }
 
   Widget _buildStores(Map<String, dynamic> resp, AppLocalizations l10n) {
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
-    final stores = (data['stores'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+    final stores =
+        (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? (data['stores'] as List?)?.cast<Map<String, dynamic>>() ?? [];
 
     return stores.isEmpty
-        ? PosEmptyState(title: l10n.noStoresFound, message: l10n.adminWameedAINoStoresMessage, icon: Icons.store_rounded)
+        ? PosEmptyState(title: l10n.noStoresFound, subtitle: l10n.adminWameedAINoStoresMessage, icon: Icons.store_rounded)
         : ListView.builder(
             padding: const EdgeInsets.all(AppSpacing.md),
             itemCount: stores.length,
             itemBuilder: (_, i) {
               final store = stores[i];
               final name = store['store_name'] ?? store['name'] ?? 'Store #${store['store_id'] ?? store['id']}';
-              final aiEnabled = store['ai_enabled'] == true || store['is_active'] == true;
+              final aiEnabled = store['is_ai_enabled'] == true || store['ai_enabled'] == true || store['is_active'] == true;
               final totalUsage = store['total_cost_usd'] ?? store['usage_amount'] ?? 0;
               final requestCount = store['request_count'] ?? store['total_requests'] ?? 0;
 
               return PosCard(
                 child: ListTile(
                   leading: Container(
-                    width: 44, height: 44,
+                    width: 44,
+                    height: 44,
                     decoration: BoxDecoration(
                       color: (aiEnabled ? AppColors.success : AppColors.textMutedLight).withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(10),
@@ -285,11 +314,16 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerPr
                     child: Icon(Icons.store_rounded, color: aiEnabled ? AppColors.success : AppColors.textMutedLight),
                   ),
                   title: Text(name.toString(), style: AppTypography.titleSmall),
-                  subtitle: Text('$requestCount ${l10n.requests} • \$${_fmt(totalUsage)}', style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondaryLight)),
+                  subtitle: Text(
+                    '$requestCount ${l10n.requests} • \$${_fmt(totalUsage)}',
+                    style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondaryLight),
+                  ),
                   trailing: Switch(
                     value: aiEnabled,
                     activeColor: AppColors.primary,
-                    onChanged: (v) => ref.read(wameedAIAdminActionProvider.notifier).toggleStoreAI(store['store_id']?.toString() ?? store['id']?.toString() ?? ''),
+                    onChanged: (v) => ref
+                        .read(wameedAIAdminActionProvider.notifier)
+                        .toggleStoreAI(store['store_id']?.toString() ?? store['id']?.toString() ?? ''),
                   ),
                 ),
               );

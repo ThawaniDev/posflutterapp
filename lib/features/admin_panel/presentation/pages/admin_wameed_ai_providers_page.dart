@@ -6,7 +6,7 @@ import 'package:thawani_pos/core/theme/app_typography.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
-import 'package:thawani_pos/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 
 class AdminWameedAIProvidersPage extends ConsumerStatefulWidget {
   const AdminWameedAIProvidersPage({super.key});
@@ -28,16 +28,11 @@ class _State extends ConsumerState<AdminWameedAIProvidersPage> {
     final state = ref.watch(wameedAIAdminProvidersProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminWameedAIProviders),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-      ),
+      appBar: AppBar(title: Text(l10n.adminWameedAIProviders), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: switch (state) {
         WameedAIAdminListLoading() => const Center(child: PosLoading()),
         WameedAIAdminListLoaded(data: final resp) => _buildContent(resp, l10n),
         WameedAIAdminListError(message: final msg) => PosErrorState(
-          title: l10n.errorLoadingData,
           message: msg,
           onRetry: () => ref.read(wameedAIAdminProvidersProvider.notifier).load(),
         ),
@@ -80,32 +75,32 @@ class _State extends ConsumerState<AdminWameedAIProvidersPage> {
               childAspectRatio: 2.2,
               children: [
                 PosKpiCard(
-                  title: l10n.adminWameedAITotalProviders,
+                  label: l10n.adminWameedAITotalProviders,
                   value: '${providers.length}',
                   subtitle: '$totalActive ${l10n.active}',
                   icon: Icons.cloud_rounded,
-                  color: AppColors.primary,
+                  iconColor: AppColors.primary,
                 ),
                 PosKpiCard(
-                  title: l10n.adminWameedAITotalModelsKpi,
+                  label: l10n.adminWameedAITotalModelsKpi,
                   value: '$totalModels',
                   subtitle: '$totalEnabled ${l10n.enabled}',
                   icon: Icons.psychology_rounded,
-                  color: AppColors.info,
+                  iconColor: AppColors.info,
                 ),
                 PosKpiCard(
-                  title: l10n.adminWameedAIModelsWithKeys,
+                  label: l10n.adminWameedAIModelsWithKeys,
                   value: '$totalWithKeys',
                   subtitle: l10n.adminWameedAIConfiguredModels,
                   icon: Icons.vpn_key_rounded,
-                  color: AppColors.success,
+                  iconColor: AppColors.success,
                 ),
                 PosKpiCard(
-                  title: l10n.adminWameedAIActiveProviders,
+                  label: l10n.adminWameedAIActiveProviders,
                   value: '$totalActive',
                   subtitle: '${l10n.of_} ${providers.length} ${l10n.providers}',
                   icon: Icons.check_circle_rounded,
-                  color: AppColors.warning,
+                  iconColor: AppColors.warning,
                 ),
               ],
             ),
@@ -158,10 +153,7 @@ class _State extends ConsumerState<AdminWameedAIProvidersPage> {
               Container(
                 width: 56,
                 height: 56,
-                decoration: BoxDecoration(
-                  color: providerColor.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                decoration: BoxDecoration(color: providerColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
                 child: Icon(providerIcon, color: providerColor, size: 28),
               ),
               const SizedBox(width: AppSpacing.md),
@@ -175,7 +167,7 @@ class _State extends ConsumerState<AdminWameedAIProvidersPage> {
                         const SizedBox(width: AppSpacing.sm),
                         PosBadge(
                           label: isActive ? l10n.active : l10n.inactive,
-                          color: isActive ? AppColors.success : AppColors.textMutedLight,
+                          customColor: isActive ? AppColors.success : AppColors.textMutedLight,
                         ),
                       ],
                     ),
@@ -187,8 +179,7 @@ class _State extends ConsumerState<AdminWameedAIProvidersPage> {
                   ],
                 ),
               ),
-              if (hasDefault)
-                PosBadge(label: l10n.hasDefault, color: AppColors.info),
+              if (hasDefault) PosBadge(label: l10n.hasDefault, customColor: AppColors.info),
             ],
           ),
         ),

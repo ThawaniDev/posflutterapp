@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/theme/app_typography.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
-import 'package:thawani_pos/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 
 class AdminWameedAILlmModelsPage extends ConsumerStatefulWidget {
   const AdminWameedAILlmModelsPage({super.key});
@@ -34,8 +33,7 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
         _reload();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.success)));
       } else if (next is WameedAIAdminActionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(next.message), backgroundColor: AppColors.error));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
       }
     });
 
@@ -44,18 +42,12 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
         title: Text(l10n.adminWameedAILlmModels),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add_rounded),
-            onPressed: () => _showCreateDialog(l10n),
-          ),
-        ],
+        actions: [IconButton(icon: const Icon(Icons.add_rounded), onPressed: () => _showCreateDialog(l10n))],
       ),
       body: switch (state) {
         WameedAIAdminListLoading() => const Center(child: PosLoading()),
         WameedAIAdminListLoaded(data: final resp) => _buildContent(resp, l10n),
-        WameedAIAdminListError(message: final msg) => PosErrorState(
-          title: l10n.errorLoadingData, message: msg, onRetry: _reload),
+        WameedAIAdminListError(message: final msg) => PosErrorState(message: msg, onRetry: _reload),
         _ => Center(child: Text(l10n.loading)),
       },
     );
@@ -96,32 +88,32 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
               childAspectRatio: 2.2,
               children: [
                 PosKpiCard(
-                  title: l10n.adminWameedAITotalModelsKpi,
+                  label: l10n.adminWameedAITotalModelsKpi,
                   value: '$total',
                   subtitle: '$enabled ${l10n.enabled}',
                   icon: Icons.psychology_rounded,
-                  color: AppColors.primary,
+                  iconColor: AppColors.primary,
                 ),
                 PosKpiCard(
-                  title: l10n.adminWameedAIActiveModels,
+                  label: l10n.adminWameedAIActiveModels,
                   value: '$enabled',
                   subtitle: '$withKeys ${l10n.withKeys}',
                   icon: Icons.check_circle_rounded,
-                  color: AppColors.success,
+                  iconColor: AppColors.success,
                 ),
                 PosKpiCard(
-                  title: l10n.adminWameedAITotalRequestsModel,
+                  label: l10n.adminWameedAITotalRequestsModel,
                   value: _fmtLargeNumber(totalRequests),
                   subtitle: '$defaultCount ${l10n.defaults}',
                   icon: Icons.api_rounded,
-                  color: AppColors.info,
+                  iconColor: AppColors.info,
                 ),
                 PosKpiCard(
-                  title: l10n.adminWameedAITotalCostModel,
+                  label: l10n.adminWameedAITotalCostModel,
                   value: '\$${totalCost.toStringAsFixed(4)}',
                   subtitle: l10n.adminWameedAIAcrossAllModels,
                   icon: Icons.attach_money_rounded,
-                  color: AppColors.warning,
+                  iconColor: AppColors.warning,
                 ),
               ],
             ),
@@ -133,7 +125,7 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
                 child: DataTable(
                   columnSpacing: AppSpacing.lg,
                   columns: [
-                    DataColumn(label: Text(l10n.provider)),
+                    DataColumn(label: Text(l10n.providers)),
                     DataColumn(label: Text(l10n.model)),
                     DataColumn(label: Text(l10n.displayName)),
                     DataColumn(label: Text(l10n.status)),
@@ -148,46 +140,57 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
                     final isDefault = m['is_default'] == true;
                     final id = m['id']?.toString() ?? '';
 
-                    return DataRow(cells: [
-                      DataCell(Text((m['provider'] ?? '').toString().toUpperCase())),
-                      DataCell(Text(m['model_id']?.toString() ?? '')),
-                      DataCell(Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(m['display_name']?.toString() ?? ''),
-                          if (isDefault) ...[
-                            const SizedBox(width: 4),
-                            PosBadge(label: l10n.defaults, color: AppColors.info),
-                          ],
-                        ],
-                      )),
-                      DataCell(PosBadge(
-                        label: isEnabled ? l10n.enabled : l10n.disabled,
-                        color: isEnabled ? AppColors.success : AppColors.textMutedLight,
-                      )),
-                      DataCell(Text('${metrics['total_requests'] ?? 0}')),
-                      DataCell(Text('\$${((metrics['total_cost'] as num?)?.toDouble() ?? 0).toStringAsFixed(4)}')),
-                      DataCell(Text('${((metrics['avg_latency'] as num?)?.toInt() ?? 0)}ms')),
-                      DataCell(Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: Icon(isEnabled ? Icons.toggle_on : Icons.toggle_off, 
-                              color: isEnabled ? AppColors.success : AppColors.textMutedLight),
-                            onPressed: () => ref.read(wameedAIAdminActionProvider.notifier).toggleLlmModel(id),
-                            tooltip: isEnabled ? l10n.disable : l10n.enable,
+                    return DataRow(
+                      cells: [
+                        DataCell(Text((m['provider'] ?? '').toString().toUpperCase())),
+                        DataCell(Text(m['model_id']?.toString() ?? '')),
+                        DataCell(
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(m['display_name']?.toString() ?? ''),
+                              if (isDefault) ...[
+                                const SizedBox(width: 4),
+                                PosBadge(label: l10n.defaults, customColor: AppColors.info),
+                              ],
+                            ],
                           ),
-                          IconButton(
-                            icon: const Icon(Icons.edit_rounded, size: 18),
-                            onPressed: () => _showEditDialog(m, AppLocalizations.of(context)!),
+                        ),
+                        DataCell(
+                          PosBadge(
+                            label: isEnabled ? l10n.enabled : l10n.disabled,
+                            customColor: isEnabled ? AppColors.success : AppColors.textMutedLight,
                           ),
-                          IconButton(
-                            icon: const Icon(Icons.delete_rounded, size: 18, color: AppColors.error),
-                            onPressed: () => _confirmDelete(id, m['display_name']?.toString() ?? '', AppLocalizations.of(context)!),
+                        ),
+                        DataCell(Text('${metrics['total_requests'] ?? 0}')),
+                        DataCell(Text('\$${((metrics['total_cost'] as num?)?.toDouble() ?? 0).toStringAsFixed(4)}')),
+                        DataCell(Text('${((metrics['avg_latency'] as num?)?.toInt() ?? 0)}ms')),
+                        DataCell(
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: Icon(
+                                  isEnabled ? Icons.toggle_on : Icons.toggle_off,
+                                  color: isEnabled ? AppColors.success : AppColors.textMutedLight,
+                                ),
+                                onPressed: () => ref.read(wameedAIAdminActionProvider.notifier).toggleLlmModel(id),
+                                tooltip: isEnabled ? l10n.disable : l10n.enable,
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.edit_rounded, size: 18),
+                                onPressed: () => _showEditDialog(m, AppLocalizations.of(context)!),
+                              ),
+                              IconButton(
+                                icon: const Icon(Icons.delete_rounded, size: 18, color: AppColors.error),
+                                onPressed: () =>
+                                    _confirmDelete(id, m['display_name']?.toString() ?? '', AppLocalizations.of(context)!),
+                              ),
+                            ],
                           ),
-                        ],
-                      )),
-                    ]);
+                        ),
+                      ],
+                    );
                   }).toList(),
                 ),
               ),
@@ -218,7 +221,7 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
                   ],
                   selectedValue: null,
                   onChanged: (v) => formData['provider'] = v,
-                  label: l10n.provider,
+                  label: l10n.providers,
                   hint: l10n.selectProvider,
                   showSearch: false,
                 ),
@@ -229,11 +232,24 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
                 const SizedBox(height: AppSpacing.sm),
                 PosTextField(label: l10n.description, hint: l10n.optional, onChanged: (v) => formData['description'] = v),
                 const SizedBox(height: AppSpacing.sm),
-                PosTextField(label: l10n.apiKey, hint: l10n.optional, onChanged: (v) => formData['api_key'] = v, obscureText: true),
+                PosTextField(
+                  label: l10n.apiKey,
+                  hint: l10n.optional,
+                  onChanged: (v) => formData['api_key'] = v,
+                  obscureText: true,
+                ),
                 const SizedBox(height: AppSpacing.sm),
-                PosTextField(label: l10n.inputPrice, hint: '0.00', onChanged: (v) => formData['input_price_per_1m'] = double.tryParse(v ?? '')),
+                PosTextField(
+                  label: l10n.inputPrice,
+                  hint: '0.00',
+                  onChanged: (v) => formData['input_price_per_1m'] = double.tryParse(v),
+                ),
                 const SizedBox(height: AppSpacing.sm),
-                PosTextField(label: l10n.outputPrice, hint: '0.00', onChanged: (v) => formData['output_price_per_1m'] = double.tryParse(v ?? '')),
+                PosTextField(
+                  label: l10n.outputPrice,
+                  hint: '0.00',
+                  onChanged: (v) => formData['output_price_per_1m'] = double.tryParse(v),
+                ),
               ],
             ),
           ),
@@ -254,10 +270,7 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
 
   void _showEditDialog(Map<String, dynamic> model, AppLocalizations l10n) {
     final id = model['id']?.toString() ?? '';
-    final formData = <String, dynamic>{
-      'display_name': model['display_name'],
-      'description': model['description'],
-    };
+    final formData = <String, dynamic>{'display_name': model['display_name'], 'description': model['description']};
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -268,15 +281,38 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                PosTextField(label: l10n.displayName, initialValue: model['display_name']?.toString(), onChanged: (v) => formData['display_name'] = v),
+                PosTextField(
+                  label: l10n.displayName,
+                  hint: model['display_name']?.toString(),
+                  onChanged: (v) => formData['display_name'] = v,
+                ),
                 const SizedBox(height: AppSpacing.sm),
-                PosTextField(label: l10n.description, initialValue: model['description']?.toString(), onChanged: (v) => formData['description'] = v),
+                PosTextField(
+                  label: l10n.description,
+                  hint: model['description']?.toString(),
+                  onChanged: (v) => formData['description'] = v,
+                ),
                 const SizedBox(height: AppSpacing.sm),
-                PosTextField(label: l10n.apiKey, hint: l10n.leaveBlankToKeep, onChanged: (v) { if (v != null && v.isNotEmpty) formData['api_key'] = v; }, obscureText: true),
+                PosTextField(
+                  label: l10n.apiKey,
+                  hint: l10n.leaveBlankToKeep,
+                  onChanged: (v) {
+                    if (v.isNotEmpty) formData['api_key'] = v;
+                  },
+                  obscureText: true,
+                ),
                 const SizedBox(height: AppSpacing.sm),
-                PosTextField(label: l10n.inputPrice, initialValue: model['input_price_per_1m']?.toString(), onChanged: (v) => formData['input_price_per_1m'] = double.tryParse(v ?? '')),
+                PosTextField(
+                  label: l10n.inputPrice,
+                  hint: model['input_price_per_1m']?.toString() ?? '0.00',
+                  onChanged: (v) => formData['input_price_per_1m'] = double.tryParse(v),
+                ),
                 const SizedBox(height: AppSpacing.sm),
-                PosTextField(label: l10n.outputPrice, initialValue: model['output_price_per_1m']?.toString(), onChanged: (v) => formData['output_price_per_1m'] = double.tryParse(v ?? '')),
+                PosTextField(
+                  label: l10n.outputPrice,
+                  hint: model['output_price_per_1m']?.toString() ?? '0.00',
+                  onChanged: (v) => formData['output_price_per_1m'] = double.tryParse(v),
+                ),
               ],
             ),
           ),

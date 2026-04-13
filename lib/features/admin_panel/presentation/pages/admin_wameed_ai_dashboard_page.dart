@@ -8,7 +8,7 @@ import 'package:thawani_pos/core/theme/app_typography.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
-import 'package:thawani_pos/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 
 class AdminWameedAIDashboardPage extends ConsumerStatefulWidget {
   const AdminWameedAIDashboardPage({super.key});
@@ -31,10 +31,9 @@ class _State extends ConsumerState<AdminWameedAIDashboardPage> {
   }
 
   void _load() {
-    ref.read(wameedAIAdminDashboardProvider.notifier).load(params: {
-      if (_from != null) 'from': _from!,
-      if (_to != null) 'to': _to!,
-    });
+    ref
+        .read(wameedAIAdminDashboardProvider.notifier)
+        .load(params: {if (_from != null) 'from': _from!, if (_to != null) 'to': _to!});
   }
 
   @override
@@ -43,19 +42,11 @@ class _State extends ConsumerState<AdminWameedAIDashboardPage> {
     final state = ref.watch(wameedAIAdminDashboardProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminWameedAIDashboard),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-      ),
+      appBar: AppBar(title: Text(l10n.adminWameedAIDashboard), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: switch (state) {
         WameedAIAdminDashboardLoading() => const Center(child: PosLoading()),
         WameedAIAdminDashboardLoaded(data: final resp) => _buildContent(resp, l10n),
-        WameedAIAdminDashboardError(message: final msg) => PosErrorState(
-          title: l10n.errorLoadingData,
-          message: msg,
-          onRetry: _load,
-        ),
+        WameedAIAdminDashboardError(message: final msg) => PosErrorState(message: msg, onRetry: _load),
         _ => Center(child: Text(l10n.loading)),
       },
     );
@@ -67,9 +58,8 @@ class _State extends ConsumerState<AdminWameedAIDashboardPage> {
     final costByModel = (data['cost_by_model'] as List?)?.cast<Map<String, dynamic>>() ?? [];
     final usageByFeature = (data['usage_by_feature'] as List?)?.cast<Map<String, dynamic>>() ?? [];
     final usageByStore = (data['usage_by_store'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    final dailyTrend = (data['daily_trend'] as List?)?.cast<Map<String, dynamic>>() ?? [];
     final topUsers = (data['top_users'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    final chatStats = data['chat_stats'] as Map<String, dynamic>? ?? {};
+    // dailyTrend and chatStats available in resp['data'] if needed
 
     return RefreshIndicator(
       onRefresh: () async => _load(),
@@ -118,21 +108,11 @@ class _State extends ConsumerState<AdminWameedAIDashboardPage> {
     return Row(
       children: [
         Expanded(
-          child: PosTextField(
-            label: l10n.from,
-            hint: 'YYYY-MM-DD',
-            initialValue: _from,
-            onChanged: (v) => _from = v,
-          ),
+          child: PosTextField(label: l10n.from, hint: _from ?? 'YYYY-MM-DD', onChanged: (v) => _from = v),
         ),
         const SizedBox(width: AppSpacing.md),
         Expanded(
-          child: PosTextField(
-            label: l10n.to,
-            hint: 'YYYY-MM-DD',
-            initialValue: _to,
-            onChanged: (v) => _to = v,
-          ),
+          child: PosTextField(label: l10n.to, hint: _to ?? 'YYYY-MM-DD', onChanged: (v) => _to = v),
         ),
         const SizedBox(width: AppSpacing.md),
         PosButton(label: l10n.apply, onPressed: _load, size: PosButtonSize.sm),
@@ -159,60 +139,60 @@ class _State extends ConsumerState<AdminWameedAIDashboardPage> {
       childAspectRatio: 2.0,
       children: [
         PosKpiCard(
-          title: l10n.adminWameedAITotalRequests,
+          label: l10n.adminWameedAITotalRequests,
           value: _fmtInt(totalReqs),
           subtitle: '${_fmtInt(successReqs)} ${l10n.successful}',
           icon: Icons.api_rounded,
-          color: AppColors.primary,
+          iconColor: AppColors.primary,
         ),
         PosKpiCard(
-          title: l10n.adminWameedAISuccessRate,
+          label: l10n.adminWameedAISuccessRate,
           value: totalReqs > 0 ? '${((successReqs / totalReqs) * 100).toStringAsFixed(1)}%' : '0%',
           subtitle: '${_fmtInt(failedReqs)} ${l10n.errors}',
           icon: Icons.check_circle_rounded,
-          color: AppColors.success,
+          iconColor: AppColors.success,
         ),
         PosKpiCard(
-          title: l10n.adminWameedAITotalTokens,
+          label: l10n.adminWameedAITotalTokens,
           value: _fmtLargeNumber(totalTokens),
           subtitle: '${_fmtInt(cachedReqs)} ${l10n.cached}',
           icon: Icons.token_rounded,
-          color: AppColors.info,
+          iconColor: AppColors.info,
         ),
         PosKpiCard(
-          title: l10n.adminWameedAITotalCost,
+          label: l10n.adminWameedAITotalCost,
           value: '\$${_fmtCost(totalCost)}',
           subtitle: '${l10n.adminWameedAIAvgLatency}: ${_fmtInt(avgLatency)}ms',
           icon: Icons.attach_money_rounded,
-          color: AppColors.warning,
+          iconColor: AppColors.warning,
         ),
         PosKpiCard(
-          title: l10n.adminWameedAIActiveStores,
+          label: l10n.adminWameedAIActiveStores,
           value: _fmtInt(uniqueStores),
           subtitle: l10n.adminWameedAIUniqueStoresUsing,
           icon: Icons.store_rounded,
-          color: const Color(0xFF6366F1),
+          iconColor: const Color(0xFF6366F1),
         ),
         PosKpiCard(
-          title: l10n.adminWameedAITotalChats,
+          label: l10n.adminWameedAITotalChats,
           value: _fmtInt(kpis['total_chats'] ?? 0),
           subtitle: '${_fmtInt(kpis['total_chat_messages'] ?? 0)} ${l10n.messages}',
           icon: Icons.chat_rounded,
-          color: const Color(0xFF10B981),
+          iconColor: const Color(0xFF10B981),
         ),
         PosKpiCard(
-          title: l10n.adminWameedAIUniqueUsers,
+          label: l10n.adminWameedAIUniqueUsers,
           value: _fmtInt(kpis['unique_users'] ?? 0),
           subtitle: l10n.adminWameedAIActiveUsers,
           icon: Icons.people_rounded,
-          color: const Color(0xFFF59E0B),
+          iconColor: const Color(0xFFF59E0B),
         ),
         PosKpiCard(
-          title: l10n.adminWameedAIAvgLatency,
+          label: l10n.adminWameedAIAvgLatency,
           value: '${_fmtInt(avgLatency)}ms',
           subtitle: l10n.adminWameedAIResponseTime,
           icon: Icons.speed_rounded,
-          color: const Color(0xFFEC4899),
+          iconColor: const Color(0xFFEC4899),
         ),
       ],
     );
@@ -235,17 +215,21 @@ class _State extends ConsumerState<AdminWameedAIDashboardPage> {
       crossAxisSpacing: AppSpacing.sm,
       mainAxisSpacing: AppSpacing.sm,
       childAspectRatio: 1.3,
-      children: items.map((item) => PosCard(
-        onTap: () => context.go(item.route),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(item.icon, size: 32, color: AppColors.primary),
-            const SizedBox(height: AppSpacing.sm),
-            Text(item.label, textAlign: TextAlign.center, style: AppTypography.labelMedium),
-          ],
-        ),
-      )).toList(),
+      children: items
+          .map(
+            (item) => PosCard(
+              onTap: () => context.go(item.route),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(item.icon, size: 32, color: AppColors.primary),
+                  const SizedBox(height: AppSpacing.sm),
+                  Text(item.label, textAlign: TextAlign.center, style: AppTypography.labelMedium),
+                ],
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -265,13 +249,19 @@ class _State extends ConsumerState<AdminWameedAIDashboardPage> {
             DataColumn(label: Text(l10n.cost), numeric: true),
             DataColumn(label: Text(l10n.adminWameedAIAvgLatency), numeric: true),
           ],
-          rows: items.map((m) => DataRow(cells: [
-            DataCell(Text(m['model_used']?.toString() ?? '')),
-            DataCell(Text(_fmtInt(m['request_count']))),
-            DataCell(Text(_fmtLargeNumber(m['total_tokens']))),
-            DataCell(Text('\$${_fmtCost(m['total_cost'])}')),
-            DataCell(Text('${_fmtInt(m['avg_latency'])}ms')),
-          ])).toList(),
+          rows: items
+              .map(
+                (m) => DataRow(
+                  cells: [
+                    DataCell(Text(m['model_used']?.toString() ?? '')),
+                    DataCell(Text(_fmtInt(m['request_count']))),
+                    DataCell(Text(_fmtLargeNumber(m['total_tokens']))),
+                    DataCell(Text('\$${_fmtCost(m['total_cost'])}')),
+                    DataCell(Text('${_fmtInt(m['avg_latency'])}ms')),
+                  ],
+                ),
+              )
+              .toList(),
         ),
       ),
     );
@@ -290,14 +280,20 @@ class _State extends ConsumerState<AdminWameedAIDashboardPage> {
             DataColumn(label: Text(l10n.tokens), numeric: true),
             DataColumn(label: Text(l10n.cost), numeric: true),
           ],
-          rows: items.map((f) => DataRow(cells: [
-            DataCell(Text(f['feature_slug']?.toString() ?? '')),
-            DataCell(Text(_fmtInt(f['request_count']))),
-            DataCell(Text(_fmtInt(f['success_count']))),
-            DataCell(Text(_fmtInt(f['error_count']))),
-            DataCell(Text(_fmtLargeNumber(f['total_tokens']))),
-            DataCell(Text('\$${_fmtCost(f['total_cost'])}')),
-          ])).toList(),
+          rows: items
+              .map(
+                (f) => DataRow(
+                  cells: [
+                    DataCell(Text(f['feature_slug']?.toString() ?? '')),
+                    DataCell(Text(_fmtInt(f['request_count']))),
+                    DataCell(Text(_fmtInt(f['success_count']))),
+                    DataCell(Text(_fmtInt(f['error_count']))),
+                    DataCell(Text(_fmtLargeNumber(f['total_tokens']))),
+                    DataCell(Text('\$${_fmtCost(f['total_cost'])}')),
+                  ],
+                ),
+              )
+              .toList(),
         ),
       ),
     );
@@ -315,13 +311,19 @@ class _State extends ConsumerState<AdminWameedAIDashboardPage> {
             DataColumn(label: Text(l10n.cost), numeric: true),
             DataColumn(label: Text(l10n.users), numeric: true),
           ],
-          rows: items.map((s) => DataRow(cells: [
-            DataCell(Text(s['store_name']?.toString() ?? s['store_id']?.toString() ?? '')),
-            DataCell(Text(_fmtInt(s['request_count']))),
-            DataCell(Text(_fmtLargeNumber(s['total_tokens']))),
-            DataCell(Text('\$${_fmtCost(s['total_cost'])}')),
-            DataCell(Text(_fmtInt(s['unique_users']))),
-          ])).toList(),
+          rows: items
+              .map(
+                (s) => DataRow(
+                  cells: [
+                    DataCell(Text(s['store_name']?.toString() ?? s['store_id']?.toString() ?? '')),
+                    DataCell(Text(_fmtInt(s['request_count']))),
+                    DataCell(Text(_fmtLargeNumber(s['total_tokens']))),
+                    DataCell(Text('\$${_fmtCost(s['total_cost'])}')),
+                    DataCell(Text(_fmtInt(s['unique_users']))),
+                  ],
+                ),
+              )
+              .toList(),
         ),
       ),
     );
@@ -339,13 +341,19 @@ class _State extends ConsumerState<AdminWameedAIDashboardPage> {
             DataColumn(label: Text(l10n.tokens), numeric: true),
             DataColumn(label: Text(l10n.cost), numeric: true),
           ],
-          rows: items.map((u) => DataRow(cells: [
-            DataCell(Text(u['user_name']?.toString() ?? '')),
-            DataCell(Text(_fmtInt(u['chat_count']))),
-            DataCell(Text(_fmtInt(u['total_messages']))),
-            DataCell(Text(_fmtLargeNumber(u['total_tokens']))),
-            DataCell(Text('\$${_fmtCost(u['total_cost'])}')),
-          ])).toList(),
+          rows: items
+              .map(
+                (u) => DataRow(
+                  cells: [
+                    DataCell(Text(u['user_name']?.toString() ?? '')),
+                    DataCell(Text(_fmtInt(u['chat_count']))),
+                    DataCell(Text(_fmtInt(u['total_messages']))),
+                    DataCell(Text(_fmtLargeNumber(u['total_tokens']))),
+                    DataCell(Text('\$${_fmtCost(u['total_cost'])}')),
+                  ],
+                ),
+              )
+              .toList(),
         ),
       ),
     );

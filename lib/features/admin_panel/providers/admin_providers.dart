@@ -4585,8 +4585,7 @@ class InfraHealthChecksNotifier extends StateNotifier<InfraListState> {
 // P18: Wameed AI Admin
 // ═══════════════════════════════════════════════════════════════
 
-final wameedAIAdminDashboardProvider =
-    StateNotifierProvider<WameedAIAdminDashboardNotifier, WameedAIAdminDashboardState>(
+final wameedAIAdminDashboardProvider = StateNotifierProvider<WameedAIAdminDashboardNotifier, WameedAIAdminDashboardState>(
   (ref) => WameedAIAdminDashboardNotifier(ref.read(adminRepositoryProvider)),
 );
 
@@ -4705,8 +4704,7 @@ class WameedAIAdminChatsNotifier extends StateNotifier<WameedAIAdminListState> {
   }
 }
 
-final wameedAIAdminChatDetailProvider =
-    StateNotifierProvider<WameedAIAdminChatDetailNotifier, WameedAIAdminDetailState>(
+final wameedAIAdminChatDetailProvider = StateNotifierProvider<WameedAIAdminChatDetailNotifier, WameedAIAdminDetailState>(
   (ref) => WameedAIAdminChatDetailNotifier(ref.read(adminRepositoryProvider)),
 );
 
@@ -4725,8 +4723,8 @@ class WameedAIAdminChatDetailNotifier extends StateNotifier<WameedAIAdminDetailS
 
 final wameedAIAdminBillingDashboardProvider =
     StateNotifierProvider<WameedAIAdminBillingDashboardNotifier, WameedAIAdminDashboardState>(
-  (ref) => WameedAIAdminBillingDashboardNotifier(ref.read(adminRepositoryProvider)),
-);
+      (ref) => WameedAIAdminBillingDashboardNotifier(ref.read(adminRepositoryProvider)),
+    );
 
 class WameedAIAdminBillingDashboardNotifier extends StateNotifier<WameedAIAdminDashboardState> {
   final AdminRepository _repo;
@@ -4741,8 +4739,7 @@ class WameedAIAdminBillingDashboardNotifier extends StateNotifier<WameedAIAdminD
   }
 }
 
-final wameedAIAdminBillingInvoicesProvider =
-    StateNotifierProvider<WameedAIAdminBillingInvoicesNotifier, WameedAIAdminListState>(
+final wameedAIAdminBillingInvoicesProvider = StateNotifierProvider<WameedAIAdminBillingInvoicesNotifier, WameedAIAdminListState>(
   (ref) => WameedAIAdminBillingInvoicesNotifier(ref.read(adminRepositoryProvider)),
 );
 
@@ -4759,8 +4756,7 @@ class WameedAIAdminBillingInvoicesNotifier extends StateNotifier<WameedAIAdminLi
   }
 }
 
-final wameedAIAdminBillingStoresProvider =
-    StateNotifierProvider<WameedAIAdminBillingStoresNotifier, WameedAIAdminListState>(
+final wameedAIAdminBillingStoresProvider = StateNotifierProvider<WameedAIAdminBillingStoresNotifier, WameedAIAdminListState>(
   (ref) => WameedAIAdminBillingStoresNotifier(ref.read(adminRepositoryProvider)),
 );
 

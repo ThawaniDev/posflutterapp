@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
@@ -89,8 +91,12 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
         :final thawaniStoreId,
         :final totalOrders,
         :final totalProductsMapped,
-        :final totalSettlements,
+        :final totalCategoriesMapped,
+        :final totalSettlements, // ignore: unused_local_variable
         :final pendingOrders,
+        :final pendingSyncItems,
+        :final syncLogsToday,
+        :final failedSyncsToday,
       ) =>
         ListView(
           padding: AppSpacing.paddingAll16,
@@ -142,7 +148,7 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
               ),
             ),
             AppSpacing.gapH16,
-            // Stats grid
+            // Stats grid - row 1
             Row(
               children: [
                 _statCard(AppLocalizations.of(context)!.thawaniTotalOrders, '$totalOrders', Icons.receipt, AppColors.info),
@@ -156,17 +162,69 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
               ],
             ),
             AppSpacing.gapH12,
+            // Stats grid - row 2
             Row(
               children: [
-                _statCard(
-                  AppLocalizations.of(context)!.thawaniSettlements,
-                  '$totalSettlements',
-                  Icons.account_balance,
-                  AppColors.info,
-                ),
+                _statCard('Categories', '$totalCategoriesMapped', Icons.category, AppColors.success),
                 AppSpacing.gapW12,
                 _statCard(AppLocalizations.of(context)!.thawaniPendingOrders, '$pendingOrders', Icons.pending, AppColors.warning),
               ],
+            ),
+            AppSpacing.gapH12,
+            // Stats grid - row 3 (sync stats)
+            Row(
+              children: [
+                _statCard('Pending Sync', '$pendingSyncItems', Icons.sync, AppColors.info),
+                AppSpacing.gapW12,
+                _statCard('Syncs Today', '$syncLogsToday', Icons.today, AppColors.purple),
+              ],
+            ),
+            if (failedSyncsToday > 0) ...[
+              AppSpacing.gapH12,
+              Card(
+                elevation: 0,
+                color: AppColors.error.withValues(alpha: 0.1),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AppRadius.md),
+                  side: BorderSide(color: AppColors.error.withValues(alpha: 0.3)),
+                ),
+                child: ListTile(
+                  leading: Icon(Icons.warning_amber, color: AppColors.error),
+                  title: Text(
+                    '$failedSyncsToday failed syncs today',
+                    style: TextStyle(color: AppColors.error, fontWeight: FontWeight.w600),
+                  ),
+                  trailing: TextButton(onPressed: () => context.push(Routes.thawaniSyncLogs), child: const Text('View Logs')),
+                ),
+              ),
+            ],
+            AppSpacing.gapH24,
+            // Quick Actions
+            Text(
+              'Quick Actions',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Theme.of(context).textTheme.bodyLarge?.color),
+            ),
+            AppSpacing.gapH12,
+            _actionTile(
+              icon: Icons.sync,
+              title: 'Sync Management',
+              subtitle: 'Push/pull products & categories',
+              color: AppColors.info,
+              onTap: () => context.push(Routes.thawaniSync),
+            ),
+            _actionTile(
+              icon: Icons.category,
+              title: 'Category Mappings',
+              subtitle: '$totalCategoriesMapped categories mapped',
+              color: AppColors.purple,
+              onTap: () => context.push(Routes.thawaniCategoryMappings),
+            ),
+            _actionTile(
+              icon: Icons.history,
+              title: 'Sync Logs',
+              subtitle: '$syncLogsToday operations today',
+              color: AppColors.success,
+              onTap: () => context.push(Routes.thawaniSyncLogs),
             ),
           ],
         ),
@@ -254,5 +312,32 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
 
   Widget _buildOrders() {
     return PosEmptyState(title: AppLocalizations.of(context)!.thawaniOrdersPlaceholder, icon: Icons.receipt_long);
+  }
+
+  Widget _actionTile({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return Card(
+      elevation: 0,
+      margin: const EdgeInsets.only(bottom: 8),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppRadius.md),
+        side: BorderSide(color: Theme.of(context).dividerColor),
+      ),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: color.withValues(alpha: 0.1),
+          child: Icon(icon, color: color, size: 20),
+        ),
+        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+        subtitle: Text(subtitle, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+        trailing: Icon(Icons.chevron_right, color: AppColors.textSecondary),
+        onTap: onTap,
+      ),
+    );
   }
 }

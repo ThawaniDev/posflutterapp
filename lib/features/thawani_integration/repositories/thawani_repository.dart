@@ -14,6 +14,18 @@ class ThawaniRepository {
       _apiService.getOrders(status: status, perPage: perPage);
   Future<Map<String, dynamic>> getProductMappings() => _apiService.getProductMappings();
   Future<Map<String, dynamic>> getSettlements({int? perPage}) => _apiService.getSettlements(perPage: perPage);
+  Future<Map<String, dynamic>> testConnection() => _apiService.testConnection();
+  Future<Map<String, dynamic>> pushProducts() => _apiService.pushProducts();
+  Future<Map<String, dynamic>> pullProducts() => _apiService.pullProducts();
+  Future<Map<String, dynamic>> getCategoryMappings() => _apiService.getCategoryMappings();
+  Future<Map<String, dynamic>> pushCategories() => _apiService.pushCategories();
+  Future<Map<String, dynamic>> pullCategories() => _apiService.pullCategories();
+  Future<Map<String, dynamic>> getColumnMappings() => _apiService.getColumnMappings();
+  Future<Map<String, dynamic>> seedColumnDefaults() => _apiService.seedColumnDefaults();
+  Future<Map<String, dynamic>> getSyncLogs({String? entityType, String? status, int? perPage}) =>
+      _apiService.getSyncLogs(entityType: entityType, status: status, perPage: perPage);
+  Future<Map<String, dynamic>> getQueueStats() => _apiService.getQueueStats();
+  Future<Map<String, dynamic>> processQueue() => _apiService.processQueue();
 }
 
 final thawaniRepositoryProvider = Provider<ThawaniRepository>((ref) {

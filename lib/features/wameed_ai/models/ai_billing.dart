@@ -3,11 +3,7 @@ class AIBillingSummary {
   final AIBillingCurrentMonth currentMonth;
   final List<AIBillingInvoicePreview> recentInvoices;
 
-  const AIBillingSummary({
-    required this.config,
-    required this.currentMonth,
-    this.recentInvoices = const [],
-  });
+  const AIBillingSummary({required this.config, required this.currentMonth, this.recentInvoices = const []});
 
   factory AIBillingSummary.fromJson(Map<String, dynamic> json) {
     return AIBillingSummary(

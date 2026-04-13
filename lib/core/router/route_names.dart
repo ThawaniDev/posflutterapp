@@ -101,6 +101,9 @@ class Routes {
 
   // Thawani Integration
   static const String thawaniIntegration = '/thawani-integration';
+  static const String thawaniSync = '/thawani-integration/sync';
+  static const String thawaniCategoryMappings = '/thawani-integration/category-mappings';
+  static const String thawaniSyncLogs = '/thawani-integration/sync-logs';
 
   // Delivery
   static const String delivery = '/delivery';

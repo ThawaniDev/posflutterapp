@@ -6,7 +6,7 @@ import 'package:thawani_pos/core/theme/app_typography.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
-import 'package:thawani_pos/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 
 class AdminWameedAIUsageLogsPage extends ConsumerStatefulWidget {
   const AdminWameedAIUsageLogsPage({super.key});
@@ -37,21 +37,20 @@ class _State extends ConsumerState<AdminWameedAIUsageLogsPage> {
   }
 
   Map<String, dynamic> get _filterParams => {
-        if (_from != null && _from!.isNotEmpty) 'from': _from!,
-        if (_to != null && _to!.isNotEmpty) 'to': _to!,
-        if (_feature != null && _feature!.isNotEmpty) 'feature': _feature!,
-        if (_model != null && _model!.isNotEmpty) 'model': _model!,
-        if (_status != null && _status!.isNotEmpty) 'status': _status!,
-        if (_search != null && _search!.isNotEmpty) 'search': _search!,
-        'page': _page,
-        'per_page': 25,
-      };
+    if (_from != null && _from!.isNotEmpty) 'from': _from!,
+    if (_to != null && _to!.isNotEmpty) 'to': _to!,
+    if (_feature != null && _feature!.isNotEmpty) 'feature': _feature!,
+    if (_model != null && _model!.isNotEmpty) 'model': _model!,
+    if (_status != null && _status!.isNotEmpty) 'status': _status!,
+    if (_search != null && _search!.isNotEmpty) 'search': _search!,
+    'page': _page,
+    'per_page': 25,
+  };
 
   void _loadStats() {
-    ref.read(wameedAIAdminLogStatsProvider.notifier).load(params: {
-      if (_from != null && _from!.isNotEmpty) 'from': _from!,
-      if (_to != null && _to!.isNotEmpty) 'to': _to!,
-    });
+    ref
+        .read(wameedAIAdminLogStatsProvider.notifier)
+        .load(params: {if (_from != null && _from!.isNotEmpty) 'from': _from!, if (_to != null && _to!.isNotEmpty) 'to': _to!});
   }
 
   void _loadLogs() {
@@ -71,11 +70,7 @@ class _State extends ConsumerState<AdminWameedAIUsageLogsPage> {
     final logsState = ref.watch(wameedAIAdminLogsProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminWameedAIUsageLogs),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-      ),
+      appBar: AppBar(title: Text(l10n.adminWameedAIUsageLogs), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           // ── Stats Cards ──
@@ -88,11 +83,7 @@ class _State extends ConsumerState<AdminWameedAIUsageLogsPage> {
             child: switch (logsState) {
               WameedAIAdminListLoading() => const Center(child: PosLoading()),
               WameedAIAdminListLoaded(data: final resp) => _buildLogsTable(resp, l10n),
-              WameedAIAdminListError(message: final msg) => PosErrorState(
-                title: l10n.errorLoadingData,
-                message: msg,
-                onRetry: _loadLogs,
-              ),
+              WameedAIAdminListError(message: final msg) => PosErrorState(message: msg, onRetry: _loadLogs),
               _ => Center(child: Text(l10n.loading)),
             },
           ),
@@ -115,60 +106,60 @@ class _State extends ConsumerState<AdminWameedAIUsageLogsPage> {
         childAspectRatio: 2.2,
         children: [
           PosKpiCard(
-            title: l10n.adminWameedAITotalRequests,
+            label: l10n.adminWameedAITotalRequests,
             value: '${data['total_requests'] ?? 0}',
             subtitle: '${l10n.adminWameedAISuccessRate}: ${data['success_rate'] ?? 0}%',
             icon: Icons.api_rounded,
-            color: AppColors.primary,
+            iconColor: AppColors.primary,
           ),
           PosKpiCard(
-            title: l10n.adminWameedAISuccessRate,
+            label: l10n.adminWameedAISuccessRate,
             value: '${data['success_requests'] ?? 0}',
             subtitle: '${data['error_requests'] ?? 0} ${l10n.errors}',
             icon: Icons.check_circle_rounded,
-            color: AppColors.success,
+            iconColor: AppColors.success,
           ),
           PosKpiCard(
-            title: l10n.adminWameedAITotalTokens,
+            label: l10n.adminWameedAITotalTokens,
             value: _fmtLargeNumber(data['total_tokens']),
             subtitle: '${data['cached_requests'] ?? 0} ${l10n.cached}',
             icon: Icons.token_rounded,
-            color: AppColors.info,
+            iconColor: AppColors.info,
           ),
           PosKpiCard(
-            title: l10n.adminWameedAITotalCost,
+            label: l10n.adminWameedAITotalCost,
             value: '\$${_fmtCost(data['total_cost_usd'])}',
             subtitle: '${l10n.adminWameedAIAvgLatency}: ${data['avg_latency_ms'] ?? 0}ms',
             icon: Icons.attach_money_rounded,
-            color: AppColors.warning,
+            iconColor: AppColors.warning,
           ),
           PosKpiCard(
-            title: l10n.adminWameedAIActiveStores,
+            label: l10n.adminWameedAIActiveStores,
             value: '${data['unique_stores'] ?? 0}',
             subtitle: l10n.adminWameedAIUniqueStoresUsing,
             icon: Icons.store_rounded,
-            color: const Color(0xFF6366F1),
+            iconColor: const Color(0xFF6366F1),
           ),
           PosKpiCard(
-            title: l10n.adminWameedAICacheHitRate,
+            label: l10n.adminWameedAICacheHitRate,
             value: '${data['cache_hit_rate'] ?? 0}%',
             subtitle: '${data['cached_requests'] ?? 0} ${l10n.cached}',
             icon: Icons.cached_rounded,
-            color: const Color(0xFF10B981),
+            iconColor: const Color(0xFF10B981),
           ),
           PosKpiCard(
-            title: l10n.adminWameedAITopFeature,
+            label: l10n.adminWameedAITopFeature,
             value: _truncate(data['top_feature']?.toString() ?? '-', 20),
             subtitle: '${data['top_feature_count'] ?? 0} ${l10n.requests}',
             icon: Icons.star_rounded,
-            color: const Color(0xFFF59E0B),
+            iconColor: const Color(0xFFF59E0B),
           ),
           PosKpiCard(
-            title: l10n.adminWameedAITopModel,
+            label: l10n.adminWameedAITopModel,
             value: _truncate(data['top_model']?.toString() ?? '-', 22),
             subtitle: '\$${_fmtCost(data['top_model_cost'])} ${l10n.cost}',
             icon: Icons.psychology_rounded,
-            color: const Color(0xFFEC4899),
+            iconColor: const Color(0xFFEC4899),
           ),
         ],
       ),
@@ -184,37 +175,19 @@ class _State extends ConsumerState<AdminWameedAIUsageLogsPage> {
         children: [
           SizedBox(
             width: 140,
-            child: PosTextField(
-              label: l10n.from,
-              hint: 'YYYY-MM-DD',
-              initialValue: _from,
-              onChanged: (v) => _from = v,
-            ),
+            child: PosTextField(label: l10n.from, hint: _from ?? 'YYYY-MM-DD', onChanged: (v) => _from = v),
           ),
           SizedBox(
             width: 140,
-            child: PosTextField(
-              label: l10n.to,
-              hint: 'YYYY-MM-DD',
-              initialValue: _to,
-              onChanged: (v) => _to = v,
-            ),
+            child: PosTextField(label: l10n.to, hint: _to ?? 'YYYY-MM-DD', onChanged: (v) => _to = v),
           ),
           SizedBox(
             width: 160,
-            child: PosTextField(
-              label: l10n.feature,
-              hint: l10n.allFeatures,
-              onChanged: (v) => _feature = v,
-            ),
+            child: PosTextField(label: l10n.feature, hint: l10n.allFeatures, onChanged: (v) => _feature = v),
           ),
           SizedBox(
             width: 160,
-            child: PosTextField(
-              label: l10n.model,
-              hint: l10n.allModels,
-              onChanged: (v) => _model = v,
-            ),
+            child: PosTextField(label: l10n.model, hint: l10n.allModels, onChanged: (v) => _model = v),
           ),
           SizedBox(
             width: 120,
@@ -234,10 +207,7 @@ class _State extends ConsumerState<AdminWameedAIUsageLogsPage> {
           ),
           SizedBox(
             width: 200,
-            child: PosSearchField(
-              hint: l10n.searchLogs,
-              onChanged: (v) => _search = v,
-            ),
+            child: PosSearchField(hint: l10n.searchLogs, onChanged: (v) => _search = v),
           ),
           PosButton(label: l10n.apply, onPressed: _applyFilters, size: PosButtonSize.sm),
         ],
@@ -253,11 +223,7 @@ class _State extends ConsumerState<AdminWameedAIUsageLogsPage> {
     final lastPage = data['last_page'] as int? ?? 1;
 
     if (items.isEmpty) {
-      return PosEmptyState(
-        title: l10n.noLogsFound,
-        message: l10n.adjustFilters,
-        icon: Icons.list_alt_rounded,
-      );
+      return PosEmptyState(title: l10n.noLogsFound, subtitle: l10n.adjustFilters, icon: Icons.list_alt_rounded);
     }
 
     return Column(
@@ -278,29 +244,37 @@ class _State extends ConsumerState<AdminWameedAIUsageLogsPage> {
                   DataColumn(label: Text(l10n.cost), numeric: true),
                   DataColumn(label: Text(l10n.latency), numeric: true),
                   DataColumn(label: Text(l10n.cached)),
-                  DataColumn(label: Text(l10n.date)),
+                  DataColumn(label: Text('Date')),
                 ],
                 rows: items.map((log) {
                   final status = log['status']?.toString() ?? '';
-                  return DataRow(cells: [
-                    DataCell(Text(log['store_name']?.toString() ?? log['store_id']?.toString() ?? '')),
-                    DataCell(Text(log['user_name']?.toString() ?? log['user_id']?.toString() ?? '-')),
-                    DataCell(Text(log['feature_slug']?.toString() ?? '')),
-                    DataCell(Text(_truncate(log['model_used']?.toString() ?? '', 20))),
-                    DataCell(PosBadge(
-                      label: status,
-                      color: status == 'success' ? AppColors.success : (status == 'error' ? AppColors.error : AppColors.warning),
-                    )),
-                    DataCell(Text('${log['total_tokens'] ?? 0}')),
-                    DataCell(Text('\$${_fmtCost(log['estimated_cost_usd'])}')),
-                    DataCell(Text('${log['latency_ms'] ?? 0}ms')),
-                    DataCell(Icon(
-                      log['response_cached'] == true ? Icons.check_circle : Icons.cancel,
-                      size: 16,
-                      color: log['response_cached'] == true ? AppColors.success : AppColors.textMutedLight,
-                    )),
-                    DataCell(Text(_fmtDate(log['created_at']))),
-                  ]);
+                  return DataRow(
+                    cells: [
+                      DataCell(Text(log['store_name']?.toString() ?? log['store_id']?.toString() ?? '')),
+                      DataCell(Text(log['user_name']?.toString() ?? log['user_id']?.toString() ?? '-')),
+                      DataCell(Text(log['feature_slug']?.toString() ?? '')),
+                      DataCell(Text(_truncate(log['model_used']?.toString() ?? '', 20))),
+                      DataCell(
+                        PosBadge(
+                          label: status,
+                          customColor: status == 'success'
+                              ? AppColors.success
+                              : (status == 'error' ? AppColors.error : AppColors.warning),
+                        ),
+                      ),
+                      DataCell(Text('${log['total_tokens'] ?? 0}')),
+                      DataCell(Text('\$${_fmtCost(log['estimated_cost_usd'])}')),
+                      DataCell(Text('${log['latency_ms'] ?? 0}ms')),
+                      DataCell(
+                        Icon(
+                          log['response_cached'] == true ? Icons.check_circle : Icons.cancel,
+                          size: 16,
+                          color: log['response_cached'] == true ? AppColors.success : AppColors.textMutedLight,
+                        ),
+                      ),
+                      DataCell(Text(_fmtDate(log['created_at']))),
+                    ],
+                  );
                 }).toList(),
               ),
             ),
@@ -316,12 +290,22 @@ class _State extends ConsumerState<AdminWameedAIUsageLogsPage> {
               Row(
                 children: [
                   IconButton(
-                    onPressed: currentPage > 1 ? () { _page = currentPage - 1; _loadLogs(); } : null,
+                    onPressed: currentPage > 1
+                        ? () {
+                            _page = currentPage - 1;
+                            _loadLogs();
+                          }
+                        : null,
                     icon: const Icon(Icons.chevron_left),
                   ),
                   Text('$currentPage / $lastPage', style: AppTypography.bodySmall),
                   IconButton(
-                    onPressed: currentPage < lastPage ? () { _page = currentPage + 1; _loadLogs(); } : null,
+                    onPressed: currentPage < lastPage
+                        ? () {
+                            _page = currentPage + 1;
+                            _loadLogs();
+                          }
+                        : null,
                     icon: const Icon(Icons.chevron_right),
                   ),
                 ],

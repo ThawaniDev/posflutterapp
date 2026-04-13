@@ -156,11 +156,11 @@ class AIStoreFeatureConfig {
     return AIStoreFeatureConfig(
       id: json['id'] as String,
       storeId: json['store_id'] as String,
-      featureId: json['feature_id'] as String,
+      featureId: json['feature_id'] as String? ?? json['ai_feature_definition_id'] as String? ?? '',
       isEnabled: json['is_enabled'] as bool? ?? true,
       dailyLimit: (json['daily_limit'] as num?)?.toInt(),
       monthlyLimit: (json['monthly_limit'] as num?)?.toInt(),
-      customConfig: json['custom_config'] as Map<String, dynamic>?,
+      customConfig: json['custom_config'] as Map<String, dynamic>? ?? json['settings_json'] as Map<String, dynamic>?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );

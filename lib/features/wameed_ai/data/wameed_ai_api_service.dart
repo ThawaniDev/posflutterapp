@@ -179,10 +179,7 @@ class WameedAIApiService {
   }
 
   Future<PaginatedResult<AIBillingInvoicePreview>> getBillingInvoices({int page = 1, int perPage = 20}) async {
-    final response = await _dio.get(
-      ApiEndpoints.wameedAIBillingInvoices,
-      queryParameters: {'page': page, 'per_page': perPage},
-    );
+    final response = await _dio.get(ApiEndpoints.wameedAIBillingInvoices, queryParameters: {'page': page, 'per_page': perPage});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     final map = apiResponse.data as Map<String, dynamic>;
     final items = (map['data'] as List).map((j) => AIBillingInvoicePreview.fromJson(j as Map<String, dynamic>)).toList();

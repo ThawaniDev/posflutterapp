@@ -27,11 +27,7 @@ class AdminStatsKpiSection extends ConsumerWidget {
   final StateNotifierProvider<StateNotifier<AdminStatsState>, AdminStatsState> provider;
   final List<KpiDef> Function(Map<String, dynamic> data) cardBuilder;
 
-  const AdminStatsKpiSection({
-    super.key,
-    required this.provider,
-    required this.cardBuilder,
-  });
+  const AdminStatsKpiSection({super.key, required this.provider, required this.cardBuilder});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,9 +35,9 @@ class AdminStatsKpiSection extends ConsumerWidget {
 
     return switch (state) {
       AdminStatsLoading() => const Padding(
-          padding: EdgeInsets.all(AppSpacing.md),
-          child: Center(child: SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2))),
-        ),
+        padding: EdgeInsets.all(AppSpacing.md),
+        child: Center(child: SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2))),
+      ),
       AdminStatsLoaded(data: final resp) => _buildGrid(context, resp),
       AdminStatsError() || AdminStatsInitial() => const SizedBox.shrink(),
     };
@@ -80,22 +76,39 @@ class AdminStatsKpiSection extends ConsumerWidget {
           children: [
             Row(
               children: [
-                Container(width: 3, height: 20, decoration: BoxDecoration(color: d.color, borderRadius: BorderRadius.circular(2))),
+                Container(
+                  width: 3,
+                  height: 20,
+                  decoration: BoxDecoration(color: d.color, borderRadius: BorderRadius.circular(2)),
+                ),
                 const SizedBox(width: 6),
                 Expanded(
-                  child: Text(d.label, style: const TextStyle(fontSize: 11, color: AppColors.textSecondaryLight), maxLines: 1, overflow: TextOverflow.ellipsis),
+                  child: Text(
+                    d.label,
+                    style: const TextStyle(fontSize: 11, color: AppColors.textSecondaryLight),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 2),
             Padding(
               padding: const EdgeInsets.only(left: 9),
-              child: Text(d.value, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: d.color)),
+              child: Text(
+                d.value,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: d.color),
+              ),
             ),
             if (d.subtitle != null)
               Padding(
                 padding: const EdgeInsets.only(left: 9),
-                child: Text(d.subtitle!, style: const TextStyle(fontSize: 10, color: AppColors.textMutedLight), maxLines: 1, overflow: TextOverflow.ellipsis),
+                child: Text(
+                  d.subtitle!,
+                  style: const TextStyle(fontSize: 10, color: AppColors.textMutedLight),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
           ],
         ),

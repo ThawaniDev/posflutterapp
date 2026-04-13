@@ -254,6 +254,9 @@ import 'package:thawani_pos/features/delivery_integration/pages/delivery_webhook
 import 'package:thawani_pos/features/delivery_integration/pages/delivery_status_push_logs_page.dart';
 // Thawani Integration
 import 'package:thawani_pos/features/thawani_integration/pages/thawani_dashboard_page.dart';
+import 'package:thawani_pos/features/thawani_integration/pages/thawani_sync_page.dart';
+import 'package:thawani_pos/features/thawani_integration/pages/thawani_category_mappings_page.dart';
+import 'package:thawani_pos/features/thawani_integration/pages/thawani_sync_logs_page.dart';
 // Branches
 import 'package:thawani_pos/features/branches/pages/branch_list_page.dart';
 import 'package:thawani_pos/features/branches/pages/branch_detail_page.dart';
@@ -1289,6 +1292,17 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             name: 'thawaniIntegration',
             builder: (context, state) => const ThawaniDashboardPage(),
           ),
+          GoRoute(path: Routes.thawaniSync, name: 'thawaniSync', builder: (context, state) => const ThawaniSyncPage()),
+          GoRoute(
+            path: Routes.thawaniCategoryMappings,
+            name: 'thawaniCategoryMappings',
+            builder: (context, state) => const ThawaniCategoryMappingsPage(),
+          ),
+          GoRoute(
+            path: Routes.thawaniSyncLogs,
+            name: 'thawaniSyncLogs',
+            builder: (context, state) => const ThawaniSyncLogsPage(),
+          ),
 
           // ─── Delivery Integration ───
           GoRoute(path: Routes.delivery, name: 'delivery', builder: (context, state) => const DeliveryDashboardPage()),
@@ -1458,7 +1472,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
           GoRoute(path: Routes.wameedAIUsage, name: 'wameedAIUsage', builder: (context, state) => const AIUsagePage()),
           GoRoute(path: Routes.wameedAIBilling, name: 'wameedAIBilling', builder: (context, state) => const AIBillingPage()),
-          GoRoute(path: Routes.wameedAIBillingInvoices, name: 'wameedAIBillingInvoices', builder: (context, state) => const AIBillingInvoicesPage()),
+          GoRoute(
+            path: Routes.wameedAIBillingInvoices,
+            name: 'wameedAIBillingInvoices',
+            builder: (context, state) => const AIBillingInvoicesPage(),
+          ),
           GoRoute(
             path: '${Routes.wameedAIBillingInvoices}/:invoiceId',
             name: 'wameedAIBillingInvoiceDetail',

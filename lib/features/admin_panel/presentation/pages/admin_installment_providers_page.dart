@@ -68,7 +68,6 @@ class _AdminInstallmentProvidersPageState extends ConsumerState<AdminInstallment
     final isAr = Localizations.localeOf(context).languageCode == 'ar';
     final name = isAr ? (provider.nameAr ?? provider.name) : provider.name;
     final description = isAr ? (provider.descriptionAr ?? provider.description) : provider.description;
-    final cardColor = isDark ? AppColors.cardDark : AppColors.cardLight;
 
     return PosCard(
       child: Padding(

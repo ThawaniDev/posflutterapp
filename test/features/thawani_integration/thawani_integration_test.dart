@@ -113,15 +113,23 @@ void main() {
         thawaniStoreId: 'T-001',
         totalOrders: 50,
         totalProductsMapped: 25,
+        totalCategoriesMapped: 8,
         totalSettlements: 10,
         pendingOrders: 3,
+        pendingSyncItems: 2,
+        syncLogsToday: 12,
+        failedSyncsToday: 1,
       );
       expect(state.isConnected, true);
       expect(state.thawaniStoreId, 'T-001');
       expect(state.totalOrders, 50);
       expect(state.totalProductsMapped, 25);
+      expect(state.totalCategoriesMapped, 8);
       expect(state.totalSettlements, 10);
       expect(state.pendingOrders, 3);
+      expect(state.pendingSyncItems, 2);
+      expect(state.syncLogsToday, 12);
+      expect(state.failedSyncsToday, 1);
     });
 
     test('ThawaniStatsError holds message', () {

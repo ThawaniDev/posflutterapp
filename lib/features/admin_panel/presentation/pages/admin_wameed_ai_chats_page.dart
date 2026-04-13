@@ -6,7 +6,7 @@ import 'package:thawani_pos/core/theme/app_typography.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
-import 'package:thawani_pos/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 
 class AdminWameedAIChatsPage extends ConsumerStatefulWidget {
   const AdminWameedAIChatsPage({super.key});
@@ -31,13 +31,17 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
   }
 
   void _load() {
-    ref.read(wameedAIAdminChatsProvider.notifier).load(params: {
-      'page': _page,
-      'per_page': 25,
-      if (_search != null && _search!.isNotEmpty) 'search': _search!,
-      if (_from != null && _from!.isNotEmpty) 'from': _from!,
-      if (_to != null && _to!.isNotEmpty) 'to': _to!,
-    });
+    ref
+        .read(wameedAIAdminChatsProvider.notifier)
+        .load(
+          params: {
+            'page': _page,
+            'per_page': 25,
+            if (_search != null && _search!.isNotEmpty) 'search': _search!,
+            if (_from != null && _from!.isNotEmpty) 'from': _from!,
+            if (_to != null && _to!.isNotEmpty) 'to': _to!,
+          },
+        );
   }
 
   @override
@@ -46,11 +50,7 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
     final state = ref.watch(wameedAIAdminChatsProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminWameedAIChats),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-      ),
+      appBar: AppBar(title: Text(l10n.adminWameedAIChats), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           _buildFilters(l10n),
@@ -59,8 +59,7 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
             child: switch (state) {
               WameedAIAdminListLoading() => const Center(child: PosLoading()),
               WameedAIAdminListLoaded(data: final resp) => _buildContent(resp, l10n),
-              WameedAIAdminListError(message: final msg) => PosErrorState(
-                title: l10n.errorLoadingData, message: msg, onRetry: _load),
+              WameedAIAdminListError(message: final msg) => PosErrorState(message: msg, onRetry: _load),
               _ => Center(child: Text(l10n.loading)),
             },
           ),
@@ -74,13 +73,28 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Row(
         children: [
-          Expanded(child: PosSearchField(hint: l10n.searchChats, onChanged: (v) => _search = v)),
+          Expanded(
+            child: PosSearchField(hint: l10n.searchChats, onChanged: (v) => _search = v),
+          ),
           const SizedBox(width: AppSpacing.sm),
-          SizedBox(width: 140, child: PosTextField(label: l10n.from, hint: 'YYYY-MM-DD', initialValue: _from, onChanged: (v) => _from = v)),
+          SizedBox(
+            width: 140,
+            child: PosTextField(label: l10n.from, hint: _from ?? 'YYYY-MM-DD', onChanged: (v) => _from = v),
+          ),
           const SizedBox(width: AppSpacing.sm),
-          SizedBox(width: 140, child: PosTextField(label: l10n.to, hint: 'YYYY-MM-DD', initialValue: _to, onChanged: (v) => _to = v)),
+          SizedBox(
+            width: 140,
+            child: PosTextField(label: l10n.to, hint: _to ?? 'YYYY-MM-DD', onChanged: (v) => _to = v),
+          ),
           const SizedBox(width: AppSpacing.sm),
-          PosButton(label: l10n.apply, onPressed: () { _page = 1; _load(); }, size: PosButtonSize.sm),
+          PosButton(
+            label: l10n.apply,
+            onPressed: () {
+              _page = 1;
+              _load();
+            },
+            size: PosButtonSize.sm,
+          ),
         ],
       ),
     );
@@ -117,32 +131,32 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
             childAspectRatio: 2.5,
             children: [
               PosKpiCard(
-                title: l10n.adminWameedAITotalChats,
+                label: l10n.adminWameedAITotalChats,
                 value: '$total',
                 subtitle: l10n.adminWameedAIAllConversations,
                 icon: Icons.chat_bubble_rounded,
-                color: AppColors.primary,
+                iconColor: AppColors.primary,
               ),
               PosKpiCard(
-                title: l10n.adminWameedAITotalMessages,
+                label: l10n.adminWameedAITotalMessages,
                 value: '$totalMessages',
                 subtitle: '${l10n.adminWameedAIInPage} ${chats.length} ${l10n.adminWameedAIChats}',
                 icon: Icons.message_rounded,
-                color: AppColors.info,
+                iconColor: AppColors.info,
               ),
               PosKpiCard(
-                title: l10n.adminWameedAIChatCost,
+                label: l10n.adminWameedAIChatCost,
                 value: '\$${totalCost.toStringAsFixed(4)}',
                 subtitle: '${_fmtLargeNumber(totalTokens)} ${l10n.tokens}',
                 icon: Icons.attach_money_rounded,
-                color: AppColors.warning,
+                iconColor: AppColors.warning,
               ),
               PosKpiCard(
-                title: l10n.adminWameedAIAvgMessages,
+                label: l10n.adminWameedAIAvgMessages,
                 value: chats.isNotEmpty ? (totalMessages / chats.length).toStringAsFixed(1) : '0',
                 subtitle: l10n.adminWameedAIPerChat,
                 icon: Icons.analytics_rounded,
-                color: AppColors.success,
+                iconColor: AppColors.success,
               ),
             ],
           ),
@@ -151,7 +165,7 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
         // ── Chat List ──
         Expanded(
           child: chats.isEmpty
-              ? PosEmptyState(title: l10n.noChatsFound, message: l10n.adjustFilters, icon: Icons.chat_rounded)
+              ? PosEmptyState(title: l10n.noChatsFound, subtitle: l10n.adjustFilters, icon: Icons.chat_rounded)
               : ListView.separated(
                   padding: const EdgeInsets.all(AppSpacing.md),
                   itemCount: chats.length,
@@ -169,12 +183,22 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
               Row(
                 children: [
                   IconButton(
-                    onPressed: currentPage > 1 ? () { _page = currentPage - 1; _load(); } : null,
+                    onPressed: currentPage > 1
+                        ? () {
+                            _page = currentPage - 1;
+                            _load();
+                          }
+                        : null,
                     icon: const Icon(Icons.chevron_left),
                   ),
                   Text('$currentPage / $lastPage', style: AppTypography.bodySmall),
                   IconButton(
-                    onPressed: currentPage < lastPage ? () { _page = currentPage + 1; _load(); } : null,
+                    onPressed: currentPage < lastPage
+                        ? () {
+                            _page = currentPage + 1;
+                            _load();
+                          }
+                        : null,
                     icon: const Icon(Icons.chevron_right),
                   ),
                 ],
@@ -202,11 +226,9 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
         child: Row(
           children: [
             Container(
-              width: 44, height: 44,
-              decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(10),
-              ),
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
               child: const Icon(Icons.chat_rounded, color: AppColors.primary),
             ),
             const SizedBox(width: AppSpacing.md),
@@ -214,7 +236,12 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: AppTypography.titleSmall.copyWith(fontWeight: FontWeight.w600), maxLines: 1, overflow: TextOverflow.ellipsis),
+                  Text(
+                    title,
+                    style: AppTypography.titleSmall.copyWith(fontWeight: FontWeight.w600),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   const SizedBox(height: 2),
                   Text(
                     '$modelName • ${messageCount.toInt()} ${l10n.messages} • \$${cost.toStringAsFixed(4)}',
@@ -223,7 +250,10 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
                 ],
               ),
             ),
-            Text(_fmtDate(lastMsg.isNotEmpty ? lastMsg : createdAt), style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
+            Text(
+              _fmtDate(lastMsg.isNotEmpty ? lastMsg : createdAt),
+              style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight),
+            ),
           ],
         ),
       ),
@@ -282,7 +312,10 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(role.toUpperCase(), style: AppTypography.micro.copyWith(color: AppColors.textMutedLight, fontWeight: FontWeight.bold)),
+                Text(
+                  role.toUpperCase(),
+                  style: AppTypography.micro.copyWith(color: AppColors.textMutedLight, fontWeight: FontWeight.bold),
+                ),
                 const SizedBox(height: 4),
                 SelectableText(content, style: AppTypography.bodySmall),
               ],

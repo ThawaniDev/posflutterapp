@@ -8,7 +8,6 @@ import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/payments/enums/installment_provider.dart';
 import 'package:thawani_pos/features/payments/models/installment_payment.dart';
 import 'package:thawani_pos/features/payments/providers/installment_providers.dart';
-import 'package:thawani_pos/features/payments/providers/installment_state.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 /// Full-screen WebView checkout page for Tamara, MisPay, and Madfu.

@@ -6,7 +6,7 @@ import 'package:thawani_pos/core/theme/app_typography.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
-import 'package:thawani_pos/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 
 class AdminWameedAIFeaturesPage extends ConsumerStatefulWidget {
   const AdminWameedAIFeaturesPage({super.key});
@@ -36,25 +36,16 @@ class _State extends ConsumerState<AdminWameedAIFeaturesPage> {
         _reload();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.success)));
       } else if (next is WameedAIAdminActionError) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(next.message), backgroundColor: AppColors.error));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
       }
     });
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminWameedAIFeatures),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-      ),
+      appBar: AppBar(title: Text(l10n.adminWameedAIFeatures), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: switch (state) {
         WameedAIAdminListLoading() => const Center(child: PosLoading()),
         WameedAIAdminListLoaded(data: final resp) => _buildContent(resp, l10n),
-        WameedAIAdminListError(message: final msg) => PosErrorState(
-          title: l10n.errorLoadingData,
-          message: msg,
-          onRetry: _reload,
-        ),
+        WameedAIAdminListError(message: final msg) => PosErrorState(message: msg, onRetry: _reload),
         _ => Center(child: Text(l10n.loading)),
       },
     );
@@ -98,32 +89,32 @@ class _State extends ConsumerState<AdminWameedAIFeaturesPage> {
               childAspectRatio: 2.2,
               children: [
                 PosKpiCard(
-                  title: l10n.adminWameedAITotalFeatures,
+                  label: l10n.adminWameedAITotalFeatures,
                   value: '$total',
                   subtitle: '${categories.length} ${l10n.categories}',
                   icon: Icons.auto_awesome_rounded,
-                  color: AppColors.primary,
+                  iconColor: AppColors.primary,
                 ),
                 PosKpiCard(
-                  title: l10n.adminWameedAIEnabledFeatures,
+                  label: l10n.adminWameedAIEnabledFeatures,
                   value: '$enabled',
                   subtitle: '${total - enabled} ${l10n.disabled}',
                   icon: Icons.toggle_on_rounded,
-                  color: AppColors.success,
+                  iconColor: AppColors.success,
                 ),
                 PosKpiCard(
-                  title: l10n.adminWameedAICategories,
+                  label: l10n.adminWameedAICategories,
                   value: '${categories.length}',
                   subtitle: l10n.adminWameedAIFeatureCategories,
                   icon: Icons.category_rounded,
-                  color: AppColors.info,
+                  iconColor: AppColors.info,
                 ),
                 PosKpiCard(
-                  title: l10n.adminWameedAIEnableRate,
+                  label: l10n.adminWameedAIEnableRate,
                   value: total > 0 ? '${((enabled / total) * 100).toStringAsFixed(0)}%' : '0%',
                   subtitle: '$enabled / $total',
                   icon: Icons.percent_rounded,
-                  color: AppColors.warning,
+                  iconColor: AppColors.warning,
                 ),
               ],
             ),
@@ -139,29 +130,30 @@ class _State extends ConsumerState<AdminWameedAIFeaturesPage> {
                   selectedColor: AppColors.primary,
                   labelStyle: TextStyle(color: _categoryFilter == null ? Colors.white : null),
                 ),
-                ...categories.map((c) => ChoiceChip(
-                  label: Text(_formatCategory(c)),
-                  selected: _categoryFilter == c,
-                  onSelected: (_) => setState(() => _categoryFilter = _categoryFilter == c ? null : c),
-                  selectedColor: AppColors.primary,
-                  labelStyle: TextStyle(color: _categoryFilter == c ? Colors.white : null),
-                )),
+                ...categories.map(
+                  (c) => ChoiceChip(
+                    label: Text(_formatCategory(c)),
+                    selected: _categoryFilter == c,
+                    onSelected: (_) => setState(() => _categoryFilter = _categoryFilter == c ? null : c),
+                    selectedColor: AppColors.primary,
+                    labelStyle: TextStyle(color: _categoryFilter == c ? Colors.white : null),
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: AppSpacing.lg),
             // ── Feature List by Category ──
-            ...filteredGroups.entries.map((entry) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _formatCategory(entry.key),
-                  style: AppTypography.titleMedium.copyWith(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                ...entry.value.map((f) => _featureCard(f, l10n)),
-                const SizedBox(height: AppSpacing.md),
-              ],
-            )),
+            ...filteredGroups.entries.map(
+              (entry) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(_formatCategory(entry.key), style: AppTypography.titleMedium.copyWith(fontWeight: FontWeight.bold)),
+                  const SizedBox(height: AppSpacing.sm),
+                  ...entry.value.map((f) => _featureCard(f, l10n)),
+                  const SizedBox(height: AppSpacing.md),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -211,8 +203,6 @@ class _State extends ConsumerState<AdminWameedAIFeaturesPage> {
   }
 
   String _formatCategory(String cat) {
-    return cat.replaceAll('_', ' ').split(' ').map((w) =>
-      w.isNotEmpty ? '${w[0].toUpperCase()}${w.substring(1)}' : w
-    ).join(' ');
+    return cat.replaceAll('_', ' ').split(' ').map((w) => w.isNotEmpty ? '${w[0].toUpperCase()}${w.substring(1)}' : w).join(' ');
   }
 }

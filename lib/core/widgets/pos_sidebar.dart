@@ -440,6 +440,12 @@ class PosSidebar extends StatefulWidget {
               permission: Permissions.wameedAiView,
             ),
             PosSidebarItem(
+              label: l10n.wameedAIBilling,
+              icon: Icons.payment_rounded,
+              route: '/wameed-ai/billing',
+              permission: Permissions.wameedAiView,
+            ),
+            PosSidebarItem(
               label: l10n.wameedAISettings,
               icon: Icons.settings_rounded,
               route: '/wameed-ai/settings',
@@ -588,57 +594,6 @@ class PosSidebar extends StatefulWidget {
               icon: Icons.menu_book_rounded,
               route: '/support/kb',
               permission: Permissions.supportView,
-            ),
-          ],
-        ),
-      ],
-    ),
-    // Platform Admin
-    PosSidebarGroup(
-      label: l10n.sidebarGroupPlatformAdmin,
-      icon: Icons.admin_panel_settings_rounded,
-      items: [
-        PosSidebarItem(
-          label: l10n.sidebarAdminWameedAI,
-          icon: Icons.auto_awesome_rounded,
-          route: '/admin/wameed-ai',
-          permission: Permissions.adminWameedAiView,
-          children: [
-            PosSidebarItem(
-              label: l10n.adminWameedAIUsageLogs,
-              icon: Icons.history_rounded,
-              route: '/admin/wameed-ai/usage-logs',
-              permission: Permissions.adminWameedAiView,
-            ),
-            PosSidebarItem(
-              label: l10n.adminWameedAIProviders,
-              icon: Icons.business_rounded,
-              route: '/admin/wameed-ai/providers',
-              permission: Permissions.adminWameedAiView,
-            ),
-            PosSidebarItem(
-              label: l10n.adminWameedAIFeatures,
-              icon: Icons.extension_rounded,
-              route: '/admin/wameed-ai/features',
-              permission: Permissions.adminWameedAiManage,
-            ),
-            PosSidebarItem(
-              label: l10n.adminWameedAILlmModels,
-              icon: Icons.memory_rounded,
-              route: '/admin/wameed-ai/llm-models',
-              permission: Permissions.adminWameedAiManage,
-            ),
-            PosSidebarItem(
-              label: l10n.adminWameedAIChats,
-              icon: Icons.chat_rounded,
-              route: '/admin/wameed-ai/chats',
-              permission: Permissions.adminWameedAiView,
-            ),
-            PosSidebarItem(
-              label: l10n.adminWameedAIBilling,
-              icon: Icons.payment_rounded,
-              route: '/admin/wameed-ai/billing',
-              permission: Permissions.adminWameedAiManage,
             ),
           ],
         ),

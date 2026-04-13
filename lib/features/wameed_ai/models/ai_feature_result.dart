@@ -10,13 +10,14 @@ class AIFeatureResult {
 
   factory AIFeatureResult.fromJson(Map<String, dynamic> json) {
     final innerData = json['data'] as Map<String, dynamic>?;
+    final usage = innerData?['usage'] as Map<String, dynamic>?;
     return AIFeatureResult(
       success: json['success'] as bool? ?? false,
       message: json['message'] as String?,
       data: innerData,
       cached: innerData?['cached'] as bool? ?? false,
-      tokensUsed: (innerData?['tokens_used'] as num?)?.toInt(),
-      cost: (innerData?['cost'] as num?)?.toDouble(),
+      tokensUsed: (innerData?['tokens_used'] as num?)?.toInt() ?? (usage?['total_tokens'] as num?)?.toInt(),
+      cost: (innerData?['cost'] as num?)?.toDouble() ?? (usage?['estimated_cost_usd'] as num?)?.toDouble(),
     );
   }
 
