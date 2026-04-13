@@ -7,6 +7,7 @@ import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 
 class AdminNotificationLogListPage extends ConsumerStatefulWidget {
   const AdminNotificationLogListPage({super.key});
@@ -27,6 +28,7 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       _applyFilters();
+      ref.read(logStatsProvider.notifier).load();
     });
   }
 
@@ -68,6 +70,18 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          AdminStatsKpiSection(
+            provider: logStatsProvider,
+            cardBuilder: (data) {
+              final n = data['notifications'] as Map<String, dynamic>? ?? {};
+              return [
+                kpi('Total Sent', n['total'] ?? 0, AppColors.primary),
+                kpi('Today', n['today'] ?? 0, AppColors.info),
+                kpi('Failed', n['failed'] ?? 0, AppColors.error),
+                kpi('Channels', (n['channel_breakdown'] as Map?)?.length ?? 0, AppColors.success),
+              ];
+            },
+          ),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Builder(

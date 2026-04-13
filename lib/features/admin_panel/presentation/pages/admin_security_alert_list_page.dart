@@ -7,6 +7,7 @@ import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 
 class AdminSecurityAlertListPage extends ConsumerStatefulWidget {
   const AdminSecurityAlertListPage({super.key});
@@ -27,6 +28,7 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       _applyFilters();
+      ref.read(logStatsProvider.notifier).load();
     });
   }
 
@@ -75,6 +77,18 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          AdminStatsKpiSection(
+            provider: logStatsProvider,
+            cardBuilder: (data) {
+              final s = data['security'] as Map<String, dynamic>? ?? {};
+              return [
+                kpi('Total Alerts', s['total'] ?? 0, AppColors.primary),
+                kpi('Unresolved', s['unresolved'] ?? 0, AppColors.warning),
+                kpi('Critical', s['critical'] ?? 0, AppColors.error),
+                kpi('Last 24h', s['last_24h'] ?? 0, AppColors.info),
+              ];
+            },
+          ),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Builder(

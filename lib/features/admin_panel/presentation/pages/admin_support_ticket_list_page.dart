@@ -8,6 +8,7 @@ import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 
 class AdminSupportTicketListPage extends ConsumerStatefulWidget {
   const AdminSupportTicketListPage({super.key});
@@ -29,6 +30,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       _applyFilters();
+      ref.read(supportStatsProvider.notifier).load();
     });
   }
 
@@ -86,6 +88,17 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          AdminStatsKpiSection(
+            provider: supportStatsProvider,
+            cardBuilder: (data) => [
+              kpi('Total Tickets', data['total'] ?? 0, AppColors.primary),
+              kpi('Open', data['open'] ?? 0, AppColors.info),
+              kpi('In Progress', data['in_progress'] ?? 0, AppColors.warning),
+              kpi('SLA Breached', data['sla_breached'] ?? 0, AppColors.error),
+              kpi('Unresolved', data['unresolved'] ?? 0, const Color(0xFFF59E0B)),
+              kpi('Resolved Today', data['resolved_today'] ?? 0, AppColors.success),
+            ],
+          ),
           // ── Filters ──
           Padding(
             padding: const EdgeInsets.all(AppSpacing.md),

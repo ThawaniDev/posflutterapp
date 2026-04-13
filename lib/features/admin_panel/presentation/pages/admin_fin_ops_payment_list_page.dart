@@ -8,6 +8,7 @@ import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_payment_detail_page.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 
 class AdminFinOpsPaymentListPage extends ConsumerStatefulWidget {
   const AdminFinOpsPaymentListPage({super.key});
@@ -26,6 +27,7 @@ class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       _applyFilter();
+      ref.read(finOpsStatsProvider.notifier).load(storeId: _storeId);
     });
   }
 
@@ -50,6 +52,19 @@ class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          AdminStatsKpiSection(
+            provider: finOpsStatsProvider,
+            cardBuilder: (data) {
+              final p = data['payments'] as Map<String, dynamic>? ?? {};
+              final r = data['refunds'] as Map<String, dynamic>? ?? {};
+              return [
+                kpi('Total Payments', p['total'] ?? 0, AppColors.primary),
+                kpi('Total Amount', '\u0081. ${_fmtAmt(p['total_amount'])}', AppColors.success),
+                kpi('Refunds', r['total'] ?? 0, AppColors.warning, '${r['pending'] ?? 0} pending'),
+                kpi('Refund Amount', '\u0081. ${_fmtAmt(r['total_amount'])}', AppColors.error),
+              ];
+            },
+          ),
           _buildFilters(),
           Expanded(
             child: switch (state) {
@@ -155,4 +170,10 @@ class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
     'mobile_payment' => Icons.phone_android,
     _ => Icons.payment,
   };
+
+  String _fmtAmt(dynamic v) {
+    if (v == null) return '0.00';
+    final n = v is num ? v : num.tryParse(v.toString()) ?? 0;
+    return n.toStringAsFixed(2);
+  }
 }

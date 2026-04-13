@@ -6,6 +6,7 @@ import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart'
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 
 class AdminFinOpsThawaniSettlementListPage extends ConsumerStatefulWidget {
   const AdminFinOpsThawaniSettlementListPage({super.key});
@@ -25,6 +26,7 @@ class _State extends ConsumerState<AdminFinOpsThawaniSettlementListPage> with Si
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       _loadData();
+      ref.read(finOpsStatsProvider.notifier).load(storeId: _storeId);
     });
   }
 
@@ -69,6 +71,19 @@ class _State extends ConsumerState<AdminFinOpsThawaniSettlementListPage> with Si
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          AdminStatsKpiSection(
+            provider: finOpsStatsProvider,
+            cardBuilder: (data) {
+              final t = data['thawani_settlements'] as Map<String, dynamic>? ?? {};
+              final ae = data['accounting_exports'] as Map<String, dynamic>? ?? {};
+              return [
+                kpi('Settlements', t['total'] ?? 0, AppColors.primary),
+                kpi('Gross Amount', t['total_gross'] ?? 0, AppColors.success),
+                kpi('Net Amount', t['total_net'] ?? 0, AppColors.info),
+                kpi('Exports', ae['total'] ?? 0, AppColors.warning, '${ae['pending'] ?? 0} pending'),
+              ];
+            },
+          ),
           Expanded(
             child: TabBarView(controller: _tabController, children: [_SettlementsTab(), _OrdersTab(), _StoreConfigsTab()]),
           ),

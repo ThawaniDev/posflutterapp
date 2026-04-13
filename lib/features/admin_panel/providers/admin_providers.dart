@@ -4859,3 +4859,123 @@ class WameedAIAdminActionNotifier extends StateNotifier<WameedAIAdminActionState
 
   void reset() => state = const WameedAIAdminActionInitial();
 }
+
+// ═══════════════════════════════════════════════════════════════
+// Generic Stats Providers (User / Log / FeatureFlag / Support)
+// ═══════════════════════════════════════════════════════════════
+
+// ─── User Stats ──────────────────────────────────────────────
+
+final billingStatsProvider = StateNotifierProvider<BillingStatsNotifier, AdminStatsState>(
+  (ref) => BillingStatsNotifier(ref.watch(adminRepositoryProvider)),
+);
+
+class BillingStatsNotifier extends StateNotifier<AdminStatsState> {
+  final AdminRepository _repo;
+  BillingStatsNotifier(this._repo) : super(const AdminStatsInitial());
+
+  Future<void> load({String? storeId}) async {
+    state = const AdminStatsLoading();
+    try {
+      state = AdminStatsLoaded(await _repo.getBillingRevenue(storeId: storeId));
+    } catch (e) {
+      state = AdminStatsError(e.toString());
+    }
+  }
+}
+
+final finOpsStatsProvider = StateNotifierProvider<FinOpsStatsNotifier, AdminStatsState>(
+  (ref) => FinOpsStatsNotifier(ref.watch(adminRepositoryProvider)),
+);
+
+class FinOpsStatsNotifier extends StateNotifier<AdminStatsState> {
+  final AdminRepository _repo;
+  FinOpsStatsNotifier(this._repo) : super(const AdminStatsInitial());
+
+  Future<void> load({String? storeId}) async {
+    state = const AdminStatsLoading();
+    try {
+      state = AdminStatsLoaded(await _repo.getFinOpsOverview(storeId: storeId));
+    } catch (e) {
+      state = AdminStatsError(e.toString());
+    }
+  }
+}
+
+final userStatsProvider = StateNotifierProvider<UserStatsNotifier, AdminStatsState>(
+  (ref) => UserStatsNotifier(ref.watch(adminRepositoryProvider)),
+);
+
+class UserStatsNotifier extends StateNotifier<AdminStatsState> {
+  final AdminRepository _repo;
+  UserStatsNotifier(this._repo) : super(const AdminStatsInitial());
+
+  Future<void> load() async {
+    state = const AdminStatsLoading();
+    try {
+      state = AdminStatsLoaded(await _repo.getUserStats());
+    } catch (e) {
+      state = AdminStatsError(e.toString());
+    }
+  }
+}
+
+// ─── Log Stats ───────────────────────────────────────────────
+
+final logStatsProvider = StateNotifierProvider<LogStatsNotifier, AdminStatsState>(
+  (ref) => LogStatsNotifier(ref.watch(adminRepositoryProvider)),
+);
+
+class LogStatsNotifier extends StateNotifier<AdminStatsState> {
+  final AdminRepository _repo;
+  LogStatsNotifier(this._repo) : super(const AdminStatsInitial());
+
+  Future<void> load() async {
+    state = const AdminStatsLoading();
+    try {
+      state = AdminStatsLoaded(await _repo.getLogStats());
+    } catch (e) {
+      state = AdminStatsError(e.toString());
+    }
+  }
+}
+
+// ─── Feature Flag Stats ─────────────────────────────────────
+
+final featureFlagStatsProvider = StateNotifierProvider<FeatureFlagStatsNotifier, AdminStatsState>(
+  (ref) => FeatureFlagStatsNotifier(ref.watch(adminRepositoryProvider)),
+);
+
+class FeatureFlagStatsNotifier extends StateNotifier<AdminStatsState> {
+  final AdminRepository _repo;
+  FeatureFlagStatsNotifier(this._repo) : super(const AdminStatsInitial());
+
+  Future<void> load() async {
+    state = const AdminStatsLoading();
+    try {
+      state = AdminStatsLoaded(await _repo.getFeatureFlagStats());
+    } catch (e) {
+      state = AdminStatsError(e.toString());
+    }
+  }
+}
+
+// ─── Support Stats ──────────────────────────────────────────
+
+final supportStatsProvider = StateNotifierProvider<SupportStatsNotifier, AdminStatsState>(
+  (ref) => SupportStatsNotifier(ref.watch(adminRepositoryProvider)),
+);
+
+class SupportStatsNotifier extends StateNotifier<AdminStatsState> {
+  final AdminRepository _repo;
+  SupportStatsNotifier(this._repo) : super(const AdminStatsInitial());
+
+  Future<void> load() async {
+    state = const AdminStatsLoading();
+    try {
+      state = AdminStatsLoaded(await _repo.getSupportStats());
+    } catch (e) {
+      state = AdminStatsError(e.toString());
+    }
+  }
+}

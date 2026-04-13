@@ -3033,3 +3033,29 @@ class WameedAIAdminActionError extends WameedAIAdminActionState {
   final String message;
   const WameedAIAdminActionError(this.message);
 }
+
+// ═══════════════════════════════════════════════════════════════
+// Generic Admin Stats State (used for user/log/flag/support stats)
+// ═══════════════════════════════════════════════════════════════
+
+sealed class AdminStatsState {
+  const AdminStatsState();
+}
+
+class AdminStatsInitial extends AdminStatsState {
+  const AdminStatsInitial();
+}
+
+class AdminStatsLoading extends AdminStatsState {
+  const AdminStatsLoading();
+}
+
+class AdminStatsLoaded extends AdminStatsState {
+  final Map<String, dynamic> data;
+  const AdminStatsLoaded(this.data);
+}
+
+class AdminStatsError extends AdminStatsState {
+  final String message;
+  const AdminStatsError(this.message);
+}

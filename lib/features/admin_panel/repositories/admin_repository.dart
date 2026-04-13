@@ -251,6 +251,8 @@ class AdminRepository {
   // P4: User Management
   // ═══════════════════════════════════════════════════════════════
 
+  Future<Map<String, dynamic>> getUserStats() => _apiService.getUserStats();
+
   // ─── Provider Users ────────────────────────────────────────
 
   Future<Map<String, dynamic>> listProviderUsers({
@@ -406,6 +408,7 @@ class AdminRepository {
 
   // ─── P7: Feature Flags & A/B Testing ──────────────────────────
 
+  Future<Map<String, dynamic>> getFeatureFlagStats() => _apiService.getFeatureFlagStats();
   Future<Map<String, dynamic>> getFeatureFlags({Map<String, dynamic>? params}) => _apiService.getFeatureFlags(params: params);
 
   Future<Map<String, dynamic>> createFeatureFlag(Map<String, dynamic> data) => _apiService.createFeatureFlag(data);
@@ -499,6 +502,7 @@ class AdminRepository {
   //  P9: Platform Logs & Monitoring
   // ═══════════════════════════════════════════════════════════
 
+  Future<Map<String, dynamic>> getLogStats() => _apiService.getLogStats();
   Future<Map<String, dynamic>> getActivityLogs({Map<String, dynamic>? params}) => _apiService.getActivityLogs(params: params);
   Future<Map<String, dynamic>> getActivityLog(String id) => _apiService.getActivityLog(id);
 
@@ -521,6 +525,7 @@ class AdminRepository {
   Future<Map<String, dynamic>> getStoreHealth({Map<String, dynamic>? params}) => _apiService.getStoreHealth(params: params);
 
   // ═══ P10: Support Ticket System ════════════════════════════
+  Future<Map<String, dynamic>> getSupportStats() => _apiService.getSupportStats();
   Future<Map<String, dynamic>> getSupportTickets({Map<String, dynamic>? params}) => _apiService.getSupportTickets(params: params);
   Future<Map<String, dynamic>> createSupportTicket(Map<String, dynamic> data) => _apiService.createSupportTicket(data);
   Future<Map<String, dynamic>> getSupportTicket(String id) => _apiService.getSupportTicket(id);

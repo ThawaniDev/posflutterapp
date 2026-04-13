@@ -6,6 +6,7 @@ import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart'
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 
 class AdminAdminUserListPage extends ConsumerStatefulWidget {
   const AdminAdminUserListPage({super.key});
@@ -24,6 +25,7 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       ref.read(adminUserListProvider.notifier).loadAdmins(storeId: _storeId);
+      ref.read(userStatsProvider.notifier).load();
     });
   }
 
@@ -58,6 +60,15 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          AdminStatsKpiSection(
+            provider: userStatsProvider,
+            cardBuilder: (data) => [
+              kpi('Total Admins', data['total_admin_users'] ?? 0, AppColors.primary),
+              kpi('Active Admins', data['active_admin_users'] ?? 0, AppColors.success),
+              kpi('Provider Users', data['total_provider_users'] ?? 0, AppColors.info),
+              kpi('New This Month', data['new_this_month'] ?? 0, AppColors.warning),
+            ],
+          ),
           Padding(
             padding: AppSpacing.paddingAll16,
             child: TextField(

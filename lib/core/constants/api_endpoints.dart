@@ -252,6 +252,7 @@ class ApiEndpoints {
   static const String adminRevenueDashboard = '/admin/revenue-dashboard';
 
   // ─── P4: User Management ──────────────────────────────────────
+  static const String adminUserStats = '/admin/users/stats';
   static const String adminProviderUsers = '/admin/users/provider';
   static String adminProviderUserById(String id) => '/admin/users/provider/$id';
   static String adminProviderUserResetPassword(String id) => '/admin/users/provider/$id/reset-password';
@@ -299,6 +300,7 @@ class ApiEndpoints {
   static const String adminAnalyticsExportStores = '/admin/analytics/export/stores';
 
   // ─── P7: Feature Flags & A/B Testing ─────────────────────────
+  static const String adminFeatureFlagStats = '/admin/feature-flags/stats';
   static const String adminFeatureFlags = '/admin/feature-flags';
   static String adminFeatureFlagById(String id) => '/admin/feature-flags/$id';
   static String adminFeatureFlagToggle(String id) => '/admin/feature-flags/$id/toggle';
@@ -327,6 +329,7 @@ class ApiEndpoints {
   static String adminNotificationTemplateToggle(String id) => '/admin/content/templates/$id/toggle';
 
   // ─── P9: Platform Logs & Monitoring ──────────────────────
+  static const String adminLogStats = '/admin/logs/stats';
   static const String adminActivityLogs = '/admin/logs/activity';
   static String adminActivityLogById(String id) => '/admin/logs/activity/$id';
 
@@ -345,6 +348,7 @@ class ApiEndpoints {
   static const String adminStoreHealth = '/admin/logs/store-health';
 
   // ═══ P10: Support Ticket System ═══════════════════════════
+  static const String adminSupportStats = '/admin/support/stats';
   static const String adminSupportTickets = '/admin/support/tickets';
   static String adminSupportTicketById(String id) => '/admin/support/tickets/$id';
   static String adminSupportTicketAssign(String id) => '/admin/support/tickets/$id/assign';
@@ -733,6 +737,17 @@ class ApiEndpoints {
   static const String thawaniOrders = '/thawani/orders';
   static const String thawaniProductMappings = '/thawani/product-mappings';
   static const String thawaniSettlements = '/thawani/settlements';
+  static const String thawaniTestConnection = '/thawani/test-connection';
+  static const String thawaniPushProducts = '/thawani/push-products';
+  static const String thawaniPullProducts = '/thawani/pull-products';
+  static const String thawaniCategoryMappings = '/thawani/category-mappings';
+  static const String thawaniPushCategories = '/thawani/push-categories';
+  static const String thawaniPullCategories = '/thawani/pull-categories';
+  static const String thawaniColumnMappings = '/thawani/column-mappings';
+  static const String thawaniSeedColumnDefaults = '/thawani/column-mappings/seed-defaults';
+  static const String thawaniSyncLogs = '/thawani/sync-logs';
+  static const String thawaniQueueStats = '/thawani/queue-stats';
+  static const String thawaniProcessQueue = '/thawani/process-queue';
 
   // ─── Predefined Catalog ───────────────────────────────────
   static const String predefinedCategories = '/predefined-catalog/categories';

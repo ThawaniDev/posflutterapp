@@ -6,6 +6,7 @@ import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 
 class AdminActivityLogListPage extends ConsumerStatefulWidget {
   const AdminActivityLogListPage({super.key});
@@ -26,6 +27,7 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       _applyFilters();
+      ref.read(logStatsProvider.notifier).load();
     });
   }
 
@@ -58,6 +60,18 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          AdminStatsKpiSection(
+            provider: logStatsProvider,
+            cardBuilder: (data) {
+              final a = data['activity'] as Map<String, dynamic>? ?? {};
+              return [
+                kpi('Total Logs', a['total'] ?? 0, AppColors.primary),
+                kpi('Today', a['today'] ?? 0, AppColors.info),
+                kpi('This Month', a['this_month'] ?? 0, AppColors.success),
+                kpi('Top Action', (a['top_actions'] as Map?)?.keys.firstOrNull ?? '-', AppColors.warning),
+              ];
+            },
+          ),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Row(

@@ -7,6 +7,7 @@ import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart'
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 
 class AdminFinOpsExpenseListPage extends ConsumerStatefulWidget {
   const AdminFinOpsExpenseListPage({super.key});
@@ -25,6 +26,7 @@ class _State extends ConsumerState<AdminFinOpsExpenseListPage> {
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       _applyFilter();
+      ref.read(finOpsStatsProvider.notifier).load(storeId: _storeId);
     });
   }
 
@@ -49,6 +51,19 @@ class _State extends ConsumerState<AdminFinOpsExpenseListPage> {
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          AdminStatsKpiSection(
+            provider: finOpsStatsProvider,
+            cardBuilder: (data) {
+              final e = data['expenses'] as Map<String, dynamic>? ?? {};
+              final p = data['payments'] as Map<String, dynamic>? ?? {};
+              return [
+                kpi('Total Expenses', e['total'] ?? 0, AppColors.primary),
+                kpi('Total Amount', e['total_amount'] ?? 0, AppColors.error),
+                kpi('Total Payments', p['total'] ?? 0, AppColors.success),
+                kpi('Payment Amount', p['total_amount'] ?? 0, AppColors.info),
+              ];
+            },
+          ),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.sm),
             child: PosSearchableDropdown<String>(

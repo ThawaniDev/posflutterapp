@@ -7,6 +7,7 @@ import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart'
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 
 class AdminFinOpsGiftCardListPage extends ConsumerStatefulWidget {
   const AdminFinOpsGiftCardListPage({super.key});
@@ -25,6 +26,7 @@ class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       _applyFilter();
+      ref.read(finOpsStatsProvider.notifier).load(storeId: _storeId);
     });
   }
 
@@ -49,6 +51,18 @@ class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          AdminStatsKpiSection(
+            provider: finOpsStatsProvider,
+            cardBuilder: (data) {
+              final gc = data['gift_cards'] as Map<String, dynamic>? ?? {};
+              return [
+                kpi('Total Cards', gc['total'] ?? 0, AppColors.primary),
+                kpi('Active', gc['active'] ?? 0, AppColors.success),
+                kpi('Total Balance', gc['total_balance'] ?? 0, AppColors.info),
+                kpi('Inactive', (gc['total'] ?? 0) - (gc['active'] ?? 0), AppColors.warning),
+              ];
+            },
+          ),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.sm),
             child: PosSearchableDropdown<String>(

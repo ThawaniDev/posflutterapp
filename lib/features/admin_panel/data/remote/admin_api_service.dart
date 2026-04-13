@@ -464,6 +464,11 @@ class AdminApiService {
   // P4: User Management
   // ═══════════════════════════════════════════════════════════════
 
+  Future<Map<String, dynamic>> getUserStats() async {
+    final response = await _dio.get(ApiEndpoints.adminUserStats);
+    return response.data as Map<String, dynamic>;
+  }
+
   // ─── Provider Users ────────────────────────────────────────
 
   Future<Map<String, dynamic>> listProviderUsers({
@@ -775,6 +780,11 @@ class AdminApiService {
 
   // ─── P7: Feature Flags & A/B Testing ──────────────────────────
 
+  Future<Map<String, dynamic>> getFeatureFlagStats() async {
+    final response = await _dio.get(ApiEndpoints.adminFeatureFlagStats);
+    return response.data as Map<String, dynamic>;
+  }
+
   Future<Map<String, dynamic>> getFeatureFlags({Map<String, dynamic>? params}) async {
     final response = await _dio.get(ApiEndpoints.adminFeatureFlags, queryParameters: params);
     return response.data as Map<String, dynamic>;
@@ -1017,6 +1027,11 @@ class AdminApiService {
   //  P9: Platform Logs & Monitoring
   // ═══════════════════════════════════════════════════════════
 
+  Future<Map<String, dynamic>> getLogStats() async {
+    final response = await _dio.get(ApiEndpoints.adminLogStats);
+    return response.data as Map<String, dynamic>;
+  }
+
   // ─── Activity Logs ─────────────────────────────────────────
 
   Future<Map<String, dynamic>> getActivityLogs({Map<String, dynamic>? params}) async {
@@ -1099,6 +1114,11 @@ class AdminApiService {
   // ═══════════════════════════════════════════════════════════
   //  P10: SUPPORT TICKET SYSTEM
   // ═══════════════════════════════════════════════════════════
+
+  Future<Map<String, dynamic>> getSupportStats() async {
+    final response = await _dio.get(ApiEndpoints.adminSupportStats);
+    return response.data as Map<String, dynamic>;
+  }
 
   // ─── Tickets ───────────────────────────────────────────────
 

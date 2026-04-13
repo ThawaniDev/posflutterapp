@@ -6,6 +6,7 @@ import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart'
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 
 class AdminBillingInvoiceListPage extends ConsumerStatefulWidget {
   const AdminBillingInvoiceListPage({super.key});
@@ -25,6 +26,7 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       ref.read(billingInvoiceListProvider.notifier).loadInvoices(storeId: _storeId);
+      ref.read(billingStatsProvider.notifier).load(storeId: _storeId);
     });
   }
 
@@ -78,6 +80,15 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          AdminStatsKpiSection(
+            provider: billingStatsProvider,
+            cardBuilder: (data) => [
+              kpi('Total Invoices', data['total_invoices'] ?? 0, AppColors.primary),
+              kpi('Paid', data['paid_invoices'] ?? 0, AppColors.success),
+              kpi('Failed', data['failed_invoices'] ?? 0, AppColors.error),
+              kpi('MRR', data['mrr'] ?? 0, AppColors.info),
+            ],
+          ),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
             child: Column(

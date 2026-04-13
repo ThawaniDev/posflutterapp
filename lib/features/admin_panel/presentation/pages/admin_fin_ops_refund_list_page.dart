@@ -7,6 +7,7 @@ import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart'
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 
 class AdminFinOpsRefundListPage extends ConsumerStatefulWidget {
   const AdminFinOpsRefundListPage({super.key});
@@ -25,6 +26,7 @@ class _State extends ConsumerState<AdminFinOpsRefundListPage> {
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       _applyFilter();
+      ref.read(finOpsStatsProvider.notifier).load(storeId: _storeId);
     });
   }
 
@@ -49,6 +51,18 @@ class _State extends ConsumerState<AdminFinOpsRefundListPage> {
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          AdminStatsKpiSection(
+            provider: finOpsStatsProvider,
+            cardBuilder: (data) {
+              final r = data['refunds'] as Map<String, dynamic>? ?? {};
+              return [
+                kpi('Total Refunds', r['total'] ?? 0, AppColors.primary),
+                kpi('Total Amount', r['total_amount'] ?? 0, AppColors.error),
+                kpi('Pending', r['pending'] ?? 0, AppColors.warning),
+                kpi('Completed', r['completed'] ?? 0, AppColors.success),
+              ];
+            },
+          ),
           Padding(
             padding: const EdgeInsets.all(AppSpacing.sm),
             child: PosSearchableDropdown<String>(

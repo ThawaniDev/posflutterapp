@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:thawani_pos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 
 class AdminFeatureFlagListPage extends ConsumerStatefulWidget {
   const AdminFeatureFlagListPage({super.key});
@@ -22,6 +23,7 @@ class _AdminFeatureFlagListPageState extends ConsumerState<AdminFeatureFlagListP
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       _loadFlags();
+      ref.read(featureFlagStatsProvider.notifier).load();
     });
   }
 
@@ -48,6 +50,21 @@ class _AdminFeatureFlagListPageState extends ConsumerState<AdminFeatureFlagListP
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          AdminStatsKpiSection(
+            provider: featureFlagStatsProvider,
+            cardBuilder: (data) {
+              final flags = data['flags'] as Map<String, dynamic>? ?? {};
+              final ab = data['ab_tests'] as Map<String, dynamic>? ?? {};
+              return [
+                kpi('Total Flags', flags['total'] ?? 0, AppColors.primary),
+                kpi('Enabled', flags['enabled'] ?? 0, AppColors.success),
+                kpi('Disabled', flags['disabled'] ?? 0, AppColors.textSecondary),
+                kpi('Partial Rollout', flags['partial_rollout'] ?? 0, AppColors.warning),
+                kpi('With Targeting', flags['with_targeting'] ?? 0, AppColors.info),
+                kpi('A/B Tests', ab['total'] ?? 0, const Color(0xFF8B5CF6), '${ab['running'] ?? 0} running'),
+              ];
+            },
+          ),
           Expanded(
             child: switch (state) {
               FeatureFlagListInitial() || FeatureFlagListLoading() => const Center(child: CircularProgressIndicator()),
