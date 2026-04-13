@@ -1,0 +1,228 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
+import 'package:thawani_pos/features/cashier_gamification/data/gamification_repository.dart';
+import 'package:thawani_pos/features/cashier_gamification/providers/gamification_providers.dart';
+import 'package:thawani_pos/features/cashier_gamification/providers/gamification_state.dart';
+import 'package:thawani_pos/features/cashier_gamification/widgets/shift_report_card.dart';
+
+class GamificationShiftReportsPage extends ConsumerStatefulWidget {
+  const GamificationShiftReportsPage({super.key});
+
+  @override
+  ConsumerState<GamificationShiftReportsPage> createState() => _GamificationShiftReportsPageState();
+}
+
+class _GamificationShiftReportsPageState extends ConsumerState<GamificationShiftReportsPage> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => ref.read(shiftReportsProvider.notifier).load());
+  }
+
+  void _showReportDetail(String reportId) {
+    // Navigate to detail or show bottom sheet
+    final isMobile = context.isPhone;
+    if (isMobile) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+        builder: (ctx) => _ReportDetailSheet(reportId: reportId),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (ctx) => Dialog(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600, maxHeight: 500),
+            child: _ReportDetailSheet(reportId: reportId),
+          ),
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final state = ref.watch(shiftReportsProvider);
+    final isMobile = context.isPhone;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          children: [
+            const Icon(Icons.assessment_rounded, color: AppColors.primary),
+            const SizedBox(width: 8),
+            Text(l10n.gamificationShiftReports),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: l10n.commonRefresh,
+            onPressed: () => ref.read(shiftReportsProvider.notifier).load(),
+          ),
+        ],
+      ),
+      body: _buildContent(state, l10n, isMobile),
+    );
+  }
+
+  Widget _buildContent(ShiftReportsState state, AppLocalizations l10n, bool isMobile) {
+    return switch (state) {
+      ShiftReportsInitial() || ShiftReportsLoading() => const Center(child: CircularProgressIndicator()),
+      ShiftReportsError(:final message) => Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.error_outline, size: 48, color: AppColors.error),
+            const SizedBox(height: 8),
+            Text(message, textAlign: TextAlign.center),
+            const SizedBox(height: 12),
+            ElevatedButton(onPressed: () => ref.read(shiftReportsProvider.notifier).load(), child: Text(l10n.commonRetry)),
+          ],
+        ),
+      ),
+      ShiftReportsLoaded(:final reports) =>
+        reports.isEmpty
+            ? Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.assessment_outlined, size: 64, color: Colors.grey.shade400),
+                    const SizedBox(height: 12),
+                    Text(l10n.gamificationNoReports, style: TextStyle(color: Colors.grey.shade600)),
+                  ],
+                ),
+              )
+            : ListView.builder(
+                padding: EdgeInsets.all(isMobile ? 12 : 16),
+                itemCount: reports.length,
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: ShiftReportCard(report: reports[index], onTap: () => _showReportDetail(reports[index].id)),
+                ),
+              ),
+    };
+  }
+}
+
+class _ReportDetailSheet extends ConsumerStatefulWidget {
+  final String reportId;
+  const _ReportDetailSheet({required this.reportId});
+
+  @override
+  ConsumerState<_ReportDetailSheet> createState() => _ReportDetailSheetState();
+}
+
+class _ReportDetailSheetState extends ConsumerState<_ReportDetailSheet> {
+  bool _loading = true;
+  String? _error;
+  Map<String, dynamic>? _report;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadReport();
+  }
+
+  Future<void> _loadReport() async {
+    try {
+      final repo = ref.read(gamificationRepositoryProvider);
+      final report = await repo.getShiftReport(widget.reportId);
+      if (mounted) {
+        setState(() {
+          _loading = false;
+          _report = {
+            'cashier': report.cashier?.name ?? 'Cashier',
+            'date': report.reportDate,
+            'transactions': report.totalTransactions,
+            'revenue': report.totalRevenue,
+            'items': report.totalItems,
+            'ipm': report.itemsPerMinute,
+            'voids': report.voidCount,
+            'returns': report.returnCount,
+            'risk': report.riskScore,
+            'risk_level': report.riskLevel,
+            'summary_en': report.summaryEn ?? '',
+            'summary_ar': report.summaryAr ?? '',
+          };
+        });
+      }
+    } catch (e) {
+      if (mounted)
+        setState(() {
+          _loading = false;
+          _error = e.toString();
+        });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).languageCode;
+
+    if (_loading)
+      return const Center(
+        child: Padding(padding: EdgeInsets.all(32), child: CircularProgressIndicator()),
+      );
+    if (_error != null)
+      return Center(
+        child: Padding(padding: const EdgeInsets.all(24), child: Text(_error!)),
+      );
+
+    final r = _report!;
+    final summary = locale == 'ar' ? r['summary_ar'] : r['summary_en'];
+
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('${r['cashier']} — ${r['date']}', style: Theme.of(context).textTheme.titleMedium),
+            const SizedBox(height: 16),
+            _DetailRow(l10n.gamificationTransactions, '${r['transactions']}'),
+            _DetailRow(l10n.gamificationRevenue, '${(r['revenue'] as double).toStringAsFixed(2)}'),
+            _DetailRow(l10n.gamificationItemsPerMinute, '${(r['ipm'] as double).toStringAsFixed(2)}'),
+            _DetailRow('Voids', '${r['voids']}'),
+            _DetailRow('Returns', '${r['returns']}'),
+            _DetailRow(l10n.gamificationRiskScore, '${(r['risk'] as double).toStringAsFixed(0)} (${r['risk_level']})'),
+            if ((summary as String).isNotEmpty) ...[
+              const SizedBox(height: 12),
+              Text(l10n.gamificationSummary, style: const TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 4),
+              Text(summary),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _DetailRow extends StatelessWidget {
+  final String label;
+  final String value;
+  const _DetailRow(this.label, this.value);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
+          Text(value, style: const TextStyle(fontWeight: FontWeight.w600)),
+        ],
+      ),
+    );
+  }
+}

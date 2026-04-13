@@ -56,6 +56,11 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
         ),
         actions: [
           IconButton(
+            icon: const Icon(Icons.receipt_outlined),
+            tooltip: l10n.wameedAIBilling,
+            onPressed: () => context.push(Routes.wameedAIBilling),
+          ),
+          IconButton(
             icon: const Icon(Icons.bar_chart_outlined),
             tooltip: l10n.wameedAIUsage,
             onPressed: () => context.push(Routes.wameedAIUsage),

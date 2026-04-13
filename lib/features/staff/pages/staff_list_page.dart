@@ -67,7 +67,14 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
       appBar: AppBar(
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
         title: Text(l10n.staffMembers),
-        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: _loadStaff)],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showStaffListInfo(context),
+          ),
+          IconButton(icon: const Icon(Icons.refresh), onPressed: _loadStaff),
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push(Routes.staffMembersCreate),

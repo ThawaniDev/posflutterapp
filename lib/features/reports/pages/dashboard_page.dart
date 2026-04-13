@@ -50,6 +50,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
         title: const Text('Reports & Analytics'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: 'Feature Guide',
+            onPressed: () => showReportsDashboardInfo(context),
+          ),
           IconButton.filled(
             onPressed: _loadData,
             icon: const Icon(Icons.refresh_rounded, size: 20),

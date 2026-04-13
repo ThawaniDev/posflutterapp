@@ -55,32 +55,33 @@ class _AIUsagePageState extends ConsumerState<AIUsagePage> {
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 16),
-              GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: isMobile ? 2 : 4,
-                childAspectRatio: isMobile ? 1.5 : 2,
-                crossAxisSpacing: 12,
-                mainAxisSpacing: 12,
-                children: [
-                  _kpiCard(l10n.wameedAITodayRequests, '${summary.today.requestCount}', Icons.today, AppColors.primary),
-                  _kpiCard(
-                    l10n.wameedAITodayCost,
-                    '\$${summary.today.totalCost.toStringAsFixed(4)}',
-                    Icons.attach_money,
-                    Colors.green,
+              PosKpiGrid(
+                desktopCols: 4,
+                mobileCols: 2,
+                cards: [
+                  PosKpiCard(
+                    label: l10n.wameedAITodayRequests,
+                    value: '${summary.today.requestCount}',
+                    icon: Icons.today,
+                    iconColor: AppColors.primary,
                   ),
-                  _kpiCard(
-                    l10n.wameedAIMonthlyRequests,
-                    '${summary.monthly.requestCount}',
-                    Icons.calendar_month,
-                    AppColors.primary,
+                  PosKpiCard(
+                    label: l10n.wameedAITodayCost,
+                    value: '\$${summary.today.totalCost.toStringAsFixed(4)}',
+                    icon: Icons.attach_money,
+                    iconColor: Colors.green,
                   ),
-                  _kpiCard(
-                    l10n.wameedAIMonthlyCost,
-                    '\$${summary.monthly.totalCost.toStringAsFixed(4)}',
-                    Icons.account_balance_wallet,
-                    Colors.green,
+                  PosKpiCard(
+                    label: l10n.wameedAIMonthlyRequests,
+                    value: '${summary.monthly.requestCount}',
+                    icon: Icons.calendar_month,
+                    iconColor: AppColors.primary,
+                  ),
+                  PosKpiCard(
+                    label: l10n.wameedAIMonthlyCost,
+                    value: '\$${summary.monthly.totalCost.toStringAsFixed(4)}',
+                    icon: Icons.account_balance_wallet,
+                    iconColor: Colors.green,
                   ),
                 ],
               ),
@@ -107,31 +108,6 @@ class _AIUsagePageState extends ConsumerState<AIUsagePage> {
           ),
         ),
       },
-    );
-  }
-
-  Widget _kpiCard(String label, String value, IconData icon, Color color) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Theme.of(context).dividerColor),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: color, size: 24),
-          const SizedBox(height: 8),
-          Text(
-            value,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700, color: color),
-          ),
-          const SizedBox(height: 4),
-          Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor)),
-        ],
-      ),
     );
   }
 }

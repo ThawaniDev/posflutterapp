@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
@@ -30,6 +31,11 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
       appBar: AppBar(
         title: const Text('Expenses'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
+            onPressed: () => showExpensesInfo(context),
+          ),
           FilledButton.icon(
             onPressed: () => _showCreateExpenseDialog(context),
             icon: const Icon(Icons.add, size: 18),

@@ -38,6 +38,11 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
         title: Text(l10n.inventoryStockAdjustments),
         actions: [
           IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showStockAdjustmentsInfo(context),
+          ),
+          IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(stockAdjustmentsProvider.notifier).load(),
@@ -82,7 +87,7 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
               variant: isIncrease ? PosBadgeVariant.success : PosBadgeVariant.error,
             );
           case 2:
-            return Text(adj.reasonCode);
+            return Text(adj.reasonCode ?? '-', overflow: TextOverflow.ellipsis);
           case 3:
             return Text(adj.notes ?? '-', overflow: TextOverflow.ellipsis);
           default:

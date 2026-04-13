@@ -101,6 +101,11 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
         title: Text(l10n.inventoryStockTransfers),
         actions: [
           IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showStockTransfersInfo(context),
+          ),
+          IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(stockTransfersProvider.notifier).load(),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/payments/enums/gift_card_status.dart';
 import 'package:thawani_pos/features/payments/providers/payment_providers.dart';
 import 'package:thawani_pos/features/payments/providers/payment_state.dart';
@@ -35,6 +37,13 @@ class _GiftCardsPageState extends ConsumerState<GiftCardsPage> with SingleTicker
     return Scaffold(
       appBar: AppBar(
         title: const Text('Gift Cards'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
+            onPressed: () => showGiftCardsInfo(context),
+          ),
+        ],
         bottom: TabBar(
           controller: _tabController,
           tabs: const [

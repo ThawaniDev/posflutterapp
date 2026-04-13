@@ -7,6 +7,7 @@ import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dar
 import 'package:thawani_pos/features/wameed_ai/models/ai_feature_definition.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_feature_result.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_suggestion.dart';
+import 'package:thawani_pos/features/wameed_ai/models/ai_billing.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_usage.dart';
 
 final wameedAIApiServiceProvider = Provider<WameedAIApiService>((ref) {
@@ -168,4 +169,35 @@ class WameedAIApiService {
   Future<AIFeatureResult> expenseAnalysis() => invokeFeature(ApiEndpoints.wameedAIExpenseAnalysis);
   Future<AIFeatureResult> cashFlowPrediction({int days = 30}) =>
       invokeFeature(ApiEndpoints.wameedAICashFlowPrediction, queryParams: {'days': days});
+
+  // ─── Billing ──────────────────────────────────────────────────
+
+  Future<AIBillingSummary> getBillingSummary() async {
+    final response = await _dio.get(ApiEndpoints.wameedAIBillingSummary);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return AIBillingSummary.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  Future<PaginatedResult<AIBillingInvoicePreview>> getBillingInvoices({int page = 1, int perPage = 20}) async {
+    final response = await _dio.get(
+      ApiEndpoints.wameedAIBillingInvoices,
+      queryParameters: {'page': page, 'per_page': perPage},
+    );
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final map = apiResponse.data as Map<String, dynamic>;
+    final items = (map['data'] as List).map((j) => AIBillingInvoicePreview.fromJson(j as Map<String, dynamic>)).toList();
+    return PaginatedResult(
+      items: items,
+      total: map['total'] as int? ?? items.length,
+      currentPage: map['current_page'] as int? ?? page,
+      lastPage: map['last_page'] as int? ?? 1,
+      perPage: map['per_page'] as int? ?? perPage,
+    );
+  }
+
+  Future<AIBillingInvoiceDetail> getBillingInvoiceDetail(String invoiceId) async {
+    final response = await _dio.get(ApiEndpoints.wameedAIBillingInvoiceDetail(invoiceId));
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return AIBillingInvoiceDetail.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
 }

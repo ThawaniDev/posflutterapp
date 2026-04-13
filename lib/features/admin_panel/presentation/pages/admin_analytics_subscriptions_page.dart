@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
@@ -78,15 +79,19 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
                     padding: const EdgeInsets.all(AppSpacing.md),
                     children: [
                       // Conversion & Churn highlights
-                      Row(
-                        children: [
-                          Expanded(child: _metricCard('Conversion Rate', '${conversion.toStringAsFixed(1)}%', AppColors.success)),
-                          const SizedBox(width: AppSpacing.sm),
-                          Expanded(child: _metricCard('Churn (Period)', '$churn', AppColors.error)),
+                      PosKpiGrid(
+                        desktopCols: 3,
+                        mobileCols: 2,
+                        cards: [
+                          PosKpiCard(
+                            label: 'Conversion Rate',
+                            value: '${conversion.toStringAsFixed(1)}%',
+                            iconColor: AppColors.success,
+                          ),
+                          PosKpiCard(label: 'Churn (Period)', value: '$churn', iconColor: AppColors.error),
+                          PosKpiCard(label: 'Avg Sub Age', value: '${avgAge.toStringAsFixed(0)} days', iconColor: AppColors.info),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.sm),
-                      _metricCard('Avg Sub Age', '${avgAge.toStringAsFixed(0)} days', AppColors.info),
                       const SizedBox(height: AppSpacing.lg),
 
                       // Status breakdown
@@ -147,25 +152,6 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
             },
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _metricCard(String label, String value, Color color) {
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Column(
-          children: [
-            Text(
-              value,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: color),
-            ),
-            const SizedBox(height: 4),
-            Text(label, style: const TextStyle(fontSize: 13, color: AppColors.textSecondary)),
-          ],
-        ),
       ),
     );
   }

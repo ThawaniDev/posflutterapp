@@ -21,7 +21,7 @@ void main() {
       'category': 'inventory',
       'icon': 'inventory_2',
       'default_model': 'gpt-4o-mini',
-      'is_active': true,
+      'is_enabled': true,
       'is_premium': false,
       'daily_limit': 50,
       'monthly_limit': 500,
@@ -45,7 +45,7 @@ void main() {
       expect(feature.dailyLimit, 50);
       expect(feature.monthlyLimit, 500);
       expect(feature.createdAt, isNotNull);
-      expect(feature.storeConfig, isNull);
+      expect(feature.storeConfigs, isNull);
     });
 
     test('fromJson uses defaults for missing fields', () {
@@ -54,26 +54,29 @@ void main() {
       expect(minimal.isPremium, false);
       expect(minimal.dailyLimit, 50);
       expect(minimal.monthlyLimit, 500);
+      expect(minimal.sortOrder, 0);
       expect(minimal.nameAr, isNull);
       expect(minimal.description, isNull);
       expect(minimal.icon, isNull);
       expect(minimal.defaultModel, isNull);
     });
 
-    test('fromJson parses store_config when present', () {
+    test('fromJson parses store_configs when present', () {
       final withConfig = Map<String, dynamic>.from(json);
-      withConfig['store_config'] = {
-        'id': 'cfg-1',
-        'store_id': 'store-1',
-        'feature_id': 'feat-1',
-        'is_enabled': true,
-        'daily_limit': 100,
-        'monthly_limit': 3000,
-      };
+      withConfig['store_configs'] = [
+        {
+          'id': 'cfg-1',
+          'store_id': 'store-1',
+          'feature_id': 'feat-1',
+          'is_enabled': true,
+          'daily_limit': 100,
+          'monthly_limit': 3000,
+        },
+      ];
       final feature = AIFeatureDefinition.fromJson(withConfig);
-      expect(feature.storeConfig, isNotNull);
-      expect(feature.storeConfig!.isEnabled, true);
-      expect(feature.storeConfig!.dailyLimit, 100);
+      expect(feature.storeConfigs, isNotNull);
+      expect(feature.storeConfigs!.first.isEnabled, true);
+      expect(feature.storeConfigs!.first.dailyLimit, 100);
     });
 
     test('toJson serializes correctly', () {
@@ -82,7 +85,7 @@ void main() {
       expect(output['id'], 'feat-1');
       expect(output['slug'], 'smart_reorder');
       expect(output['category'], 'inventory');
-      expect(output['is_active'], true);
+      expect(output['is_enabled'], true);
       expect(output['daily_limit'], 50);
     });
 

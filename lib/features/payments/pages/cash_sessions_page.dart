@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/payments/providers/payment_providers.dart';
 import 'package:thawani_pos/features/payments/providers/payment_state.dart';
 
@@ -23,7 +25,16 @@ class _CashSessionsPageState extends ConsumerState<CashSessionsPage> {
     final state = ref.watch(cashSessionsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Cash Sessions')),
+      appBar: AppBar(
+        title: const Text('Cash Sessions'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
+            onPressed: () => showCashSessionsInfo(context),
+          ),
+        ],
+      ),
       body: switch (state) {
         CashSessionsInitial() || CashSessionsLoading() => const Center(child: CircularProgressIndicator()),
         CashSessionsError(:final message) => Center(

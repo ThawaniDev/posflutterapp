@@ -58,7 +58,7 @@ class NiceToHaveApiService {
   // ─── Gamification ──────────────────────────────────────
   Future<Response> getChallenges() => _dio.get(ApiEndpoints.gamificationChallenges);
 
-  Future<Response> getBadges() => _dio.get(ApiEndpoints.gamificationBadges);
+  Future<Response> getBadges() => _dio.get(ApiEndpoints.customerGamificationBadges);
 
   Future<Response> getTiers() => _dio.get(ApiEndpoints.gamificationTiers);
 

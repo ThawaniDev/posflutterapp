@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
 import 'package:thawani_pos/features/catalog/models/category.dart';
 import 'package:thawani_pos/features/catalog/models/product.dart';
@@ -51,9 +52,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
           field.type == FeatureFieldType.multilineText ||
           field.type == FeatureFieldType.number ||
           field.type == FeatureFieldType.barcode) {
-        final controller = TextEditingController(
-          text: field.defaultValue?.toString() ?? '',
-        );
+        final controller = TextEditingController(text: field.defaultValue?.toString() ?? '');
         _textControllers[field.key] = controller;
       }
     }
@@ -121,13 +120,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
       decoration: BoxDecoration(
         color: theme.cardColor,
         border: Border(top: BorderSide(color: AppColors.primary.withValues(alpha: 0.3), width: 2)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 8,
-            offset: const Offset(0, -2),
-          ),
-        ],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8, offset: const Offset(0, -2))],
       ),
       child: Form(
         key: _formKey,
@@ -138,9 +131,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
             // ─── Header ───
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.06),
-              ),
+              decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.06)),
               child: Row(
                 children: [
                   const Icon(Icons.auto_awesome, size: 18, color: AppColors.primary),
@@ -148,19 +139,13 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
                   Expanded(
                     child: Text(
                       widget.featureName,
-                      style: theme.textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.primary,
-                      ),
+                      style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, color: AppColors.primary),
                     ),
                   ),
                   InkWell(
                     onTap: widget.onDismiss,
                     borderRadius: BorderRadius.circular(12),
-                    child: const Padding(
-                      padding: EdgeInsets.all(4),
-                      child: Icon(Icons.close, size: 20),
-                    ),
+                    child: const Padding(padding: EdgeInsets.all(4), child: Icon(Icons.close, size: 20)),
                   ),
                 ],
               ),
@@ -168,16 +153,15 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
 
             // ─── Fields ───
             ConstrainedBox(
-              constraints: const BoxConstraints(maxHeight: 300),
+              constraints: BoxConstraints(
+                maxHeight: context.isPhone ? (MediaQuery.of(context).viewInsets.bottom > 0 ? 160 : 250) : 300,
+              ),
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    for (final field in widget.config.fields) ...[
-                      _buildField(field, theme),
-                      const SizedBox(height: 12),
-                    ],
+                    for (final field in widget.config.fields) ...[_buildField(field, theme), const SizedBox(height: 12)],
                   ],
                 ),
               ),
@@ -215,9 +199,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
       FeatureFieldType.dateRange => _buildDateField(field, theme),
       FeatureFieldType.period => _buildPeriodField(field, theme),
       FeatureFieldType.image => _buildImageField(field, theme),
-      FeatureFieldType.options ||
-      FeatureFieldType.language ||
-      FeatureFieldType.platform => _buildDropdownField(field, theme),
+      FeatureFieldType.options || FeatureFieldType.language || FeatureFieldType.platform => _buildDropdownField(field, theme),
       FeatureFieldType.product => _buildProductField(field, theme),
       FeatureFieldType.category => _buildCategoryField(field, theme),
     };
@@ -227,9 +209,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
     return TextFormField(
       controller: _textControllers[field.key],
       decoration: _inputDecoration(field, theme),
-      validator: field.required
-          ? (v) => (v == null || v.trim().isEmpty) ? '${field.label} is required' : null
-          : null,
+      validator: field.required ? (v) => (v == null || v.trim().isEmpty) ? '${field.label} is required' : null : null,
       onChanged: (v) => _values[field.key] = v.trim(),
     );
   }
@@ -240,9 +220,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
       decoration: _inputDecoration(field, theme),
       maxLines: 3,
       minLines: 2,
-      validator: field.required
-          ? (v) => (v == null || v.trim().isEmpty) ? '${field.label} is required' : null
-          : null,
+      validator: field.required ? (v) => (v == null || v.trim().isEmpty) ? '${field.label} is required' : null : null,
       onChanged: (v) => _values[field.key] = v.trim(),
     );
   }
@@ -282,14 +260,10 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
         }
       },
       child: InputDecorator(
-        decoration: _inputDecoration(field, theme).copyWith(
-          suffixIcon: const Icon(Icons.calendar_today, size: 18),
-        ),
+        decoration: _inputDecoration(field, theme).copyWith(suffixIcon: const Icon(Icons.calendar_today, size: 18)),
         child: Text(
           displayText,
-          style: dateStr != null
-              ? theme.textTheme.bodyMedium
-              : theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
+          style: dateStr != null ? theme.textTheme.bodyMedium : theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
         ),
       ),
     );
@@ -308,9 +282,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
       initialValue: selected,
       items: periods.map((p) => DropdownMenuItem(value: p.value, child: Text(p.label))).toList(),
       onChanged: (v) => setState(() => _values[field.key] = v),
-      validator: field.required
-          ? (v) => (v == null || v.isEmpty) ? '${field.label} is required' : null
-          : null,
+      validator: field.required ? (v) => (v == null || v.isEmpty) ? '${field.label} is required' : null : null,
     );
   }
 
@@ -323,9 +295,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
       initialValue: selected,
       items: options.map((o) => DropdownMenuItem(value: o.value, child: Text(o.label))).toList(),
       onChanged: (v) => setState(() => _values[field.key] = v),
-      validator: field.required
-          ? (v) => (v == null || v.isEmpty) ? '${field.label} is required' : null
-          : null,
+      validator: field.required ? (v) => (v == null || v.isEmpty) ? '${field.label} is required' : null : null,
     );
   }
 
@@ -351,11 +321,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
                 const Icon(Icons.image, color: AppColors.primary, size: 24),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: Text(
-                    _imageName ?? 'Image selected',
-                    style: theme.textTheme.bodySmall,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  child: Text(_imageName ?? 'Image selected', style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
                 ),
                 IconButton(
                   icon: const Icon(Icons.close, size: 18),
@@ -429,9 +395,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
 
     return FormField<dynamic>(
       validator: field.required
-          ? (_) => (product == null || product is! Map || product['id'] == null)
-              ? '${field.label} is required'
-              : null
+          ? (_) => (product == null || product is! Map || product['id'] == null) ? '${field.label} is required' : null
           : null,
       builder: (state) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -439,15 +403,13 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
           InkWell(
             onTap: () => _showProductSearchDialog(field),
             child: InputDecorator(
-              decoration: _inputDecoration(field, theme).copyWith(
-                suffixIcon: const Icon(Icons.search, size: 18),
-                errorText: state.errorText,
-              ),
+              decoration: _inputDecoration(
+                field,
+                theme,
+              ).copyWith(suffixIcon: const Icon(Icons.search, size: 18), errorText: state.errorText),
               child: Text(
                 hasValue ? product['name'] as String : (field.hint ?? 'Search products...'),
-                style: hasValue
-                    ? theme.textTheme.bodyMedium
-                    : theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
+                style: hasValue ? theme.textTheme.bodyMedium : theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
               ),
             ),
           ),
@@ -462,9 +424,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
 
     return FormField<dynamic>(
       validator: field.required
-          ? (_) => (category == null || category is! Map || category['id'] == null)
-              ? '${field.label} is required'
-              : null
+          ? (_) => (category == null || category is! Map || category['id'] == null) ? '${field.label} is required' : null
           : null,
       builder: (state) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -472,15 +432,13 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
           InkWell(
             onTap: () => _showCategorySearchDialog(field),
             child: InputDecorator(
-              decoration: _inputDecoration(field, theme).copyWith(
-                suffixIcon: const Icon(Icons.search, size: 18),
-                errorText: state.errorText,
-              ),
+              decoration: _inputDecoration(
+                field,
+                theme,
+              ).copyWith(suffixIcon: const Icon(Icons.search, size: 18), errorText: state.errorText),
               child: Text(
                 hasValue ? category['name'] as String : (field.hint ?? 'Search categories...'),
-                style: hasValue
-                    ? theme.textTheme.bodyMedium
-                    : theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
+                style: hasValue ? theme.textTheme.bodyMedium : theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
               ),
             ),
           ),
@@ -491,41 +449,62 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
 
   void _showProductSearchDialog(FeatureField field) {
     final catalogApi = ref.read(catalogApiServiceProvider);
-    showDialog(
-      context: context,
-      builder: (ctx) => _ProductSearchDialog(
-        title: field.label,
-        catalogApi: catalogApi,
-        onSelected: (product) {
-          setState(() {
-            _values[field.key] = {
-              'id': product.id,
-              'name': product.name,
-              'sku': product.sku,
-            };
-          });
-        },
-      ),
+    final searchWidget = _ProductSearchDialog(
+      title: field.label,
+      catalogApi: catalogApi,
+      onSelected: (product) {
+        setState(() {
+          _values[field.key] = {'id': product.id, 'name': product.name, 'sku': product.sku};
+        });
+      },
     );
+
+    if (context.isPhone) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+        builder: (ctx) => DraggableScrollableSheet(
+          initialChildSize: 0.7,
+          minChildSize: 0.4,
+          maxChildSize: 0.9,
+          expand: false,
+          builder: (_, scrollController) => searchWidget,
+        ),
+      );
+    } else {
+      showDialog(context: context, builder: (ctx) => searchWidget);
+    }
   }
 
   void _showCategorySearchDialog(FeatureField field) {
     final catalogApi = ref.read(catalogApiServiceProvider);
-    showDialog(
-      context: context,
-      builder: (ctx) => _CategorySearchDialog(
-        title: field.label,
-        catalogApi: catalogApi,
-        onSelected: (category) {
-          setState(() {
-            _values[field.key] = {
-              'id': category.id,
-              'name': category.name,
-            };
-          });
-        },
-      ),
+    final searchWidget = _CategorySearchDialog(
+      title: field.label,
+      catalogApi: catalogApi,
+      onSelected: (category) {
+        setState(() {
+          _values[field.key] = {'id': category.id, 'name': category.name};
+        });
+      },
     );
+
+    if (context.isPhone) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+        builder: (ctx) => DraggableScrollableSheet(
+          initialChildSize: 0.7,
+          minChildSize: 0.4,
+          maxChildSize: 0.9,
+          expand: false,
+          builder: (_, scrollController) => searchWidget,
+        ),
+      );
+    } else {
+      showDialog(context: context, builder: (ctx) => searchWidget);
+    }
   }
 
   InputDecoration _inputDecoration(FeatureField field, ThemeData theme) {
@@ -548,11 +527,7 @@ class _ProductSearchDialog extends StatefulWidget {
   final CatalogApiService catalogApi;
   final void Function(Product product) onSelected;
 
-  const _ProductSearchDialog({
-    required this.title,
-    required this.catalogApi,
-    required this.onSelected,
-  });
+  const _ProductSearchDialog({required this.title, required this.catalogApi, required this.onSelected});
 
   @override
   State<_ProductSearchDialog> createState() => _ProductSearchDialogState();
@@ -628,28 +603,30 @@ class _ProductSearchDialogState extends State<_ProductSearchDialog> {
               child: _loading
                   ? const Center(child: CircularProgressIndicator())
                   : _results.isEmpty
-                      ? Center(child: Text('No products found', style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)))
-                      : ListView.builder(
-                          itemCount: _results.length,
-                          itemBuilder: (ctx, i) {
-                            final p = _results[i];
-                            return ListTile(
-                              title: Text(p.name),
-                              subtitle: Text(
-                                [p.sku, p.barcode].where((s) => s != null && s.isNotEmpty).join(' \u2022 '),
-                                style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
-                              ),
-                              trailing: Text(
-                                p.sellPrice.toStringAsFixed(3),
-                                style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
-                              ),
-                              onTap: () {
-                                widget.onSelected(p);
-                                Navigator.of(ctx).pop();
-                              },
-                            );
+                  ? Center(
+                      child: Text('No products found', style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
+                    )
+                  : ListView.builder(
+                      itemCount: _results.length,
+                      itemBuilder: (ctx, i) {
+                        final p = _results[i];
+                        return ListTile(
+                          title: Text(p.name),
+                          subtitle: Text(
+                            [p.sku, p.barcode].where((s) => s != null && s.isNotEmpty).join(' \u2022 '),
+                            style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
+                          ),
+                          trailing: Text(
+                            p.sellPrice.toStringAsFixed(3),
+                            style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
+                          ),
+                          onTap: () {
+                            widget.onSelected(p);
+                            Navigator.of(ctx).pop();
                           },
-                        ),
+                        );
+                      },
+                    ),
             ),
           ],
         ),
@@ -665,11 +642,7 @@ class _CategorySearchDialog extends StatefulWidget {
   final CatalogApiService catalogApi;
   final void Function(Category category) onSelected;
 
-  const _CategorySearchDialog({
-    required this.title,
-    required this.catalogApi,
-    required this.onSelected,
-  });
+  const _CategorySearchDialog({required this.title, required this.catalogApi, required this.onSelected});
 
   @override
   State<_CategorySearchDialog> createState() => _CategorySearchDialogState();
@@ -764,21 +737,23 @@ class _CategorySearchDialogState extends State<_CategorySearchDialog> {
               child: _loading
                   ? const Center(child: CircularProgressIndicator())
                   : _filtered.isEmpty
-                      ? Center(child: Text('No categories found', style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)))
-                      : ListView.builder(
-                          itemCount: _filtered.length,
-                          itemBuilder: (ctx, i) {
-                            final c = _filtered[i];
-                            return ListTile(
-                              title: Text(c.name),
-                              subtitle: c.nameAr != null ? Text(c.nameAr!) : null,
-                              onTap: () {
-                                widget.onSelected(c);
-                                Navigator.of(ctx).pop();
-                              },
-                            );
+                  ? Center(
+                      child: Text('No categories found', style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
+                    )
+                  : ListView.builder(
+                      itemCount: _filtered.length,
+                      itemBuilder: (ctx, i) {
+                        final c = _filtered[i];
+                        return ListTile(
+                          title: Text(c.name),
+                          subtitle: c.nameAr != null ? Text(c.nameAr!) : null,
+                          onTap: () {
+                            widget.onSelected(c);
+                            Navigator.of(ctx).pop();
                           },
-                        ),
+                        );
+                      },
+                    ),
             ),
           ],
         ),

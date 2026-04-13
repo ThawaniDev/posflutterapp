@@ -1,5 +1,6 @@
 import 'package:thawani_pos/features/orders/enums/order_source.dart';
 import 'package:thawani_pos/features/orders/enums/order_status.dart';
+import 'package:thawani_pos/features/orders/models/order_item.dart';
 
 class Order {
   final String id;
@@ -18,6 +19,7 @@ class Order {
   final String? externalOrderId;
   final String? deliveryAddress;
   final String? createdBy;
+  final List<OrderItem>? items;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -38,6 +40,7 @@ class Order {
     this.externalOrderId,
     this.deliveryAddress,
     this.createdBy,
+    this.items,
     this.createdAt,
     this.updatedAt,
   });
@@ -60,6 +63,9 @@ class Order {
       externalOrderId: json['external_order_id'] as String?,
       deliveryAddress: json['delivery_address'] as String?,
       createdBy: json['created_by'] as String?,
+      items: json['items'] != null
+          ? (json['items'] as List).map((e) => OrderItem.fromJson(e as Map<String, dynamic>)).toList()
+          : null,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
@@ -83,6 +89,7 @@ class Order {
       'external_order_id': externalOrderId,
       'delivery_address': deliveryAddress,
       'created_by': createdBy,
+      if (items != null) 'items': items!.map((e) => e.toJson()).toList(),
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
     };
@@ -105,6 +112,7 @@ class Order {
     String? externalOrderId,
     String? deliveryAddress,
     String? createdBy,
+    List<OrderItem>? items,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -125,19 +133,19 @@ class Order {
       externalOrderId: externalOrderId ?? this.externalOrderId,
       deliveryAddress: deliveryAddress ?? this.deliveryAddress,
       createdBy: createdBy ?? this.createdBy,
+      items: items ?? this.items,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Order && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is Order && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'Order(id: $id, storeId: $storeId, transactionId: $transactionId, customerId: $customerId, orderNumber: $orderNumber, source: $source, ...)';
+  String toString() =>
+      'Order(id: $id, storeId: $storeId, transactionId: $transactionId, customerId: $customerId, orderNumber: $orderNumber, source: $source, ...)';
 }

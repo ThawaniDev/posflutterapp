@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/features/companion/providers/companion_providers.dart';
 import 'package:thawani_pos/features/companion/providers/companion_state.dart';
 
@@ -66,47 +67,33 @@ class MobileSummaryWidget extends ConsumerWidget {
             ),
             AppSpacing.gapH12,
             // ─── Quick Stats Grid ─────────────
-            Row(
-              children: [
-                Expanded(
-                  child: _StatCard(
-                    icon: Icons.pending_actions,
-                    label: l10n.companionPendingOrders,
-                    value: '$pendingOrders',
-                    color: pendingOrders > 0 ? AppColors.warning : AppColors.success,
-                  ),
+            PosKpiGrid(
+              desktopCols: 4,
+              mobileCols: 2,
+              cards: [
+                PosKpiCard(
+                  icon: Icons.pending_actions,
+                  label: l10n.companionPendingOrders,
+                  value: '$pendingOrders',
+                  iconColor: pendingOrders > 0 ? AppColors.warning : AppColors.success,
                 ),
-                AppSpacing.gapW12,
-                Expanded(
-                  child: _StatCard(
-                    icon: Icons.people,
-                    label: l10n.companionActiveStaff,
-                    value: '$activeStaff',
-                    color: AppColors.info,
-                  ),
+                PosKpiCard(
+                  icon: Icons.people,
+                  label: l10n.companionActiveStaff,
+                  value: '$activeStaff',
+                  iconColor: AppColors.info,
                 ),
-              ],
-            ),
-            AppSpacing.gapH12,
-            Row(
-              children: [
-                Expanded(
-                  child: _StatCard(
-                    icon: Icons.inventory_2,
-                    label: l10n.companionLowStock,
-                    value: '$lowStockItems',
-                    color: lowStockItems > 0 ? AppColors.error : AppColors.success,
-                  ),
+                PosKpiCard(
+                  icon: Icons.inventory_2,
+                  label: l10n.companionLowStock,
+                  value: '$lowStockItems',
+                  iconColor: lowStockItems > 0 ? AppColors.error : AppColors.success,
                 ),
-                AppSpacing.gapW12,
-                Expanded(
-                  child: _StatCard(
-                    icon: Icons.sync,
-                    label: l10n.companionLastSync,
-                    value: lastSync ?? '-',
-                    color: AppColors.textSecondary,
-                    isSmallText: true,
-                  ),
+                PosKpiCard(
+                  icon: Icons.sync,
+                  label: l10n.companionLastSync,
+                  value: lastSync ?? '-',
+                  iconColor: AppColors.textSecondary,
                 ),
               ],
             ),
@@ -138,37 +125,4 @@ class _MiniStat extends StatelessWidget {
   }
 }
 
-class _StatCard extends StatelessWidget {
-  const _StatCard({required this.icon, required this.label, required this.value, required this.color, this.isSmallText = false});
-
-  final IconData icon;
-  final String label;
-  final String value;
-  final Color color;
-  final bool isSmallText;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Card(
-      child: Padding(
-        padding: AppSpacing.paddingAll12,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: color, size: 24),
-            AppSpacing.gapH8,
-            Text(
-              value,
-              style: isSmallText
-                  ? theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)
-                  : theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-            ),
-            AppSpacing.gapH4,
-            Text(label, style: theme.textTheme.bodySmall),
-          ],
-        ),
-      ),
-    );
-  }
-}
+// _StatCard removed — using PosKpiCard via PosKpiGrid

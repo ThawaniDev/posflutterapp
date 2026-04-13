@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
@@ -7,6 +6,7 @@ import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
+import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
@@ -88,6 +88,11 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
       appBar: AppBar(
         title: Text(l10n.debitsTitle),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showDebitListInfo(context),
+          ),
           PopupMenuButton<String?>(
             icon: const Icon(Icons.filter_list),
             tooltip: l10n.debitsFilterByStatus,
@@ -150,68 +155,27 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
   Widget _buildSummary(DebitSummary summary, AppLocalizations l10n) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, 0),
-      child: Builder(
-        builder: (context) {
-          if (context.isPhone) {
-            return Column(
-              children: [
-                Row(
-                  children: [
-                    _summaryCard(l10n.debitsSummaryTotal, summary.totalDebits.toString(), AppColors.primary),
-                    AppSpacing.gapW8,
-                    _summaryCard(l10n.debitsSummaryPending, summary.pendingAmount.toStringAsFixed(2), AppColors.warning),
-                  ],
-                ),
-                AppSpacing.gapH8,
-                Row(
-                  children: [
-                    _summaryCard(l10n.debitsSummaryAllocated, summary.totalAllocated.toStringAsFixed(2), AppColors.success),
-                    AppSpacing.gapW8,
-                    _summaryCard(l10n.debitsSummaryUnallocated, summary.unallocatedAmount.toStringAsFixed(2), AppColors.info),
-                  ],
-                ),
-              ],
-            );
-          }
-          return Row(
-            children: [
-              _summaryCard(l10n.debitsSummaryTotal, summary.totalDebits.toString(), AppColors.primary),
-              AppSpacing.gapW8,
-              _summaryCard(l10n.debitsSummaryPending, summary.pendingAmount.toStringAsFixed(2), AppColors.warning),
-              AppSpacing.gapW8,
-              _summaryCard(l10n.debitsSummaryAllocated, summary.totalAllocated.toStringAsFixed(2), AppColors.success),
-              AppSpacing.gapW8,
-              _summaryCard(l10n.debitsSummaryUnallocated, summary.unallocatedAmount.toStringAsFixed(2), AppColors.info),
-            ],
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _summaryCard(String title, String value, Color color) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.08),
-          borderRadius: AppRadius.borderMd,
-          border: Border.all(color: color.withValues(alpha: 0.2)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w600),
-            ),
-            AppSpacing.gapH4,
-            Text(
-              value,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: color),
-            ),
-          ],
-        ),
+      child: PosKpiGrid(
+        desktopCols: 4,
+        mobileCols: 2,
+        cards: [
+          PosKpiCard(label: l10n.debitsSummaryTotal, value: summary.totalDebits.toString(), iconColor: AppColors.primary),
+          PosKpiCard(
+            label: l10n.debitsSummaryPending,
+            value: summary.pendingAmount.toStringAsFixed(2),
+            iconColor: AppColors.warning,
+          ),
+          PosKpiCard(
+            label: l10n.debitsSummaryAllocated,
+            value: summary.totalAllocated.toStringAsFixed(2),
+            iconColor: AppColors.success,
+          ),
+          PosKpiCard(
+            label: l10n.debitsSummaryUnallocated,
+            value: summary.unallocatedAmount.toStringAsFixed(2),
+            iconColor: AppColors.info,
+          ),
+        ],
       ),
     );
   }

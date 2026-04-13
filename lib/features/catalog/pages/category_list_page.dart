@@ -233,6 +233,11 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
       appBar: AppBar(
         title: const Text('Categories'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
+            onPressed: () => showCategoryListInfo(context),
+          ),
           if (categoriesState is CategoriesLoaded) ...[
             IconButton(
               icon: const Icon(Icons.unfold_more),

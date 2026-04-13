@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/wameed_ai/models/ai_feature_definition.dart';
+import 'package:thawani_pos/features/wameed_ai/models/ai_billing.dart';import 'package:thawani_pos/features/wameed_ai/models/ai_feature_definition.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_feature_result.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_suggestion.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_usage.dart';
@@ -137,4 +137,89 @@ class AISmartSearchLoaded extends AISmartSearchState {
 class AISmartSearchError extends AISmartSearchState {
   final String message;
   const AISmartSearchError({required this.message});
+}
+
+// ─── Billing Summary State ──────────────────────────────────────
+
+sealed class AIBillingSummaryState {
+  const AIBillingSummaryState();
+}
+
+class AIBillingSummaryInitial extends AIBillingSummaryState {
+  const AIBillingSummaryInitial();
+}
+
+class AIBillingSummaryLoading extends AIBillingSummaryState {
+  const AIBillingSummaryLoading();
+}
+
+class AIBillingSummaryLoaded extends AIBillingSummaryState {
+  final AIBillingSummary summary;
+  const AIBillingSummaryLoaded({required this.summary});
+}
+
+class AIBillingSummaryError extends AIBillingSummaryState {
+  final String message;
+  const AIBillingSummaryError({required this.message});
+}
+
+// ─── Billing Invoices State ─────────────────────────────────────
+
+sealed class AIBillingInvoicesState {
+  const AIBillingInvoicesState();
+}
+
+class AIBillingInvoicesInitial extends AIBillingInvoicesState {
+  const AIBillingInvoicesInitial();
+}
+
+class AIBillingInvoicesLoading extends AIBillingInvoicesState {
+  const AIBillingInvoicesLoading();
+}
+
+class AIBillingInvoicesLoaded extends AIBillingInvoicesState {
+  final List<AIBillingInvoicePreview> invoices;
+  final int total;
+  final int currentPage;
+  final int lastPage;
+  final int perPage;
+
+  const AIBillingInvoicesLoaded({
+    required this.invoices,
+    required this.total,
+    required this.currentPage,
+    required this.lastPage,
+    required this.perPage,
+  });
+
+  bool get hasMore => currentPage < lastPage;
+}
+
+class AIBillingInvoicesError extends AIBillingInvoicesState {
+  final String message;
+  const AIBillingInvoicesError({required this.message});
+}
+
+// ─── Billing Invoice Detail State ───────────────────────────────
+
+sealed class AIBillingInvoiceDetailState {
+  const AIBillingInvoiceDetailState();
+}
+
+class AIBillingInvoiceDetailInitial extends AIBillingInvoiceDetailState {
+  const AIBillingInvoiceDetailInitial();
+}
+
+class AIBillingInvoiceDetailLoading extends AIBillingInvoiceDetailState {
+  const AIBillingInvoiceDetailLoading();
+}
+
+class AIBillingInvoiceDetailLoaded extends AIBillingInvoiceDetailState {
+  final AIBillingInvoiceDetail invoice;
+  const AIBillingInvoiceDetailLoaded({required this.invoice});
+}
+
+class AIBillingInvoiceDetailError extends AIBillingInvoiceDetailState {
+  final String message;
+  const AIBillingInvoiceDetailError({required this.message});
 }

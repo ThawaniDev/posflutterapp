@@ -119,6 +119,11 @@ class _OrderListPageState extends ConsumerState<OrderListPage> {
       appBar: AppBar(
         title: Text(l10n.orders),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showOrderListInfo(context),
+          ),
           PopupMenuButton<String?>(
             icon: const Icon(Icons.filter_list),
             tooltip: l10n.ordersFilterByStatus,

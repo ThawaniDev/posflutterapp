@@ -114,22 +114,30 @@ void main() {
   group('Notification model', () {
     final json = {
       'id': 'notif-1',
-      'type': 'order_created',
-      'notifiable_type': 'App\\Models\\User',
-      'notifiable_id': 'user-1',
-      'data': {'order_id': '123', 'amount': 45.5},
-      'read_at': '2024-01-15T10:30:00.000Z',
+      'user_id': 'user-1',
+      'store_id': 'store-1',
+      'category': 'order',
+      'title': 'New Order',
+      'message': 'You have a new order',
+      'action_url': '/orders/123',
+      'reference_type': 'order',
+      'reference_id': 'order-123',
+      'is_read': false,
       'created_at': '2024-01-15T10:00:00.000Z',
     };
 
     test('fromJson', () {
       final notif = Notification.fromJson(json);
       expect(notif.id, 'notif-1');
-      expect(notif.type, 'order_created');
-      expect(notif.notifiableType, 'App\\Models\\User');
-      expect(notif.notifiableId, 'user-1');
-      expect(notif.data['order_id'], '123');
-      expect(notif.readAt, isNotNull);
+      expect(notif.userId, 'user-1');
+      expect(notif.storeId, 'store-1');
+      expect(notif.category, 'order');
+      expect(notif.title, 'New Order');
+      expect(notif.message, 'You have a new order');
+      expect(notif.actionUrl, '/orders/123');
+      expect(notif.referenceType, 'order');
+      expect(notif.referenceId, 'order-123');
+      expect(notif.isRead, false);
       expect(notif.createdAt, isNotNull);
     });
 
@@ -137,36 +145,28 @@ void main() {
       final notif = Notification.fromJson(json);
       final output = notif.toJson();
       expect(output['id'], 'notif-1');
-      expect(output['type'], 'order_created');
-      expect(output['notifiable_type'], 'App\\Models\\User');
-      expect(output['data'], isA<Map>());
+      expect(output['user_id'], 'user-1');
+      expect(output['is_read'], false);
+      expect(output['category'], 'order');
     });
 
     test('fromJson with null dates', () {
-      final partial = {
-        'id': 'notif-2',
-        'type': 'test',
-        'notifiable_type': 'User',
-        'notifiable_id': 'u1',
-        'data': <String, dynamic>{},
-        'read_at': null,
-        'created_at': null,
-      };
+      final partial = {'id': 'notif-2', 'created_at': null};
       final notif = Notification.fromJson(partial);
-      expect(notif.readAt, isNull);
+      expect(notif.isRead, false);
       expect(notif.createdAt, isNull);
     });
 
     test('equality is by id', () {
       final a = Notification.fromJson(json);
-      final b = Notification.fromJson({...json, 'type': 'different'});
+      final b = Notification.fromJson({...json, 'category': 'different'});
       expect(a, equals(b)); // same id
     });
 
     test('copyWith', () {
       final notif = Notification.fromJson(json);
-      final copy = notif.copyWith(type: 'updated');
-      expect(copy.type, 'updated');
+      final copy = notif.copyWith(isRead: true);
+      expect(copy.isRead, true);
       expect(copy.id, notif.id);
     });
   });

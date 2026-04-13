@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/pos_card.dart';
 
 class SecurityOverviewWidget extends StatelessWidget {
   final Map<String, dynamic> data;
@@ -24,37 +25,46 @@ class SecurityOverviewWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // KPI grid
-          GridView.count(
-            crossAxisCount: 3,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            mainAxisSpacing: 12,
-            crossAxisSpacing: 12,
-            childAspectRatio: 1.6,
-            children: [
-              _buildKpiCard(context, l10n.securityActiveDevices, '$activeDevices', Icons.devices, AppColors.info),
-              _buildKpiCard(context, l10n.securityActiveSessions, '$activeSessions', Icons.computer, AppColors.success),
-              _buildKpiCard(
-                context,
-                l10n.securityUnresolvedIncidents,
-                '$unresolvedIncidents',
-                Icons.warning_amber,
-                unresolvedIncidents > 0 ? AppColors.error : AppColors.success,
+          PosKpiGrid(
+            desktopCols: 3,
+            tabletCols: 3,
+            mobileCols: 2,
+            cards: [
+              PosKpiCard(
+                label: l10n.securityActiveDevices,
+                value: '$activeDevices',
+                icon: Icons.devices,
+                iconColor: AppColors.info,
               ),
-              _buildKpiCard(
-                context,
-                l10n.securityFailedLoginsToday,
-                '$failedLoginsToday',
-                Icons.lock,
-                failedLoginsToday > 5 ? AppColors.error : AppColors.warning,
+              PosKpiCard(
+                label: l10n.securityActiveSessions,
+                value: '$activeSessions',
+                icon: Icons.computer,
+                iconColor: AppColors.success,
               ),
-              _buildKpiCard(context, l10n.securityTotalAuditLogs, '$totalAuditLogs', Icons.description, AppColors.textSecondary),
-              _buildKpiCard(
-                context,
-                l10n.securityLockedOutUsers,
-                '$lockedOutUsers',
-                Icons.person_off,
-                lockedOutUsers > 0 ? AppColors.error : AppColors.success,
+              PosKpiCard(
+                label: l10n.securityUnresolvedIncidents,
+                value: '$unresolvedIncidents',
+                icon: Icons.warning_amber,
+                iconColor: unresolvedIncidents > 0 ? AppColors.error : AppColors.success,
+              ),
+              PosKpiCard(
+                label: l10n.securityFailedLoginsToday,
+                value: '$failedLoginsToday',
+                icon: Icons.lock,
+                iconColor: failedLoginsToday > 5 ? AppColors.error : AppColors.warning,
+              ),
+              PosKpiCard(
+                label: l10n.securityTotalAuditLogs,
+                value: '$totalAuditLogs',
+                icon: Icons.description,
+                iconColor: AppColors.textSecondary,
+              ),
+              PosKpiCard(
+                label: l10n.securityLockedOutUsers,
+                value: '$lockedOutUsers',
+                icon: Icons.person_off,
+                iconColor: lockedOutUsers > 0 ? AppColors.error : AppColors.success,
               ),
             ],
           ),
@@ -80,32 +90,6 @@ class SecurityOverviewWidget extends StatelessWidget {
             }),
           ],
         ],
-      ),
-    );
-  }
-
-  Widget _buildKpiCard(BuildContext context, String label, String value, IconData icon, Color color) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: color, size: 24),
-            AppSpacing.gapH4,
-            Text(
-              value,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color),
-            ),
-            Text(
-              label,
-              style: TextStyle(fontSize: 10, color: AppColors.textSecondary),
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        ),
       ),
     );
   }

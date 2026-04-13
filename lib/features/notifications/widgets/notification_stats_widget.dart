@@ -49,22 +49,19 @@ class _NotificationStatsWidgetState extends ConsumerState<NotificationStatsWidge
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // KPI Cards row
-          Row(
-            children: [
-              Expanded(child: _buildKpiCard(l10n.notifStatsTotal, '$total', Icons.notifications, AppColors.info)),
-              AppSpacing.gapW8,
-              Expanded(child: _buildKpiCard(l10n.notifStatsUnread, '$unread', Icons.markunread, AppColors.warning)),
-              AppSpacing.gapW8,
-              Expanded(child: _buildKpiCard(l10n.notifStatsRead, '$read', Icons.done_all, AppColors.success)),
-              AppSpacing.gapW8,
-              Expanded(
-                child: _buildKpiCard(
-                  l10n.notifStatsDeliveryRate,
-                  '${deliveryRate.toStringAsFixed(1)}%',
-                  Icons.local_shipping,
-                  AppColors.purple,
-                ),
+          // KPI Cards
+          PosKpiGrid(
+            desktopCols: 4,
+            mobileCols: 2,
+            cards: [
+              PosKpiCard(label: l10n.notifStatsTotal, value: '$total', icon: Icons.notifications, iconColor: AppColors.info),
+              PosKpiCard(label: l10n.notifStatsUnread, value: '$unread', icon: Icons.markunread, iconColor: AppColors.warning),
+              PosKpiCard(label: l10n.notifStatsRead, value: '$read', icon: Icons.done_all, iconColor: AppColors.success),
+              PosKpiCard(
+                label: l10n.notifStatsDeliveryRate,
+                value: '${deliveryRate.toStringAsFixed(1)}%',
+                icon: Icons.local_shipping,
+                iconColor: AppColors.purple,
               ),
             ],
           ),
@@ -82,30 +79,6 @@ class _NotificationStatsWidgetState extends ConsumerState<NotificationStatsWidge
           AppSpacing.gapH8,
           ...byChannel.entries.map((e) => _buildStatRow(e.key, e.value.toString(), _channelIcon(e.key), AppColors.info)),
         ],
-      ),
-    );
-  }
-
-  Widget _buildKpiCard(String label, String value, IconData icon, Color color) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          children: [
-            Icon(icon, color: color, size: 28),
-            AppSpacing.gapH4,
-            Text(
-              value,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color),
-            ),
-            AppSpacing.gapH4,
-            Text(
-              label,
-              style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
@@ -68,19 +69,14 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                     padding: const EdgeInsets.all(AppSpacing.md),
                     children: [
                       // MRR & ARR cards
-                      Row(
-                        children: [
-                          Expanded(child: _metricCard('MRR', '\u0081${mrr.toStringAsFixed(2)}', AppColors.success)),
-                          const SizedBox(width: AppSpacing.sm),
-                          Expanded(child: _metricCard('ARR', '\u0081${arr.toStringAsFixed(2)}', AppColors.info)),
-                        ],
-                      ),
-                      const SizedBox(height: AppSpacing.sm),
-                      Row(
-                        children: [
-                          Expanded(child: _metricCard('Failed Payments', '$failed', AppColors.error)),
-                          const SizedBox(width: AppSpacing.sm),
-                          Expanded(child: _metricCard('Upcoming Renewals', '$renewals', AppColors.warning)),
+                      PosKpiGrid(
+                        desktopCols: 4,
+                        mobileCols: 2,
+                        cards: [
+                          PosKpiCard(label: 'MRR', value: '\u0081${mrr.toStringAsFixed(2)}', iconColor: AppColors.success),
+                          PosKpiCard(label: 'ARR', value: '\u0081${arr.toStringAsFixed(2)}', iconColor: AppColors.info),
+                          PosKpiCard(label: 'Failed Payments', value: '$failed', iconColor: AppColors.error),
+                          PosKpiCard(label: 'Upcoming Renewals', value: '$renewals', iconColor: AppColors.warning),
                         ],
                       ),
                       const SizedBox(height: AppSpacing.lg),
@@ -170,25 +166,6 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
             },
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _metricCard(String label, String value, Color color) {
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Column(
-          children: [
-            Text(
-              value,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: color),
-            ),
-            const SizedBox(height: 4),
-            Text(label, style: const TextStyle(fontSize: 13, color: AppColors.textSecondary)),
-          ],
-        ),
       ),
     );
   }

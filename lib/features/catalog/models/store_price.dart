@@ -1,7 +1,7 @@
 class StorePrice {
   final String id;
   final String storeId;
-  final String productId;
+  final String? productId;
   final double sellPrice;
   final DateTime? validFrom;
   final DateTime? validTo;
@@ -11,7 +11,7 @@ class StorePrice {
   const StorePrice({
     required this.id,
     required this.storeId,
-    required this.productId,
+    this.productId,
     required this.sellPrice,
     this.validFrom,
     this.validTo,
@@ -23,7 +23,7 @@ class StorePrice {
     return StorePrice(
       id: json['id'] as String,
       storeId: json['store_id'] as String,
-      productId: json['product_id'] as String,
+      productId: json['product_id'] as String?,
       sellPrice: double.tryParse(json['sell_price'].toString()) ?? 0.0,
       validFrom: json['valid_from'] != null ? DateTime.parse(json['valid_from'] as String) : null,
       validTo: json['valid_to'] != null ? DateTime.parse(json['valid_to'] as String) : null,
@@ -68,13 +68,12 @@ class StorePrice {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is StorePrice && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is StorePrice && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'StorePrice(id: $id, storeId: $storeId, productId: $productId, sellPrice: $sellPrice, validFrom: $validFrom, validTo: $validTo, ...)';
+  String toString() =>
+      'StorePrice(id: $id, storeId: $storeId, productId: $productId, sellPrice: $sellPrice, validFrom: $validFrom, validTo: $validTo, ...)';
 }

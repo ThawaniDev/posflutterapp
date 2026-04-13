@@ -62,6 +62,11 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
         title: Text(l10n.inventoryRecipes),
         actions: [
           IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showRecipesInfo(context),
+          ),
+          IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(recipesProvider.notifier).load(),

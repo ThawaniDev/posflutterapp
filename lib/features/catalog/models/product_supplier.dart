@@ -1,6 +1,6 @@
 class ProductSupplier {
   final String id;
-  final String productId;
+  final String? productId;
   final String supplierId;
   final double? costPrice;
   final int? leadTimeDays;
@@ -9,7 +9,7 @@ class ProductSupplier {
 
   const ProductSupplier({
     required this.id,
-    required this.productId,
+    this.productId,
     required this.supplierId,
     this.costPrice,
     this.leadTimeDays,
@@ -20,7 +20,7 @@ class ProductSupplier {
   factory ProductSupplier.fromJson(Map<String, dynamic> json) {
     return ProductSupplier(
       id: json['id'] as String,
-      productId: json['product_id'] as String,
+      productId: json['product_id'] as String?,
       supplierId: json['supplier_id'] as String,
       costPrice: (json['cost_price'] != null ? double.tryParse(json['cost_price'].toString()) : null),
       leadTimeDays: (json['lead_time_days'] as num?)?.toInt(),
@@ -62,13 +62,12 @@ class ProductSupplier {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ProductSupplier && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is ProductSupplier && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'ProductSupplier(id: $id, productId: $productId, supplierId: $supplierId, costPrice: $costPrice, leadTimeDays: $leadTimeDays, supplierSku: $supplierSku, ...)';
+  String toString() =>
+      'ProductSupplier(id: $id, productId: $productId, supplierId: $supplierId, costPrice: $costPrice, leadTimeDays: $leadTimeDays, supplierSku: $supplierSku, ...)';
 }

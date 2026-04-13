@@ -159,3 +159,83 @@ class AISmartSearchNotifier extends StateNotifier<AISmartSearchState> {
 
   void reset() => state = const AISmartSearchInitial();
 }
+
+// ─── Billing Summary Provider ───────────────────────────────────
+
+final aiBillingSummaryProvider = StateNotifierProvider<AIBillingSummaryNotifier, AIBillingSummaryState>((ref) {
+  return AIBillingSummaryNotifier(ref.watch(wameedAIRepositoryProvider));
+});
+
+class AIBillingSummaryNotifier extends StateNotifier<AIBillingSummaryState> {
+  final WameedAIRepository _repo;
+
+  AIBillingSummaryNotifier(this._repo) : super(const AIBillingSummaryInitial());
+
+  Future<void> load() async {
+    state = const AIBillingSummaryLoading();
+    try {
+      final summary = await _repo.getBillingSummary();
+      state = AIBillingSummaryLoaded(summary: summary);
+    } on DioException catch (e) {
+      state = AIBillingSummaryError(message: _extractError(e));
+    } catch (e) {
+      state = AIBillingSummaryError(message: e.toString());
+    }
+  }
+}
+
+// ─── Billing Invoices Provider ──────────────────────────────────
+
+final aiBillingInvoicesProvider = StateNotifierProvider<AIBillingInvoicesNotifier, AIBillingInvoicesState>((ref) {
+  return AIBillingInvoicesNotifier(ref.watch(wameedAIRepositoryProvider));
+});
+
+class AIBillingInvoicesNotifier extends StateNotifier<AIBillingInvoicesState> {
+  final WameedAIRepository _repo;
+
+  AIBillingInvoicesNotifier(this._repo) : super(const AIBillingInvoicesInitial());
+
+  Future<void> load({int page = 1}) async {
+    state = const AIBillingInvoicesLoading();
+    try {
+      final result = await _repo.getBillingInvoices(page: page);
+      state = AIBillingInvoicesLoaded(
+        invoices: result.items,
+        total: result.total,
+        currentPage: result.currentPage,
+        lastPage: result.lastPage,
+        perPage: result.perPage,
+      );
+    } on DioException catch (e) {
+      state = AIBillingInvoicesError(message: _extractError(e));
+    } catch (e) {
+      state = AIBillingInvoicesError(message: e.toString());
+    }
+  }
+}
+
+// ─── Billing Invoice Detail Provider ────────────────────────────
+
+final aiBillingInvoiceDetailProvider = StateNotifierProvider<AIBillingInvoiceDetailNotifier, AIBillingInvoiceDetailState>((ref) {
+  return AIBillingInvoiceDetailNotifier(ref.watch(wameedAIRepositoryProvider));
+});
+
+class AIBillingInvoiceDetailNotifier extends StateNotifier<AIBillingInvoiceDetailState> {
+  final WameedAIRepository _repo;
+
+  AIBillingInvoiceDetailNotifier(this._repo) : super(const AIBillingInvoiceDetailInitial());
+
+  Future<void> load(String invoiceId) async {
+    state = const AIBillingInvoiceDetailLoading();
+    try {
+      final invoice = await _repo.getBillingInvoiceDetail(invoiceId);
+      state = AIBillingInvoiceDetailLoaded(invoice: invoice);
+    } on DioException catch (e) {
+      state = AIBillingInvoiceDetailError(message: _extractError(e));
+    } catch (e) {
+      state = AIBillingInvoiceDetailError(message: e.toString());
+    }
+  }
+
+  void reset() => state = const AIBillingInvoiceDetailInitial();
+}

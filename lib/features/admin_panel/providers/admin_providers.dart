@@ -4580,3 +4580,282 @@ class InfraHealthChecksNotifier extends StateNotifier<InfraListState> {
     }
   }
 }
+
+// ═══════════════════════════════════════════════════════════════
+// P18: Wameed AI Admin
+// ═══════════════════════════════════════════════════════════════
+
+final wameedAIAdminDashboardProvider =
+    StateNotifierProvider<WameedAIAdminDashboardNotifier, WameedAIAdminDashboardState>(
+  (ref) => WameedAIAdminDashboardNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class WameedAIAdminDashboardNotifier extends StateNotifier<WameedAIAdminDashboardState> {
+  final AdminRepository _repo;
+  WameedAIAdminDashboardNotifier(this._repo) : super(const WameedAIAdminDashboardInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const WameedAIAdminDashboardLoading();
+    try {
+      state = WameedAIAdminDashboardLoaded(await _repo.getWameedAIDashboard(params: params));
+    } catch (e) {
+      state = WameedAIAdminDashboardError(e.toString());
+    }
+  }
+}
+
+final wameedAIAdminLogsProvider = StateNotifierProvider<WameedAIAdminLogsNotifier, WameedAIAdminListState>(
+  (ref) => WameedAIAdminLogsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class WameedAIAdminLogsNotifier extends StateNotifier<WameedAIAdminListState> {
+  final AdminRepository _repo;
+  WameedAIAdminLogsNotifier(this._repo) : super(const WameedAIAdminListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const WameedAIAdminListLoading();
+    try {
+      state = WameedAIAdminListLoaded(await _repo.getWameedAIPlatformLogs(params: params));
+    } catch (e) {
+      state = WameedAIAdminListError(e.toString());
+    }
+  }
+}
+
+final wameedAIAdminLogStatsProvider = StateNotifierProvider<WameedAIAdminLogStatsNotifier, WameedAIAdminDashboardState>(
+  (ref) => WameedAIAdminLogStatsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class WameedAIAdminLogStatsNotifier extends StateNotifier<WameedAIAdminDashboardState> {
+  final AdminRepository _repo;
+  WameedAIAdminLogStatsNotifier(this._repo) : super(const WameedAIAdminDashboardInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const WameedAIAdminDashboardLoading();
+    try {
+      state = WameedAIAdminDashboardLoaded(await _repo.getWameedAIPlatformLogStats(params: params));
+    } catch (e) {
+      state = WameedAIAdminDashboardError(e.toString());
+    }
+  }
+}
+
+final wameedAIAdminProvidersProvider = StateNotifierProvider<WameedAIAdminProvidersNotifier, WameedAIAdminListState>(
+  (ref) => WameedAIAdminProvidersNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class WameedAIAdminProvidersNotifier extends StateNotifier<WameedAIAdminListState> {
+  final AdminRepository _repo;
+  WameedAIAdminProvidersNotifier(this._repo) : super(const WameedAIAdminListInitial());
+  Future<void> load() async {
+    state = const WameedAIAdminListLoading();
+    try {
+      state = WameedAIAdminListLoaded(await _repo.getWameedAIProviders());
+    } catch (e) {
+      state = WameedAIAdminListError(e.toString());
+    }
+  }
+}
+
+final wameedAIAdminFeaturesProvider = StateNotifierProvider<WameedAIAdminFeaturesNotifier, WameedAIAdminListState>(
+  (ref) => WameedAIAdminFeaturesNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class WameedAIAdminFeaturesNotifier extends StateNotifier<WameedAIAdminListState> {
+  final AdminRepository _repo;
+  WameedAIAdminFeaturesNotifier(this._repo) : super(const WameedAIAdminListInitial());
+  Future<void> load() async {
+    state = const WameedAIAdminListLoading();
+    try {
+      state = WameedAIAdminListLoaded(await _repo.getWameedAIFeatures());
+    } catch (e) {
+      state = WameedAIAdminListError(e.toString());
+    }
+  }
+}
+
+final wameedAIAdminLlmModelsProvider = StateNotifierProvider<WameedAIAdminLlmModelsNotifier, WameedAIAdminListState>(
+  (ref) => WameedAIAdminLlmModelsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class WameedAIAdminLlmModelsNotifier extends StateNotifier<WameedAIAdminListState> {
+  final AdminRepository _repo;
+  WameedAIAdminLlmModelsNotifier(this._repo) : super(const WameedAIAdminListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const WameedAIAdminListLoading();
+    try {
+      state = WameedAIAdminListLoaded(await _repo.getWameedAILlmModels(params: params));
+    } catch (e) {
+      state = WameedAIAdminListError(e.toString());
+    }
+  }
+}
+
+final wameedAIAdminChatsProvider = StateNotifierProvider<WameedAIAdminChatsNotifier, WameedAIAdminListState>(
+  (ref) => WameedAIAdminChatsNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class WameedAIAdminChatsNotifier extends StateNotifier<WameedAIAdminListState> {
+  final AdminRepository _repo;
+  WameedAIAdminChatsNotifier(this._repo) : super(const WameedAIAdminListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const WameedAIAdminListLoading();
+    try {
+      state = WameedAIAdminListLoaded(await _repo.getWameedAIChats(params: params));
+    } catch (e) {
+      state = WameedAIAdminListError(e.toString());
+    }
+  }
+}
+
+final wameedAIAdminChatDetailProvider =
+    StateNotifierProvider<WameedAIAdminChatDetailNotifier, WameedAIAdminDetailState>(
+  (ref) => WameedAIAdminChatDetailNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class WameedAIAdminChatDetailNotifier extends StateNotifier<WameedAIAdminDetailState> {
+  final AdminRepository _repo;
+  WameedAIAdminChatDetailNotifier(this._repo) : super(const WameedAIAdminDetailInitial());
+  Future<void> load(String id) async {
+    state = const WameedAIAdminDetailLoading();
+    try {
+      state = WameedAIAdminDetailLoaded(await _repo.getWameedAIChatDetail(id));
+    } catch (e) {
+      state = WameedAIAdminDetailError(e.toString());
+    }
+  }
+}
+
+final wameedAIAdminBillingDashboardProvider =
+    StateNotifierProvider<WameedAIAdminBillingDashboardNotifier, WameedAIAdminDashboardState>(
+  (ref) => WameedAIAdminBillingDashboardNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class WameedAIAdminBillingDashboardNotifier extends StateNotifier<WameedAIAdminDashboardState> {
+  final AdminRepository _repo;
+  WameedAIAdminBillingDashboardNotifier(this._repo) : super(const WameedAIAdminDashboardInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const WameedAIAdminDashboardLoading();
+    try {
+      state = WameedAIAdminDashboardLoaded(await _repo.getWameedAIBillingDashboard(params: params));
+    } catch (e) {
+      state = WameedAIAdminDashboardError(e.toString());
+    }
+  }
+}
+
+final wameedAIAdminBillingInvoicesProvider =
+    StateNotifierProvider<WameedAIAdminBillingInvoicesNotifier, WameedAIAdminListState>(
+  (ref) => WameedAIAdminBillingInvoicesNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class WameedAIAdminBillingInvoicesNotifier extends StateNotifier<WameedAIAdminListState> {
+  final AdminRepository _repo;
+  WameedAIAdminBillingInvoicesNotifier(this._repo) : super(const WameedAIAdminListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const WameedAIAdminListLoading();
+    try {
+      state = WameedAIAdminListLoaded(await _repo.getWameedAIBillingInvoices(params: params));
+    } catch (e) {
+      state = WameedAIAdminListError(e.toString());
+    }
+  }
+}
+
+final wameedAIAdminBillingStoresProvider =
+    StateNotifierProvider<WameedAIAdminBillingStoresNotifier, WameedAIAdminListState>(
+  (ref) => WameedAIAdminBillingStoresNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class WameedAIAdminBillingStoresNotifier extends StateNotifier<WameedAIAdminListState> {
+  final AdminRepository _repo;
+  WameedAIAdminBillingStoresNotifier(this._repo) : super(const WameedAIAdminListInitial());
+  Future<void> load({Map<String, dynamic>? params}) async {
+    state = const WameedAIAdminListLoading();
+    try {
+      state = WameedAIAdminListLoaded(await _repo.getWameedAIBillingStores(params: params));
+    } catch (e) {
+      state = WameedAIAdminListError(e.toString());
+    }
+  }
+}
+
+final wameedAIAdminActionProvider = StateNotifierProvider<WameedAIAdminActionNotifier, WameedAIAdminActionState>(
+  (ref) => WameedAIAdminActionNotifier(ref.read(adminRepositoryProvider)),
+);
+
+class WameedAIAdminActionNotifier extends StateNotifier<WameedAIAdminActionState> {
+  final AdminRepository _repo;
+  WameedAIAdminActionNotifier(this._repo) : super(const WameedAIAdminActionInitial());
+
+  Future<void> toggleFeature(String id) async {
+    state = const WameedAIAdminActionLoading();
+    try {
+      state = WameedAIAdminActionSuccess(await _repo.toggleWameedAIFeature(id));
+    } catch (e) {
+      state = WameedAIAdminActionError(e.toString());
+    }
+  }
+
+  Future<void> createLlmModel(Map<String, dynamic> data) async {
+    state = const WameedAIAdminActionLoading();
+    try {
+      state = WameedAIAdminActionSuccess(await _repo.createWameedAILlmModel(data));
+    } catch (e) {
+      state = WameedAIAdminActionError(e.toString());
+    }
+  }
+
+  Future<void> updateLlmModel(String id, Map<String, dynamic> data) async {
+    state = const WameedAIAdminActionLoading();
+    try {
+      state = WameedAIAdminActionSuccess(await _repo.updateWameedAILlmModel(id, data));
+    } catch (e) {
+      state = WameedAIAdminActionError(e.toString());
+    }
+  }
+
+  Future<void> toggleLlmModel(String id) async {
+    state = const WameedAIAdminActionLoading();
+    try {
+      state = WameedAIAdminActionSuccess(await _repo.toggleWameedAILlmModel(id));
+    } catch (e) {
+      state = WameedAIAdminActionError(e.toString());
+    }
+  }
+
+  Future<void> deleteLlmModel(String id) async {
+    state = const WameedAIAdminActionLoading();
+    try {
+      state = WameedAIAdminActionSuccess(await _repo.deleteWameedAILlmModel(id));
+    } catch (e) {
+      state = WameedAIAdminActionError(e.toString());
+    }
+  }
+
+  Future<void> markInvoicePaid(String id, Map<String, dynamic> data) async {
+    state = const WameedAIAdminActionLoading();
+    try {
+      state = WameedAIAdminActionSuccess(await _repo.markWameedAIBillingInvoicePaid(id, data));
+    } catch (e) {
+      state = WameedAIAdminActionError(e.toString());
+    }
+  }
+
+  Future<void> toggleStoreAI(String id, {Map<String, dynamic>? data}) async {
+    state = const WameedAIAdminActionLoading();
+    try {
+      state = WameedAIAdminActionSuccess(await _repo.toggleWameedAIBillingStoreAI(id, data: data));
+    } catch (e) {
+      state = WameedAIAdminActionError(e.toString());
+    }
+  }
+
+  Future<void> generateInvoices({Map<String, dynamic>? data}) async {
+    state = const WameedAIAdminActionLoading();
+    try {
+      state = WameedAIAdminActionSuccess(await _repo.generateWameedAIBillingInvoices(data: data));
+    } catch (e) {
+      state = WameedAIAdminActionError(e.toString());
+    }
+  }
+
+  void reset() => state = const WameedAIAdminActionInitial();
+}

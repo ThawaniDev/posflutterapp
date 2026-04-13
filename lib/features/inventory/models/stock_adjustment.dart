@@ -3,19 +3,19 @@ import 'package:thawani_pos/features/inventory/enums/stock_adjustment_type.dart'
 class StockAdjustment {
   final String id;
   final String storeId;
-  final StockAdjustmentType type;
-  final String reasonCode;
+  final StockAdjustmentType? type;
+  final String? reasonCode;
   final String? notes;
-  final String adjustedBy;
+  final String? adjustedBy;
   final DateTime? createdAt;
 
   const StockAdjustment({
     required this.id,
     required this.storeId,
-    required this.type,
-    required this.reasonCode,
+    this.type,
+    this.reasonCode,
     this.notes,
-    required this.adjustedBy,
+    this.adjustedBy,
     this.createdAt,
   });
 
@@ -23,10 +23,10 @@ class StockAdjustment {
     return StockAdjustment(
       id: json['id'] as String,
       storeId: json['store_id'] as String,
-      type: StockAdjustmentType.fromValue(json['type'] as String),
-      reasonCode: json['reason_code'] as String,
+      type: json['type'] != null ? StockAdjustmentType.fromValue(json['type'] as String) : null,
+      reasonCode: json['reason_code'] as String?,
       notes: json['notes'] as String?,
-      adjustedBy: json['adjusted_by'] as String,
+      adjustedBy: json['adjusted_by'] as String?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
@@ -35,7 +35,7 @@ class StockAdjustment {
     return {
       'id': id,
       'store_id': storeId,
-      'type': type.value,
+      'type': type?.value,
       'reason_code': reasonCode,
       'notes': notes,
       'adjusted_by': adjustedBy,
@@ -64,13 +64,12 @@ class StockAdjustment {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is StockAdjustment && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is StockAdjustment && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'StockAdjustment(id: $id, storeId: $storeId, type: $type, reasonCode: $reasonCode, notes: $notes, adjustedBy: $adjustedBy, ...)';
+  String toString() =>
+      'StockAdjustment(id: $id, storeId: $storeId, type: $type, reasonCode: $reasonCode, notes: $notes, adjustedBy: $adjustedBy, ...)';
 }

@@ -1,6 +1,6 @@
 class ProductVariant {
   final String id;
-  final String productId;
+  final String? productId;
   final String variantGroupId;
   final String variantValue;
   final String? variantValueAr;
@@ -14,7 +14,7 @@ class ProductVariant {
 
   const ProductVariant({
     required this.id,
-    required this.productId,
+    this.productId,
     required this.variantGroupId,
     required this.variantValue,
     this.variantValueAr,
@@ -30,7 +30,7 @@ class ProductVariant {
   factory ProductVariant.fromJson(Map<String, dynamic> json) {
     return ProductVariant(
       id: json['id'] as String,
-      productId: json['product_id'] as String,
+      productId: json['product_id'] as String?,
       variantGroupId: json['variant_group_id'] as String,
       variantValue: json['variant_value'] as String,
       variantValueAr: json['variant_value_ar'] as String?,
@@ -92,13 +92,12 @@ class ProductVariant {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ProductVariant && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is ProductVariant && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'ProductVariant(id: $id, productId: $productId, variantGroupId: $variantGroupId, variantValue: $variantValue, variantValueAr: $variantValueAr, sku: $sku, ...)';
+  String toString() =>
+      'ProductVariant(id: $id, productId: $productId, variantGroupId: $variantGroupId, variantValue: $variantValue, variantValueAr: $variantValueAr, sku: $sku, ...)';
 }

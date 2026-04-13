@@ -43,6 +43,11 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
       appBar: AppBar(
         title: Text(l10n.finReconTitle),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showFinancialReconciliationInfo(context),
+          ),
           TextButton.icon(
             onPressed: () => _pickDate(context),
             icon: const Icon(Icons.calendar_today, size: 18),

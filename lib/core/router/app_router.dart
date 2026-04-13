@@ -26,6 +26,15 @@ import 'package:thawani_pos/features/wameed_ai/pages/invoice_ocr_page.dart';
 import 'package:thawani_pos/features/wameed_ai/pages/staff_performance_page.dart' as ai;
 import 'package:thawani_pos/features/wameed_ai/pages/efficiency_score_page.dart';
 import 'package:thawani_pos/features/wameed_ai/pages/ai_chat_page.dart';
+import 'package:thawani_pos/features/wameed_ai/pages/ai_billing_page.dart';
+import 'package:thawani_pos/features/wameed_ai/pages/ai_billing_invoices_page.dart';
+import 'package:thawani_pos/features/wameed_ai/pages/ai_billing_invoice_detail_page.dart';
+import 'package:thawani_pos/features/cashier_gamification/pages/gamification_home_page.dart';
+import 'package:thawani_pos/features/cashier_gamification/pages/cashier_history_page.dart';
+import 'package:thawani_pos/features/cashier_gamification/pages/gamification_badges_page.dart';
+import 'package:thawani_pos/features/cashier_gamification/pages/gamification_anomalies_page.dart';
+import 'package:thawani_pos/features/cashier_gamification/pages/gamification_shift_reports_page.dart';
+import 'package:thawani_pos/features/cashier_gamification/pages/gamification_settings_page.dart';
 import 'package:thawani_pos/features/catalog/pages/category_list_page.dart';
 import 'package:thawani_pos/features/catalog/pages/product_form_page.dart';
 import 'package:thawani_pos/features/catalog/pages/product_list_page.dart';
@@ -176,6 +185,14 @@ import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_user_a
 import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_data_management_overview_page.dart';
 import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_database_backup_list_page.dart';
 import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_health_dashboard_page.dart';
+// P18: Admin Wameed AI
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_wameed_ai_dashboard_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_wameed_ai_usage_logs_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_wameed_ai_providers_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_wameed_ai_features_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_wameed_ai_llm_models_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_wameed_ai_chats_page.dart';
+import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_wameed_ai_billing_page.dart';
 // POS Feature #20: ZATCA Compliance
 import 'package:thawani_pos/features/zatca/pages/zatca_dashboard_page.dart';
 import 'package:thawani_pos/features/sync/pages/sync_dashboard_page.dart';
@@ -937,6 +954,43 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const AdminHealthDashboardPage(),
           ),
 
+          // ─── Admin Wameed AI ───
+          GoRoute(
+            path: Routes.adminWameedAI,
+            name: 'adminWameedAI',
+            builder: (context, state) => const AdminWameedAIDashboardPage(),
+          ),
+          GoRoute(
+            path: Routes.adminWameedAIUsageLogs,
+            name: 'adminWameedAIUsageLogs',
+            builder: (context, state) => const AdminWameedAIUsageLogsPage(),
+          ),
+          GoRoute(
+            path: Routes.adminWameedAIProviders,
+            name: 'adminWameedAIProviders',
+            builder: (context, state) => const AdminWameedAIProvidersPage(),
+          ),
+          GoRoute(
+            path: Routes.adminWameedAIFeatures,
+            name: 'adminWameedAIFeatures',
+            builder: (context, state) => const AdminWameedAIFeaturesPage(),
+          ),
+          GoRoute(
+            path: Routes.adminWameedAILlmModels,
+            name: 'adminWameedAILlmModels',
+            builder: (context, state) => const AdminWameedAILlmModelsPage(),
+          ),
+          GoRoute(
+            path: Routes.adminWameedAIChats,
+            name: 'adminWameedAIChats',
+            builder: (context, state) => const AdminWameedAIChatsPage(),
+          ),
+          GoRoute(
+            path: Routes.adminWameedAIBilling,
+            name: 'adminWameedAIBilling',
+            builder: (context, state) => const AdminWameedAIBillingPage(),
+          ),
+
           // ─── ZATCA Compliance ───
           GoRoute(path: Routes.zatcaDashboard, name: 'zatcaDashboard', builder: (context, state) => const ZatcaDashboardPage()),
 
@@ -1403,7 +1457,45 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const AISuggestionsPage(),
           ),
           GoRoute(path: Routes.wameedAIUsage, name: 'wameedAIUsage', builder: (context, state) => const AIUsagePage()),
+          GoRoute(path: Routes.wameedAIBilling, name: 'wameedAIBilling', builder: (context, state) => const AIBillingPage()),
+          GoRoute(path: Routes.wameedAIBillingInvoices, name: 'wameedAIBillingInvoices', builder: (context, state) => const AIBillingInvoicesPage()),
+          GoRoute(
+            path: '${Routes.wameedAIBillingInvoices}/:invoiceId',
+            name: 'wameedAIBillingInvoiceDetail',
+            builder: (context, state) => AIBillingInvoiceDetailPage(invoiceId: state.pathParameters['invoiceId']!),
+          ),
           GoRoute(path: Routes.wameedAISettings, name: 'wameedAISettings', builder: (context, state) => const AISettingsPage()),
+          // ─── Cashier Gamification ───
+          GoRoute(
+            path: Routes.gamificationLeaderboard,
+            name: 'gamificationLeaderboard',
+            builder: (context, state) => const GamificationHomePage(),
+          ),
+          GoRoute(
+            path: '${Routes.gamificationLeaderboard}/history/:cashierId',
+            name: 'gamificationCashierHistory',
+            builder: (context, state) => CashierHistoryPage(cashierId: state.pathParameters['cashierId']!),
+          ),
+          GoRoute(
+            path: Routes.gamificationBadges,
+            name: 'gamificationBadges',
+            builder: (context, state) => const GamificationBadgesPage(),
+          ),
+          GoRoute(
+            path: Routes.gamificationAnomalies,
+            name: 'gamificationAnomalies',
+            builder: (context, state) => const GamificationAnomaliesPage(),
+          ),
+          GoRoute(
+            path: Routes.gamificationShiftReports,
+            name: 'gamificationShiftReports',
+            builder: (context, state) => const GamificationShiftReportsPage(),
+          ),
+          GoRoute(
+            path: Routes.gamificationSettings,
+            name: 'gamificationSettings',
+            builder: (context, state) => const GamificationSettingsPage(),
+          ),
         ], // end ShellRoute routes
       ), // end ShellRoute
       // ─── POS Cashier (full-screen, no sidebar) ──

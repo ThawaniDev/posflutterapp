@@ -64,6 +64,11 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
         title: Text(l10n.staffRolesPermissions),
         actions: [
           IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showRolesListInfo(context),
+          ),
+          IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: 'Refresh',
             onPressed: () => ref.read(rolesProvider.notifier).load(),

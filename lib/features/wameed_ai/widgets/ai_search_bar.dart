@@ -122,7 +122,7 @@ class _AISearchBarState extends ConsumerState<AISearchBar> {
         ],
         if (state is AISmartSearchError) ...[
           const SizedBox(height: 8),
-          Text((state as AISmartSearchError).message, style: const TextStyle(color: AppColors.error)),
+          Text(state.message, style: const TextStyle(color: AppColors.error)),
         ],
       ],
     );

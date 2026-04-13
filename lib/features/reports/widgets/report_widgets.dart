@@ -112,6 +112,7 @@ class ReportKpiCard extends StatelessWidget {
   final IconData icon;
   final Color color;
   final String? subtitle;
+  final bool compact;
 
   const ReportKpiCard({
     super.key,
@@ -120,12 +121,70 @@ class ReportKpiCard extends StatelessWidget {
     required this.icon,
     required this.color,
     this.subtitle,
+    this.compact = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
+    if (compact) return _buildCompact(context, isDark);
+    return _buildExpanded(context, isDark);
+  }
+
+  Widget _buildCompact(BuildContext context, bool isDark) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.cardDark : Colors.white,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(AppRadius.sm)),
+            child: Icon(icon, color: color, size: 16),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 2),
+          Text(
+            label,
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight, fontSize: 10),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          ),
+          if (subtitle != null) ...[
+            const SizedBox(height: 2),
+            Text(
+              subtitle!,
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                fontSize: 9,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildExpanded(BuildContext context, bool isDark) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -514,7 +573,7 @@ class ReportPageScaffold extends StatelessWidget {
   }
 }
 
-// ─── KPI Grid (responsive 2-col) ───────────────────────────
+// ─── KPI Grid (responsive: squares on mobile) ─────────────
 
 class ReportKpiGrid extends StatelessWidget {
   final List<ReportKpiCard> cards;
@@ -525,15 +584,34 @@ class ReportKpiGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final crossAxisCount = constraints.maxWidth > 600 ? 4 : 2;
+        final isMobile = constraints.maxWidth < 600;
+        final crossAxisCount = isMobile ? 2 : 4;
+        final aspectRatio = isMobile ? 1.0 : 1.8;
+
+        final effectiveCards = isMobile
+            ? cards
+                  .map(
+                    (c) => ReportKpiCard(
+                      key: c.key,
+                      label: c.label,
+                      value: c.value,
+                      icon: c.icon,
+                      color: c.color,
+                      subtitle: c.subtitle,
+                      compact: true,
+                    ),
+                  )
+                  .toList()
+            : cards;
+
         return GridView.count(
           crossAxisCount: crossAxisCount,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          mainAxisSpacing: 12,
-          crossAxisSpacing: 12,
-          childAspectRatio: constraints.maxWidth > 600 ? 1.8 : 1.5,
-          children: cards,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
+          childAspectRatio: aspectRatio,
+          children: effectiveCards,
         );
       },
     );

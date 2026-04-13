@@ -38,6 +38,9 @@ abstract class SettingsSubPageState<T extends SettingsSubPage> extends ConsumerS
   /// The page title.
   String pageTitle(AppLocalizations l10n);
 
+  /// Optional list of extra action widgets for the AppBar.
+  List<Widget> extraActions(BuildContext context) => const [];
+
   /// Send a partial update map to the API.
   Future<void> saveSettings(Map<String, dynamic> data) async {
     if (_storeId == null || _saving) return;
@@ -65,6 +68,7 @@ abstract class SettingsSubPageState<T extends SettingsSubPage> extends ConsumerS
       appBar: AppBar(
         title: Text(pageTitle(l10n)),
         actions: [
+          ...extraActions(context),
           if (_saving)
             const Padding(
               padding: EdgeInsets.only(right: 16),

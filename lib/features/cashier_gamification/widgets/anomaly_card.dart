@@ -1,0 +1,175 @@
+import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
+import 'package:thawani_pos/features/cashier_gamification/models/cashier_anomaly.dart';
+
+class AnomalyCard extends StatelessWidget {
+  final CashierAnomaly anomaly;
+  final VoidCallback? onReview;
+
+  const AnomalyCard({super.key, required this.anomaly, this.onReview});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isMobile = context.isPhone;
+    final locale = Localizations.localeOf(context).languageCode;
+    final title = locale == 'ar' ? (anomaly.titleAr ?? anomaly.titleEn ?? '') : (anomaly.titleEn ?? '');
+    final description = locale == 'ar' ? (anomaly.descriptionAr ?? anomaly.descriptionEn ?? '') : (anomaly.descriptionEn ?? '');
+
+    return Card(
+      elevation: 0.5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: _severityColor.withValues(alpha: 0.3), width: 1),
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(isMobile ? 12 : 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(_severityIcon, color: _severityColor, size: isMobile ? 20 : 24),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                _SeverityChip(severity: anomaly.severity),
+              ],
+            ),
+            if (description.isNotEmpty) ...[
+              const SizedBox(height: 8),
+              Text(description, style: theme.textTheme.bodySmall, maxLines: 3, overflow: TextOverflow.ellipsis),
+            ],
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              children: [
+                _InfoTag(label: 'Cashier', value: anomaly.cashier?.name ?? '—'),
+                _InfoTag(label: 'Date', value: anomaly.detectedDate),
+                _InfoTag(label: 'Risk', value: anomaly.riskScore.toStringAsFixed(0)),
+                if (anomaly.metricName != null)
+                  _InfoTag(label: anomaly.metricName!, value: anomaly.metricValue.toStringAsFixed(2)),
+              ],
+            ),
+            if (!anomaly.isReviewed && onReview != null) ...[
+              const SizedBox(height: 8),
+              Align(
+                alignment: AlignmentDirectional.centerEnd,
+                child: TextButton.icon(
+                  onPressed: onReview,
+                  icon: const Icon(Icons.rate_review_rounded, size: 16),
+                  label: const Text('Review'),
+                  style: TextButton.styleFrom(foregroundColor: AppColors.primary),
+                ),
+              ),
+            ],
+            if (anomaly.isReviewed) ...[
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  Icon(Icons.check_circle_rounded, color: AppColors.success, size: 14),
+                  const SizedBox(width: 4),
+                  Text('Reviewed', style: TextStyle(fontSize: 12, color: AppColors.success)),
+                  if (anomaly.reviewNotes != null && anomaly.reviewNotes!.isNotEmpty) ...[
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        anomaly.reviewNotes!,
+                        style: theme.textTheme.bodySmall,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Color get _severityColor {
+    switch (anomaly.severity) {
+      case 'critical':
+        return AppColors.error;
+      case 'high':
+        return AppColors.rose;
+      case 'medium':
+        return AppColors.warning;
+      default:
+        return AppColors.info;
+    }
+  }
+
+  IconData get _severityIcon {
+    switch (anomaly.severity) {
+      case 'critical':
+        return Icons.error_rounded;
+      case 'high':
+        return Icons.warning_amber_rounded;
+      case 'medium':
+        return Icons.info_rounded;
+      default:
+        return Icons.info_outline_rounded;
+    }
+  }
+}
+
+class _SeverityChip extends StatelessWidget {
+  final String severity;
+  const _SeverityChip({required this.severity});
+
+  @override
+  Widget build(BuildContext context) {
+    Color color;
+    switch (severity) {
+      case 'critical':
+        color = AppColors.error;
+        break;
+      case 'high':
+        color = AppColors.rose;
+        break;
+      case 'medium':
+        color = AppColors.warning;
+        break;
+      default:
+        color = AppColors.info;
+    }
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(8)),
+      child: Text(
+        severity.toUpperCase(),
+        style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: color),
+      ),
+    );
+  }
+}
+
+class _InfoTag extends StatelessWidget {
+  final String label;
+  final String value;
+  const _InfoTag({required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text('$label: ', style: TextStyle(fontSize: 11, color: theme.colorScheme.onSurfaceVariant)),
+        Text(value, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
+      ],
+    );
+  }
+}

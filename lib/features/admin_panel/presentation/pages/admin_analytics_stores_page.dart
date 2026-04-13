@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
@@ -79,25 +79,15 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                     padding: const EdgeInsets.all(AppSpacing.md),
                     children: [
                       // Overview cards
-                      context.isPhone
-                          ? Wrap(
-                              spacing: AppSpacing.sm,
-                              runSpacing: AppSpacing.sm,
-                              children: [
-                                _metricCard('Total Stores', '$total', AppColors.info),
-                                _metricCard('Active', '$active', AppColors.success),
-                                _metricCard('Inactive', '${total - active}', AppColors.textSecondary),
-                              ],
-                            )
-                          : Row(
-                              children: [
-                                Expanded(child: _metricCard('Total Stores', '$total', AppColors.info)),
-                                const SizedBox(width: AppSpacing.sm),
-                                Expanded(child: _metricCard('Active', '$active', AppColors.success)),
-                                const SizedBox(width: AppSpacing.sm),
-                                Expanded(child: _metricCard('Inactive', '${total - active}', AppColors.textSecondary)),
-                              ],
-                            ),
+                      PosKpiGrid(
+                        desktopCols: 3,
+                        mobileCols: 2,
+                        cards: [
+                          PosKpiCard(label: 'Total Stores', value: '$total', iconColor: AppColors.info),
+                          PosKpiCard(label: 'Active', value: '$active', iconColor: AppColors.success),
+                          PosKpiCard(label: 'Inactive', value: '${total - active}', iconColor: AppColors.textSecondary),
+                        ],
+                      ),
                       const SizedBox(height: AppSpacing.lg),
 
                       // Health Summary
@@ -168,25 +158,6 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
             },
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _metricCard(String label, String value, Color color) {
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.sm),
-        child: Column(
-          children: [
-            Text(
-              value,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: color),
-            ),
-            const SizedBox(height: 4),
-            Text(label, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
-          ],
-        ),
       ),
     );
   }

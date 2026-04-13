@@ -769,4 +769,45 @@ class AdminRepository {
   Future<Map<String, dynamic>> deleteProviderRoleTemplate(String id) => _apiService.deleteProviderRoleTemplate(id);
   Future<Map<String, dynamic>> updateProviderRoleTemplatePermissions(String id, Map<String, dynamic> data) =>
       _apiService.updateProviderRoleTemplatePermissions(id, data);
+
+  // ─── P18: Wameed AI Admin ────────────────────────────────
+  Future<Map<String, dynamic>> getWameedAIDashboard({Map<String, dynamic>? params}) =>
+      _apiService.getWameedAIDashboard(params: params);
+  Future<Map<String, dynamic>> getWameedAIPlatformLogs({Map<String, dynamic>? params}) =>
+      _apiService.getWameedAIPlatformLogs(params: params);
+  Future<Map<String, dynamic>> getWameedAIPlatformLogStats({Map<String, dynamic>? params}) =>
+      _apiService.getWameedAIPlatformLogStats(params: params);
+  Future<Map<String, dynamic>> getWameedAIProviders() => _apiService.getWameedAIProviders();
+  Future<Map<String, dynamic>> getWameedAIFeatures() => _apiService.getWameedAIFeatures();
+  Future<Map<String, dynamic>> toggleWameedAIFeature(String id) => _apiService.toggleWameedAIFeature(id);
+  Future<Map<String, dynamic>> getWameedAILlmModels({Map<String, dynamic>? params}) =>
+      _apiService.getWameedAILlmModels(params: params);
+  Future<Map<String, dynamic>> createWameedAILlmModel(Map<String, dynamic> data) =>
+      _apiService.createWameedAILlmModel(data);
+  Future<Map<String, dynamic>> updateWameedAILlmModel(String id, Map<String, dynamic> data) =>
+      _apiService.updateWameedAILlmModel(id, data);
+  Future<Map<String, dynamic>> toggleWameedAILlmModel(String id) => _apiService.toggleWameedAILlmModel(id);
+  Future<Map<String, dynamic>> deleteWameedAILlmModel(String id) => _apiService.deleteWameedAILlmModel(id);
+  Future<Map<String, dynamic>> getWameedAIChats({Map<String, dynamic>? params}) =>
+      _apiService.getWameedAIChats(params: params);
+  Future<Map<String, dynamic>> getWameedAIChatDetail(String id) => _apiService.getWameedAIChatDetail(id);
+  Future<Map<String, dynamic>> getWameedAIBillingDashboard({Map<String, dynamic>? params}) =>
+      _apiService.getWameedAIBillingDashboard(params: params);
+  Future<Map<String, dynamic>> getWameedAIBillingInvoices({Map<String, dynamic>? params}) =>
+      _apiService.getWameedAIBillingInvoices(params: params);
+  Future<Map<String, dynamic>> getWameedAIBillingInvoiceDetail(String id) =>
+      _apiService.getWameedAIBillingInvoiceDetail(id);
+  Future<Map<String, dynamic>> markWameedAIBillingInvoicePaid(String id, Map<String, dynamic> data) =>
+      _apiService.markWameedAIBillingInvoicePaid(id, data);
+  Future<Map<String, dynamic>> getWameedAIBillingStores({Map<String, dynamic>? params}) =>
+      _apiService.getWameedAIBillingStores(params: params);
+  Future<Map<String, dynamic>> getWameedAIBillingStoreDetail(String id) =>
+      _apiService.getWameedAIBillingStoreDetail(id);
+  Future<Map<String, dynamic>> toggleWameedAIBillingStoreAI(String id, {Map<String, dynamic>? data}) =>
+      _apiService.toggleWameedAIBillingStoreAI(id, data: data);
+  Future<Map<String, dynamic>> generateWameedAIBillingInvoices({Map<String, dynamic>? data}) =>
+      _apiService.generateWameedAIBillingInvoices(data: data);
+  Future<Map<String, dynamic>> getWameedAIBillingSettings() => _apiService.getWameedAIBillingSettings();
+  Future<Map<String, dynamic>> updateWameedAIBillingSettings(Map<String, dynamic> data) =>
+      _apiService.updateWameedAIBillingSettings(data);
 }

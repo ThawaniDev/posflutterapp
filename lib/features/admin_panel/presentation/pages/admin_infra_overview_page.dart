@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
@@ -85,37 +86,33 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // KPI Cards
-            GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: AppSpacing.sm,
-              crossAxisSpacing: AppSpacing.sm,
-              childAspectRatio: 1.5,
-              children: [
-                _KpiCard(
+            PosKpiGrid(
+              desktopCols: 4,
+              mobileCols: 2,
+              cards: [
+                PosKpiCard(
                   icon: Icons.error_outline,
                   label: 'Failed Jobs (24h)',
                   value: '${failedJobs['last_24h'] ?? 0}',
-                  color: (failedJobs['last_24h'] ?? 0) > 0 ? AppColors.error : AppColors.success,
+                  iconColor: (failedJobs['last_24h'] ?? 0) > 0 ? AppColors.error : AppColors.success,
                 ),
-                _KpiCard(
+                PosKpiCard(
                   icon: Icons.backup,
                   label: 'Backups',
                   value: '${backups['completed'] ?? 0} / ${backups['total'] ?? 0}',
-                  color: AppColors.info,
+                  iconColor: AppColors.info,
                 ),
-                _KpiCard(
+                PosKpiCard(
                   icon: Icons.monitor_heart,
                   label: 'Health Checks',
                   value: '${health['healthy'] ?? 0} healthy',
-                  color: (health['critical'] ?? 0) > 0 ? AppColors.error : AppColors.success,
+                  iconColor: (health['critical'] ?? 0) > 0 ? AppColors.error : AppColors.success,
                 ),
-                _KpiCard(
+                PosKpiCard(
                   icon: Icons.cloud_sync,
                   label: 'Provider Backups',
                   value: '${providerBackups['healthy'] ?? 0} / ${providerBackups['total'] ?? 0}',
-                  color: (providerBackups['critical'] ?? 0) > 0 ? AppColors.warning : AppColors.success,
+                  iconColor: (providerBackups['critical'] ?? 0) > 0 ? AppColors.warning : AppColors.success,
                 ),
               ],
             ),
@@ -201,41 +198,6 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _KpiCard extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-  final Color color;
-
-  const _KpiCard({required this.icon, required this.label, required this.value, required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.sm),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: color, size: 28),
-            const SizedBox(height: 4),
-            Text(
-              value,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color),
-            ),
-            Text(
-              label,
-              style: const TextStyle(fontSize: 11, color: AppColors.textMutedLight),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

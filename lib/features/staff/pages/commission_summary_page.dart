@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/features/staff/providers/staff_providers.dart';
 import 'package:thawani_pos/features/staff/providers/staff_state.dart';
 
@@ -88,75 +88,30 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
           ),
 
         // Summary cards
-        context.isPhone
-            ? Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _SummaryCard(
-                          title: l10n.staffTotalEarnings,
-                          value: _currencyFormat.format(totalEarnings),
-                          icon: Icons.attach_money,
-                          color: AppColors.success,
-                          isDark: isDark,
-                        ),
-                      ),
-                      AppSpacing.gapW12,
-                      Expanded(
-                        child: _SummaryCard(
-                          title: l10n.staffTotalOrders,
-                          value: totalOrders.toString(),
-                          icon: Icons.receipt_long,
-                          color: AppColors.info,
-                          isDark: isDark,
-                        ),
-                      ),
-                    ],
-                  ),
-                  AppSpacing.gapH12,
-                  _SummaryCard(
-                    title: l10n.staffAvgPerOrder,
-                    value: _currencyFormat.format(avgPerOrder),
-                    icon: Icons.trending_up,
-                    color: AppColors.purple,
-                    isDark: isDark,
-                  ),
-                ],
-              )
-            : Row(
-                children: [
-                  Expanded(
-                    child: _SummaryCard(
-                      title: l10n.staffTotalEarnings,
-                      value: _currencyFormat.format(totalEarnings),
-                      icon: Icons.attach_money,
-                      color: AppColors.success,
-                      isDark: isDark,
-                    ),
-                  ),
-                  AppSpacing.gapW12,
-                  Expanded(
-                    child: _SummaryCard(
-                      title: l10n.staffTotalOrders,
-                      value: totalOrders.toString(),
-                      icon: Icons.receipt_long,
-                      color: AppColors.info,
-                      isDark: isDark,
-                    ),
-                  ),
-                  AppSpacing.gapW12,
-                  Expanded(
-                    child: _SummaryCard(
-                      title: l10n.staffAvgPerOrder,
-                      value: _currencyFormat.format(avgPerOrder),
-                      icon: Icons.trending_up,
-                      color: AppColors.purple,
-                      isDark: isDark,
-                    ),
-                  ),
-                ],
-              ),
+        PosKpiGrid(
+          desktopCols: 3,
+          mobileCols: 2,
+          cards: [
+            PosKpiCard(
+              label: l10n.staffTotalEarnings,
+              value: _currencyFormat.format(totalEarnings),
+              icon: Icons.attach_money,
+              iconColor: AppColors.success,
+            ),
+            PosKpiCard(
+              label: l10n.staffTotalOrders,
+              value: totalOrders.toString(),
+              icon: Icons.receipt_long,
+              iconColor: AppColors.info,
+            ),
+            PosKpiCard(
+              label: l10n.staffAvgPerOrder,
+              value: _currencyFormat.format(avgPerOrder),
+              icon: Icons.trending_up,
+              iconColor: AppColors.purple,
+            ),
+          ],
+        ),
         AppSpacing.gapH32,
 
         // Performance section
@@ -233,43 +188,8 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Summary Card
+// Metric Row
 // ═══════════════════════════════════════════════════════════════
-
-class _SummaryCard extends StatelessWidget {
-  final String title;
-  final String value;
-  final IconData icon;
-  final Color color;
-  final bool isDark;
-
-  const _SummaryCard({required this.title, required this.value, required this.icon, required this.color, required this.isDark});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      color: isDark ? AppColors.cardDark : AppColors.cardLight,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-      ),
-      child: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: color, size: 28),
-            AppSpacing.gapH12,
-            Text(value, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
-            AppSpacing.gapH4,
-            Text(title, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class _MetricRow extends StatelessWidget {
   final String label;

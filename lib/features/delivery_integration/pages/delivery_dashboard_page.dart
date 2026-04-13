@@ -55,6 +55,11 @@ class _DeliveryDashboardPageState extends ConsumerState<DeliveryDashboardPage> w
         title: Text(l10n.deliveryIntegration),
         actions: [
           IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showDeliveryDashboardInfo(context),
+          ),
+          IconButton(
             icon: const Icon(Icons.sync),
             tooltip: l10n.deliveryMenuSync,
             onPressed: () => context.push(Routes.deliveryMenuSync),

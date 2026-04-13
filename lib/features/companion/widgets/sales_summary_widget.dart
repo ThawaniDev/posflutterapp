@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/features/companion/providers/companion_providers.dart';
 import 'package:thawani_pos/features/companion/providers/companion_state.dart';
 
@@ -74,33 +75,27 @@ class _SalesSummaryWidgetState extends ConsumerState<SalesSummaryWidget> {
           SalesSummaryLoaded(:final totalRevenue, :final totalOrders, :final averageOrderValue, :final dailyBreakdown) => Column(
             children: [
               // Summary cards
-              Row(
-                children: [
-                  Expanded(
-                    child: _SummaryCard(
-                      icon: Icons.attach_money,
-                      label: l10n.companionTotalRevenue,
-                      value: totalRevenue.toStringAsFixed(2),
-                      color: AppColors.success,
-                    ),
+              PosKpiGrid(
+                desktopCols: 3,
+                mobileCols: 2,
+                cards: [
+                  PosKpiCard(
+                    icon: Icons.attach_money,
+                    label: l10n.companionTotalRevenue,
+                    value: totalRevenue.toStringAsFixed(2),
+                    iconColor: AppColors.success,
                   ),
-                  AppSpacing.gapW12,
-                  Expanded(
-                    child: _SummaryCard(
-                      icon: Icons.receipt_long,
-                      label: l10n.companionTotalOrders,
-                      value: '$totalOrders',
-                      color: AppColors.primary,
-                    ),
+                  PosKpiCard(
+                    icon: Icons.receipt_long,
+                    label: l10n.companionTotalOrders,
+                    value: '$totalOrders',
+                    iconColor: AppColors.primary,
                   ),
-                  AppSpacing.gapW12,
-                  Expanded(
-                    child: _SummaryCard(
-                      icon: Icons.analytics,
-                      label: l10n.companionAvgOrderValue,
-                      value: averageOrderValue.toStringAsFixed(2),
-                      color: AppColors.info,
-                    ),
+                  PosKpiCard(
+                    icon: Icons.analytics,
+                    label: l10n.companionAvgOrderValue,
+                    value: averageOrderValue.toStringAsFixed(2),
+                    iconColor: AppColors.info,
                   ),
                 ],
               ),
@@ -133,35 +128,6 @@ class _SalesSummaryWidgetState extends ConsumerState<SalesSummaryWidget> {
           ),
         },
       ],
-    );
-  }
-}
-
-class _SummaryCard extends StatelessWidget {
-  const _SummaryCard({required this.icon, required this.label, required this.value, required this.color});
-
-  final IconData icon;
-  final String label;
-  final String value;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Card(
-      child: Padding(
-        padding: AppSpacing.paddingAll12,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: color, size: 24),
-            AppSpacing.gapH8,
-            Text(value, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
-            AppSpacing.gapH4,
-            Text(label, style: theme.textTheme.bodySmall),
-          ],
-        ),
-      ),
     );
   }
 }

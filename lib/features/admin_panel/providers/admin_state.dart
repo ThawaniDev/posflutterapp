@@ -2941,3 +2941,95 @@ class ProviderPermissionListError extends ProviderPermissionListState {
   final String message;
   const ProviderPermissionListError(this.message);
 }
+
+// ═══════════════════════════════════════════════════════════════
+// P18: Wameed AI Admin
+// ═══════════════════════════════════════════════════════════════
+
+sealed class WameedAIAdminDashboardState {
+  const WameedAIAdminDashboardState();
+}
+
+class WameedAIAdminDashboardInitial extends WameedAIAdminDashboardState {
+  const WameedAIAdminDashboardInitial();
+}
+
+class WameedAIAdminDashboardLoading extends WameedAIAdminDashboardState {
+  const WameedAIAdminDashboardLoading();
+}
+
+class WameedAIAdminDashboardLoaded extends WameedAIAdminDashboardState {
+  final Map<String, dynamic> data;
+  const WameedAIAdminDashboardLoaded(this.data);
+}
+
+class WameedAIAdminDashboardError extends WameedAIAdminDashboardState {
+  final String message;
+  const WameedAIAdminDashboardError(this.message);
+}
+
+sealed class WameedAIAdminListState {
+  const WameedAIAdminListState();
+}
+
+class WameedAIAdminListInitial extends WameedAIAdminListState {
+  const WameedAIAdminListInitial();
+}
+
+class WameedAIAdminListLoading extends WameedAIAdminListState {
+  const WameedAIAdminListLoading();
+}
+
+class WameedAIAdminListLoaded extends WameedAIAdminListState {
+  final Map<String, dynamic> data;
+  const WameedAIAdminListLoaded(this.data);
+}
+
+class WameedAIAdminListError extends WameedAIAdminListState {
+  final String message;
+  const WameedAIAdminListError(this.message);
+}
+
+sealed class WameedAIAdminDetailState {
+  const WameedAIAdminDetailState();
+}
+
+class WameedAIAdminDetailInitial extends WameedAIAdminDetailState {
+  const WameedAIAdminDetailInitial();
+}
+
+class WameedAIAdminDetailLoading extends WameedAIAdminDetailState {
+  const WameedAIAdminDetailLoading();
+}
+
+class WameedAIAdminDetailLoaded extends WameedAIAdminDetailState {
+  final Map<String, dynamic> data;
+  const WameedAIAdminDetailLoaded(this.data);
+}
+
+class WameedAIAdminDetailError extends WameedAIAdminDetailState {
+  final String message;
+  const WameedAIAdminDetailError(this.message);
+}
+
+sealed class WameedAIAdminActionState {
+  const WameedAIAdminActionState();
+}
+
+class WameedAIAdminActionInitial extends WameedAIAdminActionState {
+  const WameedAIAdminActionInitial();
+}
+
+class WameedAIAdminActionLoading extends WameedAIAdminActionState {
+  const WameedAIAdminActionLoading();
+}
+
+class WameedAIAdminActionSuccess extends WameedAIAdminActionState {
+  final Map<String, dynamic>? data;
+  const WameedAIAdminActionSuccess([this.data]);
+}
+
+class WameedAIAdminActionError extends WameedAIAdminActionState {
+  final String message;
+  const WameedAIAdminActionError(this.message);
+}

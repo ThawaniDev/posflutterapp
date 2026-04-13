@@ -93,7 +93,7 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
               ReportDataCard(
                 child: ReportLineChart(
                   data: daily,
-                  xKey: 'date',
+                  xKey: 'period',
                   yKeys: const ['total_revenue', 'net_revenue'],
                   yLabels: const ['Revenue', 'Net Revenue'],
                   colors: [AppColors.primary, AppColors.success],
@@ -154,7 +154,7 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    daily[i]['date'] as String,
+                                    (daily[i]['period'] ?? daily[i]['date'] ?? '') as String,
                                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
                                   ),
                                   Text(

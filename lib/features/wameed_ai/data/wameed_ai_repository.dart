@@ -3,6 +3,7 @@ import 'package:thawani_pos/features/wameed_ai/data/wameed_ai_api_service.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_feature_definition.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_feature_result.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_suggestion.dart';
+import 'package:thawani_pos/features/wameed_ai/models/ai_billing.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_usage.dart';
 import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
 
@@ -123,4 +124,10 @@ class WameedAIRepository {
         return AIFeatureResult.error('Unknown feature: $slug');
     }
   }
+
+  // ─── Billing ──────────────────────────────────────────────────
+  Future<AIBillingSummary> getBillingSummary() => _api.getBillingSummary();
+  Future<PaginatedResult<AIBillingInvoicePreview>> getBillingInvoices({int page = 1, int perPage = 20}) =>
+      _api.getBillingInvoices(page: page, perPage: perPage);
+  Future<AIBillingInvoiceDetail> getBillingInvoiceDetail(String invoiceId) => _api.getBillingInvoiceDetail(invoiceId);
 }

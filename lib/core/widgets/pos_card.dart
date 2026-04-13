@@ -58,10 +58,13 @@ class PosCard extends StatelessWidget {
 }
 
 // ─────────────────────────────────────────────────────────────
-// KPI / STAT CARD
+// KPI / STAT CARD — responsive (compact squares on mobile)
 // ─────────────────────────────────────────────────────────────
 
-/// KPI metric card (dashboard): icon, label, value, trend arrow.
+/// KPI metric card: icon, label, value, trend.
+///
+/// On mobile (compact mode), renders as a square tile with centred layout,
+/// smaller icon & text. On desktop, uses the wider horizontal layout.
 class PosKpiCard extends StatelessWidget {
   const PosKpiCard({
     super.key,
@@ -72,7 +75,9 @@ class PosKpiCard extends StatelessWidget {
     this.iconBgColor,
     this.trend,
     this.trendLabel,
+    this.subtitle,
     this.onTap,
+    this.compact = false,
   });
 
   final String label;
@@ -84,65 +89,254 @@ class PosKpiCard extends StatelessWidget {
   /// Positive = up (green), negative = down (red), null = neutral.
   final double? trend;
   final String? trendLabel;
+  final String? subtitle;
   final VoidCallback? onTap;
+
+  /// When true, uses a smaller square-friendly layout (auto-set by [PosKpiGrid]).
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final secondaryColor = isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
+
+    if (compact) return _buildCompact(context, isDark, mutedColor, secondaryColor);
+    return _buildExpanded(context, isDark, mutedColor, secondaryColor);
+  }
+
+  /// Mobile square tile — centred, smaller type.
+  Widget _buildCompact(BuildContext context, bool isDark, Color mutedColor, Color secondaryColor) {
+    final effectiveIconColor = iconColor ?? AppColors.primary;
+    final effectiveIconBg = iconBgColor ?? effectiveIconColor.withValues(alpha: 0.1);
+    final isPositive = (trend ?? 0) >= 0;
+    final trendColor = isPositive ? AppColors.success : AppColors.error;
 
     return PosCard(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(12),
+      onTap: onTap,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Icon + trend pill row
+          if (icon != null || trend != null)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (icon != null)
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(color: effectiveIconBg, borderRadius: AppRadius.borderMd),
+                    child: Center(child: Icon(icon, size: 16, color: effectiveIconColor)),
+                  ),
+                if (icon != null && trend != null) const SizedBox(width: 6),
+                if (trend != null)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                    decoration: BoxDecoration(color: trendColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(isPositive ? Icons.trending_up : Icons.trending_down, size: 10, color: trendColor),
+                        const SizedBox(width: 2),
+                        Text(
+                          '${isPositive ? '+' : ''}${trend!.toStringAsFixed(1)}%',
+                          style: TextStyle(fontSize: 9, fontWeight: FontWeight.w700, color: trendColor),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          const SizedBox(height: 8),
+          // Value
+          Text(
+            value,
+            style: AppTypography.titleMedium.copyWith(fontWeight: FontWeight.w800),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 2),
+          // Label
+          Text(
+            label,
+            style: AppTypography.micro.copyWith(color: secondaryColor),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.center,
+          ),
+          if (subtitle != null) ...[
+            const SizedBox(height: 2),
+            Text(
+              subtitle!,
+              style: AppTypography.micro.copyWith(color: mutedColor, fontSize: 9),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  /// Desktop / wide layout — left-aligned, bigger type.
+  Widget _buildExpanded(BuildContext context, bool isDark, Color mutedColor, Color secondaryColor) {
+    final effectiveIconColor = iconColor ?? AppColors.primary;
+    final effectiveIconBg = iconBgColor ?? effectiveIconColor.withValues(alpha: 0.1);
+    final isPositive = (trend ?? 0) >= 0;
+    final trendColor = isPositive ? AppColors.success : AppColors.error;
+
+    return PosCard(
+      padding: const EdgeInsets.all(16),
       onTap: onTap,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Icon row
-          if (icon != null) ...[
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(color: iconBgColor ?? AppColors.primary10, borderRadius: AppRadius.borderMd),
-              child: Center(child: Icon(icon, size: 20, color: iconColor ?? AppColors.primary)),
-            ),
-            AppSpacing.gapH12,
-          ],
+          // Top row: icon + trend pill
+          Row(
+            children: [
+              if (icon != null)
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(color: effectiveIconBg, borderRadius: AppRadius.borderMd),
+                  child: Center(child: Icon(icon, size: 20, color: effectiveIconColor)),
+                ),
+              const Spacer(),
+              if (trend != null)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(color: trendColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(isPositive ? Icons.trending_up : Icons.trending_down, size: 12, color: trendColor),
+                      const SizedBox(width: 2),
+                      Text(
+                        '${isPositive ? '+' : ''}${trend!.toStringAsFixed(1)}%',
+                        style: AppTypography.micro.copyWith(color: trendColor, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+          AppSpacing.gapH8,
+          // Value
+          Text(value, style: AppTypography.headlineMedium, maxLines: 1, overflow: TextOverflow.ellipsis),
+          const SizedBox(height: 2),
           // Label
           Text(
             label,
-            style: AppTypography.labelMedium.copyWith(color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
+            style: AppTypography.micro.copyWith(color: secondaryColor),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-          AppSpacing.gapH4,
-          // Value
-          Text(value, style: AppTypography.headlineLarge),
-          // Trend
-          if (trend != null) ...[
-            AppSpacing.gapH8,
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  trend! >= 0 ? Icons.trending_up_rounded : Icons.trending_down_rounded,
-                  size: 16,
-                  color: trend! >= 0 ? AppColors.success : AppColors.error,
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  '${trend! >= 0 ? '+' : ''}${trend!.toStringAsFixed(1)}%',
-                  style: AppTypography.labelSmall.copyWith(color: trend! >= 0 ? AppColors.success : AppColors.error),
-                ),
-                if (trendLabel != null) ...[
-                  const SizedBox(width: 4),
-                  Text(
-                    trendLabel!,
-                    style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-                  ),
-                ],
-              ],
+          if (trendLabel != null) ...[
+            const SizedBox(height: 2),
+            Text(trendLabel!, style: AppTypography.micro.copyWith(color: mutedColor), maxLines: 1),
+          ],
+          if (subtitle != null) ...[
+            const SizedBox(height: 2),
+            Text(
+              subtitle!,
+              style: AppTypography.micro.copyWith(color: mutedColor, fontSize: 10),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ],
       ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// KPI GRID — responsive wrapper (2-col squares on phone)
+// ─────────────────────────────────────────────────────────────
+
+/// Lays out [PosKpiCard]s in a responsive grid.
+///
+/// Phone: 2 columns, square aspect ratio, compact cards.
+/// Tablet: [tabletCols] columns (default 3).
+/// Desktop: [desktopCols] columns (default 4).
+class PosKpiGrid extends StatelessWidget {
+  const PosKpiGrid({
+    super.key,
+    required this.cards,
+    this.desktopCols = 4,
+    this.tabletCols = 3,
+    this.mobileCols = 2,
+    this.mobileAspectRatio = 1.0,
+    this.tabletAspectRatio = 1.4,
+    this.desktopAspectRatio = 1.7,
+    this.spacing = 10,
+  });
+
+  final List<PosKpiCard> cards;
+  final int desktopCols;
+  final int tabletCols;
+  final int mobileCols;
+  final double mobileAspectRatio;
+  final double tabletAspectRatio;
+  final double desktopAspectRatio;
+  final double spacing;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final w = constraints.maxWidth;
+        final bool isMobile = w < 600;
+        final bool isTablet = w >= 600 && w < 1000;
+
+        final crossAxisCount = isMobile
+            ? mobileCols
+            : isTablet
+            ? tabletCols
+            : desktopCols;
+
+        final aspectRatio = isMobile
+            ? mobileAspectRatio
+            : isTablet
+            ? tabletAspectRatio
+            : desktopAspectRatio;
+
+        // On mobile, force compact mode on cards
+        final effectiveCards = isMobile
+            ? cards
+                  .map(
+                    (c) => PosKpiCard(
+                      key: c.key,
+                      label: c.label,
+                      value: c.value,
+                      icon: c.icon,
+                      iconColor: c.iconColor,
+                      iconBgColor: c.iconBgColor,
+                      trend: c.trend,
+                      trendLabel: c.trendLabel,
+                      subtitle: c.subtitle,
+                      onTap: c.onTap,
+                      compact: true,
+                    ),
+                  )
+                  .toList()
+            : cards;
+
+        return GridView.count(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisCount: crossAxisCount,
+          mainAxisSpacing: spacing,
+          crossAxisSpacing: spacing,
+          childAspectRatio: aspectRatio,
+          children: effectiveCards,
+        );
+      },
     );
   }
 }

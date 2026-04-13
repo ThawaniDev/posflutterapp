@@ -6,7 +6,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_ar.dart';
+import 'app_localizations_bn.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_ur.dart';
 
 // ignore_for_file: type=lint
 
@@ -95,7 +97,9 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('ar'),
+    Locale('bn'),
     Locale('en'),
+    Locale('ur'),
   ];
 
   /// No description provided for @appTitle.
@@ -13506,6 +13510,12 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get appBarLanguage;
 
+  /// No description provided for @quickNavTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Navigation'**
+  String get quickNavTitle;
+
   /// No description provided for @appBarTheme.
   ///
   /// In en, this message translates to:
@@ -17237,6 +17247,4146 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Tap to explore AI features'**
   String get wameedAITapToExplore;
+
+  /// No description provided for @wameedAIBilling.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Billing'**
+  String get wameedAIBilling;
+
+  /// No description provided for @wameedAIBillingDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing Dashboard'**
+  String get wameedAIBillingDashboard;
+
+  /// No description provided for @wameedAIBillingCurrentMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Month'**
+  String get wameedAIBillingCurrentMonth;
+
+  /// No description provided for @wameedAIBillingBilledCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Billed Cost'**
+  String get wameedAIBillingBilledCost;
+
+  /// No description provided for @wameedAIBillingRawCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Raw Cost'**
+  String get wameedAIBillingRawCost;
+
+  /// No description provided for @wameedAIBillingMargin.
+  ///
+  /// In en, this message translates to:
+  /// **'Margin'**
+  String get wameedAIBillingMargin;
+
+  /// No description provided for @wameedAIBillingLimitUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'Limit Usage'**
+  String get wameedAIBillingLimitUsage;
+
+  /// No description provided for @wameedAIBillingNoLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'No Limit'**
+  String get wameedAIBillingNoLimit;
+
+  /// No description provided for @wameedAIBillingRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get wameedAIBillingRequests;
+
+  /// No description provided for @wameedAIBillingTokens.
+  ///
+  /// In en, this message translates to:
+  /// **'tokens'**
+  String get wameedAIBillingTokens;
+
+  /// No description provided for @wameedAIBillingByFeature.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage by Feature'**
+  String get wameedAIBillingByFeature;
+
+  /// No description provided for @wameedAIBillingFeature.
+  ///
+  /// In en, this message translates to:
+  /// **'Feature'**
+  String get wameedAIBillingFeature;
+
+  /// No description provided for @wameedAIBillingRecentInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Invoices'**
+  String get wameedAIBillingRecentInvoices;
+
+  /// No description provided for @wameedAIBillingInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get wameedAIBillingInvoices;
+
+  /// No description provided for @wameedAIBillingInvoiceNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice #'**
+  String get wameedAIBillingInvoiceNumber;
+
+  /// No description provided for @wameedAIBillingPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get wameedAIBillingPeriod;
+
+  /// No description provided for @wameedAIBillingAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get wameedAIBillingAmount;
+
+  /// No description provided for @wameedAIBillingStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get wameedAIBillingStatus;
+
+  /// No description provided for @wameedAIBillingDueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Due Date'**
+  String get wameedAIBillingDueDate;
+
+  /// No description provided for @wameedAIBillingPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get wameedAIBillingPending;
+
+  /// No description provided for @wameedAIBillingPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get wameedAIBillingPaid;
+
+  /// No description provided for @wameedAIBillingOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get wameedAIBillingOverdue;
+
+  /// No description provided for @wameedAIBillingPaidAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid At'**
+  String get wameedAIBillingPaidAt;
+
+  /// No description provided for @wameedAIBillingNoInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'No invoices yet'**
+  String get wameedAIBillingNoInvoices;
+
+  /// No description provided for @wameedAIBillingInvoiceDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Detail'**
+  String get wameedAIBillingInvoiceDetail;
+
+  /// No description provided for @wameedAIBillingLineItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Line Items'**
+  String get wameedAIBillingLineItems;
+
+  /// No description provided for @wameedAIBillingPaymentHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment History'**
+  String get wameedAIBillingPaymentHistory;
+
+  /// No description provided for @wameedAIBillingDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'AI is currently disabled for your store'**
+  String get wameedAIBillingDisabled;
+
+  /// No description provided for @sidebarCashierGamification.
+  ///
+  /// In en, this message translates to:
+  /// **'Cashier Performance'**
+  String get sidebarCashierGamification;
+
+  /// No description provided for @gamificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cashier Leaderboard'**
+  String get gamificationTitle;
+
+  /// No description provided for @gamificationBadges.
+  ///
+  /// In en, this message translates to:
+  /// **'Badges'**
+  String get gamificationBadges;
+
+  /// No description provided for @gamificationAnomalies.
+  ///
+  /// In en, this message translates to:
+  /// **'Anomalies'**
+  String get gamificationAnomalies;
+
+  /// No description provided for @gamificationShiftReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift Reports'**
+  String get gamificationShiftReports;
+
+  /// No description provided for @gamificationSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get gamificationSettings;
+
+  /// No description provided for @gamificationDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get gamificationDaily;
+
+  /// No description provided for @gamificationShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift'**
+  String get gamificationShift;
+
+  /// No description provided for @gamificationRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue'**
+  String get gamificationRevenue;
+
+  /// No description provided for @gamificationTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Transactions'**
+  String get gamificationTransactions;
+
+  /// No description provided for @gamificationItemsPerMinute.
+  ///
+  /// In en, this message translates to:
+  /// **'Items/Min'**
+  String get gamificationItemsPerMinute;
+
+  /// No description provided for @gamificationRiskScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Risk Score'**
+  String get gamificationRiskScore;
+
+  /// No description provided for @gamificationNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'No performance data available yet.'**
+  String get gamificationNoData;
+
+  /// No description provided for @gamificationBadgeDefinitions.
+  ///
+  /// In en, this message translates to:
+  /// **'Badge Definitions'**
+  String get gamificationBadgeDefinitions;
+
+  /// No description provided for @gamificationBadgeAwards.
+  ///
+  /// In en, this message translates to:
+  /// **'Awards'**
+  String get gamificationBadgeAwards;
+
+  /// No description provided for @gamificationSeedBadges.
+  ///
+  /// In en, this message translates to:
+  /// **'Seed Default Badges'**
+  String get gamificationSeedBadges;
+
+  /// No description provided for @gamificationNoBadges.
+  ///
+  /// In en, this message translates to:
+  /// **'No badges defined yet.'**
+  String get gamificationNoBadges;
+
+  /// No description provided for @gamificationNoAwards.
+  ///
+  /// In en, this message translates to:
+  /// **'No awards earned yet.'**
+  String get gamificationNoAwards;
+
+  /// No description provided for @gamificationAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get gamificationAll;
+
+  /// No description provided for @gamificationNoAnomalies.
+  ///
+  /// In en, this message translates to:
+  /// **'No anomalies detected — all clear!'**
+  String get gamificationNoAnomalies;
+
+  /// No description provided for @gamificationNoReports.
+  ///
+  /// In en, this message translates to:
+  /// **'No shift reports generated yet.'**
+  String get gamificationNoReports;
+
+  /// No description provided for @gamificationSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get gamificationSummary;
+
+  /// No description provided for @gamificationCashierHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Cashier History'**
+  String get gamificationCashierHistory;
+
+  /// No description provided for @gamificationLeaderboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Leaderboard'**
+  String get gamificationLeaderboard;
+
+  /// No description provided for @gamificationLeaderboardDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Show real-time cashier leaderboard rankings'**
+  String get gamificationLeaderboardDesc;
+
+  /// No description provided for @gamificationBadgesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Award performance badges to cashiers'**
+  String get gamificationBadgesDesc;
+
+  /// No description provided for @gamificationAnomalyDetection.
+  ///
+  /// In en, this message translates to:
+  /// **'Anomaly Detection'**
+  String get gamificationAnomalyDetection;
+
+  /// No description provided for @gamificationAnomalyDetectionDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Detect suspicious cashier activity patterns'**
+  String get gamificationAnomalyDetectionDesc;
+
+  /// No description provided for @gamificationShiftReportsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate end-of-shift performance reports'**
+  String get gamificationShiftReportsDesc;
+
+  /// No description provided for @gamificationAutoGenerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-Generate on Session Close'**
+  String get gamificationAutoGenerate;
+
+  /// No description provided for @gamificationAutoGenerateDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Automatically run analysis when a POS session closes'**
+  String get gamificationAutoGenerateDesc;
+
+  /// No description provided for @gamificationFeatureToggles.
+  ///
+  /// In en, this message translates to:
+  /// **'Feature Toggles'**
+  String get gamificationFeatureToggles;
+
+  /// No description provided for @gamificationAnomalyThresholds.
+  ///
+  /// In en, this message translates to:
+  /// **'Anomaly Thresholds'**
+  String get gamificationAnomalyThresholds;
+
+  /// No description provided for @gamificationZScoreThreshold.
+  ///
+  /// In en, this message translates to:
+  /// **'Z-Score Threshold'**
+  String get gamificationZScoreThreshold;
+
+  /// No description provided for @gamificationRiskWeights.
+  ///
+  /// In en, this message translates to:
+  /// **'Risk Score Weights'**
+  String get gamificationRiskWeights;
+
+  /// No description provided for @gamificationVoidWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Void Weight'**
+  String get gamificationVoidWeight;
+
+  /// No description provided for @gamificationNoSaleWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'No-Sale Weight'**
+  String get gamificationNoSaleWeight;
+
+  /// No description provided for @gamificationDiscountWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount Weight'**
+  String get gamificationDiscountWeight;
+
+  /// No description provided for @gamificationPriceOverrideWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Price Override Weight'**
+  String get gamificationPriceOverrideWeight;
+
+  /// No description provided for @gamificationReviewAnomaly.
+  ///
+  /// In en, this message translates to:
+  /// **'Review Anomaly'**
+  String get gamificationReviewAnomaly;
+
+  /// No description provided for @gamificationReviewNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Review notes (optional)'**
+  String get gamificationReviewNotes;
+
+  /// No description provided for @gamificationConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get gamificationConfirm;
+
+  /// No description provided for @gamificationDismissAnomaly.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get gamificationDismissAnomaly;
+
+  /// No description provided for @gamificationCreateBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Badge'**
+  String get gamificationCreateBadge;
+
+  /// No description provided for @featureInfoTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Feature Guide'**
+  String get featureInfoTooltip;
+
+  /// No description provided for @featureInfoProductsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Products Management'**
+  String get featureInfoProductsTitle;
+
+  /// No description provided for @featureInfoProductsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your entire product catalog from here. You can add new products, edit existing ones, set pricing, manage variants and barcodes, and organize products by categories. Products can be searched by name, SKU, or barcode.'**
+  String get featureInfoProductsDesc;
+
+  /// No description provided for @featureInfoProductsAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding a New Product'**
+  String get featureInfoProductsAddTitle;
+
+  /// No description provided for @featureInfoProductsAddStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the Add Product button'**
+  String get featureInfoProductsAddStep1Title;
+
+  /// No description provided for @featureInfoProductsAddStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the floating action button (+ icon) at the bottom of the screen to open the product form.'**
+  String get featureInfoProductsAddStep1Desc;
+
+  /// No description provided for @featureInfoProductsAddStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in Basic Info'**
+  String get featureInfoProductsAddStep2Title;
+
+  /// No description provided for @featureInfoProductsAddStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the product name (required), optional Arabic name, description, select a category, choose the unit type, enter SKU, and scan or type the barcode. Set minimum/maximum order quantities if needed.'**
+  String get featureInfoProductsAddStep2Desc;
+
+  /// No description provided for @featureInfoProductsAddStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Pricing'**
+  String get featureInfoProductsAddStep3Title;
+
+  /// No description provided for @featureInfoProductsAddStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to the Pricing tab. Enter the sell price (required) and cost price. Set the tax rate percentage. The margin and profit are calculated automatically. You can also set offer prices with start/end dates.'**
+  String get featureInfoProductsAddStep3Desc;
+
+  /// No description provided for @featureInfoProductsAddStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Media'**
+  String get featureInfoProductsAddStep4Title;
+
+  /// No description provided for @featureInfoProductsAddStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to the Media tab to add a product image URL. A live preview will show the image.'**
+  String get featureInfoProductsAddStep4Desc;
+
+  /// No description provided for @featureInfoProductsAddStep5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Save the Product'**
+  String get featureInfoProductsAddStep5Title;
+
+  /// No description provided for @featureInfoProductsAddStep5Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Create Product\' at the bottom. After saving, you can manage variants, modifiers, barcodes, and suppliers from the additional tabs.'**
+  String get featureInfoProductsAddStep5Desc;
+
+  /// No description provided for @featureInfoProductsEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Editing a Product'**
+  String get featureInfoProductsEditTitle;
+
+  /// No description provided for @featureInfoProductsEditStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the product'**
+  String get featureInfoProductsEditStep1Title;
+
+  /// No description provided for @featureInfoProductsEditStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the search bar to search by name, SKU, or barcode. You can also filter by category using the sidebar (desktop) or category chips (mobile).'**
+  String get featureInfoProductsEditStep1Desc;
+
+  /// No description provided for @featureInfoProductsEditStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the edit form'**
+  String get featureInfoProductsEditStep2Title;
+
+  /// No description provided for @featureInfoProductsEditStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the \'Edit\' action on the product row, or tap the product on mobile. This opens the product form with all existing data pre-filled.'**
+  String get featureInfoProductsEditStep2Desc;
+
+  /// No description provided for @featureInfoProductsEditStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Update and save'**
+  String get featureInfoProductsEditStep3Title;
+
+  /// No description provided for @featureInfoProductsEditStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Make your changes across any tab (Basic Info, Pricing, Variants, Modifiers, Barcodes, Suppliers, Media) and tap \'Update Product\'.'**
+  String get featureInfoProductsEditStep3Desc;
+
+  /// No description provided for @featureInfoProductsDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting a Product'**
+  String get featureInfoProductsDeleteTitle;
+
+  /// No description provided for @featureInfoProductsDeleteStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select products to delete'**
+  String get featureInfoProductsDeleteStep1Title;
+
+  /// No description provided for @featureInfoProductsDeleteStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the \'Delete\' action on an individual product row, or select multiple products using checkboxes and use the \'Delete\' bulk action.'**
+  String get featureInfoProductsDeleteStep1Desc;
+
+  /// No description provided for @featureInfoProductsDeleteStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm deletion'**
+  String get featureInfoProductsDeleteStep2Title;
+
+  /// No description provided for @featureInfoProductsDeleteStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'A confirmation dialog will appear. Products are soft-deleted and can potentially be recovered. Confirm to proceed.'**
+  String get featureInfoProductsDeleteStep2Desc;
+
+  /// No description provided for @featureInfoProductsTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the grid/list toggle (desktop) to switch between table and card views.'**
+  String get featureInfoProductsTip1;
+
+  /// No description provided for @featureInfoProductsTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'You can duplicate products using the \'Duplicate\' row action to quickly create similar items.'**
+  String get featureInfoProductsTip2;
+
+  /// No description provided for @featureInfoProductsTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'Bulk actions (activate, deactivate, delete) are available when you select multiple products.'**
+  String get featureInfoProductsTip3;
+
+  /// No description provided for @featureInfoCategoriesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories Management'**
+  String get featureInfoCategoriesTitle;
+
+  /// No description provided for @featureInfoCategoriesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Organize your products with a hierarchical category tree. Categories support parent-child relationships, allowing you to create a structured product taxonomy. Each category can have a name in both English and Arabic.'**
+  String get featureInfoCategoriesDesc;
+
+  /// No description provided for @featureInfoCategoriesAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating a Category'**
+  String get featureInfoCategoriesAddTitle;
+
+  /// No description provided for @featureInfoCategoriesAddStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the New Category button'**
+  String get featureInfoCategoriesAddStep1Title;
+
+  /// No description provided for @featureInfoCategoriesAddStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the floating action button to open the category creation dialog.'**
+  String get featureInfoCategoriesAddStep1Desc;
+
+  /// No description provided for @featureInfoCategoriesAddStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in category details'**
+  String get featureInfoCategoriesAddStep2Title;
+
+  /// No description provided for @featureInfoCategoriesAddStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the category name (required), Arabic name, description, and Arabic description. Choose a parent category if you want to create a sub-category.'**
+  String get featureInfoCategoriesAddStep2Desc;
+
+  /// No description provided for @featureInfoCategoriesAddStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Set display order'**
+  String get featureInfoCategoriesAddStep3Title;
+
+  /// No description provided for @featureInfoCategoriesAddStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Set the sort order number to control the display order among sibling categories. Toggle active status on or off.'**
+  String get featureInfoCategoriesAddStep3Desc;
+
+  /// No description provided for @featureInfoCategoriesAddStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Save the category'**
+  String get featureInfoCategoriesAddStep4Title;
+
+  /// No description provided for @featureInfoCategoriesAddStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Save\' to create the category. It will appear in the tree under its parent.'**
+  String get featureInfoCategoriesAddStep4Desc;
+
+  /// No description provided for @featureInfoCategoriesEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Editing a Category'**
+  String get featureInfoCategoriesEditTitle;
+
+  /// No description provided for @featureInfoCategoriesEditStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Click Edit on the category'**
+  String get featureInfoCategoriesEditStep1Title;
+
+  /// No description provided for @featureInfoCategoriesEditStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the category in the tree view and click the \'Edit\' action. The dialog opens pre-filled with current data.'**
+  String get featureInfoCategoriesEditStep1Desc;
+
+  /// No description provided for @featureInfoCategoriesEditStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Update and save'**
+  String get featureInfoCategoriesEditStep2Title;
+
+  /// No description provided for @featureInfoCategoriesEditStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Change the name, parent, sort order, or active status and tap \'Save\'. You can move categories to different parents.'**
+  String get featureInfoCategoriesEditStep2Desc;
+
+  /// No description provided for @featureInfoCategoriesDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting a Category'**
+  String get featureInfoCategoriesDeleteTitle;
+
+  /// No description provided for @featureInfoCategoriesDeleteStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Click Delete on the category'**
+  String get featureInfoCategoriesDeleteStep1Title;
+
+  /// No description provided for @featureInfoCategoriesDeleteStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the category in the tree and click \'Delete\'. A warning will appear if the category has subcategories.'**
+  String get featureInfoCategoriesDeleteStep1Desc;
+
+  /// No description provided for @featureInfoCategoriesDeleteStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm deletion'**
+  String get featureInfoCategoriesDeleteStep2Title;
+
+  /// No description provided for @featureInfoCategoriesDeleteStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Review the warning about subcategories and confirm. Subcategories may be reassigned or deleted depending on your configuration.'**
+  String get featureInfoCategoriesDeleteStep2Desc;
+
+  /// No description provided for @featureInfoCategoriesTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Use \'Expand All\' and \'Collapse All\' buttons in the AppBar to quickly navigate the category tree.'**
+  String get featureInfoCategoriesTip1;
+
+  /// No description provided for @featureInfoCategoriesTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'You can add child categories directly from any tree node using the \'Add Child\' action.'**
+  String get featureInfoCategoriesTip2;
+
+  /// No description provided for @featureInfoSuppliersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Suppliers Management'**
+  String get featureInfoSuppliersTitle;
+
+  /// No description provided for @featureInfoSuppliersDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your supplier directory with full contact details, banking information, and business settings. Track purchase orders, goods receipts, returns, and outstanding balances for each supplier.'**
+  String get featureInfoSuppliersDesc;
+
+  /// No description provided for @featureInfoSuppliersAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding a New Supplier'**
+  String get featureInfoSuppliersAddTitle;
+
+  /// No description provided for @featureInfoSuppliersAddStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the New Supplier button'**
+  String get featureInfoSuppliersAddStep1Title;
+
+  /// No description provided for @featureInfoSuppliersAddStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the floating action button to open the supplier form dialog.'**
+  String get featureInfoSuppliersAddStep1Desc;
+
+  /// No description provided for @featureInfoSuppliersAddStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter basic information'**
+  String get featureInfoSuppliersAddStep2Title;
+
+  /// No description provided for @featureInfoSuppliersAddStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in the supplier name (required), contact person, and category.'**
+  String get featureInfoSuppliersAddStep2Desc;
+
+  /// No description provided for @featureInfoSuppliersAddStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add contact and banking details'**
+  String get featureInfoSuppliersAddStep3Title;
+
+  /// No description provided for @featureInfoSuppliersAddStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter phone, email, website, address, and banking information (bank name, account, IBAN). Add the tax number, payment terms, credit limit, and any notes.'**
+  String get featureInfoSuppliersAddStep3Desc;
+
+  /// No description provided for @featureInfoSuppliersAddStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Save the supplier'**
+  String get featureInfoSuppliersAddStep4Title;
+
+  /// No description provided for @featureInfoSuppliersAddStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Save\' to add the supplier to your directory.'**
+  String get featureInfoSuppliersAddStep4Desc;
+
+  /// No description provided for @featureInfoSuppliersEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Editing a Supplier'**
+  String get featureInfoSuppliersEditTitle;
+
+  /// No description provided for @featureInfoSuppliersEditStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Click Edit on the supplier row'**
+  String get featureInfoSuppliersEditStep1Title;
+
+  /// No description provided for @featureInfoSuppliersEditStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the supplier in the table and click \'Edit\'. The dialog opens pre-filled.'**
+  String get featureInfoSuppliersEditStep1Desc;
+
+  /// No description provided for @featureInfoSuppliersEditStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Update and save'**
+  String get featureInfoSuppliersEditStep2Title;
+
+  /// No description provided for @featureInfoSuppliersEditStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Modify any field and tap \'Save\' to update the supplier.'**
+  String get featureInfoSuppliersEditStep2Desc;
+
+  /// No description provided for @featureInfoSuppliersDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting a Supplier'**
+  String get featureInfoSuppliersDeleteTitle;
+
+  /// No description provided for @featureInfoSuppliersDeleteStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Click Delete on the supplier row'**
+  String get featureInfoSuppliersDeleteStep1Title;
+
+  /// No description provided for @featureInfoSuppliersDeleteStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the supplier in the table and click the \'Delete\' action.'**
+  String get featureInfoSuppliersDeleteStep1Desc;
+
+  /// No description provided for @featureInfoSuppliersDeleteStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm deletion'**
+  String get featureInfoSuppliersDeleteStep2Title;
+
+  /// No description provided for @featureInfoSuppliersDeleteStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the deletion in the dialog. Note: this may affect linked products and purchase orders.'**
+  String get featureInfoSuppliersDeleteStep2Desc;
+
+  /// No description provided for @featureInfoSuppliersTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a supplier row to see detailed statistics including purchase orders, goods receipts, returns, and outstanding balance.'**
+  String get featureInfoSuppliersTip1;
+
+  /// No description provided for @featureInfoSuppliersTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the search bar to quickly find suppliers by name.'**
+  String get featureInfoSuppliersTip2;
+
+  /// No description provided for @featureInfoCustomersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer Directory'**
+  String get featureInfoCustomersTitle;
+
+  /// No description provided for @featureInfoCustomersDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'View your customer list showing customer names, contact information, and loyalty points. Customers are added automatically when they make purchases or can be added from the POS terminal during checkout.'**
+  String get featureInfoCustomersDesc;
+
+  /// No description provided for @featureInfoCustomersViewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Viewing Customers'**
+  String get featureInfoCustomersViewTitle;
+
+  /// No description provided for @featureInfoCustomersViewStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse the customer list'**
+  String get featureInfoCustomersViewStep1Title;
+
+  /// No description provided for @featureInfoCustomersViewStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Scroll through the customer list to see names, email or phone numbers, and loyalty points for each customer.'**
+  String get featureInfoCustomersViewStep1Desc;
+
+  /// No description provided for @featureInfoCustomersViewStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Check customer details'**
+  String get featureInfoCustomersViewStep2Title;
+
+  /// No description provided for @featureInfoCustomersViewStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Each customer card shows their name, contact info, and accumulated loyalty points.'**
+  String get featureInfoCustomersViewStep2Desc;
+
+  /// No description provided for @featureInfoCustomersTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers can be attached to orders from the POS cashier screen during checkout using the customer search button.'**
+  String get featureInfoCustomersTip1;
+
+  /// No description provided for @featureInfoOrdersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders Management'**
+  String get featureInfoOrdersTitle;
+
+  /// No description provided for @featureInfoOrdersDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'View and manage all orders across your store. Filter orders by status, search by order number, and void orders when needed. Orders are created from the POS terminal and appear here with their full details.'**
+  String get featureInfoOrdersDesc;
+
+  /// No description provided for @featureInfoOrdersViewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Viewing Orders'**
+  String get featureInfoOrdersViewTitle;
+
+  /// No description provided for @featureInfoOrdersViewStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse the order list'**
+  String get featureInfoOrdersViewStep1Title;
+
+  /// No description provided for @featureInfoOrdersViewStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'View all orders in a table (desktop) or card list (mobile) with order number, source, status, subtotal, tax, total, and date.'**
+  String get featureInfoOrdersViewStep1Desc;
+
+  /// No description provided for @featureInfoOrdersViewStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by order number'**
+  String get featureInfoOrdersViewStep2Title;
+
+  /// No description provided for @featureInfoOrdersViewStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the search bar to find a specific order by its order number.'**
+  String get featureInfoOrdersViewStep2Desc;
+
+  /// No description provided for @featureInfoOrdersViewStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by status'**
+  String get featureInfoOrdersViewStep3Title;
+
+  /// No description provided for @featureInfoOrdersViewStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the filter icon in the AppBar to filter orders by status: All, New, Confirmed, Preparing, Ready, Completed, Cancelled, or Voided.'**
+  String get featureInfoOrdersViewStep3Desc;
+
+  /// No description provided for @featureInfoOrdersVoidTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Voiding an Order'**
+  String get featureInfoOrdersVoidTitle;
+
+  /// No description provided for @featureInfoOrdersVoidStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the order to void'**
+  String get featureInfoOrdersVoidStep1Title;
+
+  /// No description provided for @featureInfoOrdersVoidStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Locate the order in the list. The void action is only available for orders that are not already voided or cancelled.'**
+  String get featureInfoOrdersVoidStep1Desc;
+
+  /// No description provided for @featureInfoOrdersVoidStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the void'**
+  String get featureInfoOrdersVoidStep2Title;
+
+  /// No description provided for @featureInfoOrdersVoidStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the \'Void\' action on the order row and confirm in the dialog. This is irreversible.'**
+  String get featureInfoOrdersVoidStep2Desc;
+
+  /// No description provided for @featureInfoOrdersTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Use pagination controls at the bottom to navigate between pages.'**
+  String get featureInfoOrdersTip1;
+
+  /// No description provided for @featureInfoOrdersTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull down to refresh the order list on mobile.'**
+  String get featureInfoOrdersTip2;
+
+  /// No description provided for @featureInfoStaffTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Staff Management'**
+  String get featureInfoStaffTitle;
+
+  /// No description provided for @featureInfoStaffDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your team members with full profiles, employment details, PIN security, and user accounts. Staff can be filtered by store, status, and employment type. Each staff member can have a POS PIN for secure access.'**
+  String get featureInfoStaffDesc;
+
+  /// No description provided for @featureInfoStaffAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Adding a Staff Member'**
+  String get featureInfoStaffAddTitle;
+
+  /// No description provided for @featureInfoStaffAddStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the Add button'**
+  String get featureInfoStaffAddStep1Title;
+
+  /// No description provided for @featureInfoStaffAddStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the floating action button to navigate to the staff creation form.'**
+  String get featureInfoStaffAddStep1Desc;
+
+  /// No description provided for @featureInfoStaffAddStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select store and fill personal info'**
+  String get featureInfoStaffAddStep2Title;
+
+  /// No description provided for @featureInfoStaffAddStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the store assignment from the dropdown. Enter the first name (required) and last name (required).'**
+  String get featureInfoStaffAddStep2Desc;
+
+  /// No description provided for @featureInfoStaffAddStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Set contact and employment details'**
+  String get featureInfoStaffAddStep3Title;
+
+  /// No description provided for @featureInfoStaffAddStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter email (required if creating a user account), phone, and national ID. Select the employment type (full-time, part-time, etc.), salary type, hourly rate (if applicable), status, and hire date.'**
+  String get featureInfoStaffAddStep3Desc;
+
+  /// No description provided for @featureInfoStaffAddStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure Security PIN'**
+  String get featureInfoStaffAddStep4Title;
+
+  /// No description provided for @featureInfoStaffAddStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a 4-6 digit PIN that the staff member will use to log in to the POS terminal.'**
+  String get featureInfoStaffAddStep4Desc;
+
+  /// No description provided for @featureInfoStaffAddStep5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Create optional user account'**
+  String get featureInfoStaffAddStep5Title;
+
+  /// No description provided for @featureInfoStaffAddStep5Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle \'Create User Account\' to enable system login. Select a role (e.g. cashier) and set a password (minimum 8 characters). Tap \'Create Member\' to save.'**
+  String get featureInfoStaffAddStep5Desc;
+
+  /// No description provided for @featureInfoStaffEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Editing a Staff Member'**
+  String get featureInfoStaffEditTitle;
+
+  /// No description provided for @featureInfoStaffEditStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Find and open the staff profile'**
+  String get featureInfoStaffEditStep1Title;
+
+  /// No description provided for @featureInfoStaffEditStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the store selector, search bar, or filter chips (status/employment type) to find the staff member. Tap the card or select \'Edit\' from the popup menu.'**
+  String get featureInfoStaffEditStep1Desc;
+
+  /// No description provided for @featureInfoStaffEditStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Update and save'**
+  String get featureInfoStaffEditStep2Title;
+
+  /// No description provided for @featureInfoStaffEditStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Modify any field and tap \'Save Changes\'. You can also change the PIN using the \'Change PIN\' button.'**
+  String get featureInfoStaffEditStep2Desc;
+
+  /// No description provided for @featureInfoStaffDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting a Staff Member'**
+  String get featureInfoStaffDeleteTitle;
+
+  /// No description provided for @featureInfoStaffDeleteStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the staff popup menu'**
+  String get featureInfoStaffDeleteStep1Title;
+
+  /// No description provided for @featureInfoStaffDeleteStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the staff member card and tap the three-dot menu icon.'**
+  String get featureInfoStaffDeleteStep1Desc;
+
+  /// No description provided for @featureInfoStaffDeleteStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Delete and confirm'**
+  String get featureInfoStaffDeleteStep2Title;
+
+  /// No description provided for @featureInfoStaffDeleteStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose \'Delete\' from the menu and confirm in the dialog.'**
+  String get featureInfoStaffDeleteStep2Desc;
+
+  /// No description provided for @featureInfoStaffTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the store selector at the top to view staff for a specific branch.'**
+  String get featureInfoStaffTip1;
+
+  /// No description provided for @featureInfoStaffTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter chips let you quickly filter by status (Active, Inactive, On Leave) or employment type.'**
+  String get featureInfoStaffTip2;
+
+  /// No description provided for @featureInfoStaffTip3.
+  ///
+  /// In en, this message translates to:
+  /// **'The PIN is essential for POS terminal access — make sure each staff member has a unique PIN.'**
+  String get featureInfoStaffTip3;
+
+  /// No description provided for @featureInfoRolesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Roles & Permissions'**
+  String get featureInfoRolesTitle;
+
+  /// No description provided for @featureInfoRolesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Define roles with granular permissions to control what each staff member can access. System-predefined roles cannot be deleted. Create custom roles with specific permission sets for your team.'**
+  String get featureInfoRolesDesc;
+
+  /// No description provided for @featureInfoRolesCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating a New Role'**
+  String get featureInfoRolesCreateTitle;
+
+  /// No description provided for @featureInfoRolesCreateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the New Role button'**
+  String get featureInfoRolesCreateStep1Title;
+
+  /// No description provided for @featureInfoRolesCreateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the floating action button to navigate to the role creation form.'**
+  String get featureInfoRolesCreateStep1Desc;
+
+  /// No description provided for @featureInfoRolesCreateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter role name and description'**
+  String get featureInfoRolesCreateStep2Title;
+
+  /// No description provided for @featureInfoRolesCreateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Type a display name for the role (e.g. \'Shift Manager\'). The system name is auto-generated. Optionally add a description.'**
+  String get featureInfoRolesCreateStep2Desc;
+
+  /// No description provided for @featureInfoRolesCreateStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select permissions'**
+  String get featureInfoRolesCreateStep3Title;
+
+  /// No description provided for @featureInfoRolesCreateStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Expand each permission module (POS, Orders, Inventory, Catalog, Customers, Reports, Staff, Settings, Accounting, Kitchen, Promotions) and check individual permissions. Use the select-all checkbox per module for quick selection.'**
+  String get featureInfoRolesCreateStep3Desc;
+
+  /// No description provided for @featureInfoRolesCreateStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Save the role'**
+  String get featureInfoRolesCreateStep4Title;
+
+  /// No description provided for @featureInfoRolesCreateStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Create\' in the AppBar. The role is now available for assignment to staff members.'**
+  String get featureInfoRolesCreateStep4Desc;
+
+  /// No description provided for @featureInfoRolesDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting a Custom Role'**
+  String get featureInfoRolesDeleteTitle;
+
+  /// No description provided for @featureInfoRolesDeleteStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the custom role'**
+  String get featureInfoRolesDeleteStep1Title;
+
+  /// No description provided for @featureInfoRolesDeleteStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom roles show a delete icon on their card. System-predefined roles (marked with \'System\' badge) cannot be deleted.'**
+  String get featureInfoRolesDeleteStep1Desc;
+
+  /// No description provided for @featureInfoRolesDeleteStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm deletion'**
+  String get featureInfoRolesDeleteStep2Title;
+
+  /// No description provided for @featureInfoRolesDeleteStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the delete icon and confirm. Make sure no staff members are currently assigned this role before deleting.'**
+  String get featureInfoRolesDeleteStep2Desc;
+
+  /// No description provided for @featureInfoRolesTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Some permissions are marked as \'Requires PIN override\' — these need extra verification at the POS.'**
+  String get featureInfoRolesTip1;
+
+  /// No description provided for @featureInfoRolesTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'System roles (Owner, Manager, Cashier, etc.) are pre-configured and cannot be deleted, but you can view their permissions.'**
+  String get featureInfoRolesTip2;
+
+  /// No description provided for @featureInfoInventoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory Management'**
+  String get featureInfoInventoryTitle;
+
+  /// No description provided for @featureInfoInventoryDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Your central hub for all inventory operations. Access Stock Levels, Stock Movements, Goods Receipts, Stock Adjustments, Stock Transfers, Purchase Orders, Recipes, and Supplier Returns from the tiles below.'**
+  String get featureInfoInventoryDesc;
+
+  /// No description provided for @featureInfoInventoryNavigateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Using the Inventory Hub'**
+  String get featureInfoInventoryNavigateTitle;
+
+  /// No description provided for @featureInfoInventoryNavigateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an inventory module'**
+  String get featureInfoInventoryNavigateStep1Title;
+
+  /// No description provided for @featureInfoInventoryNavigateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap any of the 8 tiles to navigate to that module: Stock Levels, Stock Movements, Goods Receipts, Stock Adjustments, Stock Transfers, Purchase Orders, Recipes, or Supplier Returns.'**
+  String get featureInfoInventoryNavigateStep1Desc;
+
+  /// No description provided for @featureInfoInventoryNavigateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Use each module'**
+  String get featureInfoInventoryNavigateStep2Title;
+
+  /// No description provided for @featureInfoInventoryNavigateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Each module has its own info button (ℹ) with detailed instructions for that specific feature.'**
+  String get featureInfoInventoryNavigateStep2Desc;
+
+  /// No description provided for @featureInfoInventoryTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock Levels shows current quantities and reorder status at a glance.'**
+  String get featureInfoInventoryTip1;
+
+  /// No description provided for @featureInfoInventoryTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock Movements is read-only — it automatically logs all inventory changes across the system.'**
+  String get featureInfoInventoryTip2;
+
+  /// No description provided for @featureInfoStockAdjTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock Adjustments'**
+  String get featureInfoStockAdjTitle;
+
+  /// No description provided for @featureInfoStockAdjDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Record manual changes to inventory quantities. Use adjustments for stock count corrections, damaged goods, expired items, theft, or any other reason that changes your actual stock without a purchase or sale.'**
+  String get featureInfoStockAdjDesc;
+
+  /// No description provided for @featureInfoStockAdjCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating a Stock Adjustment'**
+  String get featureInfoStockAdjCreateTitle;
+
+  /// No description provided for @featureInfoStockAdjCreateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the New Adjustment button'**
+  String get featureInfoStockAdjCreateStep1Title;
+
+  /// No description provided for @featureInfoStockAdjCreateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the floating action button to open the adjustment dialog.'**
+  String get featureInfoStockAdjCreateStep1Desc;
+
+  /// No description provided for @featureInfoStockAdjCreateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the adjustment type'**
+  String get featureInfoStockAdjCreateStep2Title;
+
+  /// No description provided for @featureInfoStockAdjCreateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose \'Increase\' to add stock, \'Decrease\' to reduce stock, or \'Damage\' to record damaged goods.'**
+  String get featureInfoStockAdjCreateStep2Desc;
+
+  /// No description provided for @featureInfoStockAdjCreateStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the product'**
+  String get featureInfoStockAdjCreateStep3Title;
+
+  /// No description provided for @featureInfoStockAdjCreateStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the searchable product dropdown to find and select the product you want to adjust.'**
+  String get featureInfoStockAdjCreateStep3Desc;
+
+  /// No description provided for @featureInfoStockAdjCreateStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter quantity and reason'**
+  String get featureInfoStockAdjCreateStep4Title;
+
+  /// No description provided for @featureInfoStockAdjCreateStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the quantity to adjust. Select a reason: Damaged, Expired, Lost, Correction, Returned, Miscounted, Theft, or Other. Optionally add notes.'**
+  String get featureInfoStockAdjCreateStep4Desc;
+
+  /// No description provided for @featureInfoStockAdjCreateStep5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit the adjustment'**
+  String get featureInfoStockAdjCreateStep5Title;
+
+  /// No description provided for @featureInfoStockAdjCreateStep5Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Create\' to record the adjustment. The stock level will be updated immediately.'**
+  String get featureInfoStockAdjCreateStep5Desc;
+
+  /// No description provided for @featureInfoStockAdjTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Always select the correct reason — it helps in reporting and audit trails.'**
+  String get featureInfoStockAdjTip1;
+
+  /// No description provided for @featureInfoStockAdjTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Use \'Correction\' when fixing count discrepancies found during physical inventory counts.'**
+  String get featureInfoStockAdjTip2;
+
+  /// No description provided for @featureInfoPOTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase Orders'**
+  String get featureInfoPOTitle;
+
+  /// No description provided for @featureInfoPODesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Create and manage purchase orders for your suppliers. Track orders through their lifecycle: Draft → Sent → Partially Received → Fully Received. Filter by status and manage the full procurement workflow.'**
+  String get featureInfoPODesc;
+
+  /// No description provided for @featureInfoPOCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating a Purchase Order'**
+  String get featureInfoPOCreateTitle;
+
+  /// No description provided for @featureInfoPOCreateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the New PO button'**
+  String get featureInfoPOCreateStep1Title;
+
+  /// No description provided for @featureInfoPOCreateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the floating action button to open the purchase order creation dialog.'**
+  String get featureInfoPOCreateStep1Desc;
+
+  /// No description provided for @featureInfoPOCreateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a supplier'**
+  String get featureInfoPOCreateStep2Title;
+
+  /// No description provided for @featureInfoPOCreateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the searchable dropdown to find and select the supplier for this order.'**
+  String get featureInfoPOCreateStep2Desc;
+
+  /// No description provided for @featureInfoPOCreateStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add product and quantities'**
+  String get featureInfoPOCreateStep3Title;
+
+  /// No description provided for @featureInfoPOCreateStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Optionally enter a reference number. Select the product, enter the quantity and unit cost.'**
+  String get featureInfoPOCreateStep3Desc;
+
+  /// No description provided for @featureInfoPOCreateStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Create the order'**
+  String get featureInfoPOCreateStep4Title;
+
+  /// No description provided for @featureInfoPOCreateStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Create\' to save the purchase order as a Draft.'**
+  String get featureInfoPOCreateStep4Desc;
+
+  /// No description provided for @featureInfoPOManageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Managing Purchase Orders'**
+  String get featureInfoPOManageTitle;
+
+  /// No description provided for @featureInfoPOManageStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Send the order'**
+  String get featureInfoPOManageStep1Title;
+
+  /// No description provided for @featureInfoPOManageStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'When ready, use the \'Send\' action on a Draft order to mark it as Sent to the supplier.'**
+  String get featureInfoPOManageStep1Desc;
+
+  /// No description provided for @featureInfoPOManageStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive the order'**
+  String get featureInfoPOManageStep2Title;
+
+  /// No description provided for @featureInfoPOManageStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'When goods arrive, use the \'Receive\' action on a Sent order to mark it as Received. Stock levels update automatically.'**
+  String get featureInfoPOManageStep2Desc;
+
+  /// No description provided for @featureInfoPOManageStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel if needed'**
+  String get featureInfoPOManageStep3Title;
+
+  /// No description provided for @featureInfoPOManageStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft or Sent orders can be cancelled using the \'Cancel\' action with a confirmation dialog.'**
+  String get featureInfoPOManageStep3Desc;
+
+  /// No description provided for @featureInfoPOTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the filter button to view orders by status (Draft, Sent, Partially Received, Fully Received, Cancelled).'**
+  String get featureInfoPOTip1;
+
+  /// No description provided for @featureInfoPOTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'The table shows reference number, supplier, status, total cost, and expected delivery date.'**
+  String get featureInfoPOTip2;
+
+  /// No description provided for @featureInfoTransfersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock Transfers'**
+  String get featureInfoTransfersTitle;
+
+  /// No description provided for @featureInfoTransfersDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer stock between your store branches. Track transfers through the approval workflow: Pending → Approved → In Transit → Received. Each transfer requires source and destination stores.'**
+  String get featureInfoTransfersDesc;
+
+  /// No description provided for @featureInfoTransfersCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating a Stock Transfer'**
+  String get featureInfoTransfersCreateTitle;
+
+  /// No description provided for @featureInfoTransfersCreateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the New Transfer button'**
+  String get featureInfoTransfersCreateStep1Title;
+
+  /// No description provided for @featureInfoTransfersCreateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the floating action button to open the transfer creation dialog.'**
+  String get featureInfoTransfersCreateStep1Desc;
+
+  /// No description provided for @featureInfoTransfersCreateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select source and destination'**
+  String get featureInfoTransfersCreateStep2Title;
+
+  /// No description provided for @featureInfoTransfersCreateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the \'From Store\' (source branch) and \'To Store\' (destination branch) from the searchable dropdowns.'**
+  String get featureInfoTransfersCreateStep2Desc;
+
+  /// No description provided for @featureInfoTransfersCreateStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add product details'**
+  String get featureInfoTransfersCreateStep3Title;
+
+  /// No description provided for @featureInfoTransfersCreateStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the product to transfer, enter the quantity, and optionally add notes.'**
+  String get featureInfoTransfersCreateStep3Desc;
+
+  /// No description provided for @featureInfoTransfersCreateStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Create the transfer'**
+  String get featureInfoTransfersCreateStep4Title;
+
+  /// No description provided for @featureInfoTransfersCreateStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Create\' to submit the transfer request as Pending.'**
+  String get featureInfoTransfersCreateStep4Desc;
+
+  /// No description provided for @featureInfoTransfersManageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Managing Stock Transfers'**
+  String get featureInfoTransfersManageTitle;
+
+  /// No description provided for @featureInfoTransfersManageStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve the transfer'**
+  String get featureInfoTransfersManageStep1Title;
+
+  /// No description provided for @featureInfoTransfersManageStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the \'Approve\' action on Pending transfers. This changes the status to In Transit.'**
+  String get featureInfoTransfersManageStep1Desc;
+
+  /// No description provided for @featureInfoTransfersManageStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive the transfer'**
+  String get featureInfoTransfersManageStep2Title;
+
+  /// No description provided for @featureInfoTransfersManageStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'When the goods arrive at the destination, use the \'Receive\' action. Stock levels are updated at both stores.'**
+  String get featureInfoTransfersManageStep2Desc;
+
+  /// No description provided for @featureInfoTransfersManageStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel if needed'**
+  String get featureInfoTransfersManageStep3Title;
+
+  /// No description provided for @featureInfoTransfersManageStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending transfers can be cancelled using the \'Cancel\' action. Transfers that are already in transit cannot be cancelled.'**
+  String get featureInfoTransfersManageStep3Desc;
+
+  /// No description provided for @featureInfoTransfersTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'The table shows reference number, source store, destination store, status, and creation date.'**
+  String get featureInfoTransfersTip1;
+
+  /// No description provided for @featureInfoGRTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Goods Receipts'**
+  String get featureInfoGRTitle;
+
+  /// No description provided for @featureInfoGRDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Record incoming goods from suppliers. Goods receipts update your inventory stock levels when confirmed. Receipts start as Draft and can be confirmed when verified.'**
+  String get featureInfoGRDesc;
+
+  /// No description provided for @featureInfoGRCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating a Goods Receipt'**
+  String get featureInfoGRCreateTitle;
+
+  /// No description provided for @featureInfoGRCreateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the New Receipt button'**
+  String get featureInfoGRCreateStep1Title;
+
+  /// No description provided for @featureInfoGRCreateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the floating action button to navigate to the goods receipt form page.'**
+  String get featureInfoGRCreateStep1Desc;
+
+  /// No description provided for @featureInfoGRCreateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in receipt details'**
+  String get featureInfoGRCreateStep2Title;
+
+  /// No description provided for @featureInfoGRCreateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the supplier, enter reference number, add the received products with quantities and costs.'**
+  String get featureInfoGRCreateStep2Desc;
+
+  /// No description provided for @featureInfoGRCreateStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Save as Draft'**
+  String get featureInfoGRCreateStep3Title;
+
+  /// No description provided for @featureInfoGRCreateStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Save the receipt. It will be created as a Draft that can be reviewed before confirmation.'**
+  String get featureInfoGRCreateStep3Desc;
+
+  /// No description provided for @featureInfoGRConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirming a Goods Receipt'**
+  String get featureInfoGRConfirmTitle;
+
+  /// No description provided for @featureInfoGRConfirmStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the draft receipt'**
+  String get featureInfoGRConfirmStep1Title;
+
+  /// No description provided for @featureInfoGRConfirmStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Locate the Draft receipt in the table. Only Draft receipts can be confirmed.'**
+  String get featureInfoGRConfirmStep1Desc;
+
+  /// No description provided for @featureInfoGRConfirmStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the receipt'**
+  String get featureInfoGRConfirmStep2Title;
+
+  /// No description provided for @featureInfoGRConfirmStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the \'Confirm\' action and verify in the dialog. Stock levels will be updated with the received quantities.'**
+  String get featureInfoGRConfirmStep2Desc;
+
+  /// No description provided for @featureInfoGRTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'The table shows reference number, supplier, status, total cost, and received date with pagination.'**
+  String get featureInfoGRTip1;
+
+  /// No description provided for @featureInfoSRTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier Returns'**
+  String get featureInfoSRTitle;
+
+  /// No description provided for @featureInfoSRDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Process returns of goods back to suppliers. Returns follow a workflow: Draft → Submitted → Approved → Completed. Search and filter returns by status to track the return process.'**
+  String get featureInfoSRDesc;
+
+  /// No description provided for @featureInfoSRCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating a Supplier Return'**
+  String get featureInfoSRCreateTitle;
+
+  /// No description provided for @featureInfoSRCreateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the New Return button'**
+  String get featureInfoSRCreateStep1Title;
+
+  /// No description provided for @featureInfoSRCreateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the floating action button to navigate to the supplier return form page.'**
+  String get featureInfoSRCreateStep1Desc;
+
+  /// No description provided for @featureInfoSRCreateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in return details'**
+  String get featureInfoSRCreateStep2Title;
+
+  /// No description provided for @featureInfoSRCreateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the supplier, enter a reason for the return, and add the products being returned with quantities and costs.'**
+  String get featureInfoSRCreateStep2Desc;
+
+  /// No description provided for @featureInfoSRCreateStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Save as Draft'**
+  String get featureInfoSRCreateStep3Title;
+
+  /// No description provided for @featureInfoSRCreateStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Save the return. It starts as a Draft that you can review and edit before submitting.'**
+  String get featureInfoSRCreateStep3Desc;
+
+  /// No description provided for @featureInfoSRManageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Managing Supplier Returns'**
+  String get featureInfoSRManageTitle;
+
+  /// No description provided for @featureInfoSRManageStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit the return'**
+  String get featureInfoSRManageStep1Title;
+
+  /// No description provided for @featureInfoSRManageStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the \'Submit\' action on a Draft return to send it for approval.'**
+  String get featureInfoSRManageStep1Desc;
+
+  /// No description provided for @featureInfoSRManageStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve the return'**
+  String get featureInfoSRManageStep2Title;
+
+  /// No description provided for @featureInfoSRManageStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the \'Approve\' action on a Submitted return to authorize the return.'**
+  String get featureInfoSRManageStep2Desc;
+
+  /// No description provided for @featureInfoSRManageStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete the return'**
+  String get featureInfoSRManageStep3Title;
+
+  /// No description provided for @featureInfoSRManageStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the \'Complete\' action on an Approved return to finalize it. Stock levels are adjusted accordingly.'**
+  String get featureInfoSRManageStep3Desc;
+
+  /// No description provided for @featureInfoSRManageStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel or delete if needed'**
+  String get featureInfoSRManageStep4Title;
+
+  /// No description provided for @featureInfoSRManageStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft and Submitted returns can be cancelled. Draft returns can also be permanently deleted.'**
+  String get featureInfoSRManageStep4Desc;
+
+  /// No description provided for @featureInfoSRTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the search bar and status filter dropdown to quickly find specific returns.'**
+  String get featureInfoSRTip1;
+
+  /// No description provided for @featureInfoRecipesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipes'**
+  String get featureInfoRecipesTitle;
+
+  /// No description provided for @featureInfoRecipesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Define recipes that tie a finished product to its raw material ingredients. This helps track ingredient consumption and manage composite product costs. Each recipe specifies the output product, yield quantity, ingredients, and waste percentage.'**
+  String get featureInfoRecipesDesc;
+
+  /// No description provided for @featureInfoRecipesCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating a Recipe'**
+  String get featureInfoRecipesCreateTitle;
+
+  /// No description provided for @featureInfoRecipesCreateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the New Recipe button'**
+  String get featureInfoRecipesCreateStep1Title;
+
+  /// No description provided for @featureInfoRecipesCreateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the floating action button to open the recipe creation dialog.'**
+  String get featureInfoRecipesCreateStep1Desc;
+
+  /// No description provided for @featureInfoRecipesCreateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the output product'**
+  String get featureInfoRecipesCreateStep2Title;
+
+  /// No description provided for @featureInfoRecipesCreateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the searchable dropdown to select the finished product that this recipe produces.'**
+  String get featureInfoRecipesCreateStep2Desc;
+
+  /// No description provided for @featureInfoRecipesCreateStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Set the yield quantity'**
+  String get featureInfoRecipesCreateStep3Title;
+
+  /// No description provided for @featureInfoRecipesCreateStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter how many units of the output product this recipe produces (default is 1).'**
+  String get featureInfoRecipesCreateStep3Desc;
+
+  /// No description provided for @featureInfoRecipesCreateStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add ingredients'**
+  String get featureInfoRecipesCreateStep4Title;
+
+  /// No description provided for @featureInfoRecipesCreateStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the ingredient product, enter the ingredient quantity, and set the waste percentage (how much material is typically wasted). Tap \'Create\' to save.'**
+  String get featureInfoRecipesCreateStep4Desc;
+
+  /// No description provided for @featureInfoRecipesDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleting a Recipe'**
+  String get featureInfoRecipesDeleteTitle;
+
+  /// No description provided for @featureInfoRecipesDeleteStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the recipe in the table'**
+  String get featureInfoRecipesDeleteStep1Title;
+
+  /// No description provided for @featureInfoRecipesDeleteStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Locate the recipe you want to delete in the list showing product name, yield, and status.'**
+  String get featureInfoRecipesDeleteStep1Desc;
+
+  /// No description provided for @featureInfoRecipesDeleteStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete and confirm'**
+  String get featureInfoRecipesDeleteStep2Title;
+
+  /// No description provided for @featureInfoRecipesDeleteStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the \'Delete\' action and confirm in the dialog. This removes the recipe definition.'**
+  String get featureInfoRecipesDeleteStep2Desc;
+
+  /// No description provided for @featureInfoRecipesTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Set the waste percentage to account for material lost during production (e.g. trimming, evaporation).'**
+  String get featureInfoRecipesTip1;
+
+  /// No description provided for @featureInfoStockLevelsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock Levels'**
+  String get featureInfoStockLevelsTitle;
+
+  /// No description provided for @featureInfoStockLevelsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Monitor current stock quantities for all products. View available and reserved stock, average cost, and reorder status. Set reorder points and maximum stock levels to get alerts when stock is low.'**
+  String get featureInfoStockLevelsDesc;
+
+  /// No description provided for @featureInfoStockLevelsViewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Viewing Stock Levels'**
+  String get featureInfoStockLevelsViewTitle;
+
+  /// No description provided for @featureInfoStockLevelsViewStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse the stock table'**
+  String get featureInfoStockLevelsViewStep1Title;
+
+  /// No description provided for @featureInfoStockLevelsViewStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'View product name, quantity, reserved stock, average cost, reorder point, and status (Low Stock or OK) in the table.'**
+  String get featureInfoStockLevelsViewStep1Desc;
+
+  /// No description provided for @featureInfoStockLevelsViewStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter low stock items'**
+  String get featureInfoStockLevelsViewStep2Title;
+
+  /// No description provided for @featureInfoStockLevelsViewStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle the \'Low Stock\' filter chip to show only products that are below their reorder point.'**
+  String get featureInfoStockLevelsViewStep2Desc;
+
+  /// No description provided for @featureInfoStockLevelsReorderTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Setting Reorder Points'**
+  String get featureInfoStockLevelsReorderTitle;
+
+  /// No description provided for @featureInfoStockLevelsReorderStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Click \'Set Reorder Point\''**
+  String get featureInfoStockLevelsReorderStep1Title;
+
+  /// No description provided for @featureInfoStockLevelsReorderStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the row action \'Set Reorder Point\' on any product to open the dialog.'**
+  String get featureInfoStockLevelsReorderStep1Desc;
+
+  /// No description provided for @featureInfoStockLevelsReorderStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter reorder thresholds'**
+  String get featureInfoStockLevelsReorderStep2Title;
+
+  /// No description provided for @featureInfoStockLevelsReorderStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Set the reorder point (minimum stock level before alert) and optionally set the maximum stock level.'**
+  String get featureInfoStockLevelsReorderStep2Desc;
+
+  /// No description provided for @featureInfoStockLevelsReorderStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Save the thresholds'**
+  String get featureInfoStockLevelsReorderStep3Title;
+
+  /// No description provided for @featureInfoStockLevelsReorderStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Save\'. Products below the reorder point will show a \'Low Stock\' badge.'**
+  String get featureInfoStockLevelsReorderStep3Desc;
+
+  /// No description provided for @featureInfoStockLevelsTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the search bar to find specific products and the pagination controls to navigate large inventories.'**
+  String get featureInfoStockLevelsTip1;
+
+  /// No description provided for @featureInfoPromotionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Promotions & Coupons'**
+  String get featureInfoPromotionsTitle;
+
+  /// No description provided for @featureInfoPromotionsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Create and manage promotions to boost sales. Supports percentage discounts, fixed amount discounts, buy-one-get-one (BOGO), bundle deals, and happy hour pricing. Generate coupon codes and track performance analytics.'**
+  String get featureInfoPromotionsDesc;
+
+  /// No description provided for @featureInfoPromotionsCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating a Promotion'**
+  String get featureInfoPromotionsCreateTitle;
+
+  /// No description provided for @featureInfoPromotionsCreateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the Add button'**
+  String get featureInfoPromotionsCreateStep1Title;
+
+  /// No description provided for @featureInfoPromotionsCreateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the floating action button to open the promotion creation form.'**
+  String get featureInfoPromotionsCreateStep1Desc;
+
+  /// No description provided for @featureInfoPromotionsCreateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter promotion details'**
+  String get featureInfoPromotionsCreateStep2Title;
+
+  /// No description provided for @featureInfoPromotionsCreateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the promotion name (required) and description. Select the type: Percentage, Fixed Amount, BOGO, Bundle, or Happy Hour.'**
+  String get featureInfoPromotionsCreateStep2Desc;
+
+  /// No description provided for @featureInfoPromotionsCreateStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure discount values'**
+  String get featureInfoPromotionsCreateStep3Title;
+
+  /// No description provided for @featureInfoPromotionsCreateStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Based on the type selected: enter discount % or amount for percentage/fixed; set buy quantity, get quantity, and get discount % for BOGO; enter bundle price for bundles.'**
+  String get featureInfoPromotionsCreateStep3Desc;
+
+  /// No description provided for @featureInfoPromotionsCreateStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Set rules and limits'**
+  String get featureInfoPromotionsCreateStep4Title;
+
+  /// No description provided for @featureInfoPromotionsCreateStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure minimum order total, maximum total uses, and maximum uses per customer. Toggle \'Requires Coupon Code\' if this is a coupon-based promotion. Toggle \'Stackable\' to allow combining with other promotions.'**
+  String get featureInfoPromotionsCreateStep4Desc;
+
+  /// No description provided for @featureInfoPromotionsCreateStep5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Save the promotion'**
+  String get featureInfoPromotionsCreateStep5Title;
+
+  /// No description provided for @featureInfoPromotionsCreateStep5Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Save\' to create the promotion. It can be activated or deactivated at any time.'**
+  String get featureInfoPromotionsCreateStep5Desc;
+
+  /// No description provided for @featureInfoPromotionsManageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Managing Promotions'**
+  String get featureInfoPromotionsManageTitle;
+
+  /// No description provided for @featureInfoPromotionsManageStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle active/inactive'**
+  String get featureInfoPromotionsManageStep1Title;
+
+  /// No description provided for @featureInfoPromotionsManageStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the switch on each promotion card to instantly activate or deactivate it.'**
+  String get featureInfoPromotionsManageStep1Desc;
+
+  /// No description provided for @featureInfoPromotionsManageStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate coupons'**
+  String get featureInfoPromotionsManageStep2Title;
+
+  /// No description provided for @featureInfoPromotionsManageStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'For coupon-based promotions, use \'Generate Coupons\' from the popup menu. Set the count, prefix, and max uses per coupon.'**
+  String get featureInfoPromotionsManageStep2Desc;
+
+  /// No description provided for @featureInfoPromotionsManageStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'View analytics'**
+  String get featureInfoPromotionsManageStep3Title;
+
+  /// No description provided for @featureInfoPromotionsManageStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Select \'Analytics\' from the popup menu to see performance data for the promotion.'**
+  String get featureInfoPromotionsManageStep3Desc;
+
+  /// No description provided for @featureInfoPromotionsTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the search bar and filter button to find promotions by name, type, or status.'**
+  String get featureInfoPromotionsTip1;
+
+  /// No description provided for @featureInfoPromotionsTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Happy hour promotions automatically apply during configured time windows.'**
+  String get featureInfoPromotionsTip2;
+
+  /// No description provided for @featureInfoBranchesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Branches Management'**
+  String get featureInfoBranchesTitle;
+
+  /// No description provided for @featureInfoBranchesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage all your store branches and warehouses. Configure branch details including location, contact info, operational settings, legal documents, and social media profiles. View statistics for active and inactive branches.'**
+  String get featureInfoBranchesDesc;
+
+  /// No description provided for @featureInfoBranchesCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating a Branch'**
+  String get featureInfoBranchesCreateTitle;
+
+  /// No description provided for @featureInfoBranchesCreateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the Create Branch button'**
+  String get featureInfoBranchesCreateStep1Title;
+
+  /// No description provided for @featureInfoBranchesCreateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the floating action button to navigate to the branch creation form.'**
+  String get featureInfoBranchesCreateStep1Desc;
+
+  /// No description provided for @featureInfoBranchesCreateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Fill in Basic Info'**
+  String get featureInfoBranchesCreateStep2Title;
+
+  /// No description provided for @featureInfoBranchesCreateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter branch name (required), Arabic name, branch code, description, business type, timezone, currency, and locale. Set flags like Is Main Branch, Is Warehouse, Accepts Online Orders, etc.'**
+  String get featureInfoBranchesCreateStep2Desc;
+
+  /// No description provided for @featureInfoBranchesCreateStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Location details'**
+  String get featureInfoBranchesCreateStep3Title;
+
+  /// No description provided for @featureInfoBranchesCreateStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the address, city, region, postal code, country, Google Maps URL, and coordinates (latitude/longitude).'**
+  String get featureInfoBranchesCreateStep3Desc;
+
+  /// No description provided for @featureInfoBranchesCreateStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Contact information'**
+  String get featureInfoBranchesCreateStep4Title;
+
+  /// No description provided for @featureInfoBranchesCreateStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter phone, secondary phone, email, and contact person for the branch.'**
+  String get featureInfoBranchesCreateStep4Desc;
+
+  /// No description provided for @featureInfoBranchesCreateStep5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure Operational settings'**
+  String get featureInfoBranchesCreateStep5Title;
+
+  /// No description provided for @featureInfoBranchesCreateStep5Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Set opening/closing dates, max registers, max staff, floor area, seating capacity, and upload logo/cover images.'**
+  String get featureInfoBranchesCreateStep5Desc;
+
+  /// No description provided for @featureInfoBranchesCreateStep6Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Legal and Social info'**
+  String get featureInfoBranchesCreateStep6Title;
+
+  /// No description provided for @featureInfoBranchesCreateStep6Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter CR number, VAT number, municipal license, license expiry. Add social media profiles (Instagram, Twitter, Facebook, etc.). Tap \'Save\' to create.'**
+  String get featureInfoBranchesCreateStep6Desc;
+
+  /// No description provided for @featureInfoBranchesEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Editing a Branch'**
+  String get featureInfoBranchesEditTitle;
+
+  /// No description provided for @featureInfoBranchesEditStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Find and tap the branch'**
+  String get featureInfoBranchesEditStep1Title;
+
+  /// No description provided for @featureInfoBranchesEditStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the search bar or status filter to find the branch. Tap the branch card to open its detail page.'**
+  String get featureInfoBranchesEditStep1Desc;
+
+  /// No description provided for @featureInfoBranchesEditStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit and save'**
+  String get featureInfoBranchesEditStep2Title;
+
+  /// No description provided for @featureInfoBranchesEditStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Modify any fields across all 6 tabs and tap \'Save\' to update.'**
+  String get featureInfoBranchesEditStep2Desc;
+
+  /// No description provided for @featureInfoBranchesTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'The stats row at the top shows total branches, active count, inactive count, and warehouse count.'**
+  String get featureInfoBranchesTip1;
+
+  /// No description provided for @featureInfoBranchesTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the status filter (All/Active/Inactive) to quickly narrow down the branch list.'**
+  String get featureInfoBranchesTip2;
+
+  /// No description provided for @featureInfoDebitsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Debits Management'**
+  String get featureInfoDebitsTitle;
+
+  /// No description provided for @featureInfoDebitsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Track customer credits, supplier returns, inventory adjustments, and manual credits. Debits represent money owed that can be allocated to orders. View summary KPIs for total, pending, allocated, and unallocated amounts.'**
+  String get featureInfoDebitsDesc;
+
+  /// No description provided for @featureInfoDebitsCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating a Debit'**
+  String get featureInfoDebitsCreateTitle;
+
+  /// No description provided for @featureInfoDebitsCreateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the Add button'**
+  String get featureInfoDebitsCreateStep1Title;
+
+  /// No description provided for @featureInfoDebitsCreateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Press the floating action button to navigate to the debit creation form.'**
+  String get featureInfoDebitsCreateStep1Desc;
+
+  /// No description provided for @featureInfoDebitsCreateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select customer and type'**
+  String get featureInfoDebitsCreateStep2Title;
+
+  /// No description provided for @featureInfoDebitsCreateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the customer from the searchable dropdown. Select the debit type: Customer Credit, Supplier Return, Inventory Adjustment, or Manual Credit.'**
+  String get featureInfoDebitsCreateStep2Desc;
+
+  /// No description provided for @featureInfoDebitsCreateStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter amount and details'**
+  String get featureInfoDebitsCreateStep3Title;
+
+  /// No description provided for @featureInfoDebitsCreateStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the source (POS Terminal, Invoice, Return, Manual, Inventory System). Enter the amount, reference number, and descriptions in both English and Arabic.'**
+  String get featureInfoDebitsCreateStep3Desc;
+
+  /// No description provided for @featureInfoDebitsCreateStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Save the debit'**
+  String get featureInfoDebitsCreateStep4Title;
+
+  /// No description provided for @featureInfoDebitsCreateStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Save\' to create the debit with Pending status.'**
+  String get featureInfoDebitsCreateStep4Desc;
+
+  /// No description provided for @featureInfoDebitsAllocateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Allocating a Debit to an Order'**
+  String get featureInfoDebitsAllocateTitle;
+
+  /// No description provided for @featureInfoDebitsAllocateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Find the pending debit'**
+  String get featureInfoDebitsAllocateStep1Title;
+
+  /// No description provided for @featureInfoDebitsAllocateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the status and type filters in the AppBar to find debits that can be allocated.'**
+  String get featureInfoDebitsAllocateStep1Desc;
+
+  /// No description provided for @featureInfoDebitsAllocateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the Allocate action'**
+  String get featureInfoDebitsAllocateStep2Title;
+
+  /// No description provided for @featureInfoDebitsAllocateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'On a pending or partially allocated debit, click the \'Allocate\' row action to open the allocation dialog.'**
+  String get featureInfoDebitsAllocateStep2Desc;
+
+  /// No description provided for @featureInfoDebitsAllocateStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select order and amount'**
+  String get featureInfoDebitsAllocateStep3Title;
+
+  /// No description provided for @featureInfoDebitsAllocateStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the order to allocate to, enter the amount (up to remaining balance), add optional notes, and confirm.'**
+  String get featureInfoDebitsAllocateStep3Desc;
+
+  /// No description provided for @featureInfoDebitsReverseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reversing a Debit'**
+  String get featureInfoDebitsReverseTitle;
+
+  /// No description provided for @featureInfoDebitsReverseStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the Reverse action'**
+  String get featureInfoDebitsReverseStep1Title;
+
+  /// No description provided for @featureInfoDebitsReverseStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'On an eligible debit, click the \'Reverse\' action to open the reversal dialog.'**
+  String get featureInfoDebitsReverseStep1Desc;
+
+  /// No description provided for @featureInfoDebitsReverseStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter reason and confirm'**
+  String get featureInfoDebitsReverseStep2Title;
+
+  /// No description provided for @featureInfoDebitsReverseStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Type the reversal reason and confirm. Reversed debits cannot be allocated.'**
+  String get featureInfoDebitsReverseStep2Desc;
+
+  /// No description provided for @featureInfoDebitsTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'The summary cards at the top show Total Debits, Pending Amount, Allocated, and Unallocated totals.'**
+  String get featureInfoDebitsTip1;
+
+  /// No description provided for @featureInfoDebitsTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the search bar to find debits by reference number.'**
+  String get featureInfoDebitsTip2;
+
+  /// No description provided for @featureInfoExpensesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses Tracking'**
+  String get featureInfoExpensesTitle;
+
+  /// No description provided for @featureInfoExpensesDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Record and track your store\'s daily expenses. Expenses are grouped by date with daily totals. Categories include Supplies, Food, Transport, Maintenance, Utility, and Other.'**
+  String get featureInfoExpensesDesc;
+
+  /// No description provided for @featureInfoExpensesCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording an Expense'**
+  String get featureInfoExpensesCreateTitle;
+
+  /// No description provided for @featureInfoExpensesCreateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the New Expense button'**
+  String get featureInfoExpensesCreateStep1Title;
+
+  /// No description provided for @featureInfoExpensesCreateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the \'New Expense\' button in the AppBar to open the expense dialog.'**
+  String get featureInfoExpensesCreateStep1Desc;
+
+  /// No description provided for @featureInfoExpensesCreateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the amount'**
+  String get featureInfoExpensesCreateStep2Title;
+
+  /// No description provided for @featureInfoExpensesCreateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Type the expense amount in the numeric field.'**
+  String get featureInfoExpensesCreateStep2Desc;
+
+  /// No description provided for @featureInfoExpensesCreateStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a category'**
+  String get featureInfoExpensesCreateStep3Title;
+
+  /// No description provided for @featureInfoExpensesCreateStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from: Supplies, Food, Transport, Maintenance, Utility, or Other.'**
+  String get featureInfoExpensesCreateStep3Desc;
+
+  /// No description provided for @featureInfoExpensesCreateStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add description and save'**
+  String get featureInfoExpensesCreateStep4Title;
+
+  /// No description provided for @featureInfoExpensesCreateStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Optionally add a description explaining the expense. Tap \'Create\' to record it.'**
+  String get featureInfoExpensesCreateStep4Desc;
+
+  /// No description provided for @featureInfoExpensesTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses are grouped by date. Each date group shows the total expenses for that day.'**
+  String get featureInfoExpensesTip1;
+
+  /// No description provided for @featureInfoCashMgmtTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash Management'**
+  String get featureInfoCashMgmtTitle;
+
+  /// No description provided for @featureInfoCashMgmtDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage cash sessions for your POS terminal. Open a session at the start of a shift, record cash-in and cash-out events during the day, count denominations, and close the session at the end of the shift.'**
+  String get featureInfoCashMgmtDesc;
+
+  /// No description provided for @featureInfoCashMgmtOpenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening a Cash Session'**
+  String get featureInfoCashMgmtOpenTitle;
+
+  /// No description provided for @featureInfoCashMgmtOpenStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Open Session\''**
+  String get featureInfoCashMgmtOpenStep1Title;
+
+  /// No description provided for @featureInfoCashMgmtOpenStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'If no active session exists, tap the \'Open Session\' button to start.'**
+  String get featureInfoCashMgmtOpenStep1Desc;
+
+  /// No description provided for @featureInfoCashMgmtOpenStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter opening float'**
+  String get featureInfoCashMgmtOpenStep2Title;
+
+  /// No description provided for @featureInfoCashMgmtOpenStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the amount of cash in the drawer at the start of the session (opening float) and confirm.'**
+  String get featureInfoCashMgmtOpenStep2Desc;
+
+  /// No description provided for @featureInfoCashMgmtCashInOutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording Cash In/Out'**
+  String get featureInfoCashMgmtCashInOutTitle;
+
+  /// No description provided for @featureInfoCashMgmtCashInOutStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Cash In or Cash Out'**
+  String get featureInfoCashMgmtCashInOutStep1Title;
+
+  /// No description provided for @featureInfoCashMgmtCashInOutStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'With an active session, use the \'Cash In\' or \'Cash Out\' buttons on the session card.'**
+  String get featureInfoCashMgmtCashInOutStep1Desc;
+
+  /// No description provided for @featureInfoCashMgmtCashInOutStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter details'**
+  String get featureInfoCashMgmtCashInOutStep2Title;
+
+  /// No description provided for @featureInfoCashMgmtCashInOutStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the amount, select a reason (for Cash In: tips, change replenish, other; for Cash Out: petty cash, supplier payment, bank deposit, other), and optionally add notes.'**
+  String get featureInfoCashMgmtCashInOutStep2Desc;
+
+  /// No description provided for @featureInfoCashMgmtCashInOutStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit the transaction'**
+  String get featureInfoCashMgmtCashInOutStep3Title;
+
+  /// No description provided for @featureInfoCashMgmtCashInOutStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the cash event. The expected cash balance updates in real-time.'**
+  String get featureInfoCashMgmtCashInOutStep3Desc;
+
+  /// No description provided for @featureInfoCashMgmtCloseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Closing a Cash Session'**
+  String get featureInfoCashMgmtCloseTitle;
+
+  /// No description provided for @featureInfoCashMgmtCloseStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Count your cash'**
+  String get featureInfoCashMgmtCloseStep1Title;
+
+  /// No description provided for @featureInfoCashMgmtCloseStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the denomination counter to count all cash in the drawer by entering quantities for each note and coin denomination.'**
+  String get featureInfoCashMgmtCloseStep1Desc;
+
+  /// No description provided for @featureInfoCashMgmtCloseStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Close Session\''**
+  String get featureInfoCashMgmtCloseStep2Title;
+
+  /// No description provided for @featureInfoCashMgmtCloseStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Review the counted total and expected cash amount. Optionally add closing notes.'**
+  String get featureInfoCashMgmtCloseStep2Desc;
+
+  /// No description provided for @featureInfoCashMgmtCloseStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the closure'**
+  String get featureInfoCashMgmtCloseStep3Title;
+
+  /// No description provided for @featureInfoCashMgmtCloseStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm to close the session. Any variance between counted and expected cash is recorded.'**
+  String get featureInfoCashMgmtCloseStep3Desc;
+
+  /// No description provided for @featureInfoCashMgmtTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'The denomination counter helps you accurately count physical cash before closing the session.'**
+  String get featureInfoCashMgmtTip1;
+
+  /// No description provided for @featureInfoCashMgmtTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'Session history at the bottom shows previous sessions with opening float, timing, and variance.'**
+  String get featureInfoCashMgmtTip2;
+
+  /// No description provided for @featureInfoGiftCardsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Gift Cards'**
+  String get featureInfoGiftCardsTitle;
+
+  /// No description provided for @featureInfoGiftCardsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue, check, and redeem gift cards for your store. Gift cards have a unique code, balance, optional recipient name, and expiry date. Three tabs let you manage the full gift card lifecycle.'**
+  String get featureInfoGiftCardsDesc;
+
+  /// No description provided for @featureInfoGiftCardsIssueTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Issuing a Gift Card'**
+  String get featureInfoGiftCardsIssueTitle;
+
+  /// No description provided for @featureInfoGiftCardsIssueStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an amount'**
+  String get featureInfoGiftCardsIssueStep1Title;
+
+  /// No description provided for @featureInfoGiftCardsIssueStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'On the \'Issue\' tab, choose a quick preset amount (50, 100, 200, 500) or enter a custom amount.'**
+  String get featureInfoGiftCardsIssueStep1Desc;
+
+  /// No description provided for @featureInfoGiftCardsIssueStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add recipient (optional)'**
+  String get featureInfoGiftCardsIssueStep2Title;
+
+  /// No description provided for @featureInfoGiftCardsIssueStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the recipient\'s name if you want to personalize the gift card.'**
+  String get featureInfoGiftCardsIssueStep2Desc;
+
+  /// No description provided for @featureInfoGiftCardsIssueStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue the card'**
+  String get featureInfoGiftCardsIssueStep3Title;
+
+  /// No description provided for @featureInfoGiftCardsIssueStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Issue Gift Card\'. A result card appears showing the generated code, initial amount, balance, and status.'**
+  String get featureInfoGiftCardsIssueStep3Desc;
+
+  /// No description provided for @featureInfoGiftCardsCheckTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking Balance'**
+  String get featureInfoGiftCardsCheckTitle;
+
+  /// No description provided for @featureInfoGiftCardsCheckStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the gift card code'**
+  String get featureInfoGiftCardsCheckStep1Title;
+
+  /// No description provided for @featureInfoGiftCardsCheckStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'On the \'Check Balance\' tab, enter the gift card code.'**
+  String get featureInfoGiftCardsCheckStep1Desc;
+
+  /// No description provided for @featureInfoGiftCardsCheckStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'View balance details'**
+  String get featureInfoGiftCardsCheckStep2Title;
+
+  /// No description provided for @featureInfoGiftCardsCheckStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Check\'. The remaining balance, status, and expiry date are displayed.'**
+  String get featureInfoGiftCardsCheckStep2Desc;
+
+  /// No description provided for @featureInfoGiftCardsRedeemTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Redeeming a Gift Card'**
+  String get featureInfoGiftCardsRedeemTitle;
+
+  /// No description provided for @featureInfoGiftCardsRedeemStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the gift card code'**
+  String get featureInfoGiftCardsRedeemStep1Title;
+
+  /// No description provided for @featureInfoGiftCardsRedeemStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'On the \'Redeem\' tab, enter the gift card code.'**
+  String get featureInfoGiftCardsRedeemStep1Desc;
+
+  /// No description provided for @featureInfoGiftCardsRedeemStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter redemption amount'**
+  String get featureInfoGiftCardsRedeemStep2Title;
+
+  /// No description provided for @featureInfoGiftCardsRedeemStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the amount to redeem (must not exceed the remaining balance).'**
+  String get featureInfoGiftCardsRedeemStep2Desc;
+
+  /// No description provided for @featureInfoGiftCardsRedeemStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete redemption'**
+  String get featureInfoGiftCardsRedeemStep3Title;
+
+  /// No description provided for @featureInfoGiftCardsRedeemStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \'Redeem\'. A confirmation card shows the updated balance.'**
+  String get featureInfoGiftCardsRedeemStep3Desc;
+
+  /// No description provided for @featureInfoGiftCardsTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Gift cards can also be applied as a payment method directly at the POS terminal during checkout.'**
+  String get featureInfoGiftCardsTip1;
+
+  /// No description provided for @featureInfoCashSessionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash Sessions History'**
+  String get featureInfoCashSessionsTitle;
+
+  /// No description provided for @featureInfoCashSessionsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'View the history of all cash sessions. Each session shows the terminal ID, session status, and opening float amount. Use Cash Management for opening, managing, and closing sessions.'**
+  String get featureInfoCashSessionsDesc;
+
+  /// No description provided for @featureInfoCashSessionsViewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Viewing Cash Sessions'**
+  String get featureInfoCashSessionsViewTitle;
+
+  /// No description provided for @featureInfoCashSessionsViewStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse the session list'**
+  String get featureInfoCashSessionsViewStep1Title;
+
+  /// No description provided for @featureInfoCashSessionsViewStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'View all past and current cash sessions with their terminal ID, status, and opening float.'**
+  String get featureInfoCashSessionsViewStep1Desc;
+
+  /// No description provided for @featureInfoCashSessionsViewStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Check session details'**
+  String get featureInfoCashSessionsViewStep2Title;
+
+  /// No description provided for @featureInfoCashSessionsViewStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Each session entry shows key information about the cash session period.'**
+  String get featureInfoCashSessionsViewStep2Desc;
+
+  /// No description provided for @featureInfoCashSessionsTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'For active session management (opening, cash events, closing), use the Cash Management page.'**
+  String get featureInfoCashSessionsTip1;
+
+  /// No description provided for @featureInfoDailySummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Financial Summary'**
+  String get featureInfoDailySummaryTitle;
+
+  /// No description provided for @featureInfoDailySummaryDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Review a comprehensive daily financial summary. See gross revenue, expenses, net revenue, and transaction count. View revenue breakdown by payment method, cash variance analysis, hourly activity patterns, and session details.'**
+  String get featureInfoDailySummaryDesc;
+
+  /// No description provided for @featureInfoDailySummaryNavigateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigating Between Dates'**
+  String get featureInfoDailySummaryNavigateTitle;
+
+  /// No description provided for @featureInfoDailySummaryNavigateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the date arrows'**
+  String get featureInfoDailySummaryNavigateStep1Title;
+
+  /// No description provided for @featureInfoDailySummaryNavigateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the left/right arrows in the AppBar to go to the previous or next day.'**
+  String get featureInfoDailySummaryNavigateStep1Desc;
+
+  /// No description provided for @featureInfoDailySummaryNavigateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a specific date'**
+  String get featureInfoDailySummaryNavigateStep2Title;
+
+  /// No description provided for @featureInfoDailySummaryNavigateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the date text in the AppBar to open a date picker and jump to any date.'**
+  String get featureInfoDailySummaryNavigateStep2Desc;
+
+  /// No description provided for @featureInfoDailySummaryReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading the Summary'**
+  String get featureInfoDailySummaryReviewTitle;
+
+  /// No description provided for @featureInfoDailySummaryReviewStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Check KPI cards'**
+  String get featureInfoDailySummaryReviewStep1Title;
+
+  /// No description provided for @featureInfoDailySummaryReviewStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'The top section shows Gross Revenue, Expenses, Net Revenue, and Transaction Count for the selected day.'**
+  String get featureInfoDailySummaryReviewStep1Desc;
+
+  /// No description provided for @featureInfoDailySummaryReviewStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Review payment breakdown'**
+  String get featureInfoDailySummaryReviewStep2Title;
+
+  /// No description provided for @featureInfoDailySummaryReviewStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'The \'Revenue by Payment Method\' section shows a breakdown by Cash, Card (Mada, Visa, Mastercard), Store Credit, Gift Card, and Mobile Payment with percentages.'**
+  String get featureInfoDailySummaryReviewStep2Desc;
+
+  /// No description provided for @featureInfoDailySummaryReviewStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Check cash variance'**
+  String get featureInfoDailySummaryReviewStep3Title;
+
+  /// No description provided for @featureInfoDailySummaryReviewStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'The \'Cash Variance\' section compares expected vs actual cash. A tolerance of ±5 is shown — larger variances are highlighted.'**
+  String get featureInfoDailySummaryReviewStep3Desc;
+
+  /// No description provided for @featureInfoDailySummaryTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'The hourly activity chart helps identify peak business hours for staffing decisions.'**
+  String get featureInfoDailySummaryTip1;
+
+  /// No description provided for @featureInfoFinReconTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial Reconciliation'**
+  String get featureInfoFinReconTitle;
+
+  /// No description provided for @featureInfoFinReconDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Perform end-of-day financial reconciliation. Review revenue summaries, payment method breakdowns, cash positions, and expenses. Count physical cash using the denomination grid and confirm reconciliation to close the business day.'**
+  String get featureInfoFinReconDesc;
+
+  /// No description provided for @featureInfoFinReconStepsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconciliation Process'**
+  String get featureInfoFinReconStepsTitle;
+
+  /// No description provided for @featureInfoFinReconStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select the date'**
+  String get featureInfoFinReconStep1Title;
+
+  /// No description provided for @featureInfoFinReconStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the date picker in the AppBar to select the day you want to reconcile.'**
+  String get featureInfoFinReconStep1Desc;
+
+  /// No description provided for @featureInfoFinReconStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Review revenue summary'**
+  String get featureInfoFinReconStep2Title;
+
+  /// No description provided for @featureInfoFinReconStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the Total Revenue, Transaction count, and Average Transaction amount. Review the payment method breakdown with percentages.'**
+  String get featureInfoFinReconStep2Desc;
+
+  /// No description provided for @featureInfoFinReconStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Review expenses'**
+  String get featureInfoFinReconStep3Title;
+
+  /// No description provided for @featureInfoFinReconStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the total expenses and see the breakdown by category (shown as color-coded chips).'**
+  String get featureInfoFinReconStep3Desc;
+
+  /// No description provided for @featureInfoFinReconStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Count physical cash'**
+  String get featureInfoFinReconStep4Title;
+
+  /// No description provided for @featureInfoFinReconStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the count for each denomination in the grid (notes and coins). The total is calculated automatically and compared to the expected cash amount.'**
+  String get featureInfoFinReconStep4Desc;
+
+  /// No description provided for @featureInfoFinReconStep5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm reconciliation'**
+  String get featureInfoFinReconStep5Title;
+
+  /// No description provided for @featureInfoFinReconStep5Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Review the cash variance (difference between counted and expected). Tap \'Confirm Reconciliation\' and verify in the confirmation dialog.'**
+  String get featureInfoFinReconStep5Desc;
+
+  /// No description provided for @featureInfoFinReconTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash variance is color-coded: green for matching, red for discrepancies.'**
+  String get featureInfoFinReconTip1;
+
+  /// No description provided for @featureInfoFinReconTip2.
+  ///
+  /// In en, this message translates to:
+  /// **'You can also print the report or export to PDF using the action buttons.'**
+  String get featureInfoFinReconTip2;
+
+  /// No description provided for @featureInfoTxExplorerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Explorer'**
+  String get featureInfoTxExplorerTitle;
+
+  /// No description provided for @featureInfoTxExplorerDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Search and analyze all transactions with powerful filters. View sales, returns, voids, and exchanges. Toggle analytics for KPI stats, charts, and daily trend analysis. Tap any transaction to see full details.'**
+  String get featureInfoTxExplorerDesc;
+
+  /// No description provided for @featureInfoTxExplorerSearchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Searching Transactions'**
+  String get featureInfoTxExplorerSearchTitle;
+
+  /// No description provided for @featureInfoTxExplorerSearchStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the search bar'**
+  String get featureInfoTxExplorerSearchStep1Title;
+
+  /// No description provided for @featureInfoTxExplorerSearchStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Type a transaction number or keyword in the search field to filter results.'**
+  String get featureInfoTxExplorerSearchStep1Desc;
+
+  /// No description provided for @featureInfoTxExplorerSearchStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply type and status filters'**
+  String get featureInfoTxExplorerSearchStep2Title;
+
+  /// No description provided for @featureInfoTxExplorerSearchStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the Type dropdown (Sale, Return, Void, Exchange) and Status dropdown (Completed, Voided, Pending) to narrow results.'**
+  String get featureInfoTxExplorerSearchStep2Desc;
+
+  /// No description provided for @featureInfoTxExplorerSearchStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by date range'**
+  String get featureInfoTxExplorerSearchStep3Title;
+
+  /// No description provided for @featureInfoTxExplorerSearchStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the date range picker button to select a start and end date. Use \'Clear All Filters\' to reset everything.'**
+  String get featureInfoTxExplorerSearchStep3Desc;
+
+  /// No description provided for @featureInfoTxExplorerAnalyticsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Viewing Analytics'**
+  String get featureInfoTxExplorerAnalyticsTitle;
+
+  /// No description provided for @featureInfoTxExplorerAnalyticsStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle analytics panel'**
+  String get featureInfoTxExplorerAnalyticsStep1Title;
+
+  /// No description provided for @featureInfoTxExplorerAnalyticsStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Click the analytics icon in the AppBar to show or hide the analytics dashboard above the transaction list.'**
+  String get featureInfoTxExplorerAnalyticsStep1Desc;
+
+  /// No description provided for @featureInfoTxExplorerAnalyticsStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Review KPIs and charts'**
+  String get featureInfoTxExplorerAnalyticsStep2Title;
+
+  /// No description provided for @featureInfoTxExplorerAnalyticsStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'The analytics panel shows stats cards, transaction charts, and a daily trend line to help identify patterns.'**
+  String get featureInfoTxExplorerAnalyticsStep2Desc;
+
+  /// No description provided for @featureInfoTxExplorerTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap any transaction row to navigate to the full transaction detail page.'**
+  String get featureInfoTxExplorerTip1;
+
+  /// No description provided for @featureInfoReportsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports & Analytics'**
+  String get featureInfoReportsTitle;
+
+  /// No description provided for @featureInfoReportsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Your analytics hub with today\'s KPIs, comparison with yesterday, and top products. Navigate to 9 specialized sub-reports for detailed analysis across sales, products, categories, staff, hourly trends, payments, inventory, financials, and customers.'**
+  String get featureInfoReportsDesc;
+
+  /// No description provided for @featureInfoReportsNavigateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Using the Reports Dashboard'**
+  String get featureInfoReportsNavigateTitle;
+
+  /// No description provided for @featureInfoReportsNavigateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Review today\'s overview'**
+  String get featureInfoReportsNavigateStep1Title;
+
+  /// No description provided for @featureInfoReportsNavigateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'The dashboard shows 6 KPI cards: Revenue, Transactions, Net Revenue, Average Basket, Customers, and Refunds. A \'vs Yesterday\' comparison section is below.'**
+  String get featureInfoReportsNavigateStep1Desc;
+
+  /// No description provided for @featureInfoReportsNavigateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Check Top Products'**
+  String get featureInfoReportsNavigateStep2Title;
+
+  /// No description provided for @featureInfoReportsNavigateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'View top-selling products today with a bar chart and ranked list showing quantities and revenue.'**
+  String get featureInfoReportsNavigateStep2Desc;
+
+  /// No description provided for @featureInfoReportsNavigateStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate to sub-reports'**
+  String get featureInfoReportsNavigateStep3Title;
+
+  /// No description provided for @featureInfoReportsNavigateStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the 3x3 grid to navigate to: Sales Summary, Product Performance, Category Breakdown, Staff Performance, Hourly Sales, Payment Methods, Inventory Report, Financial Report, and Customer Report.'**
+  String get featureInfoReportsNavigateStep3Desc;
+
+  /// No description provided for @featureInfoReportsTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the refresh button in the AppBar and the filter panel to customize the data view.'**
+  String get featureInfoReportsTip1;
+
+  /// No description provided for @featureInfoLabelsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Label Templates'**
+  String get featureInfoLabelsTitle;
+
+  /// No description provided for @featureInfoLabelsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Design, manage, and print product labels. Use the WYSIWYG label designer to create custom templates with barcodes, product names, prices, SKUs, logos, QR codes, and more. Print labels directly or queue them for batch printing.'**
+  String get featureInfoLabelsDesc;
+
+  /// No description provided for @featureInfoLabelsCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Creating a Label Template'**
+  String get featureInfoLabelsCreateTitle;
+
+  /// No description provided for @featureInfoLabelsCreateStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Click \'Label Designer\''**
+  String get featureInfoLabelsCreateStep1Title;
+
+  /// No description provided for @featureInfoLabelsCreateStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the \'Label Designer\' button in the AppBar to open the WYSIWYG designer.'**
+  String get featureInfoLabelsCreateStep1Desc;
+
+  /// No description provided for @featureInfoLabelsCreateStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Set template dimensions'**
+  String get featureInfoLabelsCreateStep2Title;
+
+  /// No description provided for @featureInfoLabelsCreateStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a template name, width (mm), and height (mm) for the label.'**
+  String get featureInfoLabelsCreateStep2Desc;
+
+  /// No description provided for @featureInfoLabelsCreateStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add and arrange elements'**
+  String get featureInfoLabelsCreateStep3Title;
+
+  /// No description provided for @featureInfoLabelsCreateStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Click elements from the palette (Barcode, Product Name, Price, SKU, Logo, Custom Text, Expiry Date, Weight, QR Code, Separator Line) to add them to the canvas. Drag elements to position them and adjust sizes in the properties panel.'**
+  String get featureInfoLabelsCreateStep3Desc;
+
+  /// No description provided for @featureInfoLabelsCreateStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Save the template'**
+  String get featureInfoLabelsCreateStep4Title;
+
+  /// No description provided for @featureInfoLabelsCreateStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Click \'Save\' to store the template. It will appear in the template list.'**
+  String get featureInfoLabelsCreateStep4Desc;
+
+  /// No description provided for @featureInfoLabelsPrintTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Printing Labels'**
+  String get featureInfoLabelsPrintTitle;
+
+  /// No description provided for @featureInfoLabelsPrintStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select \'Print Queue\' on a template'**
+  String get featureInfoLabelsPrintStep1Title;
+
+  /// No description provided for @featureInfoLabelsPrintStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the \'Print Queue\' action on any template row in the list to navigate to the print screen.'**
+  String get featureInfoLabelsPrintStep1Desc;
+
+  /// No description provided for @featureInfoLabelsPrintStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Configure and print'**
+  String get featureInfoLabelsPrintStep2Title;
+
+  /// No description provided for @featureInfoLabelsPrintStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Select products, set quantities, and send to the printer.'**
+  String get featureInfoLabelsPrintStep2Desc;
+
+  /// No description provided for @featureInfoLabelsTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'You can duplicate existing templates (including presets) and customize them for faster creation.'**
+  String get featureInfoLabelsTip1;
+
+  /// No description provided for @featureInfoDeliveryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Integration'**
+  String get featureInfoDeliveryTitle;
+
+  /// No description provided for @featureInfoDeliveryDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect with delivery platforms to manage online orders. View KPIs (today\'s orders, revenue, active/pending/completed), manage platform configurations, and process delivery orders (accept, reject, complete).'**
+  String get featureInfoDeliveryDesc;
+
+  /// No description provided for @featureInfoDeliveryPlatformsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Managing Delivery Platforms'**
+  String get featureInfoDeliveryPlatformsTitle;
+
+  /// No description provided for @featureInfoDeliveryPlatformsStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to the Platforms tab'**
+  String get featureInfoDeliveryPlatformsStep1Title;
+
+  /// No description provided for @featureInfoDeliveryPlatformsStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to the \'Platforms\' tab to see all configured delivery platforms.'**
+  String get featureInfoDeliveryPlatformsStep1Desc;
+
+  /// No description provided for @featureInfoDeliveryPlatformsStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Toggle or configure platforms'**
+  String get featureInfoDeliveryPlatformsStep2Title;
+
+  /// No description provided for @featureInfoDeliveryPlatformsStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the toggle switch to enable or disable a platform. Click \'Edit\' to modify configuration. Click \'Test\' to verify API connectivity.'**
+  String get featureInfoDeliveryPlatformsStep2Desc;
+
+  /// No description provided for @featureInfoDeliveryPlatformsStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a new platform'**
+  String get featureInfoDeliveryPlatformsStep3Title;
+
+  /// No description provided for @featureInfoDeliveryPlatformsStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the \'Add Platform\' button or the quick action tile on the Overview tab to set up a new delivery integration.'**
+  String get featureInfoDeliveryPlatformsStep3Desc;
+
+  /// No description provided for @featureInfoDeliveryOrdersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing Delivery Orders'**
+  String get featureInfoDeliveryOrdersTitle;
+
+  /// No description provided for @featureInfoDeliveryOrdersStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to the Orders tab'**
+  String get featureInfoDeliveryOrdersStep1Title;
+
+  /// No description provided for @featureInfoDeliveryOrdersStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Switch to the \'Orders\' tab to see incoming delivery orders. Filter by status (All/Pending/Active/Completed).'**
+  String get featureInfoDeliveryOrdersStep1Desc;
+
+  /// No description provided for @featureInfoDeliveryOrdersStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept or reject orders'**
+  String get featureInfoDeliveryOrdersStep2Title;
+
+  /// No description provided for @featureInfoDeliveryOrdersStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the \'Accept\' button to accept a pending order. Use \'Reject\' to reject with a reason.'**
+  String get featureInfoDeliveryOrdersStep2Desc;
+
+  /// No description provided for @featureInfoDeliveryOrdersStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete orders'**
+  String get featureInfoDeliveryOrdersStep3Title;
+
+  /// No description provided for @featureInfoDeliveryOrdersStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'When the order is delivered, use the \'Complete\' button to finalize it.'**
+  String get featureInfoDeliveryOrdersStep3Desc;
+
+  /// No description provided for @featureInfoDeliveryTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the Menu Sync button in the AppBar to synchronize your product catalog with delivery platforms.'**
+  String get featureInfoDeliveryTip1;
+
+  /// No description provided for @featureInfoNotificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications Center'**
+  String get featureInfoNotificationsTitle;
+
+  /// No description provided for @featureInfoNotificationsDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'View and manage all system notifications. Filter by category (Order, Inventory, Promotion, System, Payment, Staff) and priority (Low, Normal, High, Urgent). Mark as read, bulk delete, or manage notification preferences.'**
+  String get featureInfoNotificationsDesc;
+
+  /// No description provided for @featureInfoNotificationsManageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Managing Notifications'**
+  String get featureInfoNotificationsManageTitle;
+
+  /// No description provided for @featureInfoNotificationsManageStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter notifications'**
+  String get featureInfoNotificationsManageStep1Title;
+
+  /// No description provided for @featureInfoNotificationsManageStep1Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the category and priority chip filters to narrow down notifications to specific types.'**
+  String get featureInfoNotificationsManageStep1Desc;
+
+  /// No description provided for @featureInfoNotificationsManageStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as read'**
+  String get featureInfoNotificationsManageStep2Title;
+
+  /// No description provided for @featureInfoNotificationsManageStep2Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the blue dot icon on an unread notification to mark it as read. Use \'Mark All as Read\' in the AppBar to clear all unread.'**
+  String get featureInfoNotificationsManageStep2Desc;
+
+  /// No description provided for @featureInfoNotificationsManageStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete notifications'**
+  String get featureInfoNotificationsManageStep3Title;
+
+  /// No description provided for @featureInfoNotificationsManageStep3Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe left on a notification to delete it. For bulk deletion, long-press to enter selection mode, select multiple notifications, and tap the delete icon.'**
+  String get featureInfoNotificationsManageStep3Desc;
+
+  /// No description provided for @featureInfoNotificationsManageStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull to refresh'**
+  String get featureInfoNotificationsManageStep4Title;
+
+  /// No description provided for @featureInfoNotificationsManageStep4Desc.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull down on the list to refresh and load new notifications.'**
+  String get featureInfoNotificationsManageStep4Desc;
+
+  /// No description provided for @featureInfoNotificationsTip1.
+  ///
+  /// In en, this message translates to:
+  /// **'The unread count badge in the AppBar shows how many unread notifications you have.'**
+  String get featureInfoNotificationsTip1;
+
+  /// No description provided for @sidebarGroupPlatformAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Platform Admin'**
+  String get sidebarGroupPlatformAdmin;
+
+  /// No description provided for @sidebarAdminWameedAI.
+  ///
+  /// In en, this message translates to:
+  /// **'Wameed AI Admin'**
+  String get sidebarAdminWameedAI;
+
+  /// No description provided for @adminWameedAIDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Dashboard'**
+  String get adminWameedAIDashboard;
+
+  /// No description provided for @adminWameedAIUsageLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage Logs'**
+  String get adminWameedAIUsageLogs;
+
+  /// No description provided for @adminWameedAIProviders.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Providers'**
+  String get adminWameedAIProviders;
+
+  /// No description provided for @adminWameedAIFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Features'**
+  String get adminWameedAIFeatures;
+
+  /// No description provided for @adminWameedAILlmModels.
+  ///
+  /// In en, this message translates to:
+  /// **'LLM Models'**
+  String get adminWameedAILlmModels;
+
+  /// No description provided for @adminWameedAIChats.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Chats'**
+  String get adminWameedAIChats;
+
+  /// No description provided for @adminWameedAIBilling.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Billing'**
+  String get adminWameedAIBilling;
+
+  /// No description provided for @adminWameedAITotalRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Requests'**
+  String get adminWameedAITotalRequests;
+
+  /// No description provided for @adminWameedAISuccessRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Success Rate'**
+  String get adminWameedAISuccessRate;
+
+  /// No description provided for @adminWameedAITotalTokens.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Tokens'**
+  String get adminWameedAITotalTokens;
+
+  /// No description provided for @adminWameedAITotalCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Cost'**
+  String get adminWameedAITotalCost;
+
+  /// No description provided for @adminWameedAIActiveStores.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Stores'**
+  String get adminWameedAIActiveStores;
+
+  /// No description provided for @adminWameedAIUniqueUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Unique Users'**
+  String get adminWameedAIUniqueUsers;
+
+  /// No description provided for @adminWameedAIAvgLatency.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Latency'**
+  String get adminWameedAIAvgLatency;
+
+  /// No description provided for @adminWameedAITotalChats.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Chats'**
+  String get adminWameedAITotalChats;
+
+  /// No description provided for @adminWameedAIResponseTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Response Time'**
+  String get adminWameedAIResponseTime;
+
+  /// No description provided for @adminWameedAICostByModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cost by Model'**
+  String get adminWameedAICostByModel;
+
+  /// No description provided for @adminWameedAIUsageByFeature.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage by Feature'**
+  String get adminWameedAIUsageByFeature;
+
+  /// No description provided for @adminWameedAIUsageByStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage by Store'**
+  String get adminWameedAIUsageByStore;
+
+  /// No description provided for @adminWameedAITopUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Users'**
+  String get adminWameedAITopUsers;
+
+  /// No description provided for @adminWameedAIActiveUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Users'**
+  String get adminWameedAIActiveUsers;
+
+  /// No description provided for @adminWameedAITotalProviders.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Providers'**
+  String get adminWameedAITotalProviders;
+
+  /// No description provided for @adminWameedAITotalModelsKpi.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Models'**
+  String get adminWameedAITotalModelsKpi;
+
+  /// No description provided for @adminWameedAIModelsWithKeys.
+  ///
+  /// In en, this message translates to:
+  /// **'Models With Keys'**
+  String get adminWameedAIModelsWithKeys;
+
+  /// No description provided for @adminWameedAIActiveProviders.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Providers'**
+  String get adminWameedAIActiveProviders;
+
+  /// No description provided for @adminWameedAIConfiguredModels.
+  ///
+  /// In en, this message translates to:
+  /// **'configured models'**
+  String get adminWameedAIConfiguredModels;
+
+  /// No description provided for @adminWameedAITotalFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Features'**
+  String get adminWameedAITotalFeatures;
+
+  /// No description provided for @adminWameedAIEnabledFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Enabled Features'**
+  String get adminWameedAIEnabledFeatures;
+
+  /// No description provided for @adminWameedAIFeatureCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Feature Categories'**
+  String get adminWameedAIFeatureCategories;
+
+  /// No description provided for @adminWameedAIEnableRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Rate'**
+  String get adminWameedAIEnableRate;
+
+  /// No description provided for @adminWameedAICategories.
+  ///
+  /// In en, this message translates to:
+  /// **'categories'**
+  String get adminWameedAICategories;
+
+  /// No description provided for @adminWameedAIActiveModels.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Models'**
+  String get adminWameedAIActiveModels;
+
+  /// No description provided for @adminWameedAITotalRequestsModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Requests'**
+  String get adminWameedAITotalRequestsModel;
+
+  /// No description provided for @adminWameedAITotalCostModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Cost'**
+  String get adminWameedAITotalCostModel;
+
+  /// No description provided for @adminWameedAIAcrossAllModels.
+  ///
+  /// In en, this message translates to:
+  /// **'across all models'**
+  String get adminWameedAIAcrossAllModels;
+
+  /// No description provided for @adminWameedAICreateModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Model'**
+  String get adminWameedAICreateModel;
+
+  /// No description provided for @adminWameedAITotalMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Messages'**
+  String get adminWameedAITotalMessages;
+
+  /// No description provided for @adminWameedAIAllConversations.
+  ///
+  /// In en, this message translates to:
+  /// **'all conversations'**
+  String get adminWameedAIAllConversations;
+
+  /// No description provided for @adminWameedAIChatCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat Cost'**
+  String get adminWameedAIChatCost;
+
+  /// No description provided for @adminWameedAIAvgMessages.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg Messages'**
+  String get adminWameedAIAvgMessages;
+
+  /// No description provided for @adminWameedAIPerChat.
+  ///
+  /// In en, this message translates to:
+  /// **'per chat'**
+  String get adminWameedAIPerChat;
+
+  /// No description provided for @adminWameedAIInPage.
+  ///
+  /// In en, this message translates to:
+  /// **'in page of'**
+  String get adminWameedAIInPage;
+
+  /// No description provided for @adminWameedAITotalRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Revenue'**
+  String get adminWameedAITotalRevenue;
+
+  /// No description provided for @adminWameedAIAllTime.
+  ///
+  /// In en, this message translates to:
+  /// **'all time'**
+  String get adminWameedAIAllTime;
+
+  /// No description provided for @adminWameedAIOutstanding.
+  ///
+  /// In en, this message translates to:
+  /// **'Outstanding'**
+  String get adminWameedAIOutstanding;
+
+  /// No description provided for @adminWameedAIOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get adminWameedAIOverdue;
+
+  /// No description provided for @adminWameedAIBillingStores.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing Stores'**
+  String get adminWameedAIBillingStores;
+
+  /// No description provided for @adminWameedAIWithBilling.
+  ///
+  /// In en, this message translates to:
+  /// **'with billing'**
+  String get adminWameedAIWithBilling;
+
+  /// No description provided for @adminWameedAIGenerateInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate Invoices'**
+  String get adminWameedAIGenerateInvoices;
+
+  /// No description provided for @adminWameedAIGenerateInvoicesConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This will generate invoices for all stores with AI usage in the current billing period. Continue?'**
+  String get adminWameedAIGenerateInvoicesConfirm;
+
+  /// No description provided for @adminWameedAIGenerateInvoicesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate invoices to see them here'**
+  String get adminWameedAIGenerateInvoicesHint;
+
+  /// No description provided for @adminWameedAINoStoresMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'No stores with AI billing configured'**
+  String get adminWameedAINoStoresMessage;
+
+  /// No description provided for @adminWameedAICacheHitRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Cache Hit Rate'**
+  String get adminWameedAICacheHitRate;
+
+  /// No description provided for @adminWameedAITopFeature.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Feature'**
+  String get adminWameedAITopFeature;
+
+  /// No description provided for @adminWameedAITopModel.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Model'**
+  String get adminWameedAITopModel;
+
+  /// No description provided for @adminWameedAIUniqueStoresUsing.
+  ///
+  /// In en, this message translates to:
+  /// **'unique stores using AI'**
+  String get adminWameedAIUniqueStoresUsing;
+
+  /// No description provided for @actions.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get actions;
+
+  /// No description provided for @adjustFilters.
+  ///
+  /// In en, this message translates to:
+  /// **'Try adjusting your filters'**
+  String get adjustFilters;
+
+  /// No description provided for @apply.
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
+  /// No description provided for @cached.
+  ///
+  /// In en, this message translates to:
+  /// **'Cached'**
+  String get cached;
+
+  /// No description provided for @confirmDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Delete'**
+  String get confirmDelete;
+
+  /// No description provided for @cost.
+  ///
+  /// In en, this message translates to:
+  /// **'Cost'**
+  String get cost;
+
+  /// No description provided for @defaults.
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get defaults;
+
+  /// No description provided for @displayName.
+  ///
+  /// In en, this message translates to:
+  /// **'Display Name'**
+  String get displayName;
+
+  /// No description provided for @errorLoadingData.
+  ///
+  /// In en, this message translates to:
+  /// **'Error Loading Data'**
+  String get errorLoadingData;
+
+  /// No description provided for @errors.
+  ///
+  /// In en, this message translates to:
+  /// **'Errors'**
+  String get errors;
+
+  /// No description provided for @feature.
+  ///
+  /// In en, this message translates to:
+  /// **'Feature'**
+  String get feature;
+
+  /// No description provided for @from.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get from;
+
+  /// No description provided for @generate.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate'**
+  String get generate;
+
+  /// No description provided for @hasDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Default'**
+  String get hasDefault;
+
+  /// No description provided for @latency.
+  ///
+  /// In en, this message translates to:
+  /// **'Latency'**
+  String get latency;
+
+  /// No description provided for @markPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark Paid'**
+  String get markPaid;
+
+  /// No description provided for @messages.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get messages;
+
+  /// No description provided for @model.
+  ///
+  /// In en, this message translates to:
+  /// **'Model'**
+  String get model;
+
+  /// No description provided for @models.
+  ///
+  /// In en, this message translates to:
+  /// **'Models'**
+  String get models;
+
+  /// No description provided for @optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get optional;
+
+  /// No description provided for @overview.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get overview;
+
+  /// No description provided for @period.
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get period;
+
+  /// No description provided for @providers.
+  ///
+  /// In en, this message translates to:
+  /// **'Providers'**
+  String get providers;
+
+  /// No description provided for @requests.
+  ///
+  /// In en, this message translates to:
+  /// **'Requests'**
+  String get requests;
+
+  /// No description provided for @showing.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing'**
+  String get showing;
+
+  /// No description provided for @store.
+  ///
+  /// In en, this message translates to:
+  /// **'Store'**
+  String get store;
+
+  /// No description provided for @stores.
+  ///
+  /// In en, this message translates to:
+  /// **'Stores'**
+  String get stores;
+
+  /// No description provided for @success.
+  ///
+  /// In en, this message translates to:
+  /// **'Success'**
+  String get success;
+
+  /// No description provided for @to.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get to;
+
+  /// No description provided for @tokens.
+  ///
+  /// In en, this message translates to:
+  /// **'Tokens'**
+  String get tokens;
+
+  /// No description provided for @user.
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get user;
+
+  /// No description provided for @users.
+  ///
+  /// In en, this message translates to:
+  /// **'Users'**
+  String get users;
+
+  /// No description provided for @allFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'All Features'**
+  String get allFeatures;
+
+  /// No description provided for @allModels.
+  ///
+  /// In en, this message translates to:
+  /// **'All Models'**
+  String get allModels;
+
+  /// No description provided for @dueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Due Date'**
+  String get dueDate;
+
+  /// No description provided for @inputPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Input Price / 1K tokens'**
+  String get inputPrice;
+
+  /// No description provided for @invoiceNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice #'**
+  String get invoiceNumber;
+
+  /// No description provided for @leaveBlankToKeep.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave blank to keep current'**
+  String get leaveBlankToKeep;
+
+  /// No description provided for @modelId.
+  ///
+  /// In en, this message translates to:
+  /// **'Model ID'**
+  String get modelId;
+
+  /// No description provided for @noChatsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No chats found'**
+  String get noChatsFound;
+
+  /// No description provided for @noInvoicesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No invoices found'**
+  String get noInvoicesFound;
+
+  /// No description provided for @noLogsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No usage logs found'**
+  String get noLogsFound;
+
+  /// No description provided for @noStoresFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No stores found'**
+  String get noStoresFound;
+
+  /// No description provided for @of_.
+  ///
+  /// In en, this message translates to:
+  /// **'of'**
+  String get of_;
+
+  /// No description provided for @outputPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Output Price / 1K tokens'**
+  String get outputPrice;
+
+  /// No description provided for @rateLimited.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Limited'**
+  String get rateLimited;
+
+  /// No description provided for @searchChats.
+  ///
+  /// In en, this message translates to:
+  /// **'Search chats...'**
+  String get searchChats;
+
+  /// No description provided for @searchLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'Search logs...'**
+  String get searchLogs;
+
+  /// No description provided for @selectProvider.
+  ///
+  /// In en, this message translates to:
+  /// **'Select provider'**
+  String get selectProvider;
+
+  /// No description provided for @untitledChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Untitled Chat'**
+  String get untitledChat;
+
+  /// No description provided for @withKeys.
+  ///
+  /// In en, this message translates to:
+  /// **'with keys'**
+  String get withKeys;
+
+  /// No description provided for @deleteModelConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this model? This action cannot be undone.'**
+  String get deleteModelConfirm;
+
+  /// No description provided for @successful.
+  ///
+  /// In en, this message translates to:
+  /// **'Successful'**
+  String get successful;
 }
 
 class _AppLocalizationsDelegate
@@ -17250,7 +21400,7 @@ class _AppLocalizationsDelegate
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['ar', 'en'].contains(locale.languageCode);
+      <String>['ar', 'bn', 'en', 'ur'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -17261,8 +21411,12 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'ar':
       return AppLocalizationsAr();
+    case 'bn':
+      return AppLocalizationsBn();
     case 'en':
       return AppLocalizationsEn();
+    case 'ur':
+      return AppLocalizationsUr();
   }
 
   throw FlutterError(

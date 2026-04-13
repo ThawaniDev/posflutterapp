@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_chat.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/ai_chat_providers.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/ai_chat_state.dart';
@@ -30,6 +31,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   final _focusNode = FocusNode();
   String? _imageBase64;
   String? _imageName;
+  bool _showScrollToBottom = false;
 
   // Feature input panel state
   String? _pendingFeatureSlug;
@@ -39,6 +41,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(_onScrollChanged);
     Future.microtask(() {
       ref.read(aiModelsProvider.notifier).load();
       ref.read(aiFeatureCardsProvider.notifier).load();
@@ -51,9 +54,19 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   @override
   void dispose() {
     _controller.dispose();
+    _scrollController.removeListener(_onScrollChanged);
     _scrollController.dispose();
     _focusNode.dispose();
     super.dispose();
+  }
+
+  void _onScrollChanged() {
+    if (!_scrollController.hasClients) return;
+    final distanceFromBottom = _scrollController.position.maxScrollExtent - _scrollController.offset;
+    final shouldShow = distanceFromBottom > 200;
+    if (shouldShow != _showScrollToBottom) {
+      setState(() => _showScrollToBottom = shouldShow);
+    }
   }
 
   void _scrollToBottom() {
@@ -171,7 +184,25 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       body: Column(
         children: [
           // ─── Messages Area ───
-          Expanded(child: isNewChat ? _buildWelcomeView(theme) : _buildMessageList(chatState, theme)),
+          Expanded(
+            child: Stack(
+              children: [
+                isNewChat ? _buildWelcomeView(theme) : _buildMessageList(chatState, theme),
+                // Scroll-to-bottom FAB
+                if (_showScrollToBottom && !isNewChat)
+                  Positioned(
+                    right: 16,
+                    bottom: 8,
+                    child: FloatingActionButton.small(
+                      onPressed: _scrollToBottom,
+                      backgroundColor: theme.cardColor,
+                      elevation: 4,
+                      child: Icon(Icons.keyboard_arrow_down, color: AppColors.primary),
+                    ),
+                  ),
+              ],
+            ),
+          ),
 
           // ─── Feature Input Panel ───
           if (_pendingFeatureConfig != null)
@@ -257,12 +288,13 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   }
 
   Widget _buildQuickStartCard(AIFeatureCard feature, ThemeData theme) {
+    final isMobile = context.isPhone;
     return InkWell(
       onTap: () => _onFeatureSelected(feature.slug, feature.displayName),
       borderRadius: BorderRadius.circular(12),
       child: Container(
-        width: 180,
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        width: isMobile ? (MediaQuery.sizeOf(context).width - 68) / 2 : 180,
+        padding: EdgeInsets.symmetric(horizontal: isMobile ? 10 : 14, vertical: isMobile ? 10 : 12),
         decoration: BoxDecoration(
           color: theme.cardColor,
           borderRadius: BorderRadius.circular(12),
@@ -356,55 +388,90 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   Widget _buildInputBar(AIChatState chatState, ThemeData theme) {
     final isSending = chatState is AIChatLoaded && chatState.isSending;
 
+    final isMobile = context.isPhone;
+    final bottomPad = MediaQuery.of(context).padding.bottom;
+    final keyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+
     return Container(
-      padding: EdgeInsets.only(left: 12, right: 8, top: 8, bottom: MediaQuery.of(context).padding.bottom + 20),
+      padding: EdgeInsets.only(
+        left: isMobile ? 8 : 12,
+        right: 8,
+        top: 8,
+        bottom: keyboardVisible ? 8 : bottomPad + (isMobile ? 8 : 20),
+      ),
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
         border: Border(top: BorderSide(color: theme.dividerColor)),
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           // Feature overlay button
           IconButton(
-            icon: const Icon(Icons.add_circle_outline, size: 26),
+            icon: Icon(Icons.add_circle_outline, size: isMobile ? 24 : 26),
             color: AppColors.primary,
             onPressed: () => _showFeatureOverlay(),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
           ),
           // Image button
-          IconButton(icon: const Icon(Icons.image_outlined, size: 24), color: theme.hintColor, onPressed: _pickImage),
-          const SizedBox(width: 10),
+          if (!isMobile)
+            IconButton(icon: const Icon(Icons.image_outlined, size: 24), color: theme.hintColor, onPressed: _pickImage),
+          SizedBox(width: isMobile ? 4 : 10),
           // Input field
           Expanded(
             child: Container(
-              constraints: const BoxConstraints(maxHeight: 120),
+              constraints: BoxConstraints(maxHeight: isMobile ? 100 : 120),
               decoration: BoxDecoration(
                 color: theme.cardColor,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(isMobile ? 20 : 8),
                 border: Border.all(color: theme.dividerColor),
               ),
-              child: TextField(
-                controller: _controller,
-                focusNode: _focusNode,
-                maxLines: null,
-                textInputAction: TextInputAction.newline,
-                decoration: InputDecoration(
-                  hintText: 'Ask Wameed AI anything...',
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  hintStyle: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
-                ),
-                onSubmitted: (_) => _sendMessage(),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  if (isMobile)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4, bottom: 4),
+                      child: IconButton(
+                        icon: const Icon(Icons.image_outlined, size: 20),
+                        color: theme.hintColor,
+                        onPressed: _pickImage,
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                      ),
+                    ),
+                  Expanded(
+                    child: TextField(
+                      controller: _controller,
+                      focusNode: _focusNode,
+                      maxLines: null,
+                      textInputAction: isMobile ? TextInputAction.send : TextInputAction.newline,
+                      decoration: InputDecoration(
+                        hintText: isMobile ? 'Ask Wameed AI...' : 'Ask Wameed AI anything...',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 16, vertical: 10),
+                        hintStyle: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
+                      ),
+                      onSubmitted: isMobile ? (_) => _sendMessage() : null,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
           // Send button
-          Container(
-            decoration: BoxDecoration(color: isSending ? Colors.grey : AppColors.primary, shape: BoxShape.circle),
-            child: IconButton(
-              icon: Icon(isSending ? Icons.hourglass_top : Icons.arrow_upward, color: Colors.white, size: 22),
-              onPressed: isSending ? null : _sendMessage,
+          Padding(
+            padding: const EdgeInsets.only(bottom: 2),
+            child: Container(
+              decoration: BoxDecoration(color: isSending ? Colors.grey : AppColors.primary, shape: BoxShape.circle),
+              child: IconButton(
+                icon: Icon(isSending ? Icons.hourglass_top : Icons.arrow_upward, color: Colors.white, size: isMobile ? 20 : 22),
+                onPressed: isSending ? null : _sendMessage,
+                padding: EdgeInsets.zero,
+                constraints: BoxConstraints(minWidth: isMobile ? 36 : 44, minHeight: isMobile ? 36 : 44),
+              ),
             ),
           ),
         ],
@@ -449,14 +516,10 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       final chat = await ref.read(aiChatListProvider.notifier).createChat(title: name);
       if (chat != null) {
         ref.read(aiActiveChatProvider.notifier).setChat(chat);
-        await ref
-            .read(aiActiveChatProvider.notifier)
-            .sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
+        await ref.read(aiActiveChatProvider.notifier).sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
       }
     } else {
-      await ref
-          .read(aiActiveChatProvider.notifier)
-          .sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
+      await ref.read(aiActiveChatProvider.notifier).sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
     }
     _scrollToBottom();
   }
@@ -471,20 +534,14 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       final chat = await ref.read(aiChatListProvider.notifier).createChat(title: name);
       if (chat != null) {
         ref.read(aiActiveChatProvider.notifier).setChat(chat);
-        await ref.read(aiActiveChatProvider.notifier).sendMessage(
-              message: prompt,
-              featureSlug: slug,
-              featureData: params,
-              imageBase64: imageBase64,
-            );
+        await ref
+            .read(aiActiveChatProvider.notifier)
+            .sendMessage(message: prompt, featureSlug: slug, featureData: params, imageBase64: imageBase64);
       }
     } else {
-      await ref.read(aiActiveChatProvider.notifier).sendMessage(
-            message: prompt,
-            featureSlug: slug,
-            featureData: params,
-            imageBase64: imageBase64,
-          );
+      await ref
+          .read(aiActiveChatProvider.notifier)
+          .sendMessage(message: prompt, featureSlug: slug, featureData: params, imageBase64: imageBase64);
     }
     _scrollToBottom();
   }
@@ -533,19 +590,5 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
         ],
       ),
     ).then((_) => renameController.dispose());
-  }
-
-  IconData _categoryIcon(String category) {
-    return switch (category) {
-      'inventory' => Icons.inventory_2_outlined,
-      'sales' => Icons.trending_up_rounded,
-      'operations' => Icons.settings_outlined,
-      'catalog' => Icons.category_outlined,
-      'customer' => Icons.people_outline,
-      'communication' => Icons.campaign_outlined,
-      'financial' => Icons.account_balance_wallet_outlined,
-      'platform' => Icons.dashboard_outlined,
-      _ => Icons.auto_awesome,
-    };
   }
 }

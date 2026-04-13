@@ -1,6 +1,6 @@
 class ModifierGroup {
   final String id;
-  final String productId;
+  final String? productId;
   final String name;
   final String? nameAr;
   final bool? isRequired;
@@ -12,7 +12,7 @@ class ModifierGroup {
 
   const ModifierGroup({
     required this.id,
-    required this.productId,
+    this.productId,
     required this.name,
     this.nameAr,
     this.isRequired,
@@ -26,7 +26,7 @@ class ModifierGroup {
   factory ModifierGroup.fromJson(Map<String, dynamic> json) {
     return ModifierGroup(
       id: json['id'] as String,
-      productId: json['product_id'] as String,
+      productId: json['product_id'] as String?,
       name: json['name'] as String,
       nameAr: json['name_ar'] as String?,
       isRequired: json['is_required'] as bool?,
@@ -80,13 +80,12 @@ class ModifierGroup {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ModifierGroup && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is ModifierGroup && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'ModifierGroup(id: $id, productId: $productId, name: $name, nameAr: $nameAr, isRequired: $isRequired, minSelect: $minSelect, ...)';
+  String toString() =>
+      'ModifierGroup(id: $id, productId: $productId, name: $name, nameAr: $nameAr, isRequired: $isRequired, minSelect: $minSelect, ...)';
 }

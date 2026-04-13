@@ -100,6 +100,11 @@ class _StockLevelsPageState extends ConsumerState<StockLevelsPage> {
         title: Text(l10n.inventoryStockLevels),
         actions: [
           IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showStockLevelsInfo(context),
+          ),
+          IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(stockLevelsProvider.notifier).load(),

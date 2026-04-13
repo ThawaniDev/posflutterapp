@@ -6,6 +6,8 @@
 library;
 
 export 'app_shell.dart';
+export 'feature_info_dialog.dart';
+export 'feature_info_helpers.dart';
 export 'pos_app_bar.dart';
 export 'pos_badge.dart';
 export 'pos_button.dart';

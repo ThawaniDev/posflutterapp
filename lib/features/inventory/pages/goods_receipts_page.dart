@@ -61,6 +61,11 @@ class _GoodsReceiptsPageState extends ConsumerState<GoodsReceiptsPage> {
         title: Text(l10n.inventoryGoodsReceipts),
         actions: [
           IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showGoodsReceiptsInfo(context),
+          ),
+          IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(goodsReceiptsProvider.notifier).load(),

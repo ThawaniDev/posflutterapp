@@ -1,0 +1,302 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/theme/app_typography.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
+import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:thawani_pos/l10n/app_localizations.dart';
+
+class AdminWameedAIBillingPage extends ConsumerStatefulWidget {
+  const AdminWameedAIBillingPage({super.key});
+
+  @override
+  ConsumerState<AdminWameedAIBillingPage> createState() => _State();
+}
+
+class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerProviderStateMixin {
+  late TabController _tabCtrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabCtrl = TabController(length: 3, vsync: this);
+    Future.microtask(() {
+      ref.read(wameedAIAdminBillingDashboardProvider.notifier).load();
+      ref.read(wameedAIAdminBillingInvoicesProvider.notifier).load();
+      ref.read(wameedAIAdminBillingStoresProvider.notifier).load();
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final actionState = ref.watch(wameedAIAdminActionProvider);
+    ref.listen(wameedAIAdminActionProvider, (_, next) {
+      if (next is WameedAIAdminActionSuccess) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.success));
+        ref.read(wameedAIAdminActionProvider.notifier).reset();
+        _refreshAll();
+      } else if (next is WameedAIAdminActionError) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.message), backgroundColor: AppColors.error));
+        ref.read(wameedAIAdminActionProvider.notifier).reset();
+      }
+    });
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(l10n.adminWameedAIBilling),
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+        bottom: TabBar(
+          controller: _tabCtrl,
+          labelColor: Colors.white,
+          unselectedLabelColor: Colors.white70,
+          indicatorColor: Colors.white,
+          tabs: [
+            Tab(text: l10n.overview),
+            Tab(text: l10n.invoices),
+            Tab(text: l10n.stores),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabCtrl,
+        children: [
+          _overviewTab(l10n),
+          _invoicesTab(l10n),
+          _storesTab(l10n),
+        ],
+      ),
+    );
+  }
+
+  void _refreshAll() {
+    ref.read(wameedAIAdminBillingDashboardProvider.notifier).load();
+    ref.read(wameedAIAdminBillingInvoicesProvider.notifier).load();
+    ref.read(wameedAIAdminBillingStoresProvider.notifier).load();
+  }
+
+  // ── OVERVIEW TAB ──
+  Widget _overviewTab(AppLocalizations l10n) {
+    final state = ref.watch(wameedAIAdminBillingDashboardProvider);
+    return switch (state) {
+      WameedAIAdminDashboardLoading() => const Center(child: PosLoading()),
+      WameedAIAdminDashboardLoaded(data: final resp) => _buildOverview(resp, l10n),
+      WameedAIAdminDashboardError(message: final msg) => PosErrorState(
+          title: l10n.errorLoadingData, message: msg, onRetry: () => ref.read(wameedAIAdminBillingDashboardProvider.notifier).load()),
+      _ => Center(child: Text(l10n.loading)),
+    };
+  }
+
+  Widget _buildOverview(Map<String, dynamic> resp, AppLocalizations l10n) {
+    final d = resp['data'] as Map<String, dynamic>? ?? resp;
+    final summary = d['summary'] as Map<String, dynamic>? ?? {};
+    return ListView(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      children: [
+        GridView.count(
+          crossAxisCount: MediaQuery.of(context).size.width > 900 ? 4 : 2,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisSpacing: AppSpacing.md,
+          mainAxisSpacing: AppSpacing.md,
+          childAspectRatio: 2.5,
+          children: [
+            PosKpiCard(
+              title: l10n.adminWameedAITotalRevenue,
+              value: '\$${_fmt(summary['total_revenue'] ?? summary['total_invoiced_amount'])}',
+              subtitle: l10n.adminWameedAIAllTime,
+              icon: Icons.attach_money_rounded,
+              color: AppColors.success,
+            ),
+            PosKpiCard(
+              title: l10n.adminWameedAIOutstanding,
+              value: '\$${_fmt(summary['outstanding'] ?? summary['unpaid_amount'])}',
+              subtitle: '${summary['unpaid_count'] ?? summary['pending_invoices'] ?? 0} ${l10n.invoices}',
+              icon: Icons.pending_actions_rounded,
+              color: AppColors.warning,
+            ),
+            PosKpiCard(
+              title: l10n.adminWameedAIOverdue,
+              value: '\$${_fmt(summary['overdue_amount'] ?? 0)}',
+              subtitle: '${summary['overdue_count'] ?? summary['overdue_invoices'] ?? 0} ${l10n.invoices}',
+              icon: Icons.warning_amber_rounded,
+              color: AppColors.error,
+            ),
+            PosKpiCard(
+              title: l10n.adminWameedAIBillingStores,
+              value: '${summary['active_stores'] ?? summary['total_stores'] ?? 0}',
+              subtitle: '${summary['stores_with_billing'] ?? 0} ${l10n.adminWameedAIWithBilling}',
+              icon: Icons.store_rounded,
+              color: AppColors.info,
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        // Generate invoices action
+        Row(
+          children: [
+            PosButton(
+              label: l10n.adminWameedAIGenerateInvoices,
+              onPressed: () => _confirmGenerate(l10n),
+              variant: PosButtonVariant.primary,
+              icon: Icons.receipt_long_rounded,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  void _confirmGenerate(AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(l10n.adminWameedAIGenerateInvoices, style: AppTypography.titleMedium),
+        content: Text(l10n.adminWameedAIGenerateInvoicesConfirm),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
+          PosButton(
+            label: l10n.generate,
+            onPressed: () {
+              Navigator.pop(ctx);
+              ref.read(wameedAIAdminActionProvider.notifier).generateInvoices();
+            },
+            variant: PosButtonVariant.primary,
+            size: PosButtonSize.sm,
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ── INVOICES TAB ──
+  Widget _invoicesTab(AppLocalizations l10n) {
+    final state = ref.watch(wameedAIAdminBillingInvoicesProvider);
+    return switch (state) {
+      WameedAIAdminListLoading() => const Center(child: PosLoading()),
+      WameedAIAdminListLoaded(data: final resp) => _buildInvoices(resp, l10n),
+      WameedAIAdminListError(message: final msg) => PosErrorState(
+          title: l10n.errorLoadingData, message: msg, onRetry: () => ref.read(wameedAIAdminBillingInvoicesProvider.notifier).load()),
+      _ => Center(child: Text(l10n.loading)),
+    };
+  }
+
+  Widget _buildInvoices(Map<String, dynamic> resp, AppLocalizations l10n) {
+    final data = resp['data'] as Map<String, dynamic>? ?? resp;
+    final invoices = (data['invoices'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+
+    return Column(
+      children: [
+        Expanded(
+          child: invoices.isEmpty
+              ? PosEmptyState(title: l10n.noInvoicesFound, message: l10n.adminWameedAIGenerateInvoicesHint, icon: Icons.receipt_long_rounded)
+              : SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    headingRowColor: WidgetStateProperty.all(AppColors.backgroundLight),
+                    columns: [
+                      DataColumn(label: Text(l10n.store, style: AppTypography.labelSmall)),
+                      DataColumn(label: Text(l10n.invoiceNumber, style: AppTypography.labelSmall)),
+                      DataColumn(label: Text(l10n.period, style: AppTypography.labelSmall)),
+                      DataColumn(label: Text(l10n.amount, style: AppTypography.labelSmall)),
+                      DataColumn(label: Text(l10n.status, style: AppTypography.labelSmall)),
+                      DataColumn(label: Text(l10n.dueDate, style: AppTypography.labelSmall)),
+                      DataColumn(label: Text(l10n.actions, style: AppTypography.labelSmall)),
+                    ],
+                    rows: invoices.map((inv) {
+                      final storeName = inv['store_name'] ?? inv['store']?['name'] ?? 'Store #${inv['store_id'] ?? ''}';
+                      final status = inv['status']?.toString() ?? '';
+                      final isPaid = status == 'paid';
+                      final isOverdue = status == 'overdue';
+                      return DataRow(cells: [
+                        DataCell(Text(storeName.toString(), style: AppTypography.bodySmall)),
+                        DataCell(Text(inv['invoice_number']?.toString() ?? '-', style: AppTypography.bodySmall)),
+                        DataCell(Text('${_fmtDate(inv['period_start']?.toString() ?? '')} — ${_fmtDate(inv['period_end']?.toString() ?? '')}', style: AppTypography.bodySmall)),
+                        DataCell(Text('\$${_fmt(inv['total_amount'] ?? inv['amount'])}', style: AppTypography.bodySmall)),
+                        DataCell(PosBadge(
+                          label: status.toUpperCase(),
+                          color: isPaid ? AppColors.success : isOverdue ? AppColors.error : AppColors.warning,
+                        )),
+                        DataCell(Text(_fmtDate(inv['due_date']?.toString() ?? ''), style: AppTypography.bodySmall)),
+                        DataCell(
+                          isPaid
+                              ? const Icon(Icons.check_circle, color: AppColors.success, size: 20)
+                              : PosButton(
+                                  label: l10n.markPaid,
+                                  onPressed: () => ref.read(wameedAIAdminActionProvider.notifier).markInvoicePaid(inv['id']?.toString() ?? ''),
+                                  size: PosButtonSize.sm,
+                                  variant: PosButtonVariant.success,
+                                ),
+                        ),
+                      ]);
+                    }).toList(),
+                  ),
+                ),
+        ),
+      ],
+    );
+  }
+
+  // ── STORES TAB ──
+  Widget _storesTab(AppLocalizations l10n) {
+    final state = ref.watch(wameedAIAdminBillingStoresProvider);
+    return switch (state) {
+      WameedAIAdminListLoading() => const Center(child: PosLoading()),
+      WameedAIAdminListLoaded(data: final resp) => _buildStores(resp, l10n),
+      WameedAIAdminListError(message: final msg) => PosErrorState(
+          title: l10n.errorLoadingData, message: msg, onRetry: () => ref.read(wameedAIAdminBillingStoresProvider.notifier).load()),
+      _ => Center(child: Text(l10n.loading)),
+    };
+  }
+
+  Widget _buildStores(Map<String, dynamic> resp, AppLocalizations l10n) {
+    final data = resp['data'] as Map<String, dynamic>? ?? resp;
+    final stores = (data['stores'] as List?)?.cast<Map<String, dynamic>>() ?? [];
+
+    return stores.isEmpty
+        ? PosEmptyState(title: l10n.noStoresFound, message: l10n.adminWameedAINoStoresMessage, icon: Icons.store_rounded)
+        : ListView.builder(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            itemCount: stores.length,
+            itemBuilder: (_, i) {
+              final store = stores[i];
+              final name = store['store_name'] ?? store['name'] ?? 'Store #${store['store_id'] ?? store['id']}';
+              final aiEnabled = store['ai_enabled'] == true || store['is_active'] == true;
+              final totalUsage = store['total_cost_usd'] ?? store['usage_amount'] ?? 0;
+              final requestCount = store['request_count'] ?? store['total_requests'] ?? 0;
+
+              return PosCard(
+                child: ListTile(
+                  leading: Container(
+                    width: 44, height: 44,
+                    decoration: BoxDecoration(
+                      color: (aiEnabled ? AppColors.success : AppColors.textMutedLight).withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(Icons.store_rounded, color: aiEnabled ? AppColors.success : AppColors.textMutedLight),
+                  ),
+                  title: Text(name.toString(), style: AppTypography.titleSmall),
+                  subtitle: Text('$requestCount ${l10n.requests} • \$${_fmt(totalUsage)}', style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondaryLight)),
+                  trailing: Switch(
+                    value: aiEnabled,
+                    activeColor: AppColors.primary,
+                    onChanged: (v) => ref.read(wameedAIAdminActionProvider.notifier).toggleStoreAI(store['store_id']?.toString() ?? store['id']?.toString() ?? ''),
+                  ),
+                ),
+              );
+            },
+          );
+  }
+
+  String _fmt(dynamic v) => (v as num?)?.toDouble().toStringAsFixed(2) ?? '0.00';
+  String _fmtDate(String v) => v.length >= 10 ? v.substring(0, 10) : v;
+}

@@ -5,6 +5,7 @@ class LoyaltyConfig {
   final double? sarPerPoint;
   final int? minRedemptionPoints;
   final int? pointsExpiryMonths;
+  final List<String>? excludedCategoryIds;
   final bool? isActive;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -16,6 +17,7 @@ class LoyaltyConfig {
     this.sarPerPoint,
     this.minRedemptionPoints,
     this.pointsExpiryMonths,
+    this.excludedCategoryIds,
     this.isActive,
     this.createdAt,
     this.updatedAt,
@@ -29,6 +31,9 @@ class LoyaltyConfig {
       sarPerPoint: (json['sar_per_point'] != null ? double.tryParse(json['sar_per_point'].toString()) : null),
       minRedemptionPoints: (json['min_redemption_points'] as num?)?.toInt(),
       pointsExpiryMonths: (json['points_expiry_months'] as num?)?.toInt(),
+      excludedCategoryIds: json['excluded_category_ids'] != null
+          ? (json['excluded_category_ids'] as List).map((e) => e.toString()).toList()
+          : null,
       isActive: json['is_active'] as bool?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
@@ -43,6 +48,7 @@ class LoyaltyConfig {
       'sar_per_point': sarPerPoint,
       'min_redemption_points': minRedemptionPoints,
       'points_expiry_months': pointsExpiryMonths,
+      'excluded_category_ids': excludedCategoryIds,
       'is_active': isActive,
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
@@ -56,6 +62,7 @@ class LoyaltyConfig {
     double? sarPerPoint,
     int? minRedemptionPoints,
     int? pointsExpiryMonths,
+    List<String>? excludedCategoryIds,
     bool? isActive,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -67,6 +74,7 @@ class LoyaltyConfig {
       sarPerPoint: sarPerPoint ?? this.sarPerPoint,
       minRedemptionPoints: minRedemptionPoints ?? this.minRedemptionPoints,
       pointsExpiryMonths: pointsExpiryMonths ?? this.pointsExpiryMonths,
+      excludedCategoryIds: excludedCategoryIds ?? this.excludedCategoryIds,
       isActive: isActive ?? this.isActive,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -74,13 +82,12 @@ class LoyaltyConfig {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is LoyaltyConfig && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is LoyaltyConfig && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'LoyaltyConfig(id: $id, organizationId: $organizationId, pointsPerSar: $pointsPerSar, sarPerPoint: $sarPerPoint, minRedemptionPoints: $minRedemptionPoints, pointsExpiryMonths: $pointsExpiryMonths, ...)';
+  String toString() =>
+      'LoyaltyConfig(id: $id, organizationId: $organizationId, pointsPerSar: $pointsPerSar, sarPerPoint: $sarPerPoint, minRedemptionPoints: $minRedemptionPoints, pointsExpiryMonths: $pointsExpiryMonths, ...)';
 }

@@ -5,7 +5,6 @@ import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_feature_definition.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_state.dart';
 
@@ -42,7 +41,7 @@ class _AISettingsPageState extends ConsumerState<AISettingsPage> {
             final isAr = Localizations.localeOf(context).languageCode == 'ar';
             final name = isAr ? (feature.nameAr ?? feature.name) : feature.name;
             final desc = isAr ? (feature.descriptionAr ?? feature.description ?? '') : (feature.description ?? '');
-            final isEnabled = feature.storeConfig?.isEnabled ?? true;
+            final isEnabled = feature.storeConfigs?.firstOrNull?.isEnabled ?? true;
 
             return Card(
               margin: const EdgeInsets.only(bottom: 8),

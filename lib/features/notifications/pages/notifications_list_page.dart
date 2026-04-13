@@ -113,6 +113,11 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
                   ? null
                   : () => ref.read(notificationActionProvider.notifier).markAllAsRead(),
             ),
+            IconButton(
+              icon: const Icon(Icons.info_outline),
+              tooltip: l10n.featureInfoTooltip,
+              onPressed: () => showNotificationsInfo(context),
+            ),
           ],
         ],
       ),

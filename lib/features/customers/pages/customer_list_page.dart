@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/customers/providers/customer_providers.dart';
 import 'package:thawani_pos/features/customers/providers/customer_state.dart';
 
@@ -25,7 +26,16 @@ class _CustomerListPageState extends ConsumerState<CustomerListPage> {
     final state = ref.watch(customersProvider);
 
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.customers)),
+      appBar: AppBar(
+        title: Text(l10n.customers),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showCustomerListInfo(context),
+          ),
+        ],
+      ),
       body: switch (state) {
         CustomersInitial() || CustomersLoading() => const Center(child: CircularProgressIndicator()),
         CustomersError(:final message) => Center(

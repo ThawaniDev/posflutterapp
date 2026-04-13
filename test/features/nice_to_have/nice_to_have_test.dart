@@ -176,7 +176,7 @@ void main() {
     test('signagePlaylists', () => expect(ApiEndpoints.signagePlaylists, '/signage/playlists'));
     test('signagePlaylist', () => expect(ApiEndpoints.signagePlaylist('s1'), '/signage/playlists/s1'));
     test('gamificationChallenges', () => expect(ApiEndpoints.gamificationChallenges, '/gamification/challenges'));
-    test('gamificationBadges', () => expect(ApiEndpoints.gamificationBadges, '/gamification/badges'));
+    test('customerGamificationBadges', () => expect(ApiEndpoints.customerGamificationBadges, '/gamification/badges'));
     test('gamificationTiers', () => expect(ApiEndpoints.gamificationTiers, '/gamification/tiers'));
     test(
       'gamificationCustomerProgress',

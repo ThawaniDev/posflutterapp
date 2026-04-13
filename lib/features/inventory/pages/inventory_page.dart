@@ -6,6 +6,7 @@ import 'package:thawani_pos/core/router/route_names.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_card.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 
 /// Hub page for inventory management, listing all sub-sections.
 class InventoryPage extends ConsumerWidget {
@@ -15,13 +16,22 @@ class InventoryPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(title: Text(l10n.inventoryManagement)),
+      appBar: AppBar(
+        title: Text(l10n.inventoryManagement),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showInventoryInfo(context),
+          ),
+        ],
+      ),
       body: GridView.count(
         crossAxisCount: MediaQuery.of(context).size.width > 800 ? 3 : 2,
         padding: const EdgeInsets.all(AppSpacing.lg),
         mainAxisSpacing: AppSpacing.md,
         crossAxisSpacing: AppSpacing.md,
-        childAspectRatio: 1.4,
+        childAspectRatio: 1,
         children: [
           _InventoryTile(
             icon: Icons.inventory_2_outlined,

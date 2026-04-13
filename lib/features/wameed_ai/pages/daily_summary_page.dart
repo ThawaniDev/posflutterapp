@@ -172,7 +172,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
             crossAxisCount: isMobile ? 2 : 4,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
-            childAspectRatio: isMobile ? 1.5 : 1.8,
+            childAspectRatio: isMobile ? 1.0 : 1.8,
             children: [
               AIInsightMiniCard(
                 title: l10n.wameedAITotalRevenue,

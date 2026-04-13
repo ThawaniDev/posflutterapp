@@ -179,6 +179,13 @@ String? permissionForRoute(String path) {
   // ── Nice-to-Have ─────────────────────────────────────
   if (path.startsWith('/nice-to-have')) return Permissions.niceToHaveView;
 
+  // ── Cashier Gamification ─────────────────────────────
+  if (path.startsWith('/cashier-gamification/settings')) return Permissions.cashierPerformanceManageSettings;
+  if (path.startsWith('/cashier-gamification/badges')) return Permissions.cashierPerformanceViewBadges;
+  if (path.startsWith('/cashier-gamification/anomalies')) return Permissions.cashierPerformanceViewAnomalies;
+  if (path.startsWith('/cashier-gamification/shift-reports')) return Permissions.cashierPerformanceViewReports;
+  if (path.startsWith('/cashier-gamification')) return Permissions.cashierPerformanceViewLeaderboard;
+
   // ── Dashboard ────────────────────────────────────────
   if (path == '/dashboard') return Permissions.dashboardView;
 

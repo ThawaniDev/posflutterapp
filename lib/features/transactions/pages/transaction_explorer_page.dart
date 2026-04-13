@@ -12,6 +12,7 @@ import 'package:thawani_pos/core/widgets/pos_input.dart';
 import 'package:thawani_pos/core/widgets/pos_searchable_dropdown.dart';
 import 'package:thawani_pos/core/widgets/pos_table.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/pos_terminal/enums/transaction_status.dart';
 import 'package:thawani_pos/features/pos_terminal/enums/transaction_type.dart';
 import 'package:thawani_pos/features/pos_terminal/models/transaction.dart';
@@ -124,6 +125,11 @@ class _TransactionExplorerPageState extends ConsumerState<TransactionExplorerPag
       appBar: AppBar(
         title: Text(l10n.txExplorerTitle),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showTransactionExplorerInfo(context),
+          ),
           IconButton(
             icon: Icon(_showAnalytics ? Icons.analytics_outlined : Icons.analytics),
             tooltip: l10n.txToggleAnalytics,

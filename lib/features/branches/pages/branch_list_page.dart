@@ -55,7 +55,14 @@ class _BranchListPageState extends ConsumerState<BranchListPage> {
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
         foregroundColor: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
         elevation: 0,
-        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.read(branchListProvider.notifier).load())],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showBranchListInfo(context),
+          ),
+          IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.read(branchListProvider.notifier).load()),
+        ],
       ),
       floatingActionButton: PosButton(
         onPressed: () => context.push('${Routes.branches}/create'),

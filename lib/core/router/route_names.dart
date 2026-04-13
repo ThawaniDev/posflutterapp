@@ -363,6 +363,24 @@ class Routes {
   static const String wameedAIStaffPerformance = '/wameed-ai/staff-performance';
   static const String wameedAIEfficiencyScore = '/wameed-ai/efficiency-score';
   static const String wameedAIChat = '/wameed-ai/chat';
+  static const String wameedAIBilling = '/wameed-ai/billing';
+  static const String wameedAIBillingInvoices = '/wameed-ai/billing/invoices';
+
+  // ─── Cashier Gamification ───────────────────────────────
+  static const String gamificationLeaderboard = '/cashier-gamification';
+  static const String gamificationBadges = '/cashier-gamification/badges';
+  static const String gamificationAnomalies = '/cashier-gamification/anomalies';
+  static const String gamificationShiftReports = '/cashier-gamification/shift-reports';
+  static const String gamificationSettings = '/cashier-gamification/settings';
+
+  // ─── Admin Wameed AI ────────────────────────────────────────
+  static const String adminWameedAI = '/admin/wameed-ai';
+  static const String adminWameedAIUsageLogs = '/admin/wameed-ai/usage-logs';
+  static const String adminWameedAIProviders = '/admin/wameed-ai/providers';
+  static const String adminWameedAIFeatures = '/admin/wameed-ai/features';
+  static const String adminWameedAILlmModels = '/admin/wameed-ai/llm-models';
+  static const String adminWameedAIChats = '/admin/wameed-ai/chats';
+  static const String adminWameedAIBilling = '/admin/wameed-ai/billing';
 
   // ─── Role-Based Home Route ──────────────────────────────
   /// Returns the appropriate landing route for a given user role.

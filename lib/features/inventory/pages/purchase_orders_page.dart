@@ -95,6 +95,11 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
       appBar: AppBar(
         title: Text(l10n.inventoryPurchaseOrders),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showPurchaseOrdersInfo(context),
+          ),
           PopupMenuButton<String?>(
             icon: const Icon(Icons.filter_list),
             tooltip: l10n.inventoryFilterByStatus,

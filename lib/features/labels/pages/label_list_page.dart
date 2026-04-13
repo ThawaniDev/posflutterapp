@@ -44,6 +44,11 @@ class _LabelListPageState extends ConsumerState<LabelListPage> {
       appBar: PosAppBar(
         title: l10n.labelTemplates,
         actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showLabelListInfo(context),
+          ),
           PosButton(
             label: l10n.labelDesigner,
             icon: Icons.design_services_rounded,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_state.dart';
 
@@ -16,43 +17,64 @@ class AIUsageBanner extends ConsumerWidget {
     if (state is! AIUsageLoaded) return const SizedBox.shrink();
 
     final summary = state.summary;
+    final isMobile = context.isPhone;
+
+    final stats = [
+      _StatData(l10n.wameedAITodayRequests, '${summary.today.requestCount}', Icons.today, AppColors.primary),
+      _StatData(l10n.wameedAITodayCost, '\$${summary.today.totalCost.toStringAsFixed(4)}', Icons.attach_money, Colors.green),
+      _StatData(l10n.wameedAIMonthlyRequests, '${summary.monthly.requestCount}', Icons.calendar_month, AppColors.primary),
+      _StatData(
+        l10n.wameedAIMonthlyCost,
+        '\$${summary.monthly.totalCost.toStringAsFixed(4)}',
+        Icons.account_balance_wallet,
+        Colors.green,
+      ),
+    ];
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(isMobile ? 12 : 16),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Theme.of(context).dividerColor),
       ),
-      child: Row(
-        children: [
-          _usageStat(context, l10n.wameedAITodayRequests, '${summary.today.requestCount}', Icons.today, AppColors.primary),
-          _divider(context),
-          _usageStat(
-            context,
-            l10n.wameedAITodayCost,
-            '\$${summary.today.totalCost.toStringAsFixed(4)}',
-            Icons.attach_money,
-            Colors.green,
-          ),
-          _divider(context),
-          _usageStat(
-            context,
-            l10n.wameedAIMonthlyRequests,
-            '${summary.monthly.requestCount}',
-            Icons.calendar_month,
-            AppColors.primary,
-          ),
-          _divider(context),
-          _usageStat(
-            context,
-            l10n.wameedAIMonthlyCost,
-            '\$${summary.monthly.totalCost.toStringAsFixed(4)}',
-            Icons.account_balance_wallet,
-            Colors.green,
-          ),
+      child: isMobile ? _buildMobileGrid(context, stats) : _buildDesktopRow(context, stats),
+    );
+  }
+
+  Widget _buildDesktopRow(BuildContext context, List<_StatData> stats) {
+    return Row(
+      children: [
+        for (int i = 0; i < stats.length; i++) ...[
+          _usageStat(context, stats[i].label, stats[i].value, stats[i].icon, stats[i].color),
+          if (i < stats.length - 1) _divider(context),
         ],
-      ),
+      ],
+    );
+  }
+
+  Widget _buildMobileGrid(BuildContext context, List<_StatData> stats) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            _usageStat(context, stats[0].label, stats[0].value, stats[0].icon, stats[0].color),
+            _divider(context),
+            _usageStat(context, stats[1].label, stats[1].value, stats[1].icon, stats[1].color),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Divider(height: 1, color: Theme.of(context).dividerColor),
+        ),
+        Row(
+          children: [
+            _usageStat(context, stats[2].label, stats[2].value, stats[2].icon, stats[2].color),
+            _divider(context),
+            _usageStat(context, stats[3].label, stats[3].value, stats[3].icon, stats[3].color),
+          ],
+        ),
+      ],
     );
   }
 
@@ -80,9 +102,19 @@ class AIUsageBanner extends ConsumerWidget {
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
         ],
       ),
     );
   }
+}
+
+class _StatData {
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color color;
+  const _StatData(this.label, this.value, this.icon, this.color);
 }

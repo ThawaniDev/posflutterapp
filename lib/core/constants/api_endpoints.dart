@@ -642,7 +642,7 @@ class ApiEndpoints {
   static const String signagePlaylists = '/signage/playlists';
   static String signagePlaylist(String id) => '/signage/playlists/$id';
   static const String gamificationChallenges = '/gamification/challenges';
-  static const String gamificationBadges = '/gamification/badges';
+  static const String customerGamificationBadges = '/gamification/badges';
   static const String gamificationTiers = '/gamification/tiers';
   static String gamificationCustomerProgress(String id) => '/gamification/customer/$id/progress';
   static String gamificationCustomerBadges(String id) => '/gamification/customer/$id/badges';
@@ -830,6 +830,11 @@ class ApiEndpoints {
   static const String wameedAIStoreHealth = '/wameed-ai/platform/store-health';
   static const String wameedAIPlatformTrends = '/wameed-ai/platform/trends';
 
+  // ─── Wameed AI Billing ──────────────────────────────────────
+  static const String wameedAIBillingSummary = '/wameed-ai/billing/summary';
+  static const String wameedAIBillingInvoices = '/wameed-ai/billing/invoices';
+  static String wameedAIBillingInvoiceDetail(String id) => '/wameed-ai/billing/invoices/$id';
+
   // ─── Wameed AI Chat ─────────────────────────────────────────
   static const String wameedAIModels = '/wameed-ai/models';
   static const String wameedAIFeatureCards = '/wameed-ai/features/cards';
@@ -839,4 +844,46 @@ class ApiEndpoints {
   static String wameedAIChatFeature(String id) => '/wameed-ai/chats/$id/feature';
   static String wameedAIChatModel(String id) => '/wameed-ai/chats/$id/model';
   static String wameedAIChatTitle(String id) => '/wameed-ai/chats/$id/title';
+
+  // ─── Cashier Gamification ─────────────────────────────────────
+  static const String gamificationLeaderboard = '/cashier-gamification/leaderboard';
+  static String gamificationCashierHistory(String cashierId) => '/cashier-gamification/cashier/$cashierId/history';
+  static const String gamificationGenerateSnapshot = '/cashier-gamification/generate-snapshot';
+  static const String gamificationBadges = '/cashier-gamification/badges';
+  static String gamificationBadge(String id) => '/cashier-gamification/badges/$id';
+  static const String gamificationBadgesSeed = '/cashier-gamification/badges/seed';
+  static const String gamificationBadgeAwards = '/cashier-gamification/badge-awards';
+  static const String gamificationAnomalies = '/cashier-gamification/anomalies';
+  static String gamificationAnomalyReview(String id) => '/cashier-gamification/anomalies/$id/review';
+  static const String gamificationShiftReports = '/cashier-gamification/shift-reports';
+  static String gamificationShiftReport(String id) => '/cashier-gamification/shift-reports/$id';
+  static String gamificationShiftReportMarkSent(String id) => '/cashier-gamification/shift-reports/$id/mark-sent';
+  static const String gamificationSettings = '/cashier-gamification/settings';
+
+  // ─── Admin Wameed AI ────────────────────────────────────────
+  static const String adminWameedAIProviders = '/admin/wameed-ai/providers';
+  static const String adminWameedAIFeatures = '/admin/wameed-ai/features';
+  static String adminWameedAIFeatureToggle(String id) => '/admin/wameed-ai/features/$id/toggle';
+  static const String adminWameedAIDashboard = '/admin/wameed-ai/analytics/dashboard';
+  static const String adminWameedAIChats = '/admin/wameed-ai/analytics/chats';
+  static String adminWameedAIChatDetail(String id) => '/admin/wameed-ai/analytics/chats/$id';
+  static const String adminWameedAIPlatformUsage = '/admin/wameed-ai/platform-usage';
+  static const String adminWameedAIPlatformLogs = '/admin/wameed-ai/platform-logs';
+  static const String adminWameedAIPlatformLogStats = '/admin/wameed-ai/platform-log-stats';
+  static const String adminWameedAILlmModels = '/admin/wameed-ai/llm-models';
+  static String adminWameedAILlmModelById(String id) => '/admin/wameed-ai/llm-models/$id';
+  static String adminWameedAILlmModelToggle(String id) => '/admin/wameed-ai/llm-models/$id/toggle';
+  static const String adminWameedAIBillingSettings = '/admin/wameed-ai/billing/settings';
+  static const String adminWameedAIBillingDashboard = '/admin/wameed-ai/billing/dashboard';
+  static const String adminWameedAIBillingInvoices = '/admin/wameed-ai/billing/invoices';
+  static String adminWameedAIBillingInvoiceById(String id) => '/admin/wameed-ai/billing/invoices/$id';
+  static String adminWameedAIBillingInvoiceMarkPaid(String id) => '/admin/wameed-ai/billing/invoices/$id/mark-paid';
+  static String adminWameedAIBillingInvoiceRecordPayment(String id) => '/admin/wameed-ai/billing/invoices/$id/record-payment';
+  static const String adminWameedAIBillingGenerateInvoices = '/admin/wameed-ai/billing/generate-invoices';
+  static const String adminWameedAIBillingCheckOverdue = '/admin/wameed-ai/billing/check-overdue';
+  static const String adminWameedAIBillingStores = '/admin/wameed-ai/billing/stores';
+  static String adminWameedAIBillingStoreById(String id) => '/admin/wameed-ai/billing/stores/$id';
+  static String adminWameedAIBillingStoreToggleAI(String id) => '/admin/wameed-ai/billing/stores/$id/toggle-ai';
+  static const String adminWameedAIStoreHealth = '/admin/wameed-ai/store-health';
+  static const String adminWameedAIPlatformTrends = '/admin/wameed-ai/platform-trends';
 }

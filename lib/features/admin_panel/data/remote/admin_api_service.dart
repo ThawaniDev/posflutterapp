@@ -1934,4 +1934,123 @@ class AdminApiService {
     final response = await _dio.put(ApiEndpoints.adminProviderRoleTemplatePermissions(id), data: data);
     return response.data as Map<String, dynamic>;
   }
+
+  // ═══════════════════════════════════════════════════════════════
+  // P18: Wameed AI Admin
+  // ═══════════════════════════════════════════════════════════════
+
+  Future<Map<String, dynamic>> getWameedAIDashboard({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminWameedAIDashboard, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getWameedAIPlatformLogs({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminWameedAIPlatformLogs, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getWameedAIPlatformLogStats({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminWameedAIPlatformLogStats, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getWameedAIProviders() async {
+    final response = await _dio.get(ApiEndpoints.adminWameedAIProviders);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getWameedAIFeatures() async {
+    final response = await _dio.get(ApiEndpoints.adminWameedAIFeatures);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> toggleWameedAIFeature(String id) async {
+    final response = await _dio.patch(ApiEndpoints.adminWameedAIFeatureToggle(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getWameedAILlmModels({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminWameedAILlmModels, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> createWameedAILlmModel(Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.adminWameedAILlmModels, data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> updateWameedAILlmModel(String id, Map<String, dynamic> data) async {
+    final response = await _dio.put(ApiEndpoints.adminWameedAILlmModelById(id), data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> toggleWameedAILlmModel(String id) async {
+    final response = await _dio.patch(ApiEndpoints.adminWameedAILlmModelToggle(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> deleteWameedAILlmModel(String id) async {
+    final response = await _dio.delete(ApiEndpoints.adminWameedAILlmModelById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getWameedAIChats({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminWameedAIChats, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getWameedAIChatDetail(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminWameedAIChatDetail(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getWameedAIBillingDashboard({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminWameedAIBillingDashboard, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getWameedAIBillingInvoices({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminWameedAIBillingInvoices, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getWameedAIBillingInvoiceDetail(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminWameedAIBillingInvoiceById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> markWameedAIBillingInvoicePaid(String id, Map<String, dynamic> data) async {
+    final response = await _dio.post(ApiEndpoints.adminWameedAIBillingInvoiceMarkPaid(id), data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getWameedAIBillingStores({Map<String, dynamic>? params}) async {
+    final response = await _dio.get(ApiEndpoints.adminWameedAIBillingStores, queryParameters: params);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getWameedAIBillingStoreDetail(String id) async {
+    final response = await _dio.get(ApiEndpoints.adminWameedAIBillingStoreById(id));
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> toggleWameedAIBillingStoreAI(String id, {Map<String, dynamic>? data}) async {
+    final response = await _dio.post(ApiEndpoints.adminWameedAIBillingStoreToggleAI(id), data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> generateWameedAIBillingInvoices({Map<String, dynamic>? data}) async {
+    final response = await _dio.post(ApiEndpoints.adminWameedAIBillingGenerateInvoices, data: data);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> getWameedAIBillingSettings() async {
+    final response = await _dio.get(ApiEndpoints.adminWameedAIBillingSettings);
+    return response.data as Map<String, dynamic>;
+  }
+
+  Future<Map<String, dynamic>> updateWameedAIBillingSettings(Map<String, dynamic> data) async {
+    final response = await _dio.put(ApiEndpoints.adminWameedAIBillingSettings, data: data);
+    return response.data as Map<String, dynamic>;
+  }
 }

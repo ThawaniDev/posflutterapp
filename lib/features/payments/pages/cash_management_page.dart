@@ -42,7 +42,16 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
 
     final isMobile = context.isPhone;
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.cashMgmtTitle)),
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.cashMgmtTitle),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
+            onPressed: () => showCashManagementInfo(context),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(isMobile ? 12 : 16),
         child: Column(

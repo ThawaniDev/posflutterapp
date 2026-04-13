@@ -109,6 +109,11 @@ class _SupplierReturnsPageState extends ConsumerState<SupplierReturnsPage> {
         title: Text(l10n.supplierReturnsTitle),
         actions: [
           IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showSupplierReturnsInfo(context),
+          ),
+          IconButton(
             icon: const Icon(Icons.refresh),
             tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(supplierReturnsProvider.notifier).load(),

@@ -1,6 +1,6 @@
 class ModifierOption {
   final String id;
-  final String modifierGroupId;
+  final String? modifierGroupId;
   final String name;
   final String? nameAr;
   final double? priceAdjustment;
@@ -11,7 +11,7 @@ class ModifierOption {
 
   const ModifierOption({
     required this.id,
-    required this.modifierGroupId,
+    this.modifierGroupId,
     required this.name,
     this.nameAr,
     this.priceAdjustment,
@@ -24,7 +24,7 @@ class ModifierOption {
   factory ModifierOption.fromJson(Map<String, dynamic> json) {
     return ModifierOption(
       id: json['id'] as String,
-      modifierGroupId: json['modifier_group_id'] as String,
+      modifierGroupId: json['modifier_group_id'] as String?,
       name: json['name'] as String,
       nameAr: json['name_ar'] as String?,
       priceAdjustment: (json['price_adjustment'] != null ? double.tryParse(json['price_adjustment'].toString()) : null),
@@ -74,13 +74,12 @@ class ModifierOption {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ModifierOption && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is ModifierOption && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'ModifierOption(id: $id, modifierGroupId: $modifierGroupId, name: $name, nameAr: $nameAr, priceAdjustment: $priceAdjustment, isDefault: $isDefault, ...)';
+  String toString() =>
+      'ModifierOption(id: $id, modifierGroupId: $modifierGroupId, name: $name, nameAr: $nameAr, priceAdjustment: $priceAdjustment, isDefault: $isDefault, ...)';
 }

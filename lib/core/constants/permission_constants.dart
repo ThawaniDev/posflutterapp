@@ -241,6 +241,18 @@ abstract final class Permissions {
   static const wameedAiManage = 'wameed_ai.manage';
   static const wameedAiUse = 'wameed_ai.use';
 
+  // ── Admin Wameed AI (Platform) ───────────────────────
+  static const adminWameedAiView = 'admin.wameed_ai.view';
+  static const adminWameedAiManage = 'admin.wameed_ai.manage';
+
+  // ── Cashier Performance / Gamification ───────────────
+  static const cashierPerformanceViewLeaderboard = 'cashier_performance.view_leaderboard';
+  static const cashierPerformanceViewBadges = 'cashier_performance.view_badges';
+  static const cashierPerformanceManageBadges = 'cashier_performance.manage_badges';
+  static const cashierPerformanceViewAnomalies = 'cashier_performance.view_anomalies';
+  static const cashierPerformanceViewReports = 'cashier_performance.view_reports';
+  static const cashierPerformanceManageSettings = 'cashier_performance.manage_settings';
+
   /// All permission codes as a flat list (useful for validation / debugging).
   static const List<String> all = [
     // pos
@@ -342,5 +354,11 @@ abstract final class Permissions {
     restaurantTabs,
     // wameed_ai
     wameedAiView, wameedAiManage, wameedAiUse,
+    // admin wameed_ai
+    adminWameedAiView, adminWameedAiManage,
+    // cashier performance
+    cashierPerformanceViewLeaderboard, cashierPerformanceViewBadges,
+    cashierPerformanceManageBadges, cashierPerformanceViewAnomalies,
+    cashierPerformanceViewReports, cashierPerformanceManageSettings,
   ];
 }

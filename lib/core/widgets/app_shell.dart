@@ -7,6 +7,7 @@ import 'package:thawani_pos/core/providers/sidebar_provider.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/branch_selector.dart';
 import 'package:thawani_pos/core/widgets/pos_sidebar.dart';
+import 'package:thawani_pos/core/widgets/quick_nav_grid.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/auth/providers/auth_providers.dart';
 import 'package:thawani_pos/features/auth/providers/auth_state.dart';
@@ -53,7 +54,7 @@ class AppShell extends ConsumerWidget {
       },
     );
 
-    final actions = _buildActions(context, ref, l10n);
+    final actions = _buildActions(context, ref, l10n, filteredGroups);
 
     if (isDesktop) {
       return Scaffold(
@@ -137,11 +138,17 @@ class AppShell extends ConsumerWidget {
     return result;
   }
 
-  List<Widget> _buildActions(BuildContext context, WidgetRef ref, AppLocalizations l10n) {
+  List<Widget> _buildActions(BuildContext context, WidgetRef ref, AppLocalizations l10n, List<PosSidebarGroup> filteredGroups) {
     final currentLocale = Localizations.localeOf(context);
     final themeMode = ref.watch(themeModeProvider);
 
     return [
+      // Quick Nav grid
+      IconButton(
+        tooltip: l10n.quickNavTitle,
+        icon: const Icon(Icons.grid_view_rounded),
+        onPressed: () => showQuickNavGrid(context, groups: filteredGroups),
+      ),
       // Language switch
       IconButton(
         tooltip: l10n.appBarLanguage,

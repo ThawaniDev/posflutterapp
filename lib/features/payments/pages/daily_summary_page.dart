@@ -4,6 +4,8 @@ import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
+import 'package:thawani_pos/core/widgets/pos_card.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/payments/enums/payment_method_key.dart';
 import 'package:thawani_pos/features/payments/providers/payment_providers.dart';
 import 'package:thawani_pos/features/payments/providers/payment_state.dart';
@@ -74,6 +76,11 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
         title: Text(l10n.dailySummaryTitle),
         actions: [
           IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: l10n.featureInfoTooltip,
+            onPressed: () => showDailySummaryInfo(context),
+          ),
+          IconButton(
             icon: const Icon(Icons.chevron_left),
             onPressed: () {
               setState(() => _selectedDate = _selectedDate.subtract(const Duration(days: 1)));
@@ -106,73 +113,36 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // ── Top KPI Cards ──
-                  context.isPhone
-                      ? Column(
-                          children: [
-                            Row(
-                              children: [
-                                _kpiCard(
-                                  theme,
-                                  l10n.dailySummaryGrossRevenue,
-                                  '${totalRevenue.toStringAsFixed(2)} \u0081',
-                                  Icons.trending_up,
-                                  AppColors.success,
-                                ),
-                                AppSpacing.gapW8,
-                                _kpiCard(
-                                  theme,
-                                  l10n.dailySummaryExpenses,
-                                  '${totalExpenses.toStringAsFixed(2)} \u0081',
-                                  Icons.trending_down,
-                                  AppColors.error,
-                                ),
-                              ],
-                            ),
-                            AppSpacing.gapH8,
-                            Row(
-                              children: [
-                                _kpiCard(
-                                  theme,
-                                  l10n.dailySummaryNetRevenue,
-                                  '${netRevenue.toStringAsFixed(2)} \u0081',
-                                  Icons.account_balance,
-                                  netRevenue >= 0 ? AppColors.success : AppColors.error,
-                                ),
-                                AppSpacing.gapW8,
-                                _kpiCard(theme, l10n.dailySummaryTransactions, '$txCount', Icons.receipt, AppColors.info),
-                              ],
-                            ),
-                          ],
-                        )
-                      : Row(
-                          children: [
-                            _kpiCard(
-                              theme,
-                              l10n.dailySummaryGrossRevenue,
-                              '${totalRevenue.toStringAsFixed(2)} \u0081',
-                              Icons.trending_up,
-                              AppColors.success,
-                            ),
-                            AppSpacing.gapW12,
-                            _kpiCard(
-                              theme,
-                              l10n.dailySummaryExpenses,
-                              '${totalExpenses.toStringAsFixed(2)} \u0081',
-                              Icons.trending_down,
-                              AppColors.error,
-                            ),
-                            AppSpacing.gapW12,
-                            _kpiCard(
-                              theme,
-                              l10n.dailySummaryNetRevenue,
-                              '${netRevenue.toStringAsFixed(2)} \u0081',
-                              Icons.account_balance,
-                              netRevenue >= 0 ? AppColors.success : AppColors.error,
-                            ),
-                            AppSpacing.gapW12,
-                            _kpiCard(theme, l10n.dailySummaryTransactions, '$txCount', Icons.receipt, AppColors.info),
-                          ],
-                        ),
+                  PosKpiGrid(
+                    desktopCols: 4,
+                    mobileCols: 2,
+                    cards: [
+                      PosKpiCard(
+                        label: l10n.dailySummaryGrossRevenue,
+                        value: '${totalRevenue.toStringAsFixed(2)} \u0081',
+                        icon: Icons.trending_up,
+                        iconColor: AppColors.success,
+                      ),
+                      PosKpiCard(
+                        label: l10n.dailySummaryExpenses,
+                        value: '${totalExpenses.toStringAsFixed(2)} \u0081',
+                        icon: Icons.trending_down,
+                        iconColor: AppColors.error,
+                      ),
+                      PosKpiCard(
+                        label: l10n.dailySummaryNetRevenue,
+                        value: '${netRevenue.toStringAsFixed(2)} \u0081',
+                        icon: Icons.account_balance,
+                        iconColor: netRevenue >= 0 ? AppColors.success : AppColors.error,
+                      ),
+                      PosKpiCard(
+                        label: l10n.dailySummaryTransactions,
+                        value: '$txCount',
+                        icon: Icons.receipt,
+                        iconColor: AppColors.info,
+                      ),
+                    ],
+                  ),
                   AppSpacing.gapH24,
 
                   // ── Revenue by Payment Method ──
@@ -203,35 +173,6 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                 ],
               ),
             ),
-    );
-  }
-
-  Widget _kpiCard(ThemeData theme, String label, String value, IconData icon, Color color) {
-    return Expanded(
-      child: Card(
-        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
-        child: Padding(
-          padding: AppSpacing.paddingAll16,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(icon, color: color, size: 20),
-                  const Spacer(),
-                ],
-              ),
-              AppSpacing.gapH12,
-              Text(
-                value,
-                style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: color),
-              ),
-              AppSpacing.gapH4,
-              Text(label, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
-            ],
-          ),
-        ),
-      ),
     );
   }
 

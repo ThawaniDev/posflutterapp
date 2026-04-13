@@ -1,107 +1,87 @@
 class Notification {
   final String id;
-  final String type;
-  final String notifiableType;
-  final String notifiableId;
-  final Map<String, dynamic> data;
-  final DateTime? readAt;
-  final DateTime? createdAt;
-  final String? priority;
-  final DateTime? expiresAt;
-  final Map<String, dynamic>? metadata;
-  final String? channel;
+  final String? userId;
+  final String? storeId;
   final String? category;
   final String? title;
   final String? message;
+  final String? actionUrl;
+  final String? referenceType;
+  final String? referenceId;
+  final bool isRead;
+  final DateTime? createdAt;
 
   const Notification({
     required this.id,
-    required this.type,
-    required this.notifiableType,
-    required this.notifiableId,
-    required this.data,
-    this.readAt,
-    this.createdAt,
-    this.priority,
-    this.expiresAt,
-    this.metadata,
-    this.channel,
+    this.userId,
+    this.storeId,
     this.category,
     this.title,
     this.message,
+    this.actionUrl,
+    this.referenceType,
+    this.referenceId,
+    this.isRead = false,
+    this.createdAt,
   });
 
   factory Notification.fromJson(Map<String, dynamic> json) {
     return Notification(
       id: json['id'] as String,
-      type: json['type'] as String? ?? '',
-      notifiableType: json['notifiable_type'] as String? ?? '',
-      notifiableId: json['notifiable_id'] as String? ?? '',
-      data: json['data'] != null ? Map<String, dynamic>.from(json['data'] as Map) : {},
-      readAt: json['read_at'] != null ? DateTime.parse(json['read_at'] as String) : null,
-      createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
-      priority: json['priority'] as String?,
-      expiresAt: json['expires_at'] != null ? DateTime.parse(json['expires_at'] as String) : null,
-      metadata: json['metadata'] != null ? Map<String, dynamic>.from(json['metadata'] as Map) : null,
-      channel: json['channel'] as String?,
+      userId: json['user_id'] as String?,
+      storeId: json['store_id'] as String?,
       category: json['category'] as String?,
       title: json['title'] as String?,
       message: json['message'] as String?,
+      actionUrl: json['action_url'] as String?,
+      referenceType: json['reference_type'] as String?,
+      referenceId: json['reference_id'] as String?,
+      isRead: json['is_read'] as bool? ?? false,
+      createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'type': type,
-      'notifiable_type': notifiableType,
-      'notifiable_id': notifiableId,
-      'data': data,
-      'read_at': readAt?.toIso8601String(),
-      'created_at': createdAt?.toIso8601String(),
-      'priority': priority,
-      'expires_at': expiresAt?.toIso8601String(),
-      'metadata': metadata,
-      'channel': channel,
+      'user_id': userId,
+      'store_id': storeId,
       'category': category,
       'title': title,
       'message': message,
+      'action_url': actionUrl,
+      'reference_type': referenceType,
+      'reference_id': referenceId,
+      'is_read': isRead,
+      'created_at': createdAt?.toIso8601String(),
     };
   }
 
-  bool get isRead => readAt != null;
-
   Notification copyWith({
     String? id,
-    String? type,
-    String? notifiableType,
-    String? notifiableId,
-    Map<String, dynamic>? data,
-    DateTime? readAt,
-    DateTime? createdAt,
-    String? priority,
-    DateTime? expiresAt,
-    Map<String, dynamic>? metadata,
-    String? channel,
+    String? userId,
+    String? storeId,
     String? category,
     String? title,
     String? message,
+    String? actionUrl,
+    String? referenceType,
+    String? referenceId,
+    bool? isRead,
+    DateTime? createdAt,
   }) {
     return Notification(
       id: id ?? this.id,
-      type: type ?? this.type,
-      notifiableType: notifiableType ?? this.notifiableType,
-      notifiableId: notifiableId ?? this.notifiableId,
-      data: data ?? this.data,
-      readAt: readAt ?? this.readAt,
-      createdAt: createdAt ?? this.createdAt,
-      priority: priority ?? this.priority,
-      expiresAt: expiresAt ?? this.expiresAt,
-      metadata: metadata ?? this.metadata,
-      channel: channel ?? this.channel,
+      userId: userId ?? this.userId,
+      storeId: storeId ?? this.storeId,
       category: category ?? this.category,
       title: title ?? this.title,
       message: message ?? this.message,
+      actionUrl: actionUrl ?? this.actionUrl,
+      referenceType: referenceType ?? this.referenceType,
+      referenceId: referenceId ?? this.referenceId,
+      isRead: isRead ?? this.isRead,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
@@ -113,5 +93,5 @@ class Notification {
 
   @override
   String toString() =>
-      'Notification(id: $id, type: $type, notifiableType: $notifiableType, notifiableId: $notifiableId, data: $data, readAt: $readAt, ...)';
+      'Notification(id: $id, userId: $userId, storeId: $storeId, category: $category, title: $title, isRead: $isRead, ...)';
 }

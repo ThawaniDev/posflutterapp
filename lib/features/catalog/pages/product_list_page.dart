@@ -107,6 +107,11 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
         title: const Text('Products'),
         actions: [
           IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
+            onPressed: () => showProductListInfo(context),
+          ),
+          IconButton(
             icon: Icon(_showFilters ? Icons.filter_list_off : Icons.filter_list),
             tooltip: _showFilters ? 'Hide filters' : 'Show filters',
             onPressed: () => setState(() => _showFilters = !_showFilters),

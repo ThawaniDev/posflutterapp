@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/providers/branch_context_provider.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
 import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
 import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
@@ -55,15 +56,25 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
                     padding: const EdgeInsets.all(AppSpacing.md),
                     children: [
                       // KPI cards
-                      Row(
-                        children: [
-                          Expanded(child: _metricCard('Monitored', '$monitored', AppColors.info, Icons.monitor_heart)),
-                          const SizedBox(width: AppSpacing.sm),
-                          Expanded(child: _metricCard('With Errors', '$withErrors', AppColors.error, Icons.error)),
+                      PosKpiGrid(
+                        desktopCols: 3,
+                        mobileCols: 2,
+                        cards: [
+                          PosKpiCard(
+                            label: 'Monitored',
+                            value: '$monitored',
+                            iconColor: AppColors.info,
+                            icon: Icons.monitor_heart,
+                          ),
+                          PosKpiCard(label: 'With Errors', value: '$withErrors', iconColor: AppColors.error, icon: Icons.error),
+                          PosKpiCard(
+                            label: 'Total Errors Today',
+                            value: '$errors',
+                            iconColor: AppColors.warning,
+                            icon: Icons.warning,
+                          ),
                         ],
                       ),
-                      const SizedBox(height: AppSpacing.sm),
-                      _metricCard('Total Errors Today', '$errors', AppColors.warning, Icons.warning),
                       const SizedBox(height: AppSpacing.lg),
 
                       // Sync status breakdown
@@ -108,31 +119,6 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
             },
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _metricCard(String label, String value, Color color, IconData icon) {
-    return Card(
-      elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Row(
-          children: [
-            Icon(icon, color: color, size: 32),
-            const SizedBox(width: AppSpacing.sm),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  value,
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: color),
-                ),
-                Text(label, style: const TextStyle(fontSize: 13, color: AppColors.textSecondary)),
-              ],
-            ),
-          ],
-        ),
       ),
     );
   }

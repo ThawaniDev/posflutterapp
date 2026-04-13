@@ -448,6 +448,38 @@ class PosSidebar extends StatefulWidget {
           ],
         ),
         PosSidebarItem(
+          label: l10n.sidebarCashierGamification,
+          icon: Icons.emoji_events_rounded,
+          route: '/cashier-gamification',
+          permission: Permissions.cashierPerformanceViewLeaderboard,
+          children: [
+            PosSidebarItem(
+              label: l10n.gamificationBadges,
+              icon: Icons.workspace_premium_rounded,
+              route: '/cashier-gamification/badges',
+              permission: Permissions.cashierPerformanceViewBadges,
+            ),
+            PosSidebarItem(
+              label: l10n.gamificationAnomalies,
+              icon: Icons.warning_amber_rounded,
+              route: '/cashier-gamification/anomalies',
+              permission: Permissions.cashierPerformanceViewAnomalies,
+            ),
+            PosSidebarItem(
+              label: l10n.gamificationShiftReports,
+              icon: Icons.assessment_rounded,
+              route: '/cashier-gamification/shift-reports',
+              permission: Permissions.cashierPerformanceViewReports,
+            ),
+            PosSidebarItem(
+              label: l10n.gamificationSettings,
+              icon: Icons.settings_rounded,
+              route: '/cashier-gamification/settings',
+              permission: Permissions.cashierPerformanceManageSettings,
+            ),
+          ],
+        ),
+        PosSidebarItem(
           label: l10n.sidebarPosCustomize,
           icon: Icons.tune_rounded,
           route: '/customization',
@@ -556,6 +588,57 @@ class PosSidebar extends StatefulWidget {
               icon: Icons.menu_book_rounded,
               route: '/support/kb',
               permission: Permissions.supportView,
+            ),
+          ],
+        ),
+      ],
+    ),
+    // Platform Admin
+    PosSidebarGroup(
+      label: l10n.sidebarGroupPlatformAdmin,
+      icon: Icons.admin_panel_settings_rounded,
+      items: [
+        PosSidebarItem(
+          label: l10n.sidebarAdminWameedAI,
+          icon: Icons.auto_awesome_rounded,
+          route: '/admin/wameed-ai',
+          permission: Permissions.adminWameedAiView,
+          children: [
+            PosSidebarItem(
+              label: l10n.adminWameedAIUsageLogs,
+              icon: Icons.history_rounded,
+              route: '/admin/wameed-ai/usage-logs',
+              permission: Permissions.adminWameedAiView,
+            ),
+            PosSidebarItem(
+              label: l10n.adminWameedAIProviders,
+              icon: Icons.business_rounded,
+              route: '/admin/wameed-ai/providers',
+              permission: Permissions.adminWameedAiView,
+            ),
+            PosSidebarItem(
+              label: l10n.adminWameedAIFeatures,
+              icon: Icons.extension_rounded,
+              route: '/admin/wameed-ai/features',
+              permission: Permissions.adminWameedAiManage,
+            ),
+            PosSidebarItem(
+              label: l10n.adminWameedAILlmModels,
+              icon: Icons.memory_rounded,
+              route: '/admin/wameed-ai/llm-models',
+              permission: Permissions.adminWameedAiManage,
+            ),
+            PosSidebarItem(
+              label: l10n.adminWameedAIChats,
+              icon: Icons.chat_rounded,
+              route: '/admin/wameed-ai/chats',
+              permission: Permissions.adminWameedAiView,
+            ),
+            PosSidebarItem(
+              label: l10n.adminWameedAIBilling,
+              icon: Icons.payment_rounded,
+              route: '/admin/wameed-ai/billing',
+              permission: Permissions.adminWameedAiManage,
             ),
           ],
         ),

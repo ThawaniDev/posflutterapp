@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/pos_card.dart';
 import 'package:thawani_pos/features/promotions/providers/promotion_providers.dart';
 import 'package:thawani_pos/features/promotions/providers/promotion_state.dart';
 
@@ -59,62 +60,40 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
       padding: const EdgeInsets.all(16),
       children: [
         // Summary cards
-        Row(
-          children: [
-            Expanded(
-              child: _StatCard(
-                label: l10n.promotionsTotalUses,
-                value: '${data['usage_count'] ?? 0}',
-                icon: Icons.receipt_long,
-                color: theme.colorScheme.primary,
-              ),
+        PosKpiGrid(
+          desktopCols: 3,
+          mobileCols: 2,
+          cards: [
+            PosKpiCard(
+              label: l10n.promotionsTotalUses,
+              value: '${data['usage_count'] ?? 0}',
+              icon: Icons.receipt_long,
+              iconColor: theme.colorScheme.primary,
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _StatCard(
-                label: l10n.promotionsTotalDiscount,
-                value: '${(data['total_discount_given'] as num?)?.toStringAsFixed(2) ?? '0.00'}',
-                icon: Icons.discount,
-                color: theme.colorScheme.tertiary,
-              ),
+            PosKpiCard(
+              label: l10n.promotionsTotalDiscount,
+              value: '${(data['total_discount_given'] as num?)?.toStringAsFixed(2) ?? '0.00'}',
+              icon: Icons.discount,
+              iconColor: theme.colorScheme.tertiary,
             ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: _StatCard(
-                label: l10n.promotionsUniqueCustomers,
-                value: '${data['unique_customers'] ?? 0}',
-                icon: Icons.people,
-                color: theme.colorScheme.secondary,
-              ),
+            PosKpiCard(
+              label: l10n.promotionsUniqueCustomers,
+              value: '${data['unique_customers'] ?? 0}',
+              icon: Icons.people,
+              iconColor: theme.colorScheme.secondary,
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _StatCard(
-                label: l10n.promotionsActiveCoupons,
-                value: '${data['active_coupons'] ?? 0}',
-                icon: Icons.confirmation_number,
-                color: AppColors.success,
-              ),
+            PosKpiCard(
+              label: l10n.promotionsActiveCoupons,
+              value: '${data['active_coupons'] ?? 0}',
+              icon: Icons.confirmation_number,
+              iconColor: AppColors.success,
             ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: _StatCard(
-                label: l10n.promotionsTotalCoupons,
-                value: '${data['total_coupons'] ?? 0}',
-                icon: Icons.inventory_2,
-                color: AppColors.warning,
-              ),
+            PosKpiCard(
+              label: l10n.promotionsTotalCoupons,
+              value: '${data['total_coupons'] ?? 0}',
+              icon: Icons.inventory_2,
+              iconColor: AppColors.warning,
             ),
-            const SizedBox(width: 12),
-            const Expanded(child: SizedBox()),
           ],
         ),
         const SizedBox(height: 24),
@@ -150,35 +129,6 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
     if (totalCoupons == 0) return 'N/A';
     final used = totalCoupons - activeCoupons;
     return '${(used / totalCoupons * 100).toStringAsFixed(1)}%';
-  }
-}
-
-class _StatCard extends StatelessWidget {
-  final String label;
-  final String value;
-  final IconData icon;
-  final Color color;
-
-  const _StatCard({required this.label, required this.value, required this.icon, required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(14),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, color: color, size: 28),
-            const SizedBox(height: 8),
-            Text(value, style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
-            const SizedBox(height: 2),
-            Text(label, style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.outline)),
-          ],
-        ),
-      ),
-    );
   }
 }
 

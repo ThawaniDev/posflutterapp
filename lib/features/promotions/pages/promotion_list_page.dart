@@ -51,7 +51,14 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Promotions & Coupons'),
-        actions: [IconButton(icon: const Icon(Icons.filter_list), onPressed: _showFilterSheet)],
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
+            onPressed: () => showPromotionListInfo(context),
+          ),
+          IconButton(icon: const Icon(Icons.filter_list), onPressed: _showFilterSheet),
+        ],
       ),
       floatingActionButton: FloatingActionButton(onPressed: () => _openPromotionForm(context), child: const Icon(Icons.add)),
       body: Column(
