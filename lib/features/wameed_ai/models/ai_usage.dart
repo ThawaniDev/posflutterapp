@@ -47,9 +47,7 @@ class AIUsageMonthly {
     return AIUsageMonthly(
       requestCount: _toInt(json['total_requests'] ?? json['request_count']),
       totalCost: _toDouble(json['total_estimated_cost_usd'] ?? json['total_cost']),
-      totalTokens: _toInt(json['total_tokens'])
-          + _toInt(json['total_input_tokens'])
-          + _toInt(json['total_output_tokens']),
+      totalTokens: _toInt(json['total_tokens']) + _toInt(json['total_input_tokens']) + _toInt(json['total_output_tokens']),
     );
   }
 }

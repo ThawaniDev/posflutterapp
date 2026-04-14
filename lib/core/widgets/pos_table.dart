@@ -273,12 +273,15 @@ class PosDataTable<T> extends StatelessWidget {
     }
 
     // Desktop: traditional data table + pagination
-    return Column(
-      children: [
-        Expanded(child: _buildTableContainer(context)),
-        if (_hasPagination) _buildPagination(context),
-      ],
-    );
+    if (_hasPagination) {
+      return Column(
+        children: [
+          Expanded(child: _buildTableContainer(context)),
+          _buildPagination(context),
+        ],
+      );
+    }
+    return _buildTableContainer(context);
   }
 
   // ── Mobile card layout ────────────────────────────────────
@@ -286,32 +289,37 @@ class PosDataTable<T> extends StatelessWidget {
   Widget _buildMobileLayout(BuildContext context) {
     final visibleCols = _visibleColumns;
 
-    return Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.only(bottom: 80),
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              final item = items[index];
-              final id = itemId?.call(item) ?? '';
-              final isSelected = selectable && selectedItems.contains(id);
+    final listView = ListView.builder(
+      shrinkWrap: !_hasPagination,
+      physics: _hasPagination ? null : const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.only(bottom: 80),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        final item = items[index];
+        final id = itemId?.call(item) ?? '';
+        final isSelected = selectable && selectedItems.contains(id);
 
-              return _MobileDataCard<T>(
-                item: item,
-                columns: visibleCols,
-                cellBuilder: cellBuilder,
-                actions: actions,
-                isSelected: isSelected,
-                onTap: onRowTap != null ? () => onRowTap!(item) : null,
-                onSelect: selectable && onSelectItem != null ? (selected) => onSelectItem!(item, selected) : null,
-              );
-            },
-          ),
-        ),
-        if (_hasPagination) _buildMobilePagination(context),
-      ],
+        return _MobileDataCard<T>(
+          item: item,
+          columns: visibleCols,
+          cellBuilder: cellBuilder,
+          actions: actions,
+          isSelected: isSelected,
+          onTap: onRowTap != null ? () => onRowTap!(item) : null,
+          onSelect: selectable && onSelectItem != null ? (selected) => onSelectItem!(item, selected) : null,
+        );
+      },
     );
+
+    if (_hasPagination) {
+      return Column(
+        children: [
+          Expanded(child: listView),
+          _buildMobilePagination(context),
+        ],
+      );
+    }
+    return listView;
   }
 
   Widget _buildMobilePagination(BuildContext context) {
