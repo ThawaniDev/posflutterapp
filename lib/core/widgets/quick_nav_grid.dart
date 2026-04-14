@@ -141,10 +141,10 @@ class _GroupSection extends StatelessWidget {
   }
 
   double _tileWidth(BuildContext context) {
-    // Roughly calculate tile width to fit crossAxisCount per row
-    // Available width: dialog maxWidth (780) - padding (32) - spacing
-    final dialogWidth = MediaQuery.sizeOf(context).width.clamp(0.0, 780.0) - 32;
-    return (dialogWidth - (crossAxisCount - 1) * 8) / crossAxisCount;
+    // Available width: min(screenWidth - insetPadding(32), maxWidth(780)) - scrollPadding(32)
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final dialogContentWidth = (screenWidth - 32).clamp(0.0, 780.0) - 32;
+    return (dialogContentWidth - (crossAxisCount - 1) * 8) / crossAxisCount;
   }
 }
 

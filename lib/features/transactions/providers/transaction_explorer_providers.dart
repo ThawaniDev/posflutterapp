@@ -42,10 +42,7 @@ class TransactionExplorerApiService {
   }
 
   Future<List<dynamic>> getHourlySales({String? date}) async {
-    final response = await _dio.get(
-      ApiEndpoints.ownerDashboardHourlySales,
-      queryParameters: {if (date != null) 'date': date},
-    );
+    final response = await _dio.get(ApiEndpoints.ownerDashboardHourlySales, queryParameters: {if (date != null) 'date': date});
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data is List ? apiResponse.data as List : [];
   }
@@ -281,16 +278,14 @@ class TransactionStatsNotifier extends StateNotifier<TransactionStatsState> {
       // Parse daily trend from sales-trend endpoint: { current: [{date, revenue, orders}], summary: {...} }
       final trendCurrent = trend['current'] as List? ?? [];
       final trendSummary = trend['summary'] as Map<String, dynamic>? ?? {};
-      final daily = trendCurrent
-          .map((j) {
-            final m = j as Map<String, dynamic>;
-            return DailyTrendPoint(
-              date: DateTime.parse(m['date'] as String),
-              sales: _dbl(m['revenue']),
-              count: (m['orders'] as num?)?.toInt() ?? 0,
-            );
-          })
-          .toList();
+      final daily = trendCurrent.map((j) {
+        final m = j as Map<String, dynamic>;
+        return DailyTrendPoint(
+          date: DateTime.parse(m['date'] as String),
+          sales: _dbl(m['revenue']),
+          count: (m['orders'] as num?)?.toInt() ?? 0,
+        );
+      }).toList();
 
       // Parse hourly distribution from hourlySales endpoint: [{hour, transaction_count, revenue}]
       final hourlyDistribution = <int, int>{};
@@ -301,8 +296,9 @@ class TransactionStatsNotifier extends StateNotifier<TransactionStatsState> {
 
       state = TransactionStatsLoaded(
         totalSales: _dbl(revenue['total']) > 0 ? _dbl(revenue['total']) : _dbl(dashTodaySales['value']),
-        totalTransactions:
-            totalTransactionsFromDaily > 0 ? totalTransactionsFromDaily : (dashTransactions['value'] as num?)?.toInt() ?? 0,
+        totalTransactions: totalTransactionsFromDaily > 0
+            ? totalTransactionsFromDaily
+            : (dashTransactions['value'] as num?)?.toInt() ?? 0,
         totalReturns: 0, // Not directly in these endpoints
         totalVoids: 0, // Not directly in these endpoints
         avgTransactionValue: totalTransactionsFromDaily > 0
