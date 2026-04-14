@@ -186,6 +186,10 @@ String? permissionForRoute(String path) {
   if (path.startsWith('/cashier-gamification/shift-reports')) return Permissions.cashierPerformanceViewReports;
   if (path.startsWith('/cashier-gamification')) return Permissions.cashierPerformanceViewLeaderboard;
 
+  // ── Wameed AI ────────────────────────────────────────
+  if (path.startsWith('/wameed-ai/settings')) return Permissions.wameedAiManage;
+  if (path.startsWith('/wameed-ai')) return Permissions.wameedAiView;
+
   // ── Dashboard ────────────────────────────────────────
   if (path == '/dashboard') return Permissions.dashboardView;
 

@@ -1461,11 +1461,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const EfficiencyScorePage(),
           ),
           GoRoute(
-            path: '${Routes.wameedAI}/:slug',
-            name: 'wameedAIFeature',
-            builder: (context, state) => AIFeatureDetailPage(featureSlug: state.pathParameters['slug']!),
-          ),
-          GoRoute(
             path: Routes.wameedAISuggestions,
             name: 'wameedAISuggestions',
             builder: (context, state) => const AISuggestionsPage(),
@@ -1483,6 +1478,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => AIBillingInvoiceDetailPage(invoiceId: state.pathParameters['invoiceId']!),
           ),
           GoRoute(path: Routes.wameedAISettings, name: 'wameedAISettings', builder: (context, state) => const AISettingsPage()),
+          // Catch-all for dynamic AI features — MUST be after all specific routes
+          GoRoute(
+            path: '${Routes.wameedAI}/:slug',
+            name: 'wameedAIFeature',
+            builder: (context, state) => AIFeatureDetailPage(featureSlug: state.pathParameters['slug']!),
+          ),
           // ─── Cashier Gamification ───
           GoRoute(
             path: Routes.gamificationLeaderboard,
