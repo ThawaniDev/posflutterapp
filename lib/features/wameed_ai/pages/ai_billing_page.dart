@@ -110,7 +110,7 @@ class _BillingContent extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           PosKpiGrid(
-            desktopCols: 4,
+            desktopCols: 3,
             mobileCols: 2,
             cards: [
               PosKpiCard(
@@ -118,14 +118,6 @@ class _BillingContent extends StatelessWidget {
                 value: '\$${month.billedCostUsd.toStringAsFixed(3)}',
                 icon: Icons.receipt,
                 iconColor: AppColors.primary,
-                subtitle: '${l10n.wameedAIBillingRawCost}: \$${month.rawCostUsd.toStringAsFixed(3)}',
-              ),
-              PosKpiCard(
-                label: l10n.wameedAIBillingMargin,
-                value: '${month.marginPercentage.toStringAsFixed(1)}%',
-                icon: Icons.trending_up,
-                iconColor: Colors.orange,
-                subtitle: '+\$${month.marginAmountUsd.toStringAsFixed(3)}',
               ),
               PosKpiCard(
                 label: l10n.wameedAIBillingLimitUsage,
@@ -166,7 +158,6 @@ class _BillingContent extends StatelessWidget {
                   PosTableColumn(title: l10n.wameedAIBillingFeature, flex: 2),
                   PosTableColumn(title: l10n.wameedAIBillingRequests, numeric: true),
                   PosTableColumn(title: l10n.wameedAIBillingTokens, numeric: true),
-                  PosTableColumn(title: l10n.wameedAIBillingRawCost, numeric: true),
                   PosTableColumn(title: l10n.wameedAIBillingBilledCost, numeric: true),
                 ],
                 items: month.byFeature,
@@ -174,8 +165,7 @@ class _BillingContent extends StatelessWidget {
                   0 => Text(item.featureSlug.replaceAll('_', ' ')),
                   1 => Text('${item.requestCount}'),
                   2 => Text(_formatTokens(item.totalTokens)),
-                  3 => Text('\$${item.rawCostUsd.toStringAsFixed(3)}'),
-                  4 => Text('\$${item.billedCostUsd.toStringAsFixed(3)}', style: const TextStyle(fontWeight: FontWeight.w600)),
+                  3 => Text('\$${item.billedCostUsd.toStringAsFixed(3)}', style: const TextStyle(fontWeight: FontWeight.w600)),
                   _ => const SizedBox.shrink(),
                 },
               ),

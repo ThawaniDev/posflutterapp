@@ -125,7 +125,7 @@ class _InvoiceDetailContent extends StatelessWidget {
 
           // Cost Summary KPIs
           PosKpiGrid(
-            desktopCols: 4,
+            desktopCols: 2,
             mobileCols: 2,
             cards: [
               PosKpiCard(
@@ -133,18 +133,6 @@ class _InvoiceDetailContent extends StatelessWidget {
                 value: '\$${invoice.billedAmountUsd.toStringAsFixed(3)}',
                 icon: Icons.receipt,
                 iconColor: AppColors.primary,
-              ),
-              PosKpiCard(
-                label: l10n.wameedAIBillingRawCost,
-                value: '\$${invoice.rawCostUsd.toStringAsFixed(3)}',
-                icon: Icons.attach_money,
-                iconColor: Colors.green,
-              ),
-              PosKpiCard(
-                label: l10n.wameedAIBillingMargin,
-                value: '${invoice.marginPercentage.toStringAsFixed(1)}% (+\$${invoice.marginAmountUsd.toStringAsFixed(3)})',
-                icon: Icons.trending_up,
-                iconColor: Colors.orange,
               ),
               PosKpiCard(
                 label: l10n.wameedAIBillingRequests,
@@ -172,7 +160,6 @@ class _InvoiceDetailContent extends StatelessWidget {
                   PosTableColumn(title: l10n.wameedAIBillingFeature, flex: 2),
                   PosTableColumn(title: l10n.wameedAIBillingRequests, numeric: true),
                   PosTableColumn(title: l10n.wameedAIBillingTokens, numeric: true),
-                  PosTableColumn(title: l10n.wameedAIBillingRawCost, numeric: true),
                   PosTableColumn(title: l10n.wameedAIBillingBilledCost, numeric: true),
                 ],
                 items: invoice.items,
@@ -180,8 +167,7 @@ class _InvoiceDetailContent extends StatelessWidget {
                   0 => Text(item.featureName.isNotEmpty ? item.featureName : item.featureSlug.replaceAll('_', ' ')),
                   1 => Text('${item.requestCount}'),
                   2 => Text(_formatTokens(item.totalTokens)),
-                  3 => Text('\$${item.rawCostUsd.toStringAsFixed(3)}'),
-                  4 => Text('\$${item.billedCostUsd.toStringAsFixed(3)}', style: const TextStyle(fontWeight: FontWeight.w600)),
+                  3 => Text('\$${item.billedCostUsd.toStringAsFixed(3)}', style: const TextStyle(fontWeight: FontWeight.w600)),
                   _ => const SizedBox.shrink(),
                 },
               ),
@@ -259,9 +245,6 @@ class _MobileLineItem extends StatelessWidget {
             children: [
               Expanded(
                 child: _MiniStat(label: l10n.wameedAIBillingRequests, value: '${item.requestCount}'),
-              ),
-              Expanded(
-                child: _MiniStat(label: l10n.wameedAIBillingRawCost, value: '\$${item.rawCostUsd.toStringAsFixed(3)}'),
               ),
               Expanded(
                 child: _MiniStat(

@@ -20,7 +20,6 @@ class AIBillingConfig {
   final bool isAiEnabled;
   final double monthlyLimitUsd;
   final double effectiveLimitUsd;
-  final double marginPercentage;
   final String? disabledReason;
   final String? disabledAt;
 
@@ -28,7 +27,6 @@ class AIBillingConfig {
     this.isAiEnabled = true,
     this.monthlyLimitUsd = 0,
     this.effectiveLimitUsd = 0,
-    this.marginPercentage = 20,
     this.disabledReason,
     this.disabledAt,
   });
@@ -38,7 +36,6 @@ class AIBillingConfig {
       isAiEnabled: json['is_ai_enabled'] as bool? ?? true,
       monthlyLimitUsd: (json['monthly_limit_usd'] as num?)?.toDouble() ?? 0,
       effectiveLimitUsd: (json['effective_limit_usd'] as num?)?.toDouble() ?? 0,
-      marginPercentage: (json['margin_percentage'] as num?)?.toDouble() ?? 20,
       disabledReason: json['disabled_reason'] as String?,
       disabledAt: json['disabled_at'] as String?,
     );
@@ -50,9 +47,6 @@ class AIBillingCurrentMonth {
   final int month;
   final int totalRequests;
   final int totalTokens;
-  final double rawCostUsd;
-  final double marginPercentage;
-  final double marginAmountUsd;
   final double billedCostUsd;
   final double limitUsd;
   final double limitPercentage;
@@ -63,9 +57,6 @@ class AIBillingCurrentMonth {
     required this.month,
     this.totalRequests = 0,
     this.totalTokens = 0,
-    this.rawCostUsd = 0,
-    this.marginPercentage = 20,
-    this.marginAmountUsd = 0,
     this.billedCostUsd = 0,
     this.limitUsd = 0,
     this.limitPercentage = 0,
@@ -78,9 +69,6 @@ class AIBillingCurrentMonth {
       month: (json['month'] as num?)?.toInt() ?? DateTime.now().month,
       totalRequests: (json['total_requests'] as num?)?.toInt() ?? 0,
       totalTokens: (json['total_tokens'] as num?)?.toInt() ?? 0,
-      rawCostUsd: (json['raw_cost_usd'] as num?)?.toDouble() ?? 0,
-      marginPercentage: (json['margin_percentage'] as num?)?.toDouble() ?? 20,
-      marginAmountUsd: (json['margin_amount_usd'] as num?)?.toDouble() ?? 0,
       billedCostUsd: (json['billed_cost_usd'] as num?)?.toDouble() ?? 0,
       limitUsd: (json['limit_usd'] as num?)?.toDouble() ?? 0,
       limitPercentage: (json['limit_percentage'] as num?)?.toDouble() ?? 0,
@@ -95,14 +83,12 @@ class AIBillingFeatureUsage {
   final String featureSlug;
   final int requestCount;
   final int totalTokens;
-  final double rawCostUsd;
   final double billedCostUsd;
 
   const AIBillingFeatureUsage({
     required this.featureSlug,
     this.requestCount = 0,
     this.totalTokens = 0,
-    this.rawCostUsd = 0,
     this.billedCostUsd = 0,
   });
 
@@ -111,7 +97,6 @@ class AIBillingFeatureUsage {
       featureSlug: json['feature_slug'] as String,
       requestCount: (json['request_count'] as num?)?.toInt() ?? 0,
       totalTokens: (json['total_tokens'] as num?)?.toInt() ?? 0,
-      rawCostUsd: (json['raw_cost_usd'] as num?)?.toDouble() ?? 0,
       billedCostUsd: (json['billed_cost_usd'] as num?)?.toDouble() ?? 0,
     );
   }
@@ -161,9 +146,6 @@ class AIBillingInvoiceDetail {
   final String periodEnd;
   final int totalRequests;
   final int totalTokens;
-  final double rawCostUsd;
-  final double marginPercentage;
-  final double marginAmountUsd;
   final double billedAmountUsd;
   final String status;
   final String dueDate;
@@ -181,9 +163,6 @@ class AIBillingInvoiceDetail {
     required this.periodEnd,
     this.totalRequests = 0,
     this.totalTokens = 0,
-    this.rawCostUsd = 0,
-    this.marginPercentage = 20,
-    this.marginAmountUsd = 0,
     this.billedAmountUsd = 0,
     this.status = 'pending',
     required this.dueDate,
@@ -203,9 +182,6 @@ class AIBillingInvoiceDetail {
       periodEnd: json['period_end'] as String,
       totalRequests: (json['total_requests'] as num?)?.toInt() ?? 0,
       totalTokens: (json['total_tokens'] as num?)?.toInt() ?? 0,
-      rawCostUsd: (json['raw_cost_usd'] as num?)?.toDouble() ?? 0,
-      marginPercentage: (json['margin_percentage'] as num?)?.toDouble() ?? 20,
-      marginAmountUsd: (json['margin_amount_usd'] as num?)?.toDouble() ?? 0,
       billedAmountUsd: (json['billed_amount_usd'] as num?)?.toDouble() ?? 0,
       status: json['status'] as String? ?? 'pending',
       dueDate: json['due_date'] as String,
@@ -227,7 +203,6 @@ class AIBillingInvoiceItem {
   final String featureNameAr;
   final int requestCount;
   final int totalTokens;
-  final double rawCostUsd;
   final double billedCostUsd;
 
   const AIBillingInvoiceItem({
@@ -236,7 +211,6 @@ class AIBillingInvoiceItem {
     required this.featureNameAr,
     this.requestCount = 0,
     this.totalTokens = 0,
-    this.rawCostUsd = 0,
     this.billedCostUsd = 0,
   });
 
@@ -247,7 +221,6 @@ class AIBillingInvoiceItem {
       featureNameAr: json['feature_name_ar'] as String? ?? '',
       requestCount: (json['request_count'] as num?)?.toInt() ?? 0,
       totalTokens: (json['total_tokens'] as num?)?.toInt() ?? 0,
-      rawCostUsd: (json['raw_cost_usd'] as num?)?.toDouble() ?? 0,
       billedCostUsd: (json['billed_cost_usd'] as num?)?.toDouble() ?? 0,
     );
   }
