@@ -3,12 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/router/route_names.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_billing.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_state.dart';
+import 'package:thawani_pos/features/wameed_ai/utils/ai_helpers.dart';
 
 class AIBillingInvoicesPage extends ConsumerStatefulWidget {
   const AIBillingInvoicesPage({super.key});
@@ -38,16 +40,10 @@ class _AIBillingInvoicesPageState extends ConsumerState<AIBillingInvoicesPage> {
         ],
       ),
       body: switch (state) {
-        AIBillingInvoicesInitial() || AIBillingInvoicesLoading() => const Center(child: CircularProgressIndicator()),
-        AIBillingInvoicesError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message),
-              const SizedBox(height: 16),
-              PosButton(label: l10n.commonRetry, onPressed: () => ref.read(aiBillingInvoicesProvider.notifier).load()),
-            ],
-          ),
+        AIBillingInvoicesInitial() || AIBillingInvoicesLoading() => const PosLoading(),
+        AIBillingInvoicesError(:final message) => PosErrorState(
+          message: message,
+          onRetry: () => ref.read(aiBillingInvoicesProvider.notifier).load(),
         ),
         AIBillingInvoicesLoaded(:final invoices, :final currentPage, :final lastPage, :final total, :final perPage) => Padding(
           padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
@@ -64,7 +60,7 @@ class _AIBillingInvoicesPageState extends ConsumerState<AIBillingInvoicesPage> {
                   items: invoices,
                   cellBuilder: (item, colIndex, _) => switch (colIndex) {
                     0 => Text(item.invoiceNumber, style: const TextStyle(fontWeight: FontWeight.w600)),
-                    1 => Text('${_monthName(item.month)} ${item.year}'),
+                    1 => Text('${localizedMonthName(l10n, item.month)} ${item.year}'),
                     2 => Text(
                       '\$${item.billedAmountUsd.toStringAsFixed(3)}',
                       style: const TextStyle(fontWeight: FontWeight.w600),
@@ -102,11 +98,6 @@ class _AIBillingInvoicesPageState extends ConsumerState<AIBillingInvoicesPage> {
       },
     );
   }
-
-  String _monthName(int month) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    return months[month.clamp(1, 12) - 1];
-  }
 }
 
 class _MobileInvoiceList extends ConsumerWidget {
@@ -126,7 +117,7 @@ class _MobileInvoiceList extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.receipt_long_outlined, size: 48, color: Colors.grey),
+            const Icon(Icons.receipt_long_outlined, size: 48, color: AppColors.textSecondary),
             const SizedBox(height: 12),
             Text(l10n.wameedAIBillingNoInvoices),
           ],
@@ -146,13 +137,13 @@ class _MobileInvoiceList extends ConsumerWidget {
                 leading: Icon(
                   Icons.receipt_outlined,
                   color: switch (inv.status) {
-                    'paid' => Colors.green,
-                    'overdue' => Colors.red,
-                    _ => Colors.orange,
+                    'paid' => AppColors.success,
+                    'overdue' => AppColors.error,
+                    _ => AppColors.warning,
                   },
                 ),
                 title: Text(inv.invoiceNumber, style: const TextStyle(fontWeight: FontWeight.w600)),
-                subtitle: Text('${_monthName(inv.month)} ${inv.year} · ${inv.dueDate}'),
+                subtitle: Text('${localizedMonthName(l10n, inv.month)} ${inv.year} · ${inv.dueDate}'),
                 trailing: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -202,10 +193,5 @@ class _MobileInvoiceList extends ConsumerWidget {
           ),
       ],
     );
-  }
-
-  String _monthName(int month) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    return months[month.clamp(1, 12) - 1];
   }
 }

@@ -122,6 +122,8 @@ abstract final class Permissions {
   static const thawaniViewDashboard = 'thawani.view_dashboard';
   static const thawaniManageConfig = 'thawani.manage_config';
   static const thawaniMenu = 'thawani.menu';
+  static const thawaniManageSync = 'thawani.manage_sync';
+  static const thawaniViewSyncLogs = 'thawani.view_sync_logs';
 
   // ── Delivery ─────────────────────────────────────────
   static const deliveryViewDashboard = 'delivery.view_dashboard';
@@ -300,6 +302,7 @@ abstract final class Permissions {
     accountingExport,
     // thawani
     thawaniViewDashboard, thawaniManageConfig, thawaniMenu,
+    thawaniManageSync, thawaniViewSyncLogs,
     // delivery
     deliveryViewDashboard, deliveryManageConfig, deliveryManage,
     deliverySyncMenu, deliveryViewLogs,

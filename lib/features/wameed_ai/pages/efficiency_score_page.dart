@@ -49,12 +49,7 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
         ],
       ),
       body: switch (state) {
-        AIFeatureResultInitial() || AIFeatureResultLoading() => const Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [CircularProgressIndicator(), SizedBox(height: 16), Text('Calculating efficiency score...')],
-          ),
-        ),
+        AIFeatureResultInitial() || AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
         AIFeatureResultError(:final message) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -127,7 +122,7 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
                   AIScoreGauge(score: overallScore, size: 160, label: '/100'),
                   const SizedBox(height: 16),
                   Text(
-                    grade.isNotEmpty ? '$grade - ${_scoreLabel(overallScore)}' : _scoreLabel(overallScore),
+                    grade.isNotEmpty ? '$grade - ${_scoreLabel(l10n, overallScore)}' : _scoreLabel(l10n, overallScore),
                     style: Theme.of(
                       context,
                     ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700, color: _scoreColor(overallScore)),
@@ -254,12 +249,12 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
     );
   }
 
-  String _scoreLabel(double score) {
-    if (score >= 90) return 'Excellent';
-    if (score >= 75) return 'Good';
-    if (score >= 60) return 'Average';
-    if (score >= 40) return 'Below Average';
-    return 'Needs Improvement';
+  String _scoreLabel(AppLocalizations l10n, double score) {
+    if (score >= 90) return l10n.wameedAIScoreExcellent;
+    if (score >= 75) return l10n.wameedAIScoreGood;
+    if (score >= 60) return l10n.wameedAIScoreAverage;
+    if (score >= 40) return l10n.wameedAIScoreBelowAverage;
+    return l10n.wameedAIScoreNeedsImprovement;
   }
 
   Color _scoreColor(double score) {

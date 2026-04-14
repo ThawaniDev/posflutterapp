@@ -5634,6 +5634,9 @@ class AppLocalizationsUr extends AppLocalizations {
   String get commonRefresh => 'ریفریش';
 
   @override
+  String get commonRename => 'Rename';
+
+  @override
   String get commonRequired => 'ضروری';
 
   @override
@@ -5647,6 +5650,9 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get commonType => 'قسم';
+
+  @override
+  String get commonViewAll => 'View All';
 
   @override
   String get customersNoCustomersFound => 'کوئی گاہک نہیں ملے';
@@ -9019,6 +9025,195 @@ class AppLocalizationsUr extends AppLocalizations {
   @override
   String get wameedAIBillingDisabled =>
       'آپ کے اسٹور کے لیے اے آئی فی الحال غیر فعال ہے';
+
+  @override
+  String get wameedAIBillingViewAll => 'View All';
+
+  @override
+  String get wameedAINewChat => 'New Chat';
+
+  @override
+  String get wameedAIAssistant => 'Wameed AI Assistant';
+
+  @override
+  String get wameedAIWelcomeSubtitle =>
+      'Ask anything about your business — sales, inventory, customers, and more.';
+
+  @override
+  String get wameedAIRecentChats => 'Recent Chats';
+
+  @override
+  String get wameedAINoChats => 'No conversations yet';
+
+  @override
+  String get wameedAINoChatsSubtitle =>
+      'Tap \"New Chat\" to start a conversation with Wameed AI';
+
+  @override
+  String get wameedAIMessages => 'messages';
+
+  @override
+  String get wameedAIJustNow => 'Just now';
+
+  @override
+  String wameedAIMinutesAgo(Object count) {
+    return '${count}m ago';
+  }
+
+  @override
+  String wameedAIHoursAgo(Object count) {
+    return '${count}h ago';
+  }
+
+  @override
+  String wameedAIDaysAgo(Object count) {
+    return '${count}d ago';
+  }
+
+  @override
+  String get wameedAIRenameChat => 'Rename Chat';
+
+  @override
+  String get wameedAIEnterChatTitle => 'Enter chat title';
+
+  @override
+  String get wameedAITagline => 'Your intelligent business assistant';
+
+  @override
+  String get wameedAIThinking => 'Thinking...';
+
+  @override
+  String get wameedAIImageAttached => 'Image attached';
+
+  @override
+  String get wameedAIChatHint => 'Ask Wameed AI...';
+
+  @override
+  String get wameedAIChatHintDesktop => 'Ask Wameed AI anything...';
+
+  @override
+  String get wameedAIAnalyzing => 'AI is analyzing your data...';
+
+  @override
+  String get wameedAIFeatures => 'AI Features';
+
+  @override
+  String get wameedAISelectModel => 'Select Model';
+
+  @override
+  String get wameedAIScoreExcellent => 'Excellent';
+
+  @override
+  String get wameedAIScoreGood => 'Good';
+
+  @override
+  String get wameedAIScoreAverage => 'Average';
+
+  @override
+  String get wameedAIScoreBelowAverage => 'Below Average';
+
+  @override
+  String get wameedAIScoreNeedsImprovement => 'Needs Improvement';
+
+  @override
+  String get wameedAILowStock => 'Low Stock';
+
+  @override
+  String get wameedAIUnknownProduct => 'Unknown Product';
+
+  @override
+  String get wameedAIStock => 'Stock';
+
+  @override
+  String get wameedAIOrder => 'Order';
+
+  @override
+  String get wameedAIAvgPerDay => 'Avg/day';
+
+  @override
+  String get wameedAIDaysLeft => 'days left';
+
+  @override
+  String get wameedAIBatch => 'Batch';
+
+  @override
+  String wameedAIDiscountOff(Object percent) {
+    return '$percent% off';
+  }
+
+  @override
+  String get wameedAISales => 'sales';
+
+  @override
+  String get wameedAITxns => 'txns';
+
+  @override
+  String get wameedAIAvg => 'Avg';
+
+  @override
+  String get wameedAIVoid => 'Void';
+
+  @override
+  String get wameedAIAvgVisits => 'Avg visits';
+
+  @override
+  String get wameedAIMonthJan => 'Jan';
+
+  @override
+  String get wameedAIMonthFeb => 'Feb';
+
+  @override
+  String get wameedAIMonthMar => 'Mar';
+
+  @override
+  String get wameedAIMonthApr => 'Apr';
+
+  @override
+  String get wameedAIMonthMay => 'May';
+
+  @override
+  String get wameedAIMonthJun => 'Jun';
+
+  @override
+  String get wameedAIMonthJul => 'Jul';
+
+  @override
+  String get wameedAIMonthAug => 'Aug';
+
+  @override
+  String get wameedAIMonthSep => 'Sep';
+
+  @override
+  String get wameedAIMonthOct => 'Oct';
+
+  @override
+  String get wameedAIMonthNov => 'Nov';
+
+  @override
+  String get wameedAIMonthDec => 'Dec';
+
+  @override
+  String get wameedAISelectDate => 'Select date';
+
+  @override
+  String get wameedAISearchProducts => 'Search products...';
+
+  @override
+  String get wameedAISearchCategories => 'Search categories...';
+
+  @override
+  String get wameedAINoProductsFound => 'No products found';
+
+  @override
+  String get wameedAINoCategoriesFound => 'No categories found';
+
+  @override
+  String get wameedAIDefault => 'Default';
+
+  @override
+  String wameedAIFieldRequired(String field) {
+    return '$field is required';
+  }
 
   @override
   String get sidebarCashierGamification => 'کیشیئر کارکردگی';

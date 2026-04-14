@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_chat.dart';
@@ -10,10 +11,11 @@ class AIMessageBubble extends StatelessWidget {
   const AIMessageBubble({super.key, required this.message});
 
   void _copyToClipboard(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     Clipboard.setData(ClipboardData(text: message.content));
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(content: Text('Copied to clipboard'), duration: Duration(seconds: 1)));
+    ).showSnackBar(SnackBar(content: Text(l10n.wameedAICopied), duration: const Duration(seconds: 1)));
   }
 
   @override

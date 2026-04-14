@@ -53,12 +53,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
         ],
       ),
       body: switch (state) {
-        AIFeatureResultInitial() || AIFeatureResultLoading() => const Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [CircularProgressIndicator(), SizedBox(height: 16), Text('Analyzing customer data...')],
-          ),
-        ),
+        AIFeatureResultInitial() || AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
         AIFeatureResultError(:final message) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -279,7 +274,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
           if (avgVisits != null) ...[
             const SizedBox(height: 4),
             Text(
-              'Avg visits: $avgVisits',
+              '${l10n.wameedAIAvgVisits}: $avgVisits',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
             ),
           ],

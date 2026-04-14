@@ -10,6 +10,7 @@ import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_billing.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_state.dart';
+import 'package:thawani_pos/features/wameed_ai/utils/ai_helpers.dart';
 
 class AIBillingPage extends ConsumerStatefulWidget {
   const AIBillingPage({super.key});
@@ -44,16 +45,10 @@ class _AIBillingPageState extends ConsumerState<AIBillingPage> {
         ],
       ),
       body: switch (state) {
-        AIBillingSummaryInitial() || AIBillingSummaryLoading() => const Center(child: CircularProgressIndicator()),
-        AIBillingSummaryError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message),
-              const SizedBox(height: 16),
-              PosButton(label: l10n.commonRetry, onPressed: () => ref.read(aiBillingSummaryProvider.notifier).load()),
-            ],
-          ),
+        AIBillingSummaryInitial() || AIBillingSummaryLoading() => const PosLoading(),
+        AIBillingSummaryError(:final message) => PosErrorState(
+          message: message,
+          onRetry: () => ref.read(aiBillingSummaryProvider.notifier).load(),
         ),
         AIBillingSummaryLoaded(:final summary) => _BillingContent(summary: summary, isMobile: isMobile),
       },
@@ -85,18 +80,18 @@ class _BillingContent extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.red.withValues(alpha: 0.1),
+                color: AppColors.error.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.red.withValues(alpha: 0.3)),
+                border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.warning_amber_rounded, color: Colors.red),
+                  const Icon(Icons.warning_amber_rounded, color: AppColors.error),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       '${l10n.wameedAIBillingDisabled}${config.disabledReason != null ? ': ${config.disabledReason}' : ''}',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.red),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.error),
                     ),
                   ),
                 ],
@@ -124,10 +119,10 @@ class _BillingContent extends StatelessWidget {
                 value: month.limitUsd > 0 ? '${month.limitPercentage.toStringAsFixed(1)}%' : l10n.wameedAIBillingNoLimit,
                 icon: Icons.speed,
                 iconColor: month.limitPercentage >= 90
-                    ? Colors.red
+                    ? AppColors.error
                     : month.limitPercentage >= 70
-                    ? Colors.orange
-                    : Colors.green,
+                    ? AppColors.warning
+                    : AppColors.success,
                 subtitle: month.limitUsd > 0
                     ? '\$${month.billedCostUsd.toStringAsFixed(3)} / \$${month.limitUsd.toStringAsFixed(2)}'
                     : null,
@@ -137,7 +132,7 @@ class _BillingContent extends StatelessWidget {
                 value: '${month.totalRequests}',
                 icon: Icons.sync_alt,
                 iconColor: Colors.blue,
-                subtitle: '${_formatTokens(month.totalTokens)} ${l10n.wameedAIBillingTokens}',
+                subtitle: '${formatTokens(month.totalTokens)} ${l10n.wameedAIBillingTokens}',
               ),
             ],
           ),
@@ -164,7 +159,7 @@ class _BillingContent extends StatelessWidget {
                 cellBuilder: (item, colIndex, _) => switch (colIndex) {
                   0 => Text(item.featureSlug.replaceAll('_', ' ')),
                   1 => Text('${item.requestCount}'),
-                  2 => Text(_formatTokens(item.totalTokens)),
+                  2 => Text(formatTokens(item.totalTokens)),
                   3 => Text('\$${item.billedCostUsd.toStringAsFixed(3)}', style: const TextStyle(fontWeight: FontWeight.w600)),
                   _ => const SizedBox.shrink(),
                 },
@@ -181,7 +176,7 @@ class _BillingContent extends StatelessWidget {
                   l10n.wameedAIBillingRecentInvoices,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
                 ),
-                TextButton(onPressed: () => context.push(Routes.wameedAIBillingInvoices), child: Text('View All')),
+                TextButton(onPressed: () => context.push(Routes.wameedAIBillingInvoices), child: Text(l10n.wameedAIBillingViewAll)),
               ],
             ),
             const SizedBox(height: 12),
@@ -190,12 +185,6 @@ class _BillingContent extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String _formatTokens(int tokens) {
-    if (tokens >= 1000000) return '${(tokens / 1000000).toStringAsFixed(1)}M';
-    if (tokens >= 1000) return '${(tokens / 1000).toStringAsFixed(1)}K';
-    return '$tokens';
   }
 }
 
@@ -231,13 +220,13 @@ class _InvoiceListTile extends StatelessWidget {
       leading: Icon(
         Icons.receipt_outlined,
         color: switch (invoice.status) {
-          'paid' => Colors.green,
-          'overdue' => Colors.red,
-          _ => Colors.orange,
+          'paid' => AppColors.success,
+          'overdue' => AppColors.error,
+          _ => AppColors.warning,
         },
       ),
       title: Text(invoice.invoiceNumber),
-      subtitle: Text('${_monthName(invoice.month)} ${invoice.year}'),
+      subtitle: Text('${localizedMonthName(l10n, invoice.month)} ${invoice.year}'),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -262,10 +251,5 @@ class _InvoiceListTile extends StatelessWidget {
       ),
       onTap: () => context.push('${Routes.wameedAIBillingInvoices}/${invoice.id}'),
     );
-  }
-
-  String _monthName(int month) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    return months[month.clamp(1, 12) - 1];
   }
 }

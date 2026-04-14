@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_chat.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/ai_chat_providers.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/ai_chat_state.dart';
@@ -47,7 +49,7 @@ class AIFeatureOverlay extends ConsumerWidget {
                   children: [
                     const Icon(Icons.auto_awesome, color: AppColors.primary, size: 22),
                     const SizedBox(width: 8),
-                    Text('AI Features', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                    Text(AppLocalizations.of(context)!.wameedAIFeatures, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
                   ],
                 ),
               ),
@@ -56,7 +58,7 @@ class AIFeatureOverlay extends ConsumerWidget {
               // Content
               Expanded(
                 child: switch (cardsState) {
-                  AIFeatureCardsInitial() || AIFeatureCardsLoading() => const Center(child: CircularProgressIndicator()),
+                  AIFeatureCardsInitial() || AIFeatureCardsLoading() => const PosLoading(),
                   AIFeatureCardsError(:final message) => Center(child: Text(message)),
                   AIFeatureCardsLoaded(:final categories) => _buildCategoriesList(categories, scrollController, theme),
                 },

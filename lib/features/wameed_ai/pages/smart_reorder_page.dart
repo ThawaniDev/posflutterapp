@@ -49,12 +49,7 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
         ],
       ),
       body: switch (state) {
-        AIFeatureResultInitial() || AIFeatureResultLoading() => const Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [CircularProgressIndicator(), SizedBox(height: 16), Text('Analyzing inventory levels...')],
-          ),
-        ),
+        AIFeatureResultInitial() || AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
         AIFeatureResultError(:final message) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -99,7 +94,7 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
           Wrap(
             spacing: 12,
             runSpacing: 12,
-            children: [_summaryChip(context, Icons.warning_amber, 'Low Stock', '${suggestions.length}', AppColors.warning)],
+            children: [_summaryChip(context, Icons.warning_amber, l10n.wameedAILowStock, '${suggestions.length}', AppColors.warning)],
           ),
           const SizedBox(height: 20),
 
@@ -134,7 +129,7 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
               separatorBuilder: (_, __) => const SizedBox(height: 10),
               itemBuilder: (context, index) {
                 final item = suggestions[index];
-                final productName = item['product_name'] ?? item['name'] ?? item['product'] ?? 'Unknown Product';
+                final productName = item['product_name'] ?? item['name'] ?? item['product'] ?? l10n.wameedAIUnknownProduct;
                 final currentStock = item['current_stock'] ?? item['stock_level'] ?? 0;
                 final recommendedQty =
                     item['suggested_order_quantity'] ?? item['recommended_quantity'] ?? item['reorder_qty'] ?? 0;
@@ -154,10 +149,10 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
                       spacing: 8,
                       runSpacing: 6,
                       children: [
-                        _infoChip(context, 'Stock: $currentStock'),
-                        _infoChip(context, 'Order: $recommendedQty', highlight: true),
-                        if (avgDailySales != null) _infoChip(context, 'Avg/day: $avgDailySales'),
-                        if (daysOfStock != null) _infoChip(context, '$daysOfStock days left'),
+                        _infoChip(context, '${l10n.wameedAIStock}: $currentStock'),
+                        _infoChip(context, '${l10n.wameedAIOrder}: $recommendedQty', highlight: true),
+                        if (avgDailySales != null) _infoChip(context, '${l10n.wameedAIAvgPerDay}: $avgDailySales'),
+                        if (daysOfStock != null) _infoChip(context, '$daysOfStock ${l10n.wameedAIDaysLeft}'),
                         if (supplier != null) _infoChip(context, '$supplier'),
                       ],
                     ),

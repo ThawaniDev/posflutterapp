@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/theme/app_spacing.dart';
 import 'package:thawani_pos/core/widgets/pos_badge.dart';
 import 'package:thawani_pos/core/widgets/pos_mobile_data_list.dart';
@@ -148,12 +149,12 @@ class _AISuggestionsPageState extends ConsumerState<AISuggestionsPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(
-                icon: const Icon(Icons.check_circle_outline, size: 18, color: Colors.green),
+                icon: const Icon(Icons.check_circle_outline, size: 18, color: AppColors.success),
                 onPressed: () => ref.read(aiSuggestionsProvider.notifier).updateStatus(suggestion.id, 'accepted'),
                 tooltip: l10n.wameedAIAccept,
               ),
               IconButton(
-                icon: const Icon(Icons.cancel_outlined, size: 18, color: Colors.grey),
+                icon: const Icon(Icons.cancel_outlined, size: 18, color: AppColors.textSecondary),
                 onPressed: () => ref.read(aiSuggestionsProvider.notifier).updateStatus(suggestion.id, 'dismissed'),
                 tooltip: l10n.wameedAIDismiss,
               ),

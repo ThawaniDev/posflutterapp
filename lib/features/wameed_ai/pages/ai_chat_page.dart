@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_chat.dart';
@@ -137,7 +138,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       if (next is AIChatLoaded && next.errorMessage != null) {
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text(next.errorMessage!), backgroundColor: Colors.red.shade700));
+        ).showSnackBar(SnackBar(content: Text(next.errorMessage!), backgroundColor: AppColors.error));
       }
     });
 
@@ -145,6 +146,8 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     if (chatState is AIChatLoaded) {
       _scrollToBottom();
     }
+
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
@@ -156,7 +159,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               const Icon(Icons.auto_awesome, color: AppColors.primary, size: 22),
               const SizedBox(width: 8),
               Flexible(
-                child: Text(chatState is AIChatLoaded ? chatState.chat.title : 'Wameed AI', overflow: TextOverflow.ellipsis),
+                child: Text(chatState is AIChatLoaded ? chatState.chat.title : l10n.wameedAI, overflow: TextOverflow.ellipsis),
               ),
               if (chatState is AIChatLoaded)
                 Padding(
@@ -225,6 +228,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   }
 
   Widget _buildWelcomeView(ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
@@ -245,11 +249,11 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
             ),
             const SizedBox(height: 24),
             Text(
-              'Wameed AI',
+              l10n.wameedAI,
               style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
             ),
             const SizedBox(height: 8),
-            Text('Your intelligent business assistant', style: theme.textTheme.bodyLarge?.copyWith(color: theme.hintColor)),
+            Text(l10n.wameedAITagline, style: theme.textTheme.bodyLarge?.copyWith(color: theme.hintColor)),
             const SizedBox(height: 32),
             _buildFeatureCardsGrid(theme),
           ],
@@ -319,6 +323,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   }
 
   Widget _buildMessageList(AIChatLoaded chatState, ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     final messages = chatState.chat.messages;
 
     return ListView.builder(
@@ -343,7 +348,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                     children: [
                       SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary)),
                       const SizedBox(width: 8),
-                      Text('Thinking...', style: theme.textTheme.bodySmall?.copyWith(color: AppColors.primary)),
+                      Text(l10n.wameedAIThinking, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.primary)),
                     ],
                   ),
                 ),
@@ -358,6 +363,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   }
 
   Widget _buildImagePreview(ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       color: theme.scaffoldBackgroundColor,
@@ -371,7 +377,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           ),
           const SizedBox(width: 8),
           Expanded(
-            child: Text(_imageName ?? 'Image attached', style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
+            child: Text(_imageName ?? l10n.wameedAIImageAttached, style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
           ),
           IconButton(
             icon: const Icon(Icons.close, size: 18),
@@ -386,6 +392,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   }
 
   Widget _buildInputBar(AIChatState chatState, ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
     final isSending = chatState is AIChatLoaded && chatState.isSending;
 
     final isMobile = context.isPhone;
@@ -448,7 +455,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                       maxLines: null,
                       textInputAction: isMobile ? TextInputAction.send : TextInputAction.newline,
                       decoration: InputDecoration(
-                        hintText: isMobile ? 'Ask Wameed AI...' : 'Ask Wameed AI anything...',
+                        hintText: isMobile ? l10n.wameedAIChatHint : l10n.wameedAIChatHintDesktop,
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 16, vertical: 10),
                         hintStyle: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
@@ -465,7 +472,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 2),
             child: Container(
-              decoration: BoxDecoration(color: isSending ? Colors.grey : AppColors.primary, shape: BoxShape.circle),
+              decoration: BoxDecoration(color: isSending ? Theme.of(context).disabledColor : AppColors.primary, shape: BoxShape.circle),
               child: IconButton(
                 icon: Icon(isSending ? Icons.hourglass_top : Icons.arrow_upward, color: Colors.white, size: isMobile ? 20 : 22),
                 onPressed: isSending ? null : _sendMessage,
@@ -555,16 +562,17 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   }
 
   void _showRenameDialog(String currentTitle) {
+    final l10n = AppLocalizations.of(context)!;
     final renameController = TextEditingController(text: currentTitle);
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Rename Chat'),
+        title: Text(l10n.wameedAIRenameChat),
         content: TextField(
           controller: renameController,
           autofocus: true,
           maxLength: 255,
-          decoration: const InputDecoration(hintText: 'Enter chat title'),
+          decoration: InputDecoration(hintText: l10n.wameedAIEnterChatTitle),
           onSubmitted: (value) {
             final title = value.trim();
             if (title.isNotEmpty) {
@@ -575,7 +583,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           },
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.commonCancel)),
           TextButton(
             onPressed: () {
               final title = renameController.text.trim();
@@ -585,7 +593,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               }
               Navigator.of(ctx).pop();
             },
-            child: const Text('Rename'),
+            child: Text(l10n.commonRename),
           ),
         ],
       ),

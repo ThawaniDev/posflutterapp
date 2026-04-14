@@ -31,8 +31,11 @@ class _AISettingsPageState extends ConsumerState<AISettingsPage> {
     return Scaffold(
       appBar: AppBar(title: Text(l10n.wameedAISettings)),
       body: switch (state) {
-        AIFeaturesInitial() || AIFeaturesLoading() => const Center(child: CircularProgressIndicator()),
-        AIFeaturesError(:final message) => Center(child: Text(message)),
+        AIFeaturesInitial() || AIFeaturesLoading() => const PosLoading(),
+        AIFeaturesError(:final message) => PosErrorState(
+          message: message,
+          onRetry: () => ref.read(aiFeaturesProvider.notifier).load(),
+        ),
         AIFeaturesLoaded(:final features) => ListView.builder(
           padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
           itemCount: features.length,
@@ -46,7 +49,7 @@ class _AISettingsPageState extends ConsumerState<AISettingsPage> {
             return Card(
               margin: const EdgeInsets.only(bottom: 8),
               child: ListTile(
-                leading: Icon(Icons.auto_awesome, color: isEnabled ? AppColors.primary : Colors.grey),
+                leading: Icon(Icons.auto_awesome, color: isEnabled ? AppColors.primary : AppColors.textSecondary),
                 title: Text(name, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
                 subtitle: Text(desc, maxLines: 1, overflow: TextOverflow.ellipsis),
                 trailing: Switch(

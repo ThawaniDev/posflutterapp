@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_chat.dart';
 
@@ -12,7 +13,8 @@ class AIModelSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final displayName = selectedModel?.displayName ?? 'Select Model';
+    final l10n = AppLocalizations.of(context)!;
+    final displayName = selectedModel?.displayName ?? l10n.wameedAISelectModel;
 
     return PopupMenuButton<LlmModel>(
       onSelected: onSelected,
@@ -100,10 +102,10 @@ class AIModelSelector extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
                           decoration: BoxDecoration(
-                            color: Colors.green.withValues(alpha: 0.1),
+                            color: AppColors.success.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(4),
                           ),
-                          child: Text('Default', style: theme.textTheme.labelSmall?.copyWith(color: Colors.green, fontSize: 9)),
+                          child: Text(AppLocalizations.of(context)!.wameedAIDefault, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.success, fontSize: 9)),
                         ),
                       ),
                   ],

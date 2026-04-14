@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:thawani_pos/core/l10n/app_localizations.dart';
 import 'package:thawani_pos/core/theme/app_colors.dart';
 import 'package:thawani_pos/core/widgets/responsive_layout.dart';
 import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
@@ -232,7 +233,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
       keyboardType: TextInputType.number,
       validator: field.required
           ? (v) {
-              if (v == null || v.trim().isEmpty) return '${field.label} is required';
+              if (v == null || v.trim().isEmpty) return AppLocalizations.of(context)!.wameedAIFieldRequired(field.label);
               if (int.tryParse(v.trim()) == null) return 'Enter a valid number';
               return null;
             }
@@ -243,7 +244,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
 
   Widget _buildDateField(FeatureField field, ThemeData theme) {
     final dateStr = _values[field.key] as String?;
-    final displayText = dateStr ?? field.hint ?? 'Select date';
+    final displayText = dateStr ?? field.hint ?? AppLocalizations.of(context)!.wameedAISelectDate;
 
     return InkWell(
       onTap: () async {
@@ -321,7 +322,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
                 const Icon(Icons.image, color: AppColors.primary, size: 24),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: Text(_imageName ?? 'Image selected', style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
+                  child: Text(_imageName ?? AppLocalizations.of(context)!.wameedAIImageSelected, style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
                 ),
                 IconButton(
                   icon: const Icon(Icons.close, size: 18),
@@ -343,7 +344,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
                 child: OutlinedButton.icon(
                   onPressed: () => _pickImageForField(field, ImageSource.camera),
                   icon: const Icon(Icons.camera_alt_outlined, size: 18),
-                  label: const Text('Camera'),
+                  label: Text(AppLocalizations.of(context)!.wameedAICamera),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primary,
                     side: BorderSide(color: AppColors.primary.withValues(alpha: 0.3)),
@@ -356,7 +357,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
                 child: OutlinedButton.icon(
                   onPressed: () => _pickImageForField(field, ImageSource.gallery),
                   icon: const Icon(Icons.photo_library_outlined, size: 18),
-                  label: const Text('Gallery'),
+                  label: Text(AppLocalizations.of(context)!.wameedAIGallery),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primary,
                     side: BorderSide(color: AppColors.primary.withValues(alpha: 0.3)),
@@ -395,7 +396,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
 
     return FormField<dynamic>(
       validator: field.required
-          ? (_) => (product == null || product is! Map || product['id'] == null) ? '${field.label} is required' : null
+          ? (_) => (product == null || product is! Map || product['id'] == null) ? AppLocalizations.of(context)!.wameedAIFieldRequired(field.label) : null
           : null,
       builder: (state) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -408,7 +409,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
                 theme,
               ).copyWith(suffixIcon: const Icon(Icons.search, size: 18), errorText: state.errorText),
               child: Text(
-                hasValue ? product['name'] as String : (field.hint ?? 'Search products...'),
+                hasValue ? product['name'] as String : (field.hint ?? AppLocalizations.of(context)!.wameedAISearchProducts),
                 style: hasValue ? theme.textTheme.bodyMedium : theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
               ),
             ),
@@ -424,7 +425,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
 
     return FormField<dynamic>(
       validator: field.required
-          ? (_) => (category == null || category is! Map || category['id'] == null) ? '${field.label} is required' : null
+          ? (_) => (category == null || category is! Map || category['id'] == null) ? AppLocalizations.of(context)!.wameedAIFieldRequired(field.label) : null
           : null,
       builder: (state) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -437,7 +438,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
                 theme,
               ).copyWith(suffixIcon: const Icon(Icons.search, size: 18), errorText: state.errorText),
               child: Text(
-                hasValue ? category['name'] as String : (field.hint ?? 'Search categories...'),
+                hasValue ? category['name'] as String : (field.hint ?? AppLocalizations.of(context)!.wameedAISearchCategories),
                 style: hasValue ? theme.textTheme.bodyMedium : theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
               ),
             ),
@@ -565,6 +566,7 @@ class _ProductSearchDialogState extends State<_ProductSearchDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Dialog(
       insetPadding: const EdgeInsets.all(20),
@@ -590,7 +592,7 @@ class _ProductSearchDialogState extends State<_ProductSearchDialog> {
                 controller: _searchController,
                 autofocus: true,
                 decoration: InputDecoration(
-                  hintText: 'Search products...',
+                  hintText: l10n.wameedAISearchProducts,
                   prefixIcon: const Icon(Icons.search, size: 20),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                   isDense: true,
@@ -604,7 +606,7 @@ class _ProductSearchDialogState extends State<_ProductSearchDialog> {
                   ? const Center(child: CircularProgressIndicator())
                   : _results.isEmpty
                   ? Center(
-                      child: Text('No products found', style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
+                      child: Text(l10n.wameedAINoProductsFound, style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
                     )
                   : ListView.builder(
                       itemCount: _results.length,
@@ -699,6 +701,7 @@ class _CategorySearchDialogState extends State<_CategorySearchDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Dialog(
       insetPadding: const EdgeInsets.all(20),
@@ -724,7 +727,7 @@ class _CategorySearchDialogState extends State<_CategorySearchDialog> {
                 controller: _searchController,
                 autofocus: true,
                 decoration: InputDecoration(
-                  hintText: 'Search categories...',
+                  hintText: l10n.wameedAISearchCategories,
                   prefixIcon: const Icon(Icons.search, size: 20),
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                   isDense: true,
@@ -738,7 +741,7 @@ class _CategorySearchDialogState extends State<_CategorySearchDialog> {
                   ? const Center(child: CircularProgressIndicator())
                   : _filtered.isEmpty
                   ? Center(
-                      child: Text('No categories found', style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
+                      child: Text(l10n.wameedAINoCategoriesFound, style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
                     )
                   : ListView.builder(
                       itemCount: _filtered.length,

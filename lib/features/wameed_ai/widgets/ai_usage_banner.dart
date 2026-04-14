@@ -21,13 +21,13 @@ class AIUsageBanner extends ConsumerWidget {
 
     final stats = [
       _StatData(l10n.wameedAITodayRequests, '${summary.today.requestCount}', Icons.today, AppColors.primary),
-      _StatData(l10n.wameedAITodayCost, '\$${summary.today.totalCost.toStringAsFixed(4)}', Icons.attach_money, Colors.green),
+      _StatData(l10n.wameedAITodayCost, '\$${summary.today.totalCost.toStringAsFixed(4)}', Icons.attach_money, AppColors.success),
       _StatData(l10n.wameedAIMonthlyRequests, '${summary.monthly.requestCount}', Icons.calendar_month, AppColors.primary),
       _StatData(
         l10n.wameedAIMonthlyCost,
         '\$${summary.monthly.totalCost.toStringAsFixed(4)}',
         Icons.account_balance_wallet,
-        Colors.green,
+        AppColors.success,
       ),
     ];
 

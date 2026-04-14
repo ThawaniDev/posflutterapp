@@ -48,12 +48,7 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
         ],
       ),
       body: switch (state) {
-        AIFeatureResultInitial() || AIFeatureResultLoading() => const Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [CircularProgressIndicator(), SizedBox(height: 16), Text('Analyzing staff performance...')],
-          ),
-        ),
+        AIFeatureResultInitial() || AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
         AIFeatureResultError(:final message) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -248,10 +243,10 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
                   spacing: 8,
                   runSpacing: 4,
                   children: [
-                    _metricChip(context, Icons.attach_money, '$totalSales sales'),
-                    _metricChip(context, Icons.receipt, '$txnCount txns'),
-                    if (avgBasket != 0) _metricChip(context, Icons.shopping_basket, 'Avg: $avgBasket'),
-                    if (voidRate != null) _metricChip(context, Icons.cancel_outlined, 'Void: $voidRate%'),
+                    _metricChip(context, Icons.attach_money, '$totalSales ${l10n.wameedAISales}'),
+                    _metricChip(context, Icons.receipt, '$txnCount ${l10n.wameedAITxns}'),
+                    if (avgBasket != 0) _metricChip(context, Icons.shopping_basket, '${l10n.wameedAIAvg}: $avgBasket'),
+                    if (voidRate != null) _metricChip(context, Icons.cancel_outlined, '${l10n.wameedAIVoid}: $voidRate%'),
                     if (attendancePct != null) _metricChip(context, Icons.access_time, '$attendancePct%'),
                   ],
                 ),

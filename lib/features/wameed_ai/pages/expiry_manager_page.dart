@@ -49,12 +49,7 @@ class _ExpiryManagerPageState extends ConsumerState<ExpiryManagerPage> {
         ],
       ),
       body: switch (state) {
-        AIFeatureResultInitial() || AIFeatureResultLoading() => const Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [CircularProgressIndicator(), SizedBox(height: 16), Text('Checking expiry dates...')],
-          ),
-        ),
+        AIFeatureResultInitial() || AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
         AIFeatureResultError(:final message) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -165,10 +160,10 @@ class _ExpiryManagerPageState extends ConsumerState<ExpiryManagerPage> {
                       runSpacing: 6,
                       children: [
                         _countdownChip(context, daysLeft),
-                        _infoChip(context, 'Qty: $quantity'),
-                        if (batchNumber.toString().isNotEmpty) _infoChip(context, 'Batch: $batchNumber'),
+                        _infoChip(context, '${l10n.wameedAIQty}: $quantity'),
+                        if (batchNumber.toString().isNotEmpty) _infoChip(context, '${l10n.wameedAIBatch}: $batchNumber'),
                         if (expiryDate.toString().isNotEmpty) _infoChip(context, expiryDate.toString()),
-                        if (suggestedDiscount != null) _discountChip(context, '$suggestedDiscount% off'),
+                        if (suggestedDiscount != null) _discountChip(context, l10n.wameedAIDiscountOff(suggestedDiscount.toString())),
                       ],
                     ),
                   ],

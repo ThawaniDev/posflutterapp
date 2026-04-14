@@ -144,14 +144,7 @@ class _AIFeatureDetailPageState extends ConsumerState<AIFeatureDetailPage> {
             const SizedBox(height: 24),
             switch (resultState) {
               AIFeatureResultInitial() => const SizedBox.shrink(),
-              AIFeatureResultLoading() => const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(40),
-                  child: Column(
-                    children: [CircularProgressIndicator(), SizedBox(height: 16), Text('AI is analyzing your data...')],
-                  ),
-                ),
-              ),
+              AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
               AIFeatureResultError(:final message) => Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),

@@ -32,9 +32,9 @@ class AIResultCard extends StatelessWidget {
               Text(l10n.wameedAIResult, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700)),
               const Spacer(),
               if (result.cached) ...[
-                const Icon(Icons.cached, size: 14, color: Colors.green),
+                const Icon(Icons.cached, size: 14, color: AppColors.success),
                 const SizedBox(width: 4),
-                Text(l10n.wameedAICached, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.green)),
+                Text(l10n.wameedAICached, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.success)),
               ],
               const SizedBox(width: 12),
               IconButton(

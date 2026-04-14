@@ -34,16 +34,10 @@ class _AIUsagePageState extends ConsumerState<AIUsagePage> {
         actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.read(aiUsageProvider.notifier).load())],
       ),
       body: switch (state) {
-        AIUsageInitial() || AIUsageLoading() => const Center(child: CircularProgressIndicator()),
-        AIUsageError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message),
-              const SizedBox(height: 16),
-              PosButton(label: l10n.commonRetry, onPressed: () => ref.read(aiUsageProvider.notifier).load()),
-            ],
-          ),
+        AIUsageInitial() || AIUsageLoading() => const PosLoading(),
+        AIUsageError(:final message) => PosErrorState(
+          message: message,
+          onRetry: () => ref.read(aiUsageProvider.notifier).load(),
         ),
         AIUsageLoaded(:final summary) => SingleChildScrollView(
           padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
@@ -69,7 +63,7 @@ class _AIUsagePageState extends ConsumerState<AIUsagePage> {
                     label: l10n.wameedAITodayCost,
                     value: '\$${summary.today.totalCost.toStringAsFixed(4)}',
                     icon: Icons.attach_money,
-                    iconColor: Colors.green,
+                    iconColor: AppColors.success,
                   ),
                   PosKpiCard(
                     label: l10n.wameedAIMonthlyRequests,
@@ -81,7 +75,7 @@ class _AIUsagePageState extends ConsumerState<AIUsagePage> {
                     label: l10n.wameedAIMonthlyCost,
                     value: '\$${summary.monthly.totalCost.toStringAsFixed(4)}',
                     icon: Icons.account_balance_wallet,
-                    iconColor: Colors.green,
+                    iconColor: AppColors.success,
                   ),
                 ],
               ),

@@ -5611,6 +5611,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get commonRefresh => 'تحديث';
 
   @override
+  String get commonRename => 'إعادة التسمية';
+
+  @override
   String get commonRequired => 'مطلوب';
 
   @override
@@ -5624,6 +5627,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get commonType => 'النوع';
+
+  @override
+  String get commonViewAll => 'عرض الكل';
 
   @override
   String get customersNoCustomersFound => 'لم يتم العثور على عملاء';
@@ -8981,6 +8987,195 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get wameedAIBillingDisabled => 'الذكاء الاصطناعي معطل حالياً لمتجرك';
+
+  @override
+  String get wameedAIBillingViewAll => 'عرض الكل';
+
+  @override
+  String get wameedAINewChat => 'محادثة جديدة';
+
+  @override
+  String get wameedAIAssistant => 'مساعد وميض الذكي';
+
+  @override
+  String get wameedAIWelcomeSubtitle =>
+      'اسأل أي شيء عن عملك — المبيعات والمخزون والعملاء والمزيد.';
+
+  @override
+  String get wameedAIRecentChats => 'المحادثات الأخيرة';
+
+  @override
+  String get wameedAINoChats => 'لا توجد محادثات بعد';
+
+  @override
+  String get wameedAINoChatsSubtitle =>
+      'اضغط \"محادثة جديدة\" لبدء محادثة مع وميض الذكي';
+
+  @override
+  String get wameedAIMessages => 'رسائل';
+
+  @override
+  String get wameedAIJustNow => 'الآن';
+
+  @override
+  String wameedAIMinutesAgo(Object count) {
+    return 'منذ $count دقيقة';
+  }
+
+  @override
+  String wameedAIHoursAgo(Object count) {
+    return 'منذ $count ساعة';
+  }
+
+  @override
+  String wameedAIDaysAgo(Object count) {
+    return 'منذ $count يوم';
+  }
+
+  @override
+  String get wameedAIRenameChat => 'إعادة تسمية المحادثة';
+
+  @override
+  String get wameedAIEnterChatTitle => 'أدخل عنوان المحادثة';
+
+  @override
+  String get wameedAITagline => 'مساعدك الذكي للأعمال';
+
+  @override
+  String get wameedAIThinking => 'جاري التفكير...';
+
+  @override
+  String get wameedAIImageAttached => 'تم إرفاق صورة';
+
+  @override
+  String get wameedAIChatHint => 'اسأل وميض الذكي...';
+
+  @override
+  String get wameedAIChatHintDesktop => 'اسأل وميض الذكي أي شيء...';
+
+  @override
+  String get wameedAIAnalyzing => 'الذكاء الاصطناعي يحلل بياناتك...';
+
+  @override
+  String get wameedAIFeatures => 'ميزات الذكاء الاصطناعي';
+
+  @override
+  String get wameedAISelectModel => 'اختر النموذج';
+
+  @override
+  String get wameedAIScoreExcellent => 'ممتاز';
+
+  @override
+  String get wameedAIScoreGood => 'جيد';
+
+  @override
+  String get wameedAIScoreAverage => 'متوسط';
+
+  @override
+  String get wameedAIScoreBelowAverage => 'أقل من المتوسط';
+
+  @override
+  String get wameedAIScoreNeedsImprovement => 'يحتاج تحسين';
+
+  @override
+  String get wameedAILowStock => 'مخزون منخفض';
+
+  @override
+  String get wameedAIUnknownProduct => 'منتج غير معروف';
+
+  @override
+  String get wameedAIStock => 'المخزون';
+
+  @override
+  String get wameedAIOrder => 'الطلب';
+
+  @override
+  String get wameedAIAvgPerDay => 'المعدل/يوم';
+
+  @override
+  String get wameedAIDaysLeft => 'يوم متبقي';
+
+  @override
+  String get wameedAIBatch => 'الدفعة';
+
+  @override
+  String wameedAIDiscountOff(Object percent) {
+    return 'خصم $percent%';
+  }
+
+  @override
+  String get wameedAISales => 'مبيعات';
+
+  @override
+  String get wameedAITxns => 'معاملات';
+
+  @override
+  String get wameedAIAvg => 'المتوسط';
+
+  @override
+  String get wameedAIVoid => 'ملغي';
+
+  @override
+  String get wameedAIAvgVisits => 'متوسط الزيارات';
+
+  @override
+  String get wameedAIMonthJan => 'يناير';
+
+  @override
+  String get wameedAIMonthFeb => 'فبراير';
+
+  @override
+  String get wameedAIMonthMar => 'مارس';
+
+  @override
+  String get wameedAIMonthApr => 'أبريل';
+
+  @override
+  String get wameedAIMonthMay => 'مايو';
+
+  @override
+  String get wameedAIMonthJun => 'يونيو';
+
+  @override
+  String get wameedAIMonthJul => 'يوليو';
+
+  @override
+  String get wameedAIMonthAug => 'أغسطس';
+
+  @override
+  String get wameedAIMonthSep => 'سبتمبر';
+
+  @override
+  String get wameedAIMonthOct => 'أكتوبر';
+
+  @override
+  String get wameedAIMonthNov => 'نوفمبر';
+
+  @override
+  String get wameedAIMonthDec => 'ديسمبر';
+
+  @override
+  String get wameedAISelectDate => 'اختر التاريخ';
+
+  @override
+  String get wameedAISearchProducts => 'بحث عن المنتجات...';
+
+  @override
+  String get wameedAISearchCategories => 'بحث عن الفئات...';
+
+  @override
+  String get wameedAINoProductsFound => 'لم يتم العثور على منتجات';
+
+  @override
+  String get wameedAINoCategoriesFound => 'لم يتم العثور على فئات';
+
+  @override
+  String get wameedAIDefault => 'الافتراضي';
+
+  @override
+  String wameedAIFieldRequired(String field) {
+    return '$field مطلوب';
+  }
 
   @override
   String get sidebarCashierGamification => 'أداء الصرافين';

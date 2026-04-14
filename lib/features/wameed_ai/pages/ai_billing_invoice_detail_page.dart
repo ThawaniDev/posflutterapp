@@ -8,6 +8,7 @@ import 'package:thawani_pos/core/widgets/widgets.dart';
 import 'package:thawani_pos/features/wameed_ai/models/ai_billing.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_state.dart';
+import 'package:thawani_pos/features/wameed_ai/utils/ai_helpers.dart';
 
 class AIBillingInvoiceDetailPage extends ConsumerStatefulWidget {
   final String invoiceId;
@@ -41,19 +42,10 @@ class _AIBillingInvoiceDetailPageState extends ConsumerState<AIBillingInvoiceDet
         ],
       ),
       body: switch (state) {
-        AIBillingInvoiceDetailInitial() || AIBillingInvoiceDetailLoading() => const Center(child: CircularProgressIndicator()),
-        AIBillingInvoiceDetailError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message),
-              const SizedBox(height: 16),
-              PosButton(
-                label: l10n.commonRetry,
-                onPressed: () => ref.read(aiBillingInvoiceDetailProvider.notifier).load(widget.invoiceId),
-              ),
-            ],
-          ),
+        AIBillingInvoiceDetailInitial() || AIBillingInvoiceDetailLoading() => const PosLoading(),
+        AIBillingInvoiceDetailError(:final message) => PosErrorState(
+          message: message,
+          onRetry: () => ref.read(aiBillingInvoiceDetailProvider.notifier).load(widget.invoiceId),
         ),
         AIBillingInvoiceDetailLoaded(:final invoice) => _InvoiceDetailContent(invoice: invoice),
       },
@@ -93,8 +85,8 @@ class _InvoiceDetailContent extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            '${_monthName(invoice.month)} ${invoice.year}',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                            '${localizedMonthName(l10n, invoice.month)} ${invoice.year}',
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
                           ),
                         ],
                       ),
@@ -139,7 +131,7 @@ class _InvoiceDetailContent extends StatelessWidget {
                 value: '${invoice.totalRequests}',
                 icon: Icons.sync_alt,
                 iconColor: Colors.blue,
-                subtitle: '${_formatTokens(invoice.totalTokens)} ${l10n.wameedAIBillingTokens}',
+                subtitle: '${formatTokens(invoice.totalTokens)} ${l10n.wameedAIBillingTokens}',
               ),
             ],
           ),
@@ -166,7 +158,7 @@ class _InvoiceDetailContent extends StatelessWidget {
                 cellBuilder: (item, colIndex, _) => switch (colIndex) {
                   0 => Text(item.featureName.isNotEmpty ? item.featureName : item.featureSlug.replaceAll('_', ' ')),
                   1 => Text('${item.requestCount}'),
-                  2 => Text(_formatTokens(item.totalTokens)),
+                  2 => Text(formatTokens(item.totalTokens)),
                   3 => Text('\$${item.billedCostUsd.toStringAsFixed(3)}', style: const TextStyle(fontWeight: FontWeight.w600)),
                   _ => const SizedBox.shrink(),
                 },
@@ -188,16 +180,6 @@ class _InvoiceDetailContent extends StatelessWidget {
     );
   }
 
-  String _monthName(int month) {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    return months[month.clamp(1, 12) - 1];
-  }
-
-  String _formatTokens(int tokens) {
-    if (tokens >= 1000000) return '${(tokens / 1000000).toStringAsFixed(1)}M';
-    if (tokens >= 1000) return '${(tokens / 1000).toStringAsFixed(1)}K';
-    return '$tokens';
-  }
 }
 
 class _DetailRow extends StatelessWidget {
@@ -212,10 +194,7 @@ class _DetailRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          SizedBox(
-            width: 120,
-            child: Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey)),
-          ),
+            SizedBox(width: 120, child: Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary))),
           Expanded(child: Text(value, style: Theme.of(context).textTheme.bodyMedium)),
         ],
       ),
@@ -273,7 +252,7 @@ class _MiniStat extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey, fontSize: 11)),
+        Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary, fontSize: 11)),
         Text(
           value,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: bold ? FontWeight.w600 : FontWeight.normal),
@@ -291,10 +270,10 @@ class _PaymentListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: const Icon(Icons.payment, color: Colors.green),
+      leading: const Icon(Icons.payment, color: AppColors.success),
       title: Text('\$${payment.amountUsd.toStringAsFixed(3)}'),
       subtitle: Text('${payment.paymentMethod}${payment.reference != null ? ' · ${payment.reference}' : ''}'),
-      trailing: Text(payment.createdAt, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Colors.grey)),
+      trailing: Text(payment.createdAt, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
     );
   }
 }
