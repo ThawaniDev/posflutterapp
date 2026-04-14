@@ -1,3 +1,7 @@
+// Helpers to safely parse num/String values from JSON
+int _toInt(dynamic v) => v == null ? 0 : (v is num ? v.toInt() : int.tryParse(v.toString()) ?? 0);
+double _toDouble(dynamic v) => v == null ? 0 : (v is num ? v.toDouble() : double.tryParse(v.toString()) ?? 0);
+
 class AIUsageSummary {
   final AIUsageToday today;
   final AIUsageMonthly monthly;
@@ -25,9 +29,9 @@ class AIUsageToday {
 
   factory AIUsageToday.fromJson(Map<String, dynamic> json) {
     return AIUsageToday(
-      requestCount: (json['request_count'] as num?)?.toInt() ?? 0,
-      totalCost: (json['total_cost'] as num?)?.toDouble() ?? 0,
-      totalTokens: (json['total_tokens'] as num?)?.toInt() ?? 0,
+      requestCount: _toInt(json['total_requests'] ?? json['request_count']),
+      totalCost: _toDouble(json['total_cost_usd'] ?? json['total_cost']),
+      totalTokens: _toInt(json['total_tokens']),
     );
   }
 }
@@ -41,9 +45,11 @@ class AIUsageMonthly {
 
   factory AIUsageMonthly.fromJson(Map<String, dynamic> json) {
     return AIUsageMonthly(
-      requestCount: (json['request_count'] as num?)?.toInt() ?? 0,
-      totalCost: (json['total_cost'] as num?)?.toDouble() ?? 0,
-      totalTokens: (json['total_tokens'] as num?)?.toInt() ?? 0,
+      requestCount: _toInt(json['total_requests'] ?? json['request_count']),
+      totalCost: _toDouble(json['total_estimated_cost_usd'] ?? json['total_cost']),
+      totalTokens: _toInt(json['total_tokens'])
+          + _toInt(json['total_input_tokens'])
+          + _toInt(json['total_output_tokens']),
     );
   }
 }
@@ -58,8 +64,8 @@ class AIUsageByFeature {
   factory AIUsageByFeature.fromJson(Map<String, dynamic> json) {
     return AIUsageByFeature(
       featureSlug: json['feature_slug'] as String,
-      requestCount: (json['request_count'] as num?)?.toInt() ?? 0,
-      totalCost: (json['total_cost'] as num?)?.toDouble() ?? 0,
+      requestCount: _toInt(json['total_requests'] ?? json['request_count']),
+      totalCost: _toDouble(json['total_cost']),
     );
   }
 }
@@ -89,14 +95,12 @@ class AIDailyUsage {
     return AIDailyUsage(
       date: json['date'] as String,
       featureSlug: json['feature_slug'] as String? ?? '',
-      requestCount: (json['request_count'] ?? json['total_requests'] as num?)?.toInt() ?? 0,
-      cachedCount: (json['cached_count'] ?? json['cached_requests'] as num?)?.toInt() ?? 0,
-      errorCount: (json['error_count'] ?? json['failed_requests'] as num?)?.toInt() ?? 0,
-      totalTokens:
-          (json['total_tokens'] as num?)?.toInt() ??
-          ((json['total_input_tokens'] as num?)?.toInt() ?? 0) + ((json['total_output_tokens'] as num?)?.toInt() ?? 0),
-      totalCost: (json['total_cost'] ?? json['total_estimated_cost_usd'] as num?)?.toDouble() ?? 0,
-      avgResponseMs: (json['avg_response_ms'] as num?)?.toInt() ?? 0,
+      requestCount: _toInt(json['request_count'] ?? json['total_requests']),
+      cachedCount: _toInt(json['cached_count'] ?? json['cached_requests']),
+      errorCount: _toInt(json['error_count'] ?? json['failed_requests']),
+      totalTokens: _toInt(json['total_tokens']) + _toInt(json['total_input_tokens']) + _toInt(json['total_output_tokens']),
+      totalCost: _toDouble(json['total_cost'] ?? json['total_estimated_cost_usd']),
+      avgResponseMs: _toInt(json['avg_response_ms']),
     );
   }
 }

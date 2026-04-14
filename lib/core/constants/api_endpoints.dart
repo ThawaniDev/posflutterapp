@@ -805,7 +805,7 @@ class ApiEndpoints {
 
   // ─── Wameed AI ─────────────────────────────────────────
   static const String wameedAIFeatures = '/wameed-ai/features';
-  static const String wameedAIStoreConfig = '/wameed-ai/store-config';
+  static const String wameedAIStoreConfig = '/wameed-ai/config';
   static const String wameedAISuggestions = '/wameed-ai/suggestions';
   static String wameedAISuggestionStatus(String id) => '/wameed-ai/suggestions/$id/status';
   static const String wameedAIFeedback = '/wameed-ai/feedback';
