@@ -29,7 +29,7 @@ class ThawaniSettlement {
       grossAmount: double.tryParse(json['gross_amount'].toString()) ?? 0.0,
       commissionAmount: double.tryParse(json['commission_amount'].toString()) ?? 0.0,
       netAmount: double.tryParse(json['net_amount'].toString()) ?? 0.0,
-      orderCount: (json['order_count'] as num).toInt(),
+      orderCount: (json['order_count'] as num?)?.toInt() ?? 0,
       thawaniReference: json['thawani_reference'] as String?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
@@ -74,13 +74,12 @@ class ThawaniSettlement {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ThawaniSettlement && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is ThawaniSettlement && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'ThawaniSettlement(id: $id, storeId: $storeId, settlementDate: $settlementDate, grossAmount: $grossAmount, commissionAmount: $commissionAmount, netAmount: $netAmount, ...)';
+  String toString() =>
+      'ThawaniSettlement(id: $id, storeId: $storeId, settlementDate: $settlementDate, grossAmount: $grossAmount, commissionAmount: $commissionAmount, netAmount: $netAmount, ...)';
 }

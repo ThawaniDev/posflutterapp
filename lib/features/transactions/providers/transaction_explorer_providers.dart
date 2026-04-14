@@ -41,13 +41,13 @@ class TransactionExplorerApiService {
     return apiResponse.data as Map<String, dynamic>;
   }
 
-  Future<Map<String, dynamic>> getHourlySales({String? dateFrom, String? dateTo}) async {
+  Future<List<dynamic>> getHourlySales({String? date}) async {
     final response = await _dio.get(
       ApiEndpoints.ownerDashboardHourlySales,
-      queryParameters: {if (dateFrom != null) 'date_from': dateFrom, if (dateTo != null) 'date_to': dateTo},
+      queryParameters: {if (date != null) 'date': date},
     );
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    return apiResponse.data as Map<String, dynamic>;
+    return apiResponse.data is List ? apiResponse.data as List : [];
   }
 
   Future<Map<String, dynamic>> getSalesTrend({String? dateFrom, String? dateTo, int? days}) async {
@@ -247,44 +247,80 @@ class TransactionStatsNotifier extends StateNotifier<TransactionStatsState> {
         _api.getTransactionStats(branchId: branchId, dateFrom: dfStr, dateTo: dtStr, days: days),
         _api.getDashboardStats(days: days),
         _api.getSalesTrend(dateFrom: dfStr, dateTo: dtStr, days: days ?? 7),
+        _api.getHourlySales(date: dfStr),
       ]);
 
-      final financial = results[0];
-      final dashboard = results[1];
-      final trend = results[2];
+      final financial = results[0] as Map<String, dynamic>;
+      final dashboard = results[1] as Map<String, dynamic>;
+      final trend = results[2] as Map<String, dynamic>;
+      final hourlyRaw = results[3] as List;
 
-      // Parse payment method breakdown
-      final paymentRaw = financial['payment_methods'] as Map<String, dynamic>? ?? {};
-      final paymentBreakdown = paymentRaw.map((k, v) => MapEntry(k, _dbl(v)));
+      // financial-summary: revenue is nested { total, net, cost, tax, discounts, refunds }
+      final revenue = financial['revenue'] as Map<String, dynamic>? ?? {};
 
-      // Parse hourly distribution
-      final hourlyRaw = financial['hourly_sales'] as Map<String, dynamic>? ?? {};
-      final hourly = hourlyRaw.map((k, v) => MapEntry(int.tryParse(k) ?? 0, (v as num?)?.toInt() ?? 0));
+      // Parse payment method breakdown from payments array [{method, count, total}]
+      final paymentsList = financial['payments'] as List? ?? [];
+      final paymentBreakdown = <String, double>{};
+      for (final p in paymentsList) {
+        final m = p as Map<String, dynamic>;
+        paymentBreakdown[m['method'] as String? ?? 'unknown'] = _dbl(m['total']);
+      }
 
-      // Parse daily trend
-      final dailyRaw = trend['data'] as List? ?? trend['points'] as List? ?? [];
-      final daily = dailyRaw.map((j) => DailyTrendPoint.fromJson(j as Map<String, dynamic>)).toList();
+      // Calculate total transactions from daily data
+      final dailyFinancial = financial['daily'] as List? ?? [];
+      int totalTransactionsFromDaily = 0;
+      for (final d in dailyFinancial) {
+        totalTransactionsFromDaily += ((d as Map<String, dynamic>)['orders'] as num?)?.toInt() ?? 0;
+      }
+
+      // Dashboard stats: each stat is { value, change }
+      final dashTodaySales = dashboard['today_sales'] as Map<String, dynamic>? ?? {};
+      final dashTransactions = dashboard['transactions'] as Map<String, dynamic>? ?? {};
+      final dashAvgBasket = dashboard['avg_basket'] as Map<String, dynamic>? ?? {};
+
+      // Parse daily trend from sales-trend endpoint: { current: [{date, revenue, orders}], summary: {...} }
+      final trendCurrent = trend['current'] as List? ?? [];
+      final trendSummary = trend['summary'] as Map<String, dynamic>? ?? {};
+      final daily = trendCurrent
+          .map((j) {
+            final m = j as Map<String, dynamic>;
+            return DailyTrendPoint(
+              date: DateTime.parse(m['date'] as String),
+              sales: _dbl(m['revenue']),
+              count: (m['orders'] as num?)?.toInt() ?? 0,
+            );
+          })
+          .toList();
+
+      // Parse hourly distribution from hourlySales endpoint: [{hour, transaction_count, revenue}]
+      final hourlyDistribution = <int, int>{};
+      for (final h in hourlyRaw) {
+        final m = h as Map<String, dynamic>;
+        hourlyDistribution[(m['hour'] as num).toInt()] = (m['transaction_count'] as num?)?.toInt() ?? 0;
+      }
 
       state = TransactionStatsLoaded(
-        totalSales: _dbl(financial['total_sales'] ?? dashboard['today_sales']),
+        totalSales: _dbl(revenue['total']) > 0 ? _dbl(revenue['total']) : _dbl(dashTodaySales['value']),
         totalTransactions:
-            (financial['total_transactions'] as num?)?.toInt() ?? (dashboard['today_transactions'] as num?)?.toInt() ?? 0,
-        totalReturns: (financial['total_returns'] as num?)?.toInt() ?? 0,
-        totalVoids: (financial['total_voids'] as num?)?.toInt() ?? 0,
-        avgTransactionValue: _dbl(financial['avg_transaction_value'] ?? dashboard['avg_basket']),
-        netRevenue: _dbl(financial['net_revenue'] ?? financial['total_sales']),
-        totalTax: _dbl(financial['total_tax']),
-        totalDiscount: _dbl(financial['total_discount']),
-        totalTips: _dbl(financial['total_tips']),
-        salesTrend: _dblOrNull(dashboard['sales_trend']),
-        transactionsTrend: _dblOrNull(dashboard['transactions_trend']),
-        avgBasketTrend: _dblOrNull(dashboard['basket_trend']),
+            totalTransactionsFromDaily > 0 ? totalTransactionsFromDaily : (dashTransactions['value'] as num?)?.toInt() ?? 0,
+        totalReturns: 0, // Not directly in these endpoints
+        totalVoids: 0, // Not directly in these endpoints
+        avgTransactionValue: totalTransactionsFromDaily > 0
+            ? _dbl(revenue['total']) / totalTransactionsFromDaily
+            : _dbl(dashAvgBasket['value']),
+        netRevenue: _dbl(revenue['net']) > 0 ? _dbl(revenue['net']) : _dbl(revenue['total']),
+        totalTax: _dbl(revenue['tax']),
+        totalDiscount: _dbl(revenue['discounts']),
+        totalTips: 0.0,
+        salesTrend: _dblOrNull(dashTodaySales['change']),
+        transactionsTrend: _dblOrNull(dashTransactions['change']),
+        avgBasketTrend: _dblOrNull(dashAvgBasket['change']),
         paymentMethodBreakdown: paymentBreakdown,
-        hourlyDistribution: hourly,
+        hourlyDistribution: hourlyDistribution,
         dailyTrend: daily,
-        previousTotalSales: _dblOrNull(financial['previous_total_sales']),
-        previousTotalTransactions: (financial['previous_total_transactions'] as num?)?.toInt(),
-        previousAvgTransactionValue: _dblOrNull(financial['previous_avg_transaction_value']),
+        previousTotalSales: _dblOrNull(trendSummary['previous_total']),
+        previousTotalTransactions: null,
+        previousAvgTransactionValue: null,
       );
     } catch (e) {
       state = TransactionStatsError(e.toString());

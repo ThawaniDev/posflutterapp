@@ -85,12 +85,7 @@ class AIBillingFeatureUsage {
   final int totalTokens;
   final double billedCostUsd;
 
-  const AIBillingFeatureUsage({
-    required this.featureSlug,
-    this.requestCount = 0,
-    this.totalTokens = 0,
-    this.billedCostUsd = 0,
-  });
+  const AIBillingFeatureUsage({required this.featureSlug, this.requestCount = 0, this.totalTokens = 0, this.billedCostUsd = 0});
 
   factory AIBillingFeatureUsage.fromJson(Map<String, dynamic> json) {
     return AIBillingFeatureUsage(
