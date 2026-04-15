@@ -64,10 +64,12 @@ class MarketplaceApiService {
 
   // ── Purchase ──────────────────────────────────────────────
 
-  Future<TemplatePurchase> purchase(String listingId, Map<String, dynamic> data) async {
+  /// Purchase a listing. For free items returns purchase data.
+  /// For paid items returns payment data with `redirect_url`.
+  Future<Map<String, dynamic>> purchase(String listingId, Map<String, dynamic> data) async {
     final response = await _dio.post(ApiEndpoints.marketplacePurchase(listingId), data: data);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    return TemplatePurchase.fromJson(apiResponse.data as Map<String, dynamic>);
+    return apiResponse.data as Map<String, dynamic>;
   }
 
   Future<List<TemplatePurchase>> myPurchases() async {

@@ -34,7 +34,7 @@ class MarketplaceRepository {
   Future<MarketplaceListing> getListing(String id) => _apiService.getListing(id);
   Future<List<MarketplaceCategory>> listCategories() => _apiService.listCategories();
   Future<MarketplaceCategory> getCategory(String id) => _apiService.getCategory(id);
-  Future<TemplatePurchase> purchase(String listingId, Map<String, dynamic> data) => _apiService.purchase(listingId, data);
+  Future<Map<String, dynamic>> purchase(String listingId, Map<String, dynamic> data) => _apiService.purchase(listingId, data);
   Future<List<TemplatePurchase>> myPurchases() => _apiService.myPurchases();
   Future<bool> checkAccess(String listingId) => _apiService.checkAccess(listingId);
   Future<void> cancelPurchase(String purchaseId) => _apiService.cancelPurchase(purchaseId);

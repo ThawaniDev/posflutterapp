@@ -4,6 +4,7 @@ enum PaymentPurpose {
   aiBilling('ai_billing'),
   hardware('hardware'),
   implementationFee('implementation_fee'),
+  marketplacePurchase('marketplace_purchase'),
   other('other');
 
   const PaymentPurpose(this.value);
@@ -31,6 +32,7 @@ enum PaymentPurpose {
     aiBilling => 'AI Billing',
     hardware => 'Hardware',
     implementationFee => 'Implementation Fee',
+    marketplacePurchase => 'Marketplace Purchase',
     other => 'Other',
   };
 }

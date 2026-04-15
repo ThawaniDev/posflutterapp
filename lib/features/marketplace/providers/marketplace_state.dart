@@ -105,6 +105,12 @@ class MarketplaceDetailPurchasing extends MarketplaceDetailState {
   const MarketplaceDetailPurchasing();
 }
 
+class MarketplaceDetailPaymentRequired extends MarketplaceDetailState {
+  final String redirectUrl;
+  final String purchaseId;
+  const MarketplaceDetailPaymentRequired({required this.redirectUrl, required this.purchaseId});
+}
+
 class MarketplaceDetailError extends MarketplaceDetailState {
   final String message;
   const MarketplaceDetailError({required this.message});

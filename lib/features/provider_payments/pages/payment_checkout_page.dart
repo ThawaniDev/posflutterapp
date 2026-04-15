@@ -75,8 +75,7 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
           },
           onNavigationRequest: (request) {
             // Detect return URL to navigate back
-            if (request.url.contains('/provider-payments/return') ||
-                request.url.contains('/payment/result')) {
+            if (request.url.contains('/provider-payments/return') || request.url.contains('/payment/result')) {
               context.go(Routes.providerPayments);
               return NavigationDecision.prevent;
             }

@@ -16,6 +16,7 @@ import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/features/marketplace/providers/marketplace_providers.dart';
 import 'package:wameedpos/features/marketplace/providers/marketplace_state.dart';
+import 'package:wameedpos/features/marketplace/pages/marketplace_payment_webview_page.dart';
 
 class MarketplaceListingDetailPage extends ConsumerStatefulWidget {
   const MarketplaceListingDetailPage({super.key, required this.listingId});
@@ -49,6 +50,23 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
+    // Listen for payment required state to navigate to WebView
+    ref.listen<MarketplaceDetailState>(marketplaceDetailProvider(widget.listingId), (prev, next) {
+      if (next is MarketplaceDetailPaymentRequired) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => MarketplacePaymentWebViewPage(
+              redirectUrl: next.redirectUrl,
+              onComplete: () {
+                // Reload listing to refresh access status
+                ref.read(marketplaceDetailProvider(widget.listingId).notifier).load();
+              },
+            ),
+          ),
+        );
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(title: Text(state is MarketplaceDetailLoaded ? state.listing.title : l10n.marketplaceListingDetail)),
       floatingActionButton: state is MarketplaceDetailLoaded
@@ -62,7 +80,7 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
           : null,
       body: switch (state) {
         MarketplaceDetailInitial() || MarketplaceDetailLoading() => PosLoadingSkeleton.list(),
-        MarketplaceDetailPurchasing() => const Center(child: CircularProgressIndicator()),
+        MarketplaceDetailPurchasing() || MarketplaceDetailPaymentRequired() => const Center(child: CircularProgressIndicator()),
         MarketplaceDetailError(:final message) => PosErrorState(
           message: message,
           onRetry: () => ref.read(marketplaceDetailProvider(widget.listingId).notifier).load(),

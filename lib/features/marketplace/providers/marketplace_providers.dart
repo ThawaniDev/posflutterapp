@@ -123,7 +123,18 @@ class MarketplaceDetailNotifier extends StateNotifier<MarketplaceDetailState> {
   Future<void> purchase(Map<String, dynamic> data) async {
     state = const MarketplaceDetailPurchasing();
     try {
-      await _repo.purchase(_listingId, data);
+      final result = await _repo.purchase(_listingId, data);
+
+      // If response contains redirect_url, it's a paid listing needing payment
+      if (result.containsKey('redirect_url') && result['redirect_url'] != null) {
+        state = MarketplaceDetailPaymentRequired(
+          redirectUrl: result['redirect_url'] as String,
+          purchaseId: result['purchase_id'] as String? ?? '',
+        );
+        return;
+      }
+
+      // Free listing — purchase completed immediately
       await load();
     } on DioException catch (e) {
       state = MarketplaceDetailError(message: _extractError(e));
