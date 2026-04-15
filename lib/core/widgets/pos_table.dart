@@ -266,33 +266,62 @@ class PosDataTable<T> extends StatelessWidget {
       return _buildContainer(context, child: _EmptyState(config: emptyConfig));
     }
 
-    // Mobile: card-based list layout
+    // Detect whether we are inside a vertical scroll view (unbounded height)
+    // vs direct scaffold body (bounded height).
+    final parentScrollable = Scrollable.maybeOf(context);
+    final isNested = parentScrollable != null &&
+        (parentScrollable.axisDirection == AxisDirection.down ||
+         parentScrollable.axisDirection == AxisDirection.up);
+
     final screenWidth = MediaQuery.sizeOf(context).width;
     if (screenWidth < AppSizes.breakpointTablet) {
-      return _buildMobileLayout(context);
+      return _buildMobileLayout(context, isNested: isNested);
     }
 
-    // Desktop: traditional data table + pagination
+    return _buildDesktopLayout(context, isNested: isNested);
+  }
+
+  // ── Desktop layout ────────────────────────────────────────
+
+  Widget _buildDesktopLayout(BuildContext context, {required bool isNested}) {
     if (_hasPagination) {
+      if (isNested) {
+        // Inside a scroll view: shrink to content, parent handles scrolling
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildTableContainer(context),
+            _buildPagination(context),
+          ],
+        );
+      }
+      // Direct scaffold body: fill available space, scroll table if needed
       return Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
-          _buildTableContainer(context),
+          Expanded(
+            child: SingleChildScrollView(
+              child: _buildTableContainer(context),
+            ),
+          ),
           _buildPagination(context),
         ],
       );
     }
-    return _buildTableContainer(context);
+
+    if (isNested) {
+      return _buildTableContainer(context);
+    }
+    return SingleChildScrollView(child: _buildTableContainer(context));
   }
 
   // ── Mobile card layout ────────────────────────────────────
 
-  Widget _buildMobileLayout(BuildContext context) {
+  Widget _buildMobileLayout(BuildContext context, {required bool isNested}) {
     final visibleCols = _visibleColumns;
 
     final listView = ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: isNested,
+      physics: isNested ? const NeverScrollableScrollPhysics() : null,
       padding: const EdgeInsets.only(bottom: 80),
       itemCount: items.length,
       itemBuilder: (context, index) {
@@ -313,10 +342,18 @@ class PosDataTable<T> extends StatelessWidget {
     );
 
     if (_hasPagination) {
+      if (isNested) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            listView,
+            _buildMobilePagination(context),
+          ],
+        );
+      }
       return Column(
-        mainAxisSize: MainAxisSize.min,
         children: [
-          listView,
+          Expanded(child: listView),
           _buildMobilePagination(context),
         ],
       );
@@ -357,25 +394,24 @@ class PosDataTable<T> extends StatelessWidget {
 
   Widget _buildTableContainer(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final effectiveMargin = headerPadding ?? const EdgeInsets.symmetric(horizontal: AppSpacing.xxxl);
+    final resolvedMargin = effectiveMargin.resolve(Directionality.of(context));
+    final availableWidth = MediaQuery.sizeOf(context).width - resolvedMargin.horizontal;
 
     return Container(
-      margin: headerPadding ?? const EdgeInsets.symmetric(horizontal: AppSpacing.xxxl),
+      margin: effectiveMargin,
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : AppColors.cardLight,
         borderRadius: AppRadius.borderLg,
         border: showBorder ? Border.all(color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtleLight) : null,
       ),
       clipBehavior: Clip.antiAlias,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minWidth: constraints.maxWidth),
-              child: _buildDataTable(context, constraints.maxWidth),
-            ),
-          );
-        },
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minWidth: availableWidth > 0 ? availableWidth : 0),
+          child: _buildDataTable(context, availableWidth),
+        ),
       ),
     );
   }
