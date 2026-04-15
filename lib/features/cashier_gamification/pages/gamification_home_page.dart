@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
-import 'package:thawani_pos/features/cashier_gamification/providers/gamification_providers.dart';
-import 'package:thawani_pos/features/cashier_gamification/providers/gamification_state.dart';
-import 'package:thawani_pos/features/cashier_gamification/widgets/leaderboard_card.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/features/cashier_gamification/providers/gamification_providers.dart';
+import 'package:wameedpos/features/cashier_gamification/providers/gamification_state.dart';
+import 'package:wameedpos/features/cashier_gamification/widgets/leaderboard_card.dart';
 
 class GamificationHomePage extends ConsumerStatefulWidget {
   const GamificationHomePage({super.key});

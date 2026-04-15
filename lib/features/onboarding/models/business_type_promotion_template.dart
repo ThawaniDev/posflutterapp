@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/catalog/enums/business_promotion_type.dart';
-import 'package:thawani_pos/features/promotions/enums/promotion_applies_to.dart';
+import 'package:wameedpos/features/catalog/enums/business_promotion_type.dart';
+import 'package:wameedpos/features/promotions/enums/promotion_applies_to.dart';
 
 class BusinessTypePromotionTemplate {
   final String id;
@@ -101,13 +101,12 @@ class BusinessTypePromotionTemplate {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BusinessTypePromotionTemplate && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is BusinessTypePromotionTemplate && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'BusinessTypePromotionTemplate(id: $id, businessTypeId: $businessTypeId, name: $name, nameAr: $nameAr, description: $description, promotionType: $promotionType, ...)';
+  String toString() =>
+      'BusinessTypePromotionTemplate(id: $id, businessTypeId: $businessTypeId, name: $name, nameAr: $nameAr, description: $description, promotionType: $promotionType, ...)';
 }

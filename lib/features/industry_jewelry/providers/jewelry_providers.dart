@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/industry_jewelry/providers/jewelry_state.dart';
-import 'package:thawani_pos/features/industry_jewelry/repositories/jewelry_repository.dart';
+import 'package:wameedpos/features/industry_jewelry/providers/jewelry_state.dart';
+import 'package:wameedpos/features/industry_jewelry/repositories/jewelry_repository.dart';
 
 final jewelryProvider = StateNotifierProvider<JewelryNotifier, JewelryState>((ref) {
   return JewelryNotifier(ref.watch(jewelryRepositoryProvider));

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/sync/data/remote/sync_api_service.dart';
+import 'package:wameedpos/features/sync/data/remote/sync_api_service.dart';
 
 class SyncRepository {
   final SyncApiService _api;

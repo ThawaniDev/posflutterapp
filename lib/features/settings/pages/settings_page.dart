@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/router/route_names.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});

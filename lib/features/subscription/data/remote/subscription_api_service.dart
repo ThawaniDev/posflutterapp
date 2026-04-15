@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/subscription/models/invoice.dart';
-import 'package:thawani_pos/features/subscription/models/store_subscription.dart';
-import 'package:thawani_pos/features/subscription/models/subscription_plan.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/subscription/models/invoice.dart';
+import 'package:wameedpos/features/subscription/models/store_subscription.dart';
+import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
 
 final subscriptionApiServiceProvider = Provider<SubscriptionApiService>((ref) {
   return SubscriptionApiService(ref.watch(dioClientProvider));

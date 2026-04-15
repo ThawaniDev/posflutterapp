@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/theme/app_typography.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/payments/enums/installment_provider.dart';
-import 'package:thawani_pos/features/payments/models/checkout_provider_option.dart';
-import 'package:thawani_pos/features/payments/models/installment_payment.dart';
-import 'package:thawani_pos/features/payments/pages/installment_webview_page.dart';
-import 'package:thawani_pos/features/payments/providers/installment_providers.dart';
-import 'package:thawani_pos/features/payments/providers/installment_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/payments/enums/installment_provider.dart';
+import 'package:wameedpos/features/payments/models/checkout_provider_option.dart';
+import 'package:wameedpos/features/payments/models/installment_payment.dart';
+import 'package:wameedpos/features/payments/pages/installment_webview_page.dart';
+import 'package:wameedpos/features/payments/providers/installment_providers.dart';
+import 'package:wameedpos/features/payments/providers/installment_state.dart';
 
 /// Dialog for selecting an installment provider and initiating checkout.
 /// Returns the completed [InstallmentPayment] on success, or null on cancel/failure.

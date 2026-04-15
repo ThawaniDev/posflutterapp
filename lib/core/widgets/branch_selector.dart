@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/providers/branch_context_provider.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/branches/models/store.dart';
-import 'package:thawani_pos/features/branches/providers/branch_providers.dart';
-import 'package:thawani_pos/features/branches/providers/branch_state.dart';
-import 'package:thawani_pos/features/staff/providers/roles_providers.dart';
+import 'package:wameedpos/core/providers/branch_context_provider.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/branches/models/store.dart';
+import 'package:wameedpos/features/branches/providers/branch_providers.dart';
+import 'package:wameedpos/features/branches/providers/branch_state.dart';
+import 'package:wameedpos/features/staff/providers/roles_providers.dart';
 
 /// Dropdown selector for switching between branches.
 /// Shows per-branch role name. Org-scoped users can switch; branch-scoped see their branch + role.

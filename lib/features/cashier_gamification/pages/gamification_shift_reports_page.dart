@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
-import 'package:thawani_pos/features/cashier_gamification/data/gamification_repository.dart';
-import 'package:thawani_pos/features/cashier_gamification/providers/gamification_providers.dart';
-import 'package:thawani_pos/features/cashier_gamification/providers/gamification_state.dart';
-import 'package:thawani_pos/features/cashier_gamification/widgets/shift_report_card.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/features/cashier_gamification/data/gamification_repository.dart';
+import 'package:wameedpos/features/cashier_gamification/providers/gamification_providers.dart';
+import 'package:wameedpos/features/cashier_gamification/providers/gamification_state.dart';
+import 'package:wameedpos/features/cashier_gamification/widgets/shift_report_card.dart';
 
 class GamificationShiftReportsPage extends ConsumerStatefulWidget {
   const GamificationShiftReportsPage({super.key});

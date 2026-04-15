@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/features/industry_jewelry/enums/metal_type.dart';
-import 'package:thawani_pos/features/industry_jewelry/enums/making_charges_type.dart';
-import 'package:thawani_pos/features/industry_jewelry/enums/buyback_payment_method.dart';
-import 'package:thawani_pos/features/industry_jewelry/models/daily_metal_rate.dart';
-import 'package:thawani_pos/features/industry_jewelry/models/jewelry_product_detail.dart';
-import 'package:thawani_pos/features/industry_jewelry/models/buyback_transaction.dart';
-import 'package:thawani_pos/features/industry_jewelry/providers/jewelry_state.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/features/industry_jewelry/enums/metal_type.dart';
+import 'package:wameedpos/features/industry_jewelry/enums/making_charges_type.dart';
+import 'package:wameedpos/features/industry_jewelry/enums/buyback_payment_method.dart';
+import 'package:wameedpos/features/industry_jewelry/models/daily_metal_rate.dart';
+import 'package:wameedpos/features/industry_jewelry/models/jewelry_product_detail.dart';
+import 'package:wameedpos/features/industry_jewelry/models/buyback_transaction.dart';
+import 'package:wameedpos/features/industry_jewelry/providers/jewelry_state.dart';
 
 void main() {
   // ═══════════════ Enums ═══════════════

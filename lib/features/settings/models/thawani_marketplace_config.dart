@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/thawani_integration/enums/thawani_connection_status.dart';
+import 'package:wameedpos/features/thawani_integration/enums/thawani_connection_status.dart';
 
 class ThawaniMarketplaceConfig {
   final String id;
@@ -100,13 +100,12 @@ class ThawaniMarketplaceConfig {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ThawaniMarketplaceConfig && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is ThawaniMarketplaceConfig && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'ThawaniMarketplaceConfig(id: $id, clientIdEncrypted: $clientIdEncrypted, clientSecretEncrypted: $clientSecretEncrypted, redirectUrl: $redirectUrl, apiBaseUrl: $apiBaseUrl, apiVersion: $apiVersion, ...)';
+  String toString() =>
+      'ThawaniMarketplaceConfig(id: $id, clientIdEncrypted: $clientIdEncrypted, clientSecretEncrypted: $clientSecretEncrypted, redirectUrl: $redirectUrl, apiBaseUrl: $apiBaseUrl, apiVersion: $apiVersion, ...)';
 }

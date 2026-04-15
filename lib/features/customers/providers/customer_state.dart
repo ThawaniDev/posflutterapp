@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/customers/models/customer.dart';
-import 'package:thawani_pos/features/customers/models/customer_group.dart';
+import 'package:wameedpos/features/customers/models/customer.dart';
+import 'package:wameedpos/features/customers/models/customer_group.dart';
 
 // ─── Customers State ────────────────────────────────────────────
 

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/delivery_integration/enums/delivery_config_platform.dart';
-import 'package:thawani_pos/features/delivery_integration/enums/delivery_order_status.dart';
-import 'package:thawani_pos/features/delivery_integration/enums/menu_sync_status.dart';
-import 'package:thawani_pos/features/delivery_integration/enums/delivery_sync_status.dart';
-import 'package:thawani_pos/features/delivery_integration/models/delivery_webhook_log.dart';
-import 'package:thawani_pos/features/delivery_integration/models/delivery_status_push_log.dart';
-import 'package:thawani_pos/features/delivery_integration/providers/delivery_state.dart';
+import 'package:wameedpos/features/delivery_integration/enums/delivery_config_platform.dart';
+import 'package:wameedpos/features/delivery_integration/enums/delivery_order_status.dart';
+import 'package:wameedpos/features/delivery_integration/enums/menu_sync_status.dart';
+import 'package:wameedpos/features/delivery_integration/enums/delivery_sync_status.dart';
+import 'package:wameedpos/features/delivery_integration/models/delivery_webhook_log.dart';
+import 'package:wameedpos/features/delivery_integration/models/delivery_status_push_log.dart';
+import 'package:wameedpos/features/delivery_integration/providers/delivery_state.dart';
 
 void main() {
   // ════════════════════════════════════════════════════════

@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/zatca/enums/invoice_status.dart';
-import 'package:thawani_pos/features/subscription/models/invoice_line_item.dart';
+import 'package:wameedpos/features/zatca/enums/invoice_status.dart';
+import 'package:wameedpos/features/subscription/models/invoice_line_item.dart';
 
 class Invoice {
   final String id;

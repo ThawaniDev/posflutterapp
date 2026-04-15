@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/pos_card.dart';
-import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
-import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
-import 'package:thawani_pos/core/providers/branch_context_provider.dart';
-import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_infra_failed_jobs_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_infra_backups_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_infra_health_page.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/pos_card.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/providers/branch_context_provider.dart';
+import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_infra_failed_jobs_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_infra_backups_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_infra_health_page.dart';
 
 class AdminInfraOverviewPage extends ConsumerStatefulWidget {
   const AdminInfraOverviewPage({super.key});

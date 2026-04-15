@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/industry_electronics/providers/electronics_providers.dart';
-import 'package:thawani_pos/features/industry_electronics/providers/electronics_state.dart';
-import 'package:thawani_pos/features/industry_electronics/widgets/imei_record_card.dart';
-import 'package:thawani_pos/features/industry_electronics/widgets/repair_job_card.dart';
-import 'package:thawani_pos/features/industry_electronics/widgets/trade_in_card.dart';
-import 'package:thawani_pos/features/industry_electronics/pages/imei_record_form_page.dart';
-import 'package:thawani_pos/features/industry_electronics/pages/repair_job_form_page.dart';
-import 'package:thawani_pos/features/industry_electronics/pages/trade_in_form_page.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_electronics/providers/electronics_providers.dart';
+import 'package:wameedpos/features/industry_electronics/providers/electronics_state.dart';
+import 'package:wameedpos/features/industry_electronics/widgets/imei_record_card.dart';
+import 'package:wameedpos/features/industry_electronics/widgets/repair_job_card.dart';
+import 'package:wameedpos/features/industry_electronics/widgets/trade_in_card.dart';
+import 'package:wameedpos/features/industry_electronics/pages/imei_record_form_page.dart';
+import 'package:wameedpos/features/industry_electronics/pages/repair_job_form_page.dart';
+import 'package:wameedpos/features/industry_electronics/pages/trade_in_form_page.dart';
 
 class ElectronicsDashboardPage extends ConsumerStatefulWidget {
   const ElectronicsDashboardPage({super.key});

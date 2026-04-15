@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/accessibility/providers/accessibility_state.dart';
-import 'package:thawani_pos/features/accessibility/repositories/accessibility_repository.dart';
+import 'package:wameedpos/features/accessibility/providers/accessibility_state.dart';
+import 'package:wameedpos/features/accessibility/repositories/accessibility_repository.dart';
 
 // ─── Preferences Provider ─────────────────────────────
 final accessibilityPrefsProvider = StateNotifierProvider<AccessibilityPrefsNotifier, AccessibilityPrefsState>(

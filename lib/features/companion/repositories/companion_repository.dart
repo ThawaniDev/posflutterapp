@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/companion/data/remote/companion_api_service.dart';
+import 'package:wameedpos/features/companion/data/remote/companion_api_service.dart';
 
 final companionRepositoryProvider = Provider<CompanionRepository>((ref) {
   return CompanionRepository(ref.watch(companionApiServiceProvider));

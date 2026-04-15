@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/auth/data/local/auth_local_storage.dart';
-import 'package:thawani_pos/features/settings/models/working_hour.dart';
-import 'package:thawani_pos/features/settings/providers/settings_providers.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/auth/data/local/auth_local_storage.dart';
+import 'package:wameedpos/features/settings/models/working_hour.dart';
+import 'package:wameedpos/features/settings/providers/settings_providers.dart';
 
 class WorkingHoursPage extends ConsumerStatefulWidget {
   const WorkingHoursPage({super.key});

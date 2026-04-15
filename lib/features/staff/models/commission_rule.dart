@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/staff/enums/commission_rule_type.dart';
+import 'package:wameedpos/features/staff/enums/commission_rule_type.dart';
 
 class CommissionRule {
   final String id;
@@ -82,13 +82,12 @@ class CommissionRule {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CommissionRule && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is CommissionRule && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'CommissionRule(id: $id, storeId: $storeId, staffUserId: $staffUserId, type: $type, percentage: $percentage, tiersJson: $tiersJson, ...)';
+  String toString() =>
+      'CommissionRule(id: $id, storeId: $storeId, staffUserId: $staffUserId, type: $type, percentage: $percentage, tiersJson: $tiersJson, ...)';
 }

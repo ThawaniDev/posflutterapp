@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/industry_florist/enums/flower_freshness_status.dart';
+import 'package:wameedpos/features/industry_florist/enums/flower_freshness_status.dart';
 
 class FlowerFreshnessLog {
   final String id;
@@ -76,13 +76,12 @@ class FlowerFreshnessLog {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is FlowerFreshnessLog && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is FlowerFreshnessLog && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'FlowerFreshnessLog(id: $id, productId: $productId, storeId: $storeId, receivedDate: $receivedDate, expectedVaseLifeDays: $expectedVaseLifeDays, markdownDate: $markdownDate, ...)';
+  String toString() =>
+      'FlowerFreshnessLog(id: $id, productId: $productId, storeId: $storeId, receivedDate: $receivedDate, expectedVaseLifeDays: $expectedVaseLifeDays, markdownDate: $markdownDate, ...)';
 }

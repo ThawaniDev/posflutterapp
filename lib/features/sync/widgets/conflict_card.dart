@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/sync/models/sync_conflict.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/sync/models/sync_conflict.dart';
 
 class ConflictCard extends StatelessWidget {
   final SyncConflict conflict;

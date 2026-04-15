@@ -1,7 +1,7 @@
-import 'package:thawani_pos/features/industry_restaurant/models/restaurant_table.dart';
-import 'package:thawani_pos/features/industry_restaurant/models/kitchen_ticket.dart';
-import 'package:thawani_pos/features/industry_restaurant/models/table_reservation.dart';
-import 'package:thawani_pos/features/industry_restaurant/models/open_tab.dart';
+import 'package:wameedpos/features/industry_restaurant/models/restaurant_table.dart';
+import 'package:wameedpos/features/industry_restaurant/models/kitchen_ticket.dart';
+import 'package:wameedpos/features/industry_restaurant/models/table_reservation.dart';
+import 'package:wameedpos/features/industry_restaurant/models/open_tab.dart';
 
 sealed class RestaurantState {
   const RestaurantState();

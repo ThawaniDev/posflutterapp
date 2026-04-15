@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/customers/enums/waste_reason_category.dart';
+import 'package:wameedpos/features/customers/enums/waste_reason_category.dart';
 
 class BusinessTypeWasteReasonTemplate {
   final String id;
@@ -82,13 +82,12 @@ class BusinessTypeWasteReasonTemplate {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BusinessTypeWasteReasonTemplate && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is BusinessTypeWasteReasonTemplate && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'BusinessTypeWasteReasonTemplate(id: $id, businessTypeId: $businessTypeId, reasonCode: $reasonCode, name: $name, nameAr: $nameAr, category: $category, ...)';
+  String toString() =>
+      'BusinessTypeWasteReasonTemplate(id: $id, businessTypeId: $businessTypeId, reasonCode: $reasonCode, name: $name, nameAr: $nameAr, category: $category, ...)';
 }

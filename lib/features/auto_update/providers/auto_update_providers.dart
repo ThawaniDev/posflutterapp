@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/auto_update/providers/auto_update_state.dart';
-import 'package:thawani_pos/features/auto_update/repositories/auto_update_repository.dart';
+import 'package:wameedpos/features/auto_update/providers/auto_update_state.dart';
+import 'package:wameedpos/features/auto_update/repositories/auto_update_repository.dart';
 
 // ─── Update Check Provider ────────────────────────────
 final updateCheckProvider = StateNotifierProvider<UpdateCheckNotifier, UpdateCheckState>(

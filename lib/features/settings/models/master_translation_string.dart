@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/settings/enums/translation_category.dart';
+import 'package:wameedpos/features/settings/enums/translation_category.dart';
 
 class MasterTranslationString {
   final String id;
@@ -70,13 +70,12 @@ class MasterTranslationString {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is MasterTranslationString && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is MasterTranslationString && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'MasterTranslationString(id: $id, stringKey: $stringKey, category: $category, valueEn: $valueEn, valueAr: $valueAr, description: $description, ...)';
+  String toString() =>
+      'MasterTranslationString(id: $id, stringKey: $stringKey, category: $category, valueEn: $valueEn, valueAr: $valueAr, description: $description, ...)';
 }

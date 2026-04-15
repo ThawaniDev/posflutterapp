@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/companion/providers/companion_state.dart';
-import 'package:thawani_pos/features/companion/providers/companion_providers.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/companion/providers/companion_state.dart';
+import 'package:wameedpos/features/companion/providers/companion_providers.dart';
 
 class QuickActionsWidget extends ConsumerWidget {
   const QuickActionsWidget({super.key});

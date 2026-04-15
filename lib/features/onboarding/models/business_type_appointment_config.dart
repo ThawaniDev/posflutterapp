@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/orders/enums/cancellation_fee_type.dart';
+import 'package:wameedpos/features/orders/enums/cancellation_fee_type.dart';
 
 class BusinessTypeAppointmentConfig {
   final String id;
@@ -42,9 +42,13 @@ class BusinessTypeAppointmentConfig {
       maxAdvanceBookingDays: (json['max_advance_booking_days'] as num?)?.toInt(),
       cancellationWindowHours: (json['cancellation_window_hours'] as num?)?.toInt(),
       cancellationFeeType: CancellationFeeType.tryFromValue(json['cancellation_fee_type'] as String?),
-      cancellationFeeValue: (json['cancellation_fee_value'] != null ? double.tryParse(json['cancellation_fee_value'].toString()) : null),
+      cancellationFeeValue: (json['cancellation_fee_value'] != null
+          ? double.tryParse(json['cancellation_fee_value'].toString())
+          : null),
       allowWalkins: json['allow_walkins'] as bool?,
-      overbookingBufferPercentage: (json['overbooking_buffer_percentage'] != null ? double.tryParse(json['overbooking_buffer_percentage'].toString()) : null),
+      overbookingBufferPercentage: (json['overbooking_buffer_percentage'] != null
+          ? double.tryParse(json['overbooking_buffer_percentage'].toString())
+          : null),
       requireDeposit: json['require_deposit'] as bool?,
       depositPercentage: (json['deposit_percentage'] != null ? double.tryParse(json['deposit_percentage'].toString()) : null),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
@@ -106,13 +110,12 @@ class BusinessTypeAppointmentConfig {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BusinessTypeAppointmentConfig && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is BusinessTypeAppointmentConfig && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'BusinessTypeAppointmentConfig(id: $id, businessTypeId: $businessTypeId, defaultSlotDurationMinutes: $defaultSlotDurationMinutes, minAdvanceBookingHours: $minAdvanceBookingHours, maxAdvanceBookingDays: $maxAdvanceBookingDays, cancellationWindowHours: $cancellationWindowHours, ...)';
+  String toString() =>
+      'BusinessTypeAppointmentConfig(id: $id, businessTypeId: $businessTypeId, defaultSlotDurationMinutes: $defaultSlotDurationMinutes, minAdvanceBookingHours: $minAdvanceBookingHours, maxAdvanceBookingDays: $maxAdvanceBookingDays, cancellationWindowHours: $cancellationWindowHours, ...)';
 }

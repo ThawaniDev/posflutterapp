@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/sync/services/data_integrity_service.dart';
+import 'package:wameedpos/features/sync/services/data_integrity_service.dart';
 
 void main() {
   group('DataIntegrityService', () {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/subscription/models/invoice.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/subscription/models/invoice.dart';
 
 /// A list tile widget for displaying an invoice summary.
 class InvoiceTile extends StatelessWidget {

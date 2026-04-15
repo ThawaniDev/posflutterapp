@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/wameed_ai/enums/ai_suggestion_priority.dart';
-import 'package:thawani_pos/features/wameed_ai/enums/ai_suggestion_status.dart';
+import 'package:wameedpos/features/wameed_ai/enums/ai_suggestion_priority.dart';
+import 'package:wameedpos/features/wameed_ai/enums/ai_suggestion_status.dart';
 
 class AISuggestion {
   final String id;

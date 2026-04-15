@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/thawani_integration/data/remote/thawani_api_service.dart';
+import 'package:wameedpos/features/thawani_integration/data/remote/thawani_api_service.dart';
 
 class ThawaniRepository {
   final ThawaniApiService _apiService;

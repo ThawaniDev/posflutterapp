@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/branches/enums/provider_backup_status_enum.dart';
+import 'package:wameedpos/features/branches/enums/provider_backup_status_enum.dart';
 
 class ProviderBackupStatus {
   final String id;
@@ -70,13 +70,12 @@ class ProviderBackupStatus {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ProviderBackupStatus && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is ProviderBackupStatus && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'ProviderBackupStatus(id: $id, storeId: $storeId, terminalId: $terminalId, lastSuccessfulSync: $lastSuccessfulSync, lastCloudBackup: $lastCloudBackup, storageUsedBytes: $storageUsedBytes, ...)';
+  String toString() =>
+      'ProviderBackupStatus(id: $id, storeId: $storeId, terminalId: $terminalId, lastSuccessfulSync: $lastSuccessfulSync, lastCloudBackup: $lastCloudBackup, storageUsedBytes: $storageUsedBytes, ...)';
 }

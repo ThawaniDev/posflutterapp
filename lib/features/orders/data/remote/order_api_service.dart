@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
-import 'package:thawani_pos/features/orders/models/order.dart';
-import 'package:thawani_pos/features/orders/models/sale_return.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:wameedpos/features/orders/models/order.dart';
+import 'package:wameedpos/features/orders/models/sale_return.dart';
 
 final orderApiServiceProvider = Provider<OrderApiService>((ref) {
   return OrderApiService(ref.watch(dioClientProvider));

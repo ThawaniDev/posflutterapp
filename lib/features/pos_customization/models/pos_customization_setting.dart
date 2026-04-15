@@ -1,7 +1,7 @@
-import 'package:thawani_pos/features/pos_customization/enums/cart_display_mode.dart';
-import 'package:thawani_pos/features/pos_customization/enums/handedness.dart';
-import 'package:thawani_pos/features/pos_customization/enums/layout_direction.dart';
-import 'package:thawani_pos/features/pos_customization/enums/pos_theme.dart';
+import 'package:wameedpos/features/pos_customization/enums/cart_display_mode.dart';
+import 'package:wameedpos/features/pos_customization/enums/handedness.dart';
+import 'package:wameedpos/features/pos_customization/enums/layout_direction.dart';
+import 'package:wameedpos/features/pos_customization/enums/pos_theme.dart';
 
 class PosCustomizationSetting {
   final String id;

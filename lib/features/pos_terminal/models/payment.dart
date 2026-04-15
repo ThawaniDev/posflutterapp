@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/pos_terminal/enums/payment_method.dart';
+import 'package:wameedpos/features/pos_terminal/enums/payment_method.dart';
 
 class Payment {
   final String id;

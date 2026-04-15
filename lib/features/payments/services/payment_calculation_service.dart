@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:thawani_pos/features/payments/enums/payment_method_key.dart';
+import 'package:wameedpos/features/payments/enums/payment_method_key.dart';
 
 /// \u0081 denomination values (notes and coins)
 class SarDenomination {

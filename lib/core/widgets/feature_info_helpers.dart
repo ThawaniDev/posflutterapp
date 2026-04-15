@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/widgets/feature_info_dialog.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/feature_info_dialog.dart';
 
 /// Centralized feature info definitions for all major feature pages.
 ///

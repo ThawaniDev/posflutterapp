@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/auth/enums/user_role.dart';
+import 'package:wameedpos/features/auth/enums/user_role.dart';
 
 class User {
   final String id;

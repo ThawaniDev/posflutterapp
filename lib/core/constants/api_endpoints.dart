@@ -187,6 +187,13 @@ class ApiEndpoints {
   static const String subscriptionSyncEntitlements = '/subscription/sync/entitlements';
   static const String subscriptionStoreAddOns = '/subscription/store-add-ons';
 
+  // Provider Payments (PayTabs)
+  static const String providerPayments = '/provider-payments';
+  static const String providerPaymentsStatistics = '/provider-payments/statistics';
+  static const String providerPaymentsInitiate = '/provider-payments/initiate';
+  static String providerPaymentById(String id) => '/provider-payments/$id';
+  static String providerPaymentResendEmail(String id) => '/provider-payments/$id/resend-email';
+
   // Promotions & Coupons
   static const String promotions = '/promotions';
   static String promotionById(String id) => '/promotions/$id';

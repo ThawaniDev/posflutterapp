@@ -4,13 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/core/widgets/pos_dialog.dart';
-import 'package:thawani_pos/features/catalog/models/product.dart';
-import 'package:thawani_pos/features/hardware/providers/hardware_providers.dart';
-import 'package:thawani_pos/features/hardware/services/barcode_scanner_service.dart';
-import 'package:thawani_pos/features/hardware/widgets/barcode_product_popup.dart';
-import 'package:thawani_pos/features/pos_terminal/providers/pos_cashier_providers.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/core/widgets/pos_dialog.dart';
+import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/features/hardware/providers/hardware_providers.dart';
+import 'package:wameedpos/features/hardware/services/barcode_scanner_service.dart';
+import 'package:wameedpos/features/hardware/widgets/barcode_product_popup.dart';
+import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_providers.dart';
 
 /// Global barcode scan handler that listens for barcode scans across the entire app.
 ///

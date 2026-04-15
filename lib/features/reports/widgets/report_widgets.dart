@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 // ═══════════════════════════════════════════════════════════════
 // Shared Report Widgets — consistent look across all report pages

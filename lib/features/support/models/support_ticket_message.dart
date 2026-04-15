@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/support/enums/ticket_sender_type.dart';
+import 'package:wameedpos/features/support/enums/ticket_sender_type.dart';
 
 class SupportTicketMessage {
   final String id;

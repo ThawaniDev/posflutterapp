@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/staff/enums/staff_document_type.dart';
+import 'package:wameedpos/features/staff/enums/staff_document_type.dart';
 
 class StaffDocument {
   final String id;
@@ -58,13 +58,12 @@ class StaffDocument {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is StaffDocument && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is StaffDocument && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'StaffDocument(id: $id, staffUserId: $staffUserId, documentType: $documentType, fileUrl: $fileUrl, expiryDate: $expiryDate, uploadedAt: $uploadedAt)';
+  String toString() =>
+      'StaffDocument(id: $id, staffUserId: $staffUserId, documentType: $documentType, fileUrl: $fileUrl, expiryDate: $expiryDate, uploadedAt: $uploadedAt)';
 }

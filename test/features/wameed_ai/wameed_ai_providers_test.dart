@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/features/wameed_ai/enums/ai_feature_category.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_feature_definition.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_feature_result.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_suggestion.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_usage.dart';
-import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_providers.dart';
-import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/features/wameed_ai/enums/ai_feature_category.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_feature_definition.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_feature_result.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_suggestion.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_usage.dart';
+import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
+import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
 
 // ─── Mock Notifiers ─────────────────────────────────────────
 

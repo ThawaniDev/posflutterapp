@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/hardware/enums/connection_type.dart';
-import 'package:thawani_pos/features/hardware/enums/hardware_device_type.dart';
-import 'package:thawani_pos/features/hardware/models/hardware_configuration.dart';
-import 'package:thawani_pos/features/hardware/models/hardware_event_log.dart';
-import 'package:thawani_pos/features/hardware/providers/hardware_state.dart';
+import 'package:wameedpos/features/hardware/enums/connection_type.dart';
+import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
+import 'package:wameedpos/features/hardware/models/hardware_configuration.dart';
+import 'package:wameedpos/features/hardware/models/hardware_event_log.dart';
+import 'package:wameedpos/features/hardware/providers/hardware_state.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════

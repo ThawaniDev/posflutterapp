@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/support/models/knowledge_base_article.dart';
-import 'package:thawani_pos/features/support/models/support_ticket.dart';
-import 'package:thawani_pos/features/support/models/support_ticket_message.dart';
-import 'package:thawani_pos/features/support/repositories/support_repository.dart';
-import 'package:thawani_pos/features/support/providers/support_state.dart';
+import 'package:wameedpos/features/support/models/knowledge_base_article.dart';
+import 'package:wameedpos/features/support/models/support_ticket.dart';
+import 'package:wameedpos/features/support/models/support_ticket_message.dart';
+import 'package:wameedpos/features/support/repositories/support_repository.dart';
+import 'package:wameedpos/features/support/providers/support_state.dart';
 
 // ─── Support Stats Provider ─────────────────────────────
 class SupportStatsNotifier extends StateNotifier<SupportStatsState> {

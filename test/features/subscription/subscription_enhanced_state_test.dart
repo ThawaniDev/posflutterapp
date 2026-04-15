@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/subscription/providers/subscription_state.dart';
-import 'package:thawani_pos/features/subscription/models/invoice.dart';
+import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
+import 'package:wameedpos/features/subscription/models/invoice.dart';
 
 void main() {
   // --- InvoiceDetailState Tests ---

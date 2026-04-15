@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/pos_status_badge.dart';
-import 'package:thawani_pos/features/delivery_integration/enums/delivery_order_status.dart';
-import 'package:thawani_pos/features/delivery_integration/enums/delivery_config_platform.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/pos_status_badge.dart';
+import 'package:wameedpos/features/delivery_integration/enums/delivery_order_status.dart';
+import 'package:wameedpos/features/delivery_integration/enums/delivery_config_platform.dart';
 
 class DeliveryOrderCard extends StatelessWidget {
   final Map<String, dynamic> order;

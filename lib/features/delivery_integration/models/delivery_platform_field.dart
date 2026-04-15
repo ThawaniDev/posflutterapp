@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/delivery_integration/enums/delivery_field_type.dart';
+import 'package:wameedpos/features/delivery_integration/enums/delivery_field_type.dart';
 
 class DeliveryPlatformField {
   final String id;
@@ -64,13 +64,12 @@ class DeliveryPlatformField {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is DeliveryPlatformField && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is DeliveryPlatformField && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'DeliveryPlatformField(id: $id, deliveryPlatformId: $deliveryPlatformId, fieldLabel: $fieldLabel, fieldKey: $fieldKey, fieldType: $fieldType, isRequired: $isRequired, ...)';
+  String toString() =>
+      'DeliveryPlatformField(id: $id, deliveryPlatformId: $deliveryPlatformId, fieldLabel: $fieldLabel, fieldKey: $fieldKey, fieldType: $fieldType, isRequired: $isRequired, ...)';
 }

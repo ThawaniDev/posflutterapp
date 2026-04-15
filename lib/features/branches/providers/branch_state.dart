@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/branches/models/store.dart';
-import 'package:thawani_pos/features/branches/models/branch_stats.dart';
+import 'package:wameedpos/features/branches/models/store.dart';
+import 'package:wameedpos/features/branches/models/branch_stats.dart';
 
 // ─── Branch List ───
 sealed class BranchListState {

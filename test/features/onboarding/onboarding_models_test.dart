@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/onboarding/models/store_settings.dart';
-import 'package:thawani_pos/features/onboarding/models/onboarding_progress.dart';
-import 'package:thawani_pos/features/onboarding/enums/onboarding_step.dart';
+import 'package:wameedpos/features/onboarding/models/store_settings.dart';
+import 'package:wameedpos/features/onboarding/models/onboarding_progress.dart';
+import 'package:wameedpos/features/onboarding/enums/onboarding_step.dart';
 
 void main() {
   group('StoreSettings', () {

@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/hardware/enums/driver_protocol.dart';
-import 'package:thawani_pos/features/hardware/enums/hardware_device_type.dart';
+import 'package:wameedpos/features/hardware/enums/driver_protocol.dart';
+import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
 
 class CertifiedHardware {
   final String id;
@@ -113,13 +113,12 @@ class CertifiedHardware {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CertifiedHardware && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is CertifiedHardware && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'CertifiedHardware(id: $id, deviceType: $deviceType, brand: $brand, model: $model, driverProtocol: $driverProtocol, connectionTypes: $connectionTypes, ...)';
+  String toString() =>
+      'CertifiedHardware(id: $id, deviceType: $deviceType, brand: $brand, model: $model, driverProtocol: $driverProtocol, connectionTypes: $connectionTypes, ...)';
 }

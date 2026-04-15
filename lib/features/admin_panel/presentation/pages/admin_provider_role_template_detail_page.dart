@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
-import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 
 class AdminProviderRoleTemplateDetailPage extends ConsumerStatefulWidget {
   final String templateId;
@@ -77,7 +77,10 @@ class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
                               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                             if (template['name_ar'] != null)
-                              Text(template['name_ar'].toString(), style: const TextStyle(fontSize: 14, color: AppColors.textSecondary)),
+                              Text(
+                                template['name_ar'].toString(),
+                                style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
+                              ),
                           ],
                         ),
                       ),

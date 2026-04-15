@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/pos_terminal/models/held_cart.dart';
-import 'package:thawani_pos/features/pos_terminal/models/pos_session.dart';
-import 'package:thawani_pos/features/pos_terminal/models/transaction.dart';
-import 'package:thawani_pos/features/pos_terminal/enums/transaction_type.dart';
-import 'package:thawani_pos/features/pos_terminal/enums/transaction_status.dart';
-import 'package:thawani_pos/features/security/enums/session_status.dart';
-import 'package:thawani_pos/features/pos_terminal/providers/pos_terminal_state.dart';
+import 'package:wameedpos/features/pos_terminal/models/held_cart.dart';
+import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
+import 'package:wameedpos/features/pos_terminal/models/transaction.dart';
+import 'package:wameedpos/features/pos_terminal/enums/transaction_type.dart';
+import 'package:wameedpos/features/pos_terminal/enums/transaction_status.dart';
+import 'package:wameedpos/features/security/enums/session_status.dart';
+import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_state.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════════

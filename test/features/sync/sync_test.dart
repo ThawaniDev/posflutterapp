@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/sync/enums/sync_direction.dart';
-import 'package:thawani_pos/features/sync/enums/sync_log_status.dart';
-import 'package:thawani_pos/features/sync/enums/sync_conflict_resolution.dart';
-import 'package:thawani_pos/features/sync/models/sync_log.dart';
-import 'package:thawani_pos/features/sync/models/sync_conflict.dart';
-import 'package:thawani_pos/features/sync/providers/sync_state.dart';
+import 'package:wameedpos/features/sync/enums/sync_direction.dart';
+import 'package:wameedpos/features/sync/enums/sync_log_status.dart';
+import 'package:wameedpos/features/sync/enums/sync_conflict_resolution.dart';
+import 'package:wameedpos/features/sync/models/sync_log.dart';
+import 'package:wameedpos/features/sync/models/sync_conflict.dart';
+import 'package:wameedpos/features/sync/providers/sync_state.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════

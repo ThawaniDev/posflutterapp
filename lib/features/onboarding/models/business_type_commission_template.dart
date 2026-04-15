@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/catalog/enums/business_commission_type.dart';
-import 'package:thawani_pos/features/staff/enums/commission_applies_to.dart';
+import 'package:wameedpos/features/catalog/enums/business_commission_type.dart';
+import 'package:wameedpos/features/staff/enums/commission_applies_to.dart';
 
 class BusinessTypeCommissionTemplate {
   final String id;
@@ -77,13 +77,12 @@ class BusinessTypeCommissionTemplate {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BusinessTypeCommissionTemplate && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is BusinessTypeCommissionTemplate && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'BusinessTypeCommissionTemplate(id: $id, businessTypeId: $businessTypeId, name: $name, nameAr: $nameAr, commissionType: $commissionType, value: $value, ...)';
+  String toString() =>
+      'BusinessTypeCommissionTemplate(id: $id, businessTypeId: $businessTypeId, name: $name, nameAr: $nameAr, commissionType: $commissionType, value: $value, ...)';
 }

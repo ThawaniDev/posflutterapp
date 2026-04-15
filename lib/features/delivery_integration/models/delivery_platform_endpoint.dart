@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/delivery_integration/enums/delivery_endpoint_operation.dart';
-import 'package:thawani_pos/features/delivery_integration/enums/http_method.dart';
+import 'package:wameedpos/features/delivery_integration/enums/delivery_endpoint_operation.dart';
+import 'package:wameedpos/features/delivery_integration/enums/http_method.dart';
 
 class DeliveryPlatformEndpoint {
   final String id;
@@ -59,13 +59,12 @@ class DeliveryPlatformEndpoint {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is DeliveryPlatformEndpoint && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is DeliveryPlatformEndpoint && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'DeliveryPlatformEndpoint(id: $id, deliveryPlatformId: $deliveryPlatformId, operation: $operation, urlTemplate: $urlTemplate, httpMethod: $httpMethod, requestMapping: $requestMapping)';
+  String toString() =>
+      'DeliveryPlatformEndpoint(id: $id, deliveryPlatformId: $deliveryPlatformId, operation: $operation, urlTemplate: $urlTemplate, httpMethod: $httpMethod, requestMapping: $requestMapping)';
 }

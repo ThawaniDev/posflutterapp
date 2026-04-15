@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/thawani_integration/providers/thawani_providers.dart';
-import 'package:thawani_pos/features/thawani_integration/providers/thawani_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/thawani_integration/providers/thawani_providers.dart';
+import 'package:wameedpos/features/thawani_integration/providers/thawani_state.dart';
 
 class ThawaniDashboardPage extends ConsumerStatefulWidget {
   const ThawaniDashboardPage({super.key});

@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/marketplace/models/marketplace_category.dart';
-import 'package:thawani_pos/features/marketplace/models/marketplace_invoice.dart';
-import 'package:thawani_pos/features/marketplace/models/marketplace_listing.dart';
-import 'package:thawani_pos/features/marketplace/models/template_purchase.dart';
-import 'package:thawani_pos/features/marketplace/models/template_review.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/marketplace/models/marketplace_category.dart';
+import 'package:wameedpos/features/marketplace/models/marketplace_invoice.dart';
+import 'package:wameedpos/features/marketplace/models/marketplace_listing.dart';
+import 'package:wameedpos/features/marketplace/models/template_purchase.dart';
+import 'package:wameedpos/features/marketplace/models/template_review.dart';
 
 final marketplaceApiServiceProvider = Provider<MarketplaceApiService>((ref) {
   return MarketplaceApiService(ref.watch(dioClientProvider));

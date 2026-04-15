@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/industry_florist/providers/florist_providers.dart';
-import 'package:thawani_pos/features/industry_florist/providers/florist_state.dart';
-import 'package:thawani_pos/features/industry_florist/widgets/arrangement_card.dart';
-import 'package:thawani_pos/features/industry_florist/widgets/freshness_log_card.dart';
-import 'package:thawani_pos/features/industry_florist/widgets/flower_subscription_card.dart';
-import 'package:thawani_pos/features/industry_florist/pages/arrangement_form_page.dart';
-import 'package:thawani_pos/features/industry_florist/pages/freshness_log_form_page.dart';
-import 'package:thawani_pos/features/industry_florist/pages/subscription_form_page.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_florist/providers/florist_providers.dart';
+import 'package:wameedpos/features/industry_florist/providers/florist_state.dart';
+import 'package:wameedpos/features/industry_florist/widgets/arrangement_card.dart';
+import 'package:wameedpos/features/industry_florist/widgets/freshness_log_card.dart';
+import 'package:wameedpos/features/industry_florist/widgets/flower_subscription_card.dart';
+import 'package:wameedpos/features/industry_florist/pages/arrangement_form_page.dart';
+import 'package:wameedpos/features/industry_florist/pages/freshness_log_form_page.dart';
+import 'package:wameedpos/features/industry_florist/pages/subscription_form_page.dart';
 
 class FloristDashboardPage extends ConsumerStatefulWidget {
   const FloristDashboardPage({super.key});

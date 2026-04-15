@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/branches/enums/business_type.dart';
-import 'package:thawani_pos/features/branches/enums/register_platform.dart';
-import 'package:thawani_pos/features/branches/enums/provider_registration_status.dart';
-import 'package:thawani_pos/features/branches/models/store.dart';
-import 'package:thawani_pos/features/branches/providers/branch_state.dart';
+import 'package:wameedpos/features/branches/enums/business_type.dart';
+import 'package:wameedpos/features/branches/enums/register_platform.dart';
+import 'package:wameedpos/features/branches/enums/provider_registration_status.dart';
+import 'package:wameedpos/features/branches/models/store.dart';
+import 'package:wameedpos/features/branches/providers/branch_state.dart';
 
 void main() {
   // ════════════════════════════════════════════════════════

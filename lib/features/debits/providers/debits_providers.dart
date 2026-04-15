@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/debits/models/debit.dart';
-import 'package:thawani_pos/features/debits/providers/debits_state.dart';
-import 'package:thawani_pos/features/debits/repositories/debit_repository.dart';
+import 'package:wameedpos/features/debits/models/debit.dart';
+import 'package:wameedpos/features/debits/providers/debits_state.dart';
+import 'package:wameedpos/features/debits/repositories/debit_repository.dart';
 
 // ─── Debits Provider ────────────────────────────────────────────
 

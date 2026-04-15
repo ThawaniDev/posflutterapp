@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/industry_jewelry/providers/jewelry_providers.dart';
-import 'package:thawani_pos/features/industry_jewelry/providers/jewelry_state.dart';
-import 'package:thawani_pos/features/industry_jewelry/widgets/metal_rate_card.dart';
-import 'package:thawani_pos/features/industry_jewelry/widgets/jewelry_detail_card.dart';
-import 'package:thawani_pos/features/industry_jewelry/widgets/buyback_card.dart';
-import 'package:thawani_pos/features/industry_jewelry/pages/metal_rate_form_page.dart';
-import 'package:thawani_pos/features/industry_jewelry/pages/product_detail_form_page.dart';
-import 'package:thawani_pos/features/industry_jewelry/pages/buyback_form_page.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_jewelry/providers/jewelry_providers.dart';
+import 'package:wameedpos/features/industry_jewelry/providers/jewelry_state.dart';
+import 'package:wameedpos/features/industry_jewelry/widgets/metal_rate_card.dart';
+import 'package:wameedpos/features/industry_jewelry/widgets/jewelry_detail_card.dart';
+import 'package:wameedpos/features/industry_jewelry/widgets/buyback_card.dart';
+import 'package:wameedpos/features/industry_jewelry/pages/metal_rate_form_page.dart';
+import 'package:wameedpos/features/industry_jewelry/pages/product_detail_form_page.dart';
+import 'package:wameedpos/features/industry_jewelry/pages/buyback_form_page.dart';
 
 class JewelryDashboardPage extends ConsumerStatefulWidget {
   const JewelryDashboardPage({super.key});

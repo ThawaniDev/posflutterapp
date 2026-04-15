@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/notifications/enums/fcm_device_type.dart';
+import 'package:wameedpos/features/notifications/enums/fcm_device_type.dart';
 
 class FcmToken {
   final String id;
@@ -58,13 +58,12 @@ class FcmToken {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is FcmToken && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is FcmToken && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'FcmToken(id: $id, userId: $userId, token: $token, deviceType: $deviceType, createdAt: $createdAt, updatedAt: $updatedAt)';
+  String toString() =>
+      'FcmToken(id: $id, userId: $userId, token: $token, deviceType: $deviceType, createdAt: $createdAt, updatedAt: $updatedAt)';
 }

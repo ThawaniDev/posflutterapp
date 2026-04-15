@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/customers/enums/condition_grade.dart';
-import 'package:thawani_pos/features/industry_electronics/enums/device_imei_status.dart';
+import 'package:wameedpos/features/customers/enums/condition_grade.dart';
+import 'package:wameedpos/features/industry_electronics/enums/device_imei_status.dart';
 
 class DeviceImeiRecord {
   final String id;
@@ -44,7 +44,9 @@ class DeviceImeiRecord {
       purchasePrice: (json['purchase_price'] != null ? double.tryParse(json['purchase_price'].toString()) : null),
       status: DeviceImeiStatus.tryFromValue(json['status'] as String?),
       warrantyEndDate: json['warranty_end_date'] != null ? DateTime.parse(json['warranty_end_date'] as String) : null,
-      storeWarrantyEndDate: json['store_warranty_end_date'] != null ? DateTime.parse(json['store_warranty_end_date'] as String) : null,
+      storeWarrantyEndDate: json['store_warranty_end_date'] != null
+          ? DateTime.parse(json['store_warranty_end_date'] as String)
+          : null,
       soldOrderId: json['sold_order_id'] as String?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
@@ -101,13 +103,12 @@ class DeviceImeiRecord {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is DeviceImeiRecord && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is DeviceImeiRecord && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'DeviceImeiRecord(id: $id, productId: $productId, storeId: $storeId, imei: $imei, imei2: $imei2, serialNumber: $serialNumber, ...)';
+  String toString() =>
+      'DeviceImeiRecord(id: $id, productId: $productId, storeId: $storeId, imei: $imei, imei2: $imei2, serialNumber: $serialNumber, ...)';
 }

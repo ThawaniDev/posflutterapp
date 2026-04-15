@@ -4,9 +4,9 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
-import 'package:thawani_pos/core/providers/branch_context_provider.dart';
-import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
-import 'package:thawani_pos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
+import 'package:wameedpos/core/providers/branch_context_provider.dart';
+import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 
 class AdminActivityLogListPage extends ConsumerStatefulWidget {
   const AdminActivityLogListPage({super.key});

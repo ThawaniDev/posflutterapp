@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class CertifiedHardwareList extends StatelessWidget {
   const CertifiedHardwareList({super.key, required this.models});

@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/errors/app_exception.dart';
-import 'package:thawani_pos/features/subscription/data/remote/subscription_api_service.dart';
-import 'package:thawani_pos/features/subscription/models/invoice.dart';
-import 'package:thawani_pos/features/subscription/models/store_subscription.dart';
-import 'package:thawani_pos/features/subscription/models/subscription_plan.dart';
+import 'package:wameedpos/core/errors/app_exception.dart';
+import 'package:wameedpos/features/subscription/data/remote/subscription_api_service.dart';
+import 'package:wameedpos/features/subscription/models/invoice.dart';
+import 'package:wameedpos/features/subscription/models/store_subscription.dart';
+import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
 
 final subscriptionRepositoryProvider = Provider<SubscriptionRepository>((ref) {
   return SubscriptionRepository(ref.watch(subscriptionApiServiceProvider));

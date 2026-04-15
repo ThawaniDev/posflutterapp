@@ -1,7 +1,7 @@
-import 'package:thawani_pos/features/staff/models/attendance_record.dart';
-import 'package:thawani_pos/features/staff/models/shift_schedule.dart';
-import 'package:thawani_pos/features/staff/models/shift_template.dart';
-import 'package:thawani_pos/features/staff/models/staff_user.dart';
+import 'package:wameedpos/features/staff/models/attendance_record.dart';
+import 'package:wameedpos/features/staff/models/shift_schedule.dart';
+import 'package:wameedpos/features/staff/models/shift_template.dart';
+import 'package:wameedpos/features/staff/models/staff_user.dart';
 
 // ═══════════════════════════════════════════════════════════════
 // Staff List State

@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/industry_pharmacy/enums/drug_schedule_type.dart';
+import 'package:wameedpos/features/industry_pharmacy/enums/drug_schedule_type.dart';
 
 class DrugSchedule {
   final String id;
@@ -70,13 +70,12 @@ class DrugSchedule {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is DrugSchedule && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is DrugSchedule && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'DrugSchedule(id: $id, productId: $productId, scheduleType: $scheduleType, activeIngredient: $activeIngredient, dosageForm: $dosageForm, strength: $strength, ...)';
+  String toString() =>
+      'DrugSchedule(id: $id, productId: $productId, scheduleType: $scheduleType, activeIngredient: $activeIngredient, dosageForm: $dosageForm, strength: $strength, ...)';
 }

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/reports/models/daily_sales_summary.dart';
-import 'package:thawani_pos/features/reports/models/product_sales_summary.dart';
-import 'package:thawani_pos/features/reports/providers/report_state.dart';
+import 'package:wameedpos/features/reports/models/daily_sales_summary.dart';
+import 'package:wameedpos/features/reports/models/product_sales_summary.dart';
+import 'package:wameedpos/features/reports/providers/report_state.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════

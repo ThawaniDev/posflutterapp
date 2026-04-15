@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/reports/models/report_filters.dart';
-import 'package:thawani_pos/features/reports/providers/report_state.dart';
-import 'package:thawani_pos/features/reports/repositories/report_repository.dart';
+import 'package:wameedpos/features/reports/models/report_filters.dart';
+import 'package:wameedpos/features/reports/providers/report_state.dart';
+import 'package:wameedpos/features/reports/repositories/report_repository.dart';
 
 // ─── Sales Summary ───────────────────────────────────────────
 

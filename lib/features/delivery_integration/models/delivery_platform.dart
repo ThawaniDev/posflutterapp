@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/delivery_integration/enums/delivery_auth_method.dart';
+import 'package:wameedpos/features/delivery_integration/enums/delivery_auth_method.dart';
 
 class DeliveryPlatform {
   final String id;
@@ -53,7 +53,9 @@ class DeliveryPlatform {
       baseUrl: json['base_url'] as String?,
       documentationUrl: json['documentation_url'] as String?,
       supportedCountries: json['supported_countries'] != null ? List<String>.from(json['supported_countries'] as List) : null,
-      defaultCommissionPercent: (json['default_commission_percent'] != null ? double.tryParse(json['default_commission_percent'].toString()) : null),
+      defaultCommissionPercent: (json['default_commission_percent'] != null
+          ? double.tryParse(json['default_commission_percent'].toString())
+          : null),
       isActive: json['is_active'] as bool? ?? true,
       sortOrder: (json['sort_order'] as num?)?.toInt(),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,

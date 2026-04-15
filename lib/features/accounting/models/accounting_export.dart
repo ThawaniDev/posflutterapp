@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/accounting/enums/accounting_export_status.dart';
-import 'package:thawani_pos/features/accounting/enums/export_triggered_by.dart';
+import 'package:wameedpos/features/accounting/enums/accounting_export_status.dart';
+import 'package:wameedpos/features/accounting/enums/export_triggered_by.dart';
 
 class AccountingExport {
   final String id;
@@ -107,13 +107,12 @@ class AccountingExport {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AccountingExport && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is AccountingExport && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'AccountingExport(id: $id, storeId: $storeId, provider: $provider, startDate: $startDate, endDate: $endDate, exportTypes: $exportTypes, ...)';
+  String toString() =>
+      'AccountingExport(id: $id, storeId: $storeId, provider: $provider, startDate: $startDate, endDate: $endDate, exportTypes: $exportTypes, ...)';
 }

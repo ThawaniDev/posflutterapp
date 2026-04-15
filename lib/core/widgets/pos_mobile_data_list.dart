@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/pos_table.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/pos_table.dart';
 
 // ═══════════════════════════════════════════════════════════════
 // PosMobileDataList — card-based list for phone screens

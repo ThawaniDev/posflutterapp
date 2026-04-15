@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/support/enums/ticket_category.dart';
+import 'package:wameedpos/features/support/enums/ticket_category.dart';
 
 class CannedResponse {
   final String id;
@@ -76,13 +76,12 @@ class CannedResponse {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CannedResponse && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is CannedResponse && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'CannedResponse(id: $id, title: $title, shortcut: $shortcut, body: $body, bodyAr: $bodyAr, category: $category, ...)';
+  String toString() =>
+      'CannedResponse(id: $id, title: $title, shortcut: $shortcut, body: $body, bodyAr: $bodyAr, category: $category, ...)';
 }

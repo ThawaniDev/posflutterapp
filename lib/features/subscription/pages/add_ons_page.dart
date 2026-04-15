@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/subscription/providers/subscription_providers.dart';
-import 'package:thawani_pos/features/subscription/providers/subscription_state.dart';
-import 'package:thawani_pos/features/subscription/widgets/add_on_card.dart';
+import 'package:go_router/go_router.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/subscription/providers/subscription_providers.dart';
+import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
+import 'package:wameedpos/features/subscription/widgets/add_on_card.dart';
 
 /// Page that displays available and active add-ons for the store's subscription.
 class AddOnsPage extends ConsumerStatefulWidget {
@@ -157,8 +159,17 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> with SingleTickerProvid
       confirmLabel: 'Add',
       cancelLabel: 'Cancel',
     );
-    if (confirmed == true) {
-      showPosInfoSnackbar(context, AppLocalizations.of(context)!.addOnComingSoon);
+    if (confirmed == true && mounted) {
+      context.pushNamed(
+        Routes.providerPaymentCheckout,
+        extra: {
+          'purpose': 'plan_addon',
+          'purpose_label': name,
+          'amount': price,
+          'add_on_id': addOn['id']?.toString(),
+          'notes': 'Add-on: $name',
+        },
+      );
     }
   }
 

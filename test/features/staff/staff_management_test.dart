@@ -1,18 +1,18 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/auth/enums/auth_method.dart';
-import 'package:thawani_pos/core/enums/activity_entity_type.dart';
-import 'package:thawani_pos/features/staff/enums/commission_rule_type.dart';
-import 'package:thawani_pos/features/staff/enums/employment_type.dart';
-import 'package:thawani_pos/features/staff/enums/salary_type.dart';
-import 'package:thawani_pos/features/staff/enums/shift_schedule_status.dart';
-import 'package:thawani_pos/features/staff/enums/staff_status.dart';
-import 'package:thawani_pos/features/staff/models/attendance_record.dart';
-import 'package:thawani_pos/features/staff/models/commission_rule.dart';
-import 'package:thawani_pos/features/staff/models/shift_schedule.dart';
-import 'package:thawani_pos/features/staff/models/shift_template.dart';
-import 'package:thawani_pos/features/staff/models/staff_activity_log.dart';
-import 'package:thawani_pos/features/staff/models/staff_user.dart';
-import 'package:thawani_pos/features/staff/providers/staff_state.dart';
+import 'package:wameedpos/features/auth/enums/auth_method.dart';
+import 'package:wameedpos/core/enums/activity_entity_type.dart';
+import 'package:wameedpos/features/staff/enums/commission_rule_type.dart';
+import 'package:wameedpos/features/staff/enums/employment_type.dart';
+import 'package:wameedpos/features/staff/enums/salary_type.dart';
+import 'package:wameedpos/features/staff/enums/shift_schedule_status.dart';
+import 'package:wameedpos/features/staff/enums/staff_status.dart';
+import 'package:wameedpos/features/staff/models/attendance_record.dart';
+import 'package:wameedpos/features/staff/models/commission_rule.dart';
+import 'package:wameedpos/features/staff/models/shift_schedule.dart';
+import 'package:wameedpos/features/staff/models/shift_template.dart';
+import 'package:wameedpos/features/staff/models/staff_activity_log.dart';
+import 'package:wameedpos/features/staff/models/staff_user.dart';
+import 'package:wameedpos/features/staff/providers/staff_state.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════

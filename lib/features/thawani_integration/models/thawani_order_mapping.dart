@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/thawani_integration/enums/thawani_delivery_type.dart';
-import 'package:thawani_pos/features/thawani_integration/enums/thawani_order_status.dart';
+import 'package:wameedpos/features/thawani_integration/enums/thawani_delivery_type.dart';
+import 'package:wameedpos/features/thawani_integration/enums/thawani_order_status.dart';
 
 class ThawaniOrderMapping {
   final String id;
@@ -131,13 +131,12 @@ class ThawaniOrderMapping {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ThawaniOrderMapping && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is ThawaniOrderMapping && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'ThawaniOrderMapping(id: $id, storeId: $storeId, orderId: $orderId, thawaniOrderId: $thawaniOrderId, thawaniOrderNumber: $thawaniOrderNumber, status: $status, ...)';
+  String toString() =>
+      'ThawaniOrderMapping(id: $id, storeId: $storeId, orderId: $orderId, thawaniOrderId: $thawaniOrderId, thawaniOrderNumber: $thawaniOrderNumber, status: $status, ...)';
 }

@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/security/enums/session_status.dart';
+import 'package:wameedpos/features/security/enums/session_status.dart';
 
 class PosSession {
   final String id;
@@ -142,13 +142,12 @@ class PosSession {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is PosSession && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is PosSession && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'PosSession(id: $id, storeId: $storeId, registerId: $registerId, cashierId: $cashierId, status: $status, openingCash: $openingCash, ...)';
+  String toString() =>
+      'PosSession(id: $id, storeId: $storeId, registerId: $registerId, cashierId: $cashierId, status: $status, openingCash: $openingCash, ...)';
 }

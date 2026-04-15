@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/promotions/enums/promotion_type.dart';
+import 'package:wameedpos/features/promotions/enums/promotion_type.dart';
 
 class Promotion {
   final String id;
@@ -67,7 +67,9 @@ class Promotion {
       discountValue: (json['discount_value'] != null ? double.tryParse(json['discount_value'].toString()) : null),
       buyQuantity: (json['buy_quantity'] as num?)?.toInt(),
       getQuantity: (json['get_quantity'] as num?)?.toInt(),
-      getDiscountPercent: (json['get_discount_percent'] != null ? double.tryParse(json['get_discount_percent'].toString()) : null),
+      getDiscountPercent: (json['get_discount_percent'] != null
+          ? double.tryParse(json['get_discount_percent'].toString())
+          : null),
       bundlePrice: (json['bundle_price'] != null ? double.tryParse(json['bundle_price'].toString()) : null),
       minOrderTotal: (json['min_order_total'] != null ? double.tryParse(json['min_order_total'].toString()) : null),
       minItemQuantity: (json['min_item_quantity'] as num?)?.toInt(),

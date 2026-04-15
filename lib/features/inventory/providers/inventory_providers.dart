@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/inventory/models/purchase_order.dart';
-import 'package:thawani_pos/features/inventory/models/stock_transfer.dart';
-import 'package:thawani_pos/features/inventory/models/supplier_return.dart';
-import 'package:thawani_pos/features/inventory/providers/inventory_state.dart';
-import 'package:thawani_pos/features/inventory/repositories/inventory_repository.dart';
+import 'package:wameedpos/features/inventory/models/purchase_order.dart';
+import 'package:wameedpos/features/inventory/models/stock_transfer.dart';
+import 'package:wameedpos/features/inventory/models/supplier_return.dart';
+import 'package:wameedpos/features/inventory/providers/inventory_state.dart';
+import 'package:wameedpos/features/inventory/repositories/inventory_repository.dart';
 
 // ═══════════════════════════════════════════════════════════════════
 // Stock Levels

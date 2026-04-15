@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/sync/enums/sync_conflict_resolution.dart';
+import 'package:wameedpos/features/sync/enums/sync_conflict_resolution.dart';
 
 class SyncConflict {
   final String id;

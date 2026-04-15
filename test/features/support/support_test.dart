@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/support/enums/ticket_status.dart';
-import 'package:thawani_pos/features/support/enums/ticket_category.dart';
-import 'package:thawani_pos/features/support/enums/ticket_priority.dart';
-import 'package:thawani_pos/features/support/enums/ticket_sender_type.dart';
-import 'package:thawani_pos/features/support/models/support_ticket.dart';
-import 'package:thawani_pos/features/support/models/support_ticket_message.dart';
-import 'package:thawani_pos/features/support/providers/support_state.dart';
+import 'package:wameedpos/features/support/enums/ticket_status.dart';
+import 'package:wameedpos/features/support/enums/ticket_category.dart';
+import 'package:wameedpos/features/support/enums/ticket_priority.dart';
+import 'package:wameedpos/features/support/enums/ticket_sender_type.dart';
+import 'package:wameedpos/features/support/models/support_ticket.dart';
+import 'package:wameedpos/features/support/models/support_ticket_message.dart';
+import 'package:wameedpos/features/support/providers/support_state.dart';
 
 void main() {
   // ════════════════════════════════════════════════════════

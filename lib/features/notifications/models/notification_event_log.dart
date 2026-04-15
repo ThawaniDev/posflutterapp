@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/notifications/enums/notification_channel.dart';
-import 'package:thawani_pos/features/notifications/enums/notification_delivery_status.dart';
+import 'package:wameedpos/features/notifications/enums/notification_channel.dart';
+import 'package:wameedpos/features/notifications/enums/notification_delivery_status.dart';
 
 class NotificationEventLog {
   final String id;
@@ -59,13 +59,12 @@ class NotificationEventLog {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is NotificationEventLog && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is NotificationEventLog && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'NotificationEventLog(id: $id, notificationId: $notificationId, channel: $channel, status: $status, errorMessage: $errorMessage, sentAt: $sentAt)';
+  String toString() =>
+      'NotificationEventLog(id: $id, notificationId: $notificationId, channel: $channel, status: $status, errorMessage: $errorMessage, sentAt: $sentAt)';
 }

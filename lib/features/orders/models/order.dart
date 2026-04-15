@@ -1,6 +1,6 @@
-import 'package:thawani_pos/features/orders/enums/order_source.dart';
-import 'package:thawani_pos/features/orders/enums/order_status.dart';
-import 'package:thawani_pos/features/orders/models/order_item.dart';
+import 'package:wameedpos/features/orders/enums/order_source.dart';
+import 'package:wameedpos/features/orders/enums/order_status.dart';
+import 'package:wameedpos/features/orders/models/order_item.dart';
 
 class Order {
   final String id;

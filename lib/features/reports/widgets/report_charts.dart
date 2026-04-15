@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/reports/widgets/report_widgets.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
 
 // ═══════════════════════════════════════════════════════════════
 // Report Chart Widgets — using fl_chart for comprehensive charts

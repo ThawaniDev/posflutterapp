@@ -1,6 +1,6 @@
-import 'package:thawani_pos/features/industry_electronics/models/device_imei_record.dart';
-import 'package:thawani_pos/features/industry_electronics/models/repair_job.dart';
-import 'package:thawani_pos/features/industry_electronics/models/trade_in_record.dart';
+import 'package:wameedpos/features/industry_electronics/models/device_imei_record.dart';
+import 'package:wameedpos/features/industry_electronics/models/repair_job.dart';
+import 'package:wameedpos/features/industry_electronics/models/trade_in_record.dart';
 
 sealed class ElectronicsState {
   const ElectronicsState();

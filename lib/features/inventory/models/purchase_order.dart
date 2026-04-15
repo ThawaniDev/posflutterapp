@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/inventory/enums/purchase_order_status.dart';
+import 'package:wameedpos/features/inventory/enums/purchase_order_status.dart';
 
 class PurchaseOrder {
   final String id;

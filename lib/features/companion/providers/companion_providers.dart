@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/companion/repositories/companion_repository.dart';
-import 'package:thawani_pos/features/companion/providers/companion_state.dart';
+import 'package:wameedpos/features/companion/repositories/companion_repository.dart';
+import 'package:wameedpos/features/companion/providers/companion_state.dart';
 
 // --- Quick Stats Provider ---
 final quickStatsProvider = StateNotifierProvider<QuickStatsNotifier, QuickStatsState>((ref) {

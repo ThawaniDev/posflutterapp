@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/security/data/remote/security_api_service.dart';
+import 'package:wameedpos/features/security/data/remote/security_api_service.dart';
 
 final securityRepositoryProvider = Provider<SecurityRepository>((ref) {
   return SecurityRepository(ref.watch(securityApiServiceProvider));

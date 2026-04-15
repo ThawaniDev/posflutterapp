@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/industry_bakery/data/remote/bakery_api_service.dart';
-import 'package:thawani_pos/features/industry_bakery/models/bakery_recipe.dart';
-import 'package:thawani_pos/features/industry_bakery/models/production_schedule.dart';
-import 'package:thawani_pos/features/industry_bakery/models/custom_cake_order.dart';
+import 'package:wameedpos/features/industry_bakery/data/remote/bakery_api_service.dart';
+import 'package:wameedpos/features/industry_bakery/models/bakery_recipe.dart';
+import 'package:wameedpos/features/industry_bakery/models/production_schedule.dart';
+import 'package:wameedpos/features/industry_bakery/models/custom_cake_order.dart';
 
 final bakeryRepositoryProvider = Provider<BakeryRepository>((ref) {
   return BakeryRepository(apiService: ref.watch(bakeryApiServiceProvider));

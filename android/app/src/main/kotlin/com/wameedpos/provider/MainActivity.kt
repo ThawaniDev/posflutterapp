@@ -1,4 +1,4 @@
-package com.thawani.thawani_pos
+package com.wameedpos.provider
 
 import io.flutter.embedding.android.FlutterActivity
 

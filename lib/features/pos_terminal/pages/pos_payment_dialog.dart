@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/theme/app_typography.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/payments/models/installment_payment.dart';
-import 'package:thawani_pos/features/payments/pages/installment_payment_dialog.dart';
-import 'package:thawani_pos/features/pos_terminal/enums/payment_method.dart';
-import 'package:thawani_pos/features/pos_terminal/providers/pos_cashier_providers.dart';
-import 'package:thawani_pos/features/pos_terminal/providers/pos_cashier_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/payments/models/installment_payment.dart';
+import 'package:wameedpos/features/payments/pages/installment_payment_dialog.dart';
+import 'package:wameedpos/features/pos_terminal/enums/payment_method.dart';
+import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_providers.dart';
+import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_state.dart';
 
 /// A payment entry: method + amount. Supports split payments.
 class _PaymentLeg {

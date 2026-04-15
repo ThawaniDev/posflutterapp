@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/accounting/enums/accounting_provider.dart';
+import 'package:wameedpos/features/accounting/enums/accounting_provider.dart';
 
 class AccountingIntegrationConfig {
   final String id;
@@ -70,13 +70,12 @@ class AccountingIntegrationConfig {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AccountingIntegrationConfig && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is AccountingIntegrationConfig && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'AccountingIntegrationConfig(id: $id, providerName: $providerName, clientIdEncrypted: $clientIdEncrypted, clientSecretEncrypted: $clientSecretEncrypted, redirectUrl: $redirectUrl, isActive: $isActive, ...)';
+  String toString() =>
+      'AccountingIntegrationConfig(id: $id, providerName: $providerName, clientIdEncrypted: $clientIdEncrypted, clientSecretEncrypted: $clientSecretEncrypted, redirectUrl: $redirectUrl, isActive: $isActive, ...)';
 }

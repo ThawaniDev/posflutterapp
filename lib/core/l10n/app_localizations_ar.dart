@@ -6172,6 +6172,102 @@ class AppLocalizationsAr extends AppLocalizations {
   String get notifStatsByChannel => 'حسب القناة';
 
   @override
+  String get notifDeleteConfirmTitle => 'حذف الإشعارات';
+
+  @override
+  String notifDeleteConfirmMessage(int count) {
+    return 'حذف $count إشعارات محددة؟';
+  }
+
+  @override
+  String get notifStatsTitle => 'الإحصائيات';
+
+  @override
+  String get notifMoreActions => 'إجراءات أخرى';
+
+  @override
+  String get notifEmptySubtitle => 'لا توجد إشعارات جديدة';
+
+  @override
+  String get notifDeleteSingleTitle => 'حذف الإشعار';
+
+  @override
+  String get notifDeleteSingleMessage => 'هل أنت متأكد من حذف هذا الإشعار؟';
+
+  @override
+  String get notifJustNow => 'الآن';
+
+  @override
+  String get notifPrefPaymentAlerts => 'تنبيهات الدفع';
+
+  @override
+  String get notifPrefPaymentAlertsSubtitle =>
+      'إشعارات تأكيد الدفع والمبالغ المستردة';
+
+  @override
+  String get notifPrefStaffEvents => 'أحداث الموظفين';
+
+  @override
+  String get notifPrefStaffEventsSubtitle => 'تحديثات جداول الموظفين والحضور';
+
+  @override
+  String get notifPrefEmail => 'البريد الإلكتروني';
+
+  @override
+  String get notifPrefSms => 'رسائل نصية';
+
+  @override
+  String get notifLogDelivered => 'تم التوصيل';
+
+  @override
+  String get notifLogSent => 'تم الإرسال';
+
+  @override
+  String get notifLogFailed => 'فشل';
+
+  @override
+  String get notifScheduleValidation => 'العنوان والرسالة مطلوبان';
+
+  @override
+  String get notifScheduleCreatedSuccess => 'تم إنشاء الجدولة بنجاح';
+
+  @override
+  String get notifSchedulesEmptySubtitle => 'اضغط + لإنشاء إشعار مجدول';
+
+  @override
+  String get notifScheduleCancelConfirmTitle => 'إلغاء الجدولة';
+
+  @override
+  String get notifScheduleCancelConfirmMessage =>
+      'هل أنت متأكد من إلغاء هذا الإشعار المجدول؟';
+
+  @override
+  String get notifScheduleType => 'نوع الجدولة';
+
+  @override
+  String get notifScheduleTypeOnce => 'مرة واحدة';
+
+  @override
+  String get notifScheduleTypeRecurring => 'متكرر';
+
+  @override
+  String get notifActionMarkedAsRead => 'تم تحديد الإشعار كمقروء';
+
+  @override
+  String get notifActionAllMarkedAsRead => 'تم تحديد جميع الإشعارات كمقروءة';
+
+  @override
+  String get notifActionDeleted => 'تم حذف الإشعار';
+
+  @override
+  String notifActionBulkDeleted(int count) {
+    return 'تم حذف $count إشعارات';
+  }
+
+  @override
+  String get notifActionBatchCreated => 'تم إنشاء الإشعار الجماعي';
+
+  @override
   String get ordersAll => 'الكل';
 
   @override
@@ -11430,4 +11526,164 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get successful => 'ناجح';
+
+  @override
+  String get providerPaymentsTitle => 'المدفوعات';
+
+  @override
+  String get providerPaymentDetail => 'تفاصيل الدفع';
+
+  @override
+  String get providerPaymentCheckout => 'إتمام الدفع';
+
+  @override
+  String get providerPaymentInitiating => 'جاري بدء الدفع...';
+
+  @override
+  String get providerPaymentCancelTitle => 'إلغاء الدفع؟';
+
+  @override
+  String get providerPaymentCancelBody =>
+      'هل أنت متأكد من إلغاء الدفع؟ يمكنك إعادة المحاولة لاحقاً.';
+
+  @override
+  String get providerPaymentContinue => 'متابعة الدفع';
+
+  @override
+  String get providerPaymentCancel => 'إلغاء';
+
+  @override
+  String get providerPaymentNoPayments => 'لا توجد مدفوعات';
+
+  @override
+  String get providerPaymentPurpose => 'الغرض';
+
+  @override
+  String get providerPaymentCartId => 'معرف السلة';
+
+  @override
+  String get providerPaymentGateway => 'بوابة الدفع';
+
+  @override
+  String get providerPaymentTranRef => 'مرجع المعاملة';
+
+  @override
+  String get providerPaymentDate => 'التاريخ';
+
+  @override
+  String get providerPaymentAmount => 'المبلغ';
+
+  @override
+  String get providerPaymentTax => 'الضريبة';
+
+  @override
+  String get providerPaymentTotal => 'الإجمالي';
+
+  @override
+  String get providerPaymentAmountBreakdown => 'تفصيل المبلغ';
+
+  @override
+  String get providerPaymentGatewayResponse => 'استجابة البوابة';
+
+  @override
+  String get providerPaymentResponseStatus => 'حالة الاستجابة';
+
+  @override
+  String get providerPaymentResponseCode => 'رمز الاستجابة';
+
+  @override
+  String get providerPaymentResponseMessage => 'رسالة الاستجابة';
+
+  @override
+  String get providerPaymentCardType => 'نوع البطاقة';
+
+  @override
+  String get providerPaymentCardScheme => 'مخطط البطاقة';
+
+  @override
+  String get providerPaymentTracking => 'التتبع';
+
+  @override
+  String get providerPaymentEmailSent => 'تم إرسال البريد';
+
+  @override
+  String get providerPaymentInvoiceGenerated => 'تم إنشاء الفاتورة';
+
+  @override
+  String get providerPaymentEmailError => 'خطأ البريد';
+
+  @override
+  String get providerPaymentRefundInfo => 'معلومات الاسترداد';
+
+  @override
+  String get providerPaymentRefundAmount => 'مبلغ الاسترداد';
+
+  @override
+  String get providerPaymentRefundTranRef => 'مرجع معاملة الاسترداد';
+
+  @override
+  String get providerPaymentRefundReason => 'السبب';
+
+  @override
+  String get providerPaymentRefundedAt => 'تاريخ الاسترداد';
+
+  @override
+  String get providerPaymentEmailLogs => 'سجل البريد الإلكتروني';
+
+  @override
+  String get providerPaymentResendEmail => 'إعادة إرسال بريد التأكيد';
+
+  @override
+  String get providerPaymentCopied => 'تم النسخ';
+
+  @override
+  String get providerPaymentFilterAll => 'الكل';
+
+  @override
+  String get providerPaymentFilterPending => 'قيد الانتظار';
+
+  @override
+  String get providerPaymentFilterCompleted => 'مكتملة';
+
+  @override
+  String get providerPaymentFilterFailed => 'فاشلة';
+
+  @override
+  String get providerPaymentFilterRefunded => 'مستردة';
+
+  @override
+  String get providerPaymentStatusPending => 'قيد الانتظار';
+
+  @override
+  String get providerPaymentStatusProcessing => 'قيد المعالجة';
+
+  @override
+  String get providerPaymentStatusCompleted => 'مكتملة';
+
+  @override
+  String get providerPaymentStatusFailed => 'فاشلة';
+
+  @override
+  String get providerPaymentStatusRefunded => 'مستردة';
+
+  @override
+  String get providerPaymentStatusVoided => 'ملغية';
+
+  @override
+  String get providerPaymentPurposeSubscription => 'اشتراك';
+
+  @override
+  String get providerPaymentPurposePlanAddon => 'إضافة للخطة';
+
+  @override
+  String get providerPaymentPurposeAiBilling => 'فوترة الذكاء الاصطناعي';
+
+  @override
+  String get providerPaymentPurposeHardware => 'أجهزة';
+
+  @override
+  String get providerPaymentPurposeImplementationFee => 'رسوم التطبيق';
+
+  @override
+  String get providerPaymentPurposeOther => 'أخرى';
 }

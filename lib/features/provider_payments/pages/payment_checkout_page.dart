@@ -1,0 +1,169 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/provider_payments/providers/provider_payment_providers.dart';
+import 'package:wameedpos/features/provider_payments/providers/provider_payment_state.dart';
+
+/// Initiates a payment and shows a WebView to complete PayTabs checkout.
+class PaymentCheckoutPage extends ConsumerStatefulWidget {
+  final String purpose;
+  final String purposeLabel;
+  final double amount;
+  final double? taxAmount;
+  final String? subscriptionPlanId;
+  final String? addOnId;
+  final String? notes;
+
+  const PaymentCheckoutPage({
+    super.key,
+    required this.purpose,
+    required this.purposeLabel,
+    required this.amount,
+    this.taxAmount,
+    this.subscriptionPlanId,
+    this.addOnId,
+    this.notes,
+  });
+
+  @override
+  ConsumerState<PaymentCheckoutPage> createState() => _PaymentCheckoutPageState();
+}
+
+class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
+  WebViewController? _webController;
+  bool _paymentInitiated = false;
+  String? _redirectUrl;
+  bool _webViewLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(_initiatePayment);
+  }
+
+  void _initiatePayment() {
+    if (_paymentInitiated) return;
+    _paymentInitiated = true;
+
+    ref
+        .read(providerPaymentActionProvider.notifier)
+        .initiatePayment(
+          purpose: widget.purpose,
+          purposeLabel: widget.purposeLabel,
+          amount: widget.amount,
+          taxAmount: widget.taxAmount,
+          subscriptionPlanId: widget.subscriptionPlanId,
+          addOnId: widget.addOnId,
+          notes: widget.notes,
+        );
+  }
+
+  void _setupWebView(String url) {
+    _webController = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageStarted: (_) {
+            if (mounted) setState(() => _webViewLoading = true);
+          },
+          onPageFinished: (_) {
+            if (mounted) setState(() => _webViewLoading = false);
+          },
+          onNavigationRequest: (request) {
+            // Detect return URL to navigate back
+            if (request.url.contains('/provider-payments/return')) {
+              context.go(Routes.providerPayments);
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(url));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final actionState = ref.watch(providerPaymentActionProvider);
+
+    ref.listen<ProviderPaymentActionState>(providerPaymentActionProvider, (prev, next) {
+      if (next is ProviderPaymentActionSuccess && next.payment?.redirectUrl != null) {
+        setState(() => _redirectUrl = next.payment!.redirectUrl);
+        _setupWebView(next.payment!.redirectUrl!);
+      } else if (next is ProviderPaymentActionError) {
+        showPosErrorSnackbar(context, next.message);
+      }
+    });
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Complete Payment'),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            _showCancelConfirmation(context);
+          },
+        ),
+      ),
+      body: _buildBody(actionState),
+    );
+  }
+
+  Widget _buildBody(ProviderPaymentActionState state) {
+    if (state is ProviderPaymentActionLoading) {
+      return const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [CircularProgressIndicator(), SizedBox(height: 16), Text('Initiating payment...')],
+        ),
+      );
+    }
+
+    if (state is ProviderPaymentActionError) {
+      return PosErrorState(
+        message: state.message,
+        onRetry: () {
+          _paymentInitiated = false;
+          _initiatePayment();
+        },
+      );
+    }
+
+    if (_redirectUrl != null && _webController != null) {
+      return Stack(
+        children: [
+          WebViewWidget(controller: _webController!),
+          if (_webViewLoading) const Center(child: CircularProgressIndicator()),
+        ],
+      );
+    }
+
+    return const Center(child: CircularProgressIndicator());
+  }
+
+  void _showCancelConfirmation(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Cancel Payment?'),
+        content: const Text('Are you sure you want to cancel this payment? You can retry later.'),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Continue Payment')),
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              context.go(Routes.providerPayments);
+            },
+            style: TextButton.styleFrom(foregroundColor: AppColors.error),
+            child: const Text('Cancel'),
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/orders/enums/order_source.dart';
-import 'package:thawani_pos/features/orders/enums/order_status.dart';
-import 'package:thawani_pos/features/orders/enums/return_refund_method.dart';
-import 'package:thawani_pos/features/orders/enums/return_type.dart';
-import 'package:thawani_pos/features/orders/models/order.dart';
-import 'package:thawani_pos/features/orders/models/sale_return.dart';
-import 'package:thawani_pos/features/orders/providers/order_state.dart';
+import 'package:wameedpos/features/orders/enums/order_source.dart';
+import 'package:wameedpos/features/orders/enums/order_status.dart';
+import 'package:wameedpos/features/orders/enums/return_refund_method.dart';
+import 'package:wameedpos/features/orders/enums/return_type.dart';
+import 'package:wameedpos/features/orders/models/order.dart';
+import 'package:wameedpos/features/orders/models/sale_return.dart';
+import 'package:wameedpos/features/orders/providers/order_state.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════════

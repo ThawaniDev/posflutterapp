@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/auth/enums/auth_method.dart';
+import 'package:wameedpos/features/auth/enums/auth_method.dart';
 
 class AttendanceRecord {
   final String id;
@@ -88,13 +88,12 @@ class AttendanceRecord {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AttendanceRecord && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is AttendanceRecord && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'AttendanceRecord(id: $id, staffUserId: $staffUserId, storeId: $storeId, clockInAt: $clockInAt, clockOutAt: $clockOutAt, breakMinutes: $breakMinutes, ...)';
+  String toString() =>
+      'AttendanceRecord(id: $id, staffUserId: $staffUserId, storeId: $storeId, clockInAt: $clockInAt, clockOutAt: $clockOutAt, breakMinutes: $breakMinutes, ...)';
 }

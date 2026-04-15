@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/features/industry_florist/enums/flower_freshness_status.dart';
-import 'package:thawani_pos/features/industry_florist/enums/flower_subscription_frequency.dart';
-import 'package:thawani_pos/features/industry_florist/models/flower_arrangement.dart';
-import 'package:thawani_pos/features/industry_florist/models/flower_freshness_log.dart';
-import 'package:thawani_pos/features/industry_florist/models/flower_subscription.dart';
-import 'package:thawani_pos/features/industry_florist/providers/florist_state.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/features/industry_florist/enums/flower_freshness_status.dart';
+import 'package:wameedpos/features/industry_florist/enums/flower_subscription_frequency.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_arrangement.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_freshness_log.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_subscription.dart';
+import 'package:wameedpos/features/industry_florist/providers/florist_state.dart';
 
 void main() {
   // ═══════════════ Enums ═══════════════

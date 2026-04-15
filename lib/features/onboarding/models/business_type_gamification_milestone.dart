@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/customers/enums/milestone_reward_type.dart';
-import 'package:thawani_pos/features/customers/enums/milestone_type.dart';
+import 'package:wameedpos/features/customers/enums/milestone_reward_type.dart';
+import 'package:wameedpos/features/customers/enums/milestone_type.dart';
 
 class BusinessTypeGamificationMilestone {
   final String id;
@@ -77,13 +77,12 @@ class BusinessTypeGamificationMilestone {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BusinessTypeGamificationMilestone && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is BusinessTypeGamificationMilestone && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'BusinessTypeGamificationMilestone(id: $id, businessTypeId: $businessTypeId, name: $name, nameAr: $nameAr, milestoneType: $milestoneType, thresholdValue: $thresholdValue, ...)';
+  String toString() =>
+      'BusinessTypeGamificationMilestone(id: $id, businessTypeId: $businessTypeId, name: $name, nameAr: $nameAr, milestoneType: $milestoneType, thresholdValue: $thresholdValue, ...)';
 }

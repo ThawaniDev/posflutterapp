@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_typography.dart';
-import 'package:thawani_pos/core/widgets/pos_searchable_dropdown.dart';
+import 'package:wameedpos/core/widgets/pos_searchable_dropdown.dart';
 
 // ═════════════════════════════════════════════════════════════
 // POS TABLE COLUMN DEFINITION

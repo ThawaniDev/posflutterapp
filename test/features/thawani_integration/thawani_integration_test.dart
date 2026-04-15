@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/thawani_integration/enums/thawani_order_status.dart';
-import 'package:thawani_pos/features/thawani_integration/enums/thawani_connection_status.dart';
-import 'package:thawani_pos/features/thawani_integration/enums/sync_status.dart';
-import 'package:thawani_pos/features/thawani_integration/enums/thawani_delivery_type.dart';
-import 'package:thawani_pos/features/thawani_integration/providers/thawani_state.dart';
+import 'package:wameedpos/features/thawani_integration/enums/thawani_order_status.dart';
+import 'package:wameedpos/features/thawani_integration/enums/thawani_connection_status.dart';
+import 'package:wameedpos/features/thawani_integration/enums/sync_status.dart';
+import 'package:wameedpos/features/thawani_integration/enums/thawani_delivery_type.dart';
+import 'package:wameedpos/features/thawani_integration/providers/thawani_state.dart';
 
 void main() {
   // ════════════════════════════════════════════════════════

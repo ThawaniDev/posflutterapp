@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/hardware/models/hardware_event_log.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/hardware/models/hardware_event_log.dart';
 
 class EventLogList extends StatelessWidget {
   const EventLogList({super.key, required this.logs});

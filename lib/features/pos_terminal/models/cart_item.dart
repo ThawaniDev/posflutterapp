@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/catalog/models/product.dart';
-import 'package:thawani_pos/features/promotions/enums/discount_type.dart';
+import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/features/promotions/enums/discount_type.dart';
 
 class CartItem {
   final Product product;

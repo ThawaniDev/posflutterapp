@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/settings/models/translation_version.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/settings/models/translation_version.dart';
 
 class VersionHistoryList extends StatelessWidget {
   final List<TranslationVersion> versions;

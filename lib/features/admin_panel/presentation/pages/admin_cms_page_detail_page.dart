@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
-import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 
 class AdminCmsPageDetailPage extends ConsumerStatefulWidget {
   final String pageId;
@@ -46,7 +46,9 @@ class _AdminCmsPageDetailPageState extends ConsumerState<AdminCmsPageDetailPage>
                           Expanded(child: Text(page['title'] ?? '', style: Theme.of(context).textTheme.headlineSmall)),
                           Chip(
                             label: Text(page['is_published'] == true ? 'Published' : 'Draft'),
-                            backgroundColor: page['is_published'] == true ? AppColors.success.withValues(alpha: 0.15) : AppColors.borderLight,
+                            backgroundColor: page['is_published'] == true
+                                ? AppColors.success.withValues(alpha: 0.15)
+                                : AppColors.borderLight,
                           ),
                         ],
                       ),

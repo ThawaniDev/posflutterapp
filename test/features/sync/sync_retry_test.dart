@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/sync/services/sync_retry_service.dart';
+import 'package:wameedpos/features/sync/services/sync_retry_service.dart';
 
 void main() {
   group('RetryConfig', () {

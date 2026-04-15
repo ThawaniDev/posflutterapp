@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/notifications/enums/announcement_type.dart';
+import 'package:wameedpos/features/notifications/enums/announcement_type.dart';
 
 class PlatformAnnouncement {
   final String id;
@@ -112,13 +112,12 @@ class PlatformAnnouncement {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is PlatformAnnouncement && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is PlatformAnnouncement && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'PlatformAnnouncement(id: $id, type: $type, title: $title, titleAr: $titleAr, body: $body, bodyAr: $bodyAr, ...)';
+  String toString() =>
+      'PlatformAnnouncement(id: $id, type: $type, title: $title, titleAr: $titleAr, body: $body, bodyAr: $bodyAr, ...)';
 }

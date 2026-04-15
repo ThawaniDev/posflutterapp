@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/marketplace/data/remote/marketplace_api_service.dart';
-import 'package:thawani_pos/features/marketplace/models/marketplace_category.dart';
-import 'package:thawani_pos/features/marketplace/models/marketplace_invoice.dart';
-import 'package:thawani_pos/features/marketplace/models/marketplace_listing.dart';
-import 'package:thawani_pos/features/marketplace/models/template_purchase.dart';
-import 'package:thawani_pos/features/marketplace/models/template_review.dart';
+import 'package:wameedpos/features/marketplace/data/remote/marketplace_api_service.dart';
+import 'package:wameedpos/features/marketplace/models/marketplace_category.dart';
+import 'package:wameedpos/features/marketplace/models/marketplace_invoice.dart';
+import 'package:wameedpos/features/marketplace/models/marketplace_listing.dart';
+import 'package:wameedpos/features/marketplace/models/template_purchase.dart';
+import 'package:wameedpos/features/marketplace/models/template_review.dart';
 
 final marketplaceRepositoryProvider = Provider<MarketplaceRepository>((ref) {
   return MarketplaceRepository(apiService: ref.watch(marketplaceApiServiceProvider));

@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/security/enums/role_audit_action.dart';
+import 'package:wameedpos/features/security/enums/role_audit_action.dart';
 
 class RoleAuditLog {
   final String id;
@@ -64,13 +64,12 @@ class RoleAuditLog {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is RoleAuditLog && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is RoleAuditLog && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'RoleAuditLog(id: $id, storeId: $storeId, userId: $userId, action: $action, roleId: $roleId, details: $details, ...)';
+  String toString() =>
+      'RoleAuditLog(id: $id, storeId: $storeId, userId: $userId, action: $action, roleId: $roleId, details: $details, ...)';
 }

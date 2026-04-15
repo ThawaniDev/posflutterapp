@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/app_constants.dart';
-import 'package:thawani_pos/features/auth/data/local/auth_local_storage.dart';
+import 'package:wameedpos/core/constants/app_constants.dart';
+import 'package:wameedpos/features/auth/data/local/auth_local_storage.dart';
 
 /// Provider for the active branch store ID. Updated by branch context system.
 /// Dio reads this to attach X-Store-Id header to all API requests.

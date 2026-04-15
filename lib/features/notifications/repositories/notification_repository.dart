@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/notifications/data/remote/notification_api_service.dart';
+import 'package:wameedpos/features/notifications/data/remote/notification_api_service.dart';
 
 class NotificationRepository {
   final NotificationApiService _apiService;
@@ -112,6 +112,7 @@ class NotificationRepository {
     required String scheduledAt,
     String? priority,
     String? recurrenceRule,
+    String scheduleType = 'once',
   }) => _apiService.createSchedule(
     category: category,
     title: title,
@@ -120,6 +121,7 @@ class NotificationRepository {
     scheduledAt: scheduledAt,
     priority: priority,
     recurrenceRule: recurrenceRule,
+    scheduleType: scheduleType,
   );
 
   Future<Map<String, dynamic>> cancelSchedule(String id) => _apiService.cancelSchedule(id);

@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/industry_jewelry/enums/making_charges_type.dart';
-import 'package:thawani_pos/features/industry_jewelry/enums/metal_type.dart';
+import 'package:wameedpos/features/industry_jewelry/enums/making_charges_type.dart';
+import 'package:wameedpos/features/industry_jewelry/enums/metal_type.dart';
 
 class JewelryProductDetail {
   final String id;
@@ -101,13 +101,12 @@ class JewelryProductDetail {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is JewelryProductDetail && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is JewelryProductDetail && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'JewelryProductDetail(id: $id, productId: $productId, metalType: $metalType, karat: $karat, grossWeightG: $grossWeightG, netWeightG: $netWeightG, ...)';
+  String toString() =>
+      'JewelryProductDetail(id: $id, productId: $productId, metalType: $metalType, karat: $karat, grossWeightG: $grossWeightG, netWeightG: $netWeightG, ...)';
 }

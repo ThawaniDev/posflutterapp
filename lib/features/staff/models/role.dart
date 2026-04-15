@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/staff/models/permission.dart';
+import 'package:wameedpos/features/staff/models/permission.dart';
 
 class Role {
   final int id;

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/industry_bakery/providers/bakery_state.dart';
-import 'package:thawani_pos/features/industry_bakery/repositories/bakery_repository.dart';
+import 'package:wameedpos/features/industry_bakery/providers/bakery_state.dart';
+import 'package:wameedpos/features/industry_bakery/repositories/bakery_repository.dart';
 
 final bakeryProvider = StateNotifierProvider<BakeryNotifier, BakeryState>((ref) {
   return BakeryNotifier(ref.watch(bakeryRepositoryProvider));

@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/staff/data/remote/role_api_service.dart';
-import 'package:thawani_pos/features/staff/providers/roles_state.dart';
-import 'package:thawani_pos/features/staff/repositories/roles_repository.dart';
+import 'package:wameedpos/features/staff/data/remote/role_api_service.dart';
+import 'package:wameedpos/features/staff/providers/roles_state.dart';
+import 'package:wameedpos/features/staff/repositories/roles_repository.dart';
 
 // ─── Roles List ────────────────────────────────────────────────────
 

@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/branches/enums/business_type.dart';
+import 'package:wameedpos/features/branches/enums/business_type.dart';
 
 class Store {
   final String id;

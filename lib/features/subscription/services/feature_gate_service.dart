@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:thawani_pos/core/constants/storage_keys.dart';
-import 'package:thawani_pos/features/subscription/data/remote/subscription_api_service.dart';
+import 'package:wameedpos/core/constants/storage_keys.dart';
+import 'package:wameedpos/features/subscription/data/remote/subscription_api_service.dart';
 
 /// Provider for FeatureGateService.
 final featureGateServiceProvider = Provider<FeatureGateService>((ref) {

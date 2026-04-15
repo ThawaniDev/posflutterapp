@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/theme/app_typography.dart';
-import 'package:thawani_pos/core/widgets/pos_card.dart';
-import 'package:thawani_pos/features/support/enums/ticket_status.dart';
-import 'package:thawani_pos/features/support/models/support_ticket.dart';
-import 'package:thawani_pos/features/support/widgets/ticket_priority_badge.dart';
-import 'package:thawani_pos/features/support/widgets/ticket_status_badge.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/widgets/pos_card.dart';
+import 'package:wameedpos/features/support/enums/ticket_status.dart';
+import 'package:wameedpos/features/support/models/support_ticket.dart';
+import 'package:wameedpos/features/support/widgets/ticket_priority_badge.dart';
+import 'package:wameedpos/features/support/widgets/ticket_status_badge.dart';
 import 'package:intl/intl.dart';
 
 class TicketCardWidget extends StatelessWidget {

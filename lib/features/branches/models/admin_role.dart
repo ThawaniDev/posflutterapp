@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/branches/enums/admin_role_slug.dart';
+import 'package:wameedpos/features/branches/enums/admin_role_slug.dart';
 
 class AdminRole {
   final String id;
@@ -64,13 +64,12 @@ class AdminRole {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AdminRole && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is AdminRole && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'AdminRole(id: $id, name: $name, slug: $slug, description: $description, isSystem: $isSystem, createdAt: $createdAt, ...)';
+  String toString() =>
+      'AdminRole(id: $id, name: $name, slug: $slug, description: $description, isSystem: $isSystem, createdAt: $createdAt, ...)';
 }

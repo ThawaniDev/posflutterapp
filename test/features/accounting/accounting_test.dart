@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/accounting/enums/accounting_provider.dart';
-import 'package:thawani_pos/features/accounting/enums/accounting_export_status.dart';
-import 'package:thawani_pos/features/accounting/enums/export_frequency.dart';
-import 'package:thawani_pos/features/accounting/enums/export_triggered_by.dart';
-import 'package:thawani_pos/features/accounting/models/store_accounting_config.dart';
-import 'package:thawani_pos/features/accounting/models/account_mapping.dart';
-import 'package:thawani_pos/features/accounting/models/accounting_export.dart';
-import 'package:thawani_pos/features/accounting/models/auto_export_config.dart';
-import 'package:thawani_pos/features/accounting/providers/accounting_state.dart';
+import 'package:wameedpos/features/accounting/enums/accounting_provider.dart';
+import 'package:wameedpos/features/accounting/enums/accounting_export_status.dart';
+import 'package:wameedpos/features/accounting/enums/export_frequency.dart';
+import 'package:wameedpos/features/accounting/enums/export_triggered_by.dart';
+import 'package:wameedpos/features/accounting/models/store_accounting_config.dart';
+import 'package:wameedpos/features/accounting/models/account_mapping.dart';
+import 'package:wameedpos/features/accounting/models/accounting_export.dart';
+import 'package:wameedpos/features/accounting/models/auto_export_config.dart';
+import 'package:wameedpos/features/accounting/providers/accounting_state.dart';
 
 void main() {
   // ════════════════════════════════════════════════════════

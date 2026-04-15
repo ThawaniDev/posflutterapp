@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_feature_result.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_feature_result.dart';
 
 class AIResultCard extends StatelessWidget {
   final AIFeatureResult result;

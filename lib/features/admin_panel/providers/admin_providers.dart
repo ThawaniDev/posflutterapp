@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/admin_panel/repositories/admin_repository.dart';
-import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/features/admin_panel/repositories/admin_repository.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 
 // ════════════════════════════════════════════════════════
 // Store List Provider

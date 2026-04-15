@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/orders/enums/return_refund_method.dart';
-import 'package:thawani_pos/features/orders/enums/return_type.dart';
+import 'package:wameedpos/features/orders/enums/return_refund_method.dart';
+import 'package:wameedpos/features/orders/enums/return_type.dart';
 
 class SaleReturn {
   final String id;
@@ -101,13 +101,12 @@ class SaleReturn {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SaleReturn && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is SaleReturn && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'SaleReturn(id: $id, storeId: $storeId, orderId: $orderId, returnNumber: $returnNumber, type: $type, reasonCode: $reasonCode, ...)';
+  String toString() =>
+      'SaleReturn(id: $id, storeId: $storeId, orderId: $orderId, returnNumber: $returnNumber, type: $type, reasonCode: $reasonCode, ...)';
 }

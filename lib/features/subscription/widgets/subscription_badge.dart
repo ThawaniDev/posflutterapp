@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
 
 /// A colored badge indicating subscription status.
 class SubscriptionBadge extends StatelessWidget {

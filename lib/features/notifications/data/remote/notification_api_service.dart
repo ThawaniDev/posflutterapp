@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
 
 class NotificationApiService {
   final Dio _dio;
@@ -179,7 +179,7 @@ class NotificationApiService {
     return response.data as Map<String, dynamic>;
   }
 
-  /// PUT /notifications/sound-configs
+  /// PUT /notifications/sound-configs/{eventKey}
   Future<Map<String, dynamic>> updateSoundConfig({
     required String eventKey,
     String? soundFile,
@@ -187,11 +187,10 @@ class NotificationApiService {
     bool? isEnabled,
   }) async {
     final response = await _dio.put(
-      ApiEndpoints.notificationSoundConfigs,
+      '${ApiEndpoints.notificationSoundConfigs}/$eventKey',
       data: {
-        'event_key': eventKey,
         if (soundFile != null) 'sound_file': soundFile,
-        if (volume != null) 'volume': volume,
+        if (volume != null) 'volume': (volume * 100).round(),
         if (isEnabled != null) 'is_enabled': isEnabled,
       },
     );
@@ -215,6 +214,7 @@ class NotificationApiService {
     required String scheduledAt,
     String? priority,
     String? recurrenceRule,
+    String scheduleType = 'once',
   }) async {
     final response = await _dio.post(
       ApiEndpoints.notificationSchedules,
@@ -224,8 +224,9 @@ class NotificationApiService {
         'message': message,
         'channel': channel,
         'scheduled_at': scheduledAt,
+        'schedule_type': scheduleType,
         if (priority != null) 'priority': priority,
-        if (recurrenceRule != null) 'recurrence_rule': recurrenceRule,
+        if (recurrenceRule != null) 'cron_expression': recurrenceRule,
       },
     );
     return response.data as Map<String, dynamic>;

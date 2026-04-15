@@ -1,6 +1,6 @@
 {
-    "name": "thawani_pos",
-    "short_name": "thawani_pos",
+    "name": "wameedpos",
+    "short_name": "wameedpos",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#hexcode",

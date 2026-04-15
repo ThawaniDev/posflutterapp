@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/catalog/models/category.dart';
-import 'package:thawani_pos/features/catalog/models/modifier_group.dart';
-import 'package:thawani_pos/features/catalog/models/product.dart';
-import 'package:thawani_pos/features/catalog/models/product_barcode.dart';
-import 'package:thawani_pos/features/catalog/models/product_supplier.dart';
-import 'package:thawani_pos/features/catalog/models/product_variant.dart';
-import 'package:thawani_pos/features/catalog/models/store_price.dart';
-import 'package:thawani_pos/features/catalog/models/supplier.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/catalog/models/category.dart';
+import 'package:wameedpos/features/catalog/models/modifier_group.dart';
+import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/features/catalog/models/product_barcode.dart';
+import 'package:wameedpos/features/catalog/models/product_supplier.dart';
+import 'package:wameedpos/features/catalog/models/product_variant.dart';
+import 'package:wameedpos/features/catalog/models/store_price.dart';
+import 'package:wameedpos/features/catalog/models/supplier.dart';
 
 final catalogApiServiceProvider = Provider<CatalogApiService>((ref) {
   return CatalogApiService(ref.watch(dioClientProvider));

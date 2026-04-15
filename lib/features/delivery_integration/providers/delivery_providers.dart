@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/delivery_integration/repositories/delivery_repository.dart';
-import 'package:thawani_pos/features/delivery_integration/providers/delivery_state.dart';
+import 'package:wameedpos/features/delivery_integration/repositories/delivery_repository.dart';
+import 'package:wameedpos/features/delivery_integration/providers/delivery_state.dart';
 
 // ─── Delivery Stats Provider ────────────────────────────
 class DeliveryStatsNotifier extends StateNotifier<DeliveryStatsState> {

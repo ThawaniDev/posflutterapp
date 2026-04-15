@@ -1,6 +1,6 @@
-import 'package:thawani_pos/core/enums/alert_severity.dart';
-import 'package:thawani_pos/features/security/enums/security_alert_status.dart';
-import 'package:thawani_pos/features/settings/enums/security_alert_type.dart';
+import 'package:wameedpos/core/enums/alert_severity.dart';
+import 'package:wameedpos/features/security/enums/security_alert_status.dart';
+import 'package:wameedpos/features/settings/enums/security_alert_type.dart';
 
 class SecurityAlert {
   final String id;
@@ -84,13 +84,12 @@ class SecurityAlert {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SecurityAlert && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is SecurityAlert && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'SecurityAlert(id: $id, adminUserId: $adminUserId, alertType: $alertType, severity: $severity, details: $details, status: $status, ...)';
+  String toString() =>
+      'SecurityAlert(id: $id, adminUserId: $adminUserId, alertType: $alertType, severity: $severity, details: $details, status: $status, ...)';
 }

@@ -1,14 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/inventory/providers/inventory_state.dart';
-import 'package:thawani_pos/features/inventory/models/stock_level.dart';
-import 'package:thawani_pos/features/inventory/models/goods_receipt.dart';
-import 'package:thawani_pos/features/inventory/models/stock_adjustment.dart';
-import 'package:thawani_pos/features/inventory/models/stock_transfer.dart';
-import 'package:thawani_pos/features/inventory/models/purchase_order.dart';
-import 'package:thawani_pos/features/inventory/models/recipe.dart';
-import 'package:thawani_pos/features/inventory/enums/stock_adjustment_type.dart';
-import 'package:thawani_pos/features/inventory/enums/stock_transfer_status.dart';
-import 'package:thawani_pos/features/inventory/enums/purchase_order_status.dart';
+import 'package:wameedpos/features/inventory/providers/inventory_state.dart';
+import 'package:wameedpos/features/inventory/models/stock_level.dart';
+import 'package:wameedpos/features/inventory/models/goods_receipt.dart';
+import 'package:wameedpos/features/inventory/models/stock_adjustment.dart';
+import 'package:wameedpos/features/inventory/models/stock_transfer.dart';
+import 'package:wameedpos/features/inventory/models/purchase_order.dart';
+import 'package:wameedpos/features/inventory/models/recipe.dart';
+import 'package:wameedpos/features/inventory/enums/stock_adjustment_type.dart';
+import 'package:wameedpos/features/inventory/enums/stock_transfer_status.dart';
+import 'package:wameedpos/features/inventory/enums/purchase_order_status.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════════

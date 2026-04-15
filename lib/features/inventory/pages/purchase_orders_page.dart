@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/pos_badge.dart';
-import 'package:thawani_pos/core/widgets/pos_button.dart';
-import 'package:thawani_pos/core/widgets/pos_table.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/catalog/models/product.dart';
-import 'package:thawani_pos/features/catalog/models/supplier.dart';
-import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
-import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
-import 'package:thawani_pos/features/inventory/enums/purchase_order_status.dart';
-import 'package:thawani_pos/features/inventory/models/purchase_order.dart';
-import 'package:thawani_pos/features/inventory/providers/inventory_providers.dart';
-import 'package:thawani_pos/features/inventory/providers/inventory_state.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/pos_badge.dart';
+import 'package:wameedpos/core/widgets/pos_button.dart';
+import 'package:wameedpos/core/widgets/pos_table.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/features/catalog/models/supplier.dart';
+import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
+import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
+import 'package:wameedpos/features/inventory/enums/purchase_order_status.dart';
+import 'package:wameedpos/features/inventory/models/purchase_order.dart';
+import 'package:wameedpos/features/inventory/providers/inventory_providers.dart';
+import 'package:wameedpos/features/inventory/providers/inventory_state.dart';
 
 class PurchaseOrdersPage extends ConsumerStatefulWidget {
   const PurchaseOrdersPage({super.key});

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/industry_pharmacy/providers/pharmacy_providers.dart';
-import 'package:thawani_pos/features/industry_pharmacy/providers/pharmacy_state.dart';
-import 'package:thawani_pos/features/industry_pharmacy/widgets/prescription_card.dart';
-import 'package:thawani_pos/features/industry_pharmacy/widgets/drug_schedule_card.dart';
-import 'package:thawani_pos/features/industry_pharmacy/pages/prescription_form_page.dart';
-import 'package:thawani_pos/features/industry_pharmacy/pages/drug_schedule_form_page.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_pharmacy/providers/pharmacy_providers.dart';
+import 'package:wameedpos/features/industry_pharmacy/providers/pharmacy_state.dart';
+import 'package:wameedpos/features/industry_pharmacy/widgets/prescription_card.dart';
+import 'package:wameedpos/features/industry_pharmacy/widgets/drug_schedule_card.dart';
+import 'package:wameedpos/features/industry_pharmacy/pages/prescription_form_page.dart';
+import 'package:wameedpos/features/industry_pharmacy/pages/drug_schedule_form_page.dart';
 
 class PharmacyDashboardPage extends ConsumerStatefulWidget {
   const PharmacyDashboardPage({super.key});

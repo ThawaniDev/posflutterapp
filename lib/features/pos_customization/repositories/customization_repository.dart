@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/pos_customization/data/remote/customization_api_service.dart';
-import 'package:thawani_pos/features/pos_customization/models/cfd_theme.dart';
-import 'package:thawani_pos/features/pos_customization/models/label_layout_template.dart';
-import 'package:thawani_pos/features/pos_customization/models/receipt_layout_template.dart';
+import 'package:wameedpos/features/pos_customization/data/remote/customization_api_service.dart';
+import 'package:wameedpos/features/pos_customization/models/cfd_theme.dart';
+import 'package:wameedpos/features/pos_customization/models/label_layout_template.dart';
+import 'package:wameedpos/features/pos_customization/models/receipt_layout_template.dart';
 
 final customizationRepositoryProvider = Provider<CustomizationRepository>((ref) {
   return CustomizationRepository(ref.watch(customizationApiServiceProvider));

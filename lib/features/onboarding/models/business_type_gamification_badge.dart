@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/customers/enums/badge_trigger_type.dart';
+import 'package:wameedpos/features/customers/enums/badge_trigger_type.dart';
 
 class BusinessTypeGamificationBadge {
   final String id;
@@ -88,13 +88,12 @@ class BusinessTypeGamificationBadge {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BusinessTypeGamificationBadge && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is BusinessTypeGamificationBadge && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'BusinessTypeGamificationBadge(id: $id, businessTypeId: $businessTypeId, name: $name, nameAr: $nameAr, iconUrl: $iconUrl, triggerType: $triggerType, ...)';
+  String toString() =>
+      'BusinessTypeGamificationBadge(id: $id, businessTypeId: $businessTypeId, name: $name, nameAr: $nameAr, iconUrl: $iconUrl, triggerType: $triggerType, ...)';
 }

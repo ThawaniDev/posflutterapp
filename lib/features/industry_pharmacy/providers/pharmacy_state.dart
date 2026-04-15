@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/industry_pharmacy/models/prescription.dart';
-import 'package:thawani_pos/features/industry_pharmacy/models/drug_schedule.dart';
+import 'package:wameedpos/features/industry_pharmacy/models/prescription.dart';
+import 'package:wameedpos/features/industry_pharmacy/models/drug_schedule.dart';
 
 sealed class PharmacyState {
   const PharmacyState();

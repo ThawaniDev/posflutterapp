@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/delivery_integration/enums/delivery_config_platform.dart';
+import 'package:wameedpos/features/delivery_integration/enums/delivery_config_platform.dart';
 
 class DeliveryPlatformConfig {
   final String id;

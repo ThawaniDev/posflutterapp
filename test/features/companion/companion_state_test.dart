@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/companion/providers/companion_state.dart';
+import 'package:wameedpos/features/companion/providers/companion_state.dart';
 
 void main() {
   // ─── Quick Stats State ─────────────────────────────────

@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/industry_florist/models/flower_arrangement.dart';
-import 'package:thawani_pos/features/industry_florist/models/flower_freshness_log.dart';
-import 'package:thawani_pos/features/industry_florist/models/flower_subscription.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_arrangement.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_freshness_log.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_subscription.dart';
 
 final floristApiServiceProvider = Provider<FloristApiService>((ref) {
   return FloristApiService(ref.watch(dioClientProvider));

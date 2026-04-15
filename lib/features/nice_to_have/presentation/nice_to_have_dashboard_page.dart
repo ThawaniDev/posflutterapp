@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'nice_to_have_providers.dart';
 import 'widgets/wishlist_widget.dart';
 import 'widgets/appointments_widget.dart';

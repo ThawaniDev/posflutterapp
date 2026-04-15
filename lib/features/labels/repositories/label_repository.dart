@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/labels/data/remote/label_api_service.dart';
-import 'package:thawani_pos/features/labels/models/label_print_history.dart';
-import 'package:thawani_pos/features/labels/models/label_template.dart';
+import 'package:wameedpos/features/labels/data/remote/label_api_service.dart';
+import 'package:wameedpos/features/labels/models/label_print_history.dart';
+import 'package:wameedpos/features/labels/models/label_template.dart';
 
 final labelRepositoryProvider = Provider<LabelRepository>((ref) {
   return LabelRepository(apiService: ref.watch(labelApiServiceProvider));

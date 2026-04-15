@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/settings/providers/localization_providers.dart';
-import 'package:thawani_pos/features/settings/providers/localization_state.dart';
-import 'package:thawani_pos/features/settings/widgets/locale_selector.dart';
-import 'package:thawani_pos/features/settings/widgets/translation_string_card.dart';
-import 'package:thawani_pos/features/settings/widgets/version_history_list.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/settings/providers/localization_providers.dart';
+import 'package:wameedpos/features/settings/providers/localization_state.dart';
+import 'package:wameedpos/features/settings/widgets/locale_selector.dart';
+import 'package:wameedpos/features/settings/widgets/translation_string_card.dart';
+import 'package:wameedpos/features/settings/widgets/version_history_list.dart';
 
 class LocalizationPage extends ConsumerStatefulWidget {
   const LocalizationPage({super.key});

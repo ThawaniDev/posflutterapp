@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
-import 'package:thawani_pos/features/customers/models/customer.dart';
-import 'package:thawani_pos/features/customers/models/customer_group.dart';
-import 'package:thawani_pos/features/customers/models/loyalty_transaction.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:wameedpos/features/customers/models/customer.dart';
+import 'package:wameedpos/features/customers/models/customer_group.dart';
+import 'package:wameedpos/features/customers/models/loyalty_transaction.dart';
 
 final customerApiServiceProvider = Provider<CustomerApiService>((ref) {
   return CustomerApiService(ref.watch(dioClientProvider));

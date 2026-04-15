@@ -1,6 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/storage_keys.dart';
+import 'package:wameedpos/core/constants/storage_keys.dart';
 
 final authLocalStorageProvider = Provider<AuthLocalStorage>((ref) {
   return AuthLocalStorage();

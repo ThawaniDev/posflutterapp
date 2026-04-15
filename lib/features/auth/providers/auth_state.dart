@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/auth/models/user.dart';
+import 'package:wameedpos/features/auth/models/user.dart';
 
 /// Represents the authentication state of the app.
 sealed class AuthState {

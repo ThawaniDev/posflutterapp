@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/branches/data/remote/branch_api_service.dart';
+import 'package:wameedpos/features/branches/data/remote/branch_api_service.dart';
 
 class BranchRepository {
   final BranchApiService _apiService;

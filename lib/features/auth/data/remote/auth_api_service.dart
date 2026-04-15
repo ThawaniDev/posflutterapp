@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/auth/models/auth_response.dart';
-import 'package:thawani_pos/features/auth/models/user.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/auth/models/auth_response.dart';
+import 'package:wameedpos/features/auth/models/user.dart';
 
 final authApiServiceProvider = Provider<AuthApiService>((ref) {
   return AuthApiService(ref.watch(dioClientProvider));

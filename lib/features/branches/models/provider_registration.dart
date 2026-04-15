@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/branches/enums/provider_registration_status.dart';
+import 'package:wameedpos/features/branches/enums/provider_registration_status.dart';
 
 class ProviderRegistration {
   final String id;
@@ -112,13 +112,12 @@ class ProviderRegistration {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ProviderRegistration && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is ProviderRegistration && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'ProviderRegistration(id: $id, organizationName: $organizationName, organizationNameAr: $organizationNameAr, ownerName: $ownerName, ownerEmail: $ownerEmail, ownerPhone: $ownerPhone, ...)';
+  String toString() =>
+      'ProviderRegistration(id: $id, organizationName: $organizationName, organizationNameAr: $organizationNameAr, ownerName: $ownerName, ownerEmail: $ownerEmail, ownerPhone: $ownerPhone, ...)';
 }

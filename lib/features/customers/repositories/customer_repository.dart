@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
-import 'package:thawani_pos/features/customers/data/remote/customer_api_service.dart';
-import 'package:thawani_pos/features/customers/models/customer.dart';
-import 'package:thawani_pos/features/customers/models/customer_group.dart';
-import 'package:thawani_pos/features/customers/models/loyalty_transaction.dart';
+import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:wameedpos/features/customers/data/remote/customer_api_service.dart';
+import 'package:wameedpos/features/customers/models/customer.dart';
+import 'package:wameedpos/features/customers/models/customer_group.dart';
+import 'package:wameedpos/features/customers/models/loyalty_transaction.dart';
 
 final customerRepositoryProvider = Provider<CustomerRepository>((ref) {
   return CustomerRepository(apiService: ref.watch(customerApiServiceProvider));

@@ -1,17 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/theme/app_typography.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
-import 'package:thawani_pos/features/hardware/enums/connection_type.dart';
-import 'package:thawani_pos/features/hardware/enums/hardware_device_type.dart';
-import 'package:thawani_pos/features/hardware/models/hardware_configuration.dart';
-import 'package:thawani_pos/features/hardware/providers/hardware_providers.dart';
-import 'package:thawani_pos/features/hardware/providers/hardware_state.dart';
-import 'package:thawani_pos/features/hardware/services/hardware_auto_detector.dart';
-import 'package:thawani_pos/features/hardware/services/hardware_manager.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/features/hardware/enums/connection_type.dart';
+import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
+import 'package:wameedpos/features/hardware/models/hardware_configuration.dart';
+import 'package:wameedpos/features/hardware/providers/hardware_providers.dart';
+import 'package:wameedpos/features/hardware/providers/hardware_state.dart';
+import 'package:wameedpos/features/hardware/services/hardware_auto_detector.dart';
+import 'package:wameedpos/features/hardware/services/hardware_manager.dart';
 
 /// Real-time connected devices panel showing all peripherals grouped by connection type.
 class ConnectedDevicesPanel extends ConsumerWidget {

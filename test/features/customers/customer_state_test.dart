@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/customers/models/customer.dart';
-import 'package:thawani_pos/features/customers/models/customer_group.dart';
-import 'package:thawani_pos/features/customers/providers/customer_state.dart';
+import 'package:wameedpos/features/customers/models/customer.dart';
+import 'package:wameedpos/features/customers/models/customer_group.dart';
+import 'package:wameedpos/features/customers/providers/customer_state.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════════

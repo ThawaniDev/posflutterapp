@@ -1,11 +1,11 @@
-import 'package:thawani_pos/features/inventory/models/goods_receipt.dart';
-import 'package:thawani_pos/features/inventory/models/purchase_order.dart';
-import 'package:thawani_pos/features/inventory/models/recipe.dart';
-import 'package:thawani_pos/features/inventory/models/stock_adjustment.dart';
-import 'package:thawani_pos/features/inventory/models/stock_level.dart';
-import 'package:thawani_pos/features/inventory/models/stock_movement.dart';
-import 'package:thawani_pos/features/inventory/models/stock_transfer.dart';
-import 'package:thawani_pos/features/inventory/models/supplier_return.dart';
+import 'package:wameedpos/features/inventory/models/goods_receipt.dart';
+import 'package:wameedpos/features/inventory/models/purchase_order.dart';
+import 'package:wameedpos/features/inventory/models/recipe.dart';
+import 'package:wameedpos/features/inventory/models/stock_adjustment.dart';
+import 'package:wameedpos/features/inventory/models/stock_level.dart';
+import 'package:wameedpos/features/inventory/models/stock_movement.dart';
+import 'package:wameedpos/features/inventory/models/stock_transfer.dart';
+import 'package:wameedpos/features/inventory/models/supplier_return.dart';
 
 // ═══════════════════════════════════════════════════════════════════
 // Stock Levels State

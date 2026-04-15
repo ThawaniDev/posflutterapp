@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/hardware/enums/connection_type.dart';
-import 'package:thawani_pos/features/hardware/enums/hardware_device_type.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/hardware/enums/connection_type.dart';
+import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
 
 /// Dialog for adding or editing a hardware device configuration
 class DeviceSetupDialog extends StatefulWidget {

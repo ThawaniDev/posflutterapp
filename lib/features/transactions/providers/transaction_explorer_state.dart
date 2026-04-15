@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/pos_terminal/models/payment.dart';
-import 'package:thawani_pos/features/pos_terminal/models/transaction.dart';
+import 'package:wameedpos/features/pos_terminal/models/payment.dart';
+import 'package:wameedpos/features/pos_terminal/models/transaction.dart';
 
 // ─────────────────────────────────────────────────────────────
 // Transaction Explorer States

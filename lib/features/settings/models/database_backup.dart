@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/settings/enums/database_backup_status.dart';
-import 'package:thawani_pos/features/settings/enums/database_backup_type.dart';
+import 'package:wameedpos/features/settings/enums/database_backup_status.dart';
+import 'package:wameedpos/features/settings/enums/database_backup_type.dart';
 
 class DatabaseBackup {
   final String id;
@@ -71,13 +71,12 @@ class DatabaseBackup {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is DatabaseBackup && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is DatabaseBackup && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'DatabaseBackup(id: $id, backupType: $backupType, filePath: $filePath, fileSizeBytes: $fileSizeBytes, status: $status, errorMessage: $errorMessage, ...)';
+  String toString() =>
+      'DatabaseBackup(id: $id, backupType: $backupType, filePath: $filePath, fileSizeBytes: $fileSizeBytes, status: $status, errorMessage: $errorMessage, ...)';
 }

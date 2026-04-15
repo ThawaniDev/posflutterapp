@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/sync/enums/sync_direction.dart';
-import 'package:thawani_pos/features/sync/enums/sync_log_status.dart';
+import 'package:wameedpos/features/sync/enums/sync_direction.dart';
+import 'package:wameedpos/features/sync/enums/sync_log_status.dart';
 
 class SyncLog {
   final String id;

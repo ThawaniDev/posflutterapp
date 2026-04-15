@@ -6,9 +6,9 @@ import '../../customers/enums/condition_grade.dart';
 import '../enums/device_imei_status.dart';
 import '../models/device_imei_record.dart';
 import '../providers/electronics_providers.dart';
-import 'package:thawani_pos/features/catalog/models/product.dart';
-import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
-import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
+import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
+import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
 
 class ImeiRecordFormPage extends ConsumerStatefulWidget {
   final DeviceImeiRecord? record;

@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/settings/enums/sync_conflict_resolution.dart';
+import 'package:wameedpos/features/settings/enums/sync_conflict_resolution.dart';
 
 class SyncConflict {
   final String id;
@@ -82,13 +82,12 @@ class SyncConflict {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SyncConflict && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is SyncConflict && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'SyncConflict(id: $id, storeId: $storeId, tableName: $tableName, recordId: $recordId, localData: $localData, cloudData: $cloudData, ...)';
+  String toString() =>
+      'SyncConflict(id: $id, storeId: $storeId, tableName: $tableName, recordId: $recordId, localData: $localData, cloudData: $cloudData, ...)';
 }

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/theme/app_typography.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/payments/enums/installment_provider.dart';
-import 'package:thawani_pos/features/payments/providers/installment_providers.dart';
-import 'package:thawani_pos/features/payments/providers/installment_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/payments/enums/installment_provider.dart';
+import 'package:wameedpos/features/payments/providers/installment_providers.dart';
+import 'package:wameedpos/features/payments/providers/installment_state.dart';
 
 // ─── Brand colors for each provider ────────────────────────────
 class _ProviderBrand {

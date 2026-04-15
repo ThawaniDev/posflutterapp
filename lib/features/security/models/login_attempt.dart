@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/security/enums/login_attempt_type.dart';
+import 'package:wameedpos/features/security/enums/login_attempt_type.dart';
 
 class LoginAttempt {
   final String id;

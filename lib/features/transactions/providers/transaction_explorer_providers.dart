@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/pos_terminal/data/remote/pos_terminal_api_service.dart';
-import 'package:thawani_pos/features/pos_terminal/models/payment.dart';
-import 'package:thawani_pos/features/pos_terminal/models/transaction.dart';
-import 'package:thawani_pos/features/transactions/providers/transaction_explorer_state.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/pos_terminal/data/remote/pos_terminal_api_service.dart';
+import 'package:wameedpos/features/pos_terminal/models/payment.dart';
+import 'package:wameedpos/features/pos_terminal/models/transaction.dart';
+import 'package:wameedpos/features/transactions/providers/transaction_explorer_state.dart';
 
 // ─────────────────────────────────────────────────────────────
 // API Service for Transaction Explorer

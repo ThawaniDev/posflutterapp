@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/auth/models/user.dart';
-import 'package:thawani_pos/features/auth/models/auth_token.dart';
+import 'package:wameedpos/features/auth/models/user.dart';
+import 'package:wameedpos/features/auth/models/auth_token.dart';
 
 /// Auth response from login/register APIs.
 class AuthResponse {

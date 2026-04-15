@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/sync/models/sync_conflict.dart';
+import 'package:wameedpos/features/sync/models/sync_conflict.dart';
 
 // ─── Sync Status State ─────────────────────────────────────
 sealed class SyncStatusState {

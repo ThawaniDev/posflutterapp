@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
-import 'package:thawani_pos/features/catalog/models/product.dart';
-import 'package:thawani_pos/features/catalog/models/category.dart';
-import 'package:thawani_pos/features/catalog/models/supplier.dart';
+import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
+import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/features/catalog/models/category.dart';
+import 'package:wameedpos/features/catalog/models/supplier.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════════
@@ -26,13 +26,7 @@ void main() {
         Product(id: 'p2', organizationId: 'o1', name: 'Product 2', sellPrice: 2.0),
       ];
 
-      final state = ProductsLoaded(
-        products: products,
-        total: 50,
-        currentPage: 1,
-        lastPage: 3,
-        perPage: 25,
-      );
+      final state = ProductsLoaded(products: products, total: 50, currentPage: 1, lastPage: 3, perPage: 25);
 
       expect(state, isA<ProductsState>());
       expect(state.products, hasLength(2));
@@ -44,13 +38,7 @@ void main() {
     });
 
     test('ProductsLoaded hasMore is false on last page', () {
-      final state = ProductsLoaded(
-        products: [],
-        total: 10,
-        currentPage: 1,
-        lastPage: 1,
-        perPage: 25,
-      );
+      final state = ProductsLoaded(products: [], total: 10, currentPage: 1, lastPage: 1, perPage: 25);
       expect(state.hasMore, false);
     });
 
@@ -99,11 +87,15 @@ void main() {
       expect(const ProductDetailLoading(), isA<ProductDetailState>());
       expect(const ProductDetailSaving(), isA<ProductDetailState>());
       expect(
-        ProductDetailLoaded(product: Product(id: 'p1', organizationId: 'o1', name: 'T', sellPrice: 1.0)),
+        ProductDetailLoaded(
+          product: Product(id: 'p1', organizationId: 'o1', name: 'T', sellPrice: 1.0),
+        ),
         isA<ProductDetailState>(),
       );
       expect(
-        ProductDetailSaved(product: Product(id: 'p1', organizationId: 'o1', name: 'T', sellPrice: 1.0)),
+        ProductDetailSaved(
+          product: Product(id: 'p1', organizationId: 'o1', name: 'T', sellPrice: 1.0),
+        ),
         isA<ProductDetailState>(),
       );
       expect(const ProductDetailError(message: 'e'), isA<ProductDetailState>());
@@ -145,14 +137,16 @@ void main() {
     });
 
     test('CategoriesLoaded copyWith replaces categories', () {
-      final state = CategoriesLoaded(categories: [
-        Category(id: 'c1', organizationId: 'o1', name: 'A'),
-      ]);
+      final state = CategoriesLoaded(
+        categories: [Category(id: 'c1', organizationId: 'o1', name: 'A')],
+      );
 
-      final updated = state.copyWith(categories: [
-        Category(id: 'c1', organizationId: 'o1', name: 'A'),
-        Category(id: 'c2', organizationId: 'o1', name: 'B'),
-      ]);
+      final updated = state.copyWith(
+        categories: [
+          Category(id: 'c1', organizationId: 'o1', name: 'A'),
+          Category(id: 'c2', organizationId: 'o1', name: 'B'),
+        ],
+      );
 
       expect(updated.categories, hasLength(2));
     });
@@ -187,17 +181,9 @@ void main() {
     });
 
     test('SuppliersLoaded holds suppliers and pagination', () {
-      final suppliers = [
-        Supplier(id: 's1', organizationId: 'o1', name: 'Supplier A'),
-      ];
+      final suppliers = [Supplier(id: 's1', organizationId: 'o1', name: 'Supplier A')];
 
-      final state = SuppliersLoaded(
-        suppliers: suppliers,
-        total: 25,
-        currentPage: 1,
-        lastPage: 2,
-        perPage: 25,
-      );
+      final state = SuppliersLoaded(suppliers: suppliers, total: 25, currentPage: 1, lastPage: 2, perPage: 25);
 
       expect(state.suppliers, hasLength(1));
       expect(state.total, 25);
@@ -205,13 +191,7 @@ void main() {
     });
 
     test('SuppliersLoaded hasMore is false on last page', () {
-      final state = SuppliersLoaded(
-        suppliers: [],
-        total: 5,
-        currentPage: 1,
-        lastPage: 1,
-        perPage: 25,
-      );
+      final state = SuppliersLoaded(suppliers: [], total: 5, currentPage: 1, lastPage: 1, perPage: 25);
       expect(state.hasMore, false);
     });
 

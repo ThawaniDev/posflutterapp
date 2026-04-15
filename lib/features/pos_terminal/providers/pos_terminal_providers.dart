@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/pos_terminal/models/register.dart';
-import 'package:thawani_pos/features/pos_terminal/providers/pos_terminal_state.dart';
-import 'package:thawani_pos/features/pos_terminal/repositories/pos_terminal_repository.dart';
+import 'package:wameedpos/features/pos_terminal/models/register.dart';
+import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_state.dart';
+import 'package:wameedpos/features/pos_terminal/repositories/pos_terminal_repository.dart';
 
 // ─── Sessions Provider ──────────────────────────────────────────
 

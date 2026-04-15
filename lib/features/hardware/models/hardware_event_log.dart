@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/hardware/enums/hardware_device_type.dart';
+import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
 
 class HardwareEventLog {
   final String id;
@@ -64,13 +64,12 @@ class HardwareEventLog {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is HardwareEventLog && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is HardwareEventLog && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'HardwareEventLog(id: $id, storeId: $storeId, terminalId: $terminalId, deviceType: $deviceType, event: $event, details: $details, ...)';
+  String toString() =>
+      'HardwareEventLog(id: $id, storeId: $storeId, terminalId: $terminalId, deviceType: $deviceType, event: $event, details: $details, ...)';
 }

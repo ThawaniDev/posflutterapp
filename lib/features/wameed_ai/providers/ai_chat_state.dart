@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/wameed_ai/models/ai_chat.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_chat.dart';
 
 // ─── Chat List State ────────────────────────────────────────────
 

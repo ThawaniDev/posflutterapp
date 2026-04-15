@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/onboarding/enums/signage_template_type.dart';
+import 'package:wameedpos/features/onboarding/enums/signage_template_type.dart';
 
 class SignageTemplate {
   final String id;
@@ -43,7 +43,9 @@ class SignageTemplate {
       slug: json['slug'] as String,
       templateType: SignageTemplateType.fromValue(json['template_type'] as String),
       layoutConfig: Map<String, dynamic>.from(json['layout_config'] as Map),
-      placeholderContent: json['placeholder_content'] != null ? Map<String, dynamic>.from(json['placeholder_content'] as Map) : null,
+      placeholderContent: json['placeholder_content'] != null
+          ? Map<String, dynamic>.from(json['placeholder_content'] as Map)
+          : null,
       backgroundColor: json['background_color'] as String?,
       textColor: json['text_color'] as String?,
       fontFamily: json['font_family'] as String?,
@@ -112,13 +114,12 @@ class SignageTemplate {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SignageTemplate && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is SignageTemplate && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'SignageTemplate(id: $id, name: $name, nameAr: $nameAr, slug: $slug, templateType: $templateType, layoutConfig: $layoutConfig, ...)';
+  String toString() =>
+      'SignageTemplate(id: $id, name: $name, nameAr: $nameAr, slug: $slug, templateType: $templateType, layoutConfig: $layoutConfig, ...)';
 }

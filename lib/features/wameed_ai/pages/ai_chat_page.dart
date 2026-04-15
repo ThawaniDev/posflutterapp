@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_chat.dart';
-import 'package:thawani_pos/features/wameed_ai/providers/ai_chat_providers.dart';
-import 'package:thawani_pos/features/wameed_ai/providers/ai_chat_state.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_feature_params.dart';
-import 'package:thawani_pos/features/wameed_ai/widgets/ai_feature_input_panel.dart';
-import 'package:thawani_pos/features/wameed_ai/widgets/ai_feature_overlay.dart';
-import 'package:thawani_pos/features/wameed_ai/widgets/ai_model_selector.dart';
-import 'package:thawani_pos/features/wameed_ai/widgets/ai_message_bubble.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_chat.dart';
+import 'package:wameedpos/features/wameed_ai/providers/ai_chat_providers.dart';
+import 'package:wameedpos/features/wameed_ai/providers/ai_chat_state.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_feature_params.dart';
+import 'package:wameedpos/features/wameed_ai/widgets/ai_feature_input_panel.dart';
+import 'package:wameedpos/features/wameed_ai/widgets/ai_feature_overlay.dart';
+import 'package:wameedpos/features/wameed_ai/widgets/ai_model_selector.dart';
+import 'package:wameedpos/features/wameed_ai/widgets/ai_message_bubble.dart';
 
 class AIChatPage extends ConsumerStatefulWidget {
   final String? chatId;
@@ -136,9 +136,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     // Show error message as snackbar when present
     ref.listen<AIChatState>(aiActiveChatProvider, (prev, next) {
       if (next is AIChatLoaded && next.errorMessage != null) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(next.errorMessage!), backgroundColor: AppColors.error));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.errorMessage!), backgroundColor: AppColors.error));
       }
     });
 
@@ -377,7 +375,11 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           ),
           const SizedBox(width: 8),
           Expanded(
-            child: Text(_imageName ?? l10n.wameedAIImageAttached, style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
+            child: Text(
+              _imageName ?? l10n.wameedAIImageAttached,
+              style: theme.textTheme.bodySmall,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           IconButton(
             icon: const Icon(Icons.close, size: 18),
@@ -472,7 +474,10 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 2),
             child: Container(
-              decoration: BoxDecoration(color: isSending ? Theme.of(context).disabledColor : AppColors.primary, shape: BoxShape.circle),
+              decoration: BoxDecoration(
+                color: isSending ? Theme.of(context).disabledColor : AppColors.primary,
+                shape: BoxShape.circle,
+              ),
               child: IconButton(
                 icon: Icon(isSending ? Icons.hourglass_top : Icons.arrow_upward, color: Colors.white, size: isMobile ? 20 : 22),
                 onPressed: isSending ? null : _sendMessage,

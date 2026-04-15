@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
-import 'package:thawani_pos/features/hardware/services/receipt_printer_service.dart';
+import 'package:wameedpos/features/hardware/services/receipt_printer_service.dart';
 
 /// Cash drawer configuration
 class CashDrawerConfig {

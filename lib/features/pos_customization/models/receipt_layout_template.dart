@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/zatca/enums/zatca_qr_position.dart';
+import 'package:wameedpos/features/zatca/enums/zatca_qr_position.dart';
 
 class ReceiptLayoutTemplate {
   final String id;
@@ -106,13 +106,12 @@ class ReceiptLayoutTemplate {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ReceiptLayoutTemplate && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is ReceiptLayoutTemplate && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'ReceiptLayoutTemplate(id: $id, name: $name, nameAr: $nameAr, slug: $slug, paperWidth: $paperWidth, headerConfig: $headerConfig, ...)';
+  String toString() =>
+      'ReceiptLayoutTemplate(id: $id, name: $name, nameAr: $nameAr, slug: $slug, paperWidth: $paperWidth, headerConfig: $headerConfig, ...)';
 }

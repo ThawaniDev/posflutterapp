@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/industry_restaurant/enums/table_reservation_status.dart';
+import 'package:wameedpos/features/industry_restaurant/enums/table_reservation_status.dart';
 
 class TableReservation {
   final String id;
@@ -94,13 +94,12 @@ class TableReservation {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TableReservation && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is TableReservation && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'TableReservation(id: $id, storeId: $storeId, tableId: $tableId, customerName: $customerName, customerPhone: $customerPhone, partySize: $partySize, ...)';
+  String toString() =>
+      'TableReservation(id: $id, storeId: $storeId, tableId: $tableId, customerName: $customerName, customerPhone: $customerPhone, partySize: $partySize, ...)';
 }

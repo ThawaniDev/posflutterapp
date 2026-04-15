@@ -1,6 +1,6 @@
-import 'package:thawani_pos/features/support/models/knowledge_base_article.dart';
-import 'package:thawani_pos/features/support/models/support_ticket.dart';
-import 'package:thawani_pos/features/support/models/support_ticket_message.dart';
+import 'package:wameedpos/features/support/models/knowledge_base_article.dart';
+import 'package:wameedpos/features/support/models/support_ticket.dart';
+import 'package:wameedpos/features/support/models/support_ticket_message.dart';
 
 // ─── Support Stats State ────────────────────────────────
 sealed class SupportStatsState {

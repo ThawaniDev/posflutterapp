@@ -11992,6 +11992,186 @@ abstract class AppLocalizations {
   /// **'By Channel'**
   String get notifStatsByChannel;
 
+  /// No description provided for @notifDeleteConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Notifications'**
+  String get notifDeleteConfirmTitle;
+
+  /// No description provided for @notifDeleteConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {count} selected notifications?'**
+  String notifDeleteConfirmMessage(int count);
+
+  /// No description provided for @notifStatsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics'**
+  String get notifStatsTitle;
+
+  /// No description provided for @notifMoreActions.
+  ///
+  /// In en, this message translates to:
+  /// **'More Actions'**
+  String get notifMoreActions;
+
+  /// No description provided for @notifEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re all caught up'**
+  String get notifEmptySubtitle;
+
+  /// No description provided for @notifDeleteSingleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Notification'**
+  String get notifDeleteSingleTitle;
+
+  /// No description provided for @notifDeleteSingleMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this notification?'**
+  String get notifDeleteSingleMessage;
+
+  /// No description provided for @notifJustNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get notifJustNow;
+
+  /// No description provided for @notifPrefPaymentAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Alerts'**
+  String get notifPrefPaymentAlerts;
+
+  /// No description provided for @notifPrefPaymentAlertsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment confirmations and refund alerts'**
+  String get notifPrefPaymentAlertsSubtitle;
+
+  /// No description provided for @notifPrefStaffEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Staff Events'**
+  String get notifPrefStaffEvents;
+
+  /// No description provided for @notifPrefStaffEventsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Staff schedule and attendance updates'**
+  String get notifPrefStaffEventsSubtitle;
+
+  /// No description provided for @notifPrefEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get notifPrefEmail;
+
+  /// No description provided for @notifPrefSms.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS'**
+  String get notifPrefSms;
+
+  /// No description provided for @notifLogDelivered.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get notifLogDelivered;
+
+  /// No description provided for @notifLogSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get notifLogSent;
+
+  /// No description provided for @notifLogFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get notifLogFailed;
+
+  /// No description provided for @notifScheduleValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Title and message are required'**
+  String get notifScheduleValidation;
+
+  /// No description provided for @notifScheduleCreatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule created successfully'**
+  String get notifScheduleCreatedSuccess;
+
+  /// No description provided for @notifSchedulesEmptySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap + to create a scheduled notification'**
+  String get notifSchedulesEmptySubtitle;
+
+  /// No description provided for @notifScheduleCancelConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Schedule'**
+  String get notifScheduleCancelConfirmTitle;
+
+  /// No description provided for @notifScheduleCancelConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to cancel this scheduled notification?'**
+  String get notifScheduleCancelConfirmMessage;
+
+  /// No description provided for @notifScheduleType.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule Type'**
+  String get notifScheduleType;
+
+  /// No description provided for @notifScheduleTypeOnce.
+  ///
+  /// In en, this message translates to:
+  /// **'Once'**
+  String get notifScheduleTypeOnce;
+
+  /// No description provided for @notifScheduleTypeRecurring.
+  ///
+  /// In en, this message translates to:
+  /// **'Recurring'**
+  String get notifScheduleTypeRecurring;
+
+  /// No description provided for @notifActionMarkedAsRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification marked as read'**
+  String get notifActionMarkedAsRead;
+
+  /// No description provided for @notifActionAllMarkedAsRead.
+  ///
+  /// In en, this message translates to:
+  /// **'All notifications marked as read'**
+  String get notifActionAllMarkedAsRead;
+
+  /// No description provided for @notifActionDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification deleted'**
+  String get notifActionDeleted;
+
+  /// No description provided for @notifActionBulkDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} notifications deleted'**
+  String notifActionBulkDeleted(int count);
+
+  /// No description provided for @notifActionBatchCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Batch notification created'**
+  String get notifActionBatchCreated;
+
   /// No description provided for @ordersAll.
   ///
   /// In en, this message translates to:
@@ -21753,6 +21933,324 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Successful'**
   String get successful;
+
+  /// No description provided for @providerPaymentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get providerPaymentsTitle;
+
+  /// No description provided for @providerPaymentDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Details'**
+  String get providerPaymentDetail;
+
+  /// No description provided for @providerPaymentCheckout.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Payment'**
+  String get providerPaymentCheckout;
+
+  /// No description provided for @providerPaymentInitiating.
+  ///
+  /// In en, this message translates to:
+  /// **'Initiating payment...'**
+  String get providerPaymentInitiating;
+
+  /// No description provided for @providerPaymentCancelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Payment?'**
+  String get providerPaymentCancelTitle;
+
+  /// No description provided for @providerPaymentCancelBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to cancel this payment? You can retry later.'**
+  String get providerPaymentCancelBody;
+
+  /// No description provided for @providerPaymentContinue.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue Payment'**
+  String get providerPaymentContinue;
+
+  /// No description provided for @providerPaymentCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get providerPaymentCancel;
+
+  /// No description provided for @providerPaymentNoPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'No payments found'**
+  String get providerPaymentNoPayments;
+
+  /// No description provided for @providerPaymentPurpose.
+  ///
+  /// In en, this message translates to:
+  /// **'Purpose'**
+  String get providerPaymentPurpose;
+
+  /// No description provided for @providerPaymentCartId.
+  ///
+  /// In en, this message translates to:
+  /// **'Cart ID'**
+  String get providerPaymentCartId;
+
+  /// No description provided for @providerPaymentGateway.
+  ///
+  /// In en, this message translates to:
+  /// **'Gateway'**
+  String get providerPaymentGateway;
+
+  /// No description provided for @providerPaymentTranRef.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Ref'**
+  String get providerPaymentTranRef;
+
+  /// No description provided for @providerPaymentDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get providerPaymentDate;
+
+  /// No description provided for @providerPaymentAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get providerPaymentAmount;
+
+  /// No description provided for @providerPaymentTax.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax'**
+  String get providerPaymentTax;
+
+  /// No description provided for @providerPaymentTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get providerPaymentTotal;
+
+  /// No description provided for @providerPaymentAmountBreakdown.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount Breakdown'**
+  String get providerPaymentAmountBreakdown;
+
+  /// No description provided for @providerPaymentGatewayResponse.
+  ///
+  /// In en, this message translates to:
+  /// **'Gateway Response'**
+  String get providerPaymentGatewayResponse;
+
+  /// No description provided for @providerPaymentResponseStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Response Status'**
+  String get providerPaymentResponseStatus;
+
+  /// No description provided for @providerPaymentResponseCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Response Code'**
+  String get providerPaymentResponseCode;
+
+  /// No description provided for @providerPaymentResponseMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Response Message'**
+  String get providerPaymentResponseMessage;
+
+  /// No description provided for @providerPaymentCardType.
+  ///
+  /// In en, this message translates to:
+  /// **'Card Type'**
+  String get providerPaymentCardType;
+
+  /// No description provided for @providerPaymentCardScheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Card Scheme'**
+  String get providerPaymentCardScheme;
+
+  /// No description provided for @providerPaymentTracking.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking'**
+  String get providerPaymentTracking;
+
+  /// No description provided for @providerPaymentEmailSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Sent'**
+  String get providerPaymentEmailSent;
+
+  /// No description provided for @providerPaymentInvoiceGenerated.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice Generated'**
+  String get providerPaymentInvoiceGenerated;
+
+  /// No description provided for @providerPaymentEmailError.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Error'**
+  String get providerPaymentEmailError;
+
+  /// No description provided for @providerPaymentRefundInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund Information'**
+  String get providerPaymentRefundInfo;
+
+  /// No description provided for @providerPaymentRefundAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund Amount'**
+  String get providerPaymentRefundAmount;
+
+  /// No description provided for @providerPaymentRefundTranRef.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund Txn Ref'**
+  String get providerPaymentRefundTranRef;
+
+  /// No description provided for @providerPaymentRefundReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get providerPaymentRefundReason;
+
+  /// No description provided for @providerPaymentRefundedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunded At'**
+  String get providerPaymentRefundedAt;
+
+  /// No description provided for @providerPaymentEmailLogs.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Logs'**
+  String get providerPaymentEmailLogs;
+
+  /// No description provided for @providerPaymentResendEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend Confirmation Email'**
+  String get providerPaymentResendEmail;
+
+  /// No description provided for @providerPaymentCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to clipboard'**
+  String get providerPaymentCopied;
+
+  /// No description provided for @providerPaymentFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get providerPaymentFilterAll;
+
+  /// No description provided for @providerPaymentFilterPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get providerPaymentFilterPending;
+
+  /// No description provided for @providerPaymentFilterCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get providerPaymentFilterCompleted;
+
+  /// No description provided for @providerPaymentFilterFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get providerPaymentFilterFailed;
+
+  /// No description provided for @providerPaymentFilterRefunded.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunded'**
+  String get providerPaymentFilterRefunded;
+
+  /// No description provided for @providerPaymentStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get providerPaymentStatusPending;
+
+  /// No description provided for @providerPaymentStatusProcessing.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing'**
+  String get providerPaymentStatusProcessing;
+
+  /// No description provided for @providerPaymentStatusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get providerPaymentStatusCompleted;
+
+  /// No description provided for @providerPaymentStatusFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get providerPaymentStatusFailed;
+
+  /// No description provided for @providerPaymentStatusRefunded.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunded'**
+  String get providerPaymentStatusRefunded;
+
+  /// No description provided for @providerPaymentStatusVoided.
+  ///
+  /// In en, this message translates to:
+  /// **'Voided'**
+  String get providerPaymentStatusVoided;
+
+  /// No description provided for @providerPaymentPurposeSubscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get providerPaymentPurposeSubscription;
+
+  /// No description provided for @providerPaymentPurposePlanAddon.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan Add-on'**
+  String get providerPaymentPurposePlanAddon;
+
+  /// No description provided for @providerPaymentPurposeAiBilling.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Billing'**
+  String get providerPaymentPurposeAiBilling;
+
+  /// No description provided for @providerPaymentPurposeHardware.
+  ///
+  /// In en, this message translates to:
+  /// **'Hardware'**
+  String get providerPaymentPurposeHardware;
+
+  /// No description provided for @providerPaymentPurposeImplementationFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Implementation Fee'**
+  String get providerPaymentPurposeImplementationFee;
+
+  /// No description provided for @providerPaymentPurposeOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get providerPaymentPurposeOther;
 }
 
 class _AppLocalizationsDelegate

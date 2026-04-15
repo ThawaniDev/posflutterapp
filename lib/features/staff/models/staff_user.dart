@@ -1,6 +1,6 @@
-import 'package:thawani_pos/features/staff/enums/employment_type.dart';
-import 'package:thawani_pos/features/staff/enums/salary_type.dart';
-import 'package:thawani_pos/features/staff/enums/staff_status.dart';
+import 'package:wameedpos/features/staff/enums/employment_type.dart';
+import 'package:wameedpos/features/staff/enums/salary_type.dart';
+import 'package:wameedpos/features/staff/enums/staff_status.dart';
 
 class BranchAssignment {
   final String id;

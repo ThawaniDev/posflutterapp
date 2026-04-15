@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/industry_pharmacy/data/remote/pharmacy_api_service.dart';
-import 'package:thawani_pos/features/industry_pharmacy/models/prescription.dart';
-import 'package:thawani_pos/features/industry_pharmacy/models/drug_schedule.dart';
+import 'package:wameedpos/features/industry_pharmacy/data/remote/pharmacy_api_service.dart';
+import 'package:wameedpos/features/industry_pharmacy/models/prescription.dart';
+import 'package:wameedpos/features/industry_pharmacy/models/drug_schedule.dart';
 
 final pharmacyRepositoryProvider = Provider<PharmacyRepository>((ref) {
   return PharmacyRepository(apiService: ref.watch(pharmacyApiServiceProvider));

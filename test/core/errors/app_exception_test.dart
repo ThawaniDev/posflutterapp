@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/core/errors/app_exception.dart';
+import 'package:wameedpos/core/errors/app_exception.dart';
 
 void main() {
   group('AppException', () {

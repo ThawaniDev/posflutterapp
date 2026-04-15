@@ -4,9 +4,9 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 import '../models/bakery_recipe.dart';
 import '../providers/bakery_providers.dart';
-import 'package:thawani_pos/features/catalog/models/product.dart';
-import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
-import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
+import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
+import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
 
 class RecipeFormPage extends ConsumerStatefulWidget {
   final BakeryRecipe? recipe;

@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/delivery_integration/enums/delivery_sync_status.dart';
+import 'package:wameedpos/features/delivery_integration/enums/delivery_sync_status.dart';
 
 class StoreDeliveryPlatform {
   final String id;
@@ -88,13 +88,12 @@ class StoreDeliveryPlatform {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is StoreDeliveryPlatform && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is StoreDeliveryPlatform && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'StoreDeliveryPlatform(id: $id, storeId: $storeId, deliveryPlatformId: $deliveryPlatformId, credentials: $credentials, inboundApiKey: $inboundApiKey, isEnabled: $isEnabled, ...)';
+  String toString() =>
+      'StoreDeliveryPlatform(id: $id, storeId: $storeId, deliveryPlatformId: $deliveryPlatformId, credentials: $credentials, inboundApiKey: $inboundApiKey, isEnabled: $isEnabled, ...)';
 }

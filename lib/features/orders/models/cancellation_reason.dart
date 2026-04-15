@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/orders/enums/cancellation_reason_category.dart';
+import 'package:wameedpos/features/orders/enums/cancellation_reason_category.dart';
 
 class CancellationReason {
   final String id;
@@ -52,13 +52,12 @@ class CancellationReason {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CancellationReason && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is CancellationReason && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'CancellationReason(id: $id, storeSubscriptionId: $storeSubscriptionId, reasonCategory: $reasonCategory, reasonText: $reasonText, cancelledAt: $cancelledAt)';
+  String toString() =>
+      'CancellationReason(id: $id, storeSubscriptionId: $storeSubscriptionId, reasonCategory: $reasonCategory, reasonText: $reasonText, cancelledAt: $cancelledAt)';
 }

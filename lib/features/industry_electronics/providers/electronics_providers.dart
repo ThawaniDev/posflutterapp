@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/industry_electronics/providers/electronics_state.dart';
-import 'package:thawani_pos/features/industry_electronics/repositories/electronics_repository.dart';
+import 'package:wameedpos/features/industry_electronics/providers/electronics_state.dart';
+import 'package:wameedpos/features/industry_electronics/repositories/electronics_repository.dart';
 
 final electronicsProvider = StateNotifierProvider<ElectronicsNotifier, ElectronicsState>((ref) {
   return ElectronicsNotifier(ref.watch(electronicsRepositoryProvider));

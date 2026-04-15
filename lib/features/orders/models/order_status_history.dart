@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/orders/enums/order_status.dart';
+import 'package:wameedpos/features/orders/enums/order_status.dart';
 
 class OrderStatusHistory {
   final String id;
@@ -64,13 +64,12 @@ class OrderStatusHistory {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is OrderStatusHistory && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is OrderStatusHistory && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'OrderStatusHistory(id: $id, orderId: $orderId, fromStatus: $fromStatus, toStatus: $toStatus, changedBy: $changedBy, notes: $notes, ...)';
+  String toString() =>
+      'OrderStatusHistory(id: $id, orderId: $orderId, fromStatus: $fromStatus, toStatus: $toStatus, changedBy: $changedBy, notes: $notes, ...)';
 }

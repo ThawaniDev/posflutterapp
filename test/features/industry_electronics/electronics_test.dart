@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/features/industry_electronics/enums/device_imei_status.dart';
-import 'package:thawani_pos/features/industry_electronics/enums/repair_job_status.dart';
-import 'package:thawani_pos/features/industry_electronics/models/device_imei_record.dart';
-import 'package:thawani_pos/features/industry_electronics/models/repair_job.dart';
-import 'package:thawani_pos/features/industry_electronics/models/trade_in_record.dart';
-import 'package:thawani_pos/features/industry_electronics/providers/electronics_state.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/features/industry_electronics/enums/device_imei_status.dart';
+import 'package:wameedpos/features/industry_electronics/enums/repair_job_status.dart';
+import 'package:wameedpos/features/industry_electronics/models/device_imei_record.dart';
+import 'package:wameedpos/features/industry_electronics/models/repair_job.dart';
+import 'package:wameedpos/features/industry_electronics/models/trade_in_record.dart';
+import 'package:wameedpos/features/industry_electronics/providers/electronics_state.dart';
 
 void main() {
   // ═══════════════ Enums ═══════════════

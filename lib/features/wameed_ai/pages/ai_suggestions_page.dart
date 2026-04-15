@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/pos_badge.dart';
-import 'package:thawani_pos/core/widgets/pos_mobile_data_list.dart';
-import 'package:thawani_pos/core/widgets/pos_table.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_suggestion.dart';
-import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_providers.dart';
-import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/pos_badge.dart';
+import 'package:wameedpos/core/widgets/pos_mobile_data_list.dart';
+import 'package:wameedpos/core/widgets/pos_table.dart';
+import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_suggestion.dart';
+import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
+import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
 
 class AISuggestionsPage extends ConsumerStatefulWidget {
   const AISuggestionsPage({super.key});

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/theme/app_typography.dart';
-import 'package:thawani_pos/features/subscription/services/feature_gate_service.dart';
-import 'package:thawani_pos/features/subscription/models/subscription_plan.dart';
-import 'package:thawani_pos/features/subscription/providers/subscription_providers.dart';
-import 'package:thawani_pos/features/subscription/providers/subscription_state.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/features/subscription/services/feature_gate_service.dart';
+import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
+import 'package:wameedpos/features/subscription/providers/subscription_providers.dart';
+import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
 
 /// Provider for UpgradePromptService.
 final upgradePromptServiceProvider = Provider<UpgradePromptService>((ref) {

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/companion/providers/companion_state.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
+import 'package:wameedpos/features/companion/providers/companion_state.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/router/route_names.dart';
 
 void main() {
   // ═══════════════ State Tests ═══════════════

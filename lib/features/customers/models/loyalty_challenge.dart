@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/customers/enums/challenge_reward_type.dart';
-import 'package:thawani_pos/features/customers/enums/challenge_type.dart';
+import 'package:wameedpos/features/customers/enums/challenge_reward_type.dart';
+import 'package:wameedpos/features/customers/enums/challenge_type.dart';
 
 class LoyaltyChallenge {
   final String id;
@@ -113,13 +113,12 @@ class LoyaltyChallenge {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is LoyaltyChallenge && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is LoyaltyChallenge && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'LoyaltyChallenge(id: $id, storeId: $storeId, nameAr: $nameAr, nameEn: $nameEn, descriptionAr: $descriptionAr, descriptionEn: $descriptionEn, ...)';
+  String toString() =>
+      'LoyaltyChallenge(id: $id, storeId: $storeId, nameAr: $nameAr, nameEn: $nameEn, descriptionAr: $descriptionAr, descriptionEn: $descriptionEn, ...)';
 }

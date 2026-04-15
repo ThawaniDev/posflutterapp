@@ -1,10 +1,10 @@
-import 'package:thawani_pos/features/orders/enums/external_order_type.dart';
-import 'package:thawani_pos/features/thawani_integration/enums/sync_status.dart';
-import 'package:thawani_pos/features/pos_terminal/enums/transaction_status.dart';
-import 'package:thawani_pos/features/pos_terminal/enums/transaction_type.dart';
-import 'package:thawani_pos/features/pos_terminal/models/transaction_item.dart';
-import 'package:thawani_pos/features/payments/models/payment.dart';
-import 'package:thawani_pos/features/zatca/enums/zatca_compliance_status.dart';
+import 'package:wameedpos/features/orders/enums/external_order_type.dart';
+import 'package:wameedpos/features/thawani_integration/enums/sync_status.dart';
+import 'package:wameedpos/features/pos_terminal/enums/transaction_status.dart';
+import 'package:wameedpos/features/pos_terminal/enums/transaction_type.dart';
+import 'package:wameedpos/features/pos_terminal/models/transaction_item.dart';
+import 'package:wameedpos/features/payments/models/payment.dart';
+import 'package:wameedpos/features/zatca/enums/zatca_compliance_status.dart';
 
 class Transaction {
   final String id;

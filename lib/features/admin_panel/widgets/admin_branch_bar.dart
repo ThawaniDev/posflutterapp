@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/providers/branch_context_provider.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/providers/branch_context_provider.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// A lightweight branch selector bar for admin pages.
 ///

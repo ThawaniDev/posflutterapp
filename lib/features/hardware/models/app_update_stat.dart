@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/hardware/enums/app_update_status.dart';
+import 'package:wameedpos/features/hardware/enums/app_update_status.dart';
 
 class AppUpdateStat {
   final String id;
@@ -58,13 +58,12 @@ class AppUpdateStat {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AppUpdateStat && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is AppUpdateStat && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'AppUpdateStat(id: $id, storeId: $storeId, appReleaseId: $appReleaseId, status: $status, errorMessage: $errorMessage, updatedAt: $updatedAt)';
+  String toString() =>
+      'AppUpdateStat(id: $id, storeId: $storeId, appReleaseId: $appReleaseId, status: $status, errorMessage: $errorMessage, updatedAt: $updatedAt)';
 }

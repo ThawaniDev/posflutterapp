@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/notifications/enums/notification_channel.dart';
+import 'package:wameedpos/features/notifications/enums/notification_channel.dart';
 
 class NotificationTemplate {
   final String id;
@@ -88,13 +88,12 @@ class NotificationTemplate {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is NotificationTemplate && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is NotificationTemplate && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'NotificationTemplate(id: $id, eventKey: $eventKey, channel: $channel, title: $title, titleAr: $titleAr, body: $body, ...)';
+  String toString() =>
+      'NotificationTemplate(id: $id, eventKey: $eventKey, channel: $channel, title: $title, titleAr: $titleAr, body: $body, ...)';
 }

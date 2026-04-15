@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/backup/providers/backup_state.dart';
-import 'package:thawani_pos/features/backup/repositories/backup_repository.dart';
+import 'package:wameedpos/features/backup/providers/backup_state.dart';
+import 'package:wameedpos/features/backup/repositories/backup_repository.dart';
 
 // ── Backup List ──────────────────────────────────────────────
 

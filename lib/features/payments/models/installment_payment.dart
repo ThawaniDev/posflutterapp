@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/payments/enums/installment_payment_status.dart';
-import 'package:thawani_pos/features/payments/enums/installment_provider.dart';
+import 'package:wameedpos/features/payments/enums/installment_payment_status.dart';
+import 'package:wameedpos/features/payments/enums/installment_provider.dart';
 
 /// Tracks the lifecycle of a single installment payment.
 class InstallmentPayment {

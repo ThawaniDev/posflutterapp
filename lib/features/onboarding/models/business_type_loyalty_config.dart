@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/customers/enums/loyalty_program_type.dart';
+import 'package:wameedpos/features/customers/enums/loyalty_program_type.dart';
 
 class BusinessTypeLoyaltyConfig {
   final String id;
@@ -106,13 +106,12 @@ class BusinessTypeLoyaltyConfig {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BusinessTypeLoyaltyConfig && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is BusinessTypeLoyaltyConfig && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'BusinessTypeLoyaltyConfig(id: $id, businessTypeId: $businessTypeId, programType: $programType, earningRate: $earningRate, redemptionValue: $redemptionValue, minRedemptionPoints: $minRedemptionPoints, ...)';
+  String toString() =>
+      'BusinessTypeLoyaltyConfig(id: $id, businessTypeId: $businessTypeId, programType: $programType, earningRate: $earningRate, redemptionValue: $redemptionValue, minRedemptionPoints: $minRedemptionPoints, ...)';
 }

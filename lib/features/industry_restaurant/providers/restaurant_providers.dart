@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/industry_restaurant/providers/restaurant_state.dart';
-import 'package:thawani_pos/features/industry_restaurant/repositories/restaurant_repository.dart';
+import 'package:wameedpos/features/industry_restaurant/providers/restaurant_state.dart';
+import 'package:wameedpos/features/industry_restaurant/repositories/restaurant_repository.dart';
 
 final restaurantProvider = StateNotifierProvider<RestaurantNotifier, RestaurantState>((ref) {
   return RestaurantNotifier(ref.watch(restaurantRepositoryProvider));

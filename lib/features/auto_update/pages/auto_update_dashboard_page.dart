@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/auto_update/providers/auto_update_providers.dart';
-import 'package:thawani_pos/features/auto_update/providers/auto_update_state.dart';
-import 'package:thawani_pos/features/auto_update/widgets/update_status_widget.dart';
-import 'package:thawani_pos/features/auto_update/widgets/changelog_widget.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/auto_update/providers/auto_update_providers.dart';
+import 'package:wameedpos/features/auto_update/providers/auto_update_state.dart';
+import 'package:wameedpos/features/auto_update/widgets/update_status_widget.dart';
+import 'package:wameedpos/features/auto_update/widgets/changelog_widget.dart';
 
 class AutoUpdateDashboardPage extends ConsumerStatefulWidget {
   const AutoUpdateDashboardPage({super.key});

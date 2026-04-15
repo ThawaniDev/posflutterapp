@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/subscription/enums/gateway_environment.dart';
-import 'package:thawani_pos/features/subscription/enums/gateway_name.dart';
+import 'package:wameedpos/features/subscription/enums/gateway_environment.dart';
+import 'package:wameedpos/features/subscription/enums/gateway_name.dart';
 
 class PaymentGatewayConfig {
   final String id;
@@ -71,13 +71,12 @@ class PaymentGatewayConfig {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is PaymentGatewayConfig && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is PaymentGatewayConfig && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'PaymentGatewayConfig(id: $id, gatewayName: $gatewayName, credentialsEncrypted: $credentialsEncrypted, webhookUrl: $webhookUrl, environment: $environment, isActive: $isActive, ...)';
+  String toString() =>
+      'PaymentGatewayConfig(id: $id, gatewayName: $gatewayName, credentialsEncrypted: $credentialsEncrypted, webhookUrl: $webhookUrl, environment: $environment, isActive: $isActive, ...)';
 }

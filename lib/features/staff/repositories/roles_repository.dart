@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/auth/data/local/auth_local_storage.dart';
-import 'package:thawani_pos/features/staff/data/remote/role_api_service.dart';
-import 'package:thawani_pos/features/staff/models/permission.dart';
-import 'package:thawani_pos/features/staff/models/role.dart';
+import 'package:wameedpos/features/auth/data/local/auth_local_storage.dart';
+import 'package:wameedpos/features/staff/data/remote/role_api_service.dart';
+import 'package:wameedpos/features/staff/models/permission.dart';
+import 'package:wameedpos/features/staff/models/role.dart';
 
 final rolesRepositoryProvider = Provider<RolesRepository>((ref) {
   return RolesRepository(apiService: ref.watch(roleApiServiceProvider), localStorage: ref.watch(authLocalStorageProvider));

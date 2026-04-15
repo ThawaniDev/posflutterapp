@@ -100,7 +100,7 @@ class BarcodeScannerService {
     try {
       _dataWedge = FlutterDataWedge();
       await _dataWedge!.initialize();
-      await _dataWedge!.createDefaultProfile(profileName: 'ThawaniPOS');
+      await _dataWedge!.createDefaultProfile(profileName: 'WameedPOS');
       _dataWedgeSub = _dataWedge!.onScanResult.listen(_handleDataWedgeScan);
       _dataWedgeInitialized = true;
       debugPrint('BarcodeScannerService: DataWedge initialized successfully');

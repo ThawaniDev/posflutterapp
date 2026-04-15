@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_chat.dart';
-import 'package:thawani_pos/features/wameed_ai/providers/ai_chat_providers.dart';
-import 'package:thawani_pos/features/wameed_ai/providers/ai_chat_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_chat.dart';
+import 'package:wameedpos/features/wameed_ai/providers/ai_chat_providers.dart';
+import 'package:wameedpos/features/wameed_ai/providers/ai_chat_state.dart';
 
 class AIFeatureOverlay extends ConsumerWidget {
   final void Function(String slug, String displayName) onFeatureSelected;
@@ -49,7 +49,10 @@ class AIFeatureOverlay extends ConsumerWidget {
                   children: [
                     const Icon(Icons.auto_awesome, color: AppColors.primary, size: 22),
                     const SizedBox(width: 8),
-                    Text(AppLocalizations.of(context)!.wameedAIFeatures, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+                    Text(
+                      AppLocalizations.of(context)!.wameedAIFeatures,
+                      style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                    ),
                   ],
                 ),
               ),

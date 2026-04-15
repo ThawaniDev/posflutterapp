@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/errors/app_exception.dart';
-import 'package:thawani_pos/features/auth/models/user.dart';
-import 'package:thawani_pos/features/auth/providers/auth_state.dart';
-import 'package:thawani_pos/features/auth/repositories/auth_repository.dart';
+import 'package:wameedpos/core/errors/app_exception.dart';
+import 'package:wameedpos/features/auth/models/user.dart';
+import 'package:wameedpos/features/auth/providers/auth_state.dart';
+import 'package:wameedpos/features/auth/repositories/auth_repository.dart';
 
 /// The main auth state notifier — manages login, register, logout.
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {

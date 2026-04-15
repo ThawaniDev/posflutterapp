@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/subscription/enums/subscription_resource_type.dart';
+import 'package:wameedpos/features/subscription/enums/subscription_resource_type.dart';
 
 class SubscriptionUsageSnapshot {
   final String id;

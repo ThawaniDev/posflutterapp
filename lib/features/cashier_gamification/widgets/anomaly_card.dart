@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
-import 'package:thawani_pos/features/cashier_gamification/models/cashier_anomaly.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/features/cashier_gamification/models/cashier_anomaly.dart';
 
 class AnomalyCard extends StatelessWidget {
   final CashierAnomaly anomaly;

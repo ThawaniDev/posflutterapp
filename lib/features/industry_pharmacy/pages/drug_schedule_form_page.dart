@@ -5,9 +5,9 @@ import '../../../core/widgets/widgets.dart';
 import '../enums/drug_schedule_type.dart';
 import '../models/drug_schedule.dart';
 import '../providers/pharmacy_providers.dart';
-import 'package:thawani_pos/features/catalog/models/product.dart';
-import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
-import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
+import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
+import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
 
 class DrugScheduleFormPage extends ConsumerStatefulWidget {
   final DrugSchedule? schedule;

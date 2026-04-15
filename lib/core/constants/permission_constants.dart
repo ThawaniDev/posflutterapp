@@ -255,6 +255,13 @@ abstract final class Permissions {
   static const cashierPerformanceViewReports = 'cashier_performance.view_reports';
   static const cashierPerformanceManageSettings = 'cashier_performance.manage_settings';
 
+  // ── Provider Payments ────────────────────────────────
+  static const providerPaymentsView = 'provider_payments.view';
+  static const providerPaymentsCreate = 'provider_payments.create';
+  static const providerPaymentsManage = 'provider_payments.manage';
+  static const providerPaymentsRefund = 'provider_payments.refund';
+  static const providerPaymentsViewStatistics = 'provider_payments.view_statistics';
+
   /// All permission codes as a flat list (useful for validation / debugging).
   static const List<String> all = [
     // pos
@@ -363,5 +370,8 @@ abstract final class Permissions {
     cashierPerformanceViewLeaderboard, cashierPerformanceViewBadges,
     cashierPerformanceManageBadges, cashierPerformanceViewAnomalies,
     cashierPerformanceViewReports, cashierPerformanceManageSettings,
+    // provider_payments
+    providerPaymentsView, providerPaymentsCreate, providerPaymentsManage,
+    providerPaymentsRefund, providerPaymentsViewStatistics,
   ];
 }

@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/industry_electronics/data/remote/electronics_api_service.dart';
-import 'package:thawani_pos/features/industry_electronics/models/device_imei_record.dart';
-import 'package:thawani_pos/features/industry_electronics/models/repair_job.dart';
-import 'package:thawani_pos/features/industry_electronics/models/trade_in_record.dart';
+import 'package:wameedpos/features/industry_electronics/data/remote/electronics_api_service.dart';
+import 'package:wameedpos/features/industry_electronics/models/device_imei_record.dart';
+import 'package:wameedpos/features/industry_electronics/models/repair_job.dart';
+import 'package:wameedpos/features/industry_electronics/models/trade_in_record.dart';
 
 final electronicsRepositoryProvider = Provider<ElectronicsRepository>((ref) {
   return ElectronicsRepository(apiService: ref.watch(electronicsApiServiceProvider));

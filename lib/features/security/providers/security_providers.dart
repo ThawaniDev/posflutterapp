@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/security/models/device_registration.dart';
-import 'package:thawani_pos/features/security/models/login_attempt.dart';
-import 'package:thawani_pos/features/security/models/security_audit_log.dart';
-import 'package:thawani_pos/features/security/models/security_incident.dart';
-import 'package:thawani_pos/features/security/models/security_policy.dart';
-import 'package:thawani_pos/features/security/models/security_session.dart';
-import 'package:thawani_pos/features/security/providers/security_state.dart';
-import 'package:thawani_pos/features/security/repositories/security_repository.dart';
+import 'package:wameedpos/features/security/models/device_registration.dart';
+import 'package:wameedpos/features/security/models/login_attempt.dart';
+import 'package:wameedpos/features/security/models/security_audit_log.dart';
+import 'package:wameedpos/features/security/models/security_incident.dart';
+import 'package:wameedpos/features/security/models/security_policy.dart';
+import 'package:wameedpos/features/security/models/security_session.dart';
+import 'package:wameedpos/features/security/providers/security_state.dart';
+import 'package:wameedpos/features/security/repositories/security_repository.dart';
 
 // ─── Security Overview Provider ─────────────────────────────
 

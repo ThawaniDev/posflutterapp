@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/customers/enums/store_credit_transaction_type.dart';
+import 'package:wameedpos/features/customers/enums/store_credit_transaction_type.dart';
 
 class StoreCreditTransaction {
   final String id;
@@ -82,13 +82,12 @@ class StoreCreditTransaction {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is StoreCreditTransaction && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is StoreCreditTransaction && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'StoreCreditTransaction(id: $id, customerId: $customerId, type: $type, amount: $amount, balanceAfter: $balanceAfter, orderId: $orderId, ...)';
+  String toString() =>
+      'StoreCreditTransaction(id: $id, customerId: $customerId, type: $type, amount: $amount, balanceAfter: $balanceAfter, orderId: $orderId, ...)';
 }

@@ -1,14 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/settings/enums/calendar_system.dart';
-import 'package:thawani_pos/features/settings/enums/locale_direction.dart';
-import 'package:thawani_pos/features/settings/enums/translation_category.dart';
-import 'package:thawani_pos/features/settings/enums/system_settings_group.dart';
-import 'package:thawani_pos/features/settings/models/supported_locale.dart';
-import 'package:thawani_pos/features/settings/models/master_translation_string.dart';
-import 'package:thawani_pos/features/settings/models/translation_override.dart';
-import 'package:thawani_pos/features/settings/models/translation_version.dart';
-import 'package:thawani_pos/features/settings/models/user_preference.dart';
-import 'package:thawani_pos/features/settings/providers/localization_state.dart';
+import 'package:wameedpos/features/settings/enums/calendar_system.dart';
+import 'package:wameedpos/features/settings/enums/locale_direction.dart';
+import 'package:wameedpos/features/settings/enums/translation_category.dart';
+import 'package:wameedpos/features/settings/enums/system_settings_group.dart';
+import 'package:wameedpos/features/settings/models/supported_locale.dart';
+import 'package:wameedpos/features/settings/models/master_translation_string.dart';
+import 'package:wameedpos/features/settings/models/translation_override.dart';
+import 'package:wameedpos/features/settings/models/translation_version.dart';
+import 'package:wameedpos/features/settings/models/user_preference.dart';
+import 'package:wameedpos/features/settings/providers/localization_state.dart';
 
 void main() {
   // ─── Enums ──────────────────────────────────────────────────────

@@ -1,6 +1,6 @@
-import 'package:thawani_pos/features/subscription/models/invoice.dart';
-import 'package:thawani_pos/features/subscription/models/store_subscription.dart';
-import 'package:thawani_pos/features/subscription/models/subscription_plan.dart';
+import 'package:wameedpos/features/subscription/models/invoice.dart';
+import 'package:wameedpos/features/subscription/models/store_subscription.dart';
+import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
 
 // ─── Plans State ─────────────────────────────────────────────────
 

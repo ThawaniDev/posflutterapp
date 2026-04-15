@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
-import 'package:thawani_pos/features/predefined_catalog/models/predefined_category.dart';
-import 'package:thawani_pos/features/predefined_catalog/models/predefined_product.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:wameedpos/features/predefined_catalog/models/predefined_category.dart';
+import 'package:wameedpos/features/predefined_catalog/models/predefined_product.dart';
 
 final predefinedCatalogApiServiceProvider = Provider<PredefinedCatalogApiService>((ref) {
   return PredefinedCatalogApiService(ref.watch(dioClientProvider));

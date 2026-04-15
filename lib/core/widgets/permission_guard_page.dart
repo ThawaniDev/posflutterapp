@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/staff/providers/roles_providers.dart';
+import 'package:wameedpos/features/staff/providers/roles_providers.dart';
 
 /// A page-level permission guard that replaces the entire page content
 /// with a "no access" message when the user lacks the required permission.

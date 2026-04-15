@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/notifications/providers/notification_providers.dart';
-import 'package:thawani_pos/features/notifications/providers/notification_state.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/notifications/providers/notification_providers.dart';
+import 'package:wameedpos/features/notifications/providers/notification_state.dart';
 
 class NotificationPreferencesPage extends ConsumerStatefulWidget {
   const NotificationPreferencesPage({super.key});
@@ -61,99 +63,146 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
           soundEnabled: _soundEnabled,
           emailDigest: _emailDigest,
         );
-    _hasChanges = false;
+    setState(() => _hasChanges = false);
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final state = ref.watch(notificationPreferencesProvider);
 
     if (state is NotificationPreferencesLoaded) {
       _initFromState(state);
     }
 
+    ref.listen<NotificationPreferencesState>(notificationPreferencesProvider, (prev, next) {
+      if (prev is NotificationPreferencesLoading && next is NotificationPreferencesLoaded) {
+        showPosSuccessSnackbar(context, l10n.notificationsSave);
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.notificationsPreferences),
         actions: [
           if (_hasChanges)
-            TextButton(
-              onPressed: _save,
-              child: Text(l10n.notificationsSave, style: const TextStyle(fontWeight: FontWeight.bold)),
+            Padding(
+              padding: const EdgeInsets.only(right: AppSpacing.sm),
+              child: PosButton.pill(label: l10n.notificationsSave, onPressed: _save, isSelected: true),
             ),
         ],
       ),
       body: switch (state) {
-        NotificationPreferencesInitial() || NotificationPreferencesLoading() => Center(child: PosLoadingSkeleton.list()),
+        NotificationPreferencesInitial() || NotificationPreferencesLoading() => const Center(child: PosLoading()),
         NotificationPreferencesError(:final message) => PosErrorState(
           message: message,
           onRetry: () => ref.read(notificationPreferencesProvider.notifier).load(),
         ),
-        NotificationPreferencesLoaded() => _buildPreferences(),
+        NotificationPreferencesLoaded() => _buildPreferences(isDark),
       },
     );
   }
 
-  Widget _buildPreferences() {
+  Widget _buildPreferences(bool isDark) {
     final l10n = AppLocalizations.of(context)!;
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.base),
       children: [
         // ─── Notification Categories ──────────────
-        Text(l10n.notificationsCategories, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 8),
+        Text(l10n.notificationsCategories, style: AppTypography.headlineSmall),
+        AppSpacing.gapH8,
         _buildCategorySection(
+          isDark,
           'order_updates',
           l10n.notificationsOrderUpdates,
           l10n.notificationsOrderUpdatesSubtitle,
-          Icons.receipt_long,
+          Icons.receipt_long_rounded,
+          AppColors.info,
         ),
         _buildCategorySection(
+          isDark,
           'promotions',
           l10n.notificationsPromotions,
           l10n.notificationsPromotionsSubtitle,
-          Icons.local_offer,
+          Icons.local_offer_rounded,
+          AppColors.purple,
         ),
         _buildCategorySection(
+          isDark,
           'inventory_alerts',
           l10n.notificationsInventoryAlerts,
           l10n.notificationsInventoryAlertsSubtitle,
-          Icons.inventory_2,
+          Icons.inventory_2_rounded,
+          AppColors.warning,
         ),
         _buildCategorySection(
+          isDark,
           'system_updates',
           l10n.notificationsSystemUpdates,
           l10n.notificationsSystemUpdatesSubtitle,
-          Icons.settings,
+          Icons.settings_rounded,
+          isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+        ),
+        _buildCategorySection(
+          isDark,
+          'payment_alerts',
+          l10n.notifPrefPaymentAlerts,
+          l10n.notifPrefPaymentAlertsSubtitle,
+          Icons.payment_rounded,
+          AppColors.success,
+        ),
+        _buildCategorySection(
+          isDark,
+          'staff_events',
+          l10n.notifPrefStaffEvents,
+          l10n.notifPrefStaffEventsSubtitle,
+          Icons.people_rounded,
+          AppColors.rose,
         ),
 
-        const SizedBox(height: 24),
+        AppSpacing.gapH24,
 
         // ─── Sound & Email ────────────────────────
-        Text(l10n.notificationsGeneralSettings, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 8),
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              children: [
-                SwitchListTile(
-                  title: Text(l10n.notificationsSoundEnabled),
-                  subtitle: Text(l10n.notificationsSoundEnabledSubtitle),
-                  secondary: const Icon(Icons.volume_up),
-                  value: _soundEnabled,
-                  onChanged: (v) => setState(() {
-                    _soundEnabled = v;
-                    _hasChanges = true;
-                  }),
-                ),
-                const Divider(height: 1),
-                ListTile(
-                  leading: const Icon(Icons.email_outlined),
-                  title: Text(l10n.notificationsEmailDigest),
-                  subtitle: Text(l10n.notificationsEmailDigestSubtitle),
-                  trailing: SizedBox(
+        Text(l10n.notificationsGeneralSettings, style: AppTypography.headlineSmall),
+        AppSpacing.gapH8,
+        PosCard(
+          padding: AppSpacing.paddingAll16,
+          child: Column(
+            children: [
+              PosToggle(
+                label: l10n.notificationsSoundEnabled,
+                subtitle: l10n.notificationsSoundEnabledSubtitle,
+                value: _soundEnabled,
+                onChanged: (v) => setState(() {
+                  _soundEnabled = v;
+                  _hasChanges = true;
+                }),
+              ),
+              const PosDivider(),
+              Row(
+                children: [
+                  Icon(
+                    Icons.email_outlined,
+                    size: AppSizes.iconMd,
+                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                  ),
+                  AppSpacing.gapW8,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(l10n.notificationsEmailDigest, style: AppTypography.titleMedium),
+                        Text(
+                          l10n.notificationsEmailDigestSubtitle,
+                          style: AppTypography.bodySmall.copyWith(
+                            color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
                     width: 140,
                     child: PosSearchableDropdown<String>(
                       items: [
@@ -170,99 +219,136 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
                       clearable: false,
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
         ),
 
-        const SizedBox(height: 24),
+        AppSpacing.gapH24,
 
         // ─── Quiet Hours ──────────────────────────
-        Text(l10n.notificationsQuietHours, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 4),
-        Text(l10n.notificationsQuietHoursSubtitle, style: TextStyle(color: AppColors.textSecondary)),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: _buildTimePicker(
-                label: l10n.notificationsQuietStart,
-                value: _quietStart,
-                onChanged: (t) => setState(() {
-                  _quietStart = t;
-                  _hasChanges = true;
-                }),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Icon(Icons.arrow_forward, color: AppColors.textSecondary),
-            ),
-            Expanded(
-              child: _buildTimePicker(
-                label: l10n.notificationsQuietEnd,
-                value: _quietEnd,
-                onChanged: (t) => setState(() {
-                  _quietEnd = t;
-                  _hasChanges = true;
-                }),
-              ),
-            ),
-          ],
+        Text(l10n.notificationsQuietHours, style: AppTypography.headlineSmall),
+        AppSpacing.gapH4,
+        Text(
+          l10n.notificationsQuietHoursSubtitle,
+          style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
         ),
-        if (_quietStart != null || _quietEnd != null) ...[
-          const SizedBox(height: 8),
-          TextButton.icon(
-            onPressed: () => setState(() {
-              _quietStart = null;
-              _quietEnd = null;
-              _hasChanges = true;
-            }),
-            icon: const Icon(Icons.clear, size: 18),
-            label: Text(AppLocalizations.of(context)!.notificationsClearQuietHours),
+        AppSpacing.gapH12,
+        PosCard(
+          padding: AppSpacing.paddingAll16,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: _buildTimePicker(
+                      isDark: isDark,
+                      label: l10n.notificationsQuietStart,
+                      value: _quietStart,
+                      onChanged: (t) => setState(() {
+                        _quietStart = t;
+                        _hasChanges = true;
+                      }),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.base),
+                    child: Icon(Icons.arrow_forward_rounded, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  ),
+                  Expanded(
+                    child: _buildTimePicker(
+                      isDark: isDark,
+                      label: l10n.notificationsQuietEnd,
+                      value: _quietEnd,
+                      onChanged: (t) => setState(() {
+                        _quietEnd = t;
+                        _hasChanges = true;
+                      }),
+                    ),
+                  ),
+                ],
+              ),
+              if (_quietStart != null || _quietEnd != null) ...[
+                AppSpacing.gapH8,
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: TextButton.icon(
+                    onPressed: () => setState(() {
+                      _quietStart = null;
+                      _quietEnd = null;
+                      _hasChanges = true;
+                    }),
+                    icon: const Icon(Icons.clear_rounded, size: 18),
+                    label: Text(l10n.notificationsClearQuietHours),
+                    style: TextButton.styleFrom(foregroundColor: AppColors.error),
+                  ),
+                ),
+              ],
+            ],
           ),
-        ],
+        ),
+        AppSpacing.gapH24,
       ],
     );
   }
 
-  Widget _buildCategorySection(String key, String title, String subtitle, IconData icon) {
+  Widget _buildCategorySection(bool isDark, String key, String title, String subtitle, IconData icon, Color iconColor) {
     final catPrefs = (_preferences[key] as Map<String, dynamic>?) ?? {};
     final inApp = catPrefs['in_app'] as bool? ?? true;
     final push = catPrefs['push'] as bool? ?? false;
+    final email = catPrefs['email'] as bool? ?? false;
+    final sms = catPrefs['sms'] as bool? ?? false;
+    final l10n = AppLocalizations.of(context)!;
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: 8),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+      child: PosCard(
+        padding: AppSpacing.paddingAll16,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Icon(icon, size: 24, color: Theme.of(context).colorScheme.primary),
-                const SizedBox(width: 12),
+                Container(
+                  width: 36,
+                  height: 36,
+                  decoration: BoxDecoration(color: iconColor.withValues(alpha: 0.12), borderRadius: AppRadius.borderMd),
+                  child: Icon(icon, size: AppSizes.iconMd, color: iconColor),
+                ),
+                AppSpacing.gapW12,
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-                      Text(subtitle, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                      Text(title, style: AppTypography.titleMedium),
+                      Text(
+                        subtitle,
+                        style: AppTypography.bodySmall.copyWith(
+                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-            Row(
+            AppSpacing.gapH12,
+            Wrap(
+              spacing: AppSpacing.base,
+              runSpacing: AppSpacing.sm,
               children: [
-                _buildChannelToggle(AppLocalizations.of(context)!.notificationsInApp, inApp, (v) {
+                _buildChannelToggle(l10n.notificationsInApp, inApp, (v) {
                   _updateCategoryPref(key, 'in_app', v);
                 }),
-                const SizedBox(width: 16),
-                _buildChannelToggle(AppLocalizations.of(context)!.notificationsPush, push, (v) {
+                _buildChannelToggle(l10n.notificationsPush, push, (v) {
                   _updateCategoryPref(key, 'push', v);
+                }),
+                _buildChannelToggle(l10n.notifPrefEmail, email, (v) {
+                  _updateCategoryPref(key, 'email', v);
+                }),
+                _buildChannelToggle(l10n.notifPrefSms, sms, (v) {
+                  _updateCategoryPref(key, 'sms', v);
                 }),
               ],
             ),
@@ -273,13 +359,9 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
   }
 
   Widget _buildChannelToggle(String label, bool value, ValueChanged<bool> onChanged) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(label, style: const TextStyle(fontSize: 13)),
-        const SizedBox(width: 4),
-        Switch(value: value, onChanged: onChanged),
-      ],
+    return SizedBox(
+      width: 130,
+      child: PosToggle(label: label, value: value, onChanged: onChanged),
     );
   }
 
@@ -292,9 +374,15 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
     });
   }
 
-  Widget _buildTimePicker({required String label, required TimeOfDay? value, required ValueChanged<TimeOfDay> onChanged}) {
+  Widget _buildTimePicker({
+    required bool isDark,
+    required String label,
+    required TimeOfDay? value,
+    required ValueChanged<TimeOfDay> onChanged,
+  }) {
     final l10n = AppLocalizations.of(context)!;
     return InkWell(
+      borderRadius: AppRadius.borderMd,
       onTap: () async {
         final picked = await showTimePicker(context: context, initialTime: value ?? const TimeOfDay(hour: 22, minute: 0));
         if (picked != null) onChanged(picked);
@@ -303,11 +391,13 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
         decoration: InputDecoration(
           labelText: label,
           border: const OutlineInputBorder(),
-          suffixIcon: const Icon(Icons.access_time),
+          suffixIcon: const Icon(Icons.access_time_rounded),
         ),
         child: Text(
           value != null ? value.format(context) : l10n.notificationsNotSet,
-          style: TextStyle(color: value != null ? null : AppColors.textSecondary),
+          style: AppTypography.bodyMedium.copyWith(
+            color: value != null ? null : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+          ),
         ),
       ),
     );

@@ -1,7 +1,7 @@
-import 'package:thawani_pos/features/payments/models/checkout_provider_option.dart';
-import 'package:thawani_pos/features/payments/models/installment_payment.dart';
-import 'package:thawani_pos/features/payments/models/installment_provider_config.dart';
-import 'package:thawani_pos/features/payments/models/store_installment_config.dart';
+import 'package:wameedpos/features/payments/models/checkout_provider_option.dart';
+import 'package:wameedpos/features/payments/models/installment_payment.dart';
+import 'package:wameedpos/features/payments/models/installment_provider_config.dart';
+import 'package:wameedpos/features/payments/models/store_installment_config.dart';
 
 // ═══════════════════════════════════════════════════════════════
 // Platform Admin — Provider Management State

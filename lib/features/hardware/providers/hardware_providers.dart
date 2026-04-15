@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/hardware/enums/hardware_device_type.dart';
-import 'package:thawani_pos/features/hardware/models/hardware_configuration.dart';
-import 'package:thawani_pos/features/hardware/models/hardware_event_log.dart';
-import 'package:thawani_pos/features/hardware/providers/hardware_state.dart';
-import 'package:thawani_pos/features/hardware/repositories/hardware_repository.dart';
-import 'package:thawani_pos/features/hardware/services/hardware_auto_detector.dart';
-import 'package:thawani_pos/features/hardware/services/hardware_manager.dart';
+import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
+import 'package:wameedpos/features/hardware/models/hardware_configuration.dart';
+import 'package:wameedpos/features/hardware/models/hardware_event_log.dart';
+import 'package:wameedpos/features/hardware/providers/hardware_state.dart';
+import 'package:wameedpos/features/hardware/repositories/hardware_repository.dart';
+import 'package:wameedpos/features/hardware/services/hardware_auto_detector.dart';
+import 'package:wameedpos/features/hardware/services/hardware_manager.dart';
 
 // ─── Config List Provider ──────────────────────────────────
 class HardwareConfigListNotifier extends StateNotifier<HardwareConfigListState> {

@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/reports/enums/store_health_sync_status.dart';
+import 'package:wameedpos/features/reports/enums/store_health_sync_status.dart';
 
 class StoreHealthSnapshot {
   final String id;
@@ -64,13 +64,12 @@ class StoreHealthSnapshot {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is StoreHealthSnapshot && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is StoreHealthSnapshot && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'StoreHealthSnapshot(id: $id, storeId: $storeId, date: $date, syncStatus: $syncStatus, zatcaCompliance: $zatcaCompliance, errorCount: $errorCount, ...)';
+  String toString() =>
+      'StoreHealthSnapshot(id: $id, storeId: $storeId, date: $date, syncStatus: $syncStatus, zatcaCompliance: $zatcaCompliance, errorCount: $errorCount, ...)';
 }

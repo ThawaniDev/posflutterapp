@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/accessibility/data/remote/accessibility_api_service.dart';
+import 'package:wameedpos/features/accessibility/data/remote/accessibility_api_service.dart';
 
 final accessibilityRepositoryProvider = Provider<AccessibilityRepository>((ref) {
   return AccessibilityRepository(ref.read(accessibilityApiServiceProvider));

@@ -1,9 +1,9 @@
-import 'package:thawani_pos/features/cashier_gamification/models/cashier_anomaly.dart';
-import 'package:thawani_pos/features/cashier_gamification/models/cashier_badge.dart';
-import 'package:thawani_pos/features/cashier_gamification/models/cashier_badge_award.dart';
-import 'package:thawani_pos/features/cashier_gamification/models/cashier_performance_snapshot.dart';
-import 'package:thawani_pos/features/cashier_gamification/models/cashier_shift_report.dart';
-import 'package:thawani_pos/features/cashier_gamification/models/gamification_settings.dart';
+import 'package:wameedpos/features/cashier_gamification/models/cashier_anomaly.dart';
+import 'package:wameedpos/features/cashier_gamification/models/cashier_badge.dart';
+import 'package:wameedpos/features/cashier_gamification/models/cashier_badge_award.dart';
+import 'package:wameedpos/features/cashier_gamification/models/cashier_performance_snapshot.dart';
+import 'package:wameedpos/features/cashier_gamification/models/cashier_shift_report.dart';
+import 'package:wameedpos/features/cashier_gamification/models/gamification_settings.dart';
 
 // ─── Leaderboard State ──────────────────────────────────────────
 

@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/hardware/enums/connection_type.dart';
-import 'package:thawani_pos/features/hardware/enums/hardware_device_type.dart';
+import 'package:wameedpos/features/hardware/enums/connection_type.dart';
+import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
 
 class HardwareConfiguration {
   final String id;
@@ -83,13 +83,12 @@ class HardwareConfiguration {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is HardwareConfiguration && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is HardwareConfiguration && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'HardwareConfiguration(id: $id, storeId: $storeId, terminalId: $terminalId, deviceType: $deviceType, connectionType: $connectionType, deviceName: $deviceName, ...)';
+  String toString() =>
+      'HardwareConfiguration(id: $id, storeId: $storeId, terminalId: $terminalId, deviceType: $deviceType, connectionType: $connectionType, deviceName: $deviceName, ...)';
 }

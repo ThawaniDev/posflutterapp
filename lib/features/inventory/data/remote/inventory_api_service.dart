@@ -1,17 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
-import 'package:thawani_pos/features/inventory/models/goods_receipt.dart';
-import 'package:thawani_pos/features/inventory/models/purchase_order.dart';
-import 'package:thawani_pos/features/inventory/models/recipe.dart';
-import 'package:thawani_pos/features/inventory/models/stock_adjustment.dart';
-import 'package:thawani_pos/features/inventory/models/stock_level.dart';
-import 'package:thawani_pos/features/inventory/models/stock_movement.dart';
-import 'package:thawani_pos/features/inventory/models/stock_transfer.dart';
-import 'package:thawani_pos/features/inventory/models/supplier_return.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:wameedpos/features/inventory/models/goods_receipt.dart';
+import 'package:wameedpos/features/inventory/models/purchase_order.dart';
+import 'package:wameedpos/features/inventory/models/recipe.dart';
+import 'package:wameedpos/features/inventory/models/stock_adjustment.dart';
+import 'package:wameedpos/features/inventory/models/stock_level.dart';
+import 'package:wameedpos/features/inventory/models/stock_movement.dart';
+import 'package:wameedpos/features/inventory/models/stock_transfer.dart';
+import 'package:wameedpos/features/inventory/models/supplier_return.dart';
 
 final inventoryApiServiceProvider = Provider<InventoryApiService>((ref) {
   return InventoryApiService(ref.watch(dioClientProvider));

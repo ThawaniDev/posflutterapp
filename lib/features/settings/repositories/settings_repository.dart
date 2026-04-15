@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/settings/data/remote/settings_api_service.dart';
+import 'package:wameedpos/features/settings/data/remote/settings_api_service.dart';
 
 final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
   return SettingsRepository(ref.watch(settingsApiServiceProvider));

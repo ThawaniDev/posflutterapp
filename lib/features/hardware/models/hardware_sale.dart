@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/hardware/enums/hardware_sale_item_type.dart';
+import 'package:wameedpos/features/hardware/enums/hardware_sale_item_type.dart';
 
 class HardwareSale {
   final String id;
@@ -76,13 +76,12 @@ class HardwareSale {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is HardwareSale && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is HardwareSale && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'HardwareSale(id: $id, storeId: $storeId, soldBy: $soldBy, itemType: $itemType, itemDescription: $itemDescription, serialNumber: $serialNumber, ...)';
+  String toString() =>
+      'HardwareSale(id: $id, storeId: $storeId, soldBy: $soldBy, itemType: $itemType, itemDescription: $itemDescription, serialNumber: $serialNumber, ...)';
 }

@@ -1,8 +1,8 @@
-import 'package:thawani_pos/features/branches/models/store.dart';
-import 'package:thawani_pos/features/onboarding/models/business_type_template.dart';
-import 'package:thawani_pos/features/onboarding/models/onboarding_progress.dart';
-import 'package:thawani_pos/features/onboarding/models/store_settings.dart';
-import 'package:thawani_pos/features/onboarding/models/store_working_hour.dart';
+import 'package:wameedpos/features/branches/models/store.dart';
+import 'package:wameedpos/features/onboarding/models/business_type_template.dart';
+import 'package:wameedpos/features/onboarding/models/onboarding_progress.dart';
+import 'package:wameedpos/features/onboarding/models/store_settings.dart';
+import 'package:wameedpos/features/onboarding/models/store_working_hour.dart';
 
 // ─── Store State ─────────────────────────────────────────────────
 

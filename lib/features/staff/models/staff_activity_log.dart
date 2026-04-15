@@ -1,4 +1,4 @@
-import 'package:thawani_pos/core/enums/activity_entity_type.dart';
+import 'package:wameedpos/core/enums/activity_entity_type.dart';
 
 class StaffActivityLog {
   final String id;
@@ -76,13 +76,12 @@ class StaffActivityLog {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is StaffActivityLog && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is StaffActivityLog && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'StaffActivityLog(id: $id, staffUserId: $staffUserId, storeId: $storeId, action: $action, entityType: $entityType, entityId: $entityId, ...)';
+  String toString() =>
+      'StaffActivityLog(id: $id, staffUserId: $staffUserId, storeId: $storeId, action: $action, entityType: $entityType, entityId: $entityId, ...)';
 }

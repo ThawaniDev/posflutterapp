@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/pos_customization/providers/customization_state.dart';
-import 'package:thawani_pos/features/pos_customization/providers/customization_providers.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/pos_customization/providers/customization_state.dart';
+import 'package:wameedpos/features/pos_customization/providers/customization_providers.dart';
 
 class PosSettingsWidget extends ConsumerWidget {
   const PosSettingsWidget({super.key});

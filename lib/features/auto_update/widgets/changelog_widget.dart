@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/auto_update/providers/auto_update_providers.dart';
-import 'package:thawani_pos/features/auto_update/providers/auto_update_state.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/auto_update/providers/auto_update_providers.dart';
+import 'package:wameedpos/features/auto_update/providers/auto_update_state.dart';
 
 class ChangelogWidget extends ConsumerWidget {
   const ChangelogWidget({super.key});

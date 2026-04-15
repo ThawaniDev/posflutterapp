@@ -1,4 +1,4 @@
-# thawani_pos
+# wameedpos
 
 A new Flutter project.
 

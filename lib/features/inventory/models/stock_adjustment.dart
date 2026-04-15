@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/inventory/enums/stock_adjustment_type.dart';
+import 'package:wameedpos/features/inventory/enums/stock_adjustment_type.dart';
 
 class StockAdjustment {
   final String id;

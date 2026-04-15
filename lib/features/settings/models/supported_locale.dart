@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/settings/enums/calendar_system.dart';
-import 'package:thawani_pos/features/settings/enums/locale_direction.dart';
+import 'package:wameedpos/features/settings/enums/calendar_system.dart';
+import 'package:wameedpos/features/settings/enums/locale_direction.dart';
 
 class SupportedLocale {
   final String id;
@@ -89,13 +89,12 @@ class SupportedLocale {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SupportedLocale && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is SupportedLocale && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'SupportedLocale(id: $id, localeCode: $localeCode, languageName: $languageName, languageNameNative: $languageNameNative, direction: $direction, dateFormat: $dateFormat, ...)';
+  String toString() =>
+      'SupportedLocale(id: $id, localeCode: $localeCode, languageName: $languageName, languageNameNative: $languageNameNative, direction: $direction, dateFormat: $dateFormat, ...)';
 }

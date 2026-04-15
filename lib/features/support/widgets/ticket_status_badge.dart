@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/widgets/pos_badge.dart';
-import 'package:thawani_pos/features/support/enums/ticket_status.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/pos_badge.dart';
+import 'package:wameedpos/features/support/enums/ticket_status.dart';
 
 class TicketStatusBadge extends StatelessWidget {
   const TicketStatusBadge({super.key, required this.status, this.isSmall = false});

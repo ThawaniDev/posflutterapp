@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
-import 'package:thawani_pos/features/catalog/models/category.dart';
-import 'package:thawani_pos/features/catalog/models/modifier_group.dart';
-import 'package:thawani_pos/features/catalog/models/product.dart';
-import 'package:thawani_pos/features/catalog/models/product_barcode.dart';
-import 'package:thawani_pos/features/catalog/models/product_supplier.dart';
-import 'package:thawani_pos/features/catalog/models/product_variant.dart';
-import 'package:thawani_pos/features/catalog/models/store_price.dart';
-import 'package:thawani_pos/features/catalog/models/supplier.dart';
+import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:wameedpos/features/catalog/models/category.dart';
+import 'package:wameedpos/features/catalog/models/modifier_group.dart';
+import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/features/catalog/models/product_barcode.dart';
+import 'package:wameedpos/features/catalog/models/product_supplier.dart';
+import 'package:wameedpos/features/catalog/models/product_variant.dart';
+import 'package:wameedpos/features/catalog/models/store_price.dart';
+import 'package:wameedpos/features/catalog/models/supplier.dart';
 
 final catalogRepositoryProvider = Provider<CatalogRepository>((ref) {
   return CatalogRepository(apiService: ref.watch(catalogApiServiceProvider));

@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/payments/enums/cash_event_type.dart';
+import 'package:wameedpos/features/payments/enums/cash_event_type.dart';
 
 class CashEvent {
   final String id;
@@ -70,13 +70,12 @@ class CashEvent {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CashEvent && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is CashEvent && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'CashEvent(id: $id, cashSessionId: $cashSessionId, type: $type, amount: $amount, reason: $reason, notes: $notes, ...)';
+  String toString() =>
+      'CashEvent(id: $id, cashSessionId: $cashSessionId, type: $type, amount: $amount, reason: $reason, notes: $notes, ...)';
 }

@@ -1,6 +1,6 @@
-import 'package:thawani_pos/features/industry_jewelry/models/daily_metal_rate.dart';
-import 'package:thawani_pos/features/industry_jewelry/models/jewelry_product_detail.dart';
-import 'package:thawani_pos/features/industry_jewelry/models/buyback_transaction.dart';
+import 'package:wameedpos/features/industry_jewelry/models/daily_metal_rate.dart';
+import 'package:wameedpos/features/industry_jewelry/models/jewelry_product_detail.dart';
+import 'package:wameedpos/features/industry_jewelry/models/buyback_transaction.dart';
 
 sealed class JewelryState {
   const JewelryState();

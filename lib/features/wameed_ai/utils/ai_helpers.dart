@@ -1,4 +1,4 @@
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Localized month name using l10n keys.
 String localizedMonthName(AppLocalizations l10n, int month) {

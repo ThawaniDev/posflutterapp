@@ -1,4 +1,4 @@
-name: thawani_pos
+name: wameedpos
 description: "Wameed POS - Point of Sale system for Oman market"
 publish_to: 'none'
 version: 1.0.0+1
@@ -59,6 +59,9 @@ dependencies:
   # URL Launcher
   url_launcher: ^6.3.1
 
+  # Payment Gateway
+  flutter_paytabs_bridge: ^2.7.2
+
   # Image Picker
   image_picker: ^1.1.2
 
@@ -75,6 +78,7 @@ dev_dependencies:
   riverpod_generator: ^2.6.3
   build_runner: ^2.4.15
   mockito: ^5.4.6
+  change_app_package_name: ^1.4.0
   integration_test:
     sdk: flutter
 

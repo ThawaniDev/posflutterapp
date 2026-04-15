@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/catalog/models/product.dart';
-import 'package:thawani_pos/features/catalog/models/category.dart';
-import 'package:thawani_pos/features/catalog/models/supplier.dart';
-import 'package:thawani_pos/features/catalog/enums/product_unit.dart';
+import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/features/catalog/models/category.dart';
+import 'package:wameedpos/features/catalog/models/supplier.dart';
+import 'package:wameedpos/features/catalog/enums/product_unit.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════════
@@ -64,12 +64,7 @@ void main() {
     });
 
     test('fromJson handles minimal fields', () {
-      final json = {
-        'id': 'prod-uuid-2',
-        'organization_id': 'org-uuid-1',
-        'name': 'Simple Product',
-        'sell_price': 1.500,
-      };
+      final json = {'id': 'prod-uuid-2', 'organization_id': 'org-uuid-1', 'name': 'Simple Product', 'sell_price': 1.500};
 
       final product = Product.fromJson(json);
       expect(product.id, 'prod-uuid-2');
@@ -84,12 +79,7 @@ void main() {
     });
 
     test('fromJson handles numeric sell_price as int', () {
-      final json = {
-        'id': 'p1',
-        'organization_id': 'o1',
-        'name': 'Test',
-        'sell_price': 5,
-      };
+      final json = {'id': 'p1', 'organization_id': 'o1', 'name': 'Test', 'sell_price': 5};
 
       final product = Product.fromJson(json);
       expect(product.sellPrice, 5.0);
@@ -115,13 +105,7 @@ void main() {
     });
 
     test('copyWith replaces specified fields', () {
-      final original = Product(
-        id: 'p1',
-        organizationId: 'o1',
-        name: 'Original',
-        sellPrice: 1.0,
-        isActive: true,
-      );
+      final original = Product(id: 'p1', organizationId: 'o1', name: 'Original', sellPrice: 1.0, isActive: true);
 
       final updated = original.copyWith(name: 'Updated', sellPrice: 2.5);
       expect(updated.id, 'p1');
@@ -171,13 +155,7 @@ void main() {
     });
 
     test('fromJson handles unknown unit gracefully', () {
-      final json = {
-        'id': 'p1',
-        'organization_id': 'o1',
-        'name': 'Test',
-        'sell_price': 1.0,
-        'unit': 'unknown_unit',
-      };
+      final json = {'id': 'p1', 'organization_id': 'o1', 'name': 'Test', 'sell_price': 1.0, 'unit': 'unknown_unit'};
       final product = Product.fromJson(json);
       expect(product.unit, isNull); // tryFromValue returns null
     });
@@ -217,11 +195,7 @@ void main() {
     });
 
     test('fromJson handles minimal fields', () {
-      final json = {
-        'id': 'cat-uuid-2',
-        'organization_id': 'org-uuid-1',
-        'name': 'Simple',
-      };
+      final json = {'id': 'cat-uuid-2', 'organization_id': 'org-uuid-1', 'name': 'Simple'};
 
       final category = Category.fromJson(json);
       expect(category.name, 'Simple');
@@ -231,25 +205,14 @@ void main() {
     });
 
     test('fromJson parses subcategory with parent_id', () {
-      final json = {
-        'id': 'sub-cat-1',
-        'organization_id': 'org-1',
-        'parent_id': 'cat-parent-1',
-        'name': 'Juices',
-      };
+      final json = {'id': 'sub-cat-1', 'organization_id': 'org-1', 'parent_id': 'cat-parent-1', 'name': 'Juices'};
 
       final category = Category.fromJson(json);
       expect(category.parentId, 'cat-parent-1');
     });
 
     test('toJson produces correct map', () {
-      final category = Category(
-        id: 'cat-1',
-        organizationId: 'org-1',
-        name: 'Food',
-        isActive: true,
-        sortOrder: 2,
-      );
+      final category = Category(id: 'cat-1', organizationId: 'org-1', name: 'Food', isActive: true, sortOrder: 2);
 
       final json = category.toJson();
       expect(json['id'], 'cat-1');
@@ -259,12 +222,7 @@ void main() {
     });
 
     test('copyWith replaces specified fields', () {
-      final original = Category(
-        id: 'c1',
-        organizationId: 'o1',
-        name: 'Original',
-        isActive: true,
-      );
+      final original = Category(id: 'c1', organizationId: 'o1', name: 'Original', isActive: true);
 
       final updated = original.copyWith(name: 'Updated', isActive: false);
       expect(updated.id, 'c1');
@@ -311,11 +269,7 @@ void main() {
     });
 
     test('fromJson handles minimal fields', () {
-      final json = {
-        'id': 'sup-2',
-        'organization_id': 'org-1',
-        'name': 'Basic Supplier',
-      };
+      final json = {'id': 'sup-2', 'organization_id': 'org-1', 'name': 'Basic Supplier'};
 
       final supplier = Supplier.fromJson(json);
       expect(supplier.name, 'Basic Supplier');

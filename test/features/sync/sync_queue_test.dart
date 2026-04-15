@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/sync/services/sync_queue_manager.dart';
+import 'package:wameedpos/features/sync/services/sync_queue_manager.dart';
 
 void main() {
   late Directory tempDir;

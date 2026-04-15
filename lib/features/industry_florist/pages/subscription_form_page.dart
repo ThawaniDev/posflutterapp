@@ -5,9 +5,9 @@ import '../../../core/widgets/widgets.dart';
 import '../enums/flower_subscription_frequency.dart';
 import '../models/flower_subscription.dart';
 import '../providers/florist_providers.dart';
-import 'package:thawani_pos/features/customers/models/customer.dart';
-import 'package:thawani_pos/features/customers/providers/customer_providers.dart';
-import 'package:thawani_pos/features/customers/providers/customer_state.dart';
+import 'package:wameedpos/features/customers/models/customer.dart';
+import 'package:wameedpos/features/customers/providers/customer_providers.dart';
+import 'package:wameedpos/features/customers/providers/customer_state.dart';
 
 class SubscriptionFormPage extends ConsumerStatefulWidget {
   final FlowerSubscription? subscription;

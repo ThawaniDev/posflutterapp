@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/payments/models/store_installment_config.dart';
-import 'package:thawani_pos/features/payments/providers/installment_state.dart';
-import 'package:thawani_pos/features/payments/repositories/installment_repository.dart';
+import 'package:wameedpos/features/payments/models/store_installment_config.dart';
+import 'package:wameedpos/features/payments/providers/installment_state.dart';
+import 'package:wameedpos/features/payments/repositories/installment_repository.dart';
 
 // ═══════════════════════════════════════════════════════════════
 // Platform Admin — Provider Management

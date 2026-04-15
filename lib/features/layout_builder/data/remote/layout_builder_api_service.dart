@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/layout_builder/models/layout_canvas.dart';
-import 'package:thawani_pos/features/layout_builder/models/layout_widget.dart';
-import 'package:thawani_pos/features/layout_builder/models/pos_layout_template.dart';
-import 'package:thawani_pos/features/layout_builder/models/template_version.dart';
-import 'package:thawani_pos/features/layout_builder/models/widget_placement.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/layout_builder/models/layout_canvas.dart';
+import 'package:wameedpos/features/layout_builder/models/layout_widget.dart';
+import 'package:wameedpos/features/layout_builder/models/pos_layout_template.dart';
+import 'package:wameedpos/features/layout_builder/models/template_version.dart';
+import 'package:wameedpos/features/layout_builder/models/widget_placement.dart';
 
 final layoutBuilderApiServiceProvider = Provider<LayoutBuilderApiService>((ref) {
   return LayoutBuilderApiService(ref.watch(dioClientProvider));

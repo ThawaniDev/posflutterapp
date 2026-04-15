@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/delivery_integration/enums/delivery_config_platform.dart';
-import 'package:thawani_pos/features/delivery_integration/enums/menu_sync_status.dart';
+import 'package:wameedpos/features/delivery_integration/enums/delivery_config_platform.dart';
+import 'package:wameedpos/features/delivery_integration/enums/menu_sync_status.dart';
 
 class DeliveryMenuSyncLog {
   final String id;

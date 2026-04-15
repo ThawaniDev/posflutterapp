@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/widgets/pos_error_state.dart';
-import 'package:thawani_pos/features/pos_customization/pages/iframe_helper_stub.dart'
-    if (dart.library.js_interop) 'package:thawani_pos/features/pos_customization/pages/iframe_helper_web.dart';
-import 'package:thawani_pos/features/pos_customization/repositories/customization_repository.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/widgets/pos_error_state.dart';
+import 'package:wameedpos/features/pos_customization/pages/iframe_helper_stub.dart'
+    if (dart.library.js_interop) 'package:wameedpos/features/pos_customization/pages/iframe_helper_web.dart';
+import 'package:wameedpos/features/pos_customization/repositories/customization_repository.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 /// Fetches a signed preview URL then displays it in a WebView (native)

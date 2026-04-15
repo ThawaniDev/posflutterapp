@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/reports/data/remote/report_api_service.dart';
-import 'package:thawani_pos/features/reports/models/report_filters.dart';
+import 'package:wameedpos/features/reports/data/remote/report_api_service.dart';
+import 'package:wameedpos/features/reports/models/report_filters.dart';
 
 final reportRepositoryProvider = Provider<ReportRepository>((ref) {
   return ReportRepository(ref.watch(reportApiServiceProvider));

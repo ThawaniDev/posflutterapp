@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/zatca/enums/zatca_certificate_status.dart';
-import 'package:thawani_pos/features/zatca/enums/zatca_certificate_type.dart';
-import 'package:thawani_pos/features/zatca/enums/zatca_invoice_type.dart';
-import 'package:thawani_pos/features/zatca/enums/zatca_submission_status.dart';
-import 'package:thawani_pos/features/zatca/models/zatca_certificate.dart';
-import 'package:thawani_pos/features/zatca/models/zatca_invoice.dart';
-import 'package:thawani_pos/features/zatca/providers/zatca_state.dart';
+import 'package:wameedpos/features/zatca/enums/zatca_certificate_status.dart';
+import 'package:wameedpos/features/zatca/enums/zatca_certificate_type.dart';
+import 'package:wameedpos/features/zatca/enums/zatca_invoice_type.dart';
+import 'package:wameedpos/features/zatca/enums/zatca_submission_status.dart';
+import 'package:wameedpos/features/zatca/models/zatca_certificate.dart';
+import 'package:wameedpos/features/zatca/models/zatca_invoice.dart';
+import 'package:wameedpos/features/zatca/providers/zatca_state.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════

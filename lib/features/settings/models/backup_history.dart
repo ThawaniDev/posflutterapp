@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/settings/enums/backup_history_status.dart';
-import 'package:thawani_pos/features/settings/enums/backup_type.dart';
+import 'package:wameedpos/features/settings/enums/backup_history_status.dart';
+import 'package:wameedpos/features/settings/enums/backup_type.dart';
 
 class BackupHistory {
   final String id;
@@ -113,13 +113,12 @@ class BackupHistory {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BackupHistory && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is BackupHistory && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'BackupHistory(id: $id, storeId: $storeId, terminalId: $terminalId, backupType: $backupType, storageLocation: $storageLocation, localPath: $localPath, ...)';
+  String toString() =>
+      'BackupHistory(id: $id, storeId: $storeId, terminalId: $terminalId, backupType: $backupType, storageLocation: $storageLocation, localPath: $localPath, ...)';
 }

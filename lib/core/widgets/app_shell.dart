@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/providers/app_settings_providers.dart';
-import 'package:thawani_pos/core/providers/sidebar_provider.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/branch_selector.dart';
-import 'package:thawani_pos/core/widgets/pos_sidebar.dart';
-import 'package:thawani_pos/core/widgets/quick_nav_grid.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/auth/providers/auth_providers.dart';
-import 'package:thawani_pos/features/auth/providers/auth_state.dart';
-import 'package:thawani_pos/features/security/repositories/security_repository.dart';
-import 'package:thawani_pos/features/staff/providers/roles_providers.dart';
-import 'package:thawani_pos/features/staff/providers/roles_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/providers/app_settings_providers.dart';
+import 'package:wameedpos/core/providers/sidebar_provider.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/branch_selector.dart';
+import 'package:wameedpos/core/widgets/pos_sidebar.dart';
+import 'package:wameedpos/core/widgets/quick_nav_grid.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/auth/providers/auth_providers.dart';
+import 'package:wameedpos/features/auth/providers/auth_state.dart';
+import 'package:wameedpos/features/security/repositories/security_repository.dart';
+import 'package:wameedpos/features/staff/providers/roles_providers.dart';
+import 'package:wameedpos/features/staff/providers/roles_state.dart';
 
 /// Shell widget that wraps authenticated pages with a persistent sidebar.
 ///

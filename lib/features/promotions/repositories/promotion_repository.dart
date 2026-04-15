@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
-import 'package:thawani_pos/features/promotions/data/remote/promotion_api_service.dart';
-import 'package:thawani_pos/features/promotions/models/coupon_code.dart';
-import 'package:thawani_pos/features/promotions/models/promotion.dart';
+import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:wameedpos/features/promotions/data/remote/promotion_api_service.dart';
+import 'package:wameedpos/features/promotions/models/coupon_code.dart';
+import 'package:wameedpos/features/promotions/models/promotion.dart';
 
 final promotionRepositoryProvider = Provider<PromotionRepository>((ref) {
   return PromotionRepository(apiService: ref.watch(promotionApiServiceProvider));

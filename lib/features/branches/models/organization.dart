@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/branches/enums/business_type.dart';
+import 'package:wameedpos/features/branches/enums/business_type.dart';
 
 class Organization {
   final String id;
@@ -118,13 +118,12 @@ class Organization {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Organization && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is Organization && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'Organization(id: $id, name: $name, nameAr: $nameAr, slug: $slug, crNumber: $crNumber, vatNumber: $vatNumber, ...)';
+  String toString() =>
+      'Organization(id: $id, name: $name, nameAr: $nameAr, slug: $slug, crNumber: $crNumber, vatNumber: $vatNumber, ...)';
 }

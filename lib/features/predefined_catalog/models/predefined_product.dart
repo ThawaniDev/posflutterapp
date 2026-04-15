@@ -1,6 +1,6 @@
-import 'package:thawani_pos/features/catalog/enums/product_unit.dart';
-import 'package:thawani_pos/features/predefined_catalog/models/predefined_category.dart';
-import 'package:thawani_pos/features/predefined_catalog/models/predefined_product_image.dart';
+import 'package:wameedpos/features/catalog/enums/product_unit.dart';
+import 'package:wameedpos/features/predefined_catalog/models/predefined_category.dart';
+import 'package:wameedpos/features/predefined_catalog/models/predefined_product_image.dart';
 
 class PredefinedProduct {
   final String id;

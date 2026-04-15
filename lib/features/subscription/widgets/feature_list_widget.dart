@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/subscription/models/subscription_plan.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
 
 /// Widget that displays a list of plan features with check/cross indicators.
 class FeatureListWidget extends StatelessWidget {

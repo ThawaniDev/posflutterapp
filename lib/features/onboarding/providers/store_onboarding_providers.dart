@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/onboarding/providers/store_onboarding_state.dart';
-import 'package:thawani_pos/features/onboarding/repositories/store_repository.dart';
+import 'package:wameedpos/features/onboarding/providers/store_onboarding_state.dart';
+import 'package:wameedpos/features/onboarding/repositories/store_repository.dart';
 
 // ─── My Store Provider ───────────────────────────────────────────
 

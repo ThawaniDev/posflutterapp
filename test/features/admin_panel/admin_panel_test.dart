@@ -1,18 +1,18 @@
 import 'package:flutter_test/flutter_test.dart';
 
 // Models (from branches)
-import 'package:thawani_pos/features/branches/models/admin_user.dart';
-import 'package:thawani_pos/features/branches/models/admin_activity_log.dart';
-import 'package:thawani_pos/features/branches/models/provider_note.dart';
-import 'package:thawani_pos/features/branches/models/provider_registration.dart';
-import 'package:thawani_pos/features/branches/models/provider_limit_override.dart';
-import 'package:thawani_pos/features/branches/models/admin_user_role.dart';
+import 'package:wameedpos/features/branches/models/admin_user.dart';
+import 'package:wameedpos/features/branches/models/admin_activity_log.dart';
+import 'package:wameedpos/features/branches/models/provider_note.dart';
+import 'package:wameedpos/features/branches/models/provider_registration.dart';
+import 'package:wameedpos/features/branches/models/provider_limit_override.dart';
+import 'package:wameedpos/features/branches/models/admin_user_role.dart';
 
 // Enum
-import 'package:thawani_pos/features/branches/enums/provider_registration_status.dart';
+import 'package:wameedpos/features/branches/enums/provider_registration_status.dart';
 
 // States
-import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 
 void main() {
   // ════════════════════════════════════════════════════════

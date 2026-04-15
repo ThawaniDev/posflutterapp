@@ -5,9 +5,9 @@ import '../../../core/widgets/widgets.dart';
 import '../enums/buyback_payment_method.dart';
 import '../enums/metal_type.dart';
 import '../providers/jewelry_providers.dart';
-import 'package:thawani_pos/features/staff/models/staff_user.dart';
-import 'package:thawani_pos/features/staff/providers/staff_providers.dart';
-import 'package:thawani_pos/features/staff/providers/staff_state.dart';
+import 'package:wameedpos/features/staff/models/staff_user.dart';
+import 'package:wameedpos/features/staff/providers/staff_providers.dart';
+import 'package:wameedpos/features/staff/providers/staff_state.dart';
 
 class BuybackFormPage extends ConsumerStatefulWidget {
   const BuybackFormPage({super.key});

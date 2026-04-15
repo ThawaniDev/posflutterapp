@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/subscription/models/subscription_plan.dart';
-import 'package:thawani_pos/features/subscription/providers/subscription_providers.dart';
-import 'package:thawani_pos/features/subscription/providers/subscription_state.dart';
-import 'package:thawani_pos/features/subscription/widgets/plan_card.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
+import 'package:wameedpos/features/subscription/providers/subscription_providers.dart';
+import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
+import 'package:wameedpos/features/subscription/widgets/plan_card.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Page that displays available subscription plans for the user to choose.
 class PlanSelectionPage extends ConsumerStatefulWidget {
@@ -145,18 +145,29 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
 
   void _onPlanSelected(SubscriptionPlan plan) async {
     final billingCycle = _isAnnual ? 'yearly' : 'monthly';
+    final price = _isAnnual ? (plan.annualPrice ?? plan.monthlyPrice * 12) : plan.monthlyPrice;
 
     final confirmed = await showPosConfirmDialog(
       context,
       title: 'Subscribe to ${plan.name}?',
       message:
           'You will be subscribed to ${plan.name} on a $billingCycle basis.\n\n'
-          'Price: ${_isAnnual ? plan.annualPrice : plan.monthlyPrice} \u0081/$billingCycle',
-      confirmLabel: 'Subscribe',
+          'Price: $price SAR/$billingCycle\n\n'
+          'You will be redirected to complete the payment.',
+      confirmLabel: 'Proceed to Payment',
       cancelLabel: 'Cancel',
     );
     if (confirmed == true) {
-      ref.read(subscriptionProvider.notifier).subscribe(planId: plan.id, billingCycle: billingCycle);
+      context.go(
+        Routes.providerPaymentCheckout,
+        extra: {
+          'purpose': 'subscription',
+          'purpose_label': '${plan.name} ($billingCycle)',
+          'amount': price,
+          'subscription_plan_id': plan.id,
+          'notes': 'Subscription: ${plan.name} - $billingCycle',
+        },
+      );
     }
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/accessibility/services/keyboard_shortcut_service.dart';
+import 'package:wameedpos/features/accessibility/services/keyboard_shortcut_service.dart';
 
 void main() {
   group('ShortcutBinding', () {

@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/onboarding/enums/onboarding_step.dart';
+import 'package:wameedpos/features/onboarding/enums/onboarding_step.dart';
 
 class OnboardingProgress {
   final String id;

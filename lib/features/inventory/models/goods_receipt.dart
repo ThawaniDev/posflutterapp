@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/inventory/enums/goods_receipt_status.dart';
+import 'package:wameedpos/features/inventory/enums/goods_receipt_status.dart';
 
 class GoodsReceipt {
   final String id;

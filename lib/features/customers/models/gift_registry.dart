@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/customers/enums/gift_registry_event_type.dart';
+import 'package:wameedpos/features/customers/enums/gift_registry_event_type.dart';
 
 class GiftRegistry {
   final String id;
@@ -76,13 +76,12 @@ class GiftRegistry {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is GiftRegistry && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is GiftRegistry && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'GiftRegistry(id: $id, storeId: $storeId, customerId: $customerId, name: $name, eventType: $eventType, eventDate: $eventDate, ...)';
+  String toString() =>
+      'GiftRegistry(id: $id, storeId: $storeId, customerId: $customerId, name: $name, eventType: $eventType, eventDate: $eventDate, ...)';
 }

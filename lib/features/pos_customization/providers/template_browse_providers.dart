@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/pos_customization/models/cfd_theme.dart';
-import 'package:thawani_pos/features/pos_customization/models/label_layout_template.dart';
-import 'package:thawani_pos/features/pos_customization/models/receipt_layout_template.dart';
-import 'package:thawani_pos/features/pos_customization/repositories/customization_repository.dart';
+import 'package:wameedpos/features/pos_customization/models/cfd_theme.dart';
+import 'package:wameedpos/features/pos_customization/models/label_layout_template.dart';
+import 'package:wameedpos/features/pos_customization/models/receipt_layout_template.dart';
+import 'package:wameedpos/features/pos_customization/repositories/customization_repository.dart';
 
 // ─── Receipt Layout Templates ──────────────────────────────
 

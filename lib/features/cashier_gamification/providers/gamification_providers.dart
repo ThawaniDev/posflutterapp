@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/cashier_gamification/data/gamification_repository.dart';
-import 'package:thawani_pos/features/cashier_gamification/providers/gamification_state.dart';
+import 'package:wameedpos/features/cashier_gamification/data/gamification_repository.dart';
+import 'package:wameedpos/features/cashier_gamification/providers/gamification_state.dart';
 
 String _extractError(DioException e) {
   final data = e.response?.data;

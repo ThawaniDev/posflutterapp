@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/hardware/data/remote/hardware_api_service.dart';
+import 'package:wameedpos/features/hardware/data/remote/hardware_api_service.dart';
 
 class HardwareRepository {
   HardwareRepository(this._api);

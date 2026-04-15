@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/features/staff/providers/roles_providers.dart';
-import 'package:thawani_pos/features/staff/widgets/pin_override_dialog.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/features/staff/providers/roles_providers.dart';
+import 'package:wameedpos/features/staff/widgets/pin_override_dialog.dart';
 
 /// A widget that conditionally renders its [child] based on whether
 /// the current user has the required [permission].

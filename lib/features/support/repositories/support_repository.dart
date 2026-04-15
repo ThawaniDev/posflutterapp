@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/support/data/remote/support_api_service.dart';
+import 'package:wameedpos/features/support/data/remote/support_api_service.dart';
 
 class SupportRepository {
   final SupportApiService _apiService;

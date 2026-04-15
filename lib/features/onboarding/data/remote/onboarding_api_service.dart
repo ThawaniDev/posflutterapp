@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/onboarding/models/onboarding_progress.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/onboarding/models/onboarding_progress.dart';
 
 final onboardingApiServiceProvider = Provider<OnboardingApiService>((ref) {
   return OnboardingApiService(ref.watch(dioClientProvider));

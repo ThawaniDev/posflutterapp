@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/support/enums/knowledge_base_category.dart';
+import 'package:wameedpos/features/support/enums/knowledge_base_category.dart';
 
 class KnowledgeBaseArticle {
   final String id;

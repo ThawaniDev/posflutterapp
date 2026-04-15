@@ -1,8 +1,8 @@
-import 'package:thawani_pos/features/marketplace/models/marketplace_category.dart';
-import 'package:thawani_pos/features/marketplace/models/marketplace_invoice.dart';
-import 'package:thawani_pos/features/marketplace/models/marketplace_listing.dart';
-import 'package:thawani_pos/features/marketplace/models/template_purchase.dart';
-import 'package:thawani_pos/features/marketplace/models/template_review.dart';
+import 'package:wameedpos/features/marketplace/models/marketplace_category.dart';
+import 'package:wameedpos/features/marketplace/models/marketplace_invoice.dart';
+import 'package:wameedpos/features/marketplace/models/marketplace_listing.dart';
+import 'package:wameedpos/features/marketplace/models/template_purchase.dart';
+import 'package:wameedpos/features/marketplace/models/template_review.dart';
 
 // ─── Marketplace Listings State ────────────────────────────
 

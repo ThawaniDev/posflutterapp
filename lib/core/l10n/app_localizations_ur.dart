@@ -6199,6 +6199,105 @@ class AppLocalizationsUr extends AppLocalizations {
   String get notifStatsByChannel => 'By چینل';
 
   @override
+  String get notifDeleteConfirmTitle => 'Delete Notifications';
+
+  @override
+  String notifDeleteConfirmMessage(int count) {
+    return 'Delete $count selected notifications?';
+  }
+
+  @override
+  String get notifStatsTitle => 'Statistics';
+
+  @override
+  String get notifMoreActions => 'More Actions';
+
+  @override
+  String get notifEmptySubtitle => 'You\'re all caught up';
+
+  @override
+  String get notifDeleteSingleTitle => 'Delete Notification';
+
+  @override
+  String get notifDeleteSingleMessage =>
+      'Are you sure you want to delete this notification?';
+
+  @override
+  String get notifJustNow => 'Just now';
+
+  @override
+  String get notifPrefPaymentAlerts => 'Payment Alerts';
+
+  @override
+  String get notifPrefPaymentAlertsSubtitle =>
+      'Payment confirmations and refund alerts';
+
+  @override
+  String get notifPrefStaffEvents => 'Staff Events';
+
+  @override
+  String get notifPrefStaffEventsSubtitle =>
+      'Staff schedule and attendance updates';
+
+  @override
+  String get notifPrefEmail => 'Email';
+
+  @override
+  String get notifPrefSms => 'SMS';
+
+  @override
+  String get notifLogDelivered => 'Delivered';
+
+  @override
+  String get notifLogSent => 'Sent';
+
+  @override
+  String get notifLogFailed => 'Failed';
+
+  @override
+  String get notifScheduleValidation => 'Title and message are required';
+
+  @override
+  String get notifScheduleCreatedSuccess => 'Schedule created successfully';
+
+  @override
+  String get notifSchedulesEmptySubtitle =>
+      'Tap + to create a scheduled notification';
+
+  @override
+  String get notifScheduleCancelConfirmTitle => 'Cancel Schedule';
+
+  @override
+  String get notifScheduleCancelConfirmMessage =>
+      'Are you sure you want to cancel this scheduled notification?';
+
+  @override
+  String get notifScheduleType => 'Schedule Type';
+
+  @override
+  String get notifScheduleTypeOnce => 'Once';
+
+  @override
+  String get notifScheduleTypeRecurring => 'Recurring';
+
+  @override
+  String get notifActionMarkedAsRead => 'Notification marked as read';
+
+  @override
+  String get notifActionAllMarkedAsRead => 'All notifications marked as read';
+
+  @override
+  String get notifActionDeleted => 'Notification deleted';
+
+  @override
+  String notifActionBulkDeleted(int count) {
+    return '$count notifications deleted';
+  }
+
+  @override
+  String get notifActionBatchCreated => 'Batch notification created';
+
+  @override
   String get ordersAll => 'سب';
 
   @override
@@ -11509,4 +11608,164 @@ class AppLocalizationsUr extends AppLocalizations {
 
   @override
   String get successful => 'Successful';
+
+  @override
+  String get providerPaymentsTitle => 'Payments';
+
+  @override
+  String get providerPaymentDetail => 'Payment Details';
+
+  @override
+  String get providerPaymentCheckout => 'Complete Payment';
+
+  @override
+  String get providerPaymentInitiating => 'Initiating payment...';
+
+  @override
+  String get providerPaymentCancelTitle => 'Cancel Payment?';
+
+  @override
+  String get providerPaymentCancelBody =>
+      'Are you sure you want to cancel this payment? You can retry later.';
+
+  @override
+  String get providerPaymentContinue => 'Continue Payment';
+
+  @override
+  String get providerPaymentCancel => 'Cancel';
+
+  @override
+  String get providerPaymentNoPayments => 'No payments found';
+
+  @override
+  String get providerPaymentPurpose => 'Purpose';
+
+  @override
+  String get providerPaymentCartId => 'Cart ID';
+
+  @override
+  String get providerPaymentGateway => 'Gateway';
+
+  @override
+  String get providerPaymentTranRef => 'Transaction Ref';
+
+  @override
+  String get providerPaymentDate => 'Date';
+
+  @override
+  String get providerPaymentAmount => 'Amount';
+
+  @override
+  String get providerPaymentTax => 'Tax';
+
+  @override
+  String get providerPaymentTotal => 'Total';
+
+  @override
+  String get providerPaymentAmountBreakdown => 'Amount Breakdown';
+
+  @override
+  String get providerPaymentGatewayResponse => 'Gateway Response';
+
+  @override
+  String get providerPaymentResponseStatus => 'Response Status';
+
+  @override
+  String get providerPaymentResponseCode => 'Response Code';
+
+  @override
+  String get providerPaymentResponseMessage => 'Response Message';
+
+  @override
+  String get providerPaymentCardType => 'Card Type';
+
+  @override
+  String get providerPaymentCardScheme => 'Card Scheme';
+
+  @override
+  String get providerPaymentTracking => 'Tracking';
+
+  @override
+  String get providerPaymentEmailSent => 'Email Sent';
+
+  @override
+  String get providerPaymentInvoiceGenerated => 'Invoice Generated';
+
+  @override
+  String get providerPaymentEmailError => 'Email Error';
+
+  @override
+  String get providerPaymentRefundInfo => 'Refund Information';
+
+  @override
+  String get providerPaymentRefundAmount => 'Refund Amount';
+
+  @override
+  String get providerPaymentRefundTranRef => 'Refund Txn Ref';
+
+  @override
+  String get providerPaymentRefundReason => 'Reason';
+
+  @override
+  String get providerPaymentRefundedAt => 'Refunded At';
+
+  @override
+  String get providerPaymentEmailLogs => 'Email Logs';
+
+  @override
+  String get providerPaymentResendEmail => 'Resend Confirmation Email';
+
+  @override
+  String get providerPaymentCopied => 'Copied to clipboard';
+
+  @override
+  String get providerPaymentFilterAll => 'All';
+
+  @override
+  String get providerPaymentFilterPending => 'Pending';
+
+  @override
+  String get providerPaymentFilterCompleted => 'Completed';
+
+  @override
+  String get providerPaymentFilterFailed => 'Failed';
+
+  @override
+  String get providerPaymentFilterRefunded => 'Refunded';
+
+  @override
+  String get providerPaymentStatusPending => 'Pending';
+
+  @override
+  String get providerPaymentStatusProcessing => 'Processing';
+
+  @override
+  String get providerPaymentStatusCompleted => 'Completed';
+
+  @override
+  String get providerPaymentStatusFailed => 'Failed';
+
+  @override
+  String get providerPaymentStatusRefunded => 'Refunded';
+
+  @override
+  String get providerPaymentStatusVoided => 'Voided';
+
+  @override
+  String get providerPaymentPurposeSubscription => 'Subscription';
+
+  @override
+  String get providerPaymentPurposePlanAddon => 'Plan Add-on';
+
+  @override
+  String get providerPaymentPurposeAiBilling => 'AI Billing';
+
+  @override
+  String get providerPaymentPurposeHardware => 'Hardware';
+
+  @override
+  String get providerPaymentPurposeImplementationFee => 'Implementation Fee';
+
+  @override
+  String get providerPaymentPurposeOther => 'Other';
 }

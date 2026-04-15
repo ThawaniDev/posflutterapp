@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 // ═══════════════════════════════════════════════════════════════
 // Responsive Layout Utilities

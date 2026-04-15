@@ -1,12 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/features/industry_bakery/enums/production_schedule_status.dart';
-import 'package:thawani_pos/features/industry_bakery/enums/custom_cake_order_status.dart';
-import 'package:thawani_pos/features/industry_bakery/models/bakery_recipe.dart';
-import 'package:thawani_pos/features/industry_bakery/models/production_schedule.dart';
-import 'package:thawani_pos/features/industry_bakery/models/custom_cake_order.dart';
-import 'package:thawani_pos/features/industry_bakery/providers/bakery_state.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/features/industry_bakery/enums/production_schedule_status.dart';
+import 'package:wameedpos/features/industry_bakery/enums/custom_cake_order_status.dart';
+import 'package:wameedpos/features/industry_bakery/models/bakery_recipe.dart';
+import 'package:wameedpos/features/industry_bakery/models/production_schedule.dart';
+import 'package:wameedpos/features/industry_bakery/models/custom_cake_order.dart';
+import 'package:wameedpos/features/industry_bakery/providers/bakery_state.dart';
 
 void main() {
   // ═══════════════ Enums ═══════════════

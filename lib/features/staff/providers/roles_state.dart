@@ -1,6 +1,6 @@
-import 'package:thawani_pos/features/staff/data/remote/role_api_service.dart';
-import 'package:thawani_pos/features/staff/models/permission.dart';
-import 'package:thawani_pos/features/staff/models/role.dart';
+import 'package:wameedpos/features/staff/data/remote/role_api_service.dart';
+import 'package:wameedpos/features/staff/models/permission.dart';
+import 'package:wameedpos/features/staff/models/role.dart';
 
 /// State for the roles list screen
 sealed class RolesState {

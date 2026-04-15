@@ -1,7 +1,7 @@
-import 'package:thawani_pos/features/catalog/enums/barcode_type.dart';
-import 'package:thawani_pos/features/pos_customization/enums/border_style.dart';
-import 'package:thawani_pos/features/pos_customization/enums/font_size.dart';
-import 'package:thawani_pos/features/labels/enums/label_type.dart';
+import 'package:wameedpos/features/catalog/enums/barcode_type.dart';
+import 'package:wameedpos/features/pos_customization/enums/border_style.dart';
+import 'package:wameedpos/features/pos_customization/enums/font_size.dart';
+import 'package:wameedpos/features/labels/enums/label_type.dart';
 
 class LabelLayoutTemplate {
   final String id;

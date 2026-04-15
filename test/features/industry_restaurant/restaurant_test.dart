@@ -1,14 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/features/industry_restaurant/enums/restaurant_table_status.dart';
-import 'package:thawani_pos/features/industry_restaurant/enums/kitchen_ticket_status.dart';
-import 'package:thawani_pos/features/industry_restaurant/enums/table_reservation_status.dart';
-import 'package:thawani_pos/features/industry_restaurant/models/restaurant_table.dart';
-import 'package:thawani_pos/features/industry_restaurant/models/kitchen_ticket.dart';
-import 'package:thawani_pos/features/industry_restaurant/models/table_reservation.dart';
-import 'package:thawani_pos/features/industry_restaurant/models/open_tab.dart';
-import 'package:thawani_pos/features/industry_restaurant/providers/restaurant_state.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/features/industry_restaurant/enums/restaurant_table_status.dart';
+import 'package:wameedpos/features/industry_restaurant/enums/kitchen_ticket_status.dart';
+import 'package:wameedpos/features/industry_restaurant/enums/table_reservation_status.dart';
+import 'package:wameedpos/features/industry_restaurant/models/restaurant_table.dart';
+import 'package:wameedpos/features/industry_restaurant/models/kitchen_ticket.dart';
+import 'package:wameedpos/features/industry_restaurant/models/table_reservation.dart';
+import 'package:wameedpos/features/industry_restaurant/models/open_tab.dart';
+import 'package:wameedpos/features/industry_restaurant/providers/restaurant_state.dart';
 
 void main() {
   // ═══════════════ Enums ═══════════════

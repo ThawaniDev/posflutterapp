@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/customers/enums/appointment_status.dart';
+import 'package:wameedpos/features/customers/enums/appointment_status.dart';
 
 class Appointment {
   final String id;
@@ -100,13 +100,12 @@ class Appointment {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Appointment && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is Appointment && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'Appointment(id: $id, storeId: $storeId, customerId: $customerId, staffId: $staffId, serviceProductId: $serviceProductId, appointmentDate: $appointmentDate, ...)';
+  String toString() =>
+      'Appointment(id: $id, storeId: $storeId, customerId: $customerId, staffId: $staffId, serviceProductId: $serviceProductId, appointmentDate: $appointmentDate, ...)';
 }

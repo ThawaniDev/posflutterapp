@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/industry_jewelry/models/daily_metal_rate.dart';
-import 'package:thawani_pos/features/industry_jewelry/models/jewelry_product_detail.dart';
-import 'package:thawani_pos/features/industry_jewelry/models/buyback_transaction.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/industry_jewelry/models/daily_metal_rate.dart';
+import 'package:wameedpos/features/industry_jewelry/models/jewelry_product_detail.dart';
+import 'package:wameedpos/features/industry_jewelry/models/buyback_transaction.dart';
 
 final jewelryApiServiceProvider = Provider<JewelryApiService>((ref) {
   return JewelryApiService(ref.watch(dioClientProvider));

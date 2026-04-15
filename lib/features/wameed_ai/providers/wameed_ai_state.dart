@@ -1,8 +1,8 @@
-import 'package:thawani_pos/features/wameed_ai/models/ai_billing.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_feature_definition.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_feature_result.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_suggestion.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_usage.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_billing.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_feature_definition.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_feature_result.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_suggestion.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_usage.dart';
 
 // ─── Features State ─────────────────────────────────────────────
 

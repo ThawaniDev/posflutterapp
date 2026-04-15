@@ -1,6 +1,6 @@
-import 'package:thawani_pos/features/notifications/models/notification_delivery_log.dart';
-import 'package:thawani_pos/features/notifications/models/notification_schedule.dart';
-import 'package:thawani_pos/features/notifications/models/notification_sound_config.dart';
+import 'package:wameedpos/features/notifications/models/notification_delivery_log.dart';
+import 'package:wameedpos/features/notifications/models/notification_schedule.dart';
+import 'package:wameedpos/features/notifications/models/notification_sound_config.dart';
 
 // ─── Notification List State ─────────────────────────────
 sealed class NotificationListState {

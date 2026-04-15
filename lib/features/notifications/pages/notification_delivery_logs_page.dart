@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/notifications/models/notification_delivery_log.dart';
-import 'package:thawani_pos/features/notifications/providers/notification_providers.dart';
-import 'package:thawani_pos/features/notifications/providers/notification_state.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/notifications/models/notification_delivery_log.dart';
+import 'package:wameedpos/features/notifications/providers/notification_providers.dart';
+import 'package:wameedpos/features/notifications/providers/notification_state.dart';
 
 class NotificationDeliveryLogsPage extends ConsumerStatefulWidget {
   const NotificationDeliveryLogsPage({super.key});
@@ -32,28 +33,33 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final state = ref.watch(deliveryLogsProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.notifDeliveryLogsTitle),
-        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: _reload)],
+        actions: [IconButton(icon: const Icon(Icons.refresh_rounded), onPressed: _reload)],
       ),
       body: Column(
         children: [
-          _buildFilters(),
-          const Divider(height: 1),
+          _buildFilters(isDark),
+          const PosDivider(),
           Expanded(
             child: switch (state) {
-              DeliveryLogsInitial() || DeliveryLogsLoading() => Center(child: PosLoadingSkeleton.list()),
+              DeliveryLogsInitial() || DeliveryLogsLoading() => const Center(child: PosLoading()),
               DeliveryLogsError(:final message) => PosErrorState(message: message, onRetry: _reload),
               DeliveryLogsLoaded(:final logs) =>
                 logs.isEmpty
                     ? PosEmptyState(title: l10n.notifDeliveryLogsEmpty, icon: Icons.local_shipping_outlined)
-                    : ListView.builder(
-                        padding: const EdgeInsets.all(16),
-                        itemCount: logs.length,
-                        itemBuilder: (context, index) => _buildLogCard(logs[index]),
+                    : RefreshIndicator(
+                        onRefresh: () async => _reload(),
+                        child: ListView.separated(
+                          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.sm),
+                          itemCount: logs.length,
+                          separatorBuilder: (_, __) => AppSpacing.gapH8,
+                          itemBuilder: (context, index) => _buildLogCard(logs[index], isDark),
+                        ),
                       ),
             },
           ),
@@ -62,62 +68,85 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
     );
   }
 
-  Widget _buildFilters() {
+  Widget _buildFilters(bool isDark) {
     final l10n = AppLocalizations.of(context)!;
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      child: Row(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.sm),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n.notifDeliveryLogsChannel, style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
-          AppSpacing.gapW8,
-          FilterChip(
-            label: Text(l10n.ordersAll),
-            selected: _channelFilter == null,
-            onSelected: (_) {
-              setState(() => _channelFilter = null);
-              _reload();
-            },
-          ),
-          AppSpacing.gapW4,
-          ...['in_app', 'push', 'email', 'sms'].map(
-            (ch) => Padding(
-              padding: const EdgeInsets.only(right: 4),
-              child: FilterChip(
-                label: Text(ch),
-                selected: _channelFilter == ch,
-                onSelected: (_) {
-                  setState(() => _channelFilter = ch);
-                  _reload();
-                },
-                visualDensity: VisualDensity.compact,
-              ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Text(
+                  l10n.notifDeliveryLogsChannel,
+                  style: AppTypography.labelMedium.copyWith(
+                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                  ),
+                ),
+                AppSpacing.gapW8,
+                PosButton.pill(
+                  label: l10n.ordersAll,
+                  onPressed: () {
+                    setState(() => _channelFilter = null);
+                    _reload();
+                  },
+                  isSelected: _channelFilter == null,
+                ),
+                AppSpacing.gapW4,
+                ...['in_app', 'push', 'email', 'sms'].map(
+                  (ch) => Padding(
+                    padding: const EdgeInsets.only(right: AppSpacing.xs),
+                    child: PosButton.pill(
+                      label: _localizedChannel(l10n, ch),
+                      icon: _channelIcon(ch),
+                      onPressed: () {
+                        setState(() => _channelFilter = ch);
+                        _reload();
+                      },
+                      isSelected: _channelFilter == ch,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          AppSpacing.gapW16,
-          Text(l10n.notifDeliveryLogsStatus, style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
-          AppSpacing.gapW8,
-          FilterChip(
-            label: Text(l10n.ordersAll),
-            selected: _statusFilter == null,
-            onSelected: (_) {
-              setState(() => _statusFilter = null);
-              _reload();
-            },
-          ),
-          AppSpacing.gapW4,
-          ...['sent', 'delivered', 'failed', 'pending'].map(
-            (st) => Padding(
-              padding: const EdgeInsets.only(right: 4),
-              child: FilterChip(
-                label: Text(st),
-                selected: _statusFilter == st,
-                onSelected: (_) {
-                  setState(() => _statusFilter = st);
-                  _reload();
-                },
-                visualDensity: VisualDensity.compact,
-              ),
+          AppSpacing.gapH8,
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Text(
+                  l10n.notifDeliveryLogsStatus,
+                  style: AppTypography.labelMedium.copyWith(
+                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                  ),
+                ),
+                AppSpacing.gapW8,
+                PosButton.pill(
+                  label: l10n.ordersAll,
+                  onPressed: () {
+                    setState(() => _statusFilter = null);
+                    _reload();
+                  },
+                  isSelected: _statusFilter == null,
+                ),
+                AppSpacing.gapW4,
+                ...['sent', 'delivered', 'failed', 'pending'].map(
+                  (st) => Padding(
+                    padding: const EdgeInsets.only(right: AppSpacing.xs),
+                    child: PosButton.pill(
+                      label: _localizedStatus(l10n, st),
+                      onPressed: () {
+                        setState(() => _statusFilter = st);
+                        _reload();
+                      },
+                      isSelected: _statusFilter == st,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -125,77 +154,101 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
     );
   }
 
-  Widget _buildLogCard(NotificationDeliveryLog log) {
+  Widget _buildLogCard(NotificationDeliveryLog log, bool isDark) {
     final l10n = AppLocalizations.of(context)!;
     final status = log.status.value;
 
-    return Card(
-      margin: const EdgeInsets.only(bottom: 8),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(_channelIcon(log.channel.value), size: 18, color: AppColors.textSecondary),
-                AppSpacing.gapW8,
-                Expanded(
-                  child: Text(log.channel.value.toUpperCase(), style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: _statusColor(status).withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(
-                    status,
-                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: _statusColor(status)),
-                  ),
-                ),
-              ],
+    return PosCard(
+      padding: AppSpacing.paddingAll16,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.12), borderRadius: AppRadius.borderMd),
+                child: Icon(_channelIcon(log.channel.value), size: 16, color: AppColors.info),
+              ),
+              AppSpacing.gapW8,
+              Expanded(child: Text(_localizedChannel(l10n, log.channel.value), style: AppTypography.titleMedium)),
+              PosBadge(label: _localizedStatus(l10n, status), variant: _statusBadgeVariant(status), isSmall: true),
+            ],
+          ),
+          AppSpacing.gapH8,
+          if (log.notificationId != null)
+            Text(
+              '${l10n.notifDeliveryLogsNotifId}: ${log.notificationId}',
+              style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
             ),
+          if (log.retryCount != null && log.retryCount! > 0)
+            Padding(
+              padding: const EdgeInsets.only(top: AppSpacing.xs),
+              child: Row(
+                children: [
+                  Icon(Icons.refresh_rounded, size: 14, color: AppColors.warning),
+                  AppSpacing.gapW4,
+                  Text(
+                    '${l10n.notifDeliveryLogsRetries}: ${log.retryCount}',
+                    style: AppTypography.bodySmall.copyWith(color: AppColors.warning),
+                  ),
+                ],
+              ),
+            ),
+          if (log.createdAt != null) ...[
             AppSpacing.gapH4,
-            if (log.notificationId != null)
-              Text(
-                '${l10n.notifDeliveryLogsNotifId}: ${log.notificationId}',
-                style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
-              ),
-            if (log.retryCount != null && log.retryCount! > 0)
-              Text(
-                '${l10n.notifDeliveryLogsRetries}: ${log.retryCount}',
-                style: TextStyle(fontSize: 12, color: AppColors.warning),
-              ),
-            AppSpacing.gapH4,
-            if (log.createdAt != null)
-              Text(
-                '${log.createdAt!.day}/${log.createdAt!.month}/${log.createdAt!.year} ${log.createdAt!.hour}:${log.createdAt!.minute.toString().padLeft(2, '0')}',
-                style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
-              ),
+            Text(
+              _formatDateTime(log.createdAt!),
+              style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+            ),
           ],
-        ),
+        ],
       ),
     );
   }
 
+  String _formatDateTime(DateTime dt) {
+    return '${dt.day}/${dt.month}/${dt.year} ${dt.hour}:${dt.minute.toString().padLeft(2, '0')}';
+  }
+
   IconData _channelIcon(String channel) {
     return switch (channel) {
-      'push' => Icons.notifications_active,
-      'email' => Icons.email,
-      'sms' => Icons.sms,
-      'in_app' => Icons.app_shortcut,
-      _ => Icons.send,
+      'push' => Icons.notifications_active_rounded,
+      'email' => Icons.email_rounded,
+      'sms' => Icons.sms_rounded,
+      'in_app' => Icons.app_shortcut_rounded,
+      _ => Icons.send_rounded,
     };
   }
 
-  Color _statusColor(String status) {
+  String _localizedChannel(AppLocalizations l10n, String channel) {
+    return switch (channel) {
+      'in_app' => l10n.notificationsInApp,
+      'push' => l10n.notificationsPush,
+      'email' => l10n.notifPrefEmail,
+      'sms' => l10n.notifPrefSms,
+      _ => channel,
+    };
+  }
+
+  String _localizedStatus(AppLocalizations l10n, String status) {
     return switch (status) {
-      'delivered' => AppColors.success,
-      'sent' => AppColors.info,
-      'failed' => AppColors.error,
-      'pending' => AppColors.warning,
-      _ => AppColors.textSecondary,
+      'delivered' => l10n.notifLogDelivered,
+      'sent' => l10n.notifLogSent,
+      'failed' => l10n.notifLogFailed,
+      'pending' => l10n.notifSchedulePending,
+      _ => status,
+    };
+  }
+
+  PosBadgeVariant _statusBadgeVariant(String status) {
+    return switch (status) {
+      'delivered' => PosBadgeVariant.success,
+      'sent' => PosBadgeVariant.info,
+      'failed' => PosBadgeVariant.error,
+      'pending' => PosBadgeVariant.warning,
+      _ => PosBadgeVariant.neutral,
     };
   }
 }

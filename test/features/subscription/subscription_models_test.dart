@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/subscription/models/subscription_plan.dart';
-import 'package:thawani_pos/features/subscription/models/store_subscription.dart';
-import 'package:thawani_pos/features/subscription/models/invoice.dart';
-import 'package:thawani_pos/features/subscription/models/invoice_line_item.dart';
-import 'package:thawani_pos/features/subscription/enums/subscription_status.dart';
-import 'package:thawani_pos/features/subscription/enums/billing_cycle.dart';
-import 'package:thawani_pos/features/payments/enums/subscription_payment_method.dart';
+import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
+import 'package:wameedpos/features/subscription/models/store_subscription.dart';
+import 'package:wameedpos/features/subscription/models/invoice.dart';
+import 'package:wameedpos/features/subscription/models/invoice_line_item.dart';
+import 'package:wameedpos/features/subscription/enums/subscription_status.dart';
+import 'package:wameedpos/features/subscription/enums/billing_cycle.dart';
+import 'package:wameedpos/features/payments/enums/subscription_payment_method.dart';
 
 void main() {
   group('SubscriptionPlan', () {

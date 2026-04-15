@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/pos_badge.dart';
-import 'package:thawani_pos/core/widgets/pos_button.dart';
-import 'package:thawani_pos/core/widgets/pos_card.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/inventory/enums/supplier_return_status.dart';
-import 'package:thawani_pos/features/inventory/models/supplier_return.dart';
-import 'package:thawani_pos/features/inventory/providers/inventory_providers.dart';
-import 'package:thawani_pos/features/inventory/repositories/inventory_repository.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/pos_badge.dart';
+import 'package:wameedpos/core/widgets/pos_button.dart';
+import 'package:wameedpos/core/widgets/pos_card.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/inventory/enums/supplier_return_status.dart';
+import 'package:wameedpos/features/inventory/models/supplier_return.dart';
+import 'package:wameedpos/features/inventory/providers/inventory_providers.dart';
+import 'package:wameedpos/features/inventory/repositories/inventory_repository.dart';
 
 class SupplierReturnDetailPage extends ConsumerStatefulWidget {
   final String returnId;

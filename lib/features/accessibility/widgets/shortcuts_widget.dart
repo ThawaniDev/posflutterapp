@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/accessibility/providers/accessibility_providers.dart';
-import 'package:thawani_pos/features/accessibility/providers/accessibility_state.dart';
-import 'package:thawani_pos/features/accessibility/services/keyboard_shortcut_service.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/accessibility/providers/accessibility_providers.dart';
+import 'package:wameedpos/features/accessibility/providers/accessibility_state.dart';
+import 'package:wameedpos/features/accessibility/services/keyboard_shortcut_service.dart';
 
 class ShortcutsWidget extends ConsumerWidget {
   const ShortcutsWidget({super.key});

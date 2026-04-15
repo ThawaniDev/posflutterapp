@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/debits/models/debit.dart';
+import 'package:wameedpos/features/debits/models/debit.dart';
 
 sealed class DebitsState {
   const DebitsState();

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/staff/enums/shift_schedule_status.dart';
-import 'package:thawani_pos/features/staff/models/shift_schedule.dart';
-import 'package:thawani_pos/features/staff/models/shift_template.dart';
-import 'package:thawani_pos/features/staff/models/staff_user.dart';
-import 'package:thawani_pos/features/staff/providers/staff_providers.dart';
-import 'package:thawani_pos/features/staff/providers/staff_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/staff/enums/shift_schedule_status.dart';
+import 'package:wameedpos/features/staff/models/shift_schedule.dart';
+import 'package:wameedpos/features/staff/models/shift_template.dart';
+import 'package:wameedpos/features/staff/models/staff_user.dart';
+import 'package:wameedpos/features/staff/providers/staff_providers.dart';
+import 'package:wameedpos/features/staff/providers/staff_state.dart';
 
 class ShiftSchedulePage extends ConsumerStatefulWidget {
   const ShiftSchedulePage({super.key});

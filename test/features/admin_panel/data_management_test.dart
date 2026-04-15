@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/features/admin_panel/data/remote/admin_api_service.dart';
-import 'package:thawani_pos/features/admin_panel/repositories/admin_repository.dart';
-import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
-import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_data_management_overview_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_database_backup_list_page.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/features/admin_panel/data/remote/admin_api_service.dart';
+import 'package:wameedpos/features/admin_panel/repositories/admin_repository.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_data_management_overview_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_database_backup_list_page.dart';
 
 void main() {
   // ─── Endpoint Tests ───────────────────────────────────────────────

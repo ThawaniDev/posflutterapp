@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/accounting/repositories/accounting_repository.dart';
-import 'package:thawani_pos/features/accounting/providers/accounting_state.dart';
+import 'package:wameedpos/features/accounting/repositories/accounting_repository.dart';
+import 'package:wameedpos/features/accounting/providers/accounting_state.dart';
 
 // ════════════════════════════════════════════════════════
 // Connection Status Provider

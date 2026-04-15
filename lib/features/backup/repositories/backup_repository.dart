@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/backup/data/remote/backup_api_service.dart';
+import 'package:wameedpos/features/backup/data/remote/backup_api_service.dart';
 
 final backupRepositoryProvider = Provider<BackupRepository>((ref) {
   return BackupRepository(ref.watch(backupApiServiceProvider));

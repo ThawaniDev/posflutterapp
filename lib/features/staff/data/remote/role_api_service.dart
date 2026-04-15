@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/staff/models/permission.dart';
-import 'package:thawani_pos/features/staff/models/role.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/staff/models/permission.dart';
+import 'package:wameedpos/features/staff/models/role.dart';
 
 final roleApiServiceProvider = Provider<RoleApiService>((ref) {
   return RoleApiService(ref.watch(dioClientProvider));

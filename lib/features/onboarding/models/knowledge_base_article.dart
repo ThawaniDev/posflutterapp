@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/pos_customization/enums/knowledge_base_category.dart';
+import 'package:wameedpos/features/pos_customization/enums/knowledge_base_category.dart';
 
 class KnowledgeBaseArticle {
   final String id;
@@ -94,13 +94,12 @@ class KnowledgeBaseArticle {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is KnowledgeBaseArticle && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is KnowledgeBaseArticle && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'KnowledgeBaseArticle(id: $id, title: $title, titleAr: $titleAr, slug: $slug, body: $body, bodyAr: $bodyAr, ...)';
+  String toString() =>
+      'KnowledgeBaseArticle(id: $id, title: $title, titleAr: $titleAr, slug: $slug, body: $body, bodyAr: $bodyAr, ...)';
 }

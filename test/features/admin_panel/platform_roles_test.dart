@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 
 // API endpoints
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
 
 // Route names
-import 'package:thawani_pos/core/router/route_names.dart';
+import 'package:wameedpos/core/router/route_names.dart';
 
 // States
-import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 
 void main() {
   // ════════════════════════════════════════════════════════════

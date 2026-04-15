@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/inventory/enums/stock_movement_type.dart';
-import 'package:thawani_pos/features/inventory/enums/stock_reference_type.dart';
+import 'package:wameedpos/features/inventory/enums/stock_movement_type.dart';
+import 'package:wameedpos/features/inventory/enums/stock_reference_type.dart';
 
 class StockMovement {
   final String id;
@@ -89,13 +89,12 @@ class StockMovement {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is StockMovement && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is StockMovement && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'StockMovement(id: $id, storeId: $storeId, productId: $productId, type: $type, quantity: $quantity, unitCost: $unitCost, ...)';
+  String toString() =>
+      'StockMovement(id: $id, storeId: $storeId, productId: $productId, type: $type, quantity: $quantity, unitCost: $unitCost, ...)';
 }

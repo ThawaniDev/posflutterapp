@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 /// Widget showing a usage progress bar for a plan limit.
 class UsageProgress extends StatelessWidget {

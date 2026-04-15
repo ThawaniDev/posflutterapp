@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/backup/providers/backup_providers.dart';
-import 'package:thawani_pos/features/backup/providers/backup_state.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/backup/providers/backup_providers.dart';
+import 'package:wameedpos/features/backup/providers/backup_state.dart';
 
 class BackupScheduleWidget extends ConsumerWidget {
   const BackupScheduleWidget({super.key});

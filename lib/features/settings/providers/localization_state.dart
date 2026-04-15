@@ -1,7 +1,7 @@
-import 'package:thawani_pos/features/settings/models/supported_locale.dart';
-import 'package:thawani_pos/features/settings/models/master_translation_string.dart';
-import 'package:thawani_pos/features/settings/models/translation_override.dart';
-import 'package:thawani_pos/features/settings/models/translation_version.dart';
+import 'package:wameedpos/features/settings/models/supported_locale.dart';
+import 'package:wameedpos/features/settings/models/master_translation_string.dart';
+import 'package:wameedpos/features/settings/models/translation_override.dart';
+import 'package:wameedpos/features/settings/models/translation_version.dart';
 
 // ─── Locale list state ──────────────────────────────────────────────────────
 

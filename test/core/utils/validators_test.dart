@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/core/utils/validators.dart';
+import 'package:wameedpos/core/utils/validators.dart';
 
 void main() {
   group('Validators.required', () {

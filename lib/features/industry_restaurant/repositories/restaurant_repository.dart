@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/industry_restaurant/data/remote/restaurant_api_service.dart';
-import 'package:thawani_pos/features/industry_restaurant/models/restaurant_table.dart';
-import 'package:thawani_pos/features/industry_restaurant/models/kitchen_ticket.dart';
-import 'package:thawani_pos/features/industry_restaurant/models/table_reservation.dart';
-import 'package:thawani_pos/features/industry_restaurant/models/open_tab.dart';
+import 'package:wameedpos/features/industry_restaurant/data/remote/restaurant_api_service.dart';
+import 'package:wameedpos/features/industry_restaurant/models/restaurant_table.dart';
+import 'package:wameedpos/features/industry_restaurant/models/kitchen_ticket.dart';
+import 'package:wameedpos/features/industry_restaurant/models/table_reservation.dart';
+import 'package:wameedpos/features/industry_restaurant/models/open_tab.dart';
 
 final restaurantRepositoryProvider = Provider<RestaurantRepository>((ref) {
   return RestaurantRepository(apiService: ref.watch(restaurantApiServiceProvider));

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/onboarding/providers/store_onboarding_providers.dart';
-import 'package:thawani_pos/features/onboarding/providers/store_onboarding_state.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/onboarding/providers/store_onboarding_providers.dart';
+import 'package:wameedpos/features/onboarding/providers/store_onboarding_state.dart';
 
 /// Post-wizard checklist shown on the dashboard after the onboarding wizard
 /// is completed. Displays 5 actionable tasks the merchant should accomplish

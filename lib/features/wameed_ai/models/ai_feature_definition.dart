@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/wameed_ai/enums/ai_feature_category.dart';
+import 'package:wameedpos/features/wameed_ai/enums/ai_feature_category.dart';
 
 class AIFeatureDefinition {
   final String id;

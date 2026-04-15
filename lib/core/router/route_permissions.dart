@@ -1,4 +1,4 @@
-import 'package:thawani_pos/core/constants/permission_constants.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
 
 /// Returns the permission code required to view a given route path,
 /// or `null` if no permission check is needed (public / admin pages).
@@ -80,6 +80,11 @@ String? permissionForRoute(String path) {
   if (path.startsWith('/subscription/add-ons')) return Permissions.subscriptionManage;
   if (path.startsWith('/subscription/')) return Permissions.subscriptionView;
 
+  // ── Provider Payments ────────────────────────────────
+  if (path.startsWith('/provider-payments/checkout')) return Permissions.providerPaymentsCreate;
+  if (path.startsWith('/provider-payments/')) return Permissions.providerPaymentsView;
+  if (path == '/provider-payments') return Permissions.providerPaymentsView;
+
   // ── Reports ──────────────────────────────────────────
   if (path.startsWith('/reports/staff-performance')) return Permissions.reportsStaff;
   if (path.startsWith('/reports/inventory')) return Permissions.reportsInventory;
@@ -121,6 +126,9 @@ String? permissionForRoute(String path) {
 
   // ── Notifications ────────────────────────────────────
   if (path.startsWith('/notifications/preferences')) return Permissions.notificationsManage;
+  if (path.startsWith('/notifications/delivery-logs')) return Permissions.notificationsManage;
+  if (path.startsWith('/notifications/sound-configs')) return Permissions.notificationsManage;
+  if (path.startsWith('/notifications/schedules')) return Permissions.notificationsSchedules;
   if (path.startsWith('/notifications')) return Permissions.notificationsView;
 
   // ── Support ──────────────────────────────────────────

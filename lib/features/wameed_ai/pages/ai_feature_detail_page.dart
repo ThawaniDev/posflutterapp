@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_providers.dart';
-import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_state.dart';
-import 'package:thawani_pos/features/wameed_ai/widgets/ai_result_card.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
+import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
+import 'package:wameedpos/features/wameed_ai/widgets/ai_result_card.dart';
 
 class AIFeatureDetailPage extends ConsumerStatefulWidget {
   final String featureSlug;

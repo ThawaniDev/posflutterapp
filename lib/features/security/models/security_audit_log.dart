@@ -1,7 +1,7 @@
-import 'package:thawani_pos/features/settings/enums/audit_resource_type.dart';
-import 'package:thawani_pos/features/settings/enums/audit_severity.dart';
-import 'package:thawani_pos/features/settings/enums/audit_user_type.dart';
-import 'package:thawani_pos/features/security/enums/security_audit_action.dart';
+import 'package:wameedpos/features/settings/enums/audit_resource_type.dart';
+import 'package:wameedpos/features/settings/enums/audit_severity.dart';
+import 'package:wameedpos/features/settings/enums/audit_user_type.dart';
+import 'package:wameedpos/features/security/enums/security_audit_action.dart';
 
 class SecurityAuditLog {
   final String id;

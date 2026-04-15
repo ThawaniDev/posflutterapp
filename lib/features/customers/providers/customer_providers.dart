@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/customers/providers/customer_state.dart';
-import 'package:thawani_pos/features/customers/repositories/customer_repository.dart';
+import 'package:wameedpos/features/customers/providers/customer_state.dart';
+import 'package:wameedpos/features/customers/repositories/customer_repository.dart';
 
 // ─── Customers Provider ─────────────────────────────────────────
 

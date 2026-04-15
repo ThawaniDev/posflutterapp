@@ -1,6 +1,6 @@
-import 'package:thawani_pos/features/pos_customization/enums/font_size.dart';
-import 'package:thawani_pos/features/pos_customization/enums/handedness.dart';
-import 'package:thawani_pos/features/auth/enums/user_theme.dart';
+import 'package:wameedpos/features/pos_customization/enums/font_size.dart';
+import 'package:wameedpos/features/pos_customization/enums/handedness.dart';
+import 'package:wameedpos/features/auth/enums/user_theme.dart';
 
 class UserPreference {
   final String id;
@@ -10,14 +10,7 @@ class UserPreference {
   final UserTheme? theme;
   final String? posLayoutId;
 
-  const UserPreference({
-    required this.id,
-    required this.userId,
-    this.posHandedness,
-    this.fontSize,
-    this.theme,
-    this.posLayoutId,
-  });
+  const UserPreference({required this.id, required this.userId, this.posHandedness, this.fontSize, this.theme, this.posLayoutId});
 
   factory UserPreference.fromJson(Map<String, dynamic> json) {
     return UserPreference(
@@ -60,13 +53,12 @@ class UserPreference {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is UserPreference && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is UserPreference && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'UserPreference(id: $id, userId: $userId, posHandedness: $posHandedness, fontSize: $fontSize, theme: $theme, posLayoutId: $posLayoutId)';
+  String toString() =>
+      'UserPreference(id: $id, userId: $userId, posHandedness: $posHandedness, fontSize: $fontSize, theme: $theme, posLayoutId: $posLayoutId)';
 }

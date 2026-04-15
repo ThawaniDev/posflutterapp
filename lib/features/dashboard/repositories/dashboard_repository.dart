@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/dashboard/data/remote/dashboard_api_service.dart';
+import 'package:wameedpos/features/dashboard/data/remote/dashboard_api_service.dart';
 
 final dashboardRepositoryProvider = Provider<DashboardRepository>((ref) {
   return DashboardRepository(ref.watch(dashboardApiServiceProvider));

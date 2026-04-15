@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
-import 'package:thawani_pos/features/catalog/models/category.dart';
-import 'package:thawani_pos/features/catalog/models/product.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_feature_params.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:wameedpos/features/catalog/models/category.dart';
+import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_feature_params.dart';
 
 /// A panel that appears above the input bar when a feature requires user input.
 /// Shows relevant fields (text, number, date, image, dropdowns, etc.) and
@@ -322,7 +322,11 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
                 const Icon(Icons.image, color: AppColors.primary, size: 24),
                 const SizedBox(width: 8),
                 Expanded(
-                  child: Text(_imageName ?? AppLocalizations.of(context)!.wameedAIImageSelected, style: theme.textTheme.bodySmall, overflow: TextOverflow.ellipsis),
+                  child: Text(
+                    _imageName ?? AppLocalizations.of(context)!.wameedAIImageSelected,
+                    style: theme.textTheme.bodySmall,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.close, size: 18),
@@ -396,7 +400,9 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
 
     return FormField<dynamic>(
       validator: field.required
-          ? (_) => (product == null || product is! Map || product['id'] == null) ? AppLocalizations.of(context)!.wameedAIFieldRequired(field.label) : null
+          ? (_) => (product == null || product is! Map || product['id'] == null)
+                ? AppLocalizations.of(context)!.wameedAIFieldRequired(field.label)
+                : null
           : null,
       builder: (state) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -425,7 +431,9 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
 
     return FormField<dynamic>(
       validator: field.required
-          ? (_) => (category == null || category is! Map || category['id'] == null) ? AppLocalizations.of(context)!.wameedAIFieldRequired(field.label) : null
+          ? (_) => (category == null || category is! Map || category['id'] == null)
+                ? AppLocalizations.of(context)!.wameedAIFieldRequired(field.label)
+                : null
           : null,
       builder: (state) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -606,7 +614,10 @@ class _ProductSearchDialogState extends State<_ProductSearchDialog> {
                   ? const Center(child: CircularProgressIndicator())
                   : _results.isEmpty
                   ? Center(
-                      child: Text(l10n.wameedAINoProductsFound, style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
+                      child: Text(
+                        l10n.wameedAINoProductsFound,
+                        style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
+                      ),
                     )
                   : ListView.builder(
                       itemCount: _results.length,
@@ -741,7 +752,10 @@ class _CategorySearchDialogState extends State<_CategorySearchDialog> {
                   ? const Center(child: CircularProgressIndicator())
                   : _filtered.isEmpty
                   ? Center(
-                      child: Text(l10n.wameedAINoCategoriesFound, style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
+                      child: Text(
+                        l10n.wameedAINoCategoriesFound,
+                        style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
+                      ),
                     )
                   : ListView.builder(
                       itemCount: _filtered.length,

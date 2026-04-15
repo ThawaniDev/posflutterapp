@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/orders/enums/order_delivery_platform.dart';
+import 'package:wameedpos/features/orders/enums/order_delivery_platform.dart';
 
 class OrderDeliveryInfo {
   final String id;
@@ -76,13 +76,12 @@ class OrderDeliveryInfo {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is OrderDeliveryInfo && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is OrderDeliveryInfo && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'OrderDeliveryInfo(id: $id, orderId: $orderId, platform: $platform, driverName: $driverName, driverPhone: $driverPhone, estimatedDelivery: $estimatedDelivery, ...)';
+  String toString() =>
+      'OrderDeliveryInfo(id: $id, orderId: $orderId, platform: $platform, driverName: $driverName, driverPhone: $driverPhone, estimatedDelivery: $estimatedDelivery, ...)';
 }

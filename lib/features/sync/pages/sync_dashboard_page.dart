@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/pos_app_bar.dart';
-import 'package:thawani_pos/features/sync/providers/sync_providers.dart';
-import 'package:thawani_pos/features/sync/providers/sync_state.dart';
-import 'package:thawani_pos/features/sync/widgets/conflict_card.dart';
-import 'package:thawani_pos/features/sync/widgets/sync_log_list.dart';
-import 'package:thawani_pos/features/sync/widgets/sync_status_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/pos_app_bar.dart';
+import 'package:wameedpos/features/sync/providers/sync_providers.dart';
+import 'package:wameedpos/features/sync/providers/sync_state.dart';
+import 'package:wameedpos/features/sync/widgets/conflict_card.dart';
+import 'package:wameedpos/features/sync/widgets/sync_log_list.dart';
+import 'package:wameedpos/features/sync/widgets/sync_status_bar.dart';
 
 class SyncDashboardPage extends ConsumerStatefulWidget {
   const SyncDashboardPage({super.key});

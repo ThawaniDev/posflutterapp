@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/inventory/enums/supplier_return_status.dart';
-import 'package:thawani_pos/features/inventory/models/supplier_return_item.dart';
+import 'package:wameedpos/features/inventory/enums/supplier_return_status.dart';
+import 'package:wameedpos/features/inventory/models/supplier_return_item.dart';
 
 class SupplierReturn {
   final String id;

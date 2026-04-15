@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/reports/models/report_filters.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/reports/models/report_filters.dart';
 
 final reportApiServiceProvider = Provider<ReportApiService>((ref) {
   return ReportApiService(ref.watch(dioClientProvider));

@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/predefined_catalog/models/predefined_category.dart';
-import 'package:thawani_pos/features/predefined_catalog/models/predefined_product.dart';
+import 'package:wameedpos/features/predefined_catalog/models/predefined_category.dart';
+import 'package:wameedpos/features/predefined_catalog/models/predefined_product.dart';
 
 // ─── Predefined Categories State ─────────────────────────────
 

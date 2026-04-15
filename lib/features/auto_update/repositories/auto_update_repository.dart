@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/auto_update/data/remote/auto_update_api_service.dart';
+import 'package:wameedpos/features/auto_update/data/remote/auto_update_api_service.dart';
 
 final autoUpdateRepositoryProvider = Provider<AutoUpdateRepository>((ref) {
   return AutoUpdateRepository(ref.read(autoUpdateApiServiceProvider));

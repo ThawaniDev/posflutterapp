@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/marketplace/models/marketplace_category.dart';
-import 'package:thawani_pos/features/marketplace/models/marketplace_listing.dart';
-import 'package:thawani_pos/features/marketplace/providers/marketplace_state.dart';
-import 'package:thawani_pos/features/marketplace/repositories/marketplace_repository.dart';
+import 'package:wameedpos/features/marketplace/models/marketplace_category.dart';
+import 'package:wameedpos/features/marketplace/models/marketplace_listing.dart';
+import 'package:wameedpos/features/marketplace/providers/marketplace_state.dart';
+import 'package:wameedpos/features/marketplace/repositories/marketplace_repository.dart';
 
 // ─── Marketplace Listings Provider ─────────────────────────
 

@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/thawani_integration/repositories/thawani_repository.dart';
-import 'package:thawani_pos/features/thawani_integration/providers/thawani_state.dart';
+import 'package:wameedpos/features/thawani_integration/repositories/thawani_repository.dart';
+import 'package:wameedpos/features/thawani_integration/providers/thawani_state.dart';
 
 // ─── Thawani Stats Provider ─────────────────────────────
 class ThawaniStatsNotifier extends StateNotifier<ThawaniStatsState> {

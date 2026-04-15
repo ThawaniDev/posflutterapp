@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/notifications/models/notification_delivery_log.dart';
-import 'package:thawani_pos/features/notifications/models/notification_schedule.dart';
-import 'package:thawani_pos/features/notifications/models/notification_sound_config.dart';
-import 'package:thawani_pos/features/notifications/repositories/notification_repository.dart';
-import 'package:thawani_pos/features/notifications/providers/notification_state.dart';
+import 'package:wameedpos/features/notifications/models/notification_delivery_log.dart';
+import 'package:wameedpos/features/notifications/models/notification_schedule.dart';
+import 'package:wameedpos/features/notifications/models/notification_sound_config.dart';
+import 'package:wameedpos/features/notifications/repositories/notification_repository.dart';
+import 'package:wameedpos/features/notifications/providers/notification_state.dart';
 
 // ─── Notification List Provider ─────────────────────────
 class NotificationListNotifier extends StateNotifier<NotificationListState> {
@@ -74,7 +74,7 @@ class NotificationActionNotifier extends StateNotifier<NotificationActionState> 
     state = const NotificationActionLoading();
     try {
       await _repository.markAsRead(id);
-      state = const NotificationActionSuccess('Notification marked as read');
+      state = const NotificationActionSuccess('marked_as_read');
     } catch (e) {
       state = NotificationActionError(e.toString());
     }
@@ -84,7 +84,7 @@ class NotificationActionNotifier extends StateNotifier<NotificationActionState> 
     state = const NotificationActionLoading();
     try {
       await _repository.markAllAsRead();
-      state = const NotificationActionSuccess('All notifications marked as read');
+      state = const NotificationActionSuccess('all_marked_as_read');
     } catch (e) {
       state = NotificationActionError(e.toString());
     }
@@ -94,7 +94,7 @@ class NotificationActionNotifier extends StateNotifier<NotificationActionState> 
     state = const NotificationActionLoading();
     try {
       await _repository.deleteNotification(id);
-      state = const NotificationActionSuccess('Notification deleted');
+      state = const NotificationActionSuccess('deleted');
     } catch (e) {
       state = NotificationActionError(e.toString());
     }
@@ -104,7 +104,7 @@ class NotificationActionNotifier extends StateNotifier<NotificationActionState> 
     state = const NotificationActionLoading();
     try {
       await _repository.bulkDelete(ids: ids);
-      state = NotificationActionSuccess('${ids.length} notifications deleted');
+      state = NotificationActionSuccess('bulk_deleted:${ids.length}');
     } catch (e) {
       state = NotificationActionError(e.toString());
     }
@@ -128,7 +128,7 @@ class NotificationActionNotifier extends StateNotifier<NotificationActionState> 
         priority: priority,
         channel: channel,
       );
-      state = const NotificationActionSuccess('Batch notification created');
+      state = const NotificationActionSuccess('batch_created');
     } catch (e) {
       state = NotificationActionError(e.toString());
     }
@@ -308,6 +308,7 @@ class SchedulesNotifier extends StateNotifier<SchedulesState> {
     required String scheduledAt,
     String? priority,
     String? recurrenceRule,
+    String? scheduleType,
   }) async {
     state = const SchedulesLoading();
     try {
@@ -319,6 +320,7 @@ class SchedulesNotifier extends StateNotifier<SchedulesState> {
         scheduledAt: scheduledAt,
         priority: priority,
         recurrenceRule: recurrenceRule,
+        scheduleType: scheduleType ?? 'one_time',
       );
       await load();
     } catch (e) {

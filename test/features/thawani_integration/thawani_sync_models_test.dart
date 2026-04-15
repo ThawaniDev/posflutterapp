@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/thawani_integration/models/thawani_category_mapping.dart';
-import 'package:thawani_pos/features/thawani_integration/models/thawani_column_mapping.dart';
-import 'package:thawani_pos/features/thawani_integration/models/thawani_sync_log.dart';
-import 'package:thawani_pos/features/thawani_integration/providers/thawani_state.dart';
+import 'package:wameedpos/features/thawani_integration/models/thawani_category_mapping.dart';
+import 'package:wameedpos/features/thawani_integration/models/thawani_column_mapping.dart';
+import 'package:wameedpos/features/thawani_integration/models/thawani_sync_log.dart';
+import 'package:wameedpos/features/thawani_integration/providers/thawani_state.dart';
 
 void main() {
   // ════════════════════════════════════════════════════════

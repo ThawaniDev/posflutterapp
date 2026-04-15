@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/pos_customization/enums/font_size.dart';
-import 'package:thawani_pos/features/zatca/enums/zatca_qr_position.dart';
+import 'package:wameedpos/features/pos_customization/enums/font_size.dart';
+import 'package:wameedpos/features/zatca/enums/zatca_qr_position.dart';
 
 class BusinessTypeReceiptTemplate {
   final String id;
@@ -89,13 +89,12 @@ class BusinessTypeReceiptTemplate {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BusinessTypeReceiptTemplate && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is BusinessTypeReceiptTemplate && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'BusinessTypeReceiptTemplate(id: $id, businessTypeId: $businessTypeId, paperWidth: $paperWidth, headerSections: $headerSections, bodySections: $bodySections, footerSections: $footerSections, ...)';
+  String toString() =>
+      'BusinessTypeReceiptTemplate(id: $id, businessTypeId: $businessTypeId, paperWidth: $paperWidth, headerSections: $headerSections, bodySections: $bodySections, footerSections: $footerSections, ...)';
 }

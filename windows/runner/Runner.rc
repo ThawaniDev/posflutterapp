@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.thawani" "\0"
-            VALUE "FileDescription", "thawani_pos" "\0"
+            VALUE "CompanyName", "com.wameedpos" "\0"
+            VALUE "FileDescription", "wameedpos" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "thawani_pos" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 com.thawani. All rights reserved." "\0"
-            VALUE "OriginalFilename", "thawani_pos.exe" "\0"
-            VALUE "ProductName", "thawani_pos" "\0"
+            VALUE "InternalName", "wameedpos" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 com.wameedpos. All rights reserved." "\0"
+            VALUE "OriginalFilename", "wameedpos.exe" "\0"
+            VALUE "ProductName", "wameedpos" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

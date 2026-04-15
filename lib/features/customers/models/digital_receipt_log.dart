@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/customers/enums/digital_receipt_channel.dart';
-import 'package:thawani_pos/features/customers/enums/digital_receipt_status.dart';
+import 'package:wameedpos/features/customers/enums/digital_receipt_channel.dart';
+import 'package:wameedpos/features/customers/enums/digital_receipt_status.dart';
 
 class DigitalReceiptLog {
   final String id;
@@ -65,13 +65,12 @@ class DigitalReceiptLog {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is DigitalReceiptLog && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is DigitalReceiptLog && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'DigitalReceiptLog(id: $id, orderId: $orderId, customerId: $customerId, channel: $channel, destination: $destination, status: $status, ...)';
+  String toString() =>
+      'DigitalReceiptLog(id: $id, orderId: $orderId, customerId: $customerId, channel: $channel, destination: $destination, status: $status, ...)';
 }

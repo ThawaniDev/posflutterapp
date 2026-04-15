@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/industry_bakery/enums/production_schedule_status.dart';
+import 'package:wameedpos/features/industry_bakery/enums/production_schedule_status.dart';
 
 class ProductionSchedule {
   final String id;
@@ -88,13 +88,12 @@ class ProductionSchedule {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ProductionSchedule && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is ProductionSchedule && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'ProductionSchedule(id: $id, storeId: $storeId, recipeId: $recipeId, scheduleDate: $scheduleDate, plannedBatches: $plannedBatches, actualBatches: $actualBatches, ...)';
+  String toString() =>
+      'ProductionSchedule(id: $id, storeId: $storeId, recipeId: $recipeId, scheduleDate: $scheduleDate, plannedBatches: $plannedBatches, actualBatches: $actualBatches, ...)';
 }

@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/notifications/enums/reminder_channel.dart';
-import 'package:thawani_pos/features/notifications/enums/reminder_type.dart';
+import 'package:wameedpos/features/notifications/enums/reminder_channel.dart';
+import 'package:wameedpos/features/notifications/enums/reminder_type.dart';
 
 class PaymentReminder {
   final String id;
@@ -53,13 +53,12 @@ class PaymentReminder {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is PaymentReminder && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is PaymentReminder && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'PaymentReminder(id: $id, storeSubscriptionId: $storeSubscriptionId, reminderType: $reminderType, channel: $channel, sentAt: $sentAt)';
+  String toString() =>
+      'PaymentReminder(id: $id, storeSubscriptionId: $storeSubscriptionId, reminderType: $reminderType, channel: $channel, sentAt: $sentAt)';
 }

@@ -54,21 +54,21 @@
 All core widgets are available via a single barrel import:
 
 ```dart
-import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 ```
 
 All theme tokens are available via:
 
 ```dart
-import 'package:thawani_pos/core/theme/theme.dart';
+import 'package:wameedpos/core/theme/theme.dart';
 ```
 
 Individual imports (only if needed):
 
 ```dart
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
 ```
 
 ---

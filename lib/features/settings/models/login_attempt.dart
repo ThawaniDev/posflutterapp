@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/settings/enums/login_attempt_type.dart';
+import 'package:wameedpos/features/settings/enums/login_attempt_type.dart';
 
 class LoginAttempt {
   final String id;
@@ -70,13 +70,12 @@ class LoginAttempt {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is LoginAttempt && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is LoginAttempt && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'LoginAttempt(id: $id, storeId: $storeId, userIdentifier: $userIdentifier, attemptType: $attemptType, isSuccessful: $isSuccessful, ipAddress: $ipAddress, ...)';
+  String toString() =>
+      'LoginAttempt(id: $id, storeId: $storeId, userIdentifier: $userIdentifier, attemptType: $attemptType, isSuccessful: $isSuccessful, ipAddress: $ipAddress, ...)';
 }

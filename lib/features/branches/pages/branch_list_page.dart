@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/branches/models/store.dart';
-import 'package:thawani_pos/features/branches/models/branch_stats.dart';
-import 'package:thawani_pos/features/branches/providers/branch_providers.dart';
-import 'package:thawani_pos/features/branches/providers/branch_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/branches/models/store.dart';
+import 'package:wameedpos/features/branches/models/branch_stats.dart';
+import 'package:wameedpos/features/branches/providers/branch_providers.dart';
+import 'package:wameedpos/features/branches/providers/branch_state.dart';
 
 class BranchListPage extends ConsumerStatefulWidget {
   const BranchListPage({super.key});

@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/industry_jewelry/enums/metal_type.dart';
+import 'package:wameedpos/features/industry_jewelry/enums/metal_type.dart';
 
 class DailyMetalRate {
   final String id;
@@ -28,7 +28,9 @@ class DailyMetalRate {
       metalType: MetalType.fromValue(json['metal_type'] as String),
       karat: json['karat'] as String?,
       ratePerGram: double.tryParse(json['rate_per_gram'].toString()) ?? 0.0,
-      buybackRatePerGram: (json['buyback_rate_per_gram'] != null ? double.tryParse(json['buyback_rate_per_gram'].toString()) : null),
+      buybackRatePerGram: (json['buyback_rate_per_gram'] != null
+          ? double.tryParse(json['buyback_rate_per_gram'].toString())
+          : null),
       effectiveDate: DateTime.parse(json['effective_date'] as String),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
@@ -70,13 +72,12 @@ class DailyMetalRate {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is DailyMetalRate && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is DailyMetalRate && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'DailyMetalRate(id: $id, storeId: $storeId, metalType: $metalType, karat: $karat, ratePerGram: $ratePerGram, buybackRatePerGram: $buybackRatePerGram, ...)';
+  String toString() =>
+      'DailyMetalRate(id: $id, storeId: $storeId, metalType: $metalType, karat: $karat, ratePerGram: $ratePerGram, buybackRatePerGram: $buybackRatePerGram, ...)';
 }

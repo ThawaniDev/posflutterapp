@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/industry_restaurant/providers/restaurant_providers.dart';
-import 'package:thawani_pos/features/industry_restaurant/providers/restaurant_state.dart';
-import 'package:thawani_pos/features/industry_restaurant/widgets/table_grid_tile.dart';
-import 'package:thawani_pos/features/industry_restaurant/widgets/kitchen_ticket_card.dart';
-import 'package:thawani_pos/features/industry_restaurant/widgets/reservation_card.dart';
-import 'package:thawani_pos/features/industry_restaurant/widgets/open_tab_card.dart';
-import 'package:thawani_pos/features/industry_restaurant/pages/table_form_page.dart';
-import 'package:thawani_pos/features/industry_restaurant/pages/reservation_form_page.dart';
-import 'package:thawani_pos/features/industry_restaurant/pages/open_tab_form_page.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_restaurant/providers/restaurant_providers.dart';
+import 'package:wameedpos/features/industry_restaurant/providers/restaurant_state.dart';
+import 'package:wameedpos/features/industry_restaurant/widgets/table_grid_tile.dart';
+import 'package:wameedpos/features/industry_restaurant/widgets/kitchen_ticket_card.dart';
+import 'package:wameedpos/features/industry_restaurant/widgets/reservation_card.dart';
+import 'package:wameedpos/features/industry_restaurant/widgets/open_tab_card.dart';
+import 'package:wameedpos/features/industry_restaurant/pages/table_form_page.dart';
+import 'package:wameedpos/features/industry_restaurant/pages/reservation_form_page.dart';
+import 'package:wameedpos/features/industry_restaurant/pages/open_tab_form_page.dart';
 
 class RestaurantDashboardPage extends ConsumerStatefulWidget {
   const RestaurantDashboardPage({super.key});

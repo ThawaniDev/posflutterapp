@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/industry_bakery/models/bakery_recipe.dart';
-import 'package:thawani_pos/features/industry_bakery/models/production_schedule.dart';
-import 'package:thawani_pos/features/industry_bakery/models/custom_cake_order.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/industry_bakery/models/bakery_recipe.dart';
+import 'package:wameedpos/features/industry_bakery/models/production_schedule.dart';
+import 'package:wameedpos/features/industry_bakery/models/custom_cake_order.dart';
 
 final bakeryApiServiceProvider = Provider<BakeryApiService>((ref) {
   return BakeryApiService(ref.watch(dioClientProvider));

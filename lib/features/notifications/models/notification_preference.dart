@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/notifications/enums/notification_channel.dart';
+import 'package:wameedpos/features/notifications/enums/notification_channel.dart';
 
 class NotificationPreference {
   final String id;

@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/payments/enums/payment_method_key.dart';
-import 'package:thawani_pos/features/payments/enums/refund_status.dart';
+import 'package:wameedpos/features/payments/enums/payment_method_key.dart';
+import 'package:wameedpos/features/payments/enums/refund_status.dart';
 
 class Refund {
   final String id;
@@ -77,13 +77,12 @@ class Refund {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Refund && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is Refund && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'Refund(id: $id, returnId: $returnId, paymentId: $paymentId, method: $method, amount: $amount, referenceNumber: $referenceNumber, ...)';
+  String toString() =>
+      'Refund(id: $id, returnId: $returnId, paymentId: $paymentId, method: $method, amount: $amount, referenceNumber: $referenceNumber, ...)';
 }

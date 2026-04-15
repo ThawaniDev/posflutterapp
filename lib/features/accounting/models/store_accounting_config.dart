@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/accounting/enums/accounting_provider.dart';
+import 'package:wameedpos/features/accounting/enums/accounting_provider.dart';
 
 class StoreAccountingConfig {
   final String id;
@@ -100,13 +100,12 @@ class StoreAccountingConfig {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is StoreAccountingConfig && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is StoreAccountingConfig && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'StoreAccountingConfig(id: $id, storeId: $storeId, provider: $provider, accessTokenEncrypted: $accessTokenEncrypted, refreshTokenEncrypted: $refreshTokenEncrypted, tokenExpiresAt: $tokenExpiresAt, ...)';
+  String toString() =>
+      'StoreAccountingConfig(id: $id, storeId: $storeId, provider: $provider, accessTokenEncrypted: $accessTokenEncrypted, refreshTokenEncrypted: $refreshTokenEncrypted, tokenExpiresAt: $tokenExpiresAt, ...)';
 }

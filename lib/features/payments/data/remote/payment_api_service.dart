@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
-import 'package:thawani_pos/features/payments/models/cash_event.dart';
-import 'package:thawani_pos/features/payments/models/cash_session.dart';
-import 'package:thawani_pos/features/payments/models/expense.dart';
-import 'package:thawani_pos/features/payments/models/gift_card.dart';
-import 'package:thawani_pos/features/payments/models/payment.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:wameedpos/features/payments/models/cash_event.dart';
+import 'package:wameedpos/features/payments/models/cash_session.dart';
+import 'package:wameedpos/features/payments/models/expense.dart';
+import 'package:wameedpos/features/payments/models/gift_card.dart';
+import 'package:wameedpos/features/payments/models/payment.dart';
 
 final paymentApiServiceProvider = Provider<PaymentApiService>((ref) {
   return PaymentApiService(ref.watch(dioClientProvider));

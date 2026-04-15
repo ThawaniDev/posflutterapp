@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/subscription/providers/subscription_state.dart';
-import 'package:thawani_pos/features/subscription/models/subscription_plan.dart';
-import 'package:thawani_pos/features/subscription/models/store_subscription.dart';
-import 'package:thawani_pos/features/subscription/models/invoice.dart';
-import 'package:thawani_pos/features/subscription/enums/subscription_status.dart';
-import 'package:thawani_pos/features/subscription/enums/billing_cycle.dart';
+import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
+import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
+import 'package:wameedpos/features/subscription/models/store_subscription.dart';
+import 'package:wameedpos/features/subscription/models/invoice.dart';
+import 'package:wameedpos/features/subscription/enums/subscription_status.dart';
+import 'package:wameedpos/features/subscription/enums/billing_cycle.dart';
 
 void main() {
   // --- PlansState Tests ---

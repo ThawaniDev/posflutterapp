@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/industry_bakery/providers/bakery_providers.dart';
-import 'package:thawani_pos/features/industry_bakery/providers/bakery_state.dart';
-import 'package:thawani_pos/features/industry_bakery/widgets/recipe_card.dart';
-import 'package:thawani_pos/features/industry_bakery/widgets/cake_order_card.dart';
-import 'package:thawani_pos/features/industry_bakery/widgets/production_schedule_card.dart';
-import 'package:thawani_pos/features/industry_bakery/pages/recipe_form_page.dart';
-import 'package:thawani_pos/features/industry_bakery/pages/cake_order_form_page.dart';
-import 'package:thawani_pos/features/industry_bakery/pages/production_schedule_form_page.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/industry_bakery/providers/bakery_providers.dart';
+import 'package:wameedpos/features/industry_bakery/providers/bakery_state.dart';
+import 'package:wameedpos/features/industry_bakery/widgets/recipe_card.dart';
+import 'package:wameedpos/features/industry_bakery/widgets/cake_order_card.dart';
+import 'package:wameedpos/features/industry_bakery/widgets/production_schedule_card.dart';
+import 'package:wameedpos/features/industry_bakery/pages/recipe_form_page.dart';
+import 'package:wameedpos/features/industry_bakery/pages/cake_order_form_page.dart';
+import 'package:wameedpos/features/industry_bakery/pages/production_schedule_form_page.dart';
 
 class BakeryDashboardPage extends ConsumerStatefulWidget {
   const BakeryDashboardPage({super.key});

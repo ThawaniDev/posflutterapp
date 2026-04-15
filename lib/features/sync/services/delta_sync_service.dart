@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:thawani_pos/features/sync/data/remote/sync_api_service.dart';
-import 'package:thawani_pos/features/sync/services/data_integrity_service.dart';
+import 'package:wameedpos/features/sync/data/remote/sync_api_service.dart';
+import 'package:wameedpos/features/sync/services/data_integrity_service.dart';
 
 /// Handles incremental (delta) sync using sync tokens for efficient data transfer.
 /// Only fetches records modified since the last successful sync.

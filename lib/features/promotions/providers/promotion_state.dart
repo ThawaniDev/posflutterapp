@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/promotions/models/promotion.dart';
+import 'package:wameedpos/features/promotions/models/promotion.dart';
 
 // ─── Promotions List State ──────────────────────────────────────
 

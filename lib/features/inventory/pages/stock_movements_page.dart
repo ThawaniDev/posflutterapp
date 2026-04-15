@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/widgets/pos_badge.dart';
-import 'package:thawani_pos/core/widgets/pos_table.dart';
-import 'package:thawani_pos/features/inventory/models/stock_movement.dart';
-import 'package:thawani_pos/features/inventory/providers/inventory_providers.dart';
-import 'package:thawani_pos/features/inventory/providers/inventory_state.dart';
+import 'package:wameedpos/core/widgets/pos_badge.dart';
+import 'package:wameedpos/core/widgets/pos_table.dart';
+import 'package:wameedpos/features/inventory/models/stock_movement.dart';
+import 'package:wameedpos/features/inventory/providers/inventory_providers.dart';
+import 'package:wameedpos/features/inventory/providers/inventory_state.dart';
 
 class StockMovementsPage extends ConsumerStatefulWidget {
   final String? productId;

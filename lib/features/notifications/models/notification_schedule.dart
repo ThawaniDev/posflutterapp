@@ -9,8 +9,9 @@ class NotificationSchedule {
   final String? priority;
   final DateTime scheduledAt;
   final String? recurrenceRule;
-  final bool isCancelled;
-  final DateTime? sentAt;
+  final String? scheduleType;
+  final bool isActive;
+  final DateTime? lastSentAt;
   final DateTime? createdAt;
 
   const NotificationSchedule({
@@ -24,25 +25,30 @@ class NotificationSchedule {
     this.priority,
     required this.scheduledAt,
     this.recurrenceRule,
-    this.isCancelled = false,
-    this.sentAt,
+    this.scheduleType,
+    this.isActive = true,
+    this.lastSentAt,
     this.createdAt,
   });
+
+  bool get isCancelled => !isActive;
+  bool get isSent => lastSentAt != null;
 
   factory NotificationSchedule.fromJson(Map<String, dynamic> json) {
     return NotificationSchedule(
       id: json['id'] as String,
-      storeId: json['store_id'] as String,
-      userId: json['user_id'] as String?,
-      category: json['category'] as String,
-      title: json['title'] as String,
-      message: json['message'] as String,
+      storeId: json['store_id'] as String? ?? '',
+      userId: json['created_by'] as String? ?? json['user_id'] as String?,
+      category: json['category'] as String? ?? json['event_key'] as String? ?? '',
+      title: json['title'] as String? ?? '',
+      message: json['message'] as String? ?? '',
       channel: json['channel'] as String?,
       priority: json['priority'] as String?,
       scheduledAt: DateTime.parse(json['scheduled_at'] as String),
-      recurrenceRule: json['recurrence_rule'] as String?,
-      isCancelled: json['is_cancelled'] as bool? ?? false,
-      sentAt: json['sent_at'] != null ? DateTime.parse(json['sent_at'] as String) : null,
+      recurrenceRule: json['cron_expression'] as String? ?? json['recurrence_rule'] as String?,
+      scheduleType: json['schedule_type'] as String?,
+      isActive: json['is_active'] as bool? ?? true,
+      lastSentAt: json['last_sent_at'] != null ? DateTime.parse(json['last_sent_at'] as String) : null,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
     );
   }
@@ -59,8 +65,9 @@ class NotificationSchedule {
       'priority': priority,
       'scheduled_at': scheduledAt.toIso8601String(),
       'recurrence_rule': recurrenceRule,
-      'is_cancelled': isCancelled,
-      'sent_at': sentAt?.toIso8601String(),
+      'schedule_type': scheduleType,
+      'is_active': isActive,
+      'last_sent_at': lastSentAt?.toIso8601String(),
       'created_at': createdAt?.toIso8601String(),
     };
   }
@@ -76,8 +83,9 @@ class NotificationSchedule {
     String? priority,
     DateTime? scheduledAt,
     String? recurrenceRule,
-    bool? isCancelled,
-    DateTime? sentAt,
+    String? scheduleType,
+    bool? isActive,
+    DateTime? lastSentAt,
     DateTime? createdAt,
   }) {
     return NotificationSchedule(
@@ -91,8 +99,9 @@ class NotificationSchedule {
       priority: priority ?? this.priority,
       scheduledAt: scheduledAt ?? this.scheduledAt,
       recurrenceRule: recurrenceRule ?? this.recurrenceRule,
-      isCancelled: isCancelled ?? this.isCancelled,
-      sentAt: sentAt ?? this.sentAt,
+      scheduleType: scheduleType ?? this.scheduleType,
+      isActive: isActive ?? this.isActive,
+      lastSentAt: lastSentAt ?? this.lastSentAt,
       createdAt: createdAt ?? this.createdAt,
     );
   }

@@ -1,18 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/sync/data/remote/sync_api_service.dart';
-import 'package:thawani_pos/features/sync/models/sync_conflict.dart';
-import 'package:thawani_pos/features/sync/providers/sync_state.dart';
-import 'package:thawani_pos/features/sync/repositories/sync_repository.dart';
-import 'package:thawani_pos/features/sync/services/connectivity_service.dart';
-import 'package:thawani_pos/features/sync/services/conflict_resolver_service.dart' as conflict_resolver;
-import 'package:thawani_pos/features/sync/services/data_integrity_service.dart';
-import 'package:thawani_pos/features/sync/services/delta_sync_service.dart';
-import 'package:thawani_pos/features/sync/services/full_sync_service.dart';
-import 'package:thawani_pos/features/sync/services/sync_engine.dart';
-import 'package:thawani_pos/features/sync/services/sync_queue_manager.dart';
-import 'package:thawani_pos/features/sync/services/sync_retry_service.dart';
-import 'package:thawani_pos/features/sync/services/websocket_service.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/sync/data/remote/sync_api_service.dart';
+import 'package:wameedpos/features/sync/models/sync_conflict.dart';
+import 'package:wameedpos/features/sync/providers/sync_state.dart';
+import 'package:wameedpos/features/sync/repositories/sync_repository.dart';
+import 'package:wameedpos/features/sync/services/connectivity_service.dart';
+import 'package:wameedpos/features/sync/services/conflict_resolver_service.dart' as conflict_resolver;
+import 'package:wameedpos/features/sync/services/data_integrity_service.dart';
+import 'package:wameedpos/features/sync/services/delta_sync_service.dart';
+import 'package:wameedpos/features/sync/services/full_sync_service.dart';
+import 'package:wameedpos/features/sync/services/sync_engine.dart';
+import 'package:wameedpos/features/sync/services/sync_queue_manager.dart';
+import 'package:wameedpos/features/sync/services/sync_retry_service.dart';
+import 'package:wameedpos/features/sync/services/websocket_service.dart';
 
 // ─── Connectivity Provider ─────────────────────────────────
 

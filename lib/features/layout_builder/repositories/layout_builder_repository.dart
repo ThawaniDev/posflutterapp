@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/layout_builder/data/remote/layout_builder_api_service.dart';
-import 'package:thawani_pos/features/layout_builder/models/layout_canvas.dart';
-import 'package:thawani_pos/features/layout_builder/models/layout_widget.dart';
-import 'package:thawani_pos/features/layout_builder/models/pos_layout_template.dart';
-import 'package:thawani_pos/features/layout_builder/models/template_version.dart';
-import 'package:thawani_pos/features/layout_builder/models/widget_placement.dart';
+import 'package:wameedpos/features/layout_builder/data/remote/layout_builder_api_service.dart';
+import 'package:wameedpos/features/layout_builder/models/layout_canvas.dart';
+import 'package:wameedpos/features/layout_builder/models/layout_widget.dart';
+import 'package:wameedpos/features/layout_builder/models/pos_layout_template.dart';
+import 'package:wameedpos/features/layout_builder/models/template_version.dart';
+import 'package:wameedpos/features/layout_builder/models/widget_placement.dart';
 
 final layoutBuilderRepositoryProvider = Provider<LayoutBuilderRepository>((ref) {
   return LayoutBuilderRepository(apiService: ref.watch(layoutBuilderApiServiceProvider));

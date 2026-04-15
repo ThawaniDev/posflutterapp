@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/settings/data/remote/localization_api_service.dart';
+import 'package:wameedpos/features/settings/data/remote/localization_api_service.dart';
 
 final localizationRepositoryProvider = Provider<LocalizationRepository>((ref) {
   return LocalizationRepository(ref.watch(localizationApiServiceProvider));

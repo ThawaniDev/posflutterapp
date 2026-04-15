@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/sync/services/conflict_resolver_service.dart';
+import 'package:wameedpos/features/sync/services/conflict_resolver_service.dart';
 
 void main() {
   group('ConflictResolutionStrategy', () {

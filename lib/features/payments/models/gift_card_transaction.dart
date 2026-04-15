@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/payments/enums/gift_card_transaction_type.dart';
+import 'package:wameedpos/features/payments/enums/gift_card_transaction_type.dart';
 
 class GiftCardTransaction {
   final String id;
@@ -76,13 +76,12 @@ class GiftCardTransaction {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is GiftCardTransaction && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is GiftCardTransaction && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'GiftCardTransaction(id: $id, giftCardId: $giftCardId, type: $type, amount: $amount, balanceAfter: $balanceAfter, paymentId: $paymentId, ...)';
+  String toString() =>
+      'GiftCardTransaction(id: $id, giftCardId: $giftCardId, type: $type, amount: $amount, balanceAfter: $balanceAfter, paymentId: $paymentId, ...)';
 }

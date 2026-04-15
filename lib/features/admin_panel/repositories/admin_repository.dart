@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/admin_panel/data/remote/admin_api_service.dart';
+import 'package:wameedpos/features/admin_panel/data/remote/admin_api_service.dart';
 
 final adminRepositoryProvider = Provider<AdminRepository>((ref) {
   return AdminRepository(ref.watch(adminApiServiceProvider));

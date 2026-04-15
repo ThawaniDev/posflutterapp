@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/errors/app_exception.dart';
-import 'package:thawani_pos/features/auth/data/local/auth_local_storage.dart';
-import 'package:thawani_pos/features/auth/data/remote/auth_api_service.dart';
-import 'package:thawani_pos/features/auth/models/auth_response.dart';
-import 'package:thawani_pos/features/auth/models/user.dart';
+import 'package:wameedpos/core/errors/app_exception.dart';
+import 'package:wameedpos/features/auth/data/local/auth_local_storage.dart';
+import 'package:wameedpos/features/auth/data/remote/auth_api_service.dart';
+import 'package:wameedpos/features/auth/models/auth_response.dart';
+import 'package:wameedpos/features/auth/models/user.dart';
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return AuthRepository(apiService: ref.watch(authApiServiceProvider), localStorage: ref.watch(authLocalStorageProvider));

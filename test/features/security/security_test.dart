@@ -1,17 +1,17 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/security/enums/login_attempt_type.dart';
-import 'package:thawani_pos/features/security/enums/security_audit_action.dart';
-import 'package:thawani_pos/features/security/enums/security_alert_status.dart';
-import 'package:thawani_pos/features/security/enums/role_audit_action.dart';
-import 'package:thawani_pos/features/security/enums/session_status.dart';
-import 'package:thawani_pos/features/security/models/security_policy.dart';
-import 'package:thawani_pos/features/security/models/security_audit_log.dart';
-import 'package:thawani_pos/features/security/models/device_registration.dart';
-import 'package:thawani_pos/features/security/models/login_attempt.dart';
-import 'package:thawani_pos/features/security/models/pin_override.dart';
-import 'package:thawani_pos/features/security/models/security_alert.dart';
-import 'package:thawani_pos/features/security/providers/security_state.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/features/security/enums/login_attempt_type.dart';
+import 'package:wameedpos/features/security/enums/security_audit_action.dart';
+import 'package:wameedpos/features/security/enums/security_alert_status.dart';
+import 'package:wameedpos/features/security/enums/role_audit_action.dart';
+import 'package:wameedpos/features/security/enums/session_status.dart';
+import 'package:wameedpos/features/security/models/security_policy.dart';
+import 'package:wameedpos/features/security/models/security_audit_log.dart';
+import 'package:wameedpos/features/security/models/device_registration.dart';
+import 'package:wameedpos/features/security/models/login_attempt.dart';
+import 'package:wameedpos/features/security/models/pin_override.dart';
+import 'package:wameedpos/features/security/models/security_alert.dart';
+import 'package:wameedpos/features/security/providers/security_state.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
 
 void main() {
   // ═══ Enum Tests ═══════════════════════════════════════════════

@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/promotions/enums/promotion_type.dart';
-import 'package:thawani_pos/features/promotions/models/promotion.dart';
-import 'package:thawani_pos/features/promotions/models/coupon_code.dart';
-import 'package:thawani_pos/features/promotions/providers/promotion_state.dart';
+import 'package:wameedpos/features/promotions/enums/promotion_type.dart';
+import 'package:wameedpos/features/promotions/models/promotion.dart';
+import 'package:wameedpos/features/promotions/models/coupon_code.dart';
+import 'package:wameedpos/features/promotions/providers/promotion_state.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════════

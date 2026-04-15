@@ -1,14 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/cashier_gamification/models/cashier_anomaly.dart';
-import 'package:thawani_pos/features/cashier_gamification/models/cashier_badge.dart';
-import 'package:thawani_pos/features/cashier_gamification/models/cashier_badge_award.dart';
-import 'package:thawani_pos/features/cashier_gamification/models/cashier_performance_snapshot.dart';
-import 'package:thawani_pos/features/cashier_gamification/models/cashier_shift_report.dart';
-import 'package:thawani_pos/features/cashier_gamification/models/gamification_settings.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/cashier_gamification/models/cashier_anomaly.dart';
+import 'package:wameedpos/features/cashier_gamification/models/cashier_badge.dart';
+import 'package:wameedpos/features/cashier_gamification/models/cashier_badge_award.dart';
+import 'package:wameedpos/features/cashier_gamification/models/cashier_performance_snapshot.dart';
+import 'package:wameedpos/features/cashier_gamification/models/cashier_shift_report.dart';
+import 'package:wameedpos/features/cashier_gamification/models/gamification_settings.dart';
 
 final gamificationApiServiceProvider = Provider<GamificationApiService>((ref) {
   return GamificationApiService(ref.watch(dioClientProvider));

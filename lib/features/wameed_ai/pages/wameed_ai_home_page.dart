@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_chat.dart';
-import 'package:thawani_pos/features/wameed_ai/data/ai_chat_repository.dart';
-import 'package:thawani_pos/features/wameed_ai/providers/ai_chat_providers.dart';
-import 'package:thawani_pos/features/wameed_ai/providers/ai_chat_state.dart';
-import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_providers.dart';
-import 'package:thawani_pos/features/wameed_ai/widgets/ai_usage_banner.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_chat.dart';
+import 'package:wameedpos/features/wameed_ai/data/ai_chat_repository.dart';
+import 'package:wameedpos/features/wameed_ai/providers/ai_chat_providers.dart';
+import 'package:wameedpos/features/wameed_ai/providers/ai_chat_state.dart';
+import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
+import 'package:wameedpos/features/wameed_ai/widgets/ai_usage_banner.dart';
 
 class WameedAIHomePage extends ConsumerStatefulWidget {
   const WameedAIHomePage({super.key});
@@ -152,11 +152,7 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
 
   Widget _buildEmptyState() {
     final l10n = AppLocalizations.of(context)!;
-    return PosEmptyState(
-      title: l10n.wameedAINoChats,
-      subtitle: l10n.wameedAINoChatsSubtitle,
-      icon: Icons.chat_bubble_outline,
-    );
+    return PosEmptyState(title: l10n.wameedAINoChats, subtitle: l10n.wameedAINoChatsSubtitle, icon: Icons.chat_bubble_outline);
   }
 
   Widget _buildChatList(List<AIChat> chats, bool isMobile) {
@@ -215,7 +211,10 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
                         Text('•', style: TextStyle(color: theme.hintColor)),
                         const SizedBox(width: 8),
                       ],
-                      Text('${chat.messageCount} ${l10n.wameedAIMessages}', style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor)),
+                      Text(
+                        '${chat.messageCount} ${l10n.wameedAIMessages}',
+                        style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor),
+                      ),
                     ],
                   ),
                 ],

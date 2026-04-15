@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/hardware/enums/implementation_fee_status.dart';
-import 'package:thawani_pos/features/hardware/enums/implementation_fee_type.dart';
+import 'package:wameedpos/features/hardware/enums/implementation_fee_status.dart';
+import 'package:wameedpos/features/hardware/enums/implementation_fee_type.dart';
 
 class ImplementationFee {
   final String id;
@@ -65,13 +65,12 @@ class ImplementationFee {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ImplementationFee && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is ImplementationFee && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'ImplementationFee(id: $id, storeId: $storeId, feeType: $feeType, amount: $amount, status: $status, notes: $notes, ...)';
+  String toString() =>
+      'ImplementationFee(id: $id, storeId: $storeId, feeType: $feeType, amount: $amount, status: $status, notes: $notes, ...)';
 }

@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/auth/models/user.dart';
-import 'package:thawani_pos/features/auth/models/auth_token.dart';
-import 'package:thawani_pos/features/auth/models/auth_response.dart';
-import 'package:thawani_pos/features/auth/enums/user_role.dart';
+import 'package:wameedpos/features/auth/models/user.dart';
+import 'package:wameedpos/features/auth/models/auth_token.dart';
+import 'package:wameedpos/features/auth/models/auth_response.dart';
+import 'package:wameedpos/features/auth/enums/user_role.dart';
 
 void main() {
   group('User', () {
@@ -75,10 +75,7 @@ void main() {
     });
 
     test('fromJson handles null optional fields', () {
-      final json = {
-        'id': 'user-1',
-        'name': 'Minimal User',
-      };
+      final json = {'id': 'user-1', 'name': 'Minimal User'};
 
       final user = User.fromJson(json);
       expect(user.email, isNull);
@@ -91,25 +88,14 @@ void main() {
     });
 
     test('fromJson handles unknown role gracefully', () {
-      final json = {
-        'id': 'user-1',
-        'name': 'User',
-        'role': 'unknown_role',
-      };
+      final json = {'id': 'user-1', 'name': 'User', 'role': 'unknown_role'};
 
       final user = User.fromJson(json);
       expect(user.role, isNull); // tryFromValue returns null for unknown
     });
 
     test('toJson serializes correctly', () {
-      final user = User(
-        id: 'user-1',
-        name: 'Test',
-        email: 'test@test.com',
-        role: UserRole.cashier,
-        locale: 'en',
-        isActive: true,
-      );
+      final user = User(id: 'user-1', name: 'Test', email: 'test@test.com', role: UserRole.cashier, locale: 'en', isActive: true);
 
       final json = user.toJson();
       expect(json['id'], 'user-1');
@@ -160,13 +146,7 @@ void main() {
 
   group('UserStore', () {
     test('fromJson parses correctly', () {
-      final json = {
-        'id': 'store-1',
-        'name': 'My Store',
-        'name_ar': 'متجري',
-        'currency': 'SAR',
-        'is_main_branch': true,
-      };
+      final json = {'id': 'store-1', 'name': 'My Store', 'name_ar': 'متجري', 'currency': 'SAR', 'is_main_branch': true};
 
       final store = UserStore.fromJson(json);
       expect(store.id, 'store-1');
@@ -177,12 +157,7 @@ void main() {
     });
 
     test('toJson round-trips', () {
-      final store = UserStore(
-        id: 'store-1',
-        name: 'Store',
-        currency: 'SAR',
-        isMainBranch: false,
-      );
+      final store = UserStore(id: 'store-1', name: 'Store', currency: 'SAR', isMainBranch: false);
 
       final json = store.toJson();
       final restored = UserStore.fromJson(json);
@@ -194,11 +169,7 @@ void main() {
 
   group('UserOrganization', () {
     test('fromJson parses correctly', () {
-      final json = {
-        'id': 'org-1',
-        'name': 'Test Org',
-        'country': 'OM',
-      };
+      final json = {'id': 'org-1', 'name': 'Test Org', 'country': 'OM'};
 
       final org = UserOrganization.fromJson(json);
       expect(org.id, 'org-1');
@@ -209,10 +180,7 @@ void main() {
 
   group('AuthToken', () {
     test('fromJson parses correctly', () {
-      final json = {
-        'token': 'abc123token',
-        'token_type': 'Bearer',
-      };
+      final json = {'token': 'abc123token', 'token_type': 'Bearer'};
 
       final token = AuthToken.fromJson(json);
       expect(token.token, 'abc123token');
@@ -234,12 +202,7 @@ void main() {
   group('AuthResponse', () {
     test('fromJson parses user and token', () {
       final json = {
-        'user': {
-          'id': 'user-1',
-          'name': 'Owner',
-          'email': 'owner@test.com',
-          'role': 'owner',
-        },
+        'user': {'id': 'user-1', 'name': 'Owner', 'email': 'owner@test.com', 'role': 'owner'},
         'token': 'generated-token-123',
         'token_type': 'Bearer',
       };

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
-import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
-import 'package:thawani_pos/core/providers/branch_context_provider.dart';
-import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/providers/branch_context_provider.dart';
+import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 
 class AdminGatewayListPage extends ConsumerStatefulWidget {
   const AdminGatewayListPage({super.key});

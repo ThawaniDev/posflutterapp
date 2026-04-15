@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/labels/models/label_template.dart';
-import 'package:thawani_pos/features/labels/providers/label_state.dart';
+import 'package:wameedpos/features/labels/models/label_template.dart';
+import 'package:wameedpos/features/labels/providers/label_state.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════════

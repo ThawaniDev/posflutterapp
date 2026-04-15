@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/branches/models/store.dart';
-import 'package:thawani_pos/features/branches/models/branch_stats.dart';
-import 'package:thawani_pos/features/branches/repositories/branch_repository.dart';
-import 'package:thawani_pos/features/branches/providers/branch_state.dart';
+import 'package:wameedpos/features/branches/models/store.dart';
+import 'package:wameedpos/features/branches/models/branch_stats.dart';
+import 'package:wameedpos/features/branches/repositories/branch_repository.dart';
+import 'package:wameedpos/features/branches/providers/branch_state.dart';
 
 // ─── Branch List ───
 class BranchListNotifier extends StateNotifier<BranchListState> {

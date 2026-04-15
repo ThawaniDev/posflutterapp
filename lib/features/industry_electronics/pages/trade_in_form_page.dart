@@ -4,9 +4,9 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 import '../models/trade_in_record.dart';
 import '../providers/electronics_providers.dart';
-import 'package:thawani_pos/features/staff/models/staff_user.dart';
-import 'package:thawani_pos/features/staff/providers/staff_providers.dart';
-import 'package:thawani_pos/features/staff/providers/staff_state.dart';
+import 'package:wameedpos/features/staff/models/staff_user.dart';
+import 'package:wameedpos/features/staff/providers/staff_providers.dart';
+import 'package:wameedpos/features/staff/providers/staff_state.dart';
 
 class TradeInFormPage extends ConsumerStatefulWidget {
   final TradeInRecord? record;

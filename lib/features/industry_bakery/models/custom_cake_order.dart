@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/industry_bakery/enums/custom_cake_order_status.dart';
+import 'package:wameedpos/features/industry_bakery/enums/custom_cake_order_status.dart';
 
 class CustomCakeOrder {
   final String id;
@@ -112,13 +112,12 @@ class CustomCakeOrder {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CustomCakeOrder && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is CustomCakeOrder && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'CustomCakeOrder(id: $id, storeId: $storeId, customerId: $customerId, orderId: $orderId, description: $description, size: $size, ...)';
+  String toString() =>
+      'CustomCakeOrder(id: $id, storeId: $storeId, customerId: $customerId, orderId: $orderId, description: $description, size: $size, ...)';
 }

@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/staff/enums/shift_schedule_status.dart';
+import 'package:wameedpos/features/staff/enums/shift_schedule_status.dart';
 
 class ShiftSchedule {
   final String id;
@@ -82,13 +82,12 @@ class ShiftSchedule {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ShiftSchedule && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is ShiftSchedule && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'ShiftSchedule(id: $id, storeId: $storeId, staffUserId: $staffUserId, shiftTemplateId: $shiftTemplateId, date: $date, actualStart: $actualStart, ...)';
+  String toString() =>
+      'ShiftSchedule(id: $id, storeId: $storeId, staffUserId: $staffUserId, shiftTemplateId: $shiftTemplateId, date: $date, actualStart: $actualStart, ...)';
 }

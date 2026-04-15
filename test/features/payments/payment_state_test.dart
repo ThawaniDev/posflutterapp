@@ -1,14 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/payments/enums/cash_event_type.dart';
-import 'package:thawani_pos/features/payments/enums/expense_category.dart';
-import 'package:thawani_pos/features/payments/enums/gift_card_status.dart';
-import 'package:thawani_pos/features/payments/enums/payment_method_key.dart';
-import 'package:thawani_pos/features/payments/models/cash_session.dart';
-import 'package:thawani_pos/features/payments/models/expense.dart';
-import 'package:thawani_pos/features/payments/models/gift_card.dart';
-import 'package:thawani_pos/features/payments/models/payment.dart';
-import 'package:thawani_pos/features/security/enums/session_status.dart';
-import 'package:thawani_pos/features/payments/providers/payment_state.dart';
+import 'package:wameedpos/features/payments/enums/cash_event_type.dart';
+import 'package:wameedpos/features/payments/enums/expense_category.dart';
+import 'package:wameedpos/features/payments/enums/gift_card_status.dart';
+import 'package:wameedpos/features/payments/enums/payment_method_key.dart';
+import 'package:wameedpos/features/payments/models/cash_session.dart';
+import 'package:wameedpos/features/payments/models/expense.dart';
+import 'package:wameedpos/features/payments/models/gift_card.dart';
+import 'package:wameedpos/features/payments/models/payment.dart';
+import 'package:wameedpos/features/security/enums/session_status.dart';
+import 'package:wameedpos/features/payments/providers/payment_state.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════════

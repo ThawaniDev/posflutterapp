@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/delivery_integration/data/remote/delivery_api_service.dart';
+import 'package:wameedpos/features/delivery_integration/data/remote/delivery_api_service.dart';
 
 class DeliveryRepository {
   final DeliveryApiService _apiService;

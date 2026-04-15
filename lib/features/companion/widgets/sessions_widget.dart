@@ -1,11 +1,11 @@
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/companion/providers/companion_providers.dart';
-import 'package:thawani_pos/features/companion/providers/companion_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/companion/providers/companion_providers.dart';
+import 'package:wameedpos/features/companion/providers/companion_state.dart';
 
 /// Widget that displays active companion sessions with device info
 /// and the ability to end sessions remotely.

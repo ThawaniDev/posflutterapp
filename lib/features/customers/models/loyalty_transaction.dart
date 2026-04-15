@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/customers/enums/loyalty_transaction_type.dart';
+import 'package:wameedpos/features/customers/enums/loyalty_transaction_type.dart';
 
 class LoyaltyTransaction {
   final String id;
@@ -76,13 +76,12 @@ class LoyaltyTransaction {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is LoyaltyTransaction && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is LoyaltyTransaction && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'LoyaltyTransaction(id: $id, customerId: $customerId, type: $type, points: $points, balanceAfter: $balanceAfter, orderId: $orderId, ...)';
+  String toString() =>
+      'LoyaltyTransaction(id: $id, customerId: $customerId, type: $type, points: $points, balanceAfter: $balanceAfter, orderId: $orderId, ...)';
 }

@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
-import 'package:thawani_pos/features/payments/data/remote/payment_api_service.dart';
-import 'package:thawani_pos/features/payments/models/cash_event.dart';
-import 'package:thawani_pos/features/payments/models/cash_session.dart';
-import 'package:thawani_pos/features/payments/models/expense.dart';
-import 'package:thawani_pos/features/payments/models/gift_card.dart';
-import 'package:thawani_pos/features/payments/models/payment.dart';
+import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:wameedpos/features/payments/data/remote/payment_api_service.dart';
+import 'package:wameedpos/features/payments/models/cash_event.dart';
+import 'package:wameedpos/features/payments/models/cash_session.dart';
+import 'package:wameedpos/features/payments/models/expense.dart';
+import 'package:wameedpos/features/payments/models/gift_card.dart';
+import 'package:wameedpos/features/payments/models/payment.dart';
 
 final paymentRepositoryProvider = Provider<PaymentRepository>((ref) {
   return PaymentRepository(apiService: ref.watch(paymentApiServiceProvider));

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/wameed_ai/data/wameed_ai_repository.dart';
-import 'package:thawani_pos/features/wameed_ai/providers/wameed_ai_state.dart';
+import 'package:wameedpos/features/wameed_ai/data/wameed_ai_repository.dart';
+import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
 
 String _extractError(DioException e) {
   final data = e.response?.data;

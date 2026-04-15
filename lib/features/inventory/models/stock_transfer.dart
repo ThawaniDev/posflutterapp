@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/inventory/enums/stock_transfer_status.dart';
+import 'package:wameedpos/features/inventory/enums/stock_transfer_status.dart';
 
 class StockTransfer {
   final String id;

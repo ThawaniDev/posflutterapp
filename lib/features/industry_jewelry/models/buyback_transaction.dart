@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/industry_jewelry/enums/buyback_payment_method.dart';
-import 'package:thawani_pos/features/industry_jewelry/enums/metal_type.dart';
+import 'package:wameedpos/features/industry_jewelry/enums/buyback_payment_method.dart';
+import 'package:wameedpos/features/industry_jewelry/enums/metal_type.dart';
 
 class BuybackTransaction {
   final String id;
@@ -95,13 +95,12 @@ class BuybackTransaction {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BuybackTransaction && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is BuybackTransaction && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'BuybackTransaction(id: $id, storeId: $storeId, customerId: $customerId, metalType: $metalType, karat: $karat, weightG: $weightG, ...)';
+  String toString() =>
+      'BuybackTransaction(id: $id, storeId: $storeId, customerId: $customerId, metalType: $metalType, karat: $karat, weightG: $weightG, ...)';
 }

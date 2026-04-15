@@ -1,6 +1,6 @@
-import 'package:thawani_pos/features/hardware/enums/app_release_channel.dart';
-import 'package:thawani_pos/features/hardware/enums/app_release_platform.dart';
-import 'package:thawani_pos/features/hardware/enums/app_submission_status.dart';
+import 'package:wameedpos/features/hardware/enums/app_release_channel.dart';
+import 'package:wameedpos/features/hardware/enums/app_release_platform.dart';
+import 'package:wameedpos/features/hardware/enums/app_submission_status.dart';
 
 class AppRelease {
   final String id;
@@ -126,13 +126,12 @@ class AppRelease {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AppRelease && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is AppRelease && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'AppRelease(id: $id, versionNumber: $versionNumber, platform: $platform, channel: $channel, downloadUrl: $downloadUrl, storeUrl: $storeUrl, ...)';
+  String toString() =>
+      'AppRelease(id: $id, versionNumber: $versionNumber, platform: $platform, channel: $channel, downloadUrl: $downloadUrl, storeUrl: $storeUrl, ...)';
 }

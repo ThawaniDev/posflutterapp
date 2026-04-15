@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/wameed_ai/data/ai_chat_api_service.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_chat.dart';
+import 'package:wameedpos/features/wameed_ai/data/ai_chat_api_service.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_chat.dart';
 
 final aiChatRepositoryProvider = Provider<AIChatRepository>((ref) {
   return AIChatRepository(ref.watch(aiChatApiServiceProvider));

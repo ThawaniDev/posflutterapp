@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/pos_customization/repositories/customization_repository.dart';
-import 'package:thawani_pos/features/pos_customization/providers/customization_state.dart';
+import 'package:wameedpos/features/pos_customization/repositories/customization_repository.dart';
+import 'package:wameedpos/features/pos_customization/providers/customization_state.dart';
 
 // ─── Settings Provider ──────────────────────────────
 final customizationSettingsProvider = StateNotifierProvider<CustomizationSettingsNotifier, CustomizationSettingsState>((ref) {

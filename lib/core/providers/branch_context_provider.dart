@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/auth/providers/auth_providers.dart';
-import 'package:thawani_pos/features/auth/providers/auth_state.dart';
-import 'package:thawani_pos/features/staff/data/remote/role_api_service.dart';
-import 'package:thawani_pos/features/staff/providers/roles_providers.dart';
+import 'package:wameedpos/features/auth/providers/auth_providers.dart';
+import 'package:wameedpos/features/auth/providers/auth_state.dart';
+import 'package:wameedpos/features/staff/data/remote/role_api_service.dart';
+import 'package:wameedpos/features/staff/providers/roles_providers.dart';
 
 /// The currently active branch (store) ID.
 ///

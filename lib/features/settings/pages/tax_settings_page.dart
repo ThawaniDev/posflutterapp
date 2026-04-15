@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/features/settings/models/store_settings.dart';
-import 'package:thawani_pos/features/settings/pages/settings_sub_page.dart';
-import 'package:thawani_pos/features/settings/widgets/settings_widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/features/settings/models/store_settings.dart';
+import 'package:wameedpos/features/settings/pages/settings_sub_page.dart';
+import 'package:wameedpos/features/settings/widgets/settings_widgets.dart';
 
 class TaxSettingsPage extends SettingsSubPage {
   const TaxSettingsPage({super.key});

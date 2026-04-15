@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/orders/providers/order_state.dart';
-import 'package:thawani_pos/features/orders/repositories/order_repository.dart';
+import 'package:wameedpos/features/orders/providers/order_state.dart';
+import 'package:wameedpos/features/orders/repositories/order_repository.dart';
 
 // ─── Orders Provider ────────────────────────────────────────────
 

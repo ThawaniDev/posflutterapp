@@ -1,6 +1,6 @@
-import 'package:thawani_pos/features/hardware/models/hardware_configuration.dart';
-import 'package:thawani_pos/features/hardware/models/hardware_event_log.dart';
-import 'package:thawani_pos/features/hardware/services/hardware_auto_detector.dart';
+import 'package:wameedpos/features/hardware/models/hardware_configuration.dart';
+import 'package:wameedpos/features/hardware/models/hardware_event_log.dart';
+import 'package:wameedpos/features/hardware/services/hardware_auto_detector.dart';
 
 // ─── Hardware Config List State ────────────────────────────
 sealed class HardwareConfigListState {

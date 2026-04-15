@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/orders/models/order.dart';
-import 'package:thawani_pos/features/orders/models/sale_return.dart';
+import 'package:wameedpos/features/orders/models/order.dart';
+import 'package:wameedpos/features/orders/models/sale_return.dart';
 
 // ─── Orders State ───────────────────────────────────────────────
 

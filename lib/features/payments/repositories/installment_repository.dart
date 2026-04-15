@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/payments/data/remote/installment_api_service.dart';
-import 'package:thawani_pos/features/payments/models/checkout_provider_option.dart';
-import 'package:thawani_pos/features/payments/models/installment_payment.dart';
-import 'package:thawani_pos/features/payments/models/installment_provider_config.dart';
-import 'package:thawani_pos/features/payments/models/store_installment_config.dart';
+import 'package:wameedpos/features/payments/data/remote/installment_api_service.dart';
+import 'package:wameedpos/features/payments/models/checkout_provider_option.dart';
+import 'package:wameedpos/features/payments/models/installment_payment.dart';
+import 'package:wameedpos/features/payments/models/installment_provider_config.dart';
+import 'package:wameedpos/features/payments/models/store_installment_config.dart';
 
 final installmentRepositoryProvider = Provider<InstallmentRepository>((ref) {
   return InstallmentRepository(apiService: ref.watch(installmentApiServiceProvider));

@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
-import 'package:thawani_pos/features/orders/data/remote/order_api_service.dart';
-import 'package:thawani_pos/features/orders/models/order.dart';
-import 'package:thawani_pos/features/orders/models/sale_return.dart';
+import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:wameedpos/features/orders/data/remote/order_api_service.dart';
+import 'package:wameedpos/features/orders/models/order.dart';
+import 'package:wameedpos/features/orders/models/sale_return.dart';
 
 final orderRepositoryProvider = Provider<OrderRepository>((ref) {
   return OrderRepository(apiService: ref.watch(orderApiServiceProvider));

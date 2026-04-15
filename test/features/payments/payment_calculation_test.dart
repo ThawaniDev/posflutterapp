@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/payments/enums/payment_method_key.dart';
-import 'package:thawani_pos/features/payments/services/payment_calculation_service.dart';
+import 'package:wameedpos/features/payments/enums/payment_method_key.dart';
+import 'package:wameedpos/features/payments/services/payment_calculation_service.dart';
 
 void main() {
   // ═══════════════════════════════════════════════════════════

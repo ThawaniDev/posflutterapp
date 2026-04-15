@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/widgets/pos_button.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/onboarding/enums/onboarding_step.dart';
-import 'package:thawani_pos/features/onboarding/models/business_type_template.dart';
-import 'package:thawani_pos/features/onboarding/providers/store_onboarding_providers.dart';
-import 'package:thawani_pos/features/onboarding/providers/store_onboarding_state.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/pos_button.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/onboarding/enums/onboarding_step.dart';
+import 'package:wameedpos/features/onboarding/models/business_type_template.dart';
+import 'package:wameedpos/features/onboarding/providers/store_onboarding_providers.dart';
+import 'package:wameedpos/features/onboarding/providers/store_onboarding_state.dart';
 
 /// Multi-step onboarding wizard.
 /// Displays one step at a time with Next/Back/Skip controls.

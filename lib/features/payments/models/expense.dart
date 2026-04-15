@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/payments/enums/expense_category.dart';
+import 'package:wameedpos/features/payments/enums/expense_category.dart';
 
 class Expense {
   final String id;
@@ -82,13 +82,12 @@ class Expense {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Expense && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is Expense && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'Expense(id: $id, storeId: $storeId, cashSessionId: $cashSessionId, amount: $amount, category: $category, description: $description, ...)';
+  String toString() =>
+      'Expense(id: $id, storeId: $storeId, cashSessionId: $cashSessionId, amount: $amount, category: $category, description: $description, ...)';
 }

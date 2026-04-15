@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/staff/models/staff_user.dart';
-import 'package:thawani_pos/features/staff/providers/staff_state.dart';
-import 'package:thawani_pos/features/staff/repositories/staff_repository.dart';
+import 'package:wameedpos/features/staff/models/staff_user.dart';
+import 'package:wameedpos/features/staff/providers/staff_state.dart';
+import 'package:wameedpos/features/staff/repositories/staff_repository.dart';
 
 // ═══════════════════════════════════════════════════════════════
 // Staff List Provider

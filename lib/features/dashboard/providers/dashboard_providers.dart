@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/dashboard/providers/dashboard_state.dart';
-import 'package:thawani_pos/features/dashboard/repositories/dashboard_repository.dart';
+import 'package:wameedpos/features/dashboard/providers/dashboard_state.dart';
+import 'package:wameedpos/features/dashboard/repositories/dashboard_repository.dart';
 
 // ─── Main Dashboard Provider ───────────────────────────────────
 

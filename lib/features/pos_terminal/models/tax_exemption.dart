@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/settings/enums/tax_exemption_type.dart';
+import 'package:wameedpos/features/settings/enums/tax_exemption_type.dart';
 
 class TaxExemption {
   final String id;
@@ -70,13 +70,12 @@ class TaxExemption {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TaxExemption && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is TaxExemption && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'TaxExemption(id: $id, transactionId: $transactionId, customerId: $customerId, exemptionType: $exemptionType, customerTaxId: $customerTaxId, certificateNumber: $certificateNumber, ...)';
+  String toString() =>
+      'TaxExemption(id: $id, transactionId: $transactionId, customerId: $customerId, exemptionType: $exemptionType, customerTaxId: $customerTaxId, certificateNumber: $certificateNumber, ...)';
 }

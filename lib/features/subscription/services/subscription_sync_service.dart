@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/subscription/data/remote/subscription_api_service.dart';
-import 'package:thawani_pos/features/subscription/services/feature_gate_service.dart';
+import 'package:wameedpos/features/subscription/data/remote/subscription_api_service.dart';
+import 'package:wameedpos/features/subscription/services/feature_gate_service.dart';
 
 /// Provider for SubscriptionSyncService.
 final subscriptionSyncServiceProvider = Provider<SubscriptionSyncService>((ref) {

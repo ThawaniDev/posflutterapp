@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/wameed_ai/enums/ai_feature_category.dart';
-import 'package:thawani_pos/features/wameed_ai/enums/ai_suggestion_priority.dart';
-import 'package:thawani_pos/features/wameed_ai/enums/ai_suggestion_status.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_feature_definition.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_feature_result.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_suggestion.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_usage.dart';
+import 'package:wameedpos/features/wameed_ai/enums/ai_feature_category.dart';
+import 'package:wameedpos/features/wameed_ai/enums/ai_suggestion_priority.dart';
+import 'package:wameedpos/features/wameed_ai/enums/ai_suggestion_status.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_feature_definition.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_feature_result.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_suggestion.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_usage.dart';
 
 void main() {
   // ─── AIFeatureDefinition ───────────────────────────────────

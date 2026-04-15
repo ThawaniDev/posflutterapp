@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/admin_panel/providers/admin_providers.dart';
-import 'package:thawani_pos/features/admin_panel/providers/admin_state.dart';
-import 'package:thawani_pos/core/providers/branch_context_provider.dart';
-import 'package:thawani_pos/features/admin_panel/widgets/admin_branch_bar.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_payment_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_refund_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_cash_session_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_expense_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_gift_card_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_accounting_config_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_thawani_settlement_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_daily_sales_page.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
+import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/providers/branch_context_provider.dart';
+import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_payment_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_refund_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_cash_session_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_expense_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_gift_card_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_accounting_config_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_thawani_settlement_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_daily_sales_page.dart';
 
 class AdminFinOpsOverviewPage extends ConsumerStatefulWidget {
   const AdminFinOpsOverviewPage({super.key});

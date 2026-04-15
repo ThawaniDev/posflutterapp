@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/promotions/enums/discount_type.dart';
+import 'package:wameedpos/features/promotions/enums/discount_type.dart';
 
 class TransactionItem {
   final String id;
@@ -71,7 +71,9 @@ class TransactionItem {
       serialNumber: json['serial_number'] as String?,
       batchNumber: json['batch_number'] as String?,
       expiryDate: json['expiry_date'] != null ? DateTime.parse(json['expiry_date'] as String) : null,
-      modifierSelections: json['modifier_selections'] != null ? Map<String, dynamic>.from(json['modifier_selections'] as Map) : null,
+      modifierSelections: json['modifier_selections'] != null
+          ? Map<String, dynamic>.from(json['modifier_selections'] as Map)
+          : null,
       notes: json['notes'] as String?,
       isReturnItem: json['is_return_item'] as bool?,
       ageVerified: json['age_verified'] as bool?,
@@ -160,13 +162,12 @@ class TransactionItem {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TransactionItem && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is TransactionItem && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'TransactionItem(id: $id, transactionId: $transactionId, productId: $productId, barcode: $barcode, productName: $productName, productNameAr: $productNameAr, ...)';
+  String toString() =>
+      'TransactionItem(id: $id, transactionId: $transactionId, productId: $productId, barcode: $barcode, productName: $productName, productNameAr: $productNameAr, ...)';
 }

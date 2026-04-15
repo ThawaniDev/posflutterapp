@@ -5,9 +5,9 @@ import '../../../core/widgets/widgets.dart';
 import '../providers/restaurant_providers.dart';
 import '../models/restaurant_table.dart';
 import '../providers/restaurant_state.dart';
-import 'package:thawani_pos/features/orders/models/order.dart';
-import 'package:thawani_pos/features/orders/providers/order_providers.dart';
-import 'package:thawani_pos/features/orders/providers/order_state.dart';
+import 'package:wameedpos/features/orders/models/order.dart';
+import 'package:wameedpos/features/orders/providers/order_providers.dart';
+import 'package:wameedpos/features/orders/providers/order_state.dart';
 
 class OpenTabFormPage extends ConsumerStatefulWidget {
   const OpenTabFormPage({super.key});

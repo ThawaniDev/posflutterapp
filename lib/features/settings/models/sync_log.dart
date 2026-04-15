@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/settings/enums/sync_direction.dart';
-import 'package:thawani_pos/features/settings/enums/sync_log_status.dart';
+import 'package:wameedpos/features/settings/enums/sync_direction.dart';
+import 'package:wameedpos/features/settings/enums/sync_log_status.dart';
 
 class SyncLog {
   final String id;
@@ -83,13 +83,12 @@ class SyncLog {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SyncLog && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is SyncLog && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'SyncLog(id: $id, storeId: $storeId, terminalId: $terminalId, direction: $direction, recordsCount: $recordsCount, durationMs: $durationMs, ...)';
+  String toString() =>
+      'SyncLog(id: $id, storeId: $storeId, terminalId: $terminalId, direction: $direction, recordsCount: $recordsCount, durationMs: $durationMs, ...)';
 }

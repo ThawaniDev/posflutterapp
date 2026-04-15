@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/subscription/providers/subscription_providers.dart';
-import 'package:thawani_pos/features/subscription/providers/subscription_state.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/subscription/widgets/grace_period_banner.dart';
-import 'package:thawani_pos/features/subscription/widgets/subscription_badge.dart';
-import 'package:thawani_pos/features/subscription/widgets/usage_progress.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/subscription/providers/subscription_providers.dart';
+import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/subscription/widgets/grace_period_banner.dart';
+import 'package:wameedpos/features/subscription/widgets/subscription_badge.dart';
+import 'package:wameedpos/features/subscription/widgets/usage_progress.dart';
 
 /// Page showing the current subscription status, usage, and management actions.
 class SubscriptionStatusPage extends ConsumerStatefulWidget {

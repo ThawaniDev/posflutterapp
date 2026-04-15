@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/industry_electronics/enums/repair_job_status.dart';
+import 'package:wameedpos/features/industry_electronics/enums/repair_job_status.dart';
 
 class RepairJob {
   final String id;
@@ -124,13 +124,12 @@ class RepairJob {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is RepairJob && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is RepairJob && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'RepairJob(id: $id, storeId: $storeId, customerId: $customerId, deviceDescription: $deviceDescription, imei: $imei, issueDescription: $issueDescription, ...)';
+  String toString() =>
+      'RepairJob(id: $id, storeId: $storeId, customerId: $customerId, deviceDescription: $deviceDescription, imei: $imei, issueDescription: $issueDescription, ...)';
 }

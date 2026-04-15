@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/auth/providers/auth_providers.dart';
-import 'package:thawani_pos/features/auth/providers/auth_state.dart';
-import 'package:thawani_pos/features/auth/repositories/auth_repository.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/auth/providers/auth_providers.dart';
+import 'package:wameedpos/features/auth/providers/auth_state.dart';
+import 'package:wameedpos/features/auth/repositories/auth_repository.dart';
 
 class PinLoginPage extends ConsumerStatefulWidget {
   const PinLoginPage({super.key});

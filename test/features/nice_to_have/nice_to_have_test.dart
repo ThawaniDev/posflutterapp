@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/features/nice_to_have/presentation/nice_to_have_state.dart';
-import 'package:thawani_pos/features/nice_to_have/presentation/nice_to_have_providers.dart';
-import 'package:thawani_pos/features/nice_to_have/presentation/nice_to_have_dashboard_page.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/nice_to_have_state.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/nice_to_have_providers.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/nice_to_have_dashboard_page.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/router/route_names.dart';
 
 // ─── Mock Notifiers ──────────────────────────────────────────
 class MockWishlistNotifier extends StateNotifier<WishlistState> implements WishlistNotifier {

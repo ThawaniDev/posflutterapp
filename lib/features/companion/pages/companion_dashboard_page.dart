@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/features/companion/providers/companion_providers.dart';
-import 'package:thawani_pos/features/companion/widgets/companion_home_dashboard.dart';
-import 'package:thawani_pos/features/companion/widgets/quick_stats_widget.dart';
-import 'package:thawani_pos/features/companion/widgets/quick_actions_widget.dart';
-import 'package:thawani_pos/features/companion/widgets/preferences_widget.dart';
-import 'package:thawani_pos/features/companion/widgets/mobile_summary_widget.dart';
-import 'package:thawani_pos/features/companion/widgets/sales_summary_widget.dart';
-import 'package:thawani_pos/features/companion/widgets/active_orders_widget.dart';
-import 'package:thawani_pos/features/companion/widgets/inventory_alerts_widget.dart';
-import 'package:thawani_pos/features/companion/widgets/active_staff_widget.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/features/companion/providers/companion_providers.dart';
+import 'package:wameedpos/features/companion/widgets/companion_home_dashboard.dart';
+import 'package:wameedpos/features/companion/widgets/quick_stats_widget.dart';
+import 'package:wameedpos/features/companion/widgets/quick_actions_widget.dart';
+import 'package:wameedpos/features/companion/widgets/preferences_widget.dart';
+import 'package:wameedpos/features/companion/widgets/mobile_summary_widget.dart';
+import 'package:wameedpos/features/companion/widgets/sales_summary_widget.dart';
+import 'package:wameedpos/features/companion/widgets/active_orders_widget.dart';
+import 'package:wameedpos/features/companion/widgets/inventory_alerts_widget.dart';
+import 'package:wameedpos/features/companion/widgets/active_staff_widget.dart';
 
 class CompanionDashboardPage extends ConsumerStatefulWidget {
   const CompanionDashboardPage({super.key});

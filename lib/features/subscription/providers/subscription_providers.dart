@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/subscription/providers/subscription_state.dart';
-import 'package:thawani_pos/features/subscription/repositories/subscription_repository.dart';
+import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
+import 'package:wameedpos/features/subscription/repositories/subscription_repository.dart';
 
 // ─── Plans Provider ──────────────────────────────────────────────
 

@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/security/enums/session_status.dart';
+import 'package:wameedpos/features/security/enums/session_status.dart';
 
 class OpenTab {
   final String id;
@@ -70,13 +70,12 @@ class OpenTab {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is OpenTab && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is OpenTab && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'OpenTab(id: $id, storeId: $storeId, orderId: $orderId, customerName: $customerName, tableId: $tableId, openedAt: $openedAt, ...)';
+  String toString() =>
+      'OpenTab(id: $id, storeId: $storeId, orderId: $orderId, customerName: $customerName, tableId: $tableId, openedAt: $openedAt, ...)';
 }

@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/payments/enums/installment_provider.dart';
+import 'package:wameedpos/features/payments/enums/installment_provider.dart';
 
 /// Platform-level installment provider configuration.
 class InstallmentProviderConfig {

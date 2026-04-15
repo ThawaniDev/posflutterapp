@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/accounting/data/remote/accounting_api_service.dart';
+import 'package:wameedpos/features/accounting/data/remote/accounting_api_service.dart';
 
 final accountingRepositoryProvider = Provider<AccountingRepository>((ref) {
   return AccountingRepository(ref.watch(accountingApiServiceProvider));

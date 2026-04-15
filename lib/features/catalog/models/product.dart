@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/catalog/enums/product_unit.dart';
+import 'package:wameedpos/features/catalog/enums/product_unit.dart';
 
 class Product {
   final String id;

@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
-import 'package:thawani_pos/features/catalog/models/product.dart';
-import 'package:thawani_pos/features/customers/models/customer.dart';
-import 'package:thawani_pos/features/pos_terminal/models/held_cart.dart';
-import 'package:thawani_pos/features/pos_terminal/models/pos_session.dart';
-import 'package:thawani_pos/features/pos_terminal/models/register.dart';
-import 'package:thawani_pos/features/pos_terminal/models/transaction.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/features/customers/models/customer.dart';
+import 'package:wameedpos/features/pos_terminal/models/held_cart.dart';
+import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
+import 'package:wameedpos/features/pos_terminal/models/register.dart';
+import 'package:wameedpos/features/pos_terminal/models/transaction.dart';
 
 final posTerminalApiServiceProvider = Provider<PosTerminalApiService>((ref) {
   return PosTerminalApiService(ref.watch(dioClientProvider));

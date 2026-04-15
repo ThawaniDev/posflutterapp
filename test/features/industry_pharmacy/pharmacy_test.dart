@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/features/industry_pharmacy/enums/drug_schedule_type.dart';
-import 'package:thawani_pos/features/industry_pharmacy/models/prescription.dart';
-import 'package:thawani_pos/features/industry_pharmacy/models/drug_schedule.dart';
-import 'package:thawani_pos/features/industry_pharmacy/providers/pharmacy_state.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/features/industry_pharmacy/enums/drug_schedule_type.dart';
+import 'package:wameedpos/features/industry_pharmacy/models/prescription.dart';
+import 'package:wameedpos/features/industry_pharmacy/models/drug_schedule.dart';
+import 'package:wameedpos/features/industry_pharmacy/providers/pharmacy_state.dart';
 
 void main() {
   // ═══════════════ DrugScheduleType Enum ═══════════════

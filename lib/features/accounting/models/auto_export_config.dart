@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/accounting/enums/export_frequency.dart';
+import 'package:wameedpos/features/accounting/enums/export_frequency.dart';
 
 class AutoExportConfig {
   final String id;
@@ -100,13 +100,12 @@ class AutoExportConfig {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AutoExportConfig && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is AutoExportConfig && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'AutoExportConfig(id: $id, storeId: $storeId, enabled: $enabled, frequency: $frequency, dayOfWeek: $dayOfWeek, dayOfMonth: $dayOfMonth, ...)';
+  String toString() =>
+      'AutoExportConfig(id: $id, storeId: $storeId, enabled: $enabled, frequency: $frequency, dayOfWeek: $dayOfWeek, dayOfMonth: $dayOfMonth, ...)';
 }

@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/notifications/enums/notification_channel.dart';
-import 'package:thawani_pos/features/notifications/enums/notification_provider.dart';
+import 'package:wameedpos/features/notifications/enums/notification_channel.dart';
+import 'package:wameedpos/features/notifications/enums/notification_provider.dart';
 
 class NotificationProviderStatus {
   final String id;
@@ -101,13 +101,12 @@ class NotificationProviderStatus {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is NotificationProviderStatus && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is NotificationProviderStatus && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'NotificationProviderStatus(id: $id, provider: $provider, channel: $channel, isEnabled: $isEnabled, priority: $priority, isHealthy: $isHealthy, ...)';
+  String toString() =>
+      'NotificationProviderStatus(id: $id, provider: $provider, channel: $channel, isEnabled: $isEnabled, priority: $priority, isHealthy: $isHealthy, ...)';
 }

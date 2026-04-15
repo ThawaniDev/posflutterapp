@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/theme/app_typography.dart';
-import 'package:thawani_pos/core/utils/formatters.dart';
-import 'package:thawani_pos/core/widgets/pos_button.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
-import 'package:thawani_pos/features/catalog/models/product.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/utils/formatters.dart';
+import 'package:wameedpos/core/widgets/pos_button.dart';
+import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/features/catalog/models/product.dart';
 
 /// Shows a detailed product popup when a barcode is scanned.
 /// If [product] is non-null, shows full product details.

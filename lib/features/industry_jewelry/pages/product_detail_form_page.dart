@@ -6,9 +6,9 @@ import '../enums/making_charges_type.dart';
 import '../enums/metal_type.dart';
 import '../models/jewelry_product_detail.dart';
 import '../providers/jewelry_providers.dart';
-import 'package:thawani_pos/features/catalog/models/product.dart';
-import 'package:thawani_pos/features/catalog/providers/catalog_providers.dart';
-import 'package:thawani_pos/features/catalog/providers/catalog_state.dart';
+import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
+import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
 
 class ProductDetailFormPage extends ConsumerStatefulWidget {
   final JewelryProductDetail? detail;

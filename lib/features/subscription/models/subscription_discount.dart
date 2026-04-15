@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/promotions/enums/discount_type.dart';
+import 'package:wameedpos/features/promotions/enums/discount_type.dart';
 
 class SubscriptionDiscount {
   final String id;
@@ -37,7 +37,9 @@ class SubscriptionDiscount {
       timesUsed: (json['times_used'] as num?)?.toInt(),
       validFrom: json['valid_from'] != null ? DateTime.parse(json['valid_from'] as String) : null,
       validTo: json['valid_to'] != null ? DateTime.parse(json['valid_to'] as String) : null,
-      applicablePlanIds: json['applicable_plan_ids'] != null ? Map<String, dynamic>.from(json['applicable_plan_ids'] as Map) : null,
+      applicablePlanIds: json['applicable_plan_ids'] != null
+          ? Map<String, dynamic>.from(json['applicable_plan_ids'] as Map)
+          : null,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
     );
@@ -88,13 +90,12 @@ class SubscriptionDiscount {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SubscriptionDiscount && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is SubscriptionDiscount && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'SubscriptionDiscount(id: $id, code: $code, type: $type, value: $value, maxUses: $maxUses, timesUsed: $timesUsed, ...)';
+  String toString() =>
+      'SubscriptionDiscount(id: $id, code: $code, type: $type, value: $value, maxUses: $maxUses, timesUsed: $timesUsed, ...)';
 }

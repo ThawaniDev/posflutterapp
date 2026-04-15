@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/payments/enums/payment_method_category.dart';
-import 'package:thawani_pos/features/payments/enums/payment_method_key.dart';
+import 'package:wameedpos/features/payments/enums/payment_method_category.dart';
+import 'package:wameedpos/features/payments/enums/payment_method_key.dart';
 
 class PaymentMethod {
   final String id;
@@ -42,7 +42,9 @@ class PaymentMethod {
       category: PaymentMethodCategory.fromValue(json['category'] as String),
       requiresTerminal: json['requires_terminal'] as bool?,
       requiresCustomerProfile: json['requires_customer_profile'] as bool?,
-      providerConfigSchema: json['provider_config_schema'] != null ? Map<String, dynamic>.from(json['provider_config_schema'] as Map) : null,
+      providerConfigSchema: json['provider_config_schema'] != null
+          ? Map<String, dynamic>.from(json['provider_config_schema'] as Map)
+          : null,
       isActive: json['is_active'] as bool?,
       sortOrder: (json['sort_order'] as num?)?.toInt(),
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
@@ -101,13 +103,12 @@ class PaymentMethod {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is PaymentMethod && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is PaymentMethod && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'PaymentMethod(id: $id, methodKey: $methodKey, name: $name, nameAr: $nameAr, icon: $icon, category: $category, ...)';
+  String toString() =>
+      'PaymentMethod(id: $id, methodKey: $methodKey, name: $name, nameAr: $nameAr, icon: $icon, category: $category, ...)';
 }

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/widgets/pos_badge.dart';
-import 'package:thawani_pos/core/widgets/pos_button.dart';
-import 'package:thawani_pos/core/widgets/pos_table.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/inventory/models/goods_receipt.dart';
-import 'package:thawani_pos/features/inventory/enums/goods_receipt_status.dart';
-import 'package:thawani_pos/features/inventory/providers/inventory_providers.dart';
-import 'package:thawani_pos/features/inventory/providers/inventory_state.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/widgets/pos_badge.dart';
+import 'package:wameedpos/core/widgets/pos_button.dart';
+import 'package:wameedpos/core/widgets/pos_table.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/inventory/models/goods_receipt.dart';
+import 'package:wameedpos/features/inventory/enums/goods_receipt_status.dart';
+import 'package:wameedpos/features/inventory/providers/inventory_providers.dart';
+import 'package:wameedpos/features/inventory/providers/inventory_state.dart';
 
 class GoodsReceiptsPage extends ConsumerStatefulWidget {
   const GoodsReceiptsPage({super.key});

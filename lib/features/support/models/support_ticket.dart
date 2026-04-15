@@ -1,6 +1,6 @@
-import 'package:thawani_pos/features/support/enums/ticket_category.dart';
-import 'package:thawani_pos/features/support/enums/ticket_priority.dart';
-import 'package:thawani_pos/features/support/enums/ticket_status.dart';
+import 'package:wameedpos/features/support/enums/ticket_category.dart';
+import 'package:wameedpos/features/support/enums/ticket_priority.dart';
+import 'package:wameedpos/features/support/enums/ticket_status.dart';
 
 class SupportTicket {
   final String id;
@@ -126,13 +126,12 @@ class SupportTicket {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SupportTicket && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is SupportTicket && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'SupportTicket(id: $id, ticketNumber: $ticketNumber, organizationId: $organizationId, storeId: $storeId, userId: $userId, assignedTo: $assignedTo, ...)';
+  String toString() =>
+      'SupportTicket(id: $id, ticketNumber: $ticketNumber, organizationId: $organizationId, storeId: $storeId, userId: $userId, assignedTo: $assignedTo, ...)';
 }

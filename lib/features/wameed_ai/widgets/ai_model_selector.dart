@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/features/wameed_ai/models/ai_chat.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_chat.dart';
 
 class AIModelSelector extends StatelessWidget {
   final List<LlmModel> models;
@@ -105,7 +105,10 @@ class AIModelSelector extends StatelessWidget {
                             color: AppColors.success.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(4),
                           ),
-                          child: Text(AppLocalizations.of(context)!.wameedAIDefault, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.success, fontSize: 9)),
+                          child: Text(
+                            AppLocalizations.of(context)!.wameedAIDefault,
+                            style: theme.textTheme.labelSmall?.copyWith(color: AppColors.success, fontSize: 9),
+                          ),
                         ),
                       ),
                   ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/constants/permission_constants.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
+import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import '../l10n/app_localizations.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';

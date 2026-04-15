@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/predefined_catalog/data/remote/predefined_catalog_api_service.dart';
-import 'package:thawani_pos/features/predefined_catalog/providers/predefined_catalog_state.dart';
+import 'package:wameedpos/features/predefined_catalog/data/remote/predefined_catalog_api_service.dart';
+import 'package:wameedpos/features/predefined_catalog/providers/predefined_catalog_state.dart';
 
 // ═══════════════════════════════════════════════════════════════
 // Predefined Categories

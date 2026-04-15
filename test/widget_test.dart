@@ -1,7 +1,7 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/app.dart';
+import 'package:wameedpos/app.dart';
 
 void main() {
   testWidgets('App smoke test', (WidgetTester tester) async {
@@ -12,7 +12,7 @@ void main() {
       originalOnError?.call(details);
     };
 
-    await tester.pumpWidget(const ProviderScope(child: ThawaniPosApp()));
+    await tester.pumpWidget(const ProviderScope(child: WameedPosApp()));
     await tester.pumpAndSettle();
     expect(find.text('Wameed POS'), findsOneWidget);
 

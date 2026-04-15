@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/settings/models/store_settings.dart';
-import 'package:thawani_pos/features/settings/models/working_hour.dart';
-import 'package:thawani_pos/features/settings/repositories/settings_repository.dart';
+import 'package:wameedpos/features/settings/models/store_settings.dart';
+import 'package:wameedpos/features/settings/models/working_hour.dart';
+import 'package:wameedpos/features/settings/repositories/settings_repository.dart';
 
 // ─── States ──────────────────────────────────────────────────
 

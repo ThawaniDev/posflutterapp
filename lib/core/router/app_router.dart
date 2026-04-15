@@ -1,286 +1,292 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/core/providers/branch_context_provider.dart';
-import 'package:thawani_pos/core/widgets/app_shell.dart';
-import 'package:thawani_pos/features/auth/pages/login_page.dart';
-import 'package:thawani_pos/features/auth/pages/pin_login_page.dart';
-import 'package:thawani_pos/features/auth/pages/register_page.dart';
-import 'package:thawani_pos/features/auth/providers/auth_providers.dart';
-import 'package:thawani_pos/features/auth/providers/auth_state.dart';
-import 'package:thawani_pos/features/staff/providers/roles_providers.dart';
-import 'package:thawani_pos/core/constants/permission_constants.dart';
-import 'package:thawani_pos/core/widgets/permission_guard_page.dart';
-import 'package:thawani_pos/core/router/route_permissions.dart';
-import 'package:thawani_pos/features/hardware/widgets/global_barcode_scan_handler.dart';
-import 'package:thawani_pos/features/wameed_ai/pages/wameed_ai_home_page.dart';
-import 'package:thawani_pos/features/wameed_ai/pages/ai_feature_detail_page.dart';
-import 'package:thawani_pos/features/wameed_ai/pages/ai_suggestions_page.dart';
-import 'package:thawani_pos/features/wameed_ai/pages/ai_usage_page.dart';
-import 'package:thawani_pos/features/wameed_ai/pages/ai_settings_page.dart';
-import 'package:thawani_pos/features/wameed_ai/pages/smart_reorder_page.dart';
-import 'package:thawani_pos/features/wameed_ai/pages/expiry_manager_page.dart';
-import 'package:thawani_pos/features/wameed_ai/pages/daily_summary_page.dart' as ai;
-import 'package:thawani_pos/features/wameed_ai/pages/customer_segments_page.dart';
-import 'package:thawani_pos/features/wameed_ai/pages/invoice_ocr_page.dart';
-import 'package:thawani_pos/features/wameed_ai/pages/staff_performance_page.dart' as ai;
-import 'package:thawani_pos/features/wameed_ai/pages/efficiency_score_page.dart';
-import 'package:thawani_pos/features/wameed_ai/pages/ai_chat_page.dart';
-import 'package:thawani_pos/features/wameed_ai/pages/ai_billing_page.dart';
-import 'package:thawani_pos/features/wameed_ai/pages/ai_billing_invoices_page.dart';
-import 'package:thawani_pos/features/wameed_ai/pages/ai_billing_invoice_detail_page.dart';
-import 'package:thawani_pos/features/cashier_gamification/pages/gamification_home_page.dart';
-import 'package:thawani_pos/features/cashier_gamification/pages/cashier_history_page.dart';
-import 'package:thawani_pos/features/cashier_gamification/pages/gamification_badges_page.dart';
-import 'package:thawani_pos/features/cashier_gamification/pages/gamification_anomalies_page.dart';
-import 'package:thawani_pos/features/cashier_gamification/pages/gamification_shift_reports_page.dart';
-import 'package:thawani_pos/features/cashier_gamification/pages/gamification_settings_page.dart';
-import 'package:thawani_pos/features/catalog/pages/category_list_page.dart';
-import 'package:thawani_pos/features/catalog/pages/product_form_page.dart';
-import 'package:thawani_pos/features/catalog/pages/product_list_page.dart';
-import 'package:thawani_pos/features/catalog/pages/supplier_list_page.dart';
-import 'package:thawani_pos/features/customers/pages/customer_list_page.dart';
-import 'package:thawani_pos/features/inventory/pages/goods_receipt_form_page.dart';
-import 'package:thawani_pos/features/inventory/pages/goods_receipts_page.dart';
-import 'package:thawani_pos/features/inventory/pages/inventory_page.dart';
-import 'package:thawani_pos/features/inventory/pages/purchase_orders_page.dart';
-import 'package:thawani_pos/features/inventory/pages/recipes_page.dart';
-import 'package:thawani_pos/features/inventory/pages/supplier_returns_page.dart';
-import 'package:thawani_pos/features/inventory/pages/supplier_return_form_page.dart';
-import 'package:thawani_pos/features/inventory/pages/supplier_return_detail_page.dart';
-import 'package:thawani_pos/features/inventory/pages/stock_adjustments_page.dart';
-import 'package:thawani_pos/features/inventory/pages/stock_levels_page.dart';
-import 'package:thawani_pos/features/inventory/pages/stock_movements_page.dart';
-import 'package:thawani_pos/features/inventory/pages/stock_transfers_page.dart';
-import 'package:thawani_pos/features/labels/pages/label_designer_page.dart';
-import 'package:thawani_pos/features/labels/pages/label_history_page.dart';
-import 'package:thawani_pos/features/labels/pages/label_list_page.dart';
-import 'package:thawani_pos/features/labels/pages/label_print_queue_page.dart';
-import 'package:thawani_pos/features/onboarding/pages/onboarding_wizard_page.dart';
-import 'package:thawani_pos/features/onboarding/pages/store_settings_page.dart';
-import 'package:thawani_pos/features/onboarding/pages/working_hours_page.dart';
-import 'package:thawani_pos/features/orders/pages/order_list_page.dart';
-import 'package:thawani_pos/features/transactions/pages/transaction_explorer_page.dart';
-import 'package:thawani_pos/features/transactions/pages/transaction_detail_page.dart';
-import 'package:thawani_pos/features/debits/pages/debit_list_page.dart';
-import 'package:thawani_pos/features/debits/pages/debit_detail_page.dart';
-import 'package:thawani_pos/features/debits/pages/debit_form_page.dart';
-import 'package:thawani_pos/features/payments/pages/cash_sessions_page.dart';
-import 'package:thawani_pos/features/payments/pages/cash_management_page.dart';
-import 'package:thawani_pos/features/payments/pages/expenses_page.dart';
-import 'package:thawani_pos/features/payments/pages/gift_cards_page.dart';
-import 'package:thawani_pos/features/payments/pages/financial_reconciliation_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_installment_providers_page.dart';
-import 'package:thawani_pos/features/settings/pages/store_installment_config_page.dart';
-import 'package:thawani_pos/features/payments/pages/daily_summary_page.dart';
-import 'package:thawani_pos/features/pos_terminal/pages/pos_sessions_page.dart';
-import 'package:thawani_pos/features/pos_terminal/pages/pos_terminal_form_page.dart';
-import 'package:thawani_pos/features/pos_terminal/pages/pos_terminals_page.dart';
-import 'package:thawani_pos/features/pos_terminal/pages/pos_cashier_page.dart';
-import 'package:thawani_pos/features/staff/pages/attendance_page.dart';
-import 'package:thawani_pos/features/staff/pages/commission_summary_page.dart';
-import 'package:thawani_pos/features/staff/pages/role_create_page.dart';
-import 'package:thawani_pos/features/staff/pages/role_detail_page.dart';
-import 'package:thawani_pos/features/staff/pages/roles_list_page.dart';
-import 'package:thawani_pos/features/staff/pages/shift_schedule_page.dart';
-import 'package:thawani_pos/features/staff/pages/staff_detail_page.dart';
-import 'package:thawani_pos/features/staff/pages/staff_form_page.dart';
-import 'package:thawani_pos/features/staff/pages/staff_list_page.dart';
-import 'package:thawani_pos/features/subscription/pages/billing_history_page.dart';
-import 'package:thawani_pos/features/subscription/pages/plan_selection_page.dart';
-import 'package:thawani_pos/features/subscription/pages/subscription_status_page.dart';
-import 'package:thawani_pos/features/subscription/pages/invoice_detail_page.dart';
-import 'package:thawani_pos/features/subscription/pages/plan_comparison_page.dart';
-import 'package:thawani_pos/features/subscription/pages/add_ons_page.dart';
-import 'package:thawani_pos/features/dashboard/pages/owner_dashboard_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_overview_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_payment_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_payment_detail_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_refund_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_cash_session_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_expense_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_gift_card_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_accounting_config_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_thawani_settlement_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_fin_ops_daily_sales_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_infra_overview_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_infra_failed_jobs_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_infra_backups_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_infra_health_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_provider_permissions_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_provider_role_template_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_provider_role_template_detail_page.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/core/providers/branch_context_provider.dart';
+import 'package:wameedpos/core/widgets/app_shell.dart';
+import 'package:wameedpos/features/auth/pages/login_page.dart';
+import 'package:wameedpos/features/auth/pages/pin_login_page.dart';
+import 'package:wameedpos/features/auth/pages/register_page.dart';
+import 'package:wameedpos/features/auth/providers/auth_providers.dart';
+import 'package:wameedpos/features/auth/providers/auth_state.dart';
+import 'package:wameedpos/features/staff/providers/roles_providers.dart';
+import 'package:wameedpos/core/constants/permission_constants.dart';
+import 'package:wameedpos/core/widgets/permission_guard_page.dart';
+import 'package:wameedpos/core/router/route_permissions.dart';
+import 'package:wameedpos/features/hardware/widgets/global_barcode_scan_handler.dart';
+import 'package:wameedpos/features/wameed_ai/pages/wameed_ai_home_page.dart';
+import 'package:wameedpos/features/wameed_ai/pages/ai_feature_detail_page.dart';
+import 'package:wameedpos/features/wameed_ai/pages/ai_suggestions_page.dart';
+import 'package:wameedpos/features/wameed_ai/pages/ai_usage_page.dart';
+import 'package:wameedpos/features/wameed_ai/pages/ai_settings_page.dart';
+import 'package:wameedpos/features/wameed_ai/pages/smart_reorder_page.dart';
+import 'package:wameedpos/features/wameed_ai/pages/expiry_manager_page.dart';
+import 'package:wameedpos/features/wameed_ai/pages/daily_summary_page.dart' as ai;
+import 'package:wameedpos/features/wameed_ai/pages/customer_segments_page.dart';
+import 'package:wameedpos/features/wameed_ai/pages/invoice_ocr_page.dart';
+import 'package:wameedpos/features/wameed_ai/pages/staff_performance_page.dart' as ai;
+import 'package:wameedpos/features/wameed_ai/pages/efficiency_score_page.dart';
+import 'package:wameedpos/features/wameed_ai/pages/ai_chat_page.dart';
+import 'package:wameedpos/features/wameed_ai/pages/ai_billing_page.dart';
+import 'package:wameedpos/features/wameed_ai/pages/ai_billing_invoices_page.dart';
+import 'package:wameedpos/features/wameed_ai/pages/ai_billing_invoice_detail_page.dart';
+import 'package:wameedpos/features/cashier_gamification/pages/gamification_home_page.dart';
+import 'package:wameedpos/features/cashier_gamification/pages/cashier_history_page.dart';
+import 'package:wameedpos/features/cashier_gamification/pages/gamification_badges_page.dart';
+import 'package:wameedpos/features/cashier_gamification/pages/gamification_anomalies_page.dart';
+import 'package:wameedpos/features/cashier_gamification/pages/gamification_shift_reports_page.dart';
+import 'package:wameedpos/features/cashier_gamification/pages/gamification_settings_page.dart';
+import 'package:wameedpos/features/catalog/pages/category_list_page.dart';
+import 'package:wameedpos/features/catalog/pages/product_form_page.dart';
+import 'package:wameedpos/features/catalog/pages/product_list_page.dart';
+import 'package:wameedpos/features/catalog/pages/supplier_list_page.dart';
+import 'package:wameedpos/features/customers/pages/customer_list_page.dart';
+import 'package:wameedpos/features/inventory/pages/goods_receipt_form_page.dart';
+import 'package:wameedpos/features/inventory/pages/goods_receipts_page.dart';
+import 'package:wameedpos/features/inventory/pages/inventory_page.dart';
+import 'package:wameedpos/features/inventory/pages/purchase_orders_page.dart';
+import 'package:wameedpos/features/inventory/pages/recipes_page.dart';
+import 'package:wameedpos/features/inventory/pages/supplier_returns_page.dart';
+import 'package:wameedpos/features/inventory/pages/supplier_return_form_page.dart';
+import 'package:wameedpos/features/inventory/pages/supplier_return_detail_page.dart';
+import 'package:wameedpos/features/inventory/pages/stock_adjustments_page.dart';
+import 'package:wameedpos/features/inventory/pages/stock_levels_page.dart';
+import 'package:wameedpos/features/inventory/pages/stock_movements_page.dart';
+import 'package:wameedpos/features/inventory/pages/stock_transfers_page.dart';
+import 'package:wameedpos/features/labels/pages/label_designer_page.dart';
+import 'package:wameedpos/features/labels/pages/label_history_page.dart';
+import 'package:wameedpos/features/labels/pages/label_list_page.dart';
+import 'package:wameedpos/features/labels/pages/label_print_queue_page.dart';
+import 'package:wameedpos/features/onboarding/pages/onboarding_wizard_page.dart';
+import 'package:wameedpos/features/onboarding/pages/store_settings_page.dart';
+import 'package:wameedpos/features/onboarding/pages/working_hours_page.dart';
+import 'package:wameedpos/features/orders/pages/order_list_page.dart';
+import 'package:wameedpos/features/transactions/pages/transaction_explorer_page.dart';
+import 'package:wameedpos/features/transactions/pages/transaction_detail_page.dart';
+import 'package:wameedpos/features/debits/pages/debit_list_page.dart';
+import 'package:wameedpos/features/debits/pages/debit_detail_page.dart';
+import 'package:wameedpos/features/debits/pages/debit_form_page.dart';
+import 'package:wameedpos/features/payments/pages/cash_sessions_page.dart';
+import 'package:wameedpos/features/payments/pages/cash_management_page.dart';
+import 'package:wameedpos/features/payments/pages/expenses_page.dart';
+import 'package:wameedpos/features/payments/pages/gift_cards_page.dart';
+import 'package:wameedpos/features/payments/pages/financial_reconciliation_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_installment_providers_page.dart';
+import 'package:wameedpos/features/settings/pages/store_installment_config_page.dart';
+import 'package:wameedpos/features/payments/pages/daily_summary_page.dart';
+import 'package:wameedpos/features/pos_terminal/pages/pos_sessions_page.dart';
+import 'package:wameedpos/features/pos_terminal/pages/pos_terminal_form_page.dart';
+import 'package:wameedpos/features/pos_terminal/pages/pos_terminals_page.dart';
+import 'package:wameedpos/features/pos_terminal/pages/pos_cashier_page.dart';
+import 'package:wameedpos/features/staff/pages/attendance_page.dart';
+import 'package:wameedpos/features/staff/pages/commission_summary_page.dart';
+import 'package:wameedpos/features/staff/pages/role_create_page.dart';
+import 'package:wameedpos/features/staff/pages/role_detail_page.dart';
+import 'package:wameedpos/features/staff/pages/roles_list_page.dart';
+import 'package:wameedpos/features/staff/pages/shift_schedule_page.dart';
+import 'package:wameedpos/features/staff/pages/staff_detail_page.dart';
+import 'package:wameedpos/features/staff/pages/staff_form_page.dart';
+import 'package:wameedpos/features/staff/pages/staff_list_page.dart';
+import 'package:wameedpos/features/subscription/pages/billing_history_page.dart';
+import 'package:wameedpos/features/subscription/pages/plan_selection_page.dart';
+import 'package:wameedpos/features/subscription/pages/subscription_status_page.dart';
+import 'package:wameedpos/features/subscription/pages/invoice_detail_page.dart';
+import 'package:wameedpos/features/subscription/pages/plan_comparison_page.dart';
+import 'package:wameedpos/features/subscription/pages/add_ons_page.dart';
+import 'package:wameedpos/features/provider_payments/pages/provider_payments_page.dart';
+import 'package:wameedpos/features/provider_payments/pages/provider_payment_detail_page.dart';
+import 'package:wameedpos/features/provider_payments/pages/payment_checkout_page.dart';
+import 'package:wameedpos/features/dashboard/pages/owner_dashboard_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_overview_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_payment_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_payment_detail_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_refund_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_cash_session_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_expense_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_gift_card_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_accounting_config_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_thawani_settlement_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_daily_sales_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_infra_overview_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_infra_failed_jobs_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_infra_backups_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_infra_health_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_provider_permissions_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_provider_role_template_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_provider_role_template_detail_page.dart';
 // P1: Provider Management
-import 'package:thawani_pos/features/admin_panel/pages/admin_store_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/pages/admin_store_detail_page.dart';
-import 'package:thawani_pos/features/admin_panel/pages/registration_queue_page.dart';
-import 'package:thawani_pos/features/admin_panel/pages/provider_notes_page.dart';
+import 'package:wameedpos/features/admin_panel/pages/admin_store_list_page.dart';
+import 'package:wameedpos/features/admin_panel/pages/admin_store_detail_page.dart';
+import 'package:wameedpos/features/admin_panel/pages/registration_queue_page.dart';
+import 'package:wameedpos/features/admin_panel/pages/provider_notes_page.dart';
 // P2: Platform Roles
-import 'package:thawani_pos/features/admin_panel/pages/admin_role_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/pages/admin_role_detail_page.dart';
-import 'package:thawani_pos/features/admin_panel/pages/admin_permissions_page.dart';
-import 'package:thawani_pos/features/admin_panel/pages/admin_team_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/pages/admin_team_user_detail_page.dart';
-import 'package:thawani_pos/features/admin_panel/pages/admin_activity_log_page.dart';
+import 'package:wameedpos/features/admin_panel/pages/admin_role_list_page.dart';
+import 'package:wameedpos/features/admin_panel/pages/admin_role_detail_page.dart';
+import 'package:wameedpos/features/admin_panel/pages/admin_permissions_page.dart';
+import 'package:wameedpos/features/admin_panel/pages/admin_team_list_page.dart';
+import 'package:wameedpos/features/admin_panel/pages/admin_team_user_detail_page.dart';
+import 'package:wameedpos/features/admin_panel/pages/admin_activity_log_page.dart';
 // P3: Package & Subscription
-import 'package:thawani_pos/features/admin_panel/pages/admin_plan_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/pages/admin_plan_detail_page.dart';
-import 'package:thawani_pos/features/admin_panel/pages/admin_discount_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/pages/admin_subscription_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/pages/admin_invoice_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/pages/admin_revenue_dashboard_page.dart' as p3;
+import 'package:wameedpos/features/admin_panel/pages/admin_plan_list_page.dart';
+import 'package:wameedpos/features/admin_panel/pages/admin_plan_detail_page.dart';
+import 'package:wameedpos/features/admin_panel/pages/admin_discount_list_page.dart';
+import 'package:wameedpos/features/admin_panel/pages/admin_subscription_list_page.dart';
+import 'package:wameedpos/features/admin_panel/pages/admin_invoice_list_page.dart';
+import 'package:wameedpos/features/admin_panel/pages/admin_revenue_dashboard_page.dart' as p3;
 // P4: User Management
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_provider_user_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_provider_user_detail_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_admin_user_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_admin_user_detail_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_provider_user_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_provider_user_detail_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_admin_user_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_admin_user_detail_page.dart';
 // P5: Billing & Finance
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_billing_invoice_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_billing_invoice_detail_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_failed_payments_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_retry_rules_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_revenue_dashboard_page.dart' as p5;
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_gateway_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_hardware_sale_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_implementation_fee_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_billing_invoice_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_billing_invoice_detail_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_failed_payments_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_retry_rules_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_revenue_dashboard_page.dart' as p5;
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_gateway_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_hardware_sale_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_implementation_fee_list_page.dart';
 // P6: Analytics & Reporting
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_analytics_dashboard_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_analytics_revenue_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_analytics_stores_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_analytics_subscriptions_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_analytics_features_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_analytics_system_health_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_analytics_dashboard_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_analytics_revenue_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_analytics_stores_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_analytics_subscriptions_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_analytics_features_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_analytics_system_health_page.dart';
 // P7: Support Tickets
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_support_ticket_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_canned_response_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_support_ticket_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_canned_response_list_page.dart';
 // P8: Feature Flags
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_feature_flag_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_feature_flag_detail_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_feature_flag_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_feature_flag_detail_page.dart';
 // P9: Notification Templates
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_notification_template_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_notification_log_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_notification_template_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_notification_log_list_page.dart';
 // P10: Log Monitoring / A-B Tests
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_ab_test_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_ab_test_detail_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_ab_test_results_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_platform_event_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_ab_test_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_ab_test_detail_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_ab_test_results_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_platform_event_list_page.dart';
 // P11: Content & Onboarding
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_cms_page_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_cms_page_detail_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_article_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_announcement_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_cms_page_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_cms_page_detail_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_article_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_announcement_list_page.dart';
 // P13: Marketplace
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_marketplace_store_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_marketplace_settlement_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_marketplace_store_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_marketplace_settlement_list_page.dart';
 // P14: Deployment
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_deployment_overview_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_deployment_release_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_deployment_overview_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_deployment_release_list_page.dart';
 // P15B: Security Center
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_security_overview_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_security_alerts_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_security_alert_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_activity_log_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_user_activity_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_security_overview_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_security_alerts_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_security_alert_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_activity_log_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_user_activity_page.dart';
 // Data Management & Health
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_data_management_overview_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_database_backup_list_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_health_dashboard_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_data_management_overview_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_database_backup_list_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_health_dashboard_page.dart';
 // P18: Admin Wameed AI
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_wameed_ai_dashboard_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_wameed_ai_usage_logs_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_wameed_ai_providers_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_wameed_ai_features_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_wameed_ai_llm_models_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_wameed_ai_chats_page.dart';
-import 'package:thawani_pos/features/admin_panel/presentation/pages/admin_wameed_ai_billing_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_wameed_ai_dashboard_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_wameed_ai_usage_logs_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_wameed_ai_providers_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_wameed_ai_features_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_wameed_ai_llm_models_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_wameed_ai_chats_page.dart';
+import 'package:wameedpos/features/admin_panel/presentation/pages/admin_wameed_ai_billing_page.dart';
 // POS Feature #20: ZATCA Compliance
-import 'package:thawani_pos/features/zatca/pages/zatca_dashboard_page.dart';
-import 'package:thawani_pos/features/sync/pages/sync_dashboard_page.dart';
-import 'package:thawani_pos/features/hardware/pages/hardware_dashboard_page.dart';
-import 'package:thawani_pos/features/settings/pages/localization_page.dart';
-import 'package:thawani_pos/features/security/pages/security_dashboard_page.dart';
-import 'package:thawani_pos/features/backup/pages/backup_dashboard_page.dart';
-import 'package:thawani_pos/features/companion/pages/companion_dashboard_page.dart';
-import 'package:thawani_pos/features/pos_customization/pages/customization_dashboard_page.dart';
-import 'package:thawani_pos/features/layout_builder/pages/layout_template_list_page.dart';
-import 'package:thawani_pos/features/layout_builder/pages/layout_builder_canvas_page.dart';
-import 'package:thawani_pos/features/marketplace/pages/marketplace_browse_page.dart';
-import 'package:thawani_pos/features/marketplace/pages/marketplace_listing_detail_page.dart';
-import 'package:thawani_pos/features/marketplace/pages/my_purchases_page.dart';
-import 'package:thawani_pos/features/pos_customization/pages/receipt_templates_browse_page.dart';
-import 'package:thawani_pos/features/pos_customization/pages/receipt_template_detail_page.dart';
-import 'package:thawani_pos/features/pos_customization/pages/cfd_themes_browse_page.dart';
-import 'package:thawani_pos/features/pos_customization/pages/cfd_theme_detail_page.dart';
-import 'package:thawani_pos/features/pos_customization/pages/label_templates_browse_page.dart';
-import 'package:thawani_pos/features/pos_customization/pages/label_template_detail_page.dart';
-import 'package:thawani_pos/features/pos_customization/pages/template_preview_page.dart';
-import 'package:thawani_pos/features/auto_update/pages/auto_update_dashboard_page.dart';
-import 'package:thawani_pos/features/accessibility/pages/accessibility_dashboard_page.dart';
-import 'package:thawani_pos/features/nice_to_have/presentation/nice_to_have_dashboard_page.dart';
+import 'package:wameedpos/features/zatca/pages/zatca_dashboard_page.dart';
+import 'package:wameedpos/features/sync/pages/sync_dashboard_page.dart';
+import 'package:wameedpos/features/hardware/pages/hardware_dashboard_page.dart';
+import 'package:wameedpos/features/settings/pages/localization_page.dart';
+import 'package:wameedpos/features/security/pages/security_dashboard_page.dart';
+import 'package:wameedpos/features/backup/pages/backup_dashboard_page.dart';
+import 'package:wameedpos/features/companion/pages/companion_dashboard_page.dart';
+import 'package:wameedpos/features/pos_customization/pages/customization_dashboard_page.dart';
+import 'package:wameedpos/features/layout_builder/pages/layout_template_list_page.dart';
+import 'package:wameedpos/features/layout_builder/pages/layout_builder_canvas_page.dart';
+import 'package:wameedpos/features/marketplace/pages/marketplace_browse_page.dart';
+import 'package:wameedpos/features/marketplace/pages/marketplace_listing_detail_page.dart';
+import 'package:wameedpos/features/marketplace/pages/my_purchases_page.dart';
+import 'package:wameedpos/features/pos_customization/pages/receipt_templates_browse_page.dart';
+import 'package:wameedpos/features/pos_customization/pages/receipt_template_detail_page.dart';
+import 'package:wameedpos/features/pos_customization/pages/cfd_themes_browse_page.dart';
+import 'package:wameedpos/features/pos_customization/pages/cfd_theme_detail_page.dart';
+import 'package:wameedpos/features/pos_customization/pages/label_templates_browse_page.dart';
+import 'package:wameedpos/features/pos_customization/pages/label_template_detail_page.dart';
+import 'package:wameedpos/features/pos_customization/pages/template_preview_page.dart';
+import 'package:wameedpos/features/auto_update/pages/auto_update_dashboard_page.dart';
+import 'package:wameedpos/features/accessibility/pages/accessibility_dashboard_page.dart';
+import 'package:wameedpos/features/nice_to_have/presentation/nice_to_have_dashboard_page.dart';
 // Reports
-import 'package:thawani_pos/features/reports/pages/dashboard_page.dart' as reports;
-import 'package:thawani_pos/features/reports/pages/sales_summary_page.dart';
-import 'package:thawani_pos/features/reports/pages/hourly_sales_page.dart';
-import 'package:thawani_pos/features/reports/pages/product_performance_page.dart';
-import 'package:thawani_pos/features/reports/pages/category_breakdown_page.dart';
-import 'package:thawani_pos/features/reports/pages/payment_methods_page.dart';
-import 'package:thawani_pos/features/reports/pages/staff_performance_page.dart';
-import 'package:thawani_pos/features/reports/pages/inventory_report_page.dart';
-import 'package:thawani_pos/features/reports/pages/financial_report_page.dart';
-import 'package:thawani_pos/features/reports/pages/customer_report_page.dart';
+import 'package:wameedpos/features/reports/pages/dashboard_page.dart' as reports;
+import 'package:wameedpos/features/reports/pages/sales_summary_page.dart';
+import 'package:wameedpos/features/reports/pages/hourly_sales_page.dart';
+import 'package:wameedpos/features/reports/pages/product_performance_page.dart';
+import 'package:wameedpos/features/reports/pages/category_breakdown_page.dart';
+import 'package:wameedpos/features/reports/pages/payment_methods_page.dart';
+import 'package:wameedpos/features/reports/pages/staff_performance_page.dart';
+import 'package:wameedpos/features/reports/pages/inventory_report_page.dart';
+import 'package:wameedpos/features/reports/pages/financial_report_page.dart';
+import 'package:wameedpos/features/reports/pages/customer_report_page.dart';
 // Accounting
-import 'package:thawani_pos/features/accounting/pages/accounting_settings_page.dart';
-import 'package:thawani_pos/features/accounting/pages/account_mapping_page.dart';
-import 'package:thawani_pos/features/accounting/pages/export_history_page.dart';
-import 'package:thawani_pos/features/accounting/pages/auto_export_settings_page.dart';
+import 'package:wameedpos/features/accounting/pages/accounting_settings_page.dart';
+import 'package:wameedpos/features/accounting/pages/account_mapping_page.dart';
+import 'package:wameedpos/features/accounting/pages/export_history_page.dart';
+import 'package:wameedpos/features/accounting/pages/auto_export_settings_page.dart';
 // Promotions
-import 'package:thawani_pos/features/promotions/pages/promotion_list_page.dart';
-import 'package:thawani_pos/features/promotions/pages/promotion_analytics_page.dart';
+import 'package:wameedpos/features/promotions/pages/promotion_list_page.dart';
+import 'package:wameedpos/features/promotions/pages/promotion_analytics_page.dart';
 // Notifications
-import 'package:thawani_pos/features/notifications/pages/notifications_list_page.dart';
-import 'package:thawani_pos/features/notifications/pages/notification_preferences_page.dart';
+import 'package:wameedpos/features/notifications/pages/notifications_list_page.dart';
+import 'package:wameedpos/features/notifications/pages/notification_preferences_page.dart';
+import 'package:wameedpos/features/notifications/pages/notification_delivery_logs_page.dart';
+import 'package:wameedpos/features/notifications/pages/notification_schedules_page.dart';
+import 'package:wameedpos/features/notifications/pages/notification_sound_configs_page.dart';
 // Support
-import 'package:thawani_pos/features/support/pages/support_dashboard_page.dart';
-import 'package:thawani_pos/features/support/pages/create_ticket_page.dart';
-import 'package:thawani_pos/features/support/pages/ticket_detail_page.dart';
-import 'package:thawani_pos/features/support/pages/knowledge_base_page.dart';
-import 'package:thawani_pos/features/support/pages/article_detail_page.dart';
+import 'package:wameedpos/features/support/pages/support_dashboard_page.dart';
+import 'package:wameedpos/features/support/pages/create_ticket_page.dart';
+import 'package:wameedpos/features/support/pages/ticket_detail_page.dart';
+import 'package:wameedpos/features/support/pages/knowledge_base_page.dart';
+import 'package:wameedpos/features/support/pages/article_detail_page.dart';
 // Delivery
-import 'package:thawani_pos/features/delivery_integration/pages/delivery_dashboard_page.dart';
-import 'package:thawani_pos/features/delivery_integration/pages/delivery_config_page.dart';
-import 'package:thawani_pos/features/delivery_integration/pages/delivery_order_detail_page.dart';
-import 'package:thawani_pos/features/delivery_integration/pages/menu_sync_page.dart';
-import 'package:thawani_pos/features/delivery_integration/pages/delivery_webhook_logs_page.dart';
-import 'package:thawani_pos/features/delivery_integration/pages/delivery_status_push_logs_page.dart';
+import 'package:wameedpos/features/delivery_integration/pages/delivery_dashboard_page.dart';
+import 'package:wameedpos/features/delivery_integration/pages/delivery_config_page.dart';
+import 'package:wameedpos/features/delivery_integration/pages/delivery_order_detail_page.dart';
+import 'package:wameedpos/features/delivery_integration/pages/menu_sync_page.dart';
+import 'package:wameedpos/features/delivery_integration/pages/delivery_webhook_logs_page.dart';
+import 'package:wameedpos/features/delivery_integration/pages/delivery_status_push_logs_page.dart';
 // Thawani Integration
-import 'package:thawani_pos/features/thawani_integration/pages/thawani_dashboard_page.dart';
-import 'package:thawani_pos/features/thawani_integration/pages/thawani_sync_page.dart';
-import 'package:thawani_pos/features/thawani_integration/pages/thawani_category_mappings_page.dart';
-import 'package:thawani_pos/features/thawani_integration/pages/thawani_sync_logs_page.dart';
+import 'package:wameedpos/features/thawani_integration/pages/thawani_dashboard_page.dart';
+import 'package:wameedpos/features/thawani_integration/pages/thawani_sync_page.dart';
+import 'package:wameedpos/features/thawani_integration/pages/thawani_category_mappings_page.dart';
+import 'package:wameedpos/features/thawani_integration/pages/thawani_sync_logs_page.dart';
 // Branches
-import 'package:thawani_pos/features/branches/pages/branch_list_page.dart';
-import 'package:thawani_pos/features/branches/pages/branch_detail_page.dart';
-import 'package:thawani_pos/features/branches/pages/branch_form_page.dart';
-import 'package:thawani_pos/features/branches/models/store.dart';
+import 'package:wameedpos/features/branches/pages/branch_list_page.dart';
+import 'package:wameedpos/features/branches/pages/branch_detail_page.dart';
+import 'package:wameedpos/features/branches/pages/branch_form_page.dart';
+import 'package:wameedpos/features/branches/models/store.dart';
 // Settings
-import 'package:thawani_pos/features/settings/pages/settings_page.dart';
-import 'package:thawani_pos/features/settings/pages/tax_settings_page.dart';
-import 'package:thawani_pos/features/settings/pages/receipt_settings_page.dart';
-import 'package:thawani_pos/features/settings/pages/pos_behavior_page.dart';
-import 'package:thawani_pos/features/settings/pages/working_hours_page.dart' as wh;
-import 'package:thawani_pos/features/settings/pages/store_profile_page.dart';
-import 'package:thawani_pos/features/settings/pages/about_page.dart';
+import 'package:wameedpos/features/settings/pages/settings_page.dart';
+import 'package:wameedpos/features/settings/pages/tax_settings_page.dart';
+import 'package:wameedpos/features/settings/pages/receipt_settings_page.dart';
+import 'package:wameedpos/features/settings/pages/pos_behavior_page.dart';
+import 'package:wameedpos/features/settings/pages/working_hours_page.dart' as wh;
+import 'package:wameedpos/features/settings/pages/store_profile_page.dart';
+import 'package:wameedpos/features/settings/pages/about_page.dart';
 // Industry Workflows
-import 'package:thawani_pos/features/industry_pharmacy/pages/pharmacy_dashboard_page.dart';
-import 'package:thawani_pos/features/industry_jewelry/pages/jewelry_dashboard_page.dart';
-import 'package:thawani_pos/features/industry_electronics/pages/electronics_dashboard_page.dart';
-import 'package:thawani_pos/features/industry_florist/pages/florist_dashboard_page.dart';
-import 'package:thawani_pos/features/industry_bakery/pages/bakery_dashboard_page.dart';
-import 'package:thawani_pos/features/industry_restaurant/pages/restaurant_dashboard_page.dart';
+import 'package:wameedpos/features/industry_pharmacy/pages/pharmacy_dashboard_page.dart';
+import 'package:wameedpos/features/industry_jewelry/pages/jewelry_dashboard_page.dart';
+import 'package:wameedpos/features/industry_electronics/pages/electronics_dashboard_page.dart';
+import 'package:wameedpos/features/industry_florist/pages/florist_dashboard_page.dart';
+import 'package:wameedpos/features/industry_bakery/pages/bakery_dashboard_page.dart';
+import 'package:wameedpos/features/industry_restaurant/pages/restaurant_dashboard_page.dart';
 // Predefined Catalog
-import 'package:thawani_pos/features/predefined_catalog/pages/predefined_catalog_page.dart';
-import 'package:thawani_pos/features/predefined_catalog/pages/predefined_products_page.dart';
-import 'package:thawani_pos/core/router/route_names.dart';
+import 'package:wameedpos/features/predefined_catalog/pages/predefined_catalog_page.dart';
+import 'package:wameedpos/features/predefined_catalog/pages/predefined_products_page.dart';
+import 'package:wameedpos/core/router/route_names.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authProvider);
@@ -562,6 +568,37 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               final invoiceId = state.pathParameters['invoiceId']!;
               return InvoiceDetailPage(invoiceId: invoiceId);
+            },
+          ),
+
+          // ─── Provider Payments (PayTabs) ──────────────
+          GoRoute(
+            path: Routes.providerPayments,
+            name: 'providerPayments',
+            builder: (context, state) => const ProviderPaymentsPage(),
+          ),
+          GoRoute(
+            path: '${Routes.providerPaymentDetail}/:paymentId',
+            name: 'providerPaymentDetail',
+            builder: (context, state) {
+              final paymentId = state.pathParameters['paymentId']!;
+              return ProviderPaymentDetailPage(paymentId: paymentId);
+            },
+          ),
+          GoRoute(
+            path: Routes.providerPaymentCheckout,
+            name: 'providerPaymentCheckout',
+            builder: (context, state) {
+              final extra = state.extra as Map<String, dynamic>? ?? {};
+              return PaymentCheckoutPage(
+                purpose: extra['purpose'] as String? ?? 'other',
+                purposeLabel: extra['purpose_label'] as String? ?? 'Payment',
+                amount: (extra['amount'] as num?)?.toDouble() ?? 0,
+                taxAmount: (extra['tax_amount'] as num?)?.toDouble(),
+                subscriptionPlanId: extra['subscription_plan_id'] as String?,
+                addOnId: extra['add_on_id'] as String?,
+                notes: extra['notes'] as String?,
+              );
             },
           ),
 
@@ -1335,6 +1372,21 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             path: Routes.notificationPreferences,
             name: 'notificationPreferences',
             builder: (context, state) => const NotificationPreferencesPage(),
+          ),
+          GoRoute(
+            path: Routes.notificationDeliveryLogs,
+            name: 'notificationDeliveryLogs',
+            builder: (context, state) => const NotificationDeliveryLogsPage(),
+          ),
+          GoRoute(
+            path: Routes.notificationSchedules,
+            name: 'notificationSchedules',
+            builder: (context, state) => const NotificationSchedulesPage(),
+          ),
+          GoRoute(
+            path: Routes.notificationSoundConfigs,
+            name: 'notificationSoundConfigs',
+            builder: (context, state) => const NotificationSoundConfigsPage(),
           ),
 
           // ─── Support ───

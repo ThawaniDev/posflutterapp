@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/widgets/pos_badge.dart';
-import 'package:thawani_pos/core/widgets/pos_input.dart';
-import 'package:thawani_pos/core/widgets/pos_mobile_data_list.dart';
-import 'package:thawani_pos/core/widgets/pos_table.dart';
-import 'package:thawani_pos/core/widgets/responsive_layout.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/orders/enums/order_status.dart';
-import 'package:thawani_pos/features/orders/models/order.dart';
-import 'package:thawani_pos/features/orders/providers/order_providers.dart';
-import 'package:thawani_pos/features/orders/providers/order_state.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/pos_badge.dart';
+import 'package:wameedpos/core/widgets/pos_input.dart';
+import 'package:wameedpos/core/widgets/pos_mobile_data_list.dart';
+import 'package:wameedpos/core/widgets/pos_table.dart';
+import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/orders/enums/order_status.dart';
+import 'package:wameedpos/features/orders/models/order.dart';
+import 'package:wameedpos/features/orders/providers/order_providers.dart';
+import 'package:wameedpos/features/orders/providers/order_state.dart';
 
 class OrderListPage extends ConsumerStatefulWidget {
   const OrderListPage({super.key});

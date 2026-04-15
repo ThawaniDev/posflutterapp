@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/theme/app_typography.dart';
-import 'package:thawani_pos/core/widgets/pos_button.dart';
-import 'package:thawani_pos/core/widgets/pos_card.dart';
-import 'package:thawani_pos/core/widgets/pos_error_state.dart';
-import 'package:thawani_pos/core/widgets/pos_loading_skeleton.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/support/enums/ticket_status.dart';
-import 'package:thawani_pos/features/support/models/support_ticket.dart';
-import 'package:thawani_pos/features/support/providers/support_providers.dart';
-import 'package:thawani_pos/features/support/providers/support_state.dart';
-import 'package:thawani_pos/features/support/widgets/message_bubble.dart';
-import 'package:thawani_pos/features/support/widgets/ticket_priority_badge.dart';
-import 'package:thawani_pos/features/support/widgets/ticket_status_badge.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/widgets/pos_button.dart';
+import 'package:wameedpos/core/widgets/pos_card.dart';
+import 'package:wameedpos/core/widgets/pos_error_state.dart';
+import 'package:wameedpos/core/widgets/pos_loading_skeleton.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/support/enums/ticket_status.dart';
+import 'package:wameedpos/features/support/models/support_ticket.dart';
+import 'package:wameedpos/features/support/providers/support_providers.dart';
+import 'package:wameedpos/features/support/providers/support_state.dart';
+import 'package:wameedpos/features/support/widgets/message_bubble.dart';
+import 'package:wameedpos/features/support/widgets/ticket_priority_badge.dart';
+import 'package:wameedpos/features/support/widgets/ticket_status_badge.dart';
 
 class TicketDetailPage extends ConsumerStatefulWidget {
   final String ticketId;

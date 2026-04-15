@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:thawani_pos/features/hardware/enums/hardware_device_type.dart';
+import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
 
 /// Detected device info
 class DetectedDevice {

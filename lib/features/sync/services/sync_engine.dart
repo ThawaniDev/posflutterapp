@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:thawani_pos/features/sync/data/remote/sync_api_service.dart';
-import 'package:thawani_pos/features/sync/services/connectivity_service.dart';
-import 'package:thawani_pos/features/sync/services/sync_queue_manager.dart';
-import 'package:thawani_pos/features/sync/services/websocket_service.dart';
+import 'package:wameedpos/features/sync/data/remote/sync_api_service.dart';
+import 'package:wameedpos/features/sync/services/connectivity_service.dart';
+import 'package:wameedpos/features/sync/services/sync_queue_manager.dart';
+import 'package:wameedpos/features/sync/services/websocket_service.dart';
 
 /// Core sync orchestrator that coordinates connectivity, queue replay,
 /// periodic sync, and real-time WebSocket events.

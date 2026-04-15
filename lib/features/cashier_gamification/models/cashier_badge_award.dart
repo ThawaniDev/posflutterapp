@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/cashier_gamification/models/cashier_badge.dart';
-import 'package:thawani_pos/features/cashier_gamification/models/cashier_performance_snapshot.dart';
+import 'package:wameedpos/features/cashier_gamification/models/cashier_badge.dart';
+import 'package:wameedpos/features/cashier_gamification/models/cashier_performance_snapshot.dart';
 
 class CashierBadgeAward {
   final String id;

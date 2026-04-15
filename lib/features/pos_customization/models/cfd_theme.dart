@@ -1,7 +1,7 @@
-import 'package:thawani_pos/features/pos_customization/enums/animation_style.dart';
-import 'package:thawani_pos/features/pos_customization/enums/cfd_cart_layout.dart';
-import 'package:thawani_pos/features/pos_customization/enums/cfd_idle_layout.dart';
-import 'package:thawani_pos/features/onboarding/enums/thank_you_animation.dart';
+import 'package:wameedpos/features/pos_customization/enums/animation_style.dart';
+import 'package:wameedpos/features/pos_customization/enums/cfd_cart_layout.dart';
+import 'package:wameedpos/features/pos_customization/enums/cfd_idle_layout.dart';
+import 'package:wameedpos/features/onboarding/enums/thank_you_animation.dart';
 
 class CfdTheme {
   final String id;
@@ -127,13 +127,12 @@ class CfdTheme {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CfdTheme && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is CfdTheme && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'CfdTheme(id: $id, name: $name, slug: $slug, backgroundColor: $backgroundColor, textColor: $textColor, accentColor: $accentColor, ...)';
+  String toString() =>
+      'CfdTheme(id: $id, name: $name, slug: $slug, backgroundColor: $backgroundColor, textColor: $textColor, accentColor: $accentColor, ...)';
 }

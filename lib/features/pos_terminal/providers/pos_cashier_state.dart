@@ -1,7 +1,7 @@
-import 'package:thawani_pos/features/catalog/models/product.dart';
-import 'package:thawani_pos/features/customers/models/customer.dart';
-import 'package:thawani_pos/features/pos_terminal/models/cart_item.dart';
-import 'package:thawani_pos/features/pos_terminal/models/pos_session.dart';
+import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/features/customers/models/customer.dart';
+import 'package:wameedpos/features/pos_terminal/models/cart_item.dart';
+import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
 
 // ─── Cart State ─────────────────────────────────────────────────
 

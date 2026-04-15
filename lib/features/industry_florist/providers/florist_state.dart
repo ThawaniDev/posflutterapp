@@ -1,6 +1,6 @@
-import 'package:thawani_pos/features/industry_florist/models/flower_arrangement.dart';
-import 'package:thawani_pos/features/industry_florist/models/flower_freshness_log.dart';
-import 'package:thawani_pos/features/industry_florist/models/flower_subscription.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_arrangement.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_freshness_log.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_subscription.dart';
 
 sealed class FloristState {
   const FloristState();

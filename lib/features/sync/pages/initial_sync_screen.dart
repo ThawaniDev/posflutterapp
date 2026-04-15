@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/features/sync/providers/sync_providers.dart';
-import 'package:thawani_pos/features/sync/services/connectivity_service.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/sync/providers/sync_providers.dart';
+import 'package:wameedpos/features/sync/services/connectivity_service.dart';
 
 class InitialSyncScreen extends ConsumerStatefulWidget {
   final VoidCallback onComplete;

@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/constants/api_endpoints.dart';
-import 'package:thawani_pos/core/network/api_response.dart';
-import 'package:thawani_pos/core/network/dio_client.dart';
-import 'package:thawani_pos/features/pos_customization/models/cfd_theme.dart';
-import 'package:thawani_pos/features/pos_customization/models/label_layout_template.dart';
-import 'package:thawani_pos/features/pos_customization/models/receipt_layout_template.dart';
+import 'package:wameedpos/core/constants/api_endpoints.dart';
+import 'package:wameedpos/core/network/api_response.dart';
+import 'package:wameedpos/core/network/dio_client.dart';
+import 'package:wameedpos/features/pos_customization/models/cfd_theme.dart';
+import 'package:wameedpos/features/pos_customization/models/label_layout_template.dart';
+import 'package:wameedpos/features/pos_customization/models/receipt_layout_template.dart';
 
 final customizationApiServiceProvider = Provider<CustomizationApiService>((ref) {
   return CustomizationApiService(ref.watch(dioClientProvider));

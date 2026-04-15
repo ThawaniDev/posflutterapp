@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/industry_florist/data/remote/florist_api_service.dart';
-import 'package:thawani_pos/features/industry_florist/models/flower_arrangement.dart';
-import 'package:thawani_pos/features/industry_florist/models/flower_freshness_log.dart';
-import 'package:thawani_pos/features/industry_florist/models/flower_subscription.dart';
+import 'package:wameedpos/features/industry_florist/data/remote/florist_api_service.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_arrangement.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_freshness_log.dart';
+import 'package:wameedpos/features/industry_florist/models/flower_subscription.dart';
 
 final floristRepositoryProvider = Provider<FloristRepository>((ref) {
   return FloristRepository(apiService: ref.watch(floristApiServiceProvider));

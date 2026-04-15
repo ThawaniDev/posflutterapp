@@ -1,7 +1,7 @@
-import 'package:thawani_pos/features/pos_terminal/models/held_cart.dart';
-import 'package:thawani_pos/features/pos_terminal/models/pos_session.dart';
-import 'package:thawani_pos/features/pos_terminal/models/register.dart';
-import 'package:thawani_pos/features/pos_terminal/models/transaction.dart';
+import 'package:wameedpos/features/pos_terminal/models/held_cart.dart';
+import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
+import 'package:wameedpos/features/pos_terminal/models/register.dart';
+import 'package:wameedpos/features/pos_terminal/models/transaction.dart';
 
 // ─── POS Sessions State ─────────────────────────────────────────
 

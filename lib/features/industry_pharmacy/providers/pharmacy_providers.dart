@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/industry_pharmacy/providers/pharmacy_state.dart';
-import 'package:thawani_pos/features/industry_pharmacy/repositories/pharmacy_repository.dart';
+import 'package:wameedpos/features/industry_pharmacy/providers/pharmacy_state.dart';
+import 'package:wameedpos/features/industry_pharmacy/repositories/pharmacy_repository.dart';
 
 final pharmacyProvider = StateNotifierProvider<PharmacyNotifier, PharmacyState>((ref) {
   return PharmacyNotifier(ref.watch(pharmacyRepositoryProvider));

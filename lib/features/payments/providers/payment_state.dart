@@ -1,7 +1,7 @@
-import 'package:thawani_pos/features/payments/models/cash_session.dart';
-import 'package:thawani_pos/features/payments/models/expense.dart';
-import 'package:thawani_pos/features/payments/models/gift_card.dart';
-import 'package:thawani_pos/features/payments/models/payment.dart';
+import 'package:wameedpos/features/payments/models/cash_session.dart';
+import 'package:wameedpos/features/payments/models/expense.dart';
+import 'package:wameedpos/features/payments/models/gift_card.dart';
+import 'package:wameedpos/features/payments/models/payment.dart';
 
 // ─── Payments State ─────────────────────────────────────────────
 

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
-import 'package:thawani_pos/features/debits/data/remote/debits_api_service.dart';
-import 'package:thawani_pos/features/debits/models/debit.dart';
+import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:wameedpos/features/debits/data/remote/debits_api_service.dart';
+import 'package:wameedpos/features/debits/models/debit.dart';
 
 final debitRepositoryProvider = Provider<DebitRepository>((ref) {
   return DebitRepository(apiService: ref.watch(debitsApiServiceProvider));

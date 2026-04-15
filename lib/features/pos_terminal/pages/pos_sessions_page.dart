@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/theme/app_typography.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/pos_terminal/models/pos_session.dart';
-import 'package:thawani_pos/features/pos_terminal/providers/pos_terminal_providers.dart';
-import 'package:thawani_pos/features/pos_terminal/providers/pos_terminal_state.dart';
-import 'package:thawani_pos/features/security/enums/session_status.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
+import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_providers.dart';
+import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_state.dart';
+import 'package:wameedpos/features/security/enums/session_status.dart';
 
 class PosSessionsPage extends ConsumerStatefulWidget {
   const PosSessionsPage({super.key});

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/payments/providers/payment_state.dart';
-import 'package:thawani_pos/features/payments/repositories/payment_repository.dart';
+import 'package:wameedpos/features/payments/providers/payment_state.dart';
+import 'package:wameedpos/features/payments/repositories/payment_repository.dart';
 
 // ─── Payments Provider ──────────────────────────────────────────
 

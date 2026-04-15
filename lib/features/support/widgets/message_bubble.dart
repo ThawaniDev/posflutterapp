@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/theme/app_spacing.dart';
-import 'package:thawani_pos/core/theme/app_typography.dart';
-import 'package:thawani_pos/features/support/enums/ticket_sender_type.dart';
-import 'package:thawani_pos/features/support/models/support_ticket_message.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
+import 'package:wameedpos/features/support/enums/ticket_sender_type.dart';
+import 'package:wameedpos/features/support/models/support_ticket_message.dart';
 
 class MessageBubble extends StatelessWidget {
   const MessageBubble({super.key, required this.message});

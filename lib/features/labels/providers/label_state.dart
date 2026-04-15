@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/labels/models/label_template.dart';
+import 'package:wameedpos/features/labels/models/label_template.dart';
 
 // ─── Label Templates State ──────────────────────────────────────
 

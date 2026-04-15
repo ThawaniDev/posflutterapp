@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/features/accessibility/providers/accessibility_providers.dart';
-import 'package:thawani_pos/features/accessibility/widgets/accessibility_prefs_widget.dart';
-import 'package:thawani_pos/features/accessibility/widgets/shortcuts_widget.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/features/accessibility/providers/accessibility_providers.dart';
+import 'package:wameedpos/features/accessibility/widgets/accessibility_prefs_widget.dart';
+import 'package:wameedpos/features/accessibility/widgets/shortcuts_widget.dart';
 
 class AccessibilityDashboardPage extends ConsumerStatefulWidget {
   const AccessibilityDashboardPage({super.key});

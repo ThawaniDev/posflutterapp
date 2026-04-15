@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/labels/providers/label_state.dart';
-import 'package:thawani_pos/features/labels/repositories/label_repository.dart';
+import 'package:wameedpos/features/labels/providers/label_state.dart';
+import 'package:wameedpos/features/labels/repositories/label_repository.dart';
 
 // ─── Label Templates Provider ───────────────────────────────────
 

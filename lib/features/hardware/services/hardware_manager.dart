@@ -1,16 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:thawani_pos/features/hardware/enums/hardware_device_type.dart';
-import 'package:thawani_pos/features/hardware/models/hardware_configuration.dart';
-import 'package:thawani_pos/features/hardware/services/barcode_scanner_service.dart';
-import 'package:thawani_pos/features/hardware/services/card_terminal_service.dart';
-import 'package:thawani_pos/features/hardware/services/cash_drawer_service.dart';
-import 'package:thawani_pos/features/hardware/services/customer_display_service.dart';
-import 'package:thawani_pos/features/hardware/services/label_printer_service.dart';
-import 'package:thawani_pos/features/hardware/services/nfc_reader_service.dart';
-import 'package:thawani_pos/features/hardware/services/receipt_printer_service.dart';
-import 'package:thawani_pos/features/hardware/services/weighing_scale_service.dart';
+import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
+import 'package:wameedpos/features/hardware/models/hardware_configuration.dart';
+import 'package:wameedpos/features/hardware/services/barcode_scanner_service.dart';
+import 'package:wameedpos/features/hardware/services/card_terminal_service.dart';
+import 'package:wameedpos/features/hardware/services/cash_drawer_service.dart';
+import 'package:wameedpos/features/hardware/services/customer_display_service.dart';
+import 'package:wameedpos/features/hardware/services/label_printer_service.dart';
+import 'package:wameedpos/features/hardware/services/nfc_reader_service.dart';
+import 'package:wameedpos/features/hardware/services/receipt_printer_service.dart';
+import 'package:wameedpos/features/hardware/services/weighing_scale_service.dart';
 
 /// Peripheral connection status
 class PeripheralStatus {

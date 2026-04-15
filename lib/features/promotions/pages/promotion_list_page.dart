@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/promotions/enums/promotion_type.dart';
-import 'package:thawani_pos/features/promotions/models/promotion.dart';
-import 'package:thawani_pos/features/promotions/providers/promotion_providers.dart';
-import 'package:thawani_pos/features/promotions/pages/promotion_analytics_page.dart';
-import 'package:thawani_pos/features/promotions/providers/promotion_state.dart';
-import 'package:thawani_pos/features/promotions/repositories/promotion_repository.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/promotions/enums/promotion_type.dart';
+import 'package:wameedpos/features/promotions/models/promotion.dart';
+import 'package:wameedpos/features/promotions/providers/promotion_providers.dart';
+import 'package:wameedpos/features/promotions/pages/promotion_analytics_page.dart';
+import 'package:wameedpos/features/promotions/providers/promotion_state.dart';
+import 'package:wameedpos/features/promotions/repositories/promotion_repository.dart';
 
 class PromotionListPage extends ConsumerStatefulWidget {
   const PromotionListPage({super.key});

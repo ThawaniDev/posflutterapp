@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/branches/enums/register_platform.dart';
+import 'package:wameedpos/features/branches/enums/register_platform.dart';
 
 class Register {
   final String id;
@@ -88,13 +88,12 @@ class Register {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Register && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is Register && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'Register(id: $id, storeId: $storeId, name: $name, deviceId: $deviceId, appVersion: $appVersion, platform: $platform, ...)';
+  String toString() =>
+      'Register(id: $id, storeId: $storeId, name: $name, deviceId: $deviceId, appVersion: $appVersion, platform: $platform, ...)';
 }

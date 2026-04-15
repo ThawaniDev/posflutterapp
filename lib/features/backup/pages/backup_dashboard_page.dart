@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/l10n/app_localizations.dart';
-import 'package:thawani_pos/features/backup/providers/backup_providers.dart';
-import 'package:thawani_pos/features/backup/widgets/backup_list_widget.dart';
-import 'package:thawani_pos/features/backup/widgets/backup_schedule_widget.dart';
-import 'package:thawani_pos/features/backup/widgets/backup_storage_widget.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/features/backup/providers/backup_providers.dart';
+import 'package:wameedpos/features/backup/widgets/backup_list_widget.dart';
+import 'package:wameedpos/features/backup/widgets/backup_schedule_widget.dart';
+import 'package:wameedpos/features/backup/widgets/backup_storage_widget.dart';
 
 class BackupDashboardPage extends ConsumerStatefulWidget {
   const BackupDashboardPage({super.key});

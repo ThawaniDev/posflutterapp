@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/staff/models/role.dart';
-import 'package:thawani_pos/features/staff/models/permission.dart';
+import 'package:wameedpos/features/staff/models/role.dart';
+import 'package:wameedpos/features/staff/models/permission.dart';
 
 void main() {
   group('Role', () {
@@ -16,20 +16,8 @@ void main() {
         'created_at': '2024-01-01T00:00:00.000Z',
         'updated_at': '2024-06-15T10:30:00.000Z',
         'permissions': [
-          {
-            'id': 1,
-            'name': 'pos.sell',
-            'display_name': 'Sell',
-            'module': 'pos',
-            'requires_pin': false,
-          },
-          {
-            'id': 2,
-            'name': 'pos.refund',
-            'display_name': 'Refund',
-            'module': 'pos',
-            'requires_pin': true,
-          },
+          {'id': 1, 'name': 'pos.sell', 'display_name': 'Sell', 'module': 'pos', 'requires_pin': false},
+          {'id': 2, 'name': 'pos.refund', 'display_name': 'Refund', 'module': 'pos', 'requires_pin': true},
         ],
       };
 
@@ -49,23 +37,14 @@ void main() {
     });
 
     test('fromJson handles null permissions', () {
-      final json = {
-        'id': 1,
-        'name': 'basic',
-        'display_name': 'Basic',
-      };
+      final json = {'id': 1, 'name': 'basic', 'display_name': 'Basic'};
 
       final role = Role.fromJson(json);
       expect(role.permissions, isNull);
     });
 
     test('fromJson handles empty permissions array', () {
-      final json = {
-        'id': 1,
-        'name': 'empty',
-        'display_name': 'Empty',
-        'permissions': [],
-      };
+      final json = {'id': 1, 'name': 'empty', 'display_name': 'Empty', 'permissions': []};
 
       final role = Role.fromJson(json);
       expect(role.permissions, isNotNull);
@@ -73,11 +52,7 @@ void main() {
     });
 
     test('fromJson defaults guard_name to staff', () {
-      final json = {
-        'id': 1,
-        'name': 'test',
-        'display_name': 'Test',
-      };
+      final json = {'id': 1, 'name': 'test', 'display_name': 'Test'};
 
       final role = Role.fromJson(json);
       expect(role.guardName, 'staff');
@@ -90,15 +65,7 @@ void main() {
         displayName: 'Branch Manager',
         storeId: 'store-1',
         isPredefined: true,
-        permissions: [
-          Permission(
-            id: 1,
-            name: 'orders.view',
-            displayName: 'View Orders',
-            module: 'orders',
-            requiresPin: false,
-          ),
-        ],
+        permissions: [Permission(id: 1, name: 'orders.view', displayName: 'View Orders', module: 'orders', requiresPin: false)],
       );
 
       final json = role.toJson();
@@ -154,25 +121,14 @@ void main() {
     });
 
     test('fromJson defaults requiresPin to false', () {
-      final json = {
-        'id': 1,
-        'name': 'pos.sell',
-        'display_name': 'Sell',
-        'module': 'pos',
-      };
+      final json = {'id': 1, 'name': 'pos.sell', 'display_name': 'Sell', 'module': 'pos'};
 
       final perm = Permission.fromJson(json);
       expect(perm.requiresPin, false);
     });
 
     test('toJson serializes correctly', () {
-      final perm = Permission(
-        id: 10,
-        name: 'catalog.edit',
-        displayName: 'Edit Catalog',
-        module: 'catalog',
-        requiresPin: false,
-      );
+      final perm = Permission(id: 10, name: 'catalog.edit', displayName: 'Edit Catalog', module: 'catalog', requiresPin: false);
 
       final json = perm.toJson();
       expect(json['id'], 10);
@@ -182,13 +138,7 @@ void main() {
     });
 
     test('handles Arabic display names', () {
-      final json = {
-        'id': 1,
-        'name': 'pos.sell',
-        'display_name': 'Sell',
-        'display_name_ar': 'بيع',
-        'module': 'pos',
-      };
+      final json = {'id': 1, 'name': 'pos.sell', 'display_name': 'Sell', 'display_name_ar': 'بيع', 'module': 'pos'};
 
       final perm = Permission.fromJson(json);
       expect(perm.displayNameAr, 'بيع');

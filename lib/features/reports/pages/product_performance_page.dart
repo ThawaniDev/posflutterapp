@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/core/theme/app_colors.dart';
-import 'package:thawani_pos/core/widgets/widgets.dart';
-import 'package:thawani_pos/features/reports/models/report_filters.dart';
-import 'package:thawani_pos/features/reports/providers/report_providers.dart';
-import 'package:thawani_pos/features/reports/providers/report_state.dart';
-import 'package:thawani_pos/features/reports/widgets/report_charts.dart';
-import 'package:thawani_pos/features/reports/widgets/report_filter_panel.dart';
-import 'package:thawani_pos/features/reports/widgets/report_widgets.dart';
+import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/reports/models/report_filters.dart';
+import 'package:wameedpos/features/reports/providers/report_providers.dart';
+import 'package:wameedpos/features/reports/providers/report_state.dart';
+import 'package:wameedpos/features/reports/widgets/report_charts.dart';
+import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
+import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
 
 class ProductPerformancePage extends ConsumerStatefulWidget {
   const ProductPerformancePage({super.key});

@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:thawani_pos/features/catalog/data/remote/catalog_api_service.dart';
-import 'package:thawani_pos/features/staff/data/remote/staff_api_service.dart';
-import 'package:thawani_pos/features/staff/models/attendance_record.dart';
-import 'package:thawani_pos/features/staff/models/commission_rule.dart';
-import 'package:thawani_pos/features/staff/models/shift_schedule.dart';
-import 'package:thawani_pos/features/staff/models/shift_template.dart';
-import 'package:thawani_pos/features/staff/models/staff_activity_log.dart';
-import 'package:thawani_pos/features/staff/models/staff_user.dart';
+import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart';
+import 'package:wameedpos/features/staff/data/remote/staff_api_service.dart';
+import 'package:wameedpos/features/staff/models/attendance_record.dart';
+import 'package:wameedpos/features/staff/models/commission_rule.dart';
+import 'package:wameedpos/features/staff/models/shift_schedule.dart';
+import 'package:wameedpos/features/staff/models/shift_template.dart';
+import 'package:wameedpos/features/staff/models/staff_activity_log.dart';
+import 'package:wameedpos/features/staff/models/staff_user.dart';
 
 final staffRepositoryProvider = Provider<StaffRepository>((ref) {
   return StaffRepository(ref.watch(staffApiServiceProvider));

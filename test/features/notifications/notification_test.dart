@@ -1,16 +1,16 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:thawani_pos/features/notifications/enums/fcm_device_type.dart';
-import 'package:thawani_pos/features/notifications/enums/notification_channel.dart';
-import 'package:thawani_pos/features/notifications/enums/notification_delivery_status.dart';
-import 'package:thawani_pos/features/notifications/enums/notification_provider.dart';
-import 'package:thawani_pos/features/notifications/enums/announcement_type.dart';
-import 'package:thawani_pos/features/notifications/enums/reminder_channel.dart';
-import 'package:thawani_pos/features/notifications/enums/reminder_type.dart';
-import 'package:thawani_pos/features/notifications/models/notification.dart';
-import 'package:thawani_pos/features/notifications/models/fcm_token.dart';
-import 'package:thawani_pos/features/notifications/models/notification_preference.dart';
-import 'package:thawani_pos/features/notifications/models/notification_event_log.dart';
-import 'package:thawani_pos/features/notifications/providers/notification_state.dart';
+import 'package:wameedpos/features/notifications/enums/fcm_device_type.dart';
+import 'package:wameedpos/features/notifications/enums/notification_channel.dart';
+import 'package:wameedpos/features/notifications/enums/notification_delivery_status.dart';
+import 'package:wameedpos/features/notifications/enums/notification_provider.dart';
+import 'package:wameedpos/features/notifications/enums/announcement_type.dart';
+import 'package:wameedpos/features/notifications/enums/reminder_channel.dart';
+import 'package:wameedpos/features/notifications/enums/reminder_type.dart';
+import 'package:wameedpos/features/notifications/models/notification.dart';
+import 'package:wameedpos/features/notifications/models/fcm_token.dart';
+import 'package:wameedpos/features/notifications/models/notification_preference.dart';
+import 'package:wameedpos/features/notifications/models/notification_event_log.dart';
+import 'package:wameedpos/features/notifications/providers/notification_state.dart';
 
 void main() {
   // ════════════════════════════════════════════════════════

@@ -1,4 +1,4 @@
-import 'package:thawani_pos/features/auth/enums/user_role.dart';
+import 'package:wameedpos/features/auth/enums/user_role.dart';
 
 class Routes {
   Routes._();
@@ -116,6 +116,9 @@ class Routes {
   // Notifications
   static const String notifications = '/notifications';
   static const String notificationPreferences = '/notifications/preferences';
+  static const String notificationDeliveryLogs = '/notifications/delivery-logs';
+  static const String notificationSchedules = '/notifications/schedules';
+  static const String notificationSoundConfigs = '/notifications/sound-configs';
 
   // Support
   static const String support = '/support';
@@ -145,6 +148,11 @@ class Routes {
   static const String invoiceDetail = '/subscription/invoices'; // + /:id
   static const String planComparison = '/subscription/compare';
   static const String subscriptionAddOns = '/subscription/add-ons';
+
+  // Provider Payments (PayTabs)
+  static const String providerPayments = '/provider-payments';
+  static const String providerPaymentDetail = '/provider-payments/detail'; // + /:id
+  static const String providerPaymentCheckout = '/provider-payments/checkout';
 
   // Admin Panel
   static const String adminStores = '/admin/stores';

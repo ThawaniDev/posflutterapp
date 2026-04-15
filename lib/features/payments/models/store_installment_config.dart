@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/payments/enums/installment_provider.dart';
-import 'package:thawani_pos/features/payments/models/installment_provider_config.dart';
+import 'package:wameedpos/features/payments/enums/installment_provider.dart';
+import 'package:wameedpos/features/payments/models/installment_provider_config.dart';
 
 /// Store-level configuration for an installment provider.
 class StoreInstallmentConfig {

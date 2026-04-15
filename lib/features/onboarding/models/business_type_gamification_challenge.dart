@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/customers/enums/gamification_challenge_type.dart';
-import 'package:thawani_pos/features/customers/enums/gamification_reward_type.dart';
+import 'package:wameedpos/features/customers/enums/gamification_challenge_type.dart';
+import 'package:wameedpos/features/customers/enums/gamification_reward_type.dart';
 
 class BusinessTypeGamificationChallenge {
   final String id;
@@ -101,13 +101,12 @@ class BusinessTypeGamificationChallenge {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is BusinessTypeGamificationChallenge && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is BusinessTypeGamificationChallenge && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'BusinessTypeGamificationChallenge(id: $id, businessTypeId: $businessTypeId, name: $name, nameAr: $nameAr, challengeType: $challengeType, targetValue: $targetValue, ...)';
+  String toString() =>
+      'BusinessTypeGamificationChallenge(id: $id, businessTypeId: $businessTypeId, name: $name, nameAr: $nameAr, challengeType: $challengeType, targetValue: $targetValue, ...)';
 }

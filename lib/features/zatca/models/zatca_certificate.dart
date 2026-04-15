@@ -1,5 +1,5 @@
-import 'package:thawani_pos/features/zatca/enums/zatca_certificate_status.dart';
-import 'package:thawani_pos/features/zatca/enums/zatca_certificate_type.dart';
+import 'package:wameedpos/features/zatca/enums/zatca_certificate_status.dart';
+import 'package:wameedpos/features/zatca/enums/zatca_certificate_type.dart';
 
 class ZatcaCertificate {
   final String id;
@@ -77,13 +77,12 @@ class ZatcaCertificate {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ZatcaCertificate && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is ZatcaCertificate && other.id == id;
 
   @override
   int get hashCode => id.hashCode;
 
   @override
-  String toString() => 'ZatcaCertificate(id: $id, storeId: $storeId, certificateType: $certificateType, certificatePem: $certificatePem, ccsid: $ccsid, issuedAt: $issuedAt, ...)';
+  String toString() =>
+      'ZatcaCertificate(id: $id, storeId: $storeId, certificateType: $certificateType, certificatePem: $certificatePem, ccsid: $ccsid, issuedAt: $issuedAt, ...)';
 }
