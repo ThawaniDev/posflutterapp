@@ -9,7 +9,7 @@ class AppConstants {
   static const String supabaseAnonKey = ''; // Set from env
 
   // API
-  static const String apiBaseUrl = 'https://wameedpos.on-forge.com/api/v2';
+  static const String apiBaseUrl = 'https://api.wameedpos.com/api/v2';
   // static const String apiBaseUrl = 'http://localhost:8000/api/v2';
   static const Duration apiTimeout = Duration(seconds: 30);
   static const Duration connectTimeout = Duration(seconds: 15);

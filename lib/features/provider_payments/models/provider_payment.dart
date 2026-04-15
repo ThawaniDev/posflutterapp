@@ -12,6 +12,9 @@ class ProviderPayment {
   final double taxAmount;
   final double totalAmount;
   final String? currency;
+  final String? originalCurrency;
+  final double? originalAmount;
+  final double? exchangeRateUsed;
   final ProviderPaymentStatus status;
   final String? gateway;
   final String? tranRef;
@@ -51,6 +54,9 @@ class ProviderPayment {
     this.taxAmount = 0,
     required this.totalAmount,
     this.currency,
+    this.originalCurrency,
+    this.originalAmount,
+    this.exchangeRateUsed,
     required this.status,
     this.gateway,
     this.tranRef,
@@ -92,6 +98,9 @@ class ProviderPayment {
       taxAmount: double.tryParse(json['tax_amount'].toString()) ?? 0.0,
       totalAmount: double.tryParse(json['total_amount'].toString()) ?? 0.0,
       currency: json['currency'] as String?,
+      originalCurrency: json['original_currency'] as String?,
+      originalAmount: json['original_amount'] != null ? double.tryParse(json['original_amount'].toString()) : null,
+      exchangeRateUsed: json['exchange_rate_used'] != null ? double.tryParse(json['exchange_rate_used'].toString()) : null,
       status: ProviderPaymentStatus.tryFromValue(json['status'] as String?) ?? ProviderPaymentStatus.pending,
       gateway: json['gateway'] as String?,
       tranRef: json['tran_ref'] as String?,
@@ -138,6 +147,9 @@ class ProviderPayment {
       'tax_amount': taxAmount,
       'total_amount': totalAmount,
       'currency': currency,
+      'original_currency': originalCurrency,
+      'original_amount': originalAmount,
+      'exchange_rate_used': exchangeRateUsed,
       'status': status.value,
       'gateway': gateway,
       'tran_ref': tranRef,
@@ -178,6 +190,9 @@ class ProviderPayment {
     double? taxAmount,
     double? totalAmount,
     String? currency,
+    String? originalCurrency,
+    double? originalAmount,
+    double? exchangeRateUsed,
     ProviderPaymentStatus? status,
     String? gateway,
     String? tranRef,
@@ -217,6 +232,9 @@ class ProviderPayment {
       taxAmount: taxAmount ?? this.taxAmount,
       totalAmount: totalAmount ?? this.totalAmount,
       currency: currency ?? this.currency,
+      originalCurrency: originalCurrency ?? this.originalCurrency,
+      originalAmount: originalAmount ?? this.originalAmount,
+      exchangeRateUsed: exchangeRateUsed ?? this.exchangeRateUsed,
       status: status ?? this.status,
       gateway: gateway ?? this.gateway,
       tranRef: tranRef ?? this.tranRef,
@@ -253,6 +271,10 @@ class ProviderPayment {
   bool get canRefund => isSuccessful && refundAmount == null;
 
   String get formattedAmount => '${totalAmount.toStringAsFixed(2)} ${currency ?? 'SAR'}';
+
+  bool get hasOriginalCurrency => originalCurrency != null && originalCurrency != currency;
+
+  String? get formattedOriginalAmount => hasOriginalCurrency ? '${originalAmount?.toStringAsFixed(2)} $originalCurrency' : null;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is ProviderPayment && other.id == id;
