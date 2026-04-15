@@ -18,7 +18,7 @@ class TransactionStatsCards extends StatelessWidget {
       desktopCols: 5,
       tabletCols: 3,
       mobileCols: 2,
-      desktopAspectRatio: 1.85,
+      desktopAspectRatio: 1.35,
       cards: [
         PosKpiCard(
           icon: Icons.trending_up_rounded,

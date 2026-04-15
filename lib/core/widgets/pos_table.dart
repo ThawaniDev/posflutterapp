@@ -275,8 +275,9 @@ class PosDataTable<T> extends StatelessWidget {
     // Desktop: traditional data table + pagination
     if (_hasPagination) {
       return Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(child: _buildTableContainer(context)),
+          _buildTableContainer(context),
           _buildPagination(context),
         ],
       );
@@ -290,8 +291,8 @@ class PosDataTable<T> extends StatelessWidget {
     final visibleCols = _visibleColumns;
 
     final listView = ListView.builder(
-      shrinkWrap: !_hasPagination,
-      physics: _hasPagination ? null : const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.only(bottom: 80),
       itemCount: items.length,
       itemBuilder: (context, index) {
@@ -313,8 +314,9 @@ class PosDataTable<T> extends StatelessWidget {
 
     if (_hasPagination) {
       return Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(child: listView),
+          listView,
           _buildMobilePagination(context),
         ],
       );
