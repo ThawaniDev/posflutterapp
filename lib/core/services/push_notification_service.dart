@@ -24,33 +24,29 @@ class PushNotificationService {
 
   final Ref _ref;
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
-  bool _initialized = false;
+  bool _listenersSetUp = false;
 
-  /// Call once after login (when the user is authenticated).
+  /// Call every time the user becomes authenticated.
+  /// Sets up listeners once, but always re-registers the FCM token.
   Future<void> initialize() async {
-    if (_initialized) return;
-    _initialized = true;
+    // One-time: permission + listeners
+    if (!_listenersSetUp) {
+      _listenersSetUp = true;
 
-    // 1. Request permission (iOS shows a dialog; Android auto-grants)
-    await _requestPermission();
+      await _requestPermission();
 
-    // 2. Get the FCM token and register it with the backend
-    await _registerToken();
+      _messaging.onTokenRefresh.listen(_onTokenRefresh);
+      FirebaseMessaging.onMessage.listen(_onForegroundMessage);
+      FirebaseMessaging.onMessageOpenedApp.listen(_onMessageOpenedApp);
 
-    // 3. Listen for token refresh
-    _messaging.onTokenRefresh.listen(_onTokenRefresh);
-
-    // 4. Foreground message handler
-    FirebaseMessaging.onMessage.listen(_onForegroundMessage);
-
-    // 5. Notification tapped while app was in background
-    FirebaseMessaging.onMessageOpenedApp.listen(_onMessageOpenedApp);
-
-    // 6. App launched from terminated state via notification tap
-    final initialMessage = await _messaging.getInitialMessage();
-    if (initialMessage != null) {
-      _onMessageOpenedApp(initialMessage);
+      final initialMessage = await _messaging.getInitialMessage();
+      if (initialMessage != null) {
+        _onMessageOpenedApp(initialMessage);
+      }
     }
+
+    // Always register the token (backend may have cleared it on logout)
+    await _registerToken();
   }
 
   // ─── Permission ──────────────────────────────────────────

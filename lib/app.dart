@@ -25,6 +25,12 @@ class WameedPosApp extends ConsumerWidget {
       }
     });
 
+    // Also handle already-authenticated state (e.g. session restored before build)
+    final authState = ref.read(authProvider);
+    if (authState is AuthAuthenticated) {
+      Future.microtask(() => ref.read(pushNotificationServiceProvider).initialize());
+    }
+
     return MaterialApp.router(
       title: 'Wameed POS',
       debugShowCheckedModeBanner: false,
