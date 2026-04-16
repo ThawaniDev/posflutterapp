@@ -1,6 +1,7 @@
 enum ExportTriggeredBy {
   manual('manual'),
-  scheduled('scheduled');
+  scheduled('scheduled'),
+  admin('admin');
 
   const ExportTriggeredBy(this.value);
   final String value;
