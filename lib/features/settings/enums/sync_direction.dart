@@ -1,7 +1,9 @@
 enum SyncDirection {
   push('push'),
   pull('pull'),
-  full('full');
+  full('full'),
+  upload('upload'),
+  download('download');
 
   const SyncDirection(this.value);
   final String value;

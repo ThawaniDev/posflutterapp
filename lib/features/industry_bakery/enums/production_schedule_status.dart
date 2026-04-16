@@ -1,7 +1,9 @@
 enum ProductionScheduleStatus {
+  scheduled('scheduled'),
   planned('planned'),
   inProgress('in_progress'),
-  completed('completed');
+  completed('completed'),
+  cancelled('cancelled');
 
   const ProductionScheduleStatus(this.value);
   final String value;

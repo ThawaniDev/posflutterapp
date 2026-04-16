@@ -1,4 +1,5 @@
 enum UserTheme {
+  systemDefault('default'),
   lightClassic('light_classic'),
   darkMode('dark_mode'),
   highContrast('high_contrast'),

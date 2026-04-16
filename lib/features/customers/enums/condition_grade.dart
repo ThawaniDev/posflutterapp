@@ -1,4 +1,5 @@
 enum ConditionGrade {
+  brandNew('new'),
   a('A'),
   b('B'),
   c('C'),

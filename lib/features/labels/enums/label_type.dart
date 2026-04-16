@@ -1,9 +1,11 @@
 enum LabelType {
   barcode('barcode'),
   price('price'),
+  priceTag('price_tag'),
   shelf('shelf'),
   jewelry('jewelry'),
-  pharmacy('pharmacy');
+  pharmacy('pharmacy'),
+  custom('custom');
 
   const LabelType(this.value);
   final String value;

@@ -1,7 +1,10 @@
 enum StoreHealthSyncStatus {
   ok('ok'),
+  healthy('healthy'),
   error('error'),
-  pending('pending');
+  pending('pending'),
+  warning('warning'),
+  critical('critical');
 
   const StoreHealthSyncStatus(this.value);
   final String value;

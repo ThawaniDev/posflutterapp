@@ -1,8 +1,10 @@
 enum KitchenTicketStatus {
   pending('pending'),
+  inProgress('in_progress'),
   preparing('preparing'),
   ready('ready'),
-  served('served');
+  served('served'),
+  cancelled('cancelled');
 
   const KitchenTicketStatus(this.value);
   final String value;

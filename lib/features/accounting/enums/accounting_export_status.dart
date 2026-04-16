@@ -2,6 +2,7 @@ enum AccountingExportStatus {
   pending('pending'),
   processing('processing'),
   success('success'),
+  completed('completed'),
   failed('failed');
 
   const AccountingExportStatus(this.value);

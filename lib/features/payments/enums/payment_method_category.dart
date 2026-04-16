@@ -2,7 +2,10 @@ enum PaymentMethodCategory {
   cash('cash'),
   card('card'),
   digital('digital'),
-  credit('credit');
+  electronic('electronic'),
+  credit('credit'),
+  bankTransfer('bank_transfer'),
+  installment('installment');
 
   const PaymentMethodCategory(this.value);
   final String value;

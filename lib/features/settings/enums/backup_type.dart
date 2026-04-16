@@ -1,7 +1,9 @@
 enum BackupType {
   auto('auto'),
   manual('manual'),
-  preUpdate('pre_update');
+  preUpdate('pre_update'),
+  full('full'),
+  incremental('incremental');
 
   const BackupType(this.value);
   final String value;

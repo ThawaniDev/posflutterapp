@@ -1,6 +1,7 @@
 enum RepairJobStatus {
   received('received'),
   diagnosing('diagnosing'),
+  inProgress('in_progress'),
   repairing('repairing'),
   testing('testing'),
   ready('ready'),

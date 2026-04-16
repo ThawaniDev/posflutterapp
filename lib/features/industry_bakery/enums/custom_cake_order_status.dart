@@ -1,8 +1,10 @@
 enum CustomCakeOrderStatus {
   ordered('ordered'),
+  inProgress('in_progress'),
   inProduction('in_production'),
   ready('ready'),
-  delivered('delivered');
+  delivered('delivered'),
+  cancelled('cancelled');
 
   const CustomCakeOrderStatus(this.value);
   final String value;

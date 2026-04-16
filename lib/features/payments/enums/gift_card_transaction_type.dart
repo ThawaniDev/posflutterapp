@@ -1,7 +1,10 @@
 enum GiftCardTransactionType {
   redemption('redemption'),
+  redeem('redeem'),
   topUp('top_up'),
-  refund('refund');
+  refund('refund'),
+  activation('activation'),
+  voidTransaction('void');
 
   const GiftCardTransactionType(this.value);
   final String value;

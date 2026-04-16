@@ -4,6 +4,10 @@ enum ExpenseCategory {
   transport('transport'),
   maintenance('maintenance'),
   utility('utility'),
+  cleaning('cleaning'),
+  rent('rent'),
+  salary('salary'),
+  marketing('marketing'),
   other('other');
 
   const ExpenseCategory(this.value);
