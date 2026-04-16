@@ -4,10 +4,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/providers/app_settings_providers.dart';
 import 'package:wameedpos/core/router/app_router.dart';
+import 'package:wameedpos/core/services/app_update_service.dart';
 import 'package:wameedpos/core/services/push_notification_service.dart';
 import 'package:wameedpos/core/theme/app_theme.dart';
 import 'package:wameedpos/features/auth/providers/auth_providers.dart';
 import 'package:wameedpos/features/auth/providers/auth_state.dart';
+
+/// Global key so we can show dialogs (e.g. force-update) from services.
+final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class WameedPosApp extends ConsumerWidget {
   const WameedPosApp({super.key});
@@ -18,17 +22,21 @@ class WameedPosApp extends ConsumerWidget {
     final themeMode = ref.watch(themeModeProvider);
     final locale = ref.watch(localeProvider);
 
-    // Initialize FCM when the user becomes authenticated
+    // Initialize FCM + check for updates when the user becomes authenticated
     ref.listen<AuthState>(authProvider, (previous, next) {
       if (next is AuthAuthenticated) {
         ref.read(pushNotificationServiceProvider).initialize();
+        _checkForUpdate(ref);
       }
     });
 
     // Also handle already-authenticated state (e.g. session restored before build)
     final authState = ref.read(authProvider);
     if (authState is AuthAuthenticated) {
-      Future.microtask(() => ref.read(pushNotificationServiceProvider).initialize());
+      Future.microtask(() {
+        ref.read(pushNotificationServiceProvider).initialize();
+        _checkForUpdate(ref);
+      });
     }
 
     return MaterialApp.router(
@@ -47,5 +55,15 @@ class WameedPosApp extends ConsumerWidget {
       ],
       supportedLocales: const [Locale('en'), Locale('ar')],
     );
+  }
+
+  void _checkForUpdate(WidgetRef ref) {
+    // Delay slightly so the router/navigator context is available
+    Future.delayed(const Duration(seconds: 2), () {
+      final ctx = rootNavigatorKey.currentContext;
+      if (ctx != null) {
+        ref.read(appUpdateServiceProvider).checkOnLogin(ctx);
+      }
+    });
   }
 }

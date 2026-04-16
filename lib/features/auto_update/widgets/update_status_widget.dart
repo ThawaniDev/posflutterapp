@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/auto_update/providers/auto_update_providers.dart';
@@ -48,10 +49,28 @@ class UpdateStatusWidget extends ConsumerWidget {
                 Chip(label: const Text('Required Update'), backgroundColor: theme.colorScheme.errorContainer),
               ],
               if (s.releaseNotes != null) ...[AppSpacing.gapH12, Text(s.releaseNotes!, style: theme.textTheme.bodyMedium)],
+              if (s.updateAvailable) ...[
+                AppSpacing.gapH16,
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton.icon(
+                    onPressed: () => _openStore(s.storeUrl ?? s.downloadUrl),
+                    icon: const Icon(Icons.download),
+                    label: Text(s.isForceUpdate ? 'Update Now (Required)' : 'Update Now'),
+                  ),
+                ),
+              ],
             ],
           ),
         ),
       ),
     };
+  }
+
+  Future<void> _openStore(String? url) async {
+    if (url == null || url.isEmpty) return;
+    final uri = Uri.tryParse(url);
+    if (uri == null) return;
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 }

@@ -33,8 +33,7 @@ class PushNotificationService {
 
   final Ref _ref;
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
-  final FlutterLocalNotificationsPlugin _localNotifications =
-      FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _localNotifications = FlutterLocalNotificationsPlugin();
   bool _listenersSetUp = false;
 
   /// Call every time the user becomes authenticated.
@@ -66,21 +65,14 @@ class PushNotificationService {
   Future<void> _initLocalNotifications() async {
     const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosInit = DarwinInitializationSettings();
-    const initSettings = InitializationSettings(
-      android: androidInit,
-      iOS: iosInit,
-    );
+    const initSettings = InitializationSettings(android: androidInit, iOS: iosInit);
 
-    await _localNotifications.initialize(
-      initSettings,
-      onDidReceiveNotificationResponse: _onLocalNotificationTap,
-    );
+    await _localNotifications.initialize(initSettings, onDidReceiveNotificationResponse: _onLocalNotificationTap);
 
     // Create the Android notification channel for high-importance
     if (!kIsWeb && Platform.isAndroid) {
       await _localNotifications
-          .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>()
+          .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
           ?.createNotificationChannel(_androidChannel);
     }
   }
@@ -93,12 +85,7 @@ class PushNotificationService {
   // ─── Permission ──────────────────────────────────────────
 
   Future<void> _requestPermission() async {
-    final settings = await _messaging.requestPermission(
-      alert: true,
-      badge: true,
-      sound: true,
-      provisional: false,
-    );
+    final settings = await _messaging.requestPermission(alert: true, badge: true, sound: true, provisional: false);
     debugPrint('FCM permission: ${settings.authorizationStatus}');
   }
 
@@ -110,10 +97,7 @@ class PushNotificationService {
       if (token == null) return;
 
       final deviceType = _deviceType();
-      _ref.read(fcmTokenProvider.notifier).register(
-        token: token,
-        deviceType: deviceType,
-      );
+      _ref.read(fcmTokenProvider.notifier).register(token: token, deviceType: deviceType);
       debugPrint('FCM token registered ($deviceType): ${token.substring(0, 20)}...');
     } catch (e) {
       debugPrint('FCM token registration failed: $e');
@@ -122,10 +106,7 @@ class PushNotificationService {
 
   void _onTokenRefresh(String token) {
     final deviceType = _deviceType();
-    _ref.read(fcmTokenProvider.notifier).register(
-      token: token,
-      deviceType: deviceType,
-    );
+    _ref.read(fcmTokenProvider.notifier).register(token: token, deviceType: deviceType);
     debugPrint('FCM token refreshed ($deviceType)');
   }
 
@@ -150,11 +131,7 @@ class PushNotificationService {
             priority: Priority.high,
             icon: '@mipmap/ic_launcher',
           ),
-          iOS: const DarwinNotificationDetails(
-            presentAlert: true,
-            presentBadge: true,
-            presentSound: true,
-          ),
+          iOS: const DarwinNotificationDetails(presentAlert: true, presentBadge: true, presentSound: true),
         ),
         payload: message.data['reference_type'],
       );

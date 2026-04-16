@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
@@ -22,11 +26,24 @@ class _AutoUpdateDashboardPageState extends ConsumerState<AutoUpdateDashboardPag
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
-    Future.microtask(() {
-      ref.read(updateCheckProvider.notifier).check(currentVersion: '1.0.0', platform: 'ios');
-      ref.read(changelogProvider.notifier).load(platform: 'ios');
-      ref.read(updateHistoryProvider.notifier).load();
-    });
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    final info = await PackageInfo.fromPlatform();
+    final platform = _currentPlatform();
+    ref.read(updateCheckProvider.notifier).check(currentVersion: info.version, platform: platform);
+    ref.read(changelogProvider.notifier).load(platform: platform);
+    ref.read(updateHistoryProvider.notifier).load();
+  }
+
+  String _currentPlatform() {
+    if (kIsWeb) return 'ios';
+    if (Platform.isAndroid) return 'android';
+    if (Platform.isIOS) return 'ios';
+    if (Platform.isMacOS) return 'macos';
+    if (Platform.isWindows) return 'windows';
+    return 'ios';
   }
 
   @override

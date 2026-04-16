@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wameedpos/app.dart';
 import 'package:wameedpos/core/network/dio_client.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/core/widgets/app_shell.dart';
@@ -326,6 +327,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
   }
 
   return GoRouter(
+    navigatorKey: rootNavigatorKey,
     initialLocation: Routes.login,
     debugLogDiagnostics: true,
     redirect: (context, state) {
