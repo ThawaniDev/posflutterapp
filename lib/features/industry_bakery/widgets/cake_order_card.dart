@@ -70,9 +70,11 @@ class CakeOrderCard extends StatelessWidget {
   Widget _statusBadge(CustomCakeOrderStatus status) {
     final (label, variant) = switch (status) {
       CustomCakeOrderStatus.ordered => ('Ordered', PosStatusBadgeVariant.info),
+      CustomCakeOrderStatus.inProgress => ('In Progress', PosStatusBadgeVariant.warning),
       CustomCakeOrderStatus.inProduction => ('In Production', PosStatusBadgeVariant.warning),
       CustomCakeOrderStatus.ready => ('Ready', PosStatusBadgeVariant.success),
       CustomCakeOrderStatus.delivered => ('Delivered', PosStatusBadgeVariant.neutral),
+      CustomCakeOrderStatus.cancelled => ('Cancelled', PosStatusBadgeVariant.error),
     };
     return PosStatusBadge(label: label, variant: variant);
   }

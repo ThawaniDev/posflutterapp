@@ -89,9 +89,11 @@ class ProductionScheduleCard extends StatelessWidget {
   PosStatusBadge _buildStatusBadge() {
     final status = schedule.status ?? ProductionScheduleStatus.planned;
     return switch (status) {
+      ProductionScheduleStatus.scheduled => PosStatusBadge(label: 'Scheduled', variant: PosStatusBadgeVariant.info),
       ProductionScheduleStatus.planned => PosStatusBadge(label: 'Planned', variant: PosStatusBadgeVariant.neutral),
       ProductionScheduleStatus.inProgress => PosStatusBadge(label: 'In Progress', variant: PosStatusBadgeVariant.warning),
       ProductionScheduleStatus.completed => PosStatusBadge(label: 'Completed', variant: PosStatusBadgeVariant.success),
+      ProductionScheduleStatus.cancelled => PosStatusBadge(label: 'Cancelled', variant: PosStatusBadgeVariant.error),
     };
   }
 

@@ -76,18 +76,22 @@ class KitchenTicketCard extends StatelessWidget {
     final status = ticket.status ?? KitchenTicketStatus.pending;
     return switch (status) {
       KitchenTicketStatus.pending => PosStatusBadge(label: 'Pending', variant: PosStatusBadgeVariant.neutral),
+      KitchenTicketStatus.inProgress => PosStatusBadge(label: 'In Progress', variant: PosStatusBadgeVariant.warning),
       KitchenTicketStatus.preparing => PosStatusBadge(label: 'Preparing', variant: PosStatusBadgeVariant.warning),
       KitchenTicketStatus.ready => PosStatusBadge(label: 'Ready', variant: PosStatusBadgeVariant.success),
       KitchenTicketStatus.served => PosStatusBadge(label: 'Served', variant: PosStatusBadgeVariant.info),
+      KitchenTicketStatus.cancelled => PosStatusBadge(label: 'Cancelled', variant: PosStatusBadgeVariant.error),
     };
   }
 
   Color get _statusColor {
     return switch (ticket.status ?? KitchenTicketStatus.pending) {
       KitchenTicketStatus.pending => AppColors.textSecondary,
+      KitchenTicketStatus.inProgress => AppColors.warning,
       KitchenTicketStatus.preparing => AppColors.warning,
       KitchenTicketStatus.ready => AppColors.success,
       KitchenTicketStatus.served => AppColors.info,
+      KitchenTicketStatus.cancelled => AppColors.error,
     };
   }
 
@@ -114,9 +118,11 @@ class KitchenTicketCard extends StatelessWidget {
   KitchenTicketStatus? get _nextStatus {
     return switch (ticket.status ?? KitchenTicketStatus.pending) {
       KitchenTicketStatus.pending => KitchenTicketStatus.preparing,
+      KitchenTicketStatus.inProgress => KitchenTicketStatus.ready,
       KitchenTicketStatus.preparing => KitchenTicketStatus.ready,
       KitchenTicketStatus.ready => KitchenTicketStatus.served,
       KitchenTicketStatus.served => null,
+      KitchenTicketStatus.cancelled => null,
     };
   }
 

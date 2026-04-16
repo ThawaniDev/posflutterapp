@@ -214,6 +214,10 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
       ExpenseCategory.transport => Icons.local_shipping,
       ExpenseCategory.maintenance => Icons.build,
       ExpenseCategory.utility => Icons.bolt,
+      ExpenseCategory.cleaning => Icons.cleaning_services,
+      ExpenseCategory.rent => Icons.home,
+      ExpenseCategory.salary => Icons.payments,
+      ExpenseCategory.marketing => Icons.campaign,
       ExpenseCategory.other => Icons.more_horiz,
     };
   }
@@ -225,6 +229,10 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
       ExpenseCategory.transport => AppColors.primary,
       ExpenseCategory.maintenance => const Color(0xFF8B5CF6),
       ExpenseCategory.utility => AppColors.success,
+      ExpenseCategory.cleaning => const Color(0xFF06B6D4),
+      ExpenseCategory.rent => const Color(0xFFEC4899),
+      ExpenseCategory.salary => const Color(0xFF10B981),
+      ExpenseCategory.marketing => const Color(0xFFF59E0B),
       ExpenseCategory.other => const Color(0xFF6B7280),
     };
   }

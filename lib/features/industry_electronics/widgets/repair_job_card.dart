@@ -88,6 +88,7 @@ class RepairJobCard extends StatelessWidget {
     final (label, variant) = switch (status) {
       RepairJobStatus.received => ('Received', PosStatusBadgeVariant.neutral),
       RepairJobStatus.diagnosing => ('Diagnosing', PosStatusBadgeVariant.info),
+      RepairJobStatus.inProgress => ('In Progress', PosStatusBadgeVariant.warning),
       RepairJobStatus.repairing => ('Repairing', PosStatusBadgeVariant.warning),
       RepairJobStatus.testing => ('Testing', PosStatusBadgeVariant.info),
       RepairJobStatus.ready => ('Ready', PosStatusBadgeVariant.success),
