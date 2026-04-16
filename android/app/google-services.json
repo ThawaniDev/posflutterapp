@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "175672507424",
+    "project_id": "wameedpos",
+    "storage_bucket": "wameedpos.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175672507424:android:33a32a3e0386f9a4971045",
+        "android_client_info": {
+          "package_name": "com.wameedpos.provider"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSLDiHJ8X0zsvomD5RPLWhdjdWALSLtPQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -269,9 +269,9 @@ class PosDataTable<T> extends StatelessWidget {
     // Detect whether we are inside a vertical scroll view (unbounded height)
     // vs direct scaffold body (bounded height).
     final parentScrollable = Scrollable.maybeOf(context);
-    final isNested = parentScrollable != null &&
-        (parentScrollable.axisDirection == AxisDirection.down ||
-         parentScrollable.axisDirection == AxisDirection.up);
+    final isNested =
+        parentScrollable != null &&
+        (parentScrollable.axisDirection == AxisDirection.down || parentScrollable.axisDirection == AxisDirection.up);
 
     final screenWidth = MediaQuery.sizeOf(context).width;
     if (screenWidth < AppSizes.breakpointTablet) {
@@ -287,22 +287,12 @@ class PosDataTable<T> extends StatelessWidget {
     if (_hasPagination) {
       if (isNested) {
         // Inside a scroll view: shrink to content, parent handles scrolling
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildTableContainer(context),
-            _buildPagination(context),
-          ],
-        );
+        return Column(mainAxisSize: MainAxisSize.min, children: [_buildTableContainer(context), _buildPagination(context)]);
       }
       // Direct scaffold body: fill available space, scroll table if needed
       return Column(
         children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: _buildTableContainer(context),
-            ),
-          ),
+          Expanded(child: SingleChildScrollView(child: _buildTableContainer(context))),
           _buildPagination(context),
         ],
       );
@@ -343,13 +333,7 @@ class PosDataTable<T> extends StatelessWidget {
 
     if (_hasPagination) {
       if (isNested) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            listView,
-            _buildMobilePagination(context),
-          ],
-        );
+        return Column(mainAxisSize: MainAxisSize.min, children: [listView, _buildMobilePagination(context)]);
       }
       return Column(
         children: [

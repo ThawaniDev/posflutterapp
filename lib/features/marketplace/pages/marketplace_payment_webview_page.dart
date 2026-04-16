@@ -9,11 +9,7 @@ class MarketplacePaymentWebViewPage extends StatefulWidget {
   final String redirectUrl;
   final VoidCallback onComplete;
 
-  const MarketplacePaymentWebViewPage({
-    super.key,
-    required this.redirectUrl,
-    required this.onComplete,
-  });
+  const MarketplacePaymentWebViewPage({super.key, required this.redirectUrl, required this.onComplete});
 
   @override
   State<MarketplacePaymentWebViewPage> createState() => _MarketplacePaymentWebViewPageState();
@@ -37,8 +33,7 @@ class _MarketplacePaymentWebViewPageState extends State<MarketplacePaymentWebVie
             if (mounted) setState(() => _loading = false);
           },
           onNavigationRequest: (request) {
-            if (request.url.contains('/payment/result') ||
-                request.url.contains('/provider-payments/return')) {
+            if (request.url.contains('/payment/result') || request.url.contains('/provider-payments/return')) {
               Navigator.of(context).pop();
               widget.onComplete();
               return NavigationDecision.prevent;
@@ -56,10 +51,7 @@ class _MarketplacePaymentWebViewPageState extends State<MarketplacePaymentWebVie
       appBar: AppBar(
         title: const Text('Complete Payment'),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => _showCancelDialog(context),
-        ),
+        leading: IconButton(icon: const Icon(Icons.close), onPressed: () => _showCancelDialog(context)),
       ),
       body: Stack(
         children: [
