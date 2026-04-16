@@ -3569,7 +3569,6 @@
   "wameedAIPendingSuggestions": "زیر التواء",
   "wameedAIHighPriority": "اعلیٰ ترجیح",
   "wameedAITapToExplore": "اے آئی خصوصیات دریافت کرنے کے لیے ٹیپ کریں",
-
   "wameedAIBilling": "اے آئی بلنگ",
   "wameedAIBillingDashboard": "بلنگ ڈیش بورڈ",
   "wameedAIBillingCurrentMonth": "موجودہ مہینہ",
@@ -3598,7 +3597,6 @@
   "wameedAIBillingLineItems": "آئٹمز",
   "wameedAIBillingPaymentHistory": "ادائیگی کی تاریخ",
   "wameedAIBillingDisabled": "آپ کے اسٹور کے لیے اے آئی فی الحال غیر فعال ہے",
-
   "sidebarCashierGamification": "کیشیئر کارکردگی",
   "gamificationTitle": "کیشیئر لیڈر بورڈ",
   "gamificationBadges": "بیجز",
@@ -4149,5 +4147,8 @@
   "featureInfoNotificationsManageStep3Desc": "Swipe left on a notification تک delete it. For bulk deletion, long-press تک enter selection mode, select multiple notifications, اور tap the delete icon.",
   "featureInfoNotificationsManageStep4Title": "پل تک refresh",
   "featureInfoNotificationsManageStep4Desc": "پل down on the list تک refresh اور load new notifications.",
-  "featureInfoNotificationsTip1": "The unread count badge in the AppBar shows how many unread notifications you have."
+  "featureInfoNotificationsTip1": "The unread count badge in the AppBar shows how many unread notifications you have.",
+  "pinLoginTitle": "پن درج کریں",
+  "pinLoginNoStore": "کوئی سٹور سیشن نہیں ملا۔ ای میل سے سائن ان کریں۔",
+  "pinLoginEmailInstead": "بجائے اس کے ای میل سے سائن ان کریں"
 }

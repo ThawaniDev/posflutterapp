@@ -9,10 +9,7 @@ enum BackupType {
   final String value;
 
   static BackupType fromValue(String value) {
-    return BackupType.values.firstWhere(
-      (e) => e.value == value,
-      orElse: () => throw ArgumentError('Invalid BackupType: $value'),
-    );
+    return BackupType.values.firstWhere((e) => e.value == value, orElse: () => throw ArgumentError('Invalid BackupType: $value'));
   }
 
   static BackupType? tryFromValue(String? value) {

@@ -32,10 +32,7 @@ class AppUpdateService {
       if (platform == null) return; // unsupported platform
 
       // Fire the check
-      await _ref.read(updateCheckProvider.notifier).check(
-        currentVersion: currentVersion,
-        platform: platform,
-      );
+      await _ref.read(updateCheckProvider.notifier).check(currentVersion: currentVersion, platform: platform);
 
       final state = _ref.read(updateCheckProvider);
       if (state is! UpdateCheckLoaded) return;
@@ -82,22 +79,12 @@ class AppUpdateService {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'A new version (v${state.latestVersion}) is required to continue using the app.',
-              ),
+              Text('A new version (v${state.latestVersion}) is required to continue using the app.'),
               if (state.releaseNotes != null) ...[
                 const SizedBox(height: 12),
-                Text(
-                  "What's new:",
-                  style: Theme.of(ctx).textTheme.labelLarge,
-                ),
+                Text("What's new:", style: Theme.of(ctx).textTheme.labelLarge),
                 const SizedBox(height: 4),
-                Text(
-                  state.releaseNotes!,
-                  style: Theme.of(ctx).textTheme.bodySmall,
-                  maxLines: 5,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                Text(state.releaseNotes!, style: Theme.of(ctx).textTheme.bodySmall, maxLines: 5, overflow: TextOverflow.ellipsis),
               ],
             ],
           ),
@@ -128,25 +115,14 @@ class AppUpdateService {
             Text('Version ${state.latestVersion} is available.'),
             if (state.releaseNotes != null) ...[
               const SizedBox(height: 12),
-              Text(
-                "What's new:",
-                style: Theme.of(ctx).textTheme.labelLarge,
-              ),
+              Text("What's new:", style: Theme.of(ctx).textTheme.labelLarge),
               const SizedBox(height: 4),
-              Text(
-                state.releaseNotes!,
-                style: Theme.of(ctx).textTheme.bodySmall,
-                maxLines: 5,
-                overflow: TextOverflow.ellipsis,
-              ),
+              Text(state.releaseNotes!, style: Theme.of(ctx).textTheme.bodySmall, maxLines: 5, overflow: TextOverflow.ellipsis),
             ],
           ],
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Later'),
-          ),
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Later')),
           FilledButton.icon(
             onPressed: () {
               Navigator.of(ctx).pop();

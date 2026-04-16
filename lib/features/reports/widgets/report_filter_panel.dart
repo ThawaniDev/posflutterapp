@@ -122,7 +122,10 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
         Expanded(child: _buildDatePresets(isDark)),
         const SizedBox(width: 12),
         // Branch selector
-        if (canSwitch && branches.length > 1) ...[_buildBranchDropdown(isDark, branches), const SizedBox(width: 12)],
+        if (canSwitch && branches.length > 1) ...[
+          SizedBox(width: 180, child: _buildBranchDropdown(isDark, branches)),
+          const SizedBox(width: 12),
+        ],
         // Expand/collapse button
         if (_hasAdvancedFilters) ...[_buildExpandButton(isDark), const SizedBox(width: 8)],
         // Compare toggle

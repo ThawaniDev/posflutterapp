@@ -163,7 +163,7 @@
   "deploymentOverview": "نظرة عامة على النشر",
   "releases": "الإصدارات",
   "adminSecurity": "مركز الأمان",
-  "securityOverview": "نظرة عامة على الأمان",
+  "securityOverview": "نظرة عامة",
   "securityAlerts": "تنبيهات الأمان",
   "dataManagement": "إدارة البيانات",
   "databaseBackupsList": "نسخ قاعدة البيانات",
@@ -526,11 +526,9 @@
   "settingsAboutDesc": "إصدار التطبيق والمعلومات القانونية",
   "settingsPosBehavior": "سلوك نقطة البيع",
   "settingsPosBehaviorDesc": "إعدادات المبيعات والمرتجعات والمخزون والولاء",
-  "settingsSaved": "تم حفظ الإعدادات بنجاح",
+  "settingsSaved": "تم حفظ الإعدادات",
   "settingsErrorLoading": "فشل تحميل الإعدادات",
   "settingsErrorSaving": "فشل حفظ الإعدادات",
-  "save": "حفظ",
-  "retry": "إعادة المحاولة",
   "settingsTaxLabel": "مسمى الضريبة",
   "settingsTaxLabelHint": "مثال: ضريبة القيمة المضافة",
   "settingsTaxRate": "نسبة الضريبة (%)",
@@ -612,7 +610,7 @@
   "settingsWorkingBreakEnd": "نهاية الاستراحة",
   "settingsProfileCurrency": "العملة",
   "settingsProfileCurrencyCode": "رمز العملة",
-  "settingsProfileCurrencyCodeHint": "مثال: OMR, \u0081, USD",
+  "settingsProfileCurrencyCodeHint": "مثال: OMR, , USD",
   "settingsProfileCurrencySymbol": "رمز العملة",
   "settingsProfileCurrencySymbolHint": "مثال: ر.ع, ﷼, $",
   "settingsProfileFormatting": "تنسيق الأرقام",
@@ -622,7 +620,9 @@
   "settingsAboutVersion": "الإصدار {version}",
   "@settingsAboutVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
   "settingsAboutTerms": "شروط الخدمة",
@@ -633,7 +633,9 @@
   "settingsAboutCopyright": "© {year} ثواني. جميع الحقوق محفوظة.",
   "@settingsAboutCopyright": {
     "placeholders": {
-      "year": {"type": "String"}
+      "year": {
+        "type": "String"
+      }
     }
   },
   "sidebarSync": "المزامنة",
@@ -714,7 +716,6 @@
   "companionActiveStaff": "الموظفون النشطون",
   "companionLowStock": "عناصر منخفضة المخزون",
   "companionLastSync": "آخر مزامنة",
-
   "companionDashboard": "لوحة التحكم",
   "companionSales": "المبيعات",
   "companionActiveOrdersTitle": "الطلبات النشطة",
@@ -743,7 +744,6 @@
   "companionMinStock": "الحد الأدنى",
   "companionNoActiveStaff": "لا يوجد موظفون نشطون",
   "companionClockedIn": "وقت الحضور",
-
   "autoUpdateSettings": "إعدادات التحديث",
   "autoUpdateEnable": "التحديث التلقائي",
   "autoUpdateEnableDesc": "تنزيل وتثبيت التحديثات تلقائياً",
@@ -775,10 +775,11 @@
   "autoUpdateNewVersion": "إصدار جديد متاح: {version}",
   "@autoUpdateNewVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
-
   "accessibilityShortcutReference": "مرجع الاختصارات",
   "accessibilityShortcutHint": "اضغط Ctrl+/ لإظهار الاختصارات",
   "accessibilityReassignShortcut": "إعادة تعيين الاختصار",
@@ -789,14 +790,12 @@
   "accessibilityShortcutConflict": "يتعارض مع: {name}",
   "@accessibilityShortcutConflict": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
-
-  "settingsSaved": "تم حفظ الإعدادات",
   "close": "إغلاق",
-  "cancel": "إلغاء",
-  "save": "حفظ",
   "niceToHaveTitle": "ميزات إضافية",
   "niceToHaveWishlist": "قائمة الأمنيات",
   "niceToHaveAppointments": "المواعيد",
@@ -1088,7 +1087,7 @@
       }
     }
   },
-  "subscriptionSubscribeConfirm": "سيتم اشتراكك في {planName} على أساس {billingCycle}.\n\nالسعر: {price} \u0081/{billingCycle}",
+  "subscriptionSubscribeConfirm": "سيتم اشتراكك في {planName} على أساس {billingCycle}.\n\nالسعر: {price} /{billingCycle}",
   "@subscriptionSubscribeConfirm": {
     "placeholders": {
       "planName": {
@@ -1214,7 +1213,7 @@
       }
     }
   },
-  "subscriptionAddAddonConfirm": "سيتم إضافة {name} إلى اشتراكك.\n\nالتكلفة: {price} \u0081/{cycle}",
+  "subscriptionAddAddonConfirm": "سيتم إضافة {name} إلى اشتراكك.\n\nالتكلفة: {price} /{cycle}",
   "@subscriptionAddAddonConfirm": {
     "placeholders": {
       "name": {
@@ -1419,7 +1418,7 @@
   "marketplaceNoListings": "لم يتم العثور على قوالب",
   "marketplaceNoListingsSubtitle": "حاول تعديل البحث أو الفلاتر.",
   "marketplacePage": "صفحة",
-  "marketplaceCurrency": "\u0081.",
+  "marketplaceCurrency": ".",
   "marketplaceListingDetail": "تفاصيل القالب",
   "marketplaceDescription": "الوصف",
   "marketplaceOwned": "مملوك",
@@ -1511,11 +1510,11 @@
   "openCashSession": "فتح جلسة نقدية",
   "noSessionsYet": "لا توجد جلسات بعد",
   "totalCount": "المجموع الكلي",
-  "openingFloatSar": "الرصيد الافتتاحي (\u0081)",
+  "openingFloatSar": "الرصيد الافتتاحي ()",
   "openSession": "فتح الجلسة",
   "closeCashSession": "إغلاق الجلسة النقدية",
   "notesOptional": "ملاحظات (اختياري)",
-  "amountSar": "المبلغ (\u0081)",
+  "amountSar": "المبلغ ()",
   "reason": "السبب",
   "record": "تسجيل",
   "expenses": "المصروفات",
@@ -1539,7 +1538,7 @@
   "check": "تحقق",
   "availableBalance": "الرصيد المتاح",
   "redeemGiftCard": "استرداد بطاقة الهدية",
-  "redemptionAmountSar": "مبلغ الاسترداد (\u0081)",
+  "redemptionAmountSar": "مبلغ الاسترداد ()",
   "giftCardIssued": "تم إصدار بطاقة الهدية",
   "code": "الرمز",
   "initial": "المبدئي",
@@ -1751,7 +1750,7 @@
   "posFindTransaction": "أدخل رقم الإيصال للبحث عن المعاملة",
   "posTransactionNotFound": "المعاملة غير موجودة",
   "posPayment": "الدفع",
-  "posPaymentTotal": "الإجمالي: \u0081 {amount}",
+  "posPaymentTotal": "الإجمالي:  {amount}",
   "posSplitPayment": "تقسيم الدفع",
   "posCashTendered": "المبلغ المدفوع",
   "posChange": "الباقي",
@@ -1805,8 +1804,8 @@
   "posClear": "مسح",
   "posWalkInCustomer": "عميل زائر",
   "posCartDiscount": "خصم السلة",
-  "posSubtotalAmount": "المجموع الفرعي: \u0081 {amount}",
-  "posDiscountAmountSar": "مبلغ الخصم (\u0081)",
+  "posSubtotalAmount": "المجموع الفرعي:  {amount}",
+  "posDiscountAmountSar": "مبلغ الخصم ()",
   "posApply": "تطبيق",
   "posOrderNotes": "ملاحظات الطلب",
   "posNotesHint": "أضف ملاحظات لهذا الطلب...",
@@ -1828,8 +1827,8 @@
   "posRegister": "السجل",
   "posPleaseSelectRegister": "الرجاء اختيار سجل",
   "posNoRegistersFound": "لم يتم العثور على سجلات. الرجاء إضافة واحد أولاً.",
-  "posChangeGiven": "الباقي: \u0081 {amount}",
-  "posTotalAmountSar": "الإجمالي: \u0081 {amount}",
+  "posChangeGiven": "الباقي:  {amount}",
+  "posTotalAmountSar": "الإجمالي:  {amount}",
   "posTotalNotCovered": "المبلغ المدفوع لا يغطي المبلغ المستحق",
   "posReceiptTransactionNumber": "رقم الإيصال / المعاملة",
   "posFind": "بحث",
@@ -1924,11 +1923,11 @@
   "posTotalCount": "إجمالي العد",
   "posNoSessionsYet": "لا توجد جلسات بعد",
   "posOpenCashSessionDialog": "فتح جلسة نقدية",
-  "posOpeningFloatSar": "النقد الافتتاحي (\u0081)",
+  "posOpeningFloatSar": "النقد الافتتاحي ()",
   "posCloseCashSession": "إغلاق الجلسة النقدية",
-  "posCountedCash": "النقد المعدود: {amount} \u0081",
+  "posCountedCash": "النقد المعدود: {amount} ",
   "posNotesOptional": "ملاحظات (اختياري)",
-  "posAmountSar": "المبلغ (\u0081)",
+  "posAmountSar": "المبلغ ()",
   "posReason": "السبب",
   "posReasonPettyCash": "مصروفات نثرية",
   "posReasonSupplierPayment": "دفع مورد",
@@ -1954,7 +1953,7 @@
   "pinLoginSubtitle": "تبديل سريع — أدخل رقمك السري المكون من 4 أرقام",
   "pinLoginNoStoreSession": "لم يتم العثور على جلسة متجر. الرجاء تسجيل الدخول بالبريد الإلكتروني.",
   "pinLoginSignInWithEmail": "تسجيل الدخول بالبريد الإلكتروني بدلاً من ذلك",
-  "securityError": "خطأ: {message}",
+  "securityError": "خطأ أمني: {message}",
   "securityNA": "غير متوفر",
   "conflictMoreFields": "+ {count} حقول إضافية",
   "notifCategoryOrder": "طلب",
@@ -1983,8 +1982,8 @@
   "purchaseOrderCancelConfirm": "هل تريد إلغاء الطلب \"{reference}\"؟",
   "goodsReceiptConfirm": "هل تريد تأكيد الاستلام \"{reference}\"؟\n\nسيتم تحديث مستويات المخزون ولا يمكن التراجع عن ذلك.",
   "recipeDeleteConfirm": "هل تريد حذف الوصفة \"{name}\"؟",
-  "sarCurrency": "\u0081",
-  "amountWithSar": "\u0081 {amount}",
+  "sarCurrency": "",
+  "amountWithSar": " {amount}",
   "authAlreadyHaveAccount": "هل لديك حساب بالفعل؟",
   "authBusinessInformation": "معلومات العمل",
   "authBusinessNameHint": "مثلاً شركتي",
@@ -2010,7 +2009,7 @@
   "authStoreNameHint": "مثلاً الفرع الرئيسي",
   "authStoreNameOptional": "اسم المتجر (اختياري)",
   "cashMgmtActiveSession": "الجلسة النشطة",
-  "cashMgmtAmountSar": "المبلغ (\u0081.)",
+  "cashMgmtAmountSar": "المبلغ (.)",
   "cashMgmtCashCount": "عد النقد",
   "cashMgmtCashIn": "إيداع نقدي",
   "cashMgmtCashOut": "سحب نقدي",
@@ -2027,7 +2026,7 @@
   "cashMgmtOpenSession": "فتح الجلسة",
   "cashMgmtOpened": "مفتوحة",
   "cashMgmtOpeningFloat": "الرصيد الافتتاحي",
-  "cashMgmtOpeningFloatSar": "الرصيد الافتتاحي (\u0081.)",
+  "cashMgmtOpeningFloatSar": "الرصيد الافتتاحي (.)",
   "cashMgmtReason": "السبب",
   "cashMgmtRecord": "تسجيل",
   "cashMgmtSessionHistory": "سجل الجلسات",
@@ -2255,12 +2254,13 @@
   "notifStatsDeliveryRate": "معدل التوصيل",
   "notifStatsByCategory": "حسب الفئة",
   "notifStatsByChannel": "حسب القناة",
-
   "notifDeleteConfirmTitle": "حذف الإشعارات",
   "notifDeleteConfirmMessage": "حذف {count} إشعارات محددة؟",
   "@notifDeleteConfirmMessage": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "notifStatsTitle": "الإحصائيات",
@@ -2269,18 +2269,15 @@
   "notifDeleteSingleTitle": "حذف الإشعار",
   "notifDeleteSingleMessage": "هل أنت متأكد من حذف هذا الإشعار؟",
   "notifJustNow": "الآن",
-
   "notifPrefPaymentAlerts": "تنبيهات الدفع",
   "notifPrefPaymentAlertsSubtitle": "إشعارات تأكيد الدفع والمبالغ المستردة",
   "notifPrefStaffEvents": "أحداث الموظفين",
   "notifPrefStaffEventsSubtitle": "تحديثات جداول الموظفين والحضور",
   "notifPrefEmail": "البريد الإلكتروني",
   "notifPrefSms": "رسائل نصية",
-
   "notifLogDelivered": "تم التوصيل",
   "notifLogSent": "تم الإرسال",
   "notifLogFailed": "فشل",
-
   "notifScheduleValidation": "العنوان والرسالة مطلوبان",
   "notifScheduleCreatedSuccess": "تم إنشاء الجدولة بنجاح",
   "notifSchedulesEmptySubtitle": "اضغط + لإنشاء إشعار مجدول",
@@ -2289,18 +2286,18 @@
   "notifScheduleType": "نوع الجدولة",
   "notifScheduleTypeOnce": "مرة واحدة",
   "notifScheduleTypeRecurring": "متكرر",
-
   "notifActionMarkedAsRead": "تم تحديد الإشعار كمقروء",
   "notifActionAllMarkedAsRead": "تم تحديد جميع الإشعارات كمقروءة",
   "notifActionDeleted": "تم حذف الإشعار",
   "notifActionBulkDeleted": "تم حذف {count} إشعارات",
   "@notifActionBulkDeleted": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "notifActionBatchCreated": "تم إنشاء الإشعار الجماعي",
-
   "ordersAll": "الكل",
   "ordersCancelled": "ملغى",
   "ordersCompleted": "مكتمل",
@@ -2334,7 +2331,7 @@
   "ordersVoidOrder": "إلغاء الطلب",
   "ordersVoided": "ملغى",
   "ordersVoided2": "تم إلغاء الطلب",
-  "posChangeAmount": "الباقي: \u0081. {amount}",
+  "posChangeAmount": "الباقي: . {amount}",
   "@posChangeAmount": {
     "placeholders": {
       "amount": {
@@ -2357,7 +2354,7 @@
   },
   "posPaymentNotCover": "الدفع لا يغطي المبلغ الإجمالي",
   "posSelectRegisterError": "يرجى اختيار سجل",
-  "posTotalAmount": "الإجمالي: \u0081. {amount}",
+  "posTotalAmount": "الإجمالي: . {amount}",
   "@posTotalAmount": {
     "placeholders": {
       "amount": {
@@ -2390,7 +2387,6 @@
   "securityNoLoginAttempts": "لا توجد محاولات تسجيل دخول",
   "securityPolicy": "السياسة",
   "securityTitle": "الأمان",
-  "securityError": "خطأ أمني: {message}",
   "@securityError": {
     "placeholders": {
       "message": {
@@ -2398,8 +2394,6 @@
       }
     }
   },
-  "securityNA": "غير متوفر",
-  "securityOverview": "نظرة عامة",
   "securitySessions": "الجلسات",
   "securityIncidents": "الحوادث",
   "securityActive": "نشط",
@@ -2542,7 +2536,6 @@
   "termFormUpdated": "تم تحديث الجهاز بنجاح",
   "termFormVersionHint": "مثلاً 1.0.0",
   "termFormVersionLabel": "إصدار التطبيق (اختياري)",
-
   "termFormDeviceSection": "معلومات الجهاز",
   "termFormDeviceSectionSub": "تفاصيل الجهاز الفعلي",
   "termFormDeviceModelLabel": "طراز الجهاز",
@@ -2553,7 +2546,6 @@
   "termFormSerialNumberHint": "الرقم التسلسلي للجهاز",
   "termFormNfcCapable": "يدعم NFC",
   "termFormNfcCapableSub": "الجهاز يدعم الدفع بدون تلامس",
-
   "termFormSoftposSection": "إعدادات SoftPOS",
   "termFormSoftposSectionSub": "إعدادات الدفع عبر الهاتف",
   "termFormSoftposEnabled": "تفعيل SoftPOS",
@@ -2562,7 +2554,6 @@
   "termFormNearpayTidHint": "معرف الجهاز من NearPay",
   "termFormNearpayMidLabel": "معرف NearPay MID",
   "termFormNearpayMidHint": "معرف التاجر من NearPay",
-
   "termFormAcquirerSection": "بيانات المعالج",
   "termFormAcquirerSectionSub": "إعدادات معالج الدفع",
   "termFormAcquirerSourceLabel": "مصدر المعالج",
@@ -2571,7 +2562,6 @@
   "termFormAcquirerNameHint": "اسم معالج الدفع",
   "termFormAcquirerRefLabel": "مرجع المعالج",
   "termFormAcquirerRefHint": "معرف مرجع المعالج",
-
   "termFormSettlementSection": "التسوية",
   "termFormSettlementSectionSub": "إعدادات التسوية البنكية",
   "termFormSettlementCycleLabel": "دورة التسوية",
@@ -2580,12 +2570,10 @@
   "termFormSettlementBankHint": "مثلاً مصرف الراجحي",
   "termFormSettlementIbanLabel": "IBAN",
   "termFormSettlementIbanHint": "مثلاً SA0380000000608010167519",
-
   "termFormNotesSection": "ملاحظات",
   "termFormNotesSectionSub": "معلومات إضافية",
   "termFormAdminNotesLabel": "ملاحظات المدير",
   "termFormAdminNotesHint": "ملاحظات داخلية حول هذا الجهاز",
-
   "terminalsColDeviceModel": "الجهاز",
   "terminalsColSerialNo": "الرقم التسلسلي",
   "terminalsColAcquirer": "المعالج",
@@ -2594,7 +2582,6 @@
   "terminalsYes": "نعم",
   "terminalsNo": "لا",
   "terminalsNa": "غ/م",
-
   "terminalsActivate": "تفعيل",
   "terminalsActivatedLower": "مفعّل",
   "terminalsActive": "نشط",
@@ -2766,7 +2753,7 @@
   "dailySummaryHourlyActivity": "النشاط بالساعة",
   "dailySummarySessionDetails": "تفاصيل الجلسات",
   "dailySummaryNoSessions": "لا توجد جلسات",
-  "dailySummaryFloat": "المبلغ الافتتاحي: {amount} \u0081",
+  "dailySummaryFloat": "المبلغ الافتتاحي: {amount} ",
   "@dailySummaryFloat": {
     "placeholders": {
       "amount": {
@@ -2814,7 +2801,6 @@
   "customerReportsTitle": "تقارير العملاء",
   "customerReportsTopCustomers": "أفضل العملاء",
   "customerReportsRetention": "الاحتفاظ",
-
   "receiptTemplatesTitle": "قوالب الإيصالات",
   "receiptTemplatesEmpty": "لا توجد قوالب إيصالات",
   "receiptTemplatesEmptySubtitle": "لا توجد قوالب تخطيط إيصالات متاحة لخطتك.",
@@ -2824,7 +2810,6 @@
   "receiptTemplateHeaderConfig": "إعدادات الرأس",
   "receiptTemplateBodyConfig": "إعدادات المحتوى",
   "receiptTemplateFooterConfig": "إعدادات التذييل",
-
   "cfdThemesTitle": "سمات شاشة العرض للعميل",
   "cfdThemesEmpty": "لا توجد سمات",
   "cfdThemesEmptySubtitle": "لا توجد سمات شاشة عرض العميل متاحة لخطتك.",
@@ -2847,11 +2832,9 @@
   "cfdThemePreviewButton": "زر عينة",
   "cfdThemeYes": "نعم",
   "cfdThemeNo": "لا",
-
   "templatePreviewButton": "معاينة",
   "templatePreviewTitle": "معاينة",
   "templatePreviewRefresh": "تحديث المعاينة",
-
   "labelLayoutTemplatesTitle": "قوالب تخطيط الملصقات",
   "labelLayoutTemplatesEmpty": "لا توجد قوالب ملصقات",
   "labelLayoutTemplatesEmptySubtitle": "ستظهر قوالب تخطيط الملصقات هنا بمجرد إنشائها بواسطة المسؤول",
@@ -2873,7 +2856,6 @@
   "labelLayoutTemplateSimpleLayout": "تخطيط بسيط متراص",
   "labelLayoutTemplateNoFields": "لم يتم تكوين حقول",
   "sidebarLabelLayoutTemplates": "قوالب الملصقات",
-
   "sidebarGroupCore": "الأساسية",
   "sidebarGroupCatalog": "المنتجات والمخزون",
   "sidebarGroupPeople": "الأشخاص",
@@ -2883,10 +2865,8 @@
   "sidebarGroupHardware": "الأجهزة والمزامنة",
   "sidebarGroupIndustry": "القطاعات",
   "sidebarGroupSettings": "الإعدادات والأدوات",
-
   "commonUpdate": "تحديث",
   "commonClose": "إغلاق",
-
   "supplierTitle": "الموردون",
   "supplierNew": "مورد جديد",
   "supplierEdit": "تعديل المورد",
@@ -2929,16 +2909,19 @@
   "supplierDeleteConfirm": "هل أنت متأكد من حذف \"{name}\"؟",
   "@supplierDeleteConfirm": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "supplierDeleted": "تم حذف المورد \"{name}\".",
   "@supplierDeleted": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
-
   "supplierReturnsTitle": "مرتجعات الموردين",
   "supplierReturnsSubtitle": "إدارة مرتجعات المنتجات للموردين",
   "supplierReturnNew": "مرتجع جديد",
@@ -2970,17 +2953,22 @@
   "supplierReturnActionConfirm": "{action} المرتجع \"{reference}\"؟",
   "@supplierReturnActionConfirm": {
     "placeholders": {
-      "action": {"type": "String"},
-      "reference": {"type": "String"}
+      "action": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      }
     }
   },
   "supplierReturnActionSuccess": "تم {action} المرتجع بنجاح.",
   "@supplierReturnActionSuccess": {
     "placeholders": {
-      "action": {"type": "String"}
+      "action": {
+        "type": "String"
+      }
     }
   },
-
   "debitsTitle": "المدينون",
   "debitsCreate": "إنشاء مديونية",
   "debitsEdit": "تعديل المديونية",
@@ -3045,12 +3033,10 @@
   "debitsAllocatedAt": "تاريخ التخصيص",
   "debitsCreatedAt": "تاريخ الإنشاء",
   "debitsOrderNumber": "رقم الطلب",
-
   "searchDropdownHint": "بحث...",
   "noResultsFound": "لا توجد نتائج",
   "selectOption": "اختر...",
   "createNew": "إنشاء جديد",
-
   "genericError": "خطأ: {message}",
   "genericErrorSaving": "خطأ في الحفظ: {message}",
   "workingHoursSaved": "تم حفظ ساعات العمل.",
@@ -3087,7 +3073,6 @@
   "pleaseEnterValidOtp": "يرجى إدخال رمز OTP صحيح مكون من 6 أرقام.",
   "generatingCoupons": "جاري إنشاء {count} كوبون...",
   "staffPinError": "خطأ: {message}",
-
   "sidebarTransactions": "المعاملات",
   "txExplorerTitle": "مستعرض المعاملات",
   "txDetailTitle": "تفاصيل المعاملة",
@@ -3155,7 +3140,6 @@
   "txVoidConfirmTitle": "إلغاء المعاملة",
   "txVoidConfirmMessage": "هل أنت متأكد من إلغاء هذه المعاملة؟ لا يمكن التراجع عن هذا الإجراء.",
   "txVoidAction": "إلغاء",
-
   "dashboardTodaysSales": "مبيعات اليوم",
   "dashboardTransactions": "المعاملات",
   "dashboardAvgBasket": "متوسط السلة",
@@ -3187,7 +3171,6 @@
   "dashboardHourlySales": "المبيعات بالساعة",
   "dashboardStaffPerformance": "أداء الموظفين",
   "dashboardBranchOverview": "نظرة عامة على الفروع",
-
   "installmentProviders": "مزودو التقسيط",
   "installmentPayments": "مدفوعات التقسيط",
   "installmentPayment": "دفع بالتقسيط",
@@ -3229,7 +3212,13 @@
   "editProvider": "تعديل المزود",
   "removeProvider": "إزالة المزود",
   "removeProviderConfirm": "إزالة جميع بيانات الاعتماد لـ {provider}؟ لا يمكن التراجع عن هذا.",
-  "@removeProviderConfirm": { "placeholders": { "provider": { "type": "String" } } },
+  "@removeProviderConfirm": {
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
   "name": "الاسم",
   "nameAr": "الاسم (عربي)",
   "descriptionAr": "الوصف (عربي)",
@@ -3255,8 +3244,13 @@
   "connectionSuccessful": "تم الاتصال بنجاح",
   "connectionFailed": "فشل الاتصال",
   "registerOn": "التسجيل في {provider}",
-  "@registerOn": { "placeholders": { "provider": { "type": "String" } } },
-
+  "@registerOn": {
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
   "wameedAI": "وميض AI",
   "wameedAIUsage": "استخدام AI",
   "wameedAISuggestions": "اقتراحات AI",
@@ -3369,7 +3363,6 @@
   "wameedAIPendingSuggestions": "معلّقة",
   "wameedAIHighPriority": "أولوية عالية",
   "wameedAITapToExplore": "اضغط لاستكشاف ميزات الذكاء الاصطناعي",
-
   "wameedAIBilling": "فواتير الذكاء الاصطناعي",
   "wameedAIBillingDashboard": "لوحة الفواتير",
   "wameedAIBillingCurrentMonth": "الشهر الحالي",
@@ -3399,7 +3392,6 @@
   "wameedAIBillingPaymentHistory": "سجل المدفوعات",
   "wameedAIBillingDisabled": "الذكاء الاصطناعي معطل حالياً لمتجرك",
   "wameedAIBillingViewAll": "عرض الكل",
-
   "wameedAINewChat": "محادثة جديدة",
   "wameedAIAssistant": "مساعد وميض الذكي",
   "wameedAIWelcomeSubtitle": "اسأل أي شيء عن عملك — المبيعات والمخزون والعملاء والمزيد.",
@@ -3458,8 +3450,13 @@
   "wameedAINoCategoriesFound": "لم يتم العثور على فئات",
   "wameedAIDefault": "الافتراضي",
   "wameedAIFieldRequired": "{field} مطلوب",
-  "@wameedAIFieldRequired": {"placeholders": {"field": {"type": "String"}}},
-
+  "@wameedAIFieldRequired": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
   "sidebarCashierGamification": "أداء الصرافين",
   "gamificationTitle": "لوحة متصدري الصرافين",
   "gamificationBadges": "الشارات",
@@ -3504,9 +3501,7 @@
   "gamificationConfirm": "تأكيد",
   "gamificationDismissAnomaly": "رفض",
   "gamificationCreateBadge": "إنشاء شارة",
-
   "featureInfoTooltip": "دليل الميزة",
-
   "featureInfoProductsTitle": "إدارة المنتجات",
   "featureInfoProductsDesc": "أدِر كتالوج المنتجات بالكامل من هنا. يمكنك إضافة منتجات جديدة، تعديل المنتجات الحالية، تحديد الأسعار، إدارة المتغيرات والباركود، وتنظيم المنتجات حسب الفئات. يمكن البحث عن المنتجات بالاسم أو رمز SKU أو الباركود.",
   "featureInfoProductsAddTitle": "إضافة منتج جديد",
@@ -3535,7 +3530,6 @@
   "featureInfoProductsTip1": "استخدم زر التبديل بين الشبكة/القائمة (سطح المكتب) للتبديل بين عرض الجدول والبطاقات.",
   "featureInfoProductsTip2": "يمكنك تكرار المنتجات باستخدام إجراء 'تكرار' لإنشاء عناصر مماثلة بسرعة.",
   "featureInfoProductsTip3": "الإجراءات الجماعية (تفعيل، إلغاء التفعيل، حذف) متاحة عند تحديد منتجات متعددة.",
-
   "featureInfoCategoriesTitle": "إدارة الفئات",
   "featureInfoCategoriesDesc": "نظّم منتجاتك بشجرة فئات هرمية. تدعم الفئات علاقات الفئة الأم والفرعية، مما يسمح بإنشاء تصنيف منظم للمنتجات. كل فئة يمكن أن يكون لها اسم بالعربية والإنجليزية.",
   "featureInfoCategoriesAddTitle": "إنشاء فئة",
@@ -3559,7 +3553,6 @@
   "featureInfoCategoriesDeleteStep2Desc": "راجع التحذير بشأن الفئات الفرعية وأكد. قد يتم إعادة تعيين أو حذف الفئات الفرعية حسب الإعدادات.",
   "featureInfoCategoriesTip1": "استخدم أزرار 'توسيع الكل' و'طي الكل' في شريط التطبيق للتنقل بسرعة في شجرة الفئات.",
   "featureInfoCategoriesTip2": "يمكنك إضافة فئات فرعية مباشرة من أي عقدة في الشجرة باستخدام إجراء 'إضافة فرعية'.",
-
   "featureInfoSuppliersTitle": "إدارة الموردين",
   "featureInfoSuppliersDesc": "أدِر دليل الموردين مع تفاصيل الاتصال الكاملة والمعلومات المصرفية وإعدادات الأعمال. تتبع أوامر الشراء وإيصالات البضائع والمرتجعات والأرصدة المستحقة لكل مورد.",
   "featureInfoSuppliersAddTitle": "إضافة مورد جديد",
@@ -3583,7 +3576,6 @@
   "featureInfoSuppliersDeleteStep2Desc": "أكد الحذف في المربع الحواري. ملاحظة: قد يؤثر هذا على المنتجات المرتبطة وأوامر الشراء.",
   "featureInfoSuppliersTip1": "اضغط على صف المورد لمشاهدة إحصائيات تفصيلية تشمل أوامر الشراء وإيصالات البضائع والمرتجعات والرصيد المستحق.",
   "featureInfoSuppliersTip2": "استخدم شريط البحث للعثور على الموردين بسرعة بالاسم.",
-
   "featureInfoCustomersTitle": "دليل العملاء",
   "featureInfoCustomersDesc": "عرض قائمة العملاء مع أسمائهم ومعلومات الاتصال ونقاط الولاء. يتم إضافة العملاء تلقائياً عند إجراء عمليات شراء أو يمكن إضافتهم من محطة نقاط البيع أثناء الدفع.",
   "featureInfoCustomersViewTitle": "عرض العملاء",
@@ -3592,7 +3584,6 @@
   "featureInfoCustomersViewStep2Title": "تحقق من تفاصيل العميل",
   "featureInfoCustomersViewStep2Desc": "كل بطاقة عميل تعرض الاسم ومعلومات الاتصال ونقاط الولاء المتراكمة.",
   "featureInfoCustomersTip1": "يمكن ربط العملاء بالطلبات من شاشة أمين الصندوق أثناء الدفع باستخدام زر بحث العملاء.",
-
   "featureInfoOrdersTitle": "إدارة الطلبات",
   "featureInfoOrdersDesc": "عرض وإدارة جميع الطلبات عبر متجرك. صفّ الطلبات حسب الحالة، ابحث برقم الطلب، وألغِ الطلبات عند الحاجة. يتم إنشاء الطلبات من محطة نقاط البيع وتظهر هنا بتفاصيلها الكاملة.",
   "featureInfoOrdersViewTitle": "عرض الطلبات",
@@ -3609,7 +3600,6 @@
   "featureInfoOrdersVoidStep2Desc": "انقر على إجراء 'إلغاء' في صف الطلب وأكد في المربع الحواري. هذا الإجراء لا يمكن التراجع عنه.",
   "featureInfoOrdersTip1": "استخدم أدوات التنقل بين الصفحات في الأسفل للتنقل بين الصفحات.",
   "featureInfoOrdersTip2": "اسحب للأسفل لتحديث قائمة الطلبات على الجوال.",
-
   "featureInfoStaffTitle": "إدارة الموظفين",
   "featureInfoStaffDesc": "أدِر أعضاء فريقك مع ملفات تعريف كاملة وتفاصيل التوظيف وأمان PIN وحسابات المستخدمين. يمكن تصفية الموظفين حسب الفرع والحالة ونوع التوظيف. كل موظف يمكن أن يكون لديه رمز PIN للوصول الآمن.",
   "featureInfoStaffAddTitle": "إضافة موظف",
@@ -3636,7 +3626,6 @@
   "featureInfoStaffTip1": "استخدم محدد الفرع في الأعلى لعرض الموظفين لفرع محدد.",
   "featureInfoStaffTip2": "شرائح التصفية تتيح لك التصفية السريعة حسب الحالة (نشط، غير نشط، في إجازة) أو نوع التوظيف.",
   "featureInfoStaffTip3": "رمز PIN ضروري للوصول إلى محطة نقاط البيع — تأكد من أن كل موظف لديه رمز PIN فريد.",
-
   "featureInfoRolesTitle": "الأدوار والصلاحيات",
   "featureInfoRolesDesc": "حدد أدواراً بصلاحيات دقيقة للتحكم في ما يمكن لكل موظف الوصول إليه. الأدوار المحددة مسبقاً من النظام لا يمكن حذفها. أنشئ أدواراً مخصصة بمجموعات صلاحيات محددة لفريقك.",
   "featureInfoRolesCreateTitle": "إنشاء دور جديد",
@@ -3655,7 +3644,6 @@
   "featureInfoRolesDeleteStep2Desc": "اضغط على أيقونة الحذف وأكد. تأكد من عدم وجود موظفين معيّنين لهذا الدور قبل الحذف.",
   "featureInfoRolesTip1": "بعض الصلاحيات مميزة بـ 'يتطلب تجاوز PIN' — هذه تحتاج تحقق إضافي في نقاط البيع.",
   "featureInfoRolesTip2": "أدوار النظام (المالك، المدير، أمين الصندوق، إلخ) مُعدّة مسبقاً ولا يمكن حذفها، لكن يمكنك عرض صلاحياتها.",
-
   "featureInfoInventoryTitle": "إدارة المخزون",
   "featureInfoInventoryDesc": "مركزك الرئيسي لجميع عمليات المخزون. يمكنك الوصول لمستويات المخزون، حركات المخزون، إيصالات البضائع، تعديلات المخزون، تحويلات المخزون، أوامر الشراء، الوصفات، ومرتجعات الموردين من البلاطات أدناه.",
   "featureInfoInventoryNavigateTitle": "استخدام مركز المخزون",
@@ -3665,7 +3653,6 @@
   "featureInfoInventoryNavigateStep2Desc": "كل وحدة تحتوي على زر معلومات (ℹ) خاص بها مع تعليمات مفصلة لتلك الميزة المحددة.",
   "featureInfoInventoryTip1": "مستويات المخزون تعرض الكميات الحالية وحالة إعادة الطلب بنظرة واحدة.",
   "featureInfoInventoryTip2": "حركات المخزون للقراءة فقط — تسجل تلقائياً جميع تغييرات المخزون عبر النظام.",
-
   "featureInfoStockAdjTitle": "تعديلات المخزون",
   "featureInfoStockAdjDesc": "سجّل التغييرات اليدوية على كميات المخزون. استخدم التعديلات لتصحيح العد أو البضائع التالفة أو المنتهية الصلاحية أو السرقة أو أي سبب آخر يغير المخزون الفعلي بدون عملية شراء أو بيع.",
   "featureInfoStockAdjCreateTitle": "إنشاء تعديل مخزون",
@@ -3681,7 +3668,6 @@
   "featureInfoStockAdjCreateStep5Desc": "اضغط 'إنشاء' لتسجيل التعديل. سيتم تحديث مستوى المخزون فوراً.",
   "featureInfoStockAdjTip1": "اختر دائماً السبب الصحيح — يساعد في إعداد التقارير ومسارات التدقيق.",
   "featureInfoStockAdjTip2": "استخدم 'تصحيح' عند إصلاح فروق العد المكتشفة أثناء الجرد الفعلي.",
-
   "featureInfoPOTitle": "أوامر الشراء",
   "featureInfoPODesc": "أنشئ وأدِر أوامر الشراء لمورديك. تتبع الأوامر خلال دورة حياتها: مسودة ← مُرسل ← مُستلم جزئياً ← مُستلم بالكامل. صفّ حسب الحالة وأدِر سير عم�� المشتريات الكامل.",
   "featureInfoPOCreateTitle": "إنشاء أمر شراء",
@@ -3702,7 +3688,6 @@
   "featureInfoPOManageStep3Desc": "يمكن إلغاء أوامر المسودة أو المُرسلة باستخدام إجراء 'إلغاء' مع مربع حوار تأكيد.",
   "featureInfoPOTip1": "استخدم زر التصفية لعرض الأوامر حسب الحالة (مسودة، مُرسل، مُستلم جزئياً، مُستلم بالكامل، ملغي).",
   "featureInfoPOTip2": "يعرض الجدول رقم المرجع والمورد والحالة والتكلفة الإجمالية وتاريخ التسليم المتوقع.",
-
   "featureInfoTransfersTitle": "تحويلات المخزون",
   "featureInfoTransfersDesc": "حوّل المخزون بين فروع متجرك. تتبع التحويلات خلال سير عمل الموافقة: معلق ← موافق عليه ← في الطريق ← مُستلم. كل تحويل يتطلب متجر مصدر ومتجر وجهة.",
   "featureInfoTransfersCreateTitle": "إنشاء تحويل مخزون",
@@ -3722,7 +3707,6 @@
   "featureInfoTransfersManageStep3Title": "ألغِ إذا لزم الأمر",
   "featureInfoTransfersManageStep3Desc": "يمكن إلغاء التحويلات المعلقة باستخدام إجراء 'إلغاء'. التحويلات في الطريق لا يمكن إلغاؤها.",
   "featureInfoTransfersTip1": "يعرض الجدول رقم المرجع والفرع المصدر والفرع الوجهة والحالة وتاريخ الإنشاء.",
-
   "featureInfoGRTitle": "إيصالات البضائع",
   "featureInfoGRDesc": "سجّل البضائع الواردة من الموردين. تُحدّث إيصالات البضائع مستويات مخزونك عند التأكيد. تبدأ الإيصالات كمسودة ويمكن تأكيدها عند التحقق.",
   "featureInfoGRCreateTitle": "إنشاء إيصال بضائع",
@@ -3738,7 +3722,6 @@
   "featureInfoGRConfirmStep2Title": "أكد الإيصال",
   "featureInfoGRConfirmStep2Desc": "انقر على إجراء 'تأكيد' وتحقق في المربع الحواري. سيتم تحديث مستويات المخزون بالكميات المستلمة.",
   "featureInfoGRTip1": "يعرض الجدول رقم المرجع والمورد والحالة والتكلفة الإجمالية وتاريخ الاستلام مع ترقيم الصفحات.",
-
   "featureInfoSRTitle": "مرتجعات الموردين",
   "featureInfoSRDesc": "معالجة مرتجعات البضائع إلى الموردين. تتبع المرتجعات سير عمل: مسودة ← مُقدم ← مُوافق عليه ← مكتمل. ابحث وصفّ المرتجعات حسب الحالة لتتبع عملية الإرجاع.",
   "featureInfoSRCreateTitle": "إنشاء مرتجع مورد",
@@ -3758,7 +3741,6 @@
   "featureInfoSRManageStep4Title": "ألغِ أو احذف إذا لزم الأمر",
   "featureInfoSRManageStep4Desc": "يمكن إلغاء مرتجعات المسودة والمُقدمة. يمكن أيضاً حذف مرتجعات المسودة نهائياً.",
   "featureInfoSRTip1": "استخدم شريط البحث والقائمة المنسدلة لتصفية الحالة للعثور على مرتجعات محددة بسرعة.",
-
   "featureInfoRecipesTitle": "الوصفات",
   "featureInfoRecipesDesc": "حدد الوصفات التي تربط منتجاً نهائياً بمكوناته من المواد الخام. يساعد هذا في تتبع استهلاك المكونات وإدارة تكاليف المنتجات المركبة. كل وصفة تحدد المنتج الناتج وكمية الإنتاج والمكونات ونسبة الهدر.",
   "featureInfoRecipesCreateTitle": "إنشاء وصفة",
@@ -3776,7 +3758,6 @@
   "featureInfoRecipesDeleteStep2Title": "احذف وأكد",
   "featureInfoRecipesDeleteStep2Desc": "انقر على إجراء 'حذف' وأكد في المربع الحواري. هذا يزيل تعريف الوصفة.",
   "featureInfoRecipesTip1": "حدد نسبة الهدر لمراعاة المواد المفقودة أثناء الإنتاج (مثل القص والتبخر).",
-
   "featureInfoStockLevelsTitle": "مستويات المخزون",
   "featureInfoStockLevelsDesc": "راقب كميات المخزون الحالية لجميع المنتجات. عرض المخزون المتاح والمحجوز ومتوسط التكلفة وحالة إعادة الطلب. حدد نقاط إعادة الطلب والحد الأقصى للمخزون للحصول على تنبيهات عندما ينخفض المخزون.",
   "featureInfoStockLevelsViewTitle": "عرض مستويات المخزون",
@@ -3792,7 +3773,6 @@
   "featureInfoStockLevelsReorderStep3Title": "احفظ الحدود",
   "featureInfoStockLevelsReorderStep3Desc": "اضغط 'حفظ'. المنتجات الأقل من نقطة إعادة الطلب ستظهر شارة 'مخزون منخفض'.",
   "featureInfoStockLevelsTip1": "استخدم شريط البحث للعثور على منتجات محددة وأدوات ترقيم الصفحات للتنقل في المخزونات الكبيرة.",
-
   "featureInfoPromotionsTitle": "العروض والقسائم",
   "featureInfoPromotionsDesc": "أنشئ وأدِر العروض الترويجية لزيادة المبيعات. يدعم خصومات النسبة المئوية والمبالغ الثابتة واشترِ واحدة واحصل على واحدة (BOGO) وعروض الحزم وتسعير الساعات السعيدة. أنشئ أكواد القسائم وتتبع تحليلات الأداء.",
   "featureInfoPromotionsCreateTitle": "إنشاء عرض ترويجي",
@@ -3815,7 +3795,6 @@
   "featureInfoPromotionsManageStep3Desc": "اختر 'التحليلات' من القائمة المنبثقة لمشاهدة بيانات أداء العرض.",
   "featureInfoPromotionsTip1": "استخدم شريط البحث وزر التصفية للعثور على العروض بالاسم أو النوع أو الحالة.",
   "featureInfoPromotionsTip2": "عروض الساعة السعيدة تُطبّق تلقائياً خلال النوافذ الزمنية المُعدّة.",
-
   "featureInfoBranchesTitle": "إدارة الفروع",
   "featureInfoBranchesDesc": "أدِر جميع فروع متجرك والمستودعات. اضبط تفاصيل الفرع بما في ذلك الموقع ومعلومات الاتصال والإعدادات التشغيلية والمستندات القانونية وملفات التواصل الاجتماعي. عرض إحصائيات الفروع النشطة وغير النشطة.",
   "featureInfoBranchesCreateTitle": "إنشاء فرع",
@@ -3838,7 +3817,6 @@
   "featureInfoBranchesEditStep2Desc": "عدّل أي حقول عبر التبويبات الستة واضغط 'حفظ' للتحديث.",
   "featureInfoBranchesTip1": "صف الإحصائيات في الأعلى يعرض إجمالي الفروع والعدد النشط والعدد غير النشط وعدد المستودعات.",
   "featureInfoBranchesTip2": "استخدم تصفية الحالة (الكل/نشط/غير نشط) لتضييق قائمة الفروع بسرعة.",
-
   "featureInfoDebitsTitle": "إدارة المديونيات",
   "featureInfoDebitsDesc": "تتبع ائتمانات العملاء ومرتجعات الموردين وتعديلات المخزون والائتمانات اليدوية. المديونيات تمثل أموالاً مستحقة يمكن تخصيصها للطلبات. عرض مؤشرات ملخصة للإجمالي والمعلق والمُخصص وغير المُخصص.",
   "featureInfoDebitsCreateTitle": "إنشاء مديونية",
@@ -3864,7 +3842,6 @@
   "featureInfoDebitsReverseStep2Desc": "اكتب سبب العكس وأكد. المديونيات المعكوسة لا يمكن تخصيصها.",
   "featureInfoDebitsTip1": "بطاقات الملخص في الأعلى تعرض إجمالي المديونيات والمبلغ المعلق والمُخصص وغير المُخصص.",
   "featureInfoDebitsTip2": "استخدم شريط البحث للعثور على المديونيات برقم المرجع.",
-
   "featureInfoExpensesTitle": "تتبع المصروفات",
   "featureInfoExpensesDesc": "سجّل وتتبع مصروفات متجرك اليومية. يتم تجميع المصروفات حسب التاريخ مع إجماليات يومية. تشمل الفئات: مستلزمات، طعام، نقل، صيانة، مرافق، وأخرى.",
   "featureInfoExpensesCreateTitle": "تسجيل مصروف",
@@ -3877,7 +3854,6 @@
   "featureInfoExpensesCreateStep4Title": "أضف الوصف واحفظ",
   "featureInfoExpensesCreateStep4Desc": "اختيارياً أضف وصفاً يشرح المصروف. اضغط 'إنشاء' لتسجيله.",
   "featureInfoExpensesTip1": "يتم تجميع المصروفات حسب التاريخ. كل مجموعة تاريخ تعرض إجمالي المصروفات لذلك اليوم.",
-
   "featureInfoCashMgmtTitle": "إدارة النقدية",
   "featureInfoCashMgmtDesc": "أدِر جلسات النقدية لمحطة نقاط البيع. افتح جلسة في بداية الوردية، سجّل أحداث الإدخال والسحب النقدي خلال اليوم، عُد العملات، وأغلق الجلسة في نهاية الوردية.",
   "featureInfoCashMgmtOpenTitle": "فتح جلسة نقدية",
@@ -3901,7 +3877,6 @@
   "featureInfoCashMgmtCloseStep3Desc": "أكد لإغلاق الجلسة. يتم تسجيل أي فرق بين النقد المعدود والمتوقع.",
   "featureInfoCashMgmtTip1": "عداد العملات يساعدك في عد النقد المادي بدقة قبل إغلاق الجلسة.",
   "featureInfoCashMgmtTip2": "سجل الجلسات في الأسفل يعرض الجلسات السابقة مع الرصيد الافتتاحي والتوقيت والفرق.",
-
   "featureInfoGiftCardsTitle": "بطاقات الهدايا",
   "featureInfoGiftCardsDesc": "أصدر وتحقق واسترد بطاقات الهدايا لمتجرك. بطاقات الهدايا لها رمز فريد ورصيد واسم مستلم اختياري وتاريخ انتهاء. ثلاثة تبويبات تتيح إدارة دورة حياة بطاقة الهدايا الكاملة.",
   "featureInfoGiftCardsIssueTitle": "إصدار بطاقة هدايا",
@@ -3924,7 +3899,6 @@
   "featureInfoGiftCardsRedeemStep3Title": "أكمل الاسترداد",
   "featureInfoGiftCardsRedeemStep3Desc": "اضغط 'استرداد'. تظهر بطاقة تأكيد تعرض الرصيد المحدّث.",
   "featureInfoGiftCardsTip1": "يمكن أيضاً تطبيق بطاقات الهدايا كطريقة دفع مباشرة في محطة نقاط البيع أثناء الدفع.",
-
   "featureInfoCashSessionsTitle": "سجل جلسات النقدية",
   "featureInfoCashSessionsDesc": "عرض سجل جميع جلسات النقدية. كل جلسة تعرض رقم المحطة وحالة الجلسة والرصيد الافتتاحي. استخدم إدارة النقدية لفتح وإدارة وإغلاق الجلسات.",
   "featureInfoCashSessionsViewTitle": "عرض جلسات النقدية",
@@ -3933,7 +3907,6 @@
   "featureInfoCashSessionsViewStep2Title": "تحقق من تفاصيل الجلسة",
   "featureInfoCashSessionsViewStep2Desc": "كل إدخال جلسة يعرض المعلومات الأساسية عن فترة جلسة النقدية.",
   "featureInfoCashSessionsTip1": "لإدارة الجلسات النشطة (الفتح، أحداث النقد، الإغلاق)، استخدم صفحة إدارة النقدية.",
-
   "featureInfoDailySummaryTitle": "الملخص المالي اليومي",
   "featureInfoDailySummaryDesc": "راجع ملخصاً مالياً يومياً شاملاً. شاهد الإيرادات الإجمالية والمصروفات وصافي الإيرادات وعدد المعاملات. عرض تفصيل الإيرادات حسب طريقة الدفع وتحليل فرق النقد وأنماط النشاط بالساعة وتفاصيل الجلسات.",
   "featureInfoDailySummaryNavigateTitle": "التنقل بين التواريخ",
@@ -3949,7 +3922,6 @@
   "featureInfoDailySummaryReviewStep3Title": "تحقق من فرق النقد",
   "featureInfoDailySummaryReviewStep3Desc": "قسم 'فرق النقد' يقارن النقد المتوقع بالفعلي. يُظهر تسامح ±5 — الفروقات الأكبر تكون مُبرزة.",
   "featureInfoDailySummaryTip1": "مخطط النشاط بالساعة يساعد في تحديد ساعات الذروة لقرارات التوظيف.",
-
   "featureInfoFinReconTitle": "المطابقة المالية",
   "featureInfoFinReconDesc": "قم بالمطابقة المالية في نهاية اليوم. راجع ملخصات الإيرادات وتفصيل طرق الدفع ومراكز النقد والمصروفات. عُد النقد المادي باستخدام شبكة العملات وأكد المطابقة لإغلاق يوم العمل.",
   "featureInfoFinReconStepsTitle": "عملية المطابقة",
@@ -3965,7 +3937,6 @@
   "featureInfoFinReconStep5Desc": "راجع فرق النقد (الفرق بين المعدود والمتوقع). اضغط 'تأكيد المطابقة' وتحقق في مربع حوار التأكيد.",
   "featureInfoFinReconTip1": "فرق النقد ملوّن: أخضر للمطابقة، أحمر للفروقات.",
   "featureInfoFinReconTip2": "يمكنك أيضاً طباعة التقرير أو تصديره كـ PDF باستخدام أزرار الإجراءات.",
-
   "featureInfoTxExplorerTitle": "مستكشف المعاملات",
   "featureInfoTxExplorerDesc": "ابحث وحلل جميع المعاملات بفلاتر قوية. عرض المبيعات والمرتجعات والإلغاءات والاستبدالات. فعّل التحليلات لمؤشرات الأداء والرسوم البيانية وتحليل الاتجاهات اليومية. اضغط على أي معاملة لمشاهدة التفاصيل الكاملة.",
   "featureInfoTxExplorerSearchTitle": "البحث في المعاملات",
@@ -3981,7 +3952,6 @@
   "featureInfoTxExplorerAnalyticsStep2Title": "راجع المؤشرات والرسوم",
   "featureInfoTxExplorerAnalyticsStep2Desc": "لوحة التحليلات تعرض بطاقات إحصائية ورسوم بيانية للمعاملات وخط اتجاه يومي لمساعدتك في تحديد الأنماط.",
   "featureInfoTxExplorerTip1": "اضغط على أي صف معاملة للانتقال إلى صفحة تفاصيل المعاملة الكاملة.",
-
   "featureInfoReportsTitle": "التقارير والتحليلات",
   "featureInfoReportsDesc": "مركز التحليلات الخاص بك مع مؤشرات اليوم والمقارنة مع الأمس وأفضل المنتجات. انتقل إلى 9 تقارير فرعية متخصصة للتحليل التفصيلي عبر المبيعات والمنتجات والفئات والموظفين والاتجاهات بالساعة والمدفوعات والمخزون والمالية والعملاء.",
   "featureInfoReportsNavigateTitle": "استخدام لوحة التقارير",
@@ -3992,7 +3962,6 @@
   "featureInfoReportsNavigateStep3Title": "انتقل إلى التقارير الفرعية",
   "featureInfoReportsNavigateStep3Desc": "استخدم الشبكة 3×3 للانتقال إلى: ملخص المبيعات، أداء المنتجات، تفصيل الفئات، أداء الموظفين، المبيعات بالساعة، طرق الدفع، تقرير المخزون، التقرير المالي، وتقرير العملاء.",
   "featureInfoReportsTip1": "استخدم زر التحديث في شريط التطبيق ولوحة الفلاتر لتخصيص عرض البيانات.",
-
   "featureInfoLabelsTitle": "قوالب الملصقات",
   "featureInfoLabelsDesc": "صمّم وأدِر واطبع ملصقات المنتجات. استخدم مصمم الملصقات WYSIWYG لإنشاء قوالب مخصصة بالباركود وأسماء المنتجات والأسعار ورموز SKU والشعارات ورموز QR والمزيد. اطبع الملصقات مباشرة أو أضفها للطباعة الدفعية.",
   "featureInfoLabelsCreateTitle": "إنشاء قالب ملصق",
@@ -4010,7 +3979,6 @@
   "featureInfoLabelsPrintStep2Title": "اضبط واطبع",
   "featureInfoLabelsPrintStep2Desc": "حدد المنتجات وعيّن الكميات وأرسل إلى الطابعة.",
   "featureInfoLabelsTip1": "يمكنك تكرار القوالب الموجودة (بما في ذلك المُعدّة مسبقاً) وتخصيصها لإنشاء أسرع.",
-
   "featureInfoDeliveryTitle": "تكامل التوصيل",
   "featureInfoDeliveryDesc": "اتصل بمنصات التوصيل لإدارة الطلبات الإلكترونية. عرض المؤشرات (طلبات اليوم، الإيرادات، النشطة/المعلقة/المكتملة) وأدِر إعدادات المنصات وعالج طلبات التوصيل (قبول، رفض، إكمال).",
   "featureInfoDeliveryPlatformsTitle": "إدارة منصات التوصيل",
@@ -4028,7 +3996,6 @@
   "featureInfoDeliveryOrdersStep3Title": "أكمل الطلبات",
   "featureInfoDeliveryOrdersStep3Desc": "عند توصيل الطلب، استخدم زر 'إكمال' لإنهائه.",
   "featureInfoDeliveryTip1": "استخدم زر مزامنة القائمة في شريط التطبيق لمزامنة كتالوج المنتجات مع منصات التوصيل.",
-
   "featureInfoNotificationsTitle": "مركز الإشعارات",
   "featureInfoNotificationsDesc": "عرض وإدارة جميع إشعارات النظام. صفّ حسب الفئة (طلب، مخزون، عرض، نظام، دفع، موظف) والأولوية (منخفضة، عادية، عالية، عاجلة). حدد كمقروء أو احذف بشكل جماعي أو أدِر تفضيلات الإشعارات.",
   "featureInfoNotificationsManageTitle": "إدارة الإشعارات",
@@ -4041,7 +4008,6 @@
   "featureInfoNotificationsManageStep4Title": "اسحب للتحديث",
   "featureInfoNotificationsManageStep4Desc": "اسحب لأسفل على القائمة لتحديث وتحميل إشعارات جديدة.",
   "featureInfoNotificationsTip1": "شارة عدد غير المقروء في شريط التطبيق تعرض عدد الإشعارات غير المقروءة.",
-
   "sidebarGroupPlatformAdmin": "إدارة المنصة",
   "sidebarAdminWameedAI": "إدارة الذكاء الاصطناعي",
   "adminWameedAIDashboard": "لوحة تحكم الذكاء الاصطناعي",
@@ -4153,7 +4119,6 @@
   "withKeys": "بمفاتيح",
   "deleteModelConfirm": "هل أنت متأكد من حذف هذا النموذج؟ لا يمكن التراجع عن هذا الإجراء.",
   "successful": "ناجح",
-
   "providerPaymentsTitle": "المدفوعات",
   "providerPaymentDetail": "تفاصيل الدفع",
   "providerPaymentCheckout": "إتمام الدفع",
@@ -4206,5 +4171,8 @@
   "providerPaymentPurposeAiBilling": "فوترة الذكاء الاصطناعي",
   "providerPaymentPurposeHardware": "أجهزة",
   "providerPaymentPurposeImplementationFee": "رسوم التطبيق",
-  "providerPaymentPurposeOther": "أخرى"
+  "providerPaymentPurposeOther": "أخرى",
+  "pinLoginTitle": "أدخل رمز PIN",
+  "pinLoginNoStore": "لم يتم العثور على جلسة متجر. يرجى تسجيل الدخول بالبريد الإلكتروني.",
+  "pinLoginEmailInstead": "تسجيل الدخول بالبريد الإلكتروني بدلاً من ذلك"
 }

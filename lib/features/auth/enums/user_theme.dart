@@ -10,10 +10,7 @@ enum UserTheme {
   final String value;
 
   static UserTheme fromValue(String value) {
-    return UserTheme.values.firstWhere(
-      (e) => e.value == value,
-      orElse: () => throw ArgumentError('Invalid UserTheme: $value'),
-    );
+    return UserTheme.values.firstWhere((e) => e.value == value, orElse: () => throw ArgumentError('Invalid UserTheme: $value'));
   }
 
   static UserTheme? tryFromValue(String? value) {

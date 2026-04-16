@@ -163,7 +163,7 @@
   "deploymentOverview": "Deployment Overview",
   "releases": "Releases",
   "adminSecurity": "Security Center",
-  "securityOverview": "Security Overview",
+  "securityOverview": "Overview",
   "securityAlerts": "Security Alerts",
   "dataManagement": "Data Management",
   "databaseBackupsList": "Database Backups",
@@ -526,11 +526,9 @@
   "settingsAboutDesc": "App version & legal information",
   "settingsPosBehavior": "POS Behavior",
   "settingsPosBehaviorDesc": "Sales, returns, inventory & loyalty settings",
-  "settingsSaved": "Settings saved successfully",
+  "settingsSaved": "Settings saved",
   "settingsErrorLoading": "Failed to load settings",
   "settingsErrorSaving": "Failed to save settings",
-  "save": "Save",
-  "retry": "Retry",
   "settingsTaxLabel": "Tax Label",
   "settingsTaxLabelHint": "e.g. VAT, GST, Sales Tax",
   "settingsTaxRate": "Tax Rate (%)",
@@ -612,7 +610,7 @@
   "settingsWorkingBreakEnd": "Break End",
   "settingsProfileCurrency": "Currency",
   "settingsProfileCurrencyCode": "Currency Code",
-  "settingsProfileCurrencyCodeHint": "e.g. OMR, \u0081, USD",
+  "settingsProfileCurrencyCodeHint": "e.g. OMR, , USD",
   "settingsProfileCurrencySymbol": "Currency Symbol",
   "settingsProfileCurrencySymbolHint": "e.g. ر.ع, ﷼, $",
   "settingsProfileFormatting": "Number Formatting",
@@ -622,7 +620,9 @@
   "settingsAboutVersion": "Version {version}",
   "@settingsAboutVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
   "settingsAboutTerms": "Terms of Service",
@@ -633,7 +633,9 @@
   "settingsAboutCopyright": "© {year} Thawani. All rights reserved.",
   "@settingsAboutCopyright": {
     "placeholders": {
-      "year": {"type": "String"}
+      "year": {
+        "type": "String"
+      }
     }
   },
   "sidebarSync": "Sync",
@@ -714,7 +716,6 @@
   "companionActiveStaff": "Active Staff",
   "companionLowStock": "Low Stock Items",
   "companionLastSync": "Last Sync",
-
   "companionDashboard": "Dashboard",
   "companionSales": "Sales",
   "companionActiveOrdersTitle": "Active Orders",
@@ -743,7 +744,6 @@
   "companionMinStock": "Min",
   "companionNoActiveStaff": "No active staff",
   "companionClockedIn": "Clocked in",
-
   "autoUpdateSettings": "Update Settings",
   "autoUpdateEnable": "Auto Update",
   "autoUpdateEnableDesc": "Automatically download and install updates",
@@ -775,10 +775,11 @@
   "autoUpdateNewVersion": "New version available: {version}",
   "@autoUpdateNewVersion": {
     "placeholders": {
-      "version": {"type": "String"}
+      "version": {
+        "type": "String"
+      }
     }
   },
-
   "accessibilityShortcutReference": "Shortcut Reference",
   "accessibilityShortcutHint": "Press Ctrl+/ to show shortcuts",
   "accessibilityReassignShortcut": "Reassign Shortcut",
@@ -789,14 +790,12 @@
   "accessibilityShortcutConflict": "Conflicts with: {name}",
   "@accessibilityShortcutConflict": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
-
-  "settingsSaved": "Settings saved",
   "close": "Close",
-  "cancel": "Cancel",
-  "save": "Save",
   "niceToHaveTitle": "Nice-to-Have Features",
   "niceToHaveWishlist": "Wishlist",
   "niceToHaveAppointments": "Appointments",
@@ -1088,7 +1087,7 @@
       }
     }
   },
-  "subscriptionSubscribeConfirm": "You will be subscribed to {planName} on a {billingCycle} basis.\n\nPrice: {price} \u0081/{billingCycle}",
+  "subscriptionSubscribeConfirm": "You will be subscribed to {planName} on a {billingCycle} basis.\n\nPrice: {price} /{billingCycle}",
   "@subscriptionSubscribeConfirm": {
     "placeholders": {
       "planName": {
@@ -1214,7 +1213,7 @@
       }
     }
   },
-  "subscriptionAddAddonConfirm": "This will add {name} to your subscription.\n\nCost: {price} \u0081/{cycle}",
+  "subscriptionAddAddonConfirm": "This will add {name} to your subscription.\n\nCost: {price} /{cycle}",
   "@subscriptionAddAddonConfirm": {
     "placeholders": {
       "name": {
@@ -1419,7 +1418,7 @@
   "marketplaceNoListings": "No templates found",
   "marketplaceNoListingsSubtitle": "Try adjusting your search or filters.",
   "marketplacePage": "Page",
-  "marketplaceCurrency": "\u0081",
+  "marketplaceCurrency": "",
   "marketplaceListingDetail": "Template Detail",
   "marketplaceDescription": "Description",
   "marketplaceOwned": "Owned",
@@ -1511,11 +1510,11 @@
   "openCashSession": "Open Cash Session",
   "noSessionsYet": "No sessions yet",
   "totalCount": "Total Count",
-  "openingFloatSar": "Opening Float (\u0081)",
+  "openingFloatSar": "Opening Float ()",
   "openSession": "Open Session",
   "closeCashSession": "Close Cash Session",
   "notesOptional": "Notes (optional)",
-  "amountSar": "Amount (\u0081)",
+  "amountSar": "Amount ()",
   "reason": "Reason",
   "record": "Record",
   "expenses": "Expenses",
@@ -1539,7 +1538,7 @@
   "check": "Check",
   "availableBalance": "Available Balance",
   "redeemGiftCard": "Redeem Gift Card",
-  "redemptionAmountSar": "Redemption Amount (\u0081)",
+  "redemptionAmountSar": "Redemption Amount ()",
   "giftCardIssued": "Gift Card Issued",
   "code": "Code",
   "initial": "Initial",
@@ -1751,7 +1750,7 @@
   "posFindTransaction": "Enter a receipt number to find the transaction",
   "posTransactionNotFound": "Transaction not found",
   "posPayment": "Payment",
-  "posPaymentTotal": "Total: \u0081 {amount}",
+  "posPaymentTotal": "Total:  {amount}",
   "posSplitPayment": "Split Payment",
   "posCashTendered": "Cash Tendered",
   "posChange": "Change",
@@ -1815,13 +1814,13 @@
   "posClear": "Clear",
   "posWalkInCustomer": "Walk-in Customer",
   "posCartDiscount": "Cart Discount",
-  "posSubtotalAmount": "Subtotal: \u0081 {amount}",
+  "posSubtotalAmount": "Subtotal:  {amount}",
   "@posSubtotalAmount": {
     "placeholders": {
       "amount": {}
     }
   },
-  "posDiscountAmountSar": "Discount Amount (\u0081)",
+  "posDiscountAmountSar": "Discount Amount ()",
   "posApply": "Apply",
   "posOrderNotes": "Order Notes",
   "posNotesHint": "Add notes for this order...",
@@ -1873,13 +1872,13 @@
       "number": {}
     }
   },
-  "posChangeGiven": "Change: \u0081 {amount}",
+  "posChangeGiven": "Change:  {amount}",
   "@posChangeGiven": {
     "placeholders": {
       "amount": {}
     }
   },
-  "posTotalAmountSar": "Total: \u0081 {amount}",
+  "posTotalAmountSar": "Total:  {amount}",
   "@posTotalAmountSar": {
     "placeholders": {
       "amount": {}
@@ -2016,16 +2015,16 @@
   "posTotalCount": "Total Count",
   "posNoSessionsYet": "No sessions yet",
   "posOpenCashSessionDialog": "Open Cash Session",
-  "posOpeningFloatSar": "Opening Float (\u0081)",
+  "posOpeningFloatSar": "Opening Float ()",
   "posCloseCashSession": "Close Cash Session",
-  "posCountedCash": "Counted Cash: {amount} \u0081",
+  "posCountedCash": "Counted Cash: {amount} ",
   "@posCountedCash": {
     "placeholders": {
       "amount": {}
     }
   },
   "posNotesOptional": "Notes (optional)",
-  "posAmountSar": "Amount (\u0081)",
+  "posAmountSar": "Amount ()",
   "posReason": "Reason",
   "posReasonPettyCash": "Petty Cash",
   "posReasonSupplierPayment": "Supplier Payment",
@@ -2056,10 +2055,12 @@
   "pinLoginSubtitle": "Quick switch — enter your 4-digit PIN",
   "pinLoginNoStoreSession": "No store session found. Please sign in with email.",
   "pinLoginSignInWithEmail": "Sign in with email instead",
-  "securityError": "Error: {message}",
+  "securityError": "Security error: {message}",
   "@securityError": {
     "placeholders": {
-      "message": {}
+      "message": {
+        "type": "String"
+      }
     }
   },
   "securityNA": "N/A",
@@ -2120,8 +2121,8 @@
       "name": {}
     }
   },
-  "sarCurrency": "\u0081",
-  "amountWithSar": "\u0081 {amount}",
+  "sarCurrency": "",
+  "amountWithSar": " {amount}",
   "@amountWithSar": {
     "placeholders": {
       "amount": {}
@@ -2152,7 +2153,7 @@
   "authStoreNameHint": "e.g. Main Branch",
   "authStoreNameOptional": "Store Name (optional)",
   "cashMgmtActiveSession": "Active Session",
-  "cashMgmtAmountSar": "Amount (\u0081)",
+  "cashMgmtAmountSar": "Amount ()",
   "cashMgmtCashCount": "Cash Count",
   "cashMgmtCashIn": "Cash In",
   "cashMgmtCashOut": "Cash Out",
@@ -2169,7 +2170,7 @@
   "cashMgmtOpenSession": "Open Session",
   "cashMgmtOpened": "Opened",
   "cashMgmtOpeningFloat": "Opening Float",
-  "cashMgmtOpeningFloatSar": "Opening Float (\u0081)",
+  "cashMgmtOpeningFloatSar": "Opening Float ()",
   "cashMgmtReason": "Reason",
   "cashMgmtRecord": "Record",
   "cashMgmtSessionHistory": "Session History",
@@ -2397,12 +2398,13 @@
   "notifStatsDeliveryRate": "Delivery Rate",
   "notifStatsByCategory": "By Category",
   "notifStatsByChannel": "By Channel",
-
   "notifDeleteConfirmTitle": "Delete Notifications",
   "notifDeleteConfirmMessage": "Delete {count} selected notifications?",
   "@notifDeleteConfirmMessage": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "notifStatsTitle": "Statistics",
@@ -2411,18 +2413,15 @@
   "notifDeleteSingleTitle": "Delete Notification",
   "notifDeleteSingleMessage": "Are you sure you want to delete this notification?",
   "notifJustNow": "Just now",
-
   "notifPrefPaymentAlerts": "Payment Alerts",
   "notifPrefPaymentAlertsSubtitle": "Payment confirmations and refund alerts",
   "notifPrefStaffEvents": "Staff Events",
   "notifPrefStaffEventsSubtitle": "Staff schedule and attendance updates",
   "notifPrefEmail": "Email",
   "notifPrefSms": "SMS",
-
   "notifLogDelivered": "Delivered",
   "notifLogSent": "Sent",
   "notifLogFailed": "Failed",
-
   "notifScheduleValidation": "Title and message are required",
   "notifScheduleCreatedSuccess": "Schedule created successfully",
   "notifSchedulesEmptySubtitle": "Tap + to create a scheduled notification",
@@ -2431,18 +2430,18 @@
   "notifScheduleType": "Schedule Type",
   "notifScheduleTypeOnce": "Once",
   "notifScheduleTypeRecurring": "Recurring",
-
   "notifActionMarkedAsRead": "Notification marked as read",
   "notifActionAllMarkedAsRead": "All notifications marked as read",
   "notifActionDeleted": "Notification deleted",
   "notifActionBulkDeleted": "{count} notifications deleted",
   "@notifActionBulkDeleted": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "notifActionBatchCreated": "Batch notification created",
-
   "ordersAll": "All",
   "ordersCancelled": "Cancelled",
   "ordersCompleted": "Completed",
@@ -2476,7 +2475,7 @@
   "ordersVoidOrder": "Void Order",
   "ordersVoided": "Voided",
   "ordersVoided2": "Order voided",
-  "posChangeAmount": "Change: \u0081 {amount}",
+  "posChangeAmount": "Change:  {amount}",
   "@posChangeAmount": {
     "placeholders": {
       "amount": {
@@ -2499,7 +2498,7 @@
   },
   "posPaymentNotCover": "Payment does not cover the total amount",
   "posSelectRegisterError": "Please select a register",
-  "posTotalAmount": "Total: \u0081 {amount}",
+  "posTotalAmount": "Total:  {amount}",
   "@posTotalAmount": {
     "placeholders": {
       "amount": {
@@ -2532,16 +2531,6 @@
   "securityNoLoginAttempts": "No login attempts",
   "securityPolicy": "Policy",
   "securityTitle": "Security",
-  "securityError": "Security error: {message}",
-  "@securityError": {
-    "placeholders": {
-      "message": {
-        "type": "String"
-      }
-    }
-  },
-  "securityNA": "N/A",
-  "securityOverview": "Overview",
   "securitySessions": "Sessions",
   "securityIncidents": "Incidents",
   "securityActive": "Active",
@@ -2684,7 +2673,6 @@
   "termFormUpdated": "Terminal updated successfully",
   "termFormVersionHint": "e.g. 1.0.0",
   "termFormVersionLabel": "App Version (optional)",
-
   "termFormDeviceSection": "Device Hardware",
   "termFormDeviceSectionSub": "Physical device details",
   "termFormDeviceModelLabel": "Device Model",
@@ -2695,7 +2683,6 @@
   "termFormSerialNumberHint": "Device serial number",
   "termFormNfcCapable": "NFC Capable",
   "termFormNfcCapableSub": "Device supports contactless payments",
-
   "termFormSoftposSection": "SoftPOS Configuration",
   "termFormSoftposSectionSub": "Tap-on-phone payment settings",
   "termFormSoftposEnabled": "SoftPOS Enabled",
@@ -2704,7 +2691,6 @@
   "termFormNearpayTidHint": "Terminal ID from NearPay",
   "termFormNearpayMidLabel": "NearPay MID",
   "termFormNearpayMidHint": "Merchant ID from NearPay",
-
   "termFormAcquirerSection": "Acquirer Details",
   "termFormAcquirerSectionSub": "Payment acquirer configuration",
   "termFormAcquirerSourceLabel": "Acquirer Source",
@@ -2713,7 +2699,6 @@
   "termFormAcquirerNameHint": "Custom acquirer name",
   "termFormAcquirerRefLabel": "Acquirer Reference",
   "termFormAcquirerRefHint": "Acquirer reference ID",
-
   "termFormSettlementSection": "Settlement",
   "termFormSettlementSectionSub": "Bank settlement configuration",
   "termFormSettlementCycleLabel": "Settlement Cycle",
@@ -2722,12 +2707,10 @@
   "termFormSettlementBankHint": "e.g. Al Rajhi Bank",
   "termFormSettlementIbanLabel": "IBAN",
   "termFormSettlementIbanHint": "e.g. SA0380000000608010167519",
-
   "termFormNotesSection": "Notes",
   "termFormNotesSectionSub": "Additional information",
   "termFormAdminNotesLabel": "Admin Notes",
   "termFormAdminNotesHint": "Internal notes about this terminal",
-
   "terminalsColDeviceModel": "Device",
   "terminalsColSerialNo": "Serial #",
   "terminalsColAcquirer": "Acquirer",
@@ -2736,7 +2719,6 @@
   "terminalsYes": "Yes",
   "terminalsNo": "No",
   "terminalsNa": "N/A",
-
   "terminalsActivate": "Activate",
   "terminalsActivatedLower": "activated",
   "terminalsActive": "Active",
@@ -2908,7 +2890,7 @@
   "dailySummaryHourlyActivity": "Hourly Activity",
   "dailySummarySessionDetails": "Session Details",
   "dailySummaryNoSessions": "No sessions",
-  "dailySummaryFloat": "Float: {amount} \u0081",
+  "dailySummaryFloat": "Float: {amount} ",
   "@dailySummaryFloat": {
     "placeholders": {
       "amount": {
@@ -2956,7 +2938,6 @@
   "customerReportsTitle": "Customer Reports",
   "customerReportsTopCustomers": "Top Customers",
   "customerReportsRetention": "Retention",
-
   "receiptTemplatesTitle": "Receipt Templates",
   "receiptTemplatesEmpty": "No Receipt Templates",
   "receiptTemplatesEmptySubtitle": "No receipt layout templates are available for your plan.",
@@ -2966,7 +2947,6 @@
   "receiptTemplateHeaderConfig": "Header Configuration",
   "receiptTemplateBodyConfig": "Body Configuration",
   "receiptTemplateFooterConfig": "Footer Configuration",
-
   "cfdThemesTitle": "Customer Facing Display Themes",
   "cfdThemesEmpty": "No CFD Themes",
   "cfdThemesEmptySubtitle": "No customer facing display themes are available for your plan.",
@@ -2989,11 +2969,9 @@
   "cfdThemePreviewButton": "Sample Button",
   "cfdThemeYes": "Yes",
   "cfdThemeNo": "No",
-
   "templatePreviewButton": "Preview",
   "templatePreviewTitle": "Preview",
   "templatePreviewRefresh": "Refresh Preview",
-
   "labelLayoutTemplatesTitle": "Label Layout Templates",
   "labelLayoutTemplatesEmpty": "No Label Templates",
   "labelLayoutTemplatesEmptySubtitle": "Label layout templates will appear here once created by admin",
@@ -3015,7 +2993,6 @@
   "labelLayoutTemplateSimpleLayout": "Simple stacked layout",
   "labelLayoutTemplateNoFields": "No fields configured",
   "sidebarLabelLayoutTemplates": "Label Templates",
-
   "sidebarGroupCore": "Core",
   "sidebarGroupCatalog": "Catalog & Inventory",
   "sidebarGroupPeople": "People",
@@ -3025,10 +3002,8 @@
   "sidebarGroupHardware": "Hardware & Sync",
   "sidebarGroupIndustry": "Industry",
   "sidebarGroupSettings": "Settings & Tools",
-
   "commonUpdate": "Update",
   "commonClose": "Close",
-
   "supplierTitle": "Suppliers",
   "supplierNew": "New Supplier",
   "supplierEdit": "Edit Supplier",
@@ -3071,16 +3046,19 @@
   "supplierDeleteConfirm": "Are you sure you want to delete \"{name}\"?",
   "@supplierDeleteConfirm": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
   "supplierDeleted": "Supplier \"{name}\" deleted.",
   "@supplierDeleted": {
     "placeholders": {
-      "name": {"type": "String"}
+      "name": {
+        "type": "String"
+      }
     }
   },
-
   "supplierReturnsTitle": "Supplier Returns",
   "supplierReturnsSubtitle": "Manage product returns to suppliers",
   "supplierReturnNew": "New Return",
@@ -3112,17 +3090,22 @@
   "supplierReturnActionConfirm": "{action} return \"{reference}\"?",
   "@supplierReturnActionConfirm": {
     "placeholders": {
-      "action": {"type": "String"},
-      "reference": {"type": "String"}
+      "action": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      }
     }
   },
   "supplierReturnActionSuccess": "Return {action} successfully.",
   "@supplierReturnActionSuccess": {
     "placeholders": {
-      "action": {"type": "String"}
+      "action": {
+        "type": "String"
+      }
     }
   },
-
   "debitsTitle": "Debits",
   "debitsCreate": "Create Debit",
   "debitsEdit": "Edit Debit",
@@ -3187,65 +3170,161 @@
   "debitsAllocatedAt": "Allocated At",
   "debitsCreatedAt": "Created At",
   "debitsOrderNumber": "Order #",
-
   "searchDropdownHint": "Search...",
   "noResultsFound": "No results found",
   "selectOption": "Select...",
   "createNew": "Create new",
-
   "genericError": "Error: {message}",
-  "@genericError": { "placeholders": { "message": { "type": "String" } } },
+  "@genericError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
   "genericErrorSaving": "Error saving: {message}",
-  "@genericErrorSaving": { "placeholders": { "message": { "type": "String" } } },
+  "@genericErrorSaving": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
   "workingHoursSaved": "Working hours saved.",
   "settingsSavedSuccessfully": "Settings saved successfully.",
   "productUpdated": "Product updated.",
   "productCreated": "Product created.",
   "generatedBarcode": "Generated barcode: {barcode}",
-  "@generatedBarcode": { "placeholders": { "barcode": { "type": "String" } } },
+  "@generatedBarcode": {
+    "placeholders": {
+      "barcode": {
+        "type": "String"
+      }
+    }
+  },
   "allSuppliersAlreadyLinked": "All suppliers are already linked.",
   "productDeleted": "Product \"{name}\" deleted.",
-  "@productDeleted": { "placeholders": { "name": { "type": "String" } } },
+  "@productDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "productDuplicated": "Product \"{name}\" duplicated.",
-  "@productDuplicated": { "placeholders": { "name": { "type": "String" } } },
+  "@productDuplicated": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "bulkActionCompleted": "Bulk {action} completed.",
-  "@bulkActionCompleted": { "placeholders": { "action": { "type": "String" } } },
+  "@bulkActionCompleted": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
   "categoryUpdated": "Category updated.",
   "categoryCreated": "Category created.",
   "categoryDeleted": "Category \"{name}\" deleted.",
-  "@categoryDeleted": { "placeholders": { "name": { "type": "String" } } },
+  "@categoryDeleted": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "productClonedToStore": "Product \"{name}\" cloned to your store.",
-  "@productClonedToStore": { "placeholders": { "name": { "type": "String" } } },
+  "@productClonedToStore": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "selectBusinessTypeFirst": "Please select a business type first.",
   "clonedCategoriesAndProducts": "Cloned {cats} categories and {prods} products to your store.",
-  "@clonedCategoriesAndProducts": { "placeholders": { "cats": { "type": "String" }, "prods": { "type": "String" } } },
+  "@clonedCategoriesAndProducts": {
+    "placeholders": {
+      "cats": {
+        "type": "String"
+      },
+      "prods": {
+        "type": "String"
+      }
+    }
+  },
   "categoryClonedSuccessfully": "Category \"{name}\" cloned successfully.",
-  "@categoryClonedSuccessfully": { "placeholders": { "name": { "type": "String" } } },
+  "@categoryClonedSuccessfully": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "pleaseFillOneMapping": "Please fill in at least one mapping.",
   "pleaseSelectBothDates": "Please select both dates.",
   "storeExportInitiated": "Store export initiated.",
   "connectionTestSuccessful": "Connection test successful.",
   "connectionTestFailed": "Connection test failed: {message}",
-  "@connectionTestFailed": { "placeholders": { "message": { "type": "String" } } },
+  "@connectionTestFailed": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
   "pleaseEnterValidNumbers": "Please enter valid numbers.",
   "retryRulesUpdated": "Retry rules updated successfully.",
   "failedToSave": "Failed to save: {message}",
-  "@failedToSave": { "placeholders": { "message": { "type": "String" } } },
+  "@failedToSave": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
   "paymentRetryInitiated": "Payment retry initiated.",
   "retryFailed": "Retry failed: {message}",
-  "@retryFailed": { "placeholders": { "message": { "type": "String" } } },
+  "@retryFailed": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
   "pdfNotAvailable": "PDF not available for this invoice.",
   "failedToDownloadPdf": "Failed to download PDF: {message}",
-  "@failedToDownloadPdf": { "placeholders": { "message": { "type": "String" } } },
+  "@failedToDownloadPdf": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
   "addOnComingSoon": "Add-on feature coming soon.",
   "removeAddOnComingSoon": "Remove add-on feature coming soon.",
   "copied": "Copied",
   "pleaseEnterValidOtp": "Please enter a valid 6-digit OTP.",
   "generatingCoupons": "Generating {count} coupons...",
-  "@generatingCoupons": { "placeholders": { "count": { "type": "String" } } },
+  "@generatingCoupons": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
   "staffPinError": "Error: {message}",
-  "@staffPinError": { "placeholders": { "message": { "type": "String" } } },
-
+  "@staffPinError": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
   "sidebarTransactions": "Transactions",
   "txExplorerTitle": "Transaction Explorer",
   "txDetailTitle": "Transaction Detail",
@@ -3313,7 +3392,6 @@
   "txVoidConfirmTitle": "Void Transaction",
   "txVoidConfirmMessage": "Are you sure you want to void this transaction? This action cannot be undone.",
   "txVoidAction": "Void",
-
   "dashboardTodaysSales": "Today's Sales",
   "dashboardTransactions": "Transactions",
   "dashboardAvgBasket": "Avg Basket",
@@ -3345,7 +3423,6 @@
   "dashboardHourlySales": "Hourly Sales",
   "dashboardStaffPerformance": "Staff Performance",
   "dashboardBranchOverview": "Branch Overview",
-
   "installmentProviders": "Installment Providers",
   "installmentPayments": "Installment Payments",
   "installmentPayment": "Installment Payment",
@@ -3387,7 +3464,13 @@
   "editProvider": "Edit Provider",
   "removeProvider": "Remove Provider",
   "removeProviderConfirm": "Remove all credentials for {provider}? This cannot be undone.",
-  "@removeProviderConfirm": { "placeholders": { "provider": { "type": "String" } } },
+  "@removeProviderConfirm": {
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
   "name": "Name",
   "nameAr": "Name (Arabic)",
   "descriptionAr": "Description (Arabic)",
@@ -3413,8 +3496,13 @@
   "connectionSuccessful": "Connection Successful",
   "connectionFailed": "Connection Failed",
   "registerOn": "Register on {provider}",
-  "@registerOn": { "placeholders": { "provider": { "type": "String" } } },
-
+  "@registerOn": {
+    "placeholders": {
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
   "wameedAI": "Wameed AI",
   "wameedAIUsage": "AI Usage",
   "wameedAISuggestions": "AI Suggestions",
@@ -3527,7 +3615,6 @@
   "wameedAIPendingSuggestions": "Pending",
   "wameedAIHighPriority": "High Priority",
   "wameedAITapToExplore": "Tap to explore AI features",
-
   "wameedAIBilling": "AI Billing",
   "wameedAIBillingDashboard": "Billing Dashboard",
   "wameedAIBillingCurrentMonth": "Current Month",
@@ -3557,7 +3644,6 @@
   "wameedAIBillingPaymentHistory": "Payment History",
   "wameedAIBillingDisabled": "AI is currently disabled for your store",
   "wameedAIBillingViewAll": "View All",
-
   "wameedAINewChat": "New Chat",
   "wameedAIAssistant": "Wameed AI Assistant",
   "wameedAIWelcomeSubtitle": "Ask anything about your business — sales, inventory, customers, and more.",
@@ -3616,8 +3702,13 @@
   "wameedAINoCategoriesFound": "No categories found",
   "wameedAIDefault": "Default",
   "wameedAIFieldRequired": "{field} is required",
-  "@wameedAIFieldRequired": {"placeholders": {"field": {"type": "String"}}},
-
+  "@wameedAIFieldRequired": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
   "sidebarCashierGamification": "Cashier Performance",
   "gamificationTitle": "Cashier Leaderboard",
   "gamificationBadges": "Badges",
@@ -3662,9 +3753,7 @@
   "gamificationConfirm": "Confirm",
   "gamificationDismissAnomaly": "Dismiss",
   "gamificationCreateBadge": "Create Badge",
-
   "featureInfoTooltip": "Feature Guide",
-
   "featureInfoProductsTitle": "Products Management",
   "featureInfoProductsDesc": "Manage your entire product catalog from here. You can add new products, edit existing ones, set pricing, manage variants and barcodes, and organize products by categories. Products can be searched by name, SKU, or barcode.",
   "featureInfoProductsAddTitle": "Adding a New Product",
@@ -3693,7 +3782,6 @@
   "featureInfoProductsTip1": "Use the grid/list toggle (desktop) to switch between table and card views.",
   "featureInfoProductsTip2": "You can duplicate products using the 'Duplicate' row action to quickly create similar items.",
   "featureInfoProductsTip3": "Bulk actions (activate, deactivate, delete) are available when you select multiple products.",
-
   "featureInfoCategoriesTitle": "Categories Management",
   "featureInfoCategoriesDesc": "Organize your products with a hierarchical category tree. Categories support parent-child relationships, allowing you to create a structured product taxonomy. Each category can have a name in both English and Arabic.",
   "featureInfoCategoriesAddTitle": "Creating a Category",
@@ -3717,7 +3805,6 @@
   "featureInfoCategoriesDeleteStep2Desc": "Review the warning about subcategories and confirm. Subcategories may be reassigned or deleted depending on your configuration.",
   "featureInfoCategoriesTip1": "Use 'Expand All' and 'Collapse All' buttons in the AppBar to quickly navigate the category tree.",
   "featureInfoCategoriesTip2": "You can add child categories directly from any tree node using the 'Add Child' action.",
-
   "featureInfoSuppliersTitle": "Suppliers Management",
   "featureInfoSuppliersDesc": "Manage your supplier directory with full contact details, banking information, and business settings. Track purchase orders, goods receipts, returns, and outstanding balances for each supplier.",
   "featureInfoSuppliersAddTitle": "Adding a New Supplier",
@@ -3741,7 +3828,6 @@
   "featureInfoSuppliersDeleteStep2Desc": "Confirm the deletion in the dialog. Note: this may affect linked products and purchase orders.",
   "featureInfoSuppliersTip1": "Tap a supplier row to see detailed statistics including purchase orders, goods receipts, returns, and outstanding balance.",
   "featureInfoSuppliersTip2": "Use the search bar to quickly find suppliers by name.",
-
   "featureInfoCustomersTitle": "Customer Directory",
   "featureInfoCustomersDesc": "View your customer list showing customer names, contact information, and loyalty points. Customers are added automatically when they make purchases or can be added from the POS terminal during checkout.",
   "featureInfoCustomersViewTitle": "Viewing Customers",
@@ -3750,7 +3836,6 @@
   "featureInfoCustomersViewStep2Title": "Check customer details",
   "featureInfoCustomersViewStep2Desc": "Each customer card shows their name, contact info, and accumulated loyalty points.",
   "featureInfoCustomersTip1": "Customers can be attached to orders from the POS cashier screen during checkout using the customer search button.",
-
   "featureInfoOrdersTitle": "Orders Management",
   "featureInfoOrdersDesc": "View and manage all orders across your store. Filter orders by status, search by order number, and void orders when needed. Orders are created from the POS terminal and appear here with their full details.",
   "featureInfoOrdersViewTitle": "Viewing Orders",
@@ -3767,7 +3852,6 @@
   "featureInfoOrdersVoidStep2Desc": "Click the 'Void' action on the order row and confirm in the dialog. This is irreversible.",
   "featureInfoOrdersTip1": "Use pagination controls at the bottom to navigate between pages.",
   "featureInfoOrdersTip2": "Pull down to refresh the order list on mobile.",
-
   "featureInfoStaffTitle": "Staff Management",
   "featureInfoStaffDesc": "Manage your team members with full profiles, employment details, PIN security, and user accounts. Staff can be filtered by store, status, and employment type. Each staff member can have a POS PIN for secure access.",
   "featureInfoStaffAddTitle": "Adding a Staff Member",
@@ -3794,7 +3878,6 @@
   "featureInfoStaffTip1": "Use the store selector at the top to view staff for a specific branch.",
   "featureInfoStaffTip2": "Filter chips let you quickly filter by status (Active, Inactive, On Leave) or employment type.",
   "featureInfoStaffTip3": "The PIN is essential for POS terminal access — make sure each staff member has a unique PIN.",
-
   "featureInfoRolesTitle": "Roles & Permissions",
   "featureInfoRolesDesc": "Define roles with granular permissions to control what each staff member can access. System-predefined roles cannot be deleted. Create custom roles with specific permission sets for your team.",
   "featureInfoRolesCreateTitle": "Creating a New Role",
@@ -3813,7 +3896,6 @@
   "featureInfoRolesDeleteStep2Desc": "Tap the delete icon and confirm. Make sure no staff members are currently assigned this role before deleting.",
   "featureInfoRolesTip1": "Some permissions are marked as 'Requires PIN override' — these need extra verification at the POS.",
   "featureInfoRolesTip2": "System roles (Owner, Manager, Cashier, etc.) are pre-configured and cannot be deleted, but you can view their permissions.",
-
   "featureInfoInventoryTitle": "Inventory Management",
   "featureInfoInventoryDesc": "Your central hub for all inventory operations. Access Stock Levels, Stock Movements, Goods Receipts, Stock Adjustments, Stock Transfers, Purchase Orders, Recipes, and Supplier Returns from the tiles below.",
   "featureInfoInventoryNavigateTitle": "Using the Inventory Hub",
@@ -3823,7 +3905,6 @@
   "featureInfoInventoryNavigateStep2Desc": "Each module has its own info button (ℹ) with detailed instructions for that specific feature.",
   "featureInfoInventoryTip1": "Stock Levels shows current quantities and reorder status at a glance.",
   "featureInfoInventoryTip2": "Stock Movements is read-only — it automatically logs all inventory changes across the system.",
-
   "featureInfoStockAdjTitle": "Stock Adjustments",
   "featureInfoStockAdjDesc": "Record manual changes to inventory quantities. Use adjustments for stock count corrections, damaged goods, expired items, theft, or any other reason that changes your actual stock without a purchase or sale.",
   "featureInfoStockAdjCreateTitle": "Creating a Stock Adjustment",
@@ -3839,7 +3920,6 @@
   "featureInfoStockAdjCreateStep5Desc": "Tap 'Create' to record the adjustment. The stock level will be updated immediately.",
   "featureInfoStockAdjTip1": "Always select the correct reason — it helps in reporting and audit trails.",
   "featureInfoStockAdjTip2": "Use 'Correction' when fixing count discrepancies found during physical inventory counts.",
-
   "featureInfoPOTitle": "Purchase Orders",
   "featureInfoPODesc": "Create and manage purchase orders for your suppliers. Track orders through their lifecycle: Draft → Sent → Partially Received → Fully Received. Filter by status and manage the full procurement workflow.",
   "featureInfoPOCreateTitle": "Creating a Purchase Order",
@@ -3860,7 +3940,6 @@
   "featureInfoPOManageStep3Desc": "Draft or Sent orders can be cancelled using the 'Cancel' action with a confirmation dialog.",
   "featureInfoPOTip1": "Use the filter button to view orders by status (Draft, Sent, Partially Received, Fully Received, Cancelled).",
   "featureInfoPOTip2": "The table shows reference number, supplier, status, total cost, and expected delivery date.",
-
   "featureInfoTransfersTitle": "Stock Transfers",
   "featureInfoTransfersDesc": "Transfer stock between your store branches. Track transfers through the approval workflow: Pending → Approved → In Transit → Received. Each transfer requires source and destination stores.",
   "featureInfoTransfersCreateTitle": "Creating a Stock Transfer",
@@ -3880,7 +3959,6 @@
   "featureInfoTransfersManageStep3Title": "Cancel if needed",
   "featureInfoTransfersManageStep3Desc": "Pending transfers can be cancelled using the 'Cancel' action. Transfers that are already in transit cannot be cancelled.",
   "featureInfoTransfersTip1": "The table shows reference number, source store, destination store, status, and creation date.",
-
   "featureInfoGRTitle": "Goods Receipts",
   "featureInfoGRDesc": "Record incoming goods from suppliers. Goods receipts update your inventory stock levels when confirmed. Receipts start as Draft and can be confirmed when verified.",
   "featureInfoGRCreateTitle": "Creating a Goods Receipt",
@@ -3896,7 +3974,6 @@
   "featureInfoGRConfirmStep2Title": "Confirm the receipt",
   "featureInfoGRConfirmStep2Desc": "Click the 'Confirm' action and verify in the dialog. Stock levels will be updated with the received quantities.",
   "featureInfoGRTip1": "The table shows reference number, supplier, status, total cost, and received date with pagination.",
-
   "featureInfoSRTitle": "Supplier Returns",
   "featureInfoSRDesc": "Process returns of goods back to suppliers. Returns follow a workflow: Draft → Submitted → Approved → Completed. Search and filter returns by status to track the return process.",
   "featureInfoSRCreateTitle": "Creating a Supplier Return",
@@ -3916,7 +3993,6 @@
   "featureInfoSRManageStep4Title": "Cancel or delete if needed",
   "featureInfoSRManageStep4Desc": "Draft and Submitted returns can be cancelled. Draft returns can also be permanently deleted.",
   "featureInfoSRTip1": "Use the search bar and status filter dropdown to quickly find specific returns.",
-
   "featureInfoRecipesTitle": "Recipes",
   "featureInfoRecipesDesc": "Define recipes that tie a finished product to its raw material ingredients. This helps track ingredient consumption and manage composite product costs. Each recipe specifies the output product, yield quantity, ingredients, and waste percentage.",
   "featureInfoRecipesCreateTitle": "Creating a Recipe",
@@ -3934,7 +4010,6 @@
   "featureInfoRecipesDeleteStep2Title": "Delete and confirm",
   "featureInfoRecipesDeleteStep2Desc": "Click the 'Delete' action and confirm in the dialog. This removes the recipe definition.",
   "featureInfoRecipesTip1": "Set the waste percentage to account for material lost during production (e.g. trimming, evaporation).",
-
   "featureInfoStockLevelsTitle": "Stock Levels",
   "featureInfoStockLevelsDesc": "Monitor current stock quantities for all products. View available and reserved stock, average cost, and reorder status. Set reorder points and maximum stock levels to get alerts when stock is low.",
   "featureInfoStockLevelsViewTitle": "Viewing Stock Levels",
@@ -3950,7 +4025,6 @@
   "featureInfoStockLevelsReorderStep3Title": "Save the thresholds",
   "featureInfoStockLevelsReorderStep3Desc": "Tap 'Save'. Products below the reorder point will show a 'Low Stock' badge.",
   "featureInfoStockLevelsTip1": "Use the search bar to find specific products and the pagination controls to navigate large inventories.",
-
   "featureInfoPromotionsTitle": "Promotions & Coupons",
   "featureInfoPromotionsDesc": "Create and manage promotions to boost sales. Supports percentage discounts, fixed amount discounts, buy-one-get-one (BOGO), bundle deals, and happy hour pricing. Generate coupon codes and track performance analytics.",
   "featureInfoPromotionsCreateTitle": "Creating a Promotion",
@@ -3973,7 +4047,6 @@
   "featureInfoPromotionsManageStep3Desc": "Select 'Analytics' from the popup menu to see performance data for the promotion.",
   "featureInfoPromotionsTip1": "Use the search bar and filter button to find promotions by name, type, or status.",
   "featureInfoPromotionsTip2": "Happy hour promotions automatically apply during configured time windows.",
-
   "featureInfoBranchesTitle": "Branches Management",
   "featureInfoBranchesDesc": "Manage all your store branches and warehouses. Configure branch details including location, contact info, operational settings, legal documents, and social media profiles. View statistics for active and inactive branches.",
   "featureInfoBranchesCreateTitle": "Creating a Branch",
@@ -3996,7 +4069,6 @@
   "featureInfoBranchesEditStep2Desc": "Modify any fields across all 6 tabs and tap 'Save' to update.",
   "featureInfoBranchesTip1": "The stats row at the top shows total branches, active count, inactive count, and warehouse count.",
   "featureInfoBranchesTip2": "Use the status filter (All/Active/Inactive) to quickly narrow down the branch list.",
-
   "featureInfoDebitsTitle": "Debits Management",
   "featureInfoDebitsDesc": "Track customer credits, supplier returns, inventory adjustments, and manual credits. Debits represent money owed that can be allocated to orders. View summary KPIs for total, pending, allocated, and unallocated amounts.",
   "featureInfoDebitsCreateTitle": "Creating a Debit",
@@ -4022,7 +4094,6 @@
   "featureInfoDebitsReverseStep2Desc": "Type the reversal reason and confirm. Reversed debits cannot be allocated.",
   "featureInfoDebitsTip1": "The summary cards at the top show Total Debits, Pending Amount, Allocated, and Unallocated totals.",
   "featureInfoDebitsTip2": "Use the search bar to find debits by reference number.",
-
   "featureInfoExpensesTitle": "Expenses Tracking",
   "featureInfoExpensesDesc": "Record and track your store's daily expenses. Expenses are grouped by date with daily totals. Categories include Supplies, Food, Transport, Maintenance, Utility, and Other.",
   "featureInfoExpensesCreateTitle": "Recording an Expense",
@@ -4035,7 +4106,6 @@
   "featureInfoExpensesCreateStep4Title": "Add description and save",
   "featureInfoExpensesCreateStep4Desc": "Optionally add a description explaining the expense. Tap 'Create' to record it.",
   "featureInfoExpensesTip1": "Expenses are grouped by date. Each date group shows the total expenses for that day.",
-
   "featureInfoCashMgmtTitle": "Cash Management",
   "featureInfoCashMgmtDesc": "Manage cash sessions for your POS terminal. Open a session at the start of a shift, record cash-in and cash-out events during the day, count denominations, and close the session at the end of the shift.",
   "featureInfoCashMgmtOpenTitle": "Opening a Cash Session",
@@ -4059,7 +4129,6 @@
   "featureInfoCashMgmtCloseStep3Desc": "Confirm to close the session. Any variance between counted and expected cash is recorded.",
   "featureInfoCashMgmtTip1": "The denomination counter helps you accurately count physical cash before closing the session.",
   "featureInfoCashMgmtTip2": "Session history at the bottom shows previous sessions with opening float, timing, and variance.",
-
   "featureInfoGiftCardsTitle": "Gift Cards",
   "featureInfoGiftCardsDesc": "Issue, check, and redeem gift cards for your store. Gift cards have a unique code, balance, optional recipient name, and expiry date. Three tabs let you manage the full gift card lifecycle.",
   "featureInfoGiftCardsIssueTitle": "Issuing a Gift Card",
@@ -4082,7 +4151,6 @@
   "featureInfoGiftCardsRedeemStep3Title": "Complete redemption",
   "featureInfoGiftCardsRedeemStep3Desc": "Tap 'Redeem'. A confirmation card shows the updated balance.",
   "featureInfoGiftCardsTip1": "Gift cards can also be applied as a payment method directly at the POS terminal during checkout.",
-
   "featureInfoCashSessionsTitle": "Cash Sessions History",
   "featureInfoCashSessionsDesc": "View the history of all cash sessions. Each session shows the terminal ID, session status, and opening float amount. Use Cash Management for opening, managing, and closing sessions.",
   "featureInfoCashSessionsViewTitle": "Viewing Cash Sessions",
@@ -4091,7 +4159,6 @@
   "featureInfoCashSessionsViewStep2Title": "Check session details",
   "featureInfoCashSessionsViewStep2Desc": "Each session entry shows key information about the cash session period.",
   "featureInfoCashSessionsTip1": "For active session management (opening, cash events, closing), use the Cash Management page.",
-
   "featureInfoDailySummaryTitle": "Daily Financial Summary",
   "featureInfoDailySummaryDesc": "Review a comprehensive daily financial summary. See gross revenue, expenses, net revenue, and transaction count. View revenue breakdown by payment method, cash variance analysis, hourly activity patterns, and session details.",
   "featureInfoDailySummaryNavigateTitle": "Navigating Between Dates",
@@ -4107,7 +4174,6 @@
   "featureInfoDailySummaryReviewStep3Title": "Check cash variance",
   "featureInfoDailySummaryReviewStep3Desc": "The 'Cash Variance' section compares expected vs actual cash. A tolerance of ±5 is shown — larger variances are highlighted.",
   "featureInfoDailySummaryTip1": "The hourly activity chart helps identify peak business hours for staffing decisions.",
-
   "featureInfoFinReconTitle": "Financial Reconciliation",
   "featureInfoFinReconDesc": "Perform end-of-day financial reconciliation. Review revenue summaries, payment method breakdowns, cash positions, and expenses. Count physical cash using the denomination grid and confirm reconciliation to close the business day.",
   "featureInfoFinReconStepsTitle": "Reconciliation Process",
@@ -4123,7 +4189,6 @@
   "featureInfoFinReconStep5Desc": "Review the cash variance (difference between counted and expected). Tap 'Confirm Reconciliation' and verify in the confirmation dialog.",
   "featureInfoFinReconTip1": "Cash variance is color-coded: green for matching, red for discrepancies.",
   "featureInfoFinReconTip2": "You can also print the report or export to PDF using the action buttons.",
-
   "featureInfoTxExplorerTitle": "Transaction Explorer",
   "featureInfoTxExplorerDesc": "Search and analyze all transactions with powerful filters. View sales, returns, voids, and exchanges. Toggle analytics for KPI stats, charts, and daily trend analysis. Tap any transaction to see full details.",
   "featureInfoTxExplorerSearchTitle": "Searching Transactions",
@@ -4139,7 +4204,6 @@
   "featureInfoTxExplorerAnalyticsStep2Title": "Review KPIs and charts",
   "featureInfoTxExplorerAnalyticsStep2Desc": "The analytics panel shows stats cards, transaction charts, and a daily trend line to help identify patterns.",
   "featureInfoTxExplorerTip1": "Tap any transaction row to navigate to the full transaction detail page.",
-
   "featureInfoReportsTitle": "Reports & Analytics",
   "featureInfoReportsDesc": "Your analytics hub with today's KPIs, comparison with yesterday, and top products. Navigate to 9 specialized sub-reports for detailed analysis across sales, products, categories, staff, hourly trends, payments, inventory, financials, and customers.",
   "featureInfoReportsNavigateTitle": "Using the Reports Dashboard",
@@ -4150,7 +4214,6 @@
   "featureInfoReportsNavigateStep3Title": "Navigate to sub-reports",
   "featureInfoReportsNavigateStep3Desc": "Use the 3x3 grid to navigate to: Sales Summary, Product Performance, Category Breakdown, Staff Performance, Hourly Sales, Payment Methods, Inventory Report, Financial Report, and Customer Report.",
   "featureInfoReportsTip1": "Use the refresh button in the AppBar and the filter panel to customize the data view.",
-
   "featureInfoLabelsTitle": "Label Templates",
   "featureInfoLabelsDesc": "Design, manage, and print product labels. Use the WYSIWYG label designer to create custom templates with barcodes, product names, prices, SKUs, logos, QR codes, and more. Print labels directly or queue them for batch printing.",
   "featureInfoLabelsCreateTitle": "Creating a Label Template",
@@ -4168,7 +4231,6 @@
   "featureInfoLabelsPrintStep2Title": "Configure and print",
   "featureInfoLabelsPrintStep2Desc": "Select products, set quantities, and send to the printer.",
   "featureInfoLabelsTip1": "You can duplicate existing templates (including presets) and customize them for faster creation.",
-
   "featureInfoDeliveryTitle": "Delivery Integration",
   "featureInfoDeliveryDesc": "Connect with delivery platforms to manage online orders. View KPIs (today's orders, revenue, active/pending/completed), manage platform configurations, and process delivery orders (accept, reject, complete).",
   "featureInfoDeliveryPlatformsTitle": "Managing Delivery Platforms",
@@ -4186,7 +4248,6 @@
   "featureInfoDeliveryOrdersStep3Title": "Complete orders",
   "featureInfoDeliveryOrdersStep3Desc": "When the order is delivered, use the 'Complete' button to finalize it.",
   "featureInfoDeliveryTip1": "Use the Menu Sync button in the AppBar to synchronize your product catalog with delivery platforms.",
-
   "featureInfoNotificationsTitle": "Notifications Center",
   "featureInfoNotificationsDesc": "View and manage all system notifications. Filter by category (Order, Inventory, Promotion, System, Payment, Staff) and priority (Low, Normal, High, Urgent). Mark as read, bulk delete, or manage notification preferences.",
   "featureInfoNotificationsManageTitle": "Managing Notifications",
@@ -4199,7 +4260,6 @@
   "featureInfoNotificationsManageStep4Title": "Pull to refresh",
   "featureInfoNotificationsManageStep4Desc": "Pull down on the list to refresh and load new notifications.",
   "featureInfoNotificationsTip1": "The unread count badge in the AppBar shows how many unread notifications you have.",
-
   "sidebarGroupPlatformAdmin": "Platform Admin",
   "sidebarAdminWameedAI": "Wameed AI Admin",
   "adminWameedAIDashboard": "AI Dashboard",
@@ -4311,7 +4371,6 @@
   "withKeys": "with keys",
   "deleteModelConfirm": "Are you sure you want to delete this model? This action cannot be undone.",
   "successful": "Successful",
-
   "providerPaymentsTitle": "Payments",
   "providerPaymentDetail": "Payment Details",
   "providerPaymentCheckout": "Complete Payment",
@@ -4364,5 +4423,8 @@
   "providerPaymentPurposeAiBilling": "AI Billing",
   "providerPaymentPurposeHardware": "Hardware",
   "providerPaymentPurposeImplementationFee": "Implementation Fee",
-  "providerPaymentPurposeOther": "Other"
+  "providerPaymentPurposeOther": "Other",
+  "pinLoginTitle": "Enter PIN",
+  "pinLoginNoStore": "No store session found. Please sign in with email.",
+  "pinLoginEmailInstead": "Sign in with email instead"
 }

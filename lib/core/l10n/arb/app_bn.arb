@@ -4119,5 +4119,8 @@
   "featureInfoNotificationsManageStep3Desc": "Swipe left on a notification থেকে delete it. For bulk deletion, long-press থেকে enter selection mode, select multiple notifications, এবং tap the delete icon.",
   "featureInfoNotificationsManageStep4Title": "পুল থেকে refresh",
   "featureInfoNotificationsManageStep4Desc": "পুল down on the list থেকে refresh এবং load new notifications.",
-  "featureInfoNotificationsTip1": "The unread count badge in the AppBar shows how many unread notifications you have."
+  "featureInfoNotificationsTip1": "The unread count badge in the AppBar shows how many unread notifications you have.",
+  "pinLoginTitle": "পিন লিখুন",
+  "pinLoginNoStore": "কোনো স্টোর সেশন পাওয়া যায়নি। ইমেইল দিয়ে সাইন ইন করুন।",
+  "pinLoginEmailInstead": "পরিবর্তে ইমেইল দিয়ে সাইন ইন করুন"
 }
