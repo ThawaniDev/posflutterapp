@@ -1,13 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/errors/app_exception.dart';
+import 'package:wameedpos/core/services/push_notification_service.dart';
 import 'package:wameedpos/features/auth/models/user.dart';
 import 'package:wameedpos/features/auth/providers/auth_state.dart';
 import 'package:wameedpos/features/auth/repositories/auth_repository.dart';
 
 /// The main auth state notifier — manages login, register, logout.
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
-  return AuthNotifier(ref.watch(authRepositoryProvider));
+  return AuthNotifier(ref.watch(authRepositoryProvider), ref);
 });
 
 /// Convenience provider for the current user (null if not authenticated).
@@ -26,8 +27,9 @@ final isAuthenticatedProvider = Provider<bool>((ref) {
 
 class AuthNotifier extends StateNotifier<AuthState> {
   final AuthRepository _repository;
+  final Ref _ref;
 
-  AuthNotifier(this._repository) : super(const AuthInitial()) {
+  AuthNotifier(this._repository, this._ref) : super(const AuthInitial()) {
     checkStoredSession();
   }
 
@@ -148,11 +150,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
   // ─── Logout ────────────────────────────────────────────────────
 
   Future<void> logout() async {
+    // Remove FCM token before logout so user stops receiving push notifications
+    await _ref.read(pushNotificationServiceProvider).unregisterToken();
     await _repository.logout();
     state = const AuthUnauthenticated(message: 'Logged out successfully.');
   }
 
   Future<void> logoutAll() async {
+    await _ref.read(pushNotificationServiceProvider).unregisterToken();
     await _repository.logoutAll();
     state = const AuthUnauthenticated(message: 'Logged out from all devices.');
   }
