@@ -21,14 +21,13 @@ class SecurityDashboardPage extends ConsumerStatefulWidget {
   ConsumerState<SecurityDashboardPage> createState() => _SecurityDashboardPageState();
 }
 
-class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
+  int _currentTab = 0;
   String? _storeId;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 7, vsync: this);
     Future.microtask(() async {
       final storeId = await ref.read(authLocalStorageProvider).getStoreId();
       if (storeId == null || !mounted) return;
@@ -44,19 +43,12 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> w
   }
 
   @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
     ref.listen<SecurityActionState>(securityActionProvider, (prev, next) {
       if (next is SecurityActionSuccess) {
         showPosSuccessSnackbar(context, next.message);
-        // Refresh relevant data
         final sid = _storeId;
         if (sid != null) {
           ref.read(securityOverviewProvider.notifier).load(sid);
@@ -71,33 +63,41 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> w
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.securityTitle),
-        bottom: TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          tabs: [
-            Tab(text: l10n.securityOverview),
-            Tab(text: l10n.securityPolicy),
-            Tab(text: l10n.securityAuditLogs),
-            Tab(text: l10n.securityDevices),
-            Tab(text: l10n.securityLogins),
-            Tab(text: l10n.securitySessions),
-            Tab(text: l10n.securityIncidents),
-          ],
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
+    return PosListPage(
+      title: l10n.securityTitle,
+      showSearch: false,
+      child: Column(
         children: [
-          _buildOverviewTab(),
-          _buildPolicyTab(),
-          _buildAuditTab(),
-          _buildDevicesTab(),
-          _buildLoginsTab(),
-          _buildSessionsTab(),
-          _buildIncidentsTab(),
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
+            child: PosTabs(
+              selectedIndex: _currentTab,
+              onChanged: (i) => setState(() => _currentTab = i),
+              tabs: [
+                PosTabItem(label: l10n.securityOverview),
+                PosTabItem(label: l10n.securityPolicy),
+                PosTabItem(label: l10n.securityAuditLogs),
+                PosTabItem(label: l10n.securityDevices),
+                PosTabItem(label: l10n.securityLogins),
+                PosTabItem(label: l10n.securitySessions),
+                PosTabItem(label: l10n.securityIncidents),
+              ],
+            ),
+          ),
+          Expanded(
+            child: IndexedStack(
+              index: _currentTab,
+              children: [
+                _buildOverviewTab(),
+                _buildPolicyTab(),
+                _buildAuditTab(),
+                _buildDevicesTab(),
+                _buildLoginsTab(),
+                _buildSessionsTab(),
+                _buildIncidentsTab(),
+              ],
+            ),
+          ),
         ],
       ),
     );

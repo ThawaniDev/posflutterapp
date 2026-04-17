@@ -31,17 +31,15 @@ class _AIBillingInvoiceDetailPageState extends ConsumerState<AIBillingInvoiceDet
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(aiBillingInvoiceDetailProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.wameedAIBillingInvoiceDetail),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => ref.read(aiBillingInvoiceDetailProvider.notifier).load(widget.invoiceId),
-          ),
-        ],
-      ),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.wameedAIBillingInvoiceDetail,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(aiBillingInvoiceDetailProvider.notifier).load(widget.invoiceId),
+  ),
+],
+  child: switch (state) {
         AIBillingInvoiceDetailInitial() || AIBillingInvoiceDetailLoading() => const PosLoading(),
         AIBillingInvoiceDetailError(:final message) => PosErrorState(
           message: message,
@@ -49,7 +47,7 @@ class _AIBillingInvoiceDetailPageState extends ConsumerState<AIBillingInvoiceDet
         ),
         AIBillingInvoiceDetailLoaded(:final invoice) => _InvoiceDetailContent(invoice: invoice),
       },
-    );
+);
   }
 }
 
@@ -64,7 +62,7 @@ class _InvoiceDetailContent extends StatelessWidget {
     final isMobile = context.isPhone;
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+      padding: context.responsivePagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -83,7 +81,7 @@ class _InvoiceDetailContent extends StatelessWidget {
                             invoice.invoiceNumber,
                             style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
                           ),
-                          const SizedBox(height: 4),
+                          AppSpacing.gapH4,
                           Text(
                             '${localizedMonthName(l10n, invoice.month)} ${invoice.year}',
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
@@ -113,7 +111,7 @@ class _InvoiceDetailContent extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(height: 16),
+          AppSpacing.gapH16,
 
           // Cost Summary KPIs
           PosKpiGrid(
@@ -138,12 +136,12 @@ class _InvoiceDetailContent extends StatelessWidget {
 
           // Line Items
           if (invoice.items.isNotEmpty) ...[
-            const SizedBox(height: 24),
+            AppSpacing.gapH24,
             Text(
               l10n.wameedAIBillingLineItems,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
             ),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             if (isMobile)
               ...invoice.items.map((item) => _MobileLineItem(item: item))
             else
@@ -167,12 +165,12 @@ class _InvoiceDetailContent extends StatelessWidget {
 
           // Payment History
           if (invoice.payments.isNotEmpty) ...[
-            const SizedBox(height: 24),
+            AppSpacing.gapH24,
             Text(
               l10n.wameedAIBillingPaymentHistory,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
             ),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             ...invoice.payments.map((p) => _PaymentListTile(payment: p)),
           ],
         ],
@@ -221,7 +219,7 @@ class _MobileLineItem extends StatelessWidget {
             item.featureName.isNotEmpty ? item.featureName : item.featureSlug.replaceAll('_', ' '),
             style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
           ),
-          const SizedBox(height: 8),
+          AppSpacing.gapH8,
           Row(
             children: [
               Expanded(

@@ -5,8 +5,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
@@ -21,7 +19,6 @@ class AdminStoreListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _storeId;
@@ -65,104 +62,72 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(adminStoreListProvider);
     final theme = Theme.of(context);
+    final isLoading = state is AdminStoreListLoading;
+    final hasError = state is AdminStoreListError;
+    final isEmpty = state is AdminStoreListLoaded && state.stores.isEmpty;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Store Management'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add_business),
-            tooltip: 'Create Store',
-            onPressed: () => _showCreateStoreDialog(context),
+    return PosListPage(
+      title: 'Store Management',
+      searchController: _searchController,
+      onSearchChanged: (_) {},
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: _loadStores,
+      isEmpty: isEmpty,
+      emptyTitle: l10n.noStoresFound,
+      emptySubtitle: l10n.adjustFilters,
+      emptyIcon: Icons.store_outlined,
+      actions: [
+        PosButton.icon(icon: Icons.add_business, tooltip: 'Create Store', onPressed: () => _showCreateStoreDialog(context)),
+        PosButton.icon(
+          icon: Icons.file_download_outlined,
+          tooltip: 'Export Stores',
+          onPressed: () => _exportStores(),
+          variant: PosButtonVariant.ghost,
+        ),
+      ],
+      filters: [
+        _buildFilterChip(
+          label: l10n.all,
+          selected: _activeFilter == null,
+          onTap: () => setState(() {
+            _activeFilter = null;
+            _currentPage = 1;
+            _loadStores();
+          }),
+        ),
+        _buildFilterChip(
+          label: l10n.active,
+          selected: _activeFilter == true,
+          onTap: () => setState(() {
+            _activeFilter = true;
+            _currentPage = 1;
+            _loadStores();
+          }),
+        ),
+        _buildFilterChip(
+          label: l10n.suspended,
+          selected: _activeFilter == false,
+          onTap: () => setState(() {
+            _activeFilter = false;
+            _currentPage = 1;
+            _loadStores();
+          }),
+        ),
+        if (_businessTypeFilter != null)
+          Chip(
+            label: Text(_businessTypeFilter!),
+            onDeleted: () => setState(() {
+              _businessTypeFilter = null;
+              _currentPage = 1;
+              _loadStores();
+            }),
           ),
-          IconButton(icon: const Icon(Icons.file_download_outlined), tooltip: 'Export Stores', onPressed: () => _exportStores()),
-        ],
-      ),
-      body: Column(
+      ],
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
-          // ─── Filter Bar ─────────────────────────────────
-          Container(
-            padding: AppSpacing.paddingAll16,
-            decoration: BoxDecoration(
-              color: AppColors.surfaceLight,
-              border: Border(bottom: BorderSide(color: AppColors.borderLight)),
-            ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: PosTextField(
-                        controller: _searchController,
-                        hint: 'Search stores by name...',
-                        prefixIcon: Icons.search,
-                        onSubmitted: (_) {
-                          _currentPage = 1;
-                          _loadStores();
-                        },
-                      ),
-                    ),
-                    AppSpacing.gapW12,
-                    PosButton(
-                      label: l10n.search,
-                      onPressed: () {
-                        _currentPage = 1;
-                        _loadStores();
-                      },
-                      size: PosButtonSize.md,
-                    ),
-                  ],
-                ),
-                AppSpacing.gapH12,
-                Row(
-                  children: [
-                    _buildFilterChip(
-                      label: l10n.all,
-                      selected: _activeFilter == null,
-                      onTap: () => setState(() {
-                        _activeFilter = null;
-                        _currentPage = 1;
-                        _loadStores();
-                      }),
-                    ),
-                    AppSpacing.gapW8,
-                    _buildFilterChip(
-                      label: l10n.active,
-                      selected: _activeFilter == true,
-                      onTap: () => setState(() {
-                        _activeFilter = true;
-                        _currentPage = 1;
-                        _loadStores();
-                      }),
-                    ),
-                    AppSpacing.gapW8,
-                    _buildFilterChip(
-                      label: l10n.suspended,
-                      selected: _activeFilter == false,
-                      onTap: () => setState(() {
-                        _activeFilter = false;
-                        _currentPage = 1;
-                        _loadStores();
-                      }),
-                    ),
-                    const Spacer(),
-                    if (_businessTypeFilter != null)
-                      Chip(
-                        label: Text(_businessTypeFilter!),
-                        onDeleted: () => setState(() {
-                          _businessTypeFilter = null;
-                          _currentPage = 1;
-                          _loadStores();
-                        }),
-                      ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-
-          // ─── Content ────────────────────────────────────
           Expanded(child: _buildBody(state, theme)),
         ],
       ),
@@ -173,7 +138,7 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.xs),
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.xs),
         decoration: BoxDecoration(
           color: selected ? AppColors.primary10 : Colors.transparent,
           borderRadius: AppRadius.borderFull,
@@ -192,38 +157,7 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
   }
 
   Widget _buildBody(AdminStoreListState state, ThemeData theme) {
-    if (state is AdminStoreListLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (state is AdminStoreListError) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
-            AppSpacing.gapH12,
-            Text(state.message, style: theme.textTheme.bodyMedium),
-            AppSpacing.gapH16,
-            PosButton(label: l10n.retry, variant: PosButtonVariant.outline, onPressed: _loadStores),
-          ],
-        ),
-      );
-    }
     if (state is AdminStoreListLoaded) {
-      if (state.stores.isEmpty) {
-        return Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.store_outlined, size: 64, color: AppColors.textMutedLight),
-              AppSpacing.gapH12,
-              Text(l10n.noStoresFound, style: theme.textTheme.titleMedium),
-              AppSpacing.gapH4,
-              Text(l10n.adjustFilters, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight)),
-            ],
-          ),
-        );
-      }
       return Column(
         children: [
           Expanded(
@@ -250,12 +184,11 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
     final businessType = store['business_type'] as String? ?? '';
     final orgName = (store['organization'] as Map?)?['name'] as String? ?? '';
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadius.borderLg,
-        side: BorderSide(color: AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderLg,
+
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderLight)),
       child: InkWell(
         borderRadius: AppRadius.borderLg,
         onTap: () {
@@ -365,7 +298,7 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
             ],
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.cancel)),
+            PosButton(onPressed: () => Navigator.of(ctx).pop(), variant: PosButtonVariant.ghost, label: l10n.cancel),
             PosButton(
               label: l10n.create,
               onPressed: () {

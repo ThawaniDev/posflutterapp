@@ -57,24 +57,24 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(recipesProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.inventoryRecipes),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showRecipesInfo(context),
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(recipesProvider.notifier).load(),
-          ),
-        ],
-      ),
-      floatingActionButton: PosButton(label: l10n.inventoryNewRecipe, icon: Icons.add, onPressed: () => _showCreateDialog()),
-      body: _buildBody(state),
+    return PosListPage(
+      title: l10n.inventoryRecipes,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showRecipesInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () => ref.read(recipesProvider.notifier).load(),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton(label: l10n.inventoryNewRecipe, icon: Icons.add, onPressed: () => _showCreateDialog()),
+      ],
+      child: _buildBody(state),
     );
   }
 
@@ -225,8 +225,8 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
               ),
             ),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.commonCancel)),
-              TextButton(
+              PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.commonCancel),
+              PosButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     Navigator.pop(ctx, {
@@ -242,7 +242,8 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
                     });
                   }
                 },
-                child: Text(l10n.commonCreate),
+                variant: PosButtonVariant.ghost,
+                label: l10n.commonCreate,
               ),
             ],
           );

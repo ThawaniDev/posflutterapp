@@ -15,7 +15,6 @@ class ExportHistoryPage extends ConsumerStatefulWidget {
 }
 
 class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _statusFilter;
 
@@ -31,18 +30,23 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
   Widget build(BuildContext context) {
     final exportsState = ref.watch(accountingExportsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.accountingExportHistory),
-        actions: [IconButton(icon: Icon(Icons.add), tooltip: l10n.newExport, onPressed: () => _showNewExportDialog())],
-      ),
-      body: Column(
-        children: [
-          _buildStatusFilter(),
-          const Divider(height: 1),
-          Expanded(child: _buildExportList(exportsState)),
-        ],
-      ),
+    final isLoading = exportsState is AccountingExportsInitial || exportsState is AccountingExportsLoading;
+    final hasError = exportsState is AccountingExportsError;
+    final isEmpty = exportsState is AccountingExportsLoaded && exportsState.exports.isEmpty;
+
+    return PosListPage(
+      title: l10n.accountingExportHistory,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? exportsState.message : null,
+      onRetry: () => ref.read(accountingExportsProvider.notifier).loadExports(),
+      isEmpty: isEmpty,
+      emptyTitle: 'No exports yet\nTap + to create your first export',
+      emptyIcon: Icons.file_download_off,
+      actions: [PosButton(label: l10n.newExport, icon: Icons.add, onPressed: _showNewExportDialog)],
+      filters: [_buildStatusFilter()],
+      child: _buildExportList(exportsState),
     );
   }
 
@@ -51,7 +55,6 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
         children: [
           FilterChip(
@@ -65,7 +68,7 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
           AppSpacing.gapW8,
           ...statuses.map(
             (s) => Padding(
-              padding: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsetsDirectional.only(end: 8),
               child: FilterChip(
                 label: Text(s[0].toUpperCase() + s.substring(1)),
                 selected: _statusFilter == s,
@@ -84,22 +87,15 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
 
   Widget _buildExportList(AccountingExportsState state) {
     return switch (state) {
-      AccountingExportsInitial() || AccountingExportsLoading() => PosLoadingSkeleton.list(),
-      AccountingExportsError(:final message) => PosErrorState(
-        message: message,
-        onRetry: () => ref.read(accountingExportsProvider.notifier).loadExports(),
+      AccountingExportsLoaded(:final exports) => RefreshIndicator(
+        onRefresh: () => ref.read(accountingExportsProvider.notifier).loadExports(status: _statusFilter),
+        child: ListView.separated(
+          itemCount: exports.length,
+          separatorBuilder: (_, __) => const Divider(height: 1),
+          itemBuilder: (context, index) => _buildExportTile(exports[index]),
+        ),
       ),
-      AccountingExportsLoaded(:final exports) =>
-        exports.isEmpty
-            ? const PosEmptyState(title: 'No exports yet\nTap + to create your first export', icon: Icons.file_download_off)
-            : RefreshIndicator(
-                onRefresh: () => ref.read(accountingExportsProvider.notifier).loadExports(status: _statusFilter),
-                child: ListView.separated(
-                  itemCount: exports.length,
-                  separatorBuilder: (_, __) => const Divider(height: 1),
-                  itemBuilder: (context, index) => _buildExportTile(exports[index]),
-                ),
-              ),
+      _ => const SizedBox.shrink(),
     };
   }
 
@@ -187,7 +183,7 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
   Widget _buildStatusChip(String status, Color color) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
       child: Text(
         status.toUpperCase(),
         style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.bold),
@@ -287,8 +283,8 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.cancel)),
-            ElevatedButton(
+            PosButton(onPressed: () => Navigator.of(ctx).pop(), variant: PosButtonVariant.ghost, label: l10n.cancel),
+            PosButton(
               onPressed: () {
                 if (startController.text.isEmpty || endController.text.isEmpty) {
                   showPosWarningSnackbar(ctx, AppLocalizations.of(ctx)!.pleaseSelectBothDates);
@@ -303,7 +299,7 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
                       exportTypes: selectedTypes.isNotEmpty ? selectedTypes.toList() : null,
                     );
               },
-              child: Text(l10n.accountingExport),
+              label: l10n.accountingExport,
             ),
           ],
         ),

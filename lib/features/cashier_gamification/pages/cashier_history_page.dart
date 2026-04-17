@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_providers.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_state.dart';
 import 'package:wameedpos/features/cashier_gamification/widgets/risk_score_gauge.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class CashierHistoryPage extends ConsumerStatefulWidget {
   final String cashierId;
@@ -30,25 +32,16 @@ class _CashierHistoryPageState extends ConsumerState<CashierHistoryPage> {
     final state = ref.watch(cashierHistoryProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            const Icon(Icons.history_rounded, color: AppColors.primary),
-            const SizedBox(width: 8),
-            Text(l10n.gamificationCashierHistory),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(cashierHistoryProvider.notifier).load(widget.cashierId),
-          ),
-        ],
-      ),
-      body: _buildContent(state, l10n, isMobile),
-    );
+    return PosListPage(
+  title: l10n.gamificationCashierHistory,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(cashierHistoryProvider.notifier).load(widget.cashierId), tooltip: l10n.commonRefresh,
+  ),
+],
+  child: _buildContent(state, l10n, isMobile),
+);
   }
 
   Widget _buildContent(CashierHistoryState state, AppLocalizations l10n, bool isMobile) {
@@ -59,14 +52,14 @@ class _CashierHistoryPageState extends ConsumerState<CashierHistoryPage> {
         history.isEmpty
             ? Center(child: Text(l10n.gamificationNoData))
             : ListView.builder(
-                padding: EdgeInsets.all(isMobile ? 12 : 16),
+                padding: context.responsivePagePadding,
                 itemCount: history.length,
                 itemBuilder: (context, index) {
                   final snap = history[index];
-                  return Card(
+                  return PosCard(
                     margin: const EdgeInsets.only(bottom: 8),
                     child: Padding(
-                      padding: EdgeInsets.all(isMobile ? 12 : 16),
+                      padding: context.responsivePagePadding,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -90,7 +83,7 @@ class _CashierHistoryPageState extends ConsumerState<CashierHistoryPage> {
                               RiskScoreGauge(score: snap.riskScore, size: isMobile ? 56 : 68),
                             ],
                           ),
-                          const SizedBox(height: 12),
+                          AppSpacing.gapH12,
                           Wrap(
                             spacing: isMobile ? 12 : 20,
                             runSpacing: 8,
@@ -104,7 +97,7 @@ class _CashierHistoryPageState extends ConsumerState<CashierHistoryPage> {
                             ],
                           ),
                           if (snap.anomalyFlags.isNotEmpty) ...[
-                            const SizedBox(height: 8),
+                            AppSpacing.gapH8,
                             Wrap(
                               spacing: 4,
                               children: snap.anomalyFlags

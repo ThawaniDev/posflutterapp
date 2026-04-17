@@ -15,52 +15,49 @@ class GiftCardsPage extends ConsumerStatefulWidget {
   ConsumerState<GiftCardsPage> createState() => _GiftCardsPageState();
 }
 
-class _GiftCardsPageState extends ConsumerState<GiftCardsPage> with SingleTickerProviderStateMixin {
-
+class _GiftCardsPageState extends ConsumerState<GiftCardsPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+  int _currentTab = 0;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.giftCards),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
-            onPressed: () => showGiftCardsInfo(context),
-          ),
-        ],
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: l10n.issue, icon: Icon(Icons.card_giftcard)),
-            Tab(text: l10n.checkBalance, icon: Icon(Icons.search)),
-            Tab(text: l10n.redeem, icon: Icon(Icons.redeem)),
-          ],
+    return PosListPage(
+      title: l10n.giftCards,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
+          onPressed: () => showGiftCardsInfo(context),
+          variant: PosButtonVariant.ghost,
         ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
+      ],
+      child: Column(
         children: [
-          _IssueTab(theme: theme),
-          _CheckBalanceTab(theme: theme),
-          _RedeemTab(theme: theme),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: PosTabs(
+              selectedIndex: _currentTab,
+              onChanged: (i) => setState(() => _currentTab = i),
+              tabs: [
+                PosTabItem(label: l10n.issue, icon: Icons.card_giftcard),
+                PosTabItem(label: l10n.checkBalance, icon: Icons.search),
+                PosTabItem(label: l10n.redeem, icon: Icons.redeem),
+              ],
+            ),
+          ),
+          Expanded(
+            child: IndexedStack(
+              index: _currentTab,
+              children: [
+                _IssueTab(theme: theme),
+                _CheckBalanceTab(theme: theme),
+                _RedeemTab(theme: theme),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -78,7 +75,6 @@ class _IssueTab extends ConsumerStatefulWidget {
 }
 
 class _IssueTabState extends ConsumerState<_IssueTab> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _amountController = TextEditingController();
   final _recipientController = TextEditingController();
@@ -170,7 +166,7 @@ class _IssueTabState extends ConsumerState<_IssueTab> {
           // Result
           if (state is GiftCardReady && state.lastIssued != null) ...[_GiftCardResultCard(card: state.lastIssued!, theme: theme)],
           if (state is GiftCardError) ...[
-            Card(
+            PosCard(
               color: AppColors.error.withValues(alpha: 0.08),
               child: Padding(
                 padding: AppSpacing.paddingAll16,
@@ -203,7 +199,6 @@ class _CheckBalanceTab extends ConsumerStatefulWidget {
 }
 
 class _CheckBalanceTabState extends ConsumerState<_CheckBalanceTab> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _codeController = TextEditingController();
 
@@ -239,23 +234,23 @@ class _CheckBalanceTabState extends ConsumerState<_CheckBalanceTab> {
                 ),
               ),
               AppSpacing.gapW12,
-              FilledButton(
+              PosButton(
                 onPressed: state is GiftCardLoading
                     ? null
                     : () {
                         if (_codeController.text.isEmpty) return;
                         ref.read(giftCardProvider.notifier).checkBalance(_codeController.text);
                       },
-                child: state is GiftCardLoading
-                    ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                    : Text(l10n.check),
+                isLoading: state is GiftCardLoading,
+                variant: PosButtonVariant.soft,
+                label: l10n.check,
               ),
             ],
           ),
           AppSpacing.gapH24,
           if (state is GiftCardReady && state.lastBalance != null) ...[
-            Card(
-              shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+            PosCard(
+              borderRadius: AppRadius.borderLg,
               child: Padding(
                 padding: AppSpacing.paddingAll24,
                 child: Column(
@@ -285,7 +280,7 @@ class _CheckBalanceTabState extends ConsumerState<_CheckBalanceTab> {
             ),
           ],
           if (state is GiftCardError) ...[
-            Card(
+            PosCard(
               color: AppColors.error.withValues(alpha: 0.08),
               child: Padding(
                 padding: AppSpacing.paddingAll16,
@@ -318,7 +313,6 @@ class _RedeemTab extends ConsumerStatefulWidget {
 }
 
 class _RedeemTabState extends ConsumerState<_RedeemTab> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _codeController = TextEditingController();
   final _amountController = TextEditingController();
@@ -380,7 +374,7 @@ class _RedeemTabState extends ConsumerState<_RedeemTab> {
           AppSpacing.gapH24,
           if (state is GiftCardReady && state.lastIssued != null) ...[_GiftCardResultCard(card: state.lastIssued!, theme: theme)],
           if (state is GiftCardError) ...[
-            Card(
+            PosCard(
               color: AppColors.error.withValues(alpha: 0.08),
               child: Padding(
                 padding: AppSpacing.paddingAll16,
@@ -413,8 +407,8 @@ class _GiftCardResultCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+    return PosCard(
+      borderRadius: AppRadius.borderLg,
       child: Padding(
         padding: AppSpacing.paddingAll24,
         child: Column(

@@ -6,6 +6,7 @@ import '../../../core/widgets/pos_status_badge.dart';
 import '../models/flower_freshness_log.dart';
 import '../enums/flower_freshness_status.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class FreshnessLogCard extends StatelessWidget {
   final FlowerFreshnessLog log;
@@ -19,15 +20,13 @@ class FreshnessLogCard extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final daysLeft = _daysUntilExpiry;
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderMd,
+      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: AppRadius.borderMd,
         child: Padding(
           padding: AppSpacing.paddingCard,
           child: Row(
@@ -67,7 +66,7 @@ class FreshnessLogCard extends StatelessWidget {
     return Container(
       width: 44,
       height: 44,
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(AppRadius.sm)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: AppRadius.borderSm),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

@@ -15,7 +15,6 @@ class AccountingSettingsPage extends ConsumerStatefulWidget {
 }
 
 class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String _selectedProvider = 'quickbooks';
 
@@ -41,10 +40,10 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.accountingTitle)),
-      body: switch (connectionState) {
-        AccountingConnectionInitial() || AccountingConnectionLoading() => PosLoadingSkeleton.list(),
+    return PosFormPage(
+      title: l10n.accountingTitle,
+      isLoading: connectionState is AccountingConnectionInitial || connectionState is AccountingConnectionLoading,
+      child: switch (connectionState) {
         AccountingConnectionError(:final message) => PosErrorState(
           message: message,
           onRetry: () => ref.read(accountingConnectionProvider.notifier).loadStatus(),
@@ -69,6 +68,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
                   actionLoading: actionState is AccountingActionLoading,
                 )
               : _buildDisconnectedView(actionLoading: actionState is AccountingActionLoading),
+        _ => const SizedBox.shrink(),
       },
     );
   }
@@ -100,12 +100,10 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Connection status card
-          Card(
+          PosCard(
             elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              side: BorderSide(color: Theme.of(context).dividerColor),
-            ),
+            borderRadius: AppRadius.borderMd,
+            border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
             child: Padding(
               padding: AppSpacing.paddingAll16,
               child: Column(
@@ -145,12 +143,10 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
           AppSpacing.gapH16,
 
           // Quick actions
-          Card(
+          PosCard(
             elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              side: BorderSide(color: Theme.of(context).dividerColor),
-            ),
+            borderRadius: AppRadius.borderMd,
+            border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
             child: Padding(
               padding: AppSpacing.paddingAll16,
               child: Column(
@@ -226,12 +222,10 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
           AppSpacing.gapH32,
 
           // Provider selection
-          Card(
+          PosCard(
             elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              side: BorderSide(color: Theme.of(context).dividerColor),
-            ),
+            borderRadius: AppRadius.borderMd,
+            border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
             child: Padding(
               padding: AppSpacing.paddingAll16,
               child: Column(
@@ -320,8 +314,8 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.cancel)),
-          ElevatedButton(
+          PosButton(onPressed: () => Navigator.of(ctx).pop(), variant: PosButtonVariant.ghost, label: l10n.cancel),
+          PosButton(
             onPressed: () {
               Navigator.of(ctx).pop();
               ref
@@ -334,7 +328,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
                     companyName: companyController.text.isNotEmpty ? companyController.text : null,
                   );
             },
-            child: Text(l10n.connect),
+            label: l10n.connect,
           ),
         ],
       ),

@@ -30,17 +30,15 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(deliveryOrderDetailProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.deliveryOrderDetail),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => ref.read(deliveryOrderDetailProvider.notifier).load(widget.orderId),
-          ),
-        ],
-      ),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.deliveryOrderDetail,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(deliveryOrderDetailProvider.notifier).load(widget.orderId),
+  ),
+],
+  child: switch (state) {
         DeliveryOrderDetailInitial() || DeliveryOrderDetailLoading() => Center(child: PosLoadingSkeleton.list()),
         DeliveryOrderDetailError(:final message) => PosErrorState(
           message: message,
@@ -48,7 +46,7 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
         ),
         DeliveryOrderDetailLoaded(:final order) => _buildDetail(order, l10n),
       },
-    );
+);
   }
 
   Widget _buildDetail(Map<String, dynamic> order, AppLocalizations l10n) {
@@ -209,11 +207,11 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
           maxLines: 3,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.deliveryCancel)),
-          FilledButton(
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.deliveryCancel),
+          PosButton(
             onPressed: () => Navigator.pop(ctx, controller.text),
-            style: FilledButton.styleFrom(backgroundColor: AppColors.error),
-            child: Text(l10n.deliveryReject),
+            variant: PosButtonVariant.soft,
+            label: l10n.deliveryReject,
           ),
         ],
       ),
@@ -240,7 +238,7 @@ class _StatusHeader extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(AppRadius.lg),
+        borderRadius: AppRadius.borderLg,
         border: Border.all(color: status.color.withValues(alpha: 0.2)),
       ),
       child: Column(
@@ -281,12 +279,10 @@ class _SectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        side: BorderSide(color: Theme.of(context).dividerColor),
-      ),
+      borderRadius: AppRadius.borderLg,
+      border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(

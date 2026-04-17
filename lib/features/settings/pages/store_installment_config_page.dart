@@ -57,41 +57,25 @@ class _StoreInstallmentConfigPageState extends ConsumerState<StoreInstallmentCon
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.installmentPayments), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: switch (state) {
-        StoreInstallmentConfigInitial() || StoreInstallmentConfigLoading() => const Center(child: CircularProgressIndicator()),
-        StoreInstallmentConfigError(:final message) => _buildErrorState(message, l10n),
+    final isLoading = state is StoreInstallmentConfigInitial || state is StoreInstallmentConfigLoading;
+    final hasError = state is StoreInstallmentConfigError;
+
+    return PosListPage(
+      title: l10n.installmentPayments,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: () => ref.read(storeInstallmentConfigProvider.notifier).load(),
+      child: switch (state) {
         StoreInstallmentConfigLoaded(:final availableProviders, :final configs) => _buildContent(
           availableProviders,
           configs,
           l10n,
           isDark,
         ),
+        _ => const SizedBox.shrink(),
       },
-    );
-  }
-
-  // ─── Error state ──────────────────────────────────────────
-  Widget _buildErrorState(String message, AppLocalizations l10n) {
-    return Center(
-      child: Padding(
-        padding: AppSpacing.paddingAll24,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.1), shape: BoxShape.circle),
-              child: const Icon(Icons.error_outline, color: AppColors.error, size: 48),
-            ),
-            AppSpacing.gapH16,
-            Text(message, style: AppTypography.bodyMedium, textAlign: TextAlign.center),
-            AppSpacing.gapH16,
-            PosButton(label: l10n.retry, onPressed: () => ref.read(storeInstallmentConfigProvider.notifier).load()),
-          ],
-        ),
-      ),
     );
   }
 
@@ -391,25 +375,18 @@ class _StoreInstallmentConfigPageState extends ConsumerState<StoreInstallmentCon
   }
 
   // ─── Delete confirmation ──────────────────────────────────
-  void _confirmDelete(String providerValue, String providerName, AppLocalizations l10n) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.removeProvider),
-        content: Text(l10n.removeProviderConfirm(providerName)),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              ref.read(storeInstallmentConfigProvider.notifier).deleteConfig(providerValue);
-            },
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: Text(l10n.remove),
-          ),
-        ],
-      ),
+  void _confirmDelete(String providerValue, String providerName, AppLocalizations l10n) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.removeProvider,
+      message: l10n.removeProviderConfirm(providerName),
+      confirmLabel: l10n.remove,
+      cancelLabel: l10n.cancel,
+      isDanger: true,
     );
+    if (confirmed == true) {
+      ref.read(storeInstallmentConfigProvider.notifier).deleteConfig(providerValue);
+    }
   }
 }
 
@@ -661,7 +638,7 @@ class _StatusPill extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(20)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: AppRadius.borderXxl),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -690,7 +667,7 @@ class _InfoChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: isDark ? Colors.white.withValues(alpha: 0.06) : const Color(0xFFF1F5F9),
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: AppRadius.borderSm,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

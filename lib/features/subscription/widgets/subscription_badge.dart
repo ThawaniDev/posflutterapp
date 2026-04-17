@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 /// A colored badge indicating subscription status.
 class SubscriptionBadge extends StatelessWidget {
@@ -15,7 +16,7 @@ class SubscriptionBadge extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      decoration: BoxDecoration(color: config.backgroundColor, borderRadius: BorderRadius.circular(20)),
+      decoration: BoxDecoration(color: config.backgroundColor, borderRadius: AppRadius.borderXxl),
       child: Text(
         config.label,
         style: TextStyle(color: config.textColor, fontSize: 12, fontWeight: FontWeight.bold),

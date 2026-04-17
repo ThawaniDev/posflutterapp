@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 /// A lightweight WebView page for marketplace PayTabs checkout.
 /// Receives a [redirectUrl] (PayTabs payment page) and calls [onComplete]
@@ -17,7 +19,6 @@ class MarketplacePaymentWebViewPage extends StatefulWidget {
 }
 
 class _MarketplacePaymentWebViewPageState extends State<MarketplacePaymentWebViewPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   late final WebViewController _controller;
   bool _loading = true;
@@ -50,13 +51,10 @@ class _MarketplacePaymentWebViewPageState extends State<MarketplacePaymentWebVie
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.posCompletePayment),
-        centerTitle: true,
-        leading: IconButton(icon: const Icon(Icons.close), onPressed: () => _showCancelDialog(context)),
-      ),
-      body: Stack(
+    return PosListPage(
+      title: l10n.posCompletePayment,
+      showSearch: false,
+      child: Stack(
         children: [
           WebViewWidget(controller: _controller),
           if (_loading) const Center(child: CircularProgressIndicator()),
@@ -65,25 +63,17 @@ class _MarketplacePaymentWebViewPageState extends State<MarketplacePaymentWebVie
     );
   }
 
-  void _showCancelDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.providerPaymentCancelTitle),
-        content: const Text('Are you sure you want to cancel? Your purchase will be pending until payment is completed.'),
-        actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Continue')),
-          TextButton(
-            onPressed: () {
-              Navigator.of(ctx).pop();
-              Navigator.of(context).pop();
-              widget.onComplete();
-            },
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: Text(l10n.cancel),
-          ),
-        ],
-      ),
+  void _showCancelDialog(BuildContext context) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.providerPaymentCancelTitle,
+      message: 'Are you sure you want to cancel? Your purchase will be pending until payment is completed.',
+      confirmLabel: l10n.cancel,
+      cancelLabel: 'Continue',
     );
+    if (confirmed == true) {
+      Navigator.of(context).pop();
+      widget.onComplete();
+    }
   }
 }

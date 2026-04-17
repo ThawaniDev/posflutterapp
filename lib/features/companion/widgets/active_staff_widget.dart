@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
 import 'package:wameedpos/features/companion/providers/companion_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ActiveStaffWidget extends ConsumerStatefulWidget {
   const ActiveStaffWidget({super.key});
@@ -36,7 +37,7 @@ class _ActiveStaffWidgetState extends ConsumerState<ActiveStaffWidget> {
           children: [
             Text(message, style: TextStyle(color: theme.colorScheme.error)),
             AppSpacing.gapH8,
-            TextButton(onPressed: () => ref.read(activeStaffProvider.notifier).load(), child: Text(l10n.companionRetry)),
+            PosButton(onPressed: () => ref.read(activeStaffProvider.notifier).load(), variant: PosButtonVariant.ghost, label: l10n.companionRetry),
           ],
         ),
       ),
@@ -88,7 +89,7 @@ class _StaffCard extends StatelessWidget {
     final role = member['role'] as String? ?? '';
     final clockedInAt = member['clocked_in_at'] as String?;
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: CircleAvatar(

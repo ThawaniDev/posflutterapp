@@ -82,18 +82,17 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.notificationsPreferences),
-        actions: [
-          if (_hasChanges)
+    return PosListPage(
+  title: l10n.notificationsPreferences,
+  showSearch: false,
+  actions: [
+  if (_hasChanges)
             Padding(
               padding: const EdgeInsets.only(right: AppSpacing.sm),
               child: PosButton.pill(label: l10n.notificationsSave, onPressed: _save, isSelected: true),
             ),
-        ],
-      ),
-      body: switch (state) {
+],
+  child: switch (state) {
         NotificationPreferencesInitial() || NotificationPreferencesLoading() => const Center(child: PosLoading()),
         NotificationPreferencesError(:final message) => PosErrorState(
           message: message,
@@ -101,7 +100,7 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
         ),
         NotificationPreferencesLoaded() => _buildPreferences(isDark),
       },
-    );
+);
   }
 
   Widget _buildPreferences(bool isDark) {

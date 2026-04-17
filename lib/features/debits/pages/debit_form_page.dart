@@ -164,128 +164,113 @@ class _DebitFormPageState extends ConsumerState<DebitFormPage> {
     final customersState = ref.watch(customersProvider);
     final customers = customersState is CustomersLoaded ? customersState.customers : <Customer>[];
 
-    return Scaffold(
-      appBar: AppBar(title: Text(_isEdit ? l10n.debitsEdit : l10n.debitsCreate)),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Form(
-              key: _formKey,
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(AppSpacing.lg),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Customer picker
-                    PosSearchableDropdown<String>(
-                      items: customers.map((c) => PosDropdownItem(value: c.id, label: c.name, subtitle: c.phone)).toList(),
-                      selectedValue: _selectedCustomerId,
-                      onChanged: _isEdit ? null : (v) => setState(() => _selectedCustomerId = v),
-                      label: l10n.debitsSelectCustomer,
-                      hint: l10n.debitsSelectCustomer,
-                      showSearch: true,
-                      clearable: false,
-                      enabled: !_isEdit,
-                      validator: (v) => v == null ? l10n.debitsSelectCustomer : null,
-                    ),
-                    AppSpacing.gapH16,
-
-                    // Type & Source row
-                    Row(
-                      children: [
-                        Expanded(
-                          child: PosSearchableDropdown<DebitType>(
-                            items: DebitType.values.map((t) => PosDropdownItem(value: t, label: _typeLabel(t, l10n))).toList(),
-                            selectedValue: _selectedType,
-                            onChanged: _isEdit ? null : (v) => setState(() => _selectedType = v),
-                            label: l10n.debitsSelectType,
-                            hint: l10n.debitsSelectType,
-                            showSearch: false,
-                            clearable: false,
-                            enabled: !_isEdit,
-                            validator: (v) => v == null ? l10n.debitsSelectType : null,
-                          ),
-                        ),
-                        AppSpacing.gapW16,
-                        Expanded(
-                          child: PosSearchableDropdown<DebitSource>(
-                            items: DebitSource.values
-                                .map((s) => PosDropdownItem(value: s, label: _sourceLabel(s, l10n)))
-                                .toList(),
-                            selectedValue: _selectedSource,
-                            onChanged: _isEdit ? null : (v) => setState(() => _selectedSource = v),
-                            label: l10n.debitsSelectSource,
-                            hint: l10n.debitsSelectSource,
-                            showSearch: false,
-                            clearable: false,
-                            enabled: !_isEdit,
-                            validator: (v) => v == null ? l10n.debitsSelectSource : null,
-                          ),
-                        ),
-                      ],
-                    ),
-                    AppSpacing.gapH16,
-
-                    // Amount
-                    PosTextField(
-                      controller: _amountController,
-                      label: l10n.debitsAmount,
-                      hint: '0.00',
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))],
-                      readOnly: _isEdit,
-                    ),
-                    AppSpacing.gapH16,
-
-                    // Reference number
-                    PosTextField(
-                      controller: _referenceController,
-                      label: l10n.debitsReferenceNumber,
-                      hint: l10n.debitsReferenceNumber,
-                    ),
-                    AppSpacing.gapH16,
-
-                    // Description
-                    PosTextField(
-                      controller: _descriptionController,
-                      label: l10n.debitsDescription,
-                      hint: l10n.debitsDescription,
-                      maxLines: 2,
-                    ),
-                    AppSpacing.gapH16,
-
-                    // Description Arabic
-                    PosTextField(
-                      controller: _descriptionArController,
-                      label: l10n.debitsDescriptionAr,
-                      hint: l10n.debitsDescriptionAr,
-                      maxLines: 2,
-                      textDirection: TextDirection.rtl,
-                    ),
-                    AppSpacing.gapH16,
-
-                    // Notes
-                    PosTextField(
-                      controller: _notesController,
-                      label: l10n.commonNotesOptional,
-                      hint: l10n.commonNotesOptional,
-                      maxLines: 3,
-                    ),
-                    AppSpacing.gapH32,
-
-                    // Save button
-                    SizedBox(
-                      height: 48,
-                      child: ElevatedButton(
-                        onPressed: _isSaving ? null : _handleSave,
-                        child: _isSaving
-                            ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                            : Text(_isEdit ? l10n.save : l10n.debitsCreate),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+    return PosFormPage(
+      title: _isEdit ? l10n.debitsEdit : l10n.debitsCreate,
+      isLoading: _isLoading,
+      bottomBar: PosButton(
+        label: _isEdit ? l10n.save : l10n.debitsCreate,
+        onPressed: _isSaving ? null : _handleSave,
+        isLoading: _isSaving,
+        isFullWidth: true,
+      ),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Customer picker
+            PosSearchableDropdown<String>(
+              items: customers.map((c) => PosDropdownItem(value: c.id, label: c.name, subtitle: c.phone)).toList(),
+              selectedValue: _selectedCustomerId,
+              onChanged: _isEdit ? null : (v) => setState(() => _selectedCustomerId = v),
+              label: l10n.debitsSelectCustomer,
+              hint: l10n.debitsSelectCustomer,
+              showSearch: true,
+              clearable: false,
+              enabled: !_isEdit,
+              validator: (v) => v == null ? l10n.debitsSelectCustomer : null,
             ),
+            AppSpacing.gapH16,
+
+            // Type & Source row
+            Row(
+              children: [
+                Expanded(
+                  child: PosSearchableDropdown<DebitType>(
+                    items: DebitType.values.map((t) => PosDropdownItem(value: t, label: _typeLabel(t, l10n))).toList(),
+                    selectedValue: _selectedType,
+                    onChanged: _isEdit ? null : (v) => setState(() => _selectedType = v),
+                    label: l10n.debitsSelectType,
+                    hint: l10n.debitsSelectType,
+                    showSearch: false,
+                    clearable: false,
+                    enabled: !_isEdit,
+                    validator: (v) => v == null ? l10n.debitsSelectType : null,
+                  ),
+                ),
+                AppSpacing.gapW16,
+                Expanded(
+                  child: PosSearchableDropdown<DebitSource>(
+                    items: DebitSource.values.map((s) => PosDropdownItem(value: s, label: _sourceLabel(s, l10n))).toList(),
+                    selectedValue: _selectedSource,
+                    onChanged: _isEdit ? null : (v) => setState(() => _selectedSource = v),
+                    label: l10n.debitsSelectSource,
+                    hint: l10n.debitsSelectSource,
+                    showSearch: false,
+                    clearable: false,
+                    enabled: !_isEdit,
+                    validator: (v) => v == null ? l10n.debitsSelectSource : null,
+                  ),
+                ),
+              ],
+            ),
+            AppSpacing.gapH16,
+
+            // Amount
+            PosTextField(
+              controller: _amountController,
+              label: l10n.debitsAmount,
+              hint: '0.00',
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}'))],
+              readOnly: _isEdit,
+            ),
+            AppSpacing.gapH16,
+
+            // Reference number
+            PosTextField(controller: _referenceController, label: l10n.debitsReferenceNumber, hint: l10n.debitsReferenceNumber),
+            AppSpacing.gapH16,
+
+            // Description
+            PosTextField(
+              controller: _descriptionController,
+              label: l10n.debitsDescription,
+              hint: l10n.debitsDescription,
+              maxLines: 2,
+            ),
+            AppSpacing.gapH16,
+
+            // Description Arabic
+            PosTextField(
+              controller: _descriptionArController,
+              label: l10n.debitsDescriptionAr,
+              hint: l10n.debitsDescriptionAr,
+              maxLines: 2,
+              textDirection: TextDirection.rtl,
+            ),
+            AppSpacing.gapH16,
+
+            // Notes
+            PosTextField(
+              controller: _notesController,
+              label: l10n.commonNotesOptional,
+              hint: l10n.commonNotesOptional,
+              maxLines: 3,
+            ),
+            AppSpacing.gapH32,
+          ],
+        ),
+      ),
     );
   }
 }

@@ -215,8 +215,8 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
 
   Future<void> _selectPreset(DatePreset preset) async {
     if (preset == DatePreset.custom) {
-      final picked = await showDateRangePicker(
-        context: context,
+      final picked = await showPosDateRangePicker(
+      context,
         firstDate: DateTime(2020),
         lastDate: DateTime.now(),
         initialDateRange: widget.filters.dateRange,
@@ -250,12 +250,12 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
     final count = widget.filters.activeFilterCount;
     return InkWell(
       onTap: () => setState(() => _expanded = !_expanded),
-      borderRadius: BorderRadius.circular(AppRadius.sm),
+      borderRadius: AppRadius.borderSm,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         decoration: BoxDecoration(
           color: _expanded ? AppColors.primary.withValues(alpha: 0.1) : (isDark ? AppColors.cardDark : AppColors.backgroundLight),
-          borderRadius: BorderRadius.circular(AppRadius.sm),
+          borderRadius: AppRadius.borderSm,
           border: Border.all(
             color: _expanded ? AppColors.primary.withValues(alpha: 0.3) : (isDark ? AppColors.borderDark : AppColors.borderLight),
           ),
@@ -281,7 +281,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
               const SizedBox(width: 6),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
-                decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(10)),
+                decoration: BoxDecoration(color: AppColors.primary, borderRadius: AppRadius.borderMd),
                 child: Text(
                   '$count',
                   style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w600),
@@ -495,7 +495,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
               hintText: l10n.filterMin,
               isDense: true,
               contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(AppRadius.sm)),
+              border: OutlineInputBorder(borderRadius: AppRadius.borderSm),
             ),
             style: const TextStyle(fontSize: 12),
             onSubmitted: (val) {
@@ -517,7 +517,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
               hintText: l10n.filterMax,
               isDense: true,
               contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(AppRadius.sm)),
+              border: OutlineInputBorder(borderRadius: AppRadius.borderSm),
             ),
             style: const TextStyle(fontSize: 12),
             onSubmitted: (val) {

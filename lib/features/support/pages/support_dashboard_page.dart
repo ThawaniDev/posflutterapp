@@ -5,12 +5,7 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/widgets/pos_error_state.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
-import 'package:wameedpos/core/widgets/pos_loading_skeleton.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/support/providers/support_providers.dart';
 import 'package:wameedpos/features/support/providers/support_state.dart';
@@ -60,19 +55,15 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.support),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu_book_rounded),
-            tooltip: l10n.supportKnowledgeBase,
-            onPressed: () => context.push('/support/kb'),
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh_rounded),
-            tooltip: l10n.supportRefresh,
-            onPressed: () {
+    return PosListPage(
+  title: l10n.support,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.menu_book_rounded, onPressed: () => context.push('/support/kb'), tooltip: l10n.supportKnowledgeBase,
+  ),
+  PosButton.icon(
+    icon: Icons.refresh_rounded, onPressed: () {
               ref.read(supportStatsProvider.notifier).load();
               ref
                   .read(ticketListProvider.notifier)
@@ -80,24 +71,16 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
                     status: _statusFilter,
                     search: _searchController.text.trim().isNotEmpty ? _searchController.text.trim() : null,
                   );
-            },
-          ),
-        ],
-      ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: () => context.push('/support/create'),
-      //   icon: const Icon(Icons.add),
-      //   label: Text(l10n.supportNewTicket),
-      //   backgroundColor: AppColors.primary,
-      //   foregroundColor: Colors.white,
-      // ),
-      floatingActionButton: PosButton(
-        label: l10n.supportNewTicket,
-        icon: Icons.add_rounded,
-        onPressed: () => context.push('/support/create'),
-        isLoading: false,
-      ),
-      body: Column(
+            }, tooltip: l10n.supportRefresh,
+  ),
+  PosButton(
+    label: l10n.supportNewTicket,
+    icon: Icons.add,
+    size: PosButtonSize.sm,
+    onPressed: () => context.push('/support/create'),
+  ),
+],
+  child: Column(
         children: [
           // Stats KPI cards
           _buildStatsSection(statsState, l10n, isDark),
@@ -120,7 +103,7 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
           if (listState is TicketListLoaded) _buildPaginationBar(listState, isDark),
         ],
       ),
-    );
+);
   }
 
   Widget _buildStatsSection(SupportStatsState state, AppLocalizations l10n, bool isDark) {

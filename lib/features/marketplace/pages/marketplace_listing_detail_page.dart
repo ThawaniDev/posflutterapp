@@ -4,11 +4,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
-import 'package:wameedpos/core/widgets/pos_error_state.dart';
-import 'package:wameedpos/core/widgets/pos_loading_skeleton.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/marketplace/models/template_review.dart';
@@ -67,18 +62,21 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(title: Text(state is MarketplaceDetailLoaded ? state.listing.title : l10n.marketplaceListingDetail)),
-      floatingActionButton: state is MarketplaceDetailLoaded
-          ? FloatingActionButton.extended(
-              onPressed: () => context.push(
-                '${Routes.marketplaceListingPreview}/${widget.listingId}?name=${Uri.encodeComponent(state.listing.title)}',
-              ),
-              icon: const Icon(Icons.preview_rounded),
-              label: Text(l10n.templatePreviewButton),
-            )
-          : null,
-      body: switch (state) {
+    return PosListPage(
+      title: state is MarketplaceDetailLoaded ? state.listing.title : l10n.marketplaceListingDetail,
+      showSearch: false,
+      actions: [
+        if (state is MarketplaceDetailLoaded)
+          PosButton(
+            label: l10n.templatePreviewButton,
+            icon: Icons.preview_rounded,
+            size: PosButtonSize.sm,
+            onPressed: () => context.push(
+              '${Routes.marketplaceListingPreview}/${widget.listingId}?name=${Uri.encodeComponent((state).listing.title)}',
+            ),
+          ),
+      ],
+      child: switch (state) {
         MarketplaceDetailInitial() || MarketplaceDetailLoading() => PosLoadingSkeleton.list(),
         MarketplaceDetailPurchasing() || MarketplaceDetailPaymentRequired() => const Center(child: CircularProgressIndicator()),
         MarketplaceDetailError(:final message) => PosErrorState(
@@ -86,7 +84,7 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
           onRetry: () => ref.read(marketplaceDetailProvider(widget.listingId).notifier).load(),
         ),
         MarketplaceDetailLoaded(:final listing, :final reviews, :final hasAccess) => SingleChildScrollView(
-          padding: EdgeInsets.all(context.isPhone ? 12 : 16),
+          padding: context.responsivePagePadding,
           child: context.isPhone
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

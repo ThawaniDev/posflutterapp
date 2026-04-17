@@ -6,7 +6,9 @@ import '../../../../core/providers/branch_context_provider.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import '../../widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminDataManagementOverviewPage extends ConsumerStatefulWidget {
   const AdminDataManagementOverviewPage({super.key});
@@ -38,9 +40,10 @@ class _AdminDataManagementOverviewPageState extends ConsumerState<AdminDataManag
   Widget build(BuildContext context) {
     final state = ref.watch(dataManagementOverviewProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.dataManagement), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.dataManagement,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -54,9 +57,9 @@ class _AdminDataManagementOverviewPageState extends ConsumerState<AdminDataManag
                     const SizedBox(height: AppSpacing.md),
                     Text(msg, textAlign: TextAlign.center),
                     const SizedBox(height: AppSpacing.md),
-                    ElevatedButton(
+                    PosButton(
                       onPressed: () => ref.read(dataManagementOverviewProvider.notifier).load(storeId: _storeId),
-                      child: Text(l10n.retry),
+                      label: l10n.retry,
                     ),
                   ],
                 ),
@@ -67,7 +70,7 @@ class _AdminDataManagementOverviewPageState extends ConsumerState<AdminDataManag
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildOverview(Map<String, dynamic> data) {
@@ -99,7 +102,7 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return PosCard(
       elevation: 2,
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),

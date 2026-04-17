@@ -8,6 +8,7 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/provider_payments/providers/provider_payment_providers.dart';
 import 'package:wameedpos/features/provider_payments/providers/provider_payment_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 /// Initiates a payment and shows a WebView to complete PayTabs checkout.
 class PaymentCheckoutPage extends ConsumerStatefulWidget {
@@ -35,7 +36,6 @@ class PaymentCheckoutPage extends ConsumerStatefulWidget {
 }
 
 class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   WebViewController? _webController;
   bool _paymentInitiated = false;
@@ -102,18 +102,11 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.posCompletePayment),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () {
-            _showCancelConfirmation(context);
-          },
-        ),
-      ),
-      body: _buildBody(actionState),
+    return PosListPage(
+      title: l10n.posCompletePayment,
+      showSearch: false,
+      onBack: () => _showCancelConfirmation(context),
+      child: _buildBody(actionState),
     );
   }
 
@@ -149,24 +142,16 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
     return const Center(child: CircularProgressIndicator());
   }
 
-  void _showCancelConfirmation(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.providerPaymentCancelTitle),
-        content: Text(l10n.providerPaymentCancelBody),
-        actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.providerPaymentContinue)),
-          TextButton(
-            onPressed: () {
-              Navigator.of(ctx).pop();
-              context.go(Routes.providerPayments);
-            },
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: Text(l10n.cancel),
-          ),
-        ],
-      ),
+  void _showCancelConfirmation(BuildContext context) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.providerPaymentCancelTitle,
+      message: l10n.providerPaymentCancelBody,
+      confirmLabel: l10n.cancel,
+      cancelLabel: l10n.providerPaymentContinue,
     );
+    if (confirmed == true) {
+      context.go(Routes.providerPayments);
+    }
   }
 }

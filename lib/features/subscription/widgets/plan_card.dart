@@ -3,6 +3,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Card widget displaying a single subscription plan.
 class PlanCard extends StatelessWidget {
@@ -19,12 +20,9 @@ class PlanCard extends StatelessWidget {
     final period = isAnnual ? '/year' : '/month';
     final isHighlighted = plan.isHighlighted;
 
-    return Card(
+    return PosCard(
       elevation: isHighlighted ? 4 : 1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: isHighlighted ? const BorderSide(color: AppColors.primary, width: 2) : BorderSide.none,
-      ),
+      borderRadius: AppRadius.borderLg,
       margin: const EdgeInsets.only(bottom: 16),
       child: Padding(
         padding: AppSpacing.paddingAllMd,
@@ -39,8 +37,9 @@ class PlanCard extends StatelessWidget {
                 if (isHighlighted)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                    decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(20)),
-                    child: Text(l10n.subscriptionPopular,
+                    decoration: BoxDecoration(color: AppColors.primary, borderRadius: AppRadius.borderXxl),
+                    child: Text(
+                      l10n.subscriptionPopular,
                       style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -80,14 +79,7 @@ class PlanCard extends StatelessWidget {
             // CTA
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: onSelect,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: isHighlighted ? AppColors.primary : null,
-                  foregroundColor: isHighlighted ? Colors.white : null,
-                ),
-                child: Text(l10n.subscriptionSelectPlan),
-              ),
+              child: PosButton(onPressed: onSelect, label: l10n.subscriptionSelectPlan),
             ),
           ],
         ),

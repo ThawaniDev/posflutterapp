@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_chat.dart';
 import 'package:wameedpos/features/wameed_ai/providers/ai_chat_providers.dart';
 import 'package:wameedpos/features/wameed_ai/providers/ai_chat_state.dart';
@@ -16,6 +17,7 @@ import 'package:wameedpos/features/wameed_ai/widgets/ai_feature_input_panel.dart
 import 'package:wameedpos/features/wameed_ai/widgets/ai_feature_overlay.dart';
 import 'package:wameedpos/features/wameed_ai/widgets/ai_model_selector.dart';
 import 'package:wameedpos/features/wameed_ai/widgets/ai_message_bubble.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AIChatPage extends ConsumerStatefulWidget {
   final String? chatId;
@@ -147,42 +149,28 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
 
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: GestureDetector(
-          onTap: chatState is AIChatLoaded ? () => _showRenameDialog(chatState.chat.title) : null,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.auto_awesome, color: AppColors.primary, size: 22),
-              const SizedBox(width: 8),
-              Flexible(
-                child: Text(chatState is AIChatLoaded ? chatState.chat.title : l10n.wameedAI, overflow: TextOverflow.ellipsis),
-              ),
-              if (chatState is AIChatLoaded)
-                Padding(
-                  padding: const EdgeInsets.only(left: 4),
-                  child: Icon(Icons.edit_outlined, size: 14, color: Theme.of(context).hintColor),
-                ),
-            ],
+    return PosListPage(
+      title: chatState is AIChatLoaded ? chatState.chat.title : l10n.wameedAI,
+      showSearch: false,
+      actions: [
+        if (chatState is AIChatLoaded)
+          PosButton.icon(
+            icon: Icons.edit_outlined,
+            tooltip: l10n.commonEdit,
+            onPressed: () => _showRenameDialog(chatState.chat.title),
           ),
-        ),
-        actions: [
-          // Model selector
-          if (modelsState is AIModelsLoaded)
-            AIModelSelector(
-              models: modelsState.models,
-              selectedModel: chatState is AIChatLoaded ? chatState.chat.llmModel : null,
-              onSelected: (model) {
-                if (chatState is AIChatLoaded) {
-                  ref.read(aiActiveChatProvider.notifier).changeModel(model.id);
-                }
-              },
-            ),
-          const SizedBox(width: 8),
-        ],
-      ),
-      body: Column(
+        if (modelsState is AIModelsLoaded)
+          AIModelSelector(
+            models: modelsState.models,
+            selectedModel: chatState is AIChatLoaded ? chatState.chat.llmModel : null,
+            onSelected: (model) {
+              if (chatState is AIChatLoaded) {
+                ref.read(aiActiveChatProvider.notifier).changeModel(model.id);
+              }
+            },
+          ),
+      ],
+      child: Column(
         children: [
           // ─── Messages Area ───
           Expanded(
@@ -245,14 +233,14 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               ),
               child: const Icon(Icons.auto_awesome, size: 48, color: AppColors.primary),
             ),
-            const SizedBox(height: 24),
+            AppSpacing.gapH24,
             Text(
               l10n.wameedAI,
               style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
             ),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             Text(l10n.wameedAITagline, style: theme.textTheme.bodyLarge?.copyWith(color: theme.hintColor)),
-            const SizedBox(height: 32),
+            AppSpacing.gapH32,
             _buildFeatureCardsGrid(theme),
           ],
         ),
@@ -293,20 +281,20 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     final isMobile = context.isPhone;
     return InkWell(
       onTap: () => _onFeatureSelected(feature.slug, feature.displayName),
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: AppRadius.borderLg,
       child: Container(
         width: isMobile ? (MediaQuery.sizeOf(context).width - 68) / 2 : 180,
         padding: EdgeInsets.symmetric(horizontal: isMobile ? 10 : 14, vertical: isMobile ? 10 : 12),
         decoration: BoxDecoration(
           color: theme.cardColor,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: AppRadius.borderLg,
           // border: Border.all(color: theme.dividerColor),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Icon(_categoryIcon(feature.category), size: 20, color: AppColors.primary),
-            // const SizedBox(height: 8),
+            // AppSpacing.gapH8,
             Text(
               feature.displayName + '\n',
               style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
@@ -339,13 +327,13 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: AppRadius.borderXl,
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary)),
-                      const SizedBox(width: 8),
+                      AppSpacing.gapW8,
                       Text(l10n.wameedAIThinking, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.primary)),
                     ],
                   ),
@@ -370,10 +358,10 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           Container(
             width: 48,
             height: 48,
-            decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
+            decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
             child: const Icon(Icons.image, color: AppColors.primary),
           ),
-          const SizedBox(width: 8),
+          AppSpacing.gapW8,
           Expanded(
             child: Text(
               _imageName ?? l10n.wameedAIImageAttached,
@@ -403,10 +391,10 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
 
     return Container(
       padding: EdgeInsets.only(
-        left: isMobile ? 8 : 12,
-        right: 8,
-        top: 8,
-        bottom: keyboardVisible ? 8 : bottomPad + (isMobile ? 8 : 20),
+        left: isMobile ? AppSpacing.sm : AppSpacing.md,
+        right: AppSpacing.sm,
+        top: AppSpacing.sm,
+        bottom: keyboardVisible ? AppSpacing.sm : bottomPad + (isMobile ? AppSpacing.sm : AppSpacing.lg),
       ),
       decoration: BoxDecoration(
         color: theme.scaffoldBackgroundColor,
@@ -426,7 +414,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           // Image button
           if (!isMobile)
             IconButton(icon: const Icon(Icons.image_outlined, size: 24), color: theme.hintColor, onPressed: _pickImage),
-          SizedBox(width: isMobile ? 4 : 10),
+          SizedBox(width: isMobile ? AppSpacing.xs : 10),
           // Input field
           Expanded(
             child: Container(
@@ -459,7 +447,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                       decoration: InputDecoration(
                         hintText: isMobile ? l10n.wameedAIChatHint : l10n.wameedAIChatHintDesktop,
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 16, vertical: 10),
+                        contentPadding: EdgeInsets.symmetric(horizontal: isMobile ? AppSpacing.md : AppSpacing.base, vertical: 10),
                         hintStyle: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
                       ),
                       onSubmitted: isMobile ? (_) => _sendMessage() : null,
@@ -469,7 +457,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               ),
             ),
           ),
-          const SizedBox(width: 8),
+          AppSpacing.gapW8,
           // Send button
           Padding(
             padding: const EdgeInsets.only(bottom: 2),
@@ -588,8 +576,8 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           },
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.commonCancel)),
-          TextButton(
+          PosButton(onPressed: () => Navigator.of(ctx).pop(), variant: PosButtonVariant.ghost, label: l10n.commonCancel),
+          PosButton(
             onPressed: () {
               final title = renameController.text.trim();
               if (title.isNotEmpty) {
@@ -598,7 +586,8 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               }
               Navigator.of(ctx).pop();
             },
-            child: Text(l10n.commonRename),
+            variant: PosButtonVariant.ghost,
+            label: l10n.commonRename,
           ),
         ],
       ),

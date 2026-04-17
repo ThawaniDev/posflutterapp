@@ -71,9 +71,10 @@ class _State extends ConsumerState<AdminWameedAIUsageLogsPage> {
     final statsState = ref.watch(wameedAIAdminLogStatsProvider);
     final logsState = ref.watch(wameedAIAdminLogsProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.adminWameedAIUsageLogs), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.adminWameedAIUsageLogs,
+  showSearch: false,
+    child: Column(
         children: [
           // ── Stats Cards ──
           if (statsState is WameedAIAdminDashboardLoaded) _buildStatsCards(statsState.data, l10n),
@@ -91,7 +92,7 @@ class _State extends ConsumerState<AdminWameedAIUsageLogsPage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildStatsCards(Map<String, dynamic> resp, AppLocalizations l10n) {

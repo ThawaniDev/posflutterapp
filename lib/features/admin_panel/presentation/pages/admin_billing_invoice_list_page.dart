@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
@@ -65,22 +66,17 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
   Widget build(BuildContext context) {
     final state = ref.watch(billingInvoiceListProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.invoices),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            tooltip: 'Create Manual Invoice',
-            onPressed: () {
+    return PosListPage(
+  title: l10n.invoices,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.add, onPressed: () {
               // Navigate to create invoice
-            },
-          ),
-        ],
-      ),
-      body: Column(
+            }, tooltip: 'Create Manual Invoice',
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -148,7 +144,7 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
                         itemBuilder: (context, index) {
                           final inv = invoices[index];
                           final status = inv['status'] as String? ?? 'unknown';
-                          return Card(
+                          return PosCard(
                             margin: const EdgeInsets.only(bottom: AppSpacing.sm),
                             child: ListTile(
                               leading: CircleAvatar(
@@ -161,7 +157,7 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                 decoration: BoxDecoration(
                                   color: _statusColor(status).withValues(alpha: 0.1),
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: AppRadius.borderLg,
                                 ),
                                 child: Text(
                                   status.toUpperCase(),
@@ -181,6 +177,6 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
           ),
         ],
       ),
-    );
+);
   }
 }

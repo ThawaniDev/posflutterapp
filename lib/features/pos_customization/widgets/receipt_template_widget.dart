@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/pos_customization/providers/customization_state.dart';
 import 'package:wameedpos/features/pos_customization/providers/customization_providers.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ReceiptTemplateWidget extends ConsumerWidget {
   const ReceiptTemplateWidget({super.key});
@@ -28,7 +29,7 @@ class ReceiptTemplateWidget extends ConsumerWidget {
       ),
       final ReceiptLoaded s => SingleChildScrollView(
         padding: AppSpacing.paddingAll16,
-        child: Card(
+        child: PosCard(
           child: Column(
             children: [
               ListTile(leading: const Icon(Icons.image), title: const Text('Logo'), subtitle: Text(s.logoUrl ?? 'Not set')),

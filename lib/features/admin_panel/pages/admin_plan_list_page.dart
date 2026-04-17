@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
@@ -17,7 +17,6 @@ class AdminPlanListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminPlanListPageState extends ConsumerState<AdminPlanListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
@@ -37,50 +36,34 @@ class _AdminPlanListPageState extends ConsumerState<AdminPlanListPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(planListProvider);
+    final isLoading = state is PlanListLoading;
+    final hasError = state is PlanListError;
+    final isEmpty = state is PlanListLoaded && state.plans.isEmpty;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Subscription Plans'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              // Navigate to create plan
-            },
-          ),
-        ],
-      ),
-      body: Column(
+    return PosListPage(
+      title: 'Subscription Plans',
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: () => ref.read(planListProvider.notifier).loadPlans(),
+      isEmpty: isEmpty,
+      emptyTitle: 'No plans found',
+      emptyIcon: Icons.workspace_premium_outlined,
+      actions: [PosButton(label: l10n.add, icon: Icons.add, onPressed: () {})],
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
             child: switch (state) {
-              PlanListLoading() => const Center(child: CircularProgressIndicator()),
-              PlanListError(:final message) => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(message, style: const TextStyle(color: AppColors.error)),
-                    AppSpacing.gapH16,
-                    PosButton(
-                      label: l10n.retry,
-                      variant: PosButtonVariant.outline,
-                      onPressed: () => ref.read(planListProvider.notifier).loadPlans(),
-                    ),
-                  ],
-                ),
+              PlanListLoaded(:final plans) => ListView.builder(
+                padding: AppSpacing.paddingAll16,
+                itemCount: plans.length,
+                itemBuilder: (context, index) {
+                  final plan = plans[index];
+                  return _PlanCard(plan: plan);
+                },
               ),
-              PlanListLoaded(:final plans) =>
-                plans.isEmpty
-                    ? const Center(child: Text('No plans found'))
-                    : ListView.builder(
-                        padding: AppSpacing.paddingAll16,
-                        itemCount: plans.length,
-                        itemBuilder: (context, index) {
-                          final plan = plans[index];
-                          return _PlanCard(plan: plan);
-                        },
-                      ),
               _ => const SizedBox.shrink(),
             },
           ),
@@ -99,12 +82,10 @@ class _PlanCard extends StatelessWidget {
     final isActive = plan['is_active'] == true;
     final isHighlighted = plan['is_highlighted'] == true;
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: isHighlighted ? const BorderSide(color: AppColors.primary, width: 2) : BorderSide(color: AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderLg,
+      border: Border.fromBorderSide(isHighlighted ? const BorderSide(color: AppColors.primary, width: 2) : BorderSide(color: AppColors.borderLight)),
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -120,7 +101,7 @@ class _PlanCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
                       color: AppColors.primary.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: AppRadius.borderLg,
                     ),
                     child: const Text(
                       'Highlighted',
@@ -132,7 +113,7 @@ class _PlanCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(
                     color: isActive ? AppColors.success.withValues(alpha: 0.1) : AppColors.error.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.borderLg,
                   ),
                   child: Text(
                     isActive ? 'Active' : 'Inactive',

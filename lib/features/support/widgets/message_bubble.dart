@@ -48,8 +48,8 @@ class MessageBubble extends StatelessWidget {
               decoration: BoxDecoration(
                 color: bubbleColor,
                 borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(16),
-                  topRight: const Radius.circular(16),
+                  topLeft: const Radius.circular(AppRadius.xl),
+                  topRight: const Radius.circular(AppRadius.xl),
                   bottomLeft: Radius.circular(isProvider ? 16 : 4),
                   bottomRight: Radius.circular(isProvider ? 4 : 16),
                 ),

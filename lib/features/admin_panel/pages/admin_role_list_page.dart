@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
@@ -17,7 +17,6 @@ class AdminRoleListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminRoleListPageState extends ConsumerState<AdminRoleListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
@@ -30,70 +29,68 @@ class _AdminRoleListPageState extends ConsumerState<AdminRoleListPage> {
     final state = ref.watch(adminRoleListProvider);
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminPlatformRoles),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.shield_outlined),
-            tooltip: l10n.permissions,
-            onPressed: () => context.push(Routes.adminPermissions),
-          ),
-          IconButton(icon: Icon(Icons.add), tooltip: l10n.createRole, onPressed: () => context.push(Routes.adminRoleCreate)),
-        ],
-      ),
-      body: switch (state) {
-        AdminRoleListInitial() || AdminRoleListLoading() => const Center(child: CircularProgressIndicator()),
-        AdminRoleListError(message: final msg) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(msg, style: theme.textTheme.bodyLarge),
-              AppSpacing.gapH16,
-              PosButton(label: l10n.retry, onPressed: () => ref.read(adminRoleListProvider.notifier).load()),
-            ],
-          ),
+    final isLoading = state is AdminRoleListInitial || state is AdminRoleListLoading;
+    final hasError = state is AdminRoleListError;
+    final isEmpty = state is AdminRoleListLoaded && state.roles.isEmpty;
+
+    return PosListPage(
+      title: l10n.adminPlatformRoles,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: () => ref.read(adminRoleListProvider.notifier).load(),
+      isEmpty: isEmpty,
+      emptyTitle: 'No roles found',
+      emptyIcon: Icons.security,
+      actions: [
+        PosButton.icon(
+          icon: Icons.shield_outlined,
+          tooltip: l10n.permissions,
+          onPressed: () => context.push(Routes.adminPermissions),
+          variant: PosButtonVariant.ghost,
         ),
-        AdminRoleListLoaded(roles: final roles) =>
-          roles.isEmpty
-              ? const Center(child: Text('No roles found'))
-              : ListView.separated(
-                  padding: AppSpacing.paddingAll16,
-                  itemCount: roles.length,
-                  separatorBuilder: (_, __) => AppSpacing.gapH8,
-                  itemBuilder: (context, index) {
-                    final role = roles[index];
-                    final isSystem = role['is_system'] == true;
-                    return Card(
-                      child: ListTile(
-                        leading: Icon(
-                          isSystem ? Icons.admin_panel_settings : Icons.security,
-                          color: isSystem ? AppColors.primary : AppColors.textSecondary,
-                        ),
-                        title: Text(role['name'] as String? ?? ''),
-                        subtitle: Text(role['description'] as String? ?? role['slug'] as String? ?? ''),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (isSystem)
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                decoration: BoxDecoration(
-                                  color: AppColors.primary.withValues(alpha: 0.1),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Text(l10n.settingsSystem, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.primary)),
-                              ),
-                            const SizedBox(width: 8),
-                            Text('${role['permissions_count'] ?? 0} perms', style: theme.textTheme.bodySmall),
-                            const Icon(Icons.chevron_right),
-                          ],
-                        ),
-                        onTap: () => context.push('${Routes.adminRoleDetail}/${role['id']}'),
-                      ),
-                    );
-                  },
+        PosButton(label: l10n.createRole, icon: Icons.add, onPressed: () => context.push(Routes.adminRoleCreate)),
+      ],
+      child: switch (state) {
+        AdminRoleListLoaded(roles: final roles) => ListView.separated(
+          padding: AppSpacing.paddingAll16,
+          itemCount: roles.length,
+          separatorBuilder: (_, __) => AppSpacing.gapH8,
+          itemBuilder: (context, index) {
+            final role = roles[index];
+            final isSystem = role['is_system'] == true;
+            return PosCard(
+              child: ListTile(
+                leading: Icon(
+                  isSystem ? Icons.admin_panel_settings : Icons.security,
+                  color: isSystem ? AppColors.primary : AppColors.textSecondary,
                 ),
+                title: Text(role['name'] as String? ?? ''),
+                subtitle: Text(role['description'] as String? ?? role['slug'] as String? ?? ''),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (isSystem)
+                      Container(
+                        padding: const EdgeInsetsDirectional.symmetric(horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary.withValues(alpha: 0.1),
+                          borderRadius: AppRadius.borderLg,
+                        ),
+                        child: Text(l10n.settingsSystem, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.primary)),
+                      ),
+                    AppSpacing.gapW8,
+                    Text('${role['permissions_count'] ?? 0} perms', style: theme.textTheme.bodySmall),
+                    const Icon(Icons.chevron_right),
+                  ],
+                ),
+                onTap: () => context.push('${Routes.adminRoleDetail}/${role['id']}'),
+              ),
+            );
+          },
+        ),
+        _ => const SizedBox.shrink(),
       },
     );
   }

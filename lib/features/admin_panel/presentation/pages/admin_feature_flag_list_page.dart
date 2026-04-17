@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,6 +8,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminFeatureFlagListPage extends ConsumerStatefulWidget {
   const AdminFeatureFlagListPage({super.key});
@@ -45,12 +47,15 @@ class _AdminFeatureFlagListPageState extends ConsumerState<AdminFeatureFlagListP
   Widget build(BuildContext context) {
     final state = ref.watch(featureFlagListProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminFeatureFlags),
-        actions: [IconButton(icon: const Icon(Icons.add), onPressed: () {})],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.adminFeatureFlags,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.add, onPressed: () {},
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -84,7 +89,7 @@ class _AdminFeatureFlagListPageState extends ConsumerState<AdminFeatureFlagListP
                             itemCount: flags.length,
                             itemBuilder: (context, index) {
                               final flag = flags[index];
-                              return Card(
+                              return PosCard(
                                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                                 child: ListTile(
                                   title: Text(flag['flag_key'] as String? ?? ''),
@@ -112,7 +117,7 @@ class _AdminFeatureFlagListPageState extends ConsumerState<AdminFeatureFlagListP
                     const SizedBox(height: 8),
                     Text(message),
                     const SizedBox(height: 16),
-                    ElevatedButton(onPressed: () => _loadFlags(), child: Text(l10n.retry)),
+                    PosButton(onPressed: () => _loadFlags(), label: l10n.retry),
                   ],
                 ),
               ),
@@ -120,6 +125,6 @@ class _AdminFeatureFlagListPageState extends ConsumerState<AdminFeatureFlagListP
           ),
         ],
       ),
-    );
+);
   }
 }

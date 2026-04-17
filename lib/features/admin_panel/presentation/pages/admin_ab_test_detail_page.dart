@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminABTestDetailPage extends ConsumerStatefulWidget {
   final String testId;
@@ -26,16 +28,17 @@ class _AdminABTestDetailPageState extends ConsumerState<AdminABTestDetailPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(abTestDetailProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.abTestDetail)),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.abTestDetail,
+  showSearch: false,
+    child: switch (state) {
         ABTestDetailInitial() || ABTestDetailLoading() => const Center(child: CircularProgressIndicator()),
         ABTestDetailLoaded(:final test, :final variants) => SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Card(
+              PosCard(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -64,7 +67,7 @@ class _AdminABTestDetailPageState extends ConsumerState<AdminABTestDetailPage> {
                 const Text('No variants added yet')
               else
                 ...variants.map(
-                  (v) => Card(
+                  (v) => PosCard(
                     child: ListTile(
                       leading: v['is_control'] == true
                           ? const Icon(Icons.science, color: AppColors.info)
@@ -105,6 +108,6 @@ class _AdminABTestDetailPageState extends ConsumerState<AdminABTestDetailPage> {
           ),
         ),
       },
-    );
+);
   }
 }

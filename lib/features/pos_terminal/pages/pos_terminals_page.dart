@@ -6,7 +6,6 @@ import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/pos_terminal/models/register.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_providers.dart';
@@ -100,83 +99,22 @@ class _PosTerminalsPageState extends ConsumerState<PosTerminalsPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(terminalsProvider);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildToolbar(context, isDark),
-          Expanded(child: _buildTable(state)),
-        ],
-      ),
-    );
-  }
-
-  // ──────────────────────────────────────────────────────────
-  // Toolbar
-  // ──────────────────────────────────────────────────────────
-
-  Widget _buildToolbar(BuildContext context, bool isDark) {
-    final isMobile = context.isPhone;
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: isMobile ? AppSpacing.md : AppSpacing.xxxl,
-        vertical: isMobile ? AppSpacing.md : AppSpacing.lg,
-      ),
-      child: isMobile
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(child: Text(AppLocalizations.of(context)!.terminalsTitle, style: AppTypography.headlineSmall)),
-                    PosButton(
-                      label: AppLocalizations.of(context)!.terminalsAdd,
-                      icon: Icons.add_rounded,
-                      size: PosButtonSize.sm,
-                      onPressed: () => context.push(Routes.posTerminalAdd),
-                    ),
-                  ],
-                ),
-                AppSpacing.gapH8,
-                PosSearchField(
-                  controller: _searchController,
-                  hint: AppLocalizations.of(context)!.terminalsSearch,
-                  onChanged: (q) => ref.read(terminalsProvider.notifier).search(q),
-                ),
-              ],
-            )
-          : Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(AppLocalizations.of(context)!.terminalsTitle, style: AppTypography.headlineMedium),
-                    Text(
-                      AppLocalizations.of(context)!.terminalsSubtitle,
-                      style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                SizedBox(
-                  width: 280,
-                  child: PosSearchField(
-                    controller: _searchController,
-                    hint: AppLocalizations.of(context)!.terminalsSearch,
-                    onChanged: (q) => ref.read(terminalsProvider.notifier).search(q),
-                  ),
-                ),
-                AppSpacing.gapW12,
-                PosButton(
-                  label: AppLocalizations.of(context)!.terminalsAdd,
-                  icon: Icons.add_rounded,
-                  onPressed: () => context.push(Routes.posTerminalAdd),
-                ),
-              ],
-            ),
+    return PosListPage(
+      title: l10n.terminalsTitle,
+      subtitle: l10n.terminalsSubtitle,
+      searchController: _searchController,
+      searchHint: l10n.terminalsSearch,
+      onSearchChanged: (q) => ref.read(terminalsProvider.notifier).search(q),
+      onSearchClear: () {
+        _searchController.clear();
+        ref.read(terminalsProvider.notifier).search('');
+      },
+      actions: [
+        PosButton(label: l10n.terminalsAdd, icon: Icons.add_rounded, onPressed: () => context.push(Routes.posTerminalAdd)),
+      ],
+      child: _buildTable(state),
     );
   }
 

@@ -17,60 +17,45 @@ class AddOnsPage extends ConsumerStatefulWidget {
   ConsumerState<AddOnsPage> createState() => _AddOnsPageState();
 }
 
-class _AddOnsPageState extends ConsumerState<AddOnsPage> with SingleTickerProviderStateMixin {
-
+class _AddOnsPageState extends ConsumerState<AddOnsPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  late TabController _tabController;
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
     Future.microtask(() {
       ref.read(addOnsProvider.notifier).loadAddOns();
     });
   }
 
   @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final state = ref.watch(addOnsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.subscriptionAddOns),
-        centerTitle: true,
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: l10n.subscriptionAvailable),
-            Tab(text: l10n.subscriptionMyAddOns),
-          ],
-        ),
-      ),
-      body: _buildBody(state),
+    return PosListPage(
+      title: l10n.subscriptionAddOns,
+      showSearch: false,
+      isLoading: state is AddOnsLoading,
+      hasError: state is AddOnsError,
+      errorMessage: state is AddOnsError ? state.message : null,
+      onRetry: () => ref.read(addOnsProvider.notifier).loadAddOns(),
+      child: state is AddOnsLoaded
+          ? Column(
+              children: [
+                PosTabs(
+                  selectedIndex: _currentTab,
+                  onChanged: (i) => setState(() => _currentTab = i),
+                  tabs: [
+                    PosTabItem(label: l10n.subscriptionAvailable),
+                    PosTabItem(label: l10n.subscriptionMyAddOns),
+                  ],
+                ),
+                IndexedStack(index: _currentTab, children: [_buildAvailableTab(state), _buildMyAddOnsTab(state)]),
+              ],
+            )
+          : const SizedBox.shrink(),
     );
-  }
-
-  Widget _buildBody(AddOnsState state) {
-    if (state is AddOnsLoading) {
-      return Center(child: PosLoadingSkeleton.list());
-    }
-
-    if (state is AddOnsError) {
-      return PosErrorState(message: state.message, onRetry: () => ref.read(addOnsProvider.notifier).loadAddOns());
-    }
-
-    if (state is AddOnsLoaded) {
-      return TabBarView(controller: _tabController, children: [_buildAvailableTab(state), _buildMyAddOnsTab(state)]);
-    }
-
-    return const SizedBox.shrink();
   }
 
   Widget _buildAvailableTab(AddOnsLoaded state) {

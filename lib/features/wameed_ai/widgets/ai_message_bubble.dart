@@ -4,6 +4,8 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_chat.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AIMessageBubble extends StatelessWidget {
   final AIChatMessage message;
@@ -25,7 +27,7 @@ class AIMessageBubble extends StatelessWidget {
     final isMobile = context.isPhone;
 
     return Padding(
-      padding: EdgeInsets.only(bottom: isMobile ? 8 : 12),
+      padding: EdgeInsets.only(bottom: isMobile ? AppSpacing.sm : AppSpacing.md),
       child: Row(
         mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,15 +36,15 @@ class AIMessageBubble extends StatelessWidget {
             CircleAvatar(
               radius: isMobile ? 14 : 16,
               backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-              child: Icon(Icons.auto_awesome, size: isMobile ? 15 : 18, color: AppColors.primary),
+              child: Icon(Icons.auto_awesome, size: isMobile ? AppSizes.iconSm - 1 : AppSizes.iconSm + 2, color: AppColors.primary),
             ),
-            const SizedBox(width: 8),
+            AppSpacing.gapW8,
           ],
           Flexible(
             child: GestureDetector(
               onLongPress: () => _copyToClipboard(context),
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 16, vertical: isMobile ? 10 : 12),
+                padding: EdgeInsets.symmetric(horizontal: isMobile ? AppSpacing.md : AppSpacing.base, vertical: isMobile ? 10 : AppSpacing.md),
                 decoration: BoxDecoration(
                   color: isUser ? AppColors.primary : theme.cardColor,
                   borderRadius: BorderRadius.only(
@@ -62,7 +64,7 @@ class AIMessageBubble extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
                           color: isUser ? Colors.white.withValues(alpha: 0.2) : AppColors.primary.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: AppRadius.borderLg,
                         ),
                         child: Text(
                           _formatFeatureName(message.featureSlug!),
@@ -80,12 +82,11 @@ class AIMessageBubble extends StatelessWidget {
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: isUser ? Colors.white : theme.textTheme.bodyMedium?.color,
                         height: 1.5,
-                        fontSize: isMobile ? 13.5 : null,
                       ),
                     ),
                     // Metadata row
                     if (!isUser && (message.modelUsed != null || message.latencyMs > 0)) ...[
-                      const SizedBox(height: 8),
+                      AppSpacing.gapH8,
                       Wrap(
                         spacing: 8,
                         runSpacing: 4,
@@ -103,7 +104,7 @@ class AIMessageBubble extends StatelessWidget {
                             ),
                           InkWell(
                             onTap: () => _copyToClipboard(context),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: AppRadius.borderMd,
                             child: Padding(
                               padding: const EdgeInsets.all(4),
                               child: Icon(Icons.copy, size: isMobile ? 16 : 14, color: theme.hintColor),
@@ -117,7 +118,7 @@ class AIMessageBubble extends StatelessWidget {
               ),
             ),
           ),
-          if (isUser) const SizedBox(width: 8),
+          if (isUser) AppSpacing.gapW8,
         ],
       ),
     );

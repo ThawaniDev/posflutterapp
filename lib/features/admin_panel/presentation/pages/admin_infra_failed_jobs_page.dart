@@ -47,9 +47,10 @@ class _State extends ConsumerState<AdminInfraFailedJobsPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(infraFailedJobsProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.adminInfraFailedJobs), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.adminInfraFailedJobs,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
@@ -86,7 +87,7 @@ class _State extends ConsumerState<AdminInfraFailedJobsPage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> resp) {
@@ -104,8 +105,8 @@ class _State extends ConsumerState<AdminInfraFailedJobsPage> {
           final item = items[i];
           final exception = (item['exception'] ?? '').toString();
           final truncated = exception.length > 100 ? '${exception.substring(0, 100)}...' : exception;
-          return Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          return PosCard(
+            borderRadius: BorderRadius.circular(10,),
             child: ListTile(
               leading: const CircleAvatar(
                 backgroundColor: Color(0xFFFEE2E2),

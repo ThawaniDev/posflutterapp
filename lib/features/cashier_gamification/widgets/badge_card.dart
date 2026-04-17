@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/models/cashier_badge.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class BadgeCard extends StatelessWidget {
   final CashierBadge badge;
@@ -29,27 +31,27 @@ class BadgeCard extends StatelessWidget {
       badgeColor = Colors.orange;
     }
 
-    return Card(
+    return PosCard(
       elevation: 0.5,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      borderRadius: AppRadius.borderLg,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.borderLg,
         child: Padding(
-          padding: EdgeInsets.all(isMobile ? 12 : 16),
+          padding: context.responsivePagePadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
                   Container(
-                    width: isMobile ? 40 : 48,
-                    height: isMobile ? 40 : 48,
-                    decoration: BoxDecoration(color: badgeColor.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(12)),
+                    width: context.responsiveAvatarSize,
+                    height: context.responsiveAvatarSize,
+                    decoration: BoxDecoration(color: badgeColor.withValues(alpha: 0.12), borderRadius: AppRadius.borderLg),
                     alignment: Alignment.center,
-                    child: Text(badge.icon, style: TextStyle(fontSize: isMobile ? 20 : 24)),
+                    child: Text(badge.icon, style: TextStyle(fontSize: context.responsiveIconSize)),
                   ),
-                  const SizedBox(width: 12),
+                  AppSpacing.gapW12,
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +62,7 @@ class BadgeCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(height: 2),
+                        AppSpacing.gapH2,
                         Text(
                           '${badge.triggerType} ≥ ${badge.triggerThreshold.toStringAsFixed(1)} (${badge.period})',
                           style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.onSurfaceVariant),
@@ -75,7 +77,7 @@ class BadgeCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
                         color: Colors.grey.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(6),
+                        borderRadius: AppRadius.borderSm,
                       ),
                       child: Text(l10n.inactive, style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
                     ),
@@ -92,7 +94,7 @@ class BadgeCard extends StatelessWidget {
                 ],
               ),
               if (description.isNotEmpty) ...[
-                const SizedBox(height: 8),
+                AppSpacing.gapH8,
                 Text(description, style: theme.textTheme.bodySmall, maxLines: 2, overflow: TextOverflow.ellipsis),
               ],
             ],

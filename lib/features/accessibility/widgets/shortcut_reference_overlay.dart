@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/accessibility/services/keyboard_shortcut_service.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Full-screen overlay showing all keyboard shortcuts, accessible via Ctrl+/.
 /// Groups shortcuts by context (POS, Global, Navigation).
@@ -144,7 +145,7 @@ class _ShortcutGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +163,7 @@ class _ShortcutGroup extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   color: theme.colorScheme.surfaceContainerHighest,
-                  borderRadius: BorderRadius.circular(6),
+                  borderRadius: AppRadius.borderSm,
                   border: Border.all(color: theme.dividerColor),
                 ),
                 child: Text(

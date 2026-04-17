@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/companion/providers/companion_state.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class PreferencesWidget extends ConsumerWidget {
   const PreferencesWidget({super.key});
@@ -59,7 +60,7 @@ class PreferencesWidget extends ConsumerWidget {
         children: [
           Text(l10n.companionAppPreferences, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
           AppSpacing.gapH16,
-          Card(
+          PosCard(
             child: Column(
               children: [
                 _buildTile(icon: Icons.palette, title: l10n.appBarTheme, subtitle: themeMode.toUpperCase()),

@@ -4,6 +4,8 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/features/promotions/providers/promotion_providers.dart';
 import 'package:wameedpos/features/promotions/providers/promotion_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Dialog that validates a coupon code during POS checkout.
 ///
@@ -78,7 +80,7 @@ class _CouponValidationDialogState extends ConsumerState<_CouponValidationDialog
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: AppColors.success.withValues(alpha: 0.08),
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: AppRadius.borderMd,
                   border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
                 ),
                 child: Column(
@@ -108,7 +110,7 @@ class _CouponValidationDialogState extends ConsumerState<_CouponValidationDialog
               ),
               CouponValidationInvalid(:final message) => Container(
                 padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(color: theme.colorScheme.errorContainer, borderRadius: BorderRadius.circular(8)),
+                decoration: BoxDecoration(color: theme.colorScheme.errorContainer, borderRadius: AppRadius.borderMd),
                 child: Row(
                   children: [
                     Icon(Icons.cancel, color: theme.colorScheme.error, size: 20),
@@ -125,19 +127,21 @@ class _CouponValidationDialogState extends ConsumerState<_CouponValidationDialog
         ),
       ),
       actions: [
-        TextButton(
+        PosButton(
           onPressed: () {
             ref.read(couponValidationProvider.notifier).reset();
             Navigator.pop(context);
           },
-          child: Text(l10n.cancel),
+          variant: PosButtonVariant.ghost,
+          label: l10n.cancel,
         ),
         if (state is CouponValidationValid)
-          FilledButton(
+          PosButton(
             onPressed: () {
               Navigator.pop(context, state);
             },
-            child: Text(l10n.apply),
+            variant: PosButtonVariant.soft,
+            label: l10n.apply,
           ),
       ],
     );

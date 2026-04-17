@@ -5,6 +5,7 @@ import 'package:wameedpos/features/hardware/enums/connection_type.dart';
 import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
 import 'package:wameedpos/features/hardware/models/hardware_configuration.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class DeviceConfigCard extends StatelessWidget {
   const DeviceConfigCard({super.key, required this.config, this.onTest, this.onRemove});
@@ -35,8 +36,8 @@ class DeviceConfigCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+    return PosCard(
+      borderRadius: AppRadius.borderMd,
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(

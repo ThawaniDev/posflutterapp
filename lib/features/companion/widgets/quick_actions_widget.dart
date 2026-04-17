@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/companion/providers/companion_state.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class QuickActionsWidget extends ConsumerWidget {
   const QuickActionsWidget({super.key});
@@ -61,7 +62,7 @@ class QuickActionsWidget extends ConsumerWidget {
                 final iconName = action['icon'] as String? ?? 'settings';
                 final icon = _iconMap[iconName] ?? Icons.touch_app;
 
-                return Card(
+                return PosCard(
                   elevation: enabled ? 2 : 0,
                   color: enabled ? null : theme.colorScheme.surfaceContainerHighest,
                   child: InkWell(

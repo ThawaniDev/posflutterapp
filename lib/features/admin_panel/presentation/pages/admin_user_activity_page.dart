@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
@@ -41,9 +42,10 @@ class _AdminUserActivityPageState extends ConsumerState<AdminUserActivityPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(userActivityProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(widget.isAdmin ? 'Admin Activity' : 'User Activity')),
-      body: Column(
+    return PosListPage(
+  title: widget.isAdmin ? 'Admin Activity' : 'User Activity',
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -65,7 +67,7 @@ class _AdminUserActivityPageState extends ConsumerState<AdminUserActivityPage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildLogEntry(Map<String, dynamic> log) {
@@ -104,7 +106,7 @@ class _AdminUserActivityPageState extends ConsumerState<AdminUserActivityPage> {
         iconColor = AppColors.textSecondary;
     }
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: ListTile(
         leading: Icon(actionIcon, color: iconColor),

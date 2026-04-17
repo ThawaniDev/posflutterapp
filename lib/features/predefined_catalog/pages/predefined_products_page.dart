@@ -20,7 +20,6 @@ class PredefinedProductsPage extends ConsumerStatefulWidget {
 }
 
 class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
 
@@ -74,39 +73,19 @@ class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage>
     final cloneState = ref.watch(cloneProvider);
     final isCloning = cloneState is CloneInProgress;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.categoryName ?? 'Predefined Products'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(predefinedProductsProvider.notifier).load(businessTypeId: widget.businessTypeId),
-          ),
-        ],
-      ),
-      body: Column(
+    return PosListPage(
+      title: widget.categoryName ?? 'Predefined Products',
+      searchController: _searchController,
+      onSearchChanged: (value) {
+        if (value.isEmpty) {
+          ref.read(predefinedProductsProvider.notifier).search(null);
+        } else {
+          ref.read(predefinedProductsProvider.notifier).search(value);
+        }
+      },
+      child: Column(
         children: [
-          // Search bar
-          Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: PosTextField(
-              controller: _searchController,
-              hint: 'Search products...',
-              prefixIcon: Icons.search,
-              suffixIcon: Icons.clear,
-              onSubmitted: (value) => ref.read(predefinedProductsProvider.notifier).search(value),
-              onChanged: (value) {
-                if (value.isEmpty) {
-                  ref.read(predefinedProductsProvider.notifier).search(null);
-                }
-              },
-            ),
-          ),
-
           if (isCloning) const LinearProgressIndicator(),
-
-          // Content
           Expanded(child: _buildBody(productsState)),
         ],
       ),
@@ -201,7 +180,7 @@ class _ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
@@ -209,7 +188,7 @@ class _ProductCard extends StatelessWidget {
           children: [
             // Product image
             ClipRRect(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: AppRadius.borderMd,
               child: SizedBox(
                 width: 64,
                 height: 64,
@@ -249,7 +228,7 @@ class _ProductCard extends StatelessWidget {
                       if (product.unit != null)
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                          decoration: BoxDecoration(color: AppColors.primary10, borderRadius: BorderRadius.circular(4)),
+                          decoration: BoxDecoration(color: AppColors.primary10, borderRadius: AppRadius.borderXs),
                           child: Text(product.unit!.value, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.primary)),
                         ),
                     ],

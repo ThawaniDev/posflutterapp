@@ -6,11 +6,7 @@ import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/widgets/pos_error_state.dart';
-import 'package:wameedpos/core/widgets/pos_loading_skeleton.dart';
 import 'package:wameedpos/features/pos_customization/models/cfd_theme.dart';
 import 'package:wameedpos/features/pos_customization/providers/template_browse_providers.dart';
 
@@ -34,9 +30,10 @@ class _CfdThemesBrowsePageState extends ConsumerState<CfdThemesBrowsePage> {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.cfdThemesTitle)),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.cfdThemesTitle,
+  showSearch: false,
+    child: switch (state) {
         CfdThemeListInitial() || CfdThemeListLoading() => PosLoadingSkeleton.list(),
         CfdThemeListError(:final message) => PosErrorState(
           message: message,
@@ -59,7 +56,7 @@ class _CfdThemesBrowsePageState extends ConsumerState<CfdThemesBrowsePage> {
           itemBuilder: (context, index) => _buildThemeCard(themes[index], l10n, isDark),
         ),
       },
-    );
+);
   }
 
   Widget _buildThemeCard(CfdTheme theme, AppLocalizations l10n, bool isDark) {
@@ -144,7 +141,7 @@ class _CfdThemesBrowsePageState extends ConsumerState<CfdThemesBrowsePage> {
           height: 24,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: AppRadius.borderXs,
             border: Border.all(color: Colors.white54),
           ),
         ),

@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/companion/providers/companion_state.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class QuickStatsWidget extends ConsumerWidget {
   const QuickStatsWidget({super.key});
@@ -75,7 +76,7 @@ class QuickStatsWidget extends ConsumerWidget {
       children: tiles
           .map(
             (tile) => Expanded(
-              child: Card(
+              child: PosCard(
                 child: Padding(
                   padding: AppSpacing.paddingAll12,
                   child: Column(

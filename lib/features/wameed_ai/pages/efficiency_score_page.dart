@@ -31,33 +31,24 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
     final state = ref.watch(aiFeatureResultProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            const Icon(Icons.speed, color: AppColors.primary),
-            const SizedBox(width: 8),
-            Text(l10n.wameedAIEfficiencyScore),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('efficiency_score'),
-          ),
-        ],
-      ),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.wameedAIEfficiencyScore,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('efficiency_score'), tooltip: l10n.commonRefresh,
+  ),
+],
+  child: switch (state) {
         AIFeatureResultInitial() || AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
         AIFeatureResultError(:final message) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(Icons.error_outline, color: AppColors.error, size: 48),
-              const SizedBox(height: 16),
+              AppSpacing.gapH16,
               Text(message, textAlign: TextAlign.center),
-              const SizedBox(height: 16),
+              AppSpacing.gapH16,
               PosButton(
                 label: l10n.commonRetry,
                 onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('efficiency_score'),
@@ -67,7 +58,7 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
         ),
         AIFeatureResultLoaded(:final result) => _buildContent(result.data, isMobile, l10n),
       },
-    );
+);
   }
 
   Widget _buildContent(Map<String, dynamic>? data, bool isMobile, AppLocalizations l10n) {
@@ -97,7 +88,7 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
     final summaryText = data['summary_ar']?.toString() ?? '';
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+      padding: context.responsivePagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -107,7 +98,7 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
               padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: AppRadius.borderXxl,
                 border: Border.all(color: Theme.of(context).dividerColor),
               ),
               child: Column(
@@ -118,9 +109,9 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
                       context,
                     ).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600, color: Theme.of(context).hintColor),
                   ),
-                  const SizedBox(height: 16),
+                  AppSpacing.gapH16,
                   AIScoreGauge(score: overallScore, size: 160, label: '/100'),
-                  const SizedBox(height: 16),
+                  AppSpacing.gapH16,
                   Text(
                     grade.isNotEmpty ? '$grade - ${_scoreLabel(l10n, overallScore)}' : _scoreLabel(l10n, overallScore),
                     style: Theme.of(
@@ -134,12 +125,12 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
 
           // Sub-scores
           if (subscores.isNotEmpty) ...[
-            const SizedBox(height: 24),
+            AppSpacing.gapH24,
             Text(
               l10n.wameedAIScoreBreakdown,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
             ),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -158,14 +149,14 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: Theme.of(context).cardColor,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.borderLg,
                     border: Border.all(color: Theme.of(context).dividerColor),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       AIScoreGauge(score: score, size: 70),
-                      const SizedBox(height: 8),
+                      AppSpacing.gapH8,
                       Text(
                         label,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
@@ -182,13 +173,13 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
 
           // AI Summary
           if (summaryText.isNotEmpty) ...[
-            const SizedBox(height: 24),
+            AppSpacing.gapH24,
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.05),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.borderLg,
                 border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
               ),
               child: SelectableText(summaryText, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
@@ -197,18 +188,18 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
 
           // Improvement suggestions
           if (improvements.isNotEmpty) ...[
-            const SizedBox(height: 24),
+            AppSpacing.gapH24,
             Row(
               children: [
                 const Icon(Icons.trending_up, size: 20, color: AppColors.warning),
-                const SizedBox(width: 8),
+                AppSpacing.gapW8,
                 Text(
                   l10n.wameedAIImprovements,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             ...improvements.asMap().entries.map(
               (entry) => Container(
                 width: double.infinity,
@@ -216,7 +207,7 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: AppColors.warning.withValues(alpha: 0.05),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: AppRadius.borderLg,
                   border: Border.all(color: AppColors.warning.withValues(alpha: 0.15)),
                 ),
                 child: Row(
@@ -228,7 +219,7 @@ class _EfficiencyScorePageState extends ConsumerState<EfficiencyScorePage> {
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: AppColors.warning.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(6),
+                        borderRadius: AppRadius.borderSm,
                       ),
                       child: Text(
                         '${entry.key + 1}',

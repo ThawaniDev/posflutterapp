@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_app_bar.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/sync/providers/sync_providers.dart';
 import 'package:wameedpos/features/sync/providers/sync_state.dart';
 import 'package:wameedpos/features/sync/widgets/conflict_card.dart';
@@ -33,9 +33,10 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
     final conflictState = ref.watch(syncConflictListProvider);
     final operationState = ref.watch(syncOperationProvider);
 
-    return Scaffold(
-      appBar: PosAppBar(title: AppLocalizations.of(context)!.syncTitle),
-      body: RefreshIndicator(
+    return PosListPage(
+      title: AppLocalizations.of(context)!.syncTitle,
+      showSearch: false,
+      child: RefreshIndicator(
         onRefresh: () async {
           ref.read(syncStatusProvider.notifier).load();
           ref.read(syncConflictListProvider.notifier).load(status: 'unresolved');
@@ -77,7 +78,7 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
   }
 
   Widget _buildOperationSection(SyncOperationState state) {
-    return Card(
+    return PosCard(
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -148,7 +149,7 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
           ),
           AppSpacing.gapH8,
           if (conflicts.isEmpty)
-            Card(
+            PosCard(
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Text(AppLocalizations.of(context)!.syncNoUnresolvedConflicts),
@@ -191,7 +192,7 @@ class _ErrorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return PosCard(
       color: AppColors.error.withValues(alpha: 0.08),
       child: Padding(
         padding: AppSpacing.paddingAll16,
@@ -199,7 +200,11 @@ class _ErrorCard extends StatelessWidget {
           children: [
             Text(message, style: const TextStyle(color: AppColors.error)),
             AppSpacing.gapH8,
-            TextButton(onPressed: onRetry, child: Text(AppLocalizations.of(context)!.commonRetry)),
+            PosButton(
+              onPressed: onRetry,
+              variant: PosButtonVariant.ghost,
+              label: AppLocalizations.of(context)!.commonRetry,
+            ),
           ],
         ),
       ),

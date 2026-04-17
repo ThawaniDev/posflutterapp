@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_app_bar.dart';
 import 'package:wameedpos/core/widgets/pos_badge.dart';
 import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/pos_card.dart';
@@ -60,23 +59,21 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
     final state = ref.watch(labelTemplatesProvider);
     final templates = state is LabelTemplatesLoaded ? state.templates : <LabelTemplate>[];
 
-    return Scaffold(
-      appBar: PosAppBar(
-        title: l10n.labelPrintQueue,
-        showBackButton: true,
-        onBackPressed: () => context.pop(),
-        actions: [
-          PosButton(
-            label: l10n.labelPrint,
-            icon: Icons.print_rounded,
-            variant: PosButtonVariant.primary,
-            size: PosButtonSize.sm,
-            isLoading: _isPrinting,
-            onPressed: _queueItems.isNotEmpty ? _handlePrint : null,
-          ),
-        ],
-      ),
-      body: context.isPhone
+    return PosListPage(
+      title: l10n.labelPrintQueue,
+      showSearch: false,
+      onBack: () => context.pop(),
+      actions: [
+        PosButton(
+          label: l10n.labelPrint,
+          icon: Icons.print_rounded,
+          variant: PosButtonVariant.primary,
+          size: PosButtonSize.sm,
+          isLoading: _isPrinting,
+          onPressed: _queueItems.isNotEmpty ? _handlePrint : null,
+        ),
+      ],
+      child: context.isPhone
           ? _buildMobileBody(context, l10n, isDark, templates)
           : _buildDesktopBody(context, l10n, isDark, templates),
     );
@@ -214,7 +211,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                                   height: 32,
                                   decoration: BoxDecoration(
                                     color: AppColors.primary.withValues(alpha: 0.1),
-                                    borderRadius: BorderRadius.circular(6),
+                                    borderRadius: AppRadius.borderSm,
                                   ),
                                   child: const Icon(Icons.inventory_2_rounded, size: 16, color: AppColors.primary),
                                 ),
@@ -334,13 +331,13 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtleLight),
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: AppRadius.borderXs,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.qr_code_2_rounded, size: 36, color: Colors.grey.shade600),
-                  const SizedBox(height: 4),
+                  AppSpacing.gapH4,
                   Text('Product Name', style: TextStyle(fontSize: 10, color: Colors.grey.shade700)),
                   Text(
                     '0.000 \u0081',
@@ -362,7 +359,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
               padding: const EdgeInsets.all(AppSpacing.md),
               decoration: BoxDecoration(
                 color: isDark ? AppColors.cardDark : AppColors.primary.withValues(alpha: 0.05),
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: AppRadius.borderMd,
               ),
               child: Column(
                 children: [
@@ -542,7 +539,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                                         height: 36,
                                         decoration: BoxDecoration(
                                           color: AppColors.primary.withValues(alpha: 0.1),
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius: AppRadius.borderMd,
                                         ),
                                         child: const Icon(Icons.inventory_2_rounded, size: 18, color: AppColors.primary),
                                       ),
@@ -609,13 +606,13 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border.all(color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtleLight),
-                        borderRadius: BorderRadius.circular(4),
+                        borderRadius: AppRadius.borderXs,
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.qr_code_2_rounded, size: 36, color: Colors.grey.shade600),
-                          const SizedBox(height: 4),
+                          AppSpacing.gapH4,
                           Text('Product Name', style: TextStyle(fontSize: 10, color: Colors.grey.shade700)),
                           Text(
                             '0.000 \u0081',
@@ -643,7 +640,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                   padding: const EdgeInsets.all(AppSpacing.md),
                   decoration: BoxDecoration(
                     color: isDark ? AppColors.cardDark : AppColors.primary.withValues(alpha: 0.05),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: AppRadius.borderMd,
                   ),
                   child: Column(
                     children: [

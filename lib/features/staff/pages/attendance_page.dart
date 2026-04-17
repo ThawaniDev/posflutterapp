@@ -18,7 +18,6 @@ class AttendancePage extends ConsumerStatefulWidget {
 }
 
 class _AttendancePageState extends ConsumerState<AttendancePage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   DateTimeRange? _dateRange;
   String? _selectedStaffId;
@@ -59,22 +58,32 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
       }
     });
 
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: Text(l10n.staffAttendance),
-        actions: [
-          IconButton(icon: Icon(Icons.date_range), onPressed: _pickDateRange, tooltip: l10n.staffFilterByDate),
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _loadAttendance),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _showClockDialog(context),
-        icon: const Icon(Icons.access_time),
-        label: Text(l10n.staffClockInOut),
-      ),
-      body: Column(
+    return PosListPage(
+      title: l10n.staffAttendance,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.date_range,
+          tooltip: l10n.staffFilterByDate,
+          onPressed: _pickDateRange,
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: _loadAttendance,
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton(label: l10n.staffClockInOut, icon: Icons.access_time, onPressed: () => _showClockDialog(context)),
+      ],
+      isLoading: state is AttendanceInitial || state is AttendanceLoading,
+      hasError: state is AttendanceError,
+      errorMessage: state is AttendanceError ? (state).message : null,
+      onRetry: _loadAttendance,
+      isEmpty: state is AttendanceLoaded && (state).records.isEmpty,
+      emptyTitle: l10n.staffNoAttendance,
+      emptyIcon: Icons.access_time,
+      child: Column(
         children: [
           // Active filters
           if (_dateRange != null || _selectedStaffId != null)
@@ -114,27 +123,23 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
           // Attendance list
           Expanded(
             child: switch (state) {
-              AttendanceInitial() || AttendanceLoading() => PosLoadingSkeleton.list(),
-              AttendanceError(message: final msg) => PosErrorState(message: msg, onRetry: _loadAttendance),
-              AttendanceLoaded(records: final records) =>
-                records.isEmpty
-                    ? PosEmptyState(title: l10n.staffNoAttendance, icon: Icons.access_time)
-                    : RefreshIndicator(
-                        onRefresh: () async => _loadAttendance(),
-                        child: ListView.builder(
-                          padding: const EdgeInsets.only(bottom: 80),
-                          itemCount: records.length,
-                          itemBuilder: (context, index) => _AttendanceCard(
-                            record: records[index],
-                            isDark: isDark,
-                            l10n: l10n,
-                            timeFormat: _timeFormat,
-                            dateTimeFormat: _dateTimeFormat,
-                            onStartBreak: () => _startBreak(records[index]),
-                            onEndBreak: () => _endBreak(records[index]),
-                          ),
-                        ),
-                      ),
+              AttendanceLoaded(records: final records) => RefreshIndicator(
+                onRefresh: () async => _loadAttendance(),
+                child: ListView.builder(
+                  padding: const EdgeInsets.only(bottom: 80),
+                  itemCount: records.length,
+                  itemBuilder: (context, index) => _AttendanceCard(
+                    record: records[index],
+                    isDark: isDark,
+                    l10n: l10n,
+                    timeFormat: _timeFormat,
+                    dateTimeFormat: _dateTimeFormat,
+                    onStartBreak: () => _startBreak(records[index]),
+                    onEndBreak: () => _endBreak(records[index]),
+                  ),
+                ),
+              ),
+              _ => const SizedBox.shrink(),
             },
           ),
         ],
@@ -143,8 +148,8 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
   }
 
   Future<void> _pickDateRange() async {
-    final range = await showDateRangePicker(
-      context: context,
+    final range = await showPosDateRangePicker(
+      context,
       firstDate: DateTime(2020),
       lastDate: DateTime.now().add(const Duration(days: 365)),
       initialDateRange: _dateRange,
@@ -208,13 +213,12 @@ class _AttendanceCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final isOpen = record.clockOutAt == null;
 
-    return Card(
+    return PosCard(
       elevation: 0,
       color: isDark ? AppColors.cardDark : AppColors.cardLight,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderMd,
+
+      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Padding(
         padding: AppSpacing.paddingAll16,
@@ -236,9 +240,10 @@ class _AttendanceCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
                       color: AppColors.warning.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: AppRadius.borderLg,
                     ),
-                    child: Text(l10n.active,
+                    child: Text(
+                      l10n.active,
                       style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.warning),
                     ),
                   ),
@@ -274,16 +279,18 @@ class _AttendanceCard extends StatelessWidget {
               AppSpacing.gapH12,
               Row(
                 children: [
-                  OutlinedButton.icon(
+                  PosButton(
                     onPressed: onStartBreak,
-                    icon: const Icon(Icons.coffee, size: 16),
-                    label: Text(l10n.staffStartBreak),
+                    variant: PosButtonVariant.outline,
+                    icon: Icons.coffee,
+                    label: l10n.staffStartBreak,
                   ),
                   AppSpacing.gapW8,
-                  OutlinedButton.icon(
+                  PosButton(
                     onPressed: onEndBreak,
-                    icon: const Icon(Icons.play_arrow, size: 16),
-                    label: Text(l10n.staffEndBreak),
+                    variant: PosButtonVariant.outline,
+                    icon: Icons.play_arrow,
+                    label: l10n.staffEndBreak,
                   ),
                 ],
               ),
@@ -330,7 +337,6 @@ class _ClockDialog extends ConsumerStatefulWidget {
 }
 
 class _ClockDialogState extends ConsumerState<_ClockDialog> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   StaffUser? _selectedStaff;
   bool _isClockIn = true;
@@ -391,8 +397,8 @@ class _ClockDialogState extends ConsumerState<_ClockDialog> {
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: Text(l10n.cancel)),
-        FilledButton(
+        PosButton(onPressed: () => Navigator.pop(context), variant: PosButtonVariant.ghost, label: l10n.cancel),
+        PosButton(
           onPressed: _selectedStaff == null
               ? null
               : () => widget.onClock(
@@ -401,7 +407,8 @@ class _ClockDialogState extends ConsumerState<_ClockDialog> {
                   _isClockIn,
                   _notesController.text.isNotEmpty ? _notesController.text : null,
                 ),
-          child: Text(_isClockIn ? 'Clock In' : 'Clock Out'),
+          variant: PosButtonVariant.soft,
+          label: _isClockIn ? 'Clock In' : 'Clock Out',
         ),
       ],
     );

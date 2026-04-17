@@ -6,11 +6,7 @@ import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/widgets/pos_error_state.dart';
-import 'package:wameedpos/core/widgets/pos_loading_skeleton.dart';
 import 'package:wameedpos/features/pos_customization/models/label_layout_template.dart';
 import 'package:wameedpos/features/pos_customization/providers/template_browse_providers.dart';
 
@@ -34,9 +30,10 @@ class _LabelTemplatesBrowsePageState extends ConsumerState<LabelTemplatesBrowseP
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.labelLayoutTemplatesTitle)),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.labelLayoutTemplatesTitle,
+  showSearch: false,
+    child: switch (state) {
         LabelLayoutListInitial() || LabelLayoutListLoading() => PosLoadingSkeleton.list(),
         LabelLayoutListError(:final message) => PosErrorState(
           message: message,
@@ -59,7 +56,7 @@ class _LabelTemplatesBrowsePageState extends ConsumerState<LabelTemplatesBrowseP
           itemBuilder: (context, index) => _buildTemplateCard(templates[index], l10n, isDark),
         ),
       },
-    );
+);
   }
 
   Widget _buildTemplateCard(LabelLayoutTemplate template, AppLocalizations l10n, bool isDark) {

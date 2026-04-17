@@ -6,6 +6,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
 import 'package:wameedpos/features/companion/providers/companion_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class SalesSummaryWidget extends ConsumerStatefulWidget {
   const SalesSummaryWidget({super.key});
@@ -35,7 +36,7 @@ class _SalesSummaryWidgetState extends ConsumerState<SalesSummaryWidget> {
       padding: AppSpacing.paddingAll16,
       children: [
         // Period selector
-        Card(
+        PosCard(
           child: Padding(
             padding: AppSpacing.paddingAll12,
             child: Row(
@@ -66,7 +67,7 @@ class _SalesSummaryWidgetState extends ConsumerState<SalesSummaryWidget> {
           SalesSummaryInitial() || SalesSummaryLoading() => const Center(
             child: Padding(padding: EdgeInsets.all(32), child: CircularProgressIndicator()),
           ),
-          SalesSummaryError(:final message) => Card(
+          SalesSummaryError(:final message) => PosCard(
             child: Padding(
               padding: AppSpacing.paddingAll16,
               child: Text(message, style: TextStyle(color: theme.colorScheme.error)),
@@ -102,7 +103,7 @@ class _SalesSummaryWidgetState extends ConsumerState<SalesSummaryWidget> {
               AppSpacing.gapH16,
               // Daily breakdown
               if (dailyBreakdown.isNotEmpty)
-                Card(
+                PosCard(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

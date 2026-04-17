@@ -5,6 +5,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/pos_status_badge.dart';
 import '../models/buyback_transaction.dart';
 import '../enums/metal_type.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class BuybackCard extends StatelessWidget {
   final BuybackTransaction buyback;
@@ -14,15 +15,13 @@ class BuybackCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
-      ),
+      borderRadius: AppRadius.borderMd,
+      border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: AppRadius.borderMd,
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Row(

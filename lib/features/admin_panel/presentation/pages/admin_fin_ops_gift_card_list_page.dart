@@ -49,9 +49,10 @@ class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(finOpsGiftCardsProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.giftCards), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.giftCards,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -98,7 +99,7 @@ class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> resp) {
@@ -117,8 +118,8 @@ class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
           final status = (item['status'] ?? '').toString();
           final balance = num.tryParse(item['balance']?.toString() ?? '') ?? 0;
           final initial = num.tryParse(item['initial_amount']?.toString() ?? '') ?? 0;
-          return Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          return PosCard(
+            borderRadius: BorderRadius.circular(10,),
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: const Color(0xFFF59E0B).withValues(alpha: 0.15),
@@ -150,7 +151,7 @@ class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
     };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
       child: Text(
         status.toUpperCase(),
         style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: color),

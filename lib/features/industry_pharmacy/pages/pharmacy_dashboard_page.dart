@@ -16,27 +16,18 @@ class PharmacyDashboardPage extends ConsumerStatefulWidget {
   ConsumerState<PharmacyDashboardPage> createState() => _PharmacyDashboardPageState();
 }
 
-class _PharmacyDashboardPageState extends ConsumerState<PharmacyDashboardPage> with SingleTickerProviderStateMixin {
-
+class _PharmacyDashboardPageState extends ConsumerState<PharmacyDashboardPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  late final TabController _tabController;
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-    _tabController.addListener(() => setState(() {}));
     Future.microtask(() => ref.read(pharmacyProvider.notifier).load());
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
   void _onFabPressed() {
-    final page = switch (_tabController.index) {
+    final page = switch (_currentTab) {
       0 => const PrescriptionFormPage(),
       _ => const DrugScheduleFormPage(),
     };
@@ -48,71 +39,78 @@ class _PharmacyDashboardPageState extends ConsumerState<PharmacyDashboardPage> w
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(pharmacyProvider);
+    final isLoading = state is PharmacyInitial || state is PharmacyLoading;
+    final hasError = state is PharmacyError;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.pharmacyTitle),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: l10n.pharmacyPrescriptions),
-            Tab(text: l10n.pharmacyDrugSchedules),
-          ],
-        ),
+    return PosListPage(
+      title: l10n.pharmacyTitle,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: () => ref.read(pharmacyProvider.notifier).load(),
+      actions: [PosButton(label: l10n.add, icon: Icons.add, onPressed: _onFabPressed)],
+      child: Column(
+        children: [
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: l10n.pharmacyPrescriptions),
+              PosTabItem(label: l10n.pharmacyDrugSchedules),
+            ],
+          ),
+          Expanded(
+            child: state is PharmacyLoaded
+                ? IndexedStack(
+                    index: _currentTab,
+                    children: [
+                      state.prescriptions.isEmpty
+                          ? const PosEmptyState(title: 'No prescriptions', icon: Icons.medical_services)
+                          : ListView.builder(
+                              padding: const EdgeInsets.all(12),
+                              itemCount: state.prescriptions.length,
+                              itemBuilder: (context, i) {
+                                final p = state.prescriptions[i];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: PrescriptionCard(
+                                    prescription: p,
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(builder: (_) => PrescriptionFormPage(prescription: p)))
+                                          .then((_) => ref.read(pharmacyProvider.notifier).load());
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                      state.drugSchedules.isEmpty
+                          ? const PosEmptyState(title: 'No drug schedules', icon: Icons.medication)
+                          : ListView.builder(
+                              padding: const EdgeInsets.all(12),
+                              itemCount: state.drugSchedules.length,
+                              itemBuilder: (context, i) {
+                                final d = state.drugSchedules[i];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: DrugScheduleCard(
+                                    drug: d,
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(builder: (_) => DrugScheduleFormPage(schedule: d)))
+                                          .then((_) => ref.read(pharmacyProvider.notifier).load());
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                    ],
+                  )
+                : const SizedBox.shrink(),
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: _onFabPressed, child: const Icon(Icons.add)),
-      body: switch (state) {
-        PharmacyInitial() || PharmacyLoading() => PosLoadingSkeleton.list(),
-        PharmacyError(:final message) => PosErrorState(
-          message: message,
-          onRetry: () => ref.read(pharmacyProvider.notifier).load(),
-        ),
-        PharmacyLoaded(:final prescriptions, :final drugSchedules) => TabBarView(
-          controller: _tabController,
-          children: [
-            prescriptions.isEmpty
-                ? const PosEmptyState(title: 'No prescriptions', icon: Icons.medical_services)
-                : ListView.builder(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: prescriptions.length,
-                    itemBuilder: (context, i) {
-                      final p = prescriptions[i];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: PrescriptionCard(
-                          prescription: p,
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (_) => PrescriptionFormPage(prescription: p)))
-                                .then((_) => ref.read(pharmacyProvider.notifier).load());
-                          },
-                        ),
-                      );
-                    },
-                  ),
-            drugSchedules.isEmpty
-                ? const PosEmptyState(title: 'No drug schedules', icon: Icons.medication)
-                : ListView.builder(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: drugSchedules.length,
-                    itemBuilder: (context, i) {
-                      final d = drugSchedules[i];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: DrugScheduleCard(
-                          drug: d,
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (_) => DrugScheduleFormPage(schedule: d)))
-                                .then((_) => ref.read(pharmacyProvider.notifier).load());
-                          },
-                        ),
-                      );
-                    },
-                  ),
-          ],
-        ),
-      },
     );
   }
 }

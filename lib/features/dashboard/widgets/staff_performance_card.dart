@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/pos_card.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class StaffPerformanceCard extends StatelessWidget {
   final List<Map<String, dynamic>> staff;
@@ -73,7 +74,7 @@ class _StaffBarChart extends StatelessWidget {
               toY: val,
               color: _staffColors[i % _staffColors.length],
               width: 14,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadius.xs)),
             ),
           ],
         ),

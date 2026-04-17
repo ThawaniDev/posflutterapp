@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_chat.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AIModelSelector extends StatelessWidget {
   final List<LlmModel> models;
@@ -19,10 +21,10 @@ class AIModelSelector extends StatelessWidget {
     return PopupMenuButton<LlmModel>(
       onSelected: onSelected,
       offset: const Offset(0, 40),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(20)),
+        decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.borderXxl),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -103,7 +105,7 @@ class AIModelSelector extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
                           decoration: BoxDecoration(
                             color: AppColors.success.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(4),
+                            borderRadius: AppRadius.borderXs,
                           ),
                           child: Text(
                             AppLocalizations.of(context)!.wameedAIDefault,

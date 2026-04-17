@@ -28,16 +28,19 @@ class _AIUsagePageState extends ConsumerState<AIUsagePage> {
     final state = ref.watch(aiUsageProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.wameedAIUsage),
-        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.read(aiUsageProvider.notifier).load())],
-      ),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.wameedAIUsage,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(aiUsageProvider.notifier).load(),
+  ),
+],
+  child: switch (state) {
         AIUsageInitial() || AIUsageLoading() => const PosLoading(),
         AIUsageError(:final message) => PosErrorState(message: message, onRetry: () => ref.read(aiUsageProvider.notifier).load()),
         AIUsageLoaded(:final summary) => SingleChildScrollView(
-          padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+          padding: context.responsivePagePadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -45,7 +48,7 @@ class _AIUsagePageState extends ConsumerState<AIUsagePage> {
                 l10n.wameedAIUsageOverview,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
               ),
-              const SizedBox(height: 16),
+              AppSpacing.gapH16,
               PosKpiGrid(
                 desktopCols: 4,
                 mobileCols: 2,
@@ -77,12 +80,12 @@ class _AIUsagePageState extends ConsumerState<AIUsagePage> {
                 ],
               ),
               if (summary.byFeature.isNotEmpty) ...[
-                const SizedBox(height: 24),
+                AppSpacing.gapH24,
                 Text(
                   l10n.wameedAIUsageByFeature,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
                 ),
-                const SizedBox(height: 12),
+                AppSpacing.gapH12,
                 ...summary.byFeature.map(
                   (f) => ListTile(
                     leading: const Icon(Icons.auto_awesome, color: AppColors.primary),
@@ -99,6 +102,6 @@ class _AIUsagePageState extends ConsumerState<AIUsagePage> {
           ),
         ),
       },
-    );
+);
   }
 }

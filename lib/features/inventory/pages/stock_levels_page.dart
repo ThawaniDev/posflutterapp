@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
 import 'package:wameedpos/core/widgets/pos_table.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/inventory/models/stock_level.dart';
@@ -62,8 +61,16 @@ class _StockLevelsPageState extends ConsumerState<StockLevelsPage> {
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.commonCancel)),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(l10n.commonSave)),
+          PosButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            variant: PosButtonVariant.ghost,
+            label: l10n.commonCancel,
+          ),
+          PosButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            variant: PosButtonVariant.ghost,
+            label: l10n.commonSave,
+          ),
         ],
       ),
     );
@@ -95,53 +102,42 @@ class _StockLevelsPageState extends ConsumerState<StockLevelsPage> {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(stockLevelsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.inventoryStockLevels),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showStockLevelsInfo(context),
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(stockLevelsProvider.notifier).load(),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          // Search + low stock filter
-          Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: Row(
-              children: [
-                Expanded(
-                  child: PosTextField(
-                    controller: _searchController,
-                    hint: l10n.inventorySearchByProduct,
-                    prefixIcon: Icons.search,
-                    onSubmitted: (value) => ref.read(stockLevelsProvider.notifier).search(value),
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.md),
-                FilterChip(
-                  label: Text(l10n.inventoryLowStock),
-                  selected: _lowStockOnly,
-                  selectedColor: AppColors.warning,
-                  onSelected: (value) {
-                    setState(() => _lowStockOnly = value);
-                    ref.read(stockLevelsProvider.notifier).toggleLowStockFilter(value);
-                  },
-                ),
-              ],
-            ),
-          ),
-          Expanded(child: _buildBody(state)),
-        ],
-      ),
+    return PosListPage(
+      title: l10n.inventoryStockLevels,
+      searchController: _searchController,
+      searchHint: l10n.inventorySearchByProduct,
+      onSearchSubmitted: (value) => ref.read(stockLevelsProvider.notifier).search(value),
+      onSearchClear: () {
+        _searchController.clear();
+        ref.read(stockLevelsProvider.notifier).search('');
+      },
+      filters: [
+        FilterChip(
+          label: Text(l10n.inventoryLowStock),
+          selected: _lowStockOnly,
+          selectedColor: AppColors.warning.withValues(alpha: 0.2),
+          checkmarkColor: AppColors.warning,
+          onSelected: (value) {
+            setState(() => _lowStockOnly = value);
+            ref.read(stockLevelsProvider.notifier).toggleLowStockFilter(value);
+          },
+        ),
+      ],
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showStockLevelsInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () => ref.read(stockLevelsProvider.notifier).load(),
+          variant: PosButtonVariant.ghost,
+        ),
+      ],
+      child: _buildBody(state),
     );
   }
 

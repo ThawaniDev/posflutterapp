@@ -18,7 +18,6 @@ class PredefinedCatalogPage extends ConsumerStatefulWidget {
 }
 
 class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _selectedBusinessTypeId;
 
@@ -99,27 +98,20 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
     final cloneState = ref.watch(cloneProvider);
     final isCloning = cloneState is CloneInProgress;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.sidebarPredefinedCatalog),
-        actions: [
-          if (_selectedBusinessTypeId != null)
-            PosButton(
-              label: 'Clone All',
-              icon: Icons.copy_all,
-              onPressed: isCloning ? null : _handleCloneAll,
-              variant: PosButtonVariant.soft,
-              size: PosButtonSize.sm,
-            ),
-          const SizedBox(width: AppSpacing.sm),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(predefinedCategoriesProvider.notifier).load(),
+    return PosListPage(
+      title: l10n.sidebarPredefinedCatalog,
+      showSearch: false,
+      actions: [
+        if (_selectedBusinessTypeId != null)
+          PosButton(
+            label: 'Clone All',
+            icon: Icons.copy_all,
+            onPressed: isCloning ? null : _handleCloneAll,
+            variant: PosButtonVariant.soft,
+            size: PosButtonSize.sm,
           ),
-        ],
-      ),
-      body: Column(
+      ],
+      child: Column(
         children: [
           // Business type filter
           _buildBusinessTypeFilter(),
@@ -267,8 +259,7 @@ class _CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Card(
-      clipBehavior: Clip.antiAlias,
+    return PosCard(
       child: InkWell(
         onTap: onTap,
         child: Column(

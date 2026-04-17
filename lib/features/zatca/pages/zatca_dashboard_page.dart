@@ -4,13 +4,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/widgets/pos_app_bar.dart';
+import '../../../core/widgets/widgets.dart';
 import '../providers/zatca_providers.dart';
 import '../providers/zatca_state.dart';
 import '../widgets/compliance_status_card.dart';
 import '../widgets/enrollment_wizard.dart';
 import '../widgets/invoice_list_widget.dart';
 import '../widgets/vat_report_card.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class ZatcaDashboardPage extends ConsumerStatefulWidget {
   const ZatcaDashboardPage({super.key});
@@ -38,9 +40,10 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
     final enrollState = ref.watch(zatcaEnrollmentProvider);
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: PosAppBar(title: AppLocalizations.of(context)!.zatcaEInvoicing),
-      body: RefreshIndicator(
+    return PosListPage(
+      title: AppLocalizations.of(context)!.zatcaEInvoicing,
+      showSearch: false,
+      child: RefreshIndicator(
         onRefresh: _refresh,
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -149,11 +152,9 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
               if (total > invoices.length)
                 Padding(
                   padding: AppSpacing.paddingAll12,
-                  child: TextButton(
-                    onPressed: () {
+                  child: PosButton(onPressed: () {
                       // Navigate to full invoice list
-                    },
-                    child: Text(l10n.zatcaViewAll(total)),
+                    }, variant: PosButtonVariant.ghost, label: l10n.zatcaViewAll(total),
                   ),
                 ),
             ],
@@ -191,7 +192,7 @@ class _ErrorCard extends StatelessWidget {
       padding: AppSpacing.paddingAll20,
       decoration: BoxDecoration(
         color: AppColors.error.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: AppRadius.borderMd,
       ),
       child: Column(
         children: [

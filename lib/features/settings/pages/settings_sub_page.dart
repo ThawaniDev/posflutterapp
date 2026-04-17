@@ -64,34 +64,46 @@ abstract class SettingsSubPageState<T extends SettingsSubPage> extends ConsumerS
     final l10n = AppLocalizations.of(context)!;
     final settingsState = ref.watch(storeSettingsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(pageTitle(l10n)),
-        actions: [
-          ...extraActions(context),
-          if (_saving)
-            const Padding(
-              padding: EdgeInsets.only(right: 16),
-              child: Center(child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))),
-            ),
-        ],
-      ),
-      body: switch (settingsState) {
-        StoreSettingsLoading() => const Center(child: CircularProgressIndicator()),
-        StoreSettingsError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message, textAlign: TextAlign.center),
-              AppSpacing.gapH12,
-              FilledButton(onPressed: () => ref.read(storeSettingsProvider.notifier).load(_storeId!), child: Text(l10n.retry)),
-            ],
+    final isLoading = settingsState is StoreSettingsLoading || settingsState is StoreSettingsInitial;
+    final hasError = settingsState is StoreSettingsError;
+    final errorMessage = hasError ? (settingsState).message : null;
+
+    final StoreSettings? loadedSettings = switch (settingsState) {
+      StoreSettingsLoaded(:final settings) => settings,
+      StoreSettingsSaved(:final settings) => settings,
+      StoreSettingsSaving(:final settings) => settings,
+      _ => null,
+    };
+
+    return PosFormPage(
+      title: pageTitle(l10n),
+      isLoading: isLoading,
+      actions: [
+        ...extraActions(context),
+        if (_saving)
+          const Padding(
+            padding: EdgeInsetsDirectional.only(end: 16),
+            child: Center(child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))),
           ),
-        ),
-        StoreSettingsLoaded(:final settings) || StoreSettingsSaved(:final settings) || StoreSettingsSaving(:final settings) =>
-          SingleChildScrollView(padding: AppSpacing.paddingAll16, child: buildSettingsBody(context, settings)),
-        _ => const SizedBox.shrink(),
-      },
+      ],
+      child: hasError
+          ? Padding(
+              padding: AppSpacing.paddingAll16,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(errorMessage ?? '', textAlign: TextAlign.center),
+                  AppSpacing.gapH12,
+                  PosButton(
+                    label: l10n.retry,
+                    onPressed: _storeId == null ? null : () => ref.read(storeSettingsProvider.notifier).load(_storeId!),
+                  ),
+                ],
+              ),
+            )
+          : loadedSettings == null
+          ? const SizedBox.shrink()
+          : buildSettingsBody(context, loadedSettings),
     );
   }
 }

@@ -8,6 +8,7 @@ import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_providers.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Provider for UpgradePromptService.
 final upgradePromptServiceProvider = Provider<UpgradePromptService>((ref) {
@@ -127,7 +128,7 @@ class _FeatureGateDialog extends ConsumerWidget {
     }
 
     return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderXl),
       titlePadding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
       contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
       actionsPadding: const EdgeInsets.all(16),
@@ -136,7 +137,7 @@ class _FeatureGateDialog extends ConsumerWidget {
           Container(
             width: 48,
             height: 48,
-            decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(12)),
+            decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.12), borderRadius: AppRadius.borderLg),
             child: const Icon(Icons.lock_outline, color: AppColors.warning, size: 24),
           ),
           AppSpacing.gapW12,
@@ -163,7 +164,7 @@ class _FeatureGateDialog extends ConsumerWidget {
               padding: AppSpacing.paddingAll12,
               decoration: BoxDecoration(
                 color: AppColors.info.withValues(alpha: 0.06),
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: AppRadius.borderMd,
                 border: Border.all(color: AppColors.info.withValues(alpha: 0.2)),
               ),
               child: Column(
@@ -223,7 +224,11 @@ class _FeatureGateDialog extends ConsumerWidget {
         ],
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Not Now')),
+        PosButton(
+          onPressed: () => Navigator.pop(context, false),
+          variant: PosButtonVariant.ghost,
+          label: 'Not Now',
+        ),
         FilledButton.icon(
           onPressed: () {
             Navigator.pop(context, true);
@@ -253,7 +258,7 @@ class _LimitReachedDialog extends StatelessWidget {
     final percentage = planLimit > 0 ? (currentUsage / planLimit * 100).clamp(0.0, 100.0) : 100.0;
 
     return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderXl),
       titlePadding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
       contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
       actionsPadding: const EdgeInsets.all(16),
@@ -262,7 +267,7 @@ class _LimitReachedDialog extends StatelessWidget {
           Container(
             width: 48,
             height: 48,
-            decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(12)),
+            decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.12), borderRadius: AppRadius.borderLg),
             child: const Icon(Icons.block, color: AppColors.error, size: 24),
           ),
           AppSpacing.gapW12,
@@ -290,7 +295,7 @@ class _LimitReachedDialog extends StatelessWidget {
           // Usage bar
           Container(
             padding: AppSpacing.paddingAll12,
-            decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.06), borderRadius: BorderRadius.circular(8)),
+            decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.06), borderRadius: AppRadius.borderMd),
             child: Column(
               children: [
                 Row(
@@ -305,7 +310,7 @@ class _LimitReachedDialog extends StatelessWidget {
                 ),
                 AppSpacing.gapH8,
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: AppRadius.borderXs,
                   child: LinearProgressIndicator(
                     value: (percentage / 100).clamp(0.0, 1.0),
                     minHeight: 8,
@@ -324,7 +329,11 @@ class _LimitReachedDialog extends StatelessWidget {
         ],
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Not Now')),
+        PosButton(
+          onPressed: () => Navigator.pop(context, false),
+          variant: PosButtonVariant.ghost,
+          label: 'Not Now',
+        ),
         FilledButton.icon(
           onPressed: () {
             Navigator.pop(context, true);

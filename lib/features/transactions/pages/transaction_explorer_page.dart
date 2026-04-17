@@ -97,16 +97,10 @@ class _TransactionExplorerPageState extends ConsumerState<TransactionExplorerPag
 
   Future<void> _pickDateRange() async {
     final now = DateTime.now();
-    final picked = await showDateRangePicker(
-      context: context,
+    final picked = await showPosDateRangePicker(
+      context,
       firstDate: DateTime(now.year - 2),
       lastDate: now,
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(colorScheme: Theme.of(context).colorScheme.copyWith(primary: AppColors.primary)),
-          child: child!,
-        );
-      },
     );
     if (picked != null) {
       ref.read(transactionExplorerProvider.notifier).setDateRange(picked.start, picked.end);
@@ -121,37 +115,39 @@ class _TransactionExplorerPageState extends ConsumerState<TransactionExplorerPag
     final state = ref.watch(transactionExplorerProvider);
     final statsState = ref.watch(transactionStatsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.txExplorerTitle),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showTransactionExplorerInfo(context),
-          ),
-          IconButton(
-            icon: Icon(_showAnalytics ? Icons.analytics_outlined : Icons.analytics),
-            tooltip: l10n.txToggleAnalytics,
-            onPressed: () => setState(() => _showAnalytics = !_showAnalytics),
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () {
-              ref.read(transactionExplorerProvider.notifier).load();
-              ref.read(transactionStatsProvider.notifier).load();
-            },
-          ),
-        ],
-      ),
-      body: RefreshIndicator(
+    return PosListPage(
+      title: l10n.txExplorerTitle,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showTransactionExplorerInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: _showAnalytics ? Icons.analytics_outlined : Icons.analytics,
+          tooltip: l10n.txToggleAnalytics,
+          onPressed: () => setState(() => _showAnalytics = !_showAnalytics),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () {
+            ref.read(transactionExplorerProvider.notifier).load();
+            ref.read(transactionStatsProvider.notifier).load();
+          },
+          variant: PosButtonVariant.ghost,
+        ),
+      ],
+      child: RefreshIndicator(
         onRefresh: () async {
           await ref.read(transactionExplorerProvider.notifier).load();
           await ref.read(transactionStatsProvider.notifier).load();
         },
         child: ListView(
-          padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.md),
+          padding: context.responsivePagePadding,
           children: [
             // ─── Stats Cards ─────────────────────────────
             if (_showAnalytics) ...[
@@ -329,7 +325,7 @@ class _TransactionExplorerPageState extends ConsumerState<TransactionExplorerPag
             children: [
               Text(state.message, style: const TextStyle(color: AppColors.error)),
               AppSpacing.gapH8,
-              TextButton(onPressed: () => ref.read(transactionExplorerProvider.notifier).load(), child: Text(l10n.commonRetry)),
+              PosButton(onPressed: () => ref.read(transactionExplorerProvider.notifier).load(), variant: PosButtonVariant.ghost, label: l10n.commonRetry),
             ],
           ),
         ),

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Definition of a single KPI card.
 class KpiDef {
@@ -65,9 +66,9 @@ class AdminStatsKpiSection extends ConsumerWidget {
   }
 
   Widget _card(KpiDef d) {
-    return Card(
+    return PosCard(
       elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      borderRadius: AppRadius.borderMd,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         child: Column(

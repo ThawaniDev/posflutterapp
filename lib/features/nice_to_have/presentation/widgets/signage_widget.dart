@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import '../nice_to_have_providers.dart';
 import '../nice_to_have_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class SignageWidget extends ConsumerWidget {
   const SignageWidget({super.key});
@@ -27,7 +28,7 @@ class SignageWidget extends ConsumerWidget {
                 itemBuilder: (_, i) {
                   final p = playlists[i] as Map<String, dynamic>;
                   final slides = (p['slides'] as List?) ?? [];
-                  return Card(
+                  return PosCard(
                     margin: const EdgeInsets.only(bottom: 8),
                     child: ListTile(
                       leading: const Icon(Icons.slideshow),

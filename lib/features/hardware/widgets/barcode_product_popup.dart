@@ -7,6 +7,7 @@ import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Shows a detailed product popup when a barcode is scanned.
 /// If [product] is non-null, shows full product details.
@@ -55,7 +56,7 @@ class _BarcodeProductContent extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return ClipRRect(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: AppRadius.borderXl,
       child: Scaffold(
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
         body: product != null ? _buildProductFound(context, product!, isDark) : _buildProductNotFound(context, isDark),
@@ -109,10 +110,10 @@ class _BarcodeProductContent extends StatelessWidget {
                 children: [
                   Text(product.name, style: AppTypography.headlineSmall, maxLines: 2, overflow: TextOverflow.ellipsis),
                   if (product.nameAr != null && product.nameAr!.isNotEmpty) ...[
-                    const SizedBox(height: 2),
+                    AppSpacing.gapH2,
                     Text(product.nameAr!, style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
                   ],
-                  const SizedBox(height: 4),
+                  AppSpacing.gapH4,
                   Row(
                     children: [
                       _statusChip(
@@ -188,7 +189,7 @@ class _BarcodeProductContent extends StatelessWidget {
                     Row(
                       children: [
                         const Icon(Icons.local_offer_rounded, size: 16, color: AppColors.success),
-                        const SizedBox(width: 4),
+                        AppSpacing.gapW4,
                         Text(l10n.offerPrice, style: AppTypography.labelMedium.copyWith(color: AppColors.success)),
                       ],
                     ),
@@ -209,7 +210,7 @@ class _BarcodeProductContent extends StatelessWidget {
                   ],
                 ),
                 if (product.costPrice! > 0) ...[
-                  const SizedBox(height: 4),
+                  AppSpacing.gapH4,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -356,7 +357,7 @@ class _BarcodeProductContent extends StatelessWidget {
   Widget _statusChip(String label, Color color) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: AppRadius.borderLg),
       child: Text(
         label,
         style: AppTypography.micro.copyWith(color: color, fontWeight: FontWeight.w600),
@@ -381,7 +382,7 @@ class _BarcodeProductContent extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(item.label, style: AppTypography.micro.copyWith(color: AppColors.textMutedLight)),
-              const SizedBox(height: 2),
+              AppSpacing.gapH2,
               Text(item.value, style: AppTypography.labelSmall),
             ],
           ),

@@ -42,17 +42,15 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.syncManagement),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: isLoading ? null : () => ref.read(thawaniQueueStatsProvider.notifier).load(),
-          ),
-        ],
-      ),
-      body: ListView(
+    return PosListPage(
+  title: l10n.syncManagement,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: isLoading ? null : () => ref.read(thawaniQueueStatsProvider.notifier).load(),
+  ),
+],
+  child: ListView(
         padding: AppSpacing.paddingAll16,
         children: [
           // Connection Test
@@ -157,16 +155,14 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _sectionCard({required String title, required IconData icon, required Color color, required List<Widget> children}) {
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
-      ),
+      borderRadius: AppRadius.borderMd,
+      border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(

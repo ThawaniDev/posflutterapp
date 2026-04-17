@@ -31,33 +31,24 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
     final state = ref.watch(aiFeatureResultProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            const Icon(Icons.shopping_cart_checkout, color: AppColors.primary),
-            const SizedBox(width: 8),
-            Text(l10n.wameedAISmartReorder),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('smart_reorder'),
-          ),
-        ],
-      ),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.wameedAISmartReorder,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('smart_reorder'), tooltip: l10n.commonRefresh,
+  ),
+],
+  child: switch (state) {
         AIFeatureResultInitial() || AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
         AIFeatureResultError(:final message) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(Icons.error_outline, color: AppColors.error, size: 48),
-              const SizedBox(height: 16),
+              AppSpacing.gapH16,
               Text(message, textAlign: TextAlign.center),
-              const SizedBox(height: 16),
+              AppSpacing.gapH16,
               PosButton(
                 label: l10n.commonRetry,
                 onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('smart_reorder'),
@@ -67,7 +58,7 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
         ),
         AIFeatureResultLoaded(:final result) => _buildContent(result.data, isMobile, l10n),
       },
-    );
+);
   }
 
   Widget _buildContent(Map<String, dynamic>? data, bool isMobile, AppLocalizations l10n) {
@@ -86,7 +77,7 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
     final summaryText = data['summary']?.toString() ?? data['summary_ar']?.toString() ?? '';
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+      padding: context.responsivePagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -98,7 +89,7 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
               _summaryChip(context, Icons.warning_amber, l10n.wameedAILowStock, '${suggestions.length}', AppColors.warning),
             ],
           ),
-          const SizedBox(height: 20),
+          AppSpacing.gapH20,
 
           // AI summary text
           if (summaryText.isNotEmpty) ...[
@@ -107,12 +98,12 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.05),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.borderLg,
                 border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
               ),
               child: SelectableText(summaryText, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
             ),
-            const SizedBox(height: 20),
+            AppSpacing.gapH20,
           ],
 
           // Reorder items
@@ -120,7 +111,7 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
             l10n.wameedAIReorderSuggestions,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
           ),
-          const SizedBox(height: 12),
+          AppSpacing.gapH12,
           if (suggestions.isEmpty)
             PosEmptyState(title: l10n.wameedAINoReorderNeeded, icon: Icons.check_circle_outline)
           else
@@ -172,14 +163,14 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: AppRadius.borderLg,
         border: Border.all(color: color.withValues(alpha: 0.2)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 18, color: color),
-          const SizedBox(width: 8),
+          AppSpacing.gapW8,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -200,7 +191,7 @@ class _SmartReorderPageState extends ConsumerState<SmartReorderPage> {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: highlight ? AppColors.primary.withValues(alpha: 0.1) : Theme.of(context).dividerColor.withValues(alpha: 0.3),
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: AppRadius.borderSm,
       ),
       child: Text(
         text,

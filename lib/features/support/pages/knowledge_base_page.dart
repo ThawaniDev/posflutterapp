@@ -5,12 +5,7 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/widgets/pos_error_state.dart';
-import 'package:wameedpos/core/widgets/pos_loading_skeleton.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
 import 'package:wameedpos/features/support/enums/knowledge_base_category.dart';
 import 'package:wameedpos/features/support/providers/support_providers.dart';
 import 'package:wameedpos/features/support/providers/support_state.dart';
@@ -64,9 +59,10 @@ class _KnowledgeBasePageState extends ConsumerState<KnowledgeBasePage> {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.supportKnowledgeBase)),
-      body: Column(
+    return PosListPage(
+  title: l10n.supportKnowledgeBase,
+  showSearch: false,
+    child: Column(
         children: [
           // Search bar
           Padding(
@@ -169,6 +165,6 @@ class _KnowledgeBasePageState extends ConsumerState<KnowledgeBasePage> {
           ),
         ],
       ),
-    );
+);
   }
 }

@@ -97,7 +97,7 @@ class _StatTile extends StatelessWidget {
         padding: AppSpacing.paddingAll16,
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(AppRadius.lg),
+          borderRadius: AppRadius.borderLg,
           border: Border.all(color: Theme.of(context).dividerColor),
         ),
         child: Column(

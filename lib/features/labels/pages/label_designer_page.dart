@@ -521,7 +521,7 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(l10n.labelElements, style: Theme.of(context).textTheme.titleSmall),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             Wrap(
               spacing: 8,
               runSpacing: 8,
@@ -536,7 +536,7 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
                 );
               }).toList(),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
           ],
         ),
       ),
@@ -672,9 +672,9 @@ class _ElementPaletteItem extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Material(
       color: isDark ? AppColors.cardDark : AppColors.cardLight,
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: AppRadius.borderMd,
       child: InkWell(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: AppRadius.borderMd,
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),

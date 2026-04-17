@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/settings/providers/localization_providers.dart';
 import 'package:wameedpos/features/settings/providers/localization_state.dart';
 import 'package:wameedpos/features/settings/widgets/locale_selector.dart';
@@ -15,16 +16,14 @@ class LocalizationPage extends ConsumerStatefulWidget {
   ConsumerState<LocalizationPage> createState() => _LocalizationPageState();
 }
 
-class _LocalizationPageState extends ConsumerState<LocalizationPage> with SingleTickerProviderStateMixin {
-
+class _LocalizationPageState extends ConsumerState<LocalizationPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  late final TabController _tabController;
+  int _currentTab = 0;
   String _selectedLocale = 'en';
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
     Future.microtask(() {
       ref.read(localeListProvider.notifier).load();
       ref.read(translationListProvider.notifier).load(locale: _selectedLocale);
@@ -33,29 +32,32 @@ class _LocalizationPageState extends ConsumerState<LocalizationPage> with Single
   }
 
   @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.localizationTitle),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(icon: const Icon(Icons.language), text: AppLocalizations.of(context)!.localizationLanguage),
-            Tab(icon: const Icon(Icons.translate), text: AppLocalizations.of(context)!.localizationTranslations),
-            Tab(icon: const Icon(Icons.history), text: AppLocalizations.of(context)!.autoUpdateHistory),
-          ],
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [_buildLocalesTab(theme), _buildTranslationsTab(theme), _buildVersionsTab(theme)],
+    return PosListPage(
+      title: l10n.localizationTitle,
+      showSearch: false,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 0),
+            child: PosTabs(
+              selectedIndex: _currentTab,
+              onChanged: (i) => setState(() => _currentTab = i),
+              tabs: [
+                PosTabItem(label: l10n.localizationLanguage, icon: Icons.language),
+                PosTabItem(label: l10n.localizationTranslations, icon: Icons.translate),
+                PosTabItem(label: l10n.autoUpdateHistory, icon: Icons.history),
+              ],
+            ),
+          ),
+          Expanded(
+            child: IndexedStack(
+              index: _currentTab,
+              children: [_buildLocalesTab(theme), _buildTranslationsTab(theme), _buildVersionsTab(theme)],
+            ),
+          ),
+        ],
       ),
     );
   }

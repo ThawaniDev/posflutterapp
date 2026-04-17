@@ -8,6 +8,7 @@ import '../../providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminPlatformEventListPage extends ConsumerStatefulWidget {
   const AdminPlatformEventListPage({super.key});
@@ -75,9 +76,10 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
   Widget build(BuildContext context) {
     final state = ref.watch(platformEventListProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.platformEvents)),
-      body: Column(
+    return PosListPage(
+  title: l10n.platformEvents,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
@@ -89,7 +91,7 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
                   decoration: InputDecoration(
                     hintText: 'Search events...',
                     prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                    border: OutlineInputBorder(borderRadius: AppRadius.borderMd),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                   ),
                   onSubmitted: (_) => _applyFilters(),
@@ -128,29 +130,9 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
                   showSearch: false,
                   clearable: true,
                 );
-                if (context.isPhone) {
-                  return Column(
-                    children: [
-                      searchField,
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Expanded(child: levelDropdown),
-                          const SizedBox(width: 8),
-                          Expanded(child: typeDropdown),
-                        ],
-                      ),
-                    ],
-                  );
-                }
-                return Row(
-                  children: [
-                    Expanded(child: searchField),
-                    const SizedBox(width: 12),
-                    levelDropdown,
-                    const SizedBox(width: 8),
-                    typeDropdown,
-                  ],
+                return ResponsiveSearchFilterBar(
+                  searchField: searchField,
+                  filters: [levelDropdown, typeDropdown],
                 );
               },
             ),
@@ -166,7 +148,7 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> data) {
@@ -180,7 +162,7 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
       itemBuilder: (context, index) {
         final event = items[index] as Map<String, dynamic>;
         final level = event['level']?.toString();
-        return Card(
+        return PosCard(
           margin: const EdgeInsets.only(bottom: 8),
           child: ListTile(
             leading: CircleAvatar(
@@ -201,7 +183,7 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
                     color: _levelColor(level).withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: AppRadius.borderXs,
                   ),
                   child: Text(
                     level?.toUpperCase() ?? '',

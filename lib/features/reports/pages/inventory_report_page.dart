@@ -18,22 +18,17 @@ class InventoryReportPage extends ConsumerStatefulWidget {
   ConsumerState<InventoryReportPage> createState() => _InventoryReportPageState();
 }
 
-class _InventoryReportPageState extends ConsumerState<InventoryReportPage> with TickerProviderStateMixin {
-
+class _InventoryReportPageState extends ConsumerState<InventoryReportPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  late final TabController _tabController;
+  int _currentTab = 0;
   ReportFilters _filters = const ReportFilters();
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(inventoryValuationProvider.notifier).load(filters: _filters);
       ref.read(inventoryLowStockProvider.notifier).load(filters: _filters);
-    });
-    _tabController.addListener(() {
-      if (!_tabController.indexIsChanging) _onTabChanged(_tabController.index);
     });
   }
 
@@ -52,46 +47,41 @@ class _InventoryReportPageState extends ConsumerState<InventoryReportPage> with 
 
   void _onFiltersChanged(ReportFilters filters) {
     setState(() => _filters = filters);
-    _onTabChanged(_tabController.index);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
+    _onTabChanged(_currentTab);
   }
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: Text(l10n.reportsInventory),
-        bottom: TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          tabs: [
-            Tab(text: l10n.reportsValuation),
-            Tab(text: l10n.reportsTurnover),
-            Tab(text: l10n.reportsShrinkage),
-            Tab(text: l10n.reportsLowStock),
-          ],
-        ),
-      ),
-      body: Column(
+    return PosListPage(
+      title: l10n.reportsInventory,
+      showSearch: false,
+      child: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: PosTabs(
+              selectedIndex: _currentTab,
+              onChanged: (i) => setState(() {
+                _currentTab = i;
+                _onTabChanged(i);
+              }),
+              tabs: [
+                PosTabItem(label: l10n.reportsValuation),
+                PosTabItem(label: l10n.reportsTurnover),
+                PosTabItem(label: l10n.reportsShrinkage),
+                PosTabItem(label: l10n.reportsLowStock),
+              ],
+            ),
+          ),
           ReportFilterPanel(
             filters: _filters,
             onFiltersChanged: _onFiltersChanged,
-            onRefresh: () => _onTabChanged(_tabController.index),
+            onRefresh: () => _onTabChanged(_currentTab),
             showCategoryFilter: true,
           ),
           Expanded(
-            child: TabBarView(
-              controller: _tabController,
+            child: IndexedStack(
+              index: _currentTab,
               children: const [_ValuationTab(), _TurnoverTab(), _ShrinkageTab(), _LowStockTab()],
             ),
           ),
@@ -303,7 +293,7 @@ class _ShrinkageTab extends ConsumerWidget {
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                   color: AppColors.warning.withValues(alpha: 0.1),
-                                  borderRadius: BorderRadius.circular(8),
+                                  borderRadius: AppRadius.borderMd,
                                 ),
                                 child: Icon(Icons.warning_amber_rounded, color: AppColors.warning, size: 18),
                               ),
@@ -414,7 +404,7 @@ class _LowStockTab extends ConsumerWidget {
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           color: alertColor.withValues(alpha: 0.05),
-                          borderRadius: BorderRadius.circular(AppRadius.lg),
+                          borderRadius: AppRadius.borderLg,
                           border: Border.all(color: alertColor.withValues(alpha: 0.3)),
                         ),
                         child: Row(
@@ -423,7 +413,7 @@ class _LowStockTab extends ConsumerWidget {
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 color: alertColor.withValues(alpha: 0.1),
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: AppRadius.borderMd,
                               ),
                               child: Icon(
                                 isOutOfStock ? Icons.error_rounded : Icons.warning_amber_rounded,

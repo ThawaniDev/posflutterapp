@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_providers.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_state.dart';
 import 'package:wameedpos/features/cashier_gamification/widgets/anomaly_card.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class GamificationAnomaliesPage extends ConsumerStatefulWidget {
   const GamificationAnomaliesPage({super.key});
@@ -41,21 +43,26 @@ class _GamificationAnomaliesPageState extends ConsumerState<GamificationAnomalie
           maxLines: 3,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(AppLocalizations.of(context)!.commonCancel)),
-          FilledButton(
+          PosButton(
+            onPressed: () => Navigator.pop(ctx),
+            variant: PosButtonVariant.ghost,
+            label: AppLocalizations.of(context)!.commonCancel,
+          ),
+          PosButton(
             onPressed: () {
               ref.read(anomaliesProvider.notifier).review(anomalyId, reviewNotes: notesC.text, confirmed: true);
               Navigator.pop(ctx);
             },
-            style: FilledButton.styleFrom(backgroundColor: AppColors.success),
-            child: Text(AppLocalizations.of(context)!.gamificationConfirm),
+            variant: PosButtonVariant.soft,
+            label: AppLocalizations.of(context)!.gamificationConfirm,
           ),
-          OutlinedButton(
+          PosButton(
             onPressed: () {
               ref.read(anomaliesProvider.notifier).review(anomalyId, reviewNotes: notesC.text, confirmed: false);
               Navigator.pop(ctx);
             },
-            child: Text(AppLocalizations.of(context)!.gamificationDismissAnomaly),
+            variant: PosButtonVariant.outline,
+            label: AppLocalizations.of(context)!.gamificationDismissAnomaly,
           ),
         ],
       ),
@@ -68,18 +75,15 @@ class _GamificationAnomaliesPageState extends ConsumerState<GamificationAnomalie
     final state = ref.watch(anomaliesProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            const Icon(Icons.warning_amber_rounded, color: AppColors.warning),
-            const SizedBox(width: 8),
-            Text(l10n.gamificationAnomalies),
-          ],
-        ),
-        actions: [IconButton(icon: Icon(Icons.refresh), tooltip: l10n.commonRefresh, onPressed: _loadData)],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.gamificationAnomalies,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: _loadData, tooltip: l10n.commonRefresh,
+  ),
+],
+  child: Column(
         children: [
           // Severity filter chips
           Padding(
@@ -138,7 +142,7 @@ class _GamificationAnomaliesPageState extends ConsumerState<GamificationAnomalie
           Expanded(child: _buildContent(state, l10n, isMobile)),
         ],
       ),
-    );
+);
   }
 
   Widget _buildContent(AnomaliesState state, AppLocalizations l10n, bool isMobile) {
@@ -149,10 +153,10 @@ class _GamificationAnomaliesPageState extends ConsumerState<GamificationAnomalie
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.error_outline, size: 48, color: AppColors.error),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             Text(message, textAlign: TextAlign.center),
-            const SizedBox(height: 12),
-            ElevatedButton(onPressed: _loadData, child: Text(l10n.commonRetry)),
+            AppSpacing.gapH12,
+            PosButton(onPressed: _loadData, label: l10n.commonRetry),
           ],
         ),
       ),
@@ -163,13 +167,13 @@ class _GamificationAnomaliesPageState extends ConsumerState<GamificationAnomalie
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(Icons.check_circle_outline, size: 64, color: AppColors.success),
-                    const SizedBox(height: 12),
+                    AppSpacing.gapH12,
                     Text(l10n.gamificationNoAnomalies, style: TextStyle(color: Colors.grey.shade600)),
                   ],
                 ),
               )
             : ListView.builder(
-                padding: EdgeInsets.all(isMobile ? 12 : 16),
+                padding: context.responsivePagePadding,
                 itemCount: anomalies.length,
                 itemBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.only(bottom: 8),

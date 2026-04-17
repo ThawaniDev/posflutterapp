@@ -95,7 +95,7 @@ class OnboardingChecklistWidget extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(AppSpacing.base, AppSpacing.sm, AppSpacing.base, AppSpacing.sm),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: AppRadius.borderXs,
               child: LinearProgressIndicator(
                 value: totalCount > 0 ? completedCount / totalCount : 0,
                 minHeight: 6,
@@ -165,7 +165,7 @@ class _ChecklistItem extends ConsumerWidget {
                 height: 24,
                 decoration: BoxDecoration(
                   color: completed ? AppColors.success : Colors.transparent,
-                  borderRadius: BorderRadius.circular(6),
+                  borderRadius: AppRadius.borderSm,
                   border: Border.all(color: completed ? AppColors.success : AppColors.borderLight, width: 2),
                 ),
                 child: completed ? const Icon(Icons.check, size: 14, color: Colors.white) : null,

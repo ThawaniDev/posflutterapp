@@ -3,6 +3,7 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/security/models/security_policy.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class SecurityPolicyEditor extends StatelessWidget {
   final SecurityPolicy policy;
@@ -18,7 +19,7 @@ class SecurityPolicyEditor extends StatelessWidget {
       children: [
         // ─── PIN & Authentication ─────────────────
         _buildSectionHeader(context, l10n.securityPinAuth, Icons.pin),
-        Card(
+        PosCard(
           child: Padding(
             padding: AppSpacing.paddingAll16,
             child: Column(
@@ -47,7 +48,7 @@ class SecurityPolicyEditor extends StatelessWidget {
 
         // ─── Lockout & Sessions ───────────────────
         _buildSectionHeader(context, l10n.securityLockoutSessions, Icons.lock_clock),
-        Card(
+        PosCard(
           child: Padding(
             padding: AppSpacing.paddingAll16,
             child: Column(
@@ -71,7 +72,7 @@ class SecurityPolicyEditor extends StatelessWidget {
 
         // ─── PIN Override ─────────────────────────
         _buildSectionHeader(context, l10n.securityPinOverrides, Icons.admin_panel_settings),
-        Card(
+        PosCard(
           child: Padding(
             padding: AppSpacing.paddingAll16,
             child: Column(
@@ -89,7 +90,7 @@ class SecurityPolicyEditor extends StatelessWidget {
 
         // ─── Password & Device ────────────────────
         _buildSectionHeader(context, l10n.securityPasswordDevice, Icons.devices),
-        Card(
+        PosCard(
           child: Padding(
             padding: AppSpacing.paddingAll16,
             child: Column(
@@ -117,7 +118,7 @@ class SecurityPolicyEditor extends StatelessWidget {
 
         // ─── IP Restrictions ──────────────────────
         _buildSectionHeader(context, l10n.securityIpRestrictions, Icons.language),
-        Card(
+        PosCard(
           child: Padding(
             padding: AppSpacing.paddingAll16,
             child: Column(

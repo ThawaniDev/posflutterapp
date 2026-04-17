@@ -18,27 +18,18 @@ class JewelryDashboardPage extends ConsumerStatefulWidget {
   ConsumerState<JewelryDashboardPage> createState() => _JewelryDashboardPageState();
 }
 
-class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> with SingleTickerProviderStateMixin {
-
+class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  late final TabController _tabController;
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-    _tabController.addListener(() => setState(() {}));
     Future.microtask(() => ref.read(jewelryProvider.notifier).load());
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
   void _onFabPressed() {
-    final page = switch (_tabController.index) {
+    final page = switch (_currentTab) {
       0 => const MetalRateFormPage(),
       1 => const ProductDetailFormPage(),
       _ => const BuybackFormPage(),
@@ -51,82 +42,92 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> wit
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(jewelryProvider);
+    final isLoading = state is JewelryInitial || state is JewelryLoading;
+    final hasError = state is JewelryError;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.jewelryTitle),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: l10n.jewelryMetalRates),
-            Tab(text: l10n.jewelryProductDetails),
-            Tab(text: 'Buybacks'),
-          ],
-        ),
+    return PosListPage(
+      title: l10n.jewelryTitle,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: () => ref.read(jewelryProvider.notifier).load(),
+      actions: [PosButton(label: l10n.add, icon: Icons.add, onPressed: _onFabPressed)],
+      child: Column(
+        children: [
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: l10n.jewelryMetalRates),
+              PosTabItem(label: l10n.jewelryProductDetails),
+              PosTabItem(label: 'Buybacks'),
+            ],
+          ),
+          Expanded(
+            child: state is JewelryLoaded
+                ? IndexedStack(
+                    index: _currentTab,
+                    children: [
+                      state.metalRates.isEmpty
+                          ? const PosEmptyState(title: 'No metal rates set', icon: Icons.monetization_on)
+                          : ListView.builder(
+                              padding: const EdgeInsets.all(12),
+                              itemCount: state.metalRates.length,
+                              itemBuilder: (context, i) {
+                                final r = state.metalRates[i];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: MetalRateCard(
+                                    rate: r,
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(builder: (_) => MetalRateFormPage(rate: r)))
+                                          .then((_) => ref.read(jewelryProvider.notifier).load());
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                      state.productDetails.isEmpty
+                          ? const PosEmptyState(title: 'No product details', icon: Icons.diamond)
+                          : ListView.builder(
+                              padding: const EdgeInsets.all(12),
+                              itemCount: state.productDetails.length,
+                              itemBuilder: (context, i) {
+                                final d = state.productDetails[i];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: JewelryDetailCard(
+                                    detail: d,
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(builder: (_) => ProductDetailFormPage(detail: d)))
+                                          .then((_) => ref.read(jewelryProvider.notifier).load());
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                      state.buybacks.isEmpty
+                          ? const PosEmptyState(title: 'No buyback transactions', icon: Icons.swap_horiz)
+                          : ListView.builder(
+                              padding: const EdgeInsets.all(12),
+                              itemCount: state.buybacks.length,
+                              itemBuilder: (context, i) {
+                                final b = state.buybacks[i];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: BuybackCard(buyback: b),
+                                );
+                              },
+                            ),
+                    ],
+                  )
+                : const SizedBox.shrink(),
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: _onFabPressed, child: const Icon(Icons.add)),
-      body: switch (state) {
-        JewelryInitial() || JewelryLoading() => PosLoadingSkeleton.list(),
-        JewelryError(:final message) => PosErrorState(message: message, onRetry: () => ref.read(jewelryProvider.notifier).load()),
-        JewelryLoaded(:final metalRates, :final productDetails, :final buybacks) => TabBarView(
-          controller: _tabController,
-          children: [
-            metalRates.isEmpty
-                ? const PosEmptyState(title: 'No metal rates set', icon: Icons.monetization_on)
-                : ListView.builder(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: metalRates.length,
-                    itemBuilder: (context, i) {
-                      final r = metalRates[i];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: MetalRateCard(
-                          rate: r,
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (_) => MetalRateFormPage(rate: r)))
-                                .then((_) => ref.read(jewelryProvider.notifier).load());
-                          },
-                        ),
-                      );
-                    },
-                  ),
-            productDetails.isEmpty
-                ? const PosEmptyState(title: 'No product details', icon: Icons.diamond)
-                : ListView.builder(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: productDetails.length,
-                    itemBuilder: (context, i) {
-                      final d = productDetails[i];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: JewelryDetailCard(
-                          detail: d,
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (_) => ProductDetailFormPage(detail: d)))
-                                .then((_) => ref.read(jewelryProvider.notifier).load());
-                          },
-                        ),
-                      );
-                    },
-                  ),
-            buybacks.isEmpty
-                ? const PosEmptyState(title: 'No buyback transactions', icon: Icons.swap_horiz)
-                : ListView.builder(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: buybacks.length,
-                    itemBuilder: (context, i) {
-                      final b = buybacks[i];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: BuybackCard(buyback: b),
-                      );
-                    },
-                  ),
-          ],
-        ),
-      },
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/backup/providers/backup_providers.dart';
 import 'package:wameedpos/features/backup/providers/backup_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class BackupScheduleWidget extends ConsumerWidget {
   const BackupScheduleWidget({super.key});
@@ -41,7 +42,7 @@ class BackupScheduleWidget extends ConsumerWidget {
       padding: AppSpacing.paddingAll16,
       child: Column(
         children: [
-          Card(
+          PosCard(
             child: Padding(
               padding: AppSpacing.paddingAll16,
               child: Column(

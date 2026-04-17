@@ -6,6 +6,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/pos_card.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class HourlySalesChart extends StatelessWidget {
   final List<Map<String, dynamic>> data;

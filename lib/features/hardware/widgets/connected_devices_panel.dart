@@ -13,6 +13,7 @@ import 'package:wameedpos/features/hardware/providers/hardware_state.dart';
 import 'package:wameedpos/features/hardware/services/hardware_auto_detector.dart';
 import 'package:wameedpos/features/hardware/services/hardware_manager.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Real-time connected devices panel showing all peripherals grouped by connection type.
 class ConnectedDevicesPanel extends ConsumerWidget {
@@ -172,8 +173,8 @@ class _EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+    return PosCard(
+      borderRadius: AppRadius.borderMd,
       color: isDark ? AppColors.surfaceDark : null,
       child: Padding(
         padding: AppSpacing.paddingAll24,
@@ -231,10 +232,10 @@ class _ConnectionGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final connected = devices.where((d) => d.status?.isConnected == true).length;
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+    return PosCard(
+      borderRadius: AppRadius.borderMd,
       color: isDark ? AppColors.surfaceDark : null,
-      clipBehavior: Clip.antiAlias,
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -378,8 +379,8 @@ class _NetworkScanSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+    return PosCard(
+      borderRadius: AppRadius.borderMd,
       color: isDark ? AppColors.surfaceDark : null,
       child: Padding(
         padding: AppSpacing.paddingAll16,
@@ -504,10 +505,10 @@ class _KeyboardWedgeScannerCard extends ConsumerWidget {
     final scanner = ref.read(hardwareManagerProvider).barcodeScanner;
     final isListening = scanner.isListening;
 
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+    return PosCard(
+      borderRadius: AppRadius.borderMd,
       color: isDark ? AppColors.surfaceDark : null,
-      clipBehavior: Clip.antiAlias,
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

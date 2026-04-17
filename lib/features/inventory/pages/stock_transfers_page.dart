@@ -96,28 +96,24 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(stockTransfersProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.inventoryStockTransfers),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showStockTransfersInfo(context),
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(stockTransfersProvider.notifier).load(),
-          ),
-        ],
-      ),
-      floatingActionButton: PosButton(
-        label: l10n.inventoryNewTransfer,
-        icon: Icons.add,
-        onPressed: () => _showCreateTransferDialog(),
-      ),
-      body: _buildBody(state),
+    return PosListPage(
+      title: l10n.inventoryStockTransfers,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showStockTransfersInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () => ref.read(stockTransfersProvider.notifier).load(),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton(label: l10n.inventoryNewTransfer, icon: Icons.add, onPressed: () => _showCreateTransferDialog()),
+      ],
+      child: _buildBody(state),
     );
   }
 
@@ -273,8 +269,8 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
               ),
             ),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.commonCancel)),
-              TextButton(
+              PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.commonCancel),
+              PosButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     Navigator.pop(ctx, {
@@ -287,7 +283,8 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
                     });
                   }
                 },
-                child: Text(l10n.commonCreate),
+                variant: PosButtonVariant.ghost,
+                label: l10n.commonCreate,
               ),
             ],
           );

@@ -16,7 +16,6 @@ class ExpensesPage extends ConsumerStatefulWidget {
 }
 
 class _ExpensesPageState extends ConsumerState<ExpensesPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
@@ -29,52 +28,29 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
     final theme = Theme.of(context);
     final state = ref.watch(expensesProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.expenses),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
-            onPressed: () => showExpensesInfo(context),
-          ),
-          FilledButton.icon(
-            onPressed: () => _showCreateExpenseDialog(context),
-            icon: const Icon(Icons.add, size: 18),
-            label: Text(l10n.newExpense),
-          ),
-          AppSpacing.gapW12,
-        ],
-      ),
-      body: switch (state) {
-        ExpensesInitial() || ExpensesLoading() => const Center(child: CircularProgressIndicator()),
-        ExpensesError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.error_outline, size: 48, color: AppColors.error),
-              AppSpacing.gapH12,
-              Text(message),
-              AppSpacing.gapH12,
-              FilledButton(onPressed: () => ref.read(expensesProvider.notifier).load(), child: Text(l10n.retry)),
-            ],
-          ),
+    return PosListPage(
+      title: l10n.expenses,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
+          onPressed: () => showExpensesInfo(context),
+          variant: PosButtonVariant.ghost,
         ),
-        ExpensesLoaded(:final expenses) =>
-          expenses.isEmpty
-              ? Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.receipt_long, size: 64, color: theme.hintColor),
-                      AppSpacing.gapH12,
-                      Text(l10n.noExpensesRecorded, style: theme.textTheme.titleSmall),
-                      AppSpacing.gapH8,
-                      Text(l10n.tapToAddExpense, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
-                    ],
-                  ),
-                )
-              : _buildExpenseList(theme, expenses),
+        PosButton(label: l10n.newExpense, icon: Icons.add, onPressed: () => _showCreateExpenseDialog(context)),
+      ],
+      isLoading: state is ExpensesInitial || state is ExpensesLoading,
+      hasError: state is ExpensesError,
+      errorMessage: state is ExpensesError ? (state).message : null,
+      onRetry: () => ref.read(expensesProvider.notifier).load(),
+      isEmpty: state is ExpensesLoaded && (state).expenses.isEmpty,
+      emptyTitle: l10n.noExpensesRecorded,
+      emptySubtitle: l10n.tapToAddExpense,
+      emptyIcon: Icons.receipt_long,
+      child: switch (state) {
+        ExpensesLoaded(:final expenses) => _buildExpenseList(theme, expenses),
+        _ => const SizedBox.shrink(),
       },
     );
   }
@@ -112,8 +88,8 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
               ),
             ),
             ...items.map(
-              (expense) => Card(
-                shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+              (expense) => PosCard(
+                borderRadius: AppRadius.borderMd,
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundColor: _categoryColor(expense.category).withValues(alpha: 0.15),
@@ -187,8 +163,8 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-            FilledButton(
+            PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
+            PosButton(
               onPressed: () {
                 final amount = double.tryParse(amountController.text);
                 if (amount == null || amount <= 0 || selectedCategory == null) return;
@@ -201,7 +177,8 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
                 });
                 Navigator.pop(ctx);
               },
-              child: Text(l10n.save),
+              variant: PosButtonVariant.soft,
+              label: l10n.save,
             ),
           ],
         ),

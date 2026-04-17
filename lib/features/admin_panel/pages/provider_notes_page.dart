@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
@@ -20,7 +19,6 @@ class ProviderNotesPage extends ConsumerStatefulWidget {
 }
 
 class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _noteController = TextEditingController();
   String? _storeId;
@@ -48,13 +46,24 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(providerNotesProvider);
     final theme = Theme.of(context);
+    final isLoading = state is ProviderNotesLoading;
+    final hasError = state is ProviderNotesError;
+    final isEmpty = state is ProviderNotesLoaded && state.notes.isEmpty;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.providerNotes)),
-      body: Column(
+    return PosListPage(
+      title: l10n.providerNotes,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: () => ref.read(providerNotesProvider.notifier).load(widget.organizationId),
+      isEmpty: isEmpty,
+      emptyTitle: 'No notes yet',
+      emptySubtitle: 'Add a note above to get started',
+      emptyIcon: Icons.note_outlined,
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
-          // ─── Add Note Bar ──────────────────────────────
           Container(
             padding: AppSpacing.paddingAll16,
             decoration: BoxDecoration(
@@ -77,8 +86,6 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
               ],
             ),
           ),
-
-          // ─── Notes List ─────────────────────────────────
           Expanded(child: _buildNotesList(state, theme)),
         ],
       ),
@@ -93,45 +100,7 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
   }
 
   Widget _buildNotesList(ProviderNotesState state, ThemeData theme) {
-    if (state is ProviderNotesLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (state is ProviderNotesError) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
-            AppSpacing.gapH12,
-            Text(state.message, style: theme.textTheme.bodyMedium),
-            AppSpacing.gapH16,
-            PosButton(
-              label: l10n.retry,
-              variant: PosButtonVariant.outline,
-              onPressed: () => ref.read(providerNotesProvider.notifier).load(widget.organizationId),
-            ),
-          ],
-        ),
-      );
-    }
     if (state is ProviderNotesLoaded) {
-      if (state.notes.isEmpty) {
-        return Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.note_outlined, size: 64, color: AppColors.textMutedLight),
-              AppSpacing.gapH12,
-              Text('No notes yet', style: theme.textTheme.titleMedium),
-              AppSpacing.gapH4,
-              Text(
-                'Add a note above to get started',
-                style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
-              ),
-            ],
-          ),
-        );
-      }
       return ListView.separated(
         padding: AppSpacing.paddingAll16,
         itemCount: state.notes.length,
@@ -151,12 +120,11 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
     final adminUser = note['admin_user'] as Map<String, dynamic>?;
     final adminName = adminUser?['name'] as String? ?? 'Admin';
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadius.borderLg,
-        side: BorderSide(color: AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderLg,
+
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderLight)),
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(

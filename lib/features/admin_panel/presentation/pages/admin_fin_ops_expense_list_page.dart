@@ -49,9 +49,10 @@ class _State extends ConsumerState<AdminFinOpsExpenseListPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(finOpsExpensesProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.expenses), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.expenses,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -101,7 +102,7 @@ class _State extends ConsumerState<AdminFinOpsExpenseListPage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> resp) {
@@ -119,8 +120,8 @@ class _State extends ConsumerState<AdminFinOpsExpenseListPage> {
           final item = items[i];
           final category = (item['category'] ?? '').toString();
           final amount = num.tryParse(item['amount']?.toString() ?? '') ?? 0;
-          return Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          return PosCard(
+            borderRadius: BorderRadius.circular(10,),
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: AppColors.error.withValues(alpha: 0.15),

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
 import 'package:wameedpos/core/widgets/pos_mobile_data_list.dart';
 import 'package:wameedpos/core/widgets/pos_table.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
@@ -49,16 +48,19 @@ class _AISuggestionsPageState extends ConsumerState<AISuggestionsPage> {
     final state = ref.watch(aiSuggestionsProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.wameedAISuggestions),
-        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.read(aiSuggestionsProvider.notifier).load())],
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.md),
+    return PosListPage(
+  title: l10n.wameedAISuggestions,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(aiSuggestionsProvider.notifier).load(),
+  ),
+],
+  child: Padding(
+        padding: context.responsivePagePadding,
         child: isMobile ? _buildMobileBody(state, l10n) : _buildDesktopBody(state, l10n),
       ),
-    );
+);
   }
 
   Widget _buildMobileBody(AISuggestionsState state, AppLocalizations l10n) {

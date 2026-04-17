@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -10,6 +11,7 @@ import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminSupportTicketListPage extends ConsumerStatefulWidget {
   const AdminSupportTicketListPage({super.key});
@@ -86,9 +88,10 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
   Widget build(BuildContext context) {
     final state = ref.watch(ticketListProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.adminSupportTickets), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.adminSupportTickets,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -125,129 +128,65 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
                   onSubmitted: (_) => _applyFilters(),
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                context.isPhone
-                    ? Column(
-                        children: [
-                          PosSearchableDropdown<String>(
-                            items: [
-                              PosDropdownItem(value: 'open', label: l10n.open),
-                              PosDropdownItem(value: 'in_progress', label: l10n.statusInProgress),
-                              PosDropdownItem(value: 'resolved', label: l10n.resolved),
-                              PosDropdownItem(value: 'closed', label: l10n.posClosed),
-                            ],
-                            selectedValue: _statusFilter,
-                            onChanged: (v) {
-                              setState(() => _statusFilter = v);
-                              _applyFilters();
-                            },
-                            label: l10n.status,
-                            hint: 'All',
-                            showSearch: false,
-                            clearable: true,
-                          ),
-                          const SizedBox(height: AppSpacing.sm),
-                          PosSearchableDropdown<String>(
-                            items: [
-                              PosDropdownItem(value: 'low', label: l10n.notifPriorityLow),
-                              PosDropdownItem(value: 'medium', label: l10n.supportPriorityMedium),
-                              PosDropdownItem(value: 'high', label: l10n.notifPriorityHigh),
-                              PosDropdownItem(value: 'critical', label: l10n.supportPriorityCritical),
-                            ],
-                            selectedValue: _priorityFilter,
-                            onChanged: (v) {
-                              setState(() => _priorityFilter = v);
-                              _applyFilters();
-                            },
-                            label: l10n.supportPriority,
-                            hint: 'All',
-                            showSearch: false,
-                            clearable: true,
-                          ),
-                          const SizedBox(height: AppSpacing.sm),
-                          PosSearchableDropdown<String>(
-                            items: [
-                              PosDropdownItem(value: 'billing', label: l10n.supportKbBilling),
-                              PosDropdownItem(value: 'technical', label: l10n.supportCategoryTechnical),
-                              PosDropdownItem(value: 'zatca', label: l10n.sidebarZatca),
-                              PosDropdownItem(value: 'feature_request', label: l10n.feature),
-                              PosDropdownItem(value: 'general', label: l10n.settingsGeneral),
-                            ],
-                            selectedValue: _categoryFilter,
-                            onChanged: (v) {
-                              setState(() => _categoryFilter = v);
-                              _applyFilters();
-                            },
-                            label: l10n.category,
-                            hint: 'All',
-                            showSearch: false,
-                            clearable: true,
-                          ),
-                        ],
-                      )
-                    : Row(
-                        children: [
-                          Expanded(
-                            child: PosSearchableDropdown<String>(
-                              items: [
-                                PosDropdownItem(value: 'open', label: l10n.open),
-                                PosDropdownItem(value: 'in_progress', label: l10n.statusInProgress),
-                                PosDropdownItem(value: 'resolved', label: l10n.resolved),
-                                PosDropdownItem(value: 'closed', label: l10n.posClosed),
-                              ],
-                              selectedValue: _statusFilter,
-                              onChanged: (v) {
-                                setState(() => _statusFilter = v);
-                                _applyFilters();
-                              },
-                              label: l10n.status,
-                              hint: 'All',
-                              showSearch: false,
-                              clearable: true,
-                            ),
-                          ),
-                          const SizedBox(width: AppSpacing.sm),
-                          Expanded(
-                            child: PosSearchableDropdown<String>(
-                              items: [
-                                PosDropdownItem(value: 'low', label: l10n.notifPriorityLow),
-                                PosDropdownItem(value: 'medium', label: l10n.supportPriorityMedium),
-                                PosDropdownItem(value: 'high', label: l10n.notifPriorityHigh),
-                                PosDropdownItem(value: 'critical', label: l10n.supportPriorityCritical),
-                              ],
-                              selectedValue: _priorityFilter,
-                              onChanged: (v) {
-                                setState(() => _priorityFilter = v);
-                                _applyFilters();
-                              },
-                              label: l10n.supportPriority,
-                              hint: 'All',
-                              showSearch: false,
-                              clearable: true,
-                            ),
-                          ),
-                          const SizedBox(width: AppSpacing.sm),
-                          Expanded(
-                            child: PosSearchableDropdown<String>(
-                              items: [
-                                PosDropdownItem(value: 'billing', label: l10n.supportKbBilling),
-                                PosDropdownItem(value: 'technical', label: l10n.supportCategoryTechnical),
-                                PosDropdownItem(value: 'zatca', label: l10n.sidebarZatca),
-                                PosDropdownItem(value: 'feature_request', label: l10n.feature),
-                                PosDropdownItem(value: 'general', label: l10n.settingsGeneral),
-                              ],
-                              selectedValue: _categoryFilter,
-                              onChanged: (v) {
-                                setState(() => _categoryFilter = v);
-                                _applyFilters();
-                              },
-                              label: l10n.category,
-                              hint: 'All',
-                              showSearch: false,
-                              clearable: true,
-                            ),
-                          ),
-                        ],
-                      ),
+                Builder(
+                  builder: (context) {
+                    final statusDropdown = PosSearchableDropdown<String>(
+                      items: [
+                        PosDropdownItem(value: 'open', label: l10n.open),
+                        PosDropdownItem(value: 'in_progress', label: l10n.statusInProgress),
+                        PosDropdownItem(value: 'resolved', label: l10n.resolved),
+                        PosDropdownItem(value: 'closed', label: l10n.posClosed),
+                      ],
+                      selectedValue: _statusFilter,
+                      onChanged: (v) {
+                        setState(() => _statusFilter = v);
+                        _applyFilters();
+                      },
+                      label: l10n.status,
+                      hint: 'All',
+                      showSearch: false,
+                      clearable: true,
+                    );
+                    final priorityDropdown = PosSearchableDropdown<String>(
+                      items: [
+                        PosDropdownItem(value: 'low', label: l10n.notifPriorityLow),
+                        PosDropdownItem(value: 'medium', label: l10n.supportPriorityMedium),
+                        PosDropdownItem(value: 'high', label: l10n.notifPriorityHigh),
+                        PosDropdownItem(value: 'critical', label: l10n.supportPriorityCritical),
+                      ],
+                      selectedValue: _priorityFilter,
+                      onChanged: (v) {
+                        setState(() => _priorityFilter = v);
+                        _applyFilters();
+                      },
+                      label: l10n.supportPriority,
+                      hint: 'All',
+                      showSearch: false,
+                      clearable: true,
+                    );
+                    final categoryDropdown = PosSearchableDropdown<String>(
+                      items: [
+                        PosDropdownItem(value: 'billing', label: l10n.supportKbBilling),
+                        PosDropdownItem(value: 'technical', label: l10n.supportCategoryTechnical),
+                        PosDropdownItem(value: 'zatca', label: l10n.sidebarZatca),
+                        PosDropdownItem(value: 'feature_request', label: l10n.feature),
+                        PosDropdownItem(value: 'general', label: l10n.settingsGeneral),
+                      ],
+                      selectedValue: _categoryFilter,
+                      onChanged: (v) {
+                        setState(() => _categoryFilter = v);
+                        _applyFilters();
+                      },
+                      label: l10n.category,
+                      hint: 'All',
+                      showSearch: false,
+                      clearable: true,
+                    );
+                    return ResponsiveRowWrap(
+                      children: [statusDropdown, priorityDropdown, categoryDropdown],
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -264,7 +203,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> data) {
@@ -279,7 +218,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
         final t = tickets[index];
         final status = t['status']?.toString() ?? '';
         final priority = t['priority']?.toString() ?? '';
-        return Card(
+        return PosCard(
           margin: const EdgeInsets.only(bottom: AppSpacing.sm),
           child: ListTile(
             leading: Icon(_priorityIcon(priority), color: _priorityColor(priority)),
@@ -289,7 +228,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
                 color: _statusColor(status).withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.borderLg,
               ),
               child: Text(
                 status.replaceAll('_', ' ').toUpperCase(),

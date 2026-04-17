@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/accessibility/providers/accessibility_providers.dart';
 import 'package:wameedpos/features/accessibility/widgets/accessibility_prefs_widget.dart';
 import 'package:wameedpos/features/accessibility/widgets/shortcuts_widget.dart';
@@ -12,13 +13,12 @@ class AccessibilityDashboardPage extends ConsumerStatefulWidget {
   ConsumerState<AccessibilityDashboardPage> createState() => _AccessibilityDashboardPageState();
 }
 
-class _AccessibilityDashboardPageState extends ConsumerState<AccessibilityDashboardPage> with SingleTickerProviderStateMixin {
-  late final TabController _tabController;
+class _AccessibilityDashboardPageState extends ConsumerState<AccessibilityDashboardPage> {
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
     Future.microtask(() {
       ref.read(accessibilityPrefsProvider.notifier).load();
       ref.read(shortcutsProvider.notifier).load();
@@ -26,25 +26,26 @@ class _AccessibilityDashboardPageState extends ConsumerState<AccessibilityDashbo
   }
 
   @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.accessibilityTitle),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: AppLocalizations.of(context)!.accessibilityPreferences),
-            Tab(text: AppLocalizations.of(context)!.accessibilityShortcuts),
-          ],
-        ),
+    final l10n = AppLocalizations.of(context)!;
+    return PosListPage(
+      title: l10n.accessibilityTitle,
+      showSearch: false,
+      child: Column(
+        children: [
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: l10n.accessibilityPreferences),
+              PosTabItem(label: l10n.accessibilityShortcuts),
+            ],
+          ),
+          Expanded(
+            child: IndexedStack(index: _currentTab, children: const [AccessibilityPrefsWidget(), ShortcutsWidget()]),
+          ),
+        ],
       ),
-      body: TabBarView(controller: _tabController, children: const [AccessibilityPrefsWidget(), ShortcutsWidget()]),
     );
   }
 }

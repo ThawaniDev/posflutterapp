@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminNotificationTemplateListPage extends ConsumerStatefulWidget {
   const AdminNotificationTemplateListPage({super.key});
@@ -65,12 +66,15 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
   Widget build(BuildContext context) {
     final state = ref.watch(notificationTemplateListProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminNotificationTemplates),
-        actions: [IconButton(icon: const Icon(Icons.add), onPressed: () {})],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.adminNotificationTemplates,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.add, onPressed: () {},
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
@@ -127,7 +131,7 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
                         itemBuilder: (context, index) {
                           final tpl = templates[index];
                           final channel = tpl['channel'] as String?;
-                          return Card(
+                          return PosCard(
                             child: ListTile(
                               leading: CircleAvatar(
                                 backgroundColor: _channelColor(channel).withValues(alpha: 0.2),
@@ -147,6 +151,6 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
           ),
         ],
       ),
-    );
+);
   }
 }

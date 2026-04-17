@@ -87,21 +87,18 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
   Widget build(BuildContext context) {
     final productsState = ref.watch(productsProvider);
     final products = productsState is ProductsLoaded ? productsState.products : <Product>[];
-    return Scaffold(
-      appBar: AppBar(title: Text(_isEditing ? 'Edit Recipe' : 'New Recipe')),
-      bottomNavigationBar: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: PosButton(
+    return PosFormPage(
+      title: _isEditing ? 'Edit Recipe' : 'New Recipe',
+      bottomBar: PosButton(
           label: _isEditing ? 'Update Recipe' : 'Create Recipe',
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,
         ),
-      ),
-      body: Form(
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosTextField(controller: _nameCtrl, label: l10n.recipeName, hint: 'Enter recipe name'),
             SizedBox(height: AppSpacing.md),

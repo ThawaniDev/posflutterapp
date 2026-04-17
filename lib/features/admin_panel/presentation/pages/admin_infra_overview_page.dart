@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
@@ -42,9 +42,10 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(infraOverviewProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.adminInfrastructure), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.adminInfrastructure,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -57,9 +58,9 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
                   children: [
                     Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
                     const SizedBox(height: AppSpacing.md),
-                    ElevatedButton(
+                    PosButton(
                       onPressed: () => ref.read(infraOverviewProvider.notifier).load(storeId: _storeId),
-                      child: Text(l10n.retry),
+                      label: l10n.retry,
                     ),
                   ],
                 ),
@@ -69,7 +70,7 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildContent(Map<String, dynamic> resp) {
@@ -215,9 +216,9 @@ class _NavTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: AppSpacing.xs),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      borderRadius: BorderRadius.circular(10,),
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: AppColors.primary.withValues(alpha: 0.1),

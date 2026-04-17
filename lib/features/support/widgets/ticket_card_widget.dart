@@ -8,6 +8,7 @@ import 'package:wameedpos/features/support/models/support_ticket.dart';
 import 'package:wameedpos/features/support/widgets/ticket_priority_badge.dart';
 import 'package:wameedpos/features/support/widgets/ticket_status_badge.dart';
 import 'package:intl/intl.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class TicketCardWidget extends StatelessWidget {
   const TicketCardWidget({super.key, required this.ticket, this.onTap});

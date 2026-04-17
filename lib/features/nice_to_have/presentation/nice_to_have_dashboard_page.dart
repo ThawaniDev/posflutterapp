@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'nice_to_have_providers.dart';
 import 'widgets/wishlist_widget.dart';
 import 'widgets/appointments_widget.dart';
@@ -16,13 +17,12 @@ class NiceToHaveDashboardPage extends ConsumerStatefulWidget {
   ConsumerState<NiceToHaveDashboardPage> createState() => _NiceToHaveDashboardPageState();
 }
 
-class _NiceToHaveDashboardPageState extends ConsumerState<NiceToHaveDashboardPage> with TickerProviderStateMixin {
-  late final TabController _tabController;
+class _NiceToHaveDashboardPageState extends ConsumerState<NiceToHaveDashboardPage> {
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 6, vsync: this);
     Future.microtask(() {
       ref.read(appointmentProvider.notifier).load();
       ref.read(cfdConfigProvider.notifier).load();
@@ -33,38 +33,38 @@ class _NiceToHaveDashboardPageState extends ConsumerState<NiceToHaveDashboardPag
   }
 
   @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.niceToHaveTitle),
-        bottom: TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          tabs: [
-            Tab(icon: const Icon(Icons.favorite), text: AppLocalizations.of(context)!.niceToHaveWishlist),
-            Tab(icon: const Icon(Icons.calendar_today), text: AppLocalizations.of(context)!.niceToHaveAppointments),
-            Tab(icon: const Icon(Icons.monitor), text: AppLocalizations.of(context)!.niceToHaveCfd),
-            Tab(icon: const Icon(Icons.card_giftcard), text: AppLocalizations.of(context)!.niceToHaveGiftRegistry),
-            Tab(icon: const Icon(Icons.slideshow), text: AppLocalizations.of(context)!.niceToHaveSignage),
-            Tab(icon: const Icon(Icons.emoji_events), text: AppLocalizations.of(context)!.niceToHaveGamification),
-          ],
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          WishlistWidget(),
-          AppointmentsWidget(),
-          CfdConfigWidget(),
-          GiftRegistryWidget(),
-          SignageWidget(),
-          GamificationWidget(),
+    final l10n = AppLocalizations.of(context)!;
+    return PosListPage(
+      title: l10n.niceToHaveTitle,
+      showSearch: false,
+      child: Column(
+        children: [
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: l10n.niceToHaveWishlist, icon: Icons.favorite),
+              PosTabItem(label: l10n.niceToHaveAppointments, icon: Icons.calendar_today),
+              PosTabItem(label: l10n.niceToHaveCfd, icon: Icons.monitor),
+              PosTabItem(label: l10n.niceToHaveGiftRegistry, icon: Icons.card_giftcard),
+              PosTabItem(label: l10n.niceToHaveSignage, icon: Icons.slideshow),
+              PosTabItem(label: l10n.niceToHaveGamification, icon: Icons.emoji_events),
+            ],
+          ),
+          Expanded(
+            child: IndexedStack(
+              index: _currentTab,
+              children: const [
+                WishlistWidget(),
+                AppointmentsWidget(),
+                CfdConfigWidget(),
+                GiftRegistryWidget(),
+                SignageWidget(),
+                GamificationWidget(),
+              ],
+            ),
+          ),
         ],
       ),
     );

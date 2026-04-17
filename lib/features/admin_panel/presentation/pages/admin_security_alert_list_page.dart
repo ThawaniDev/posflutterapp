@@ -9,6 +9,7 @@ import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminSecurityAlertListPage extends ConsumerStatefulWidget {
   const AdminSecurityAlertListPage({super.key});
@@ -75,9 +76,10 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
   Widget build(BuildContext context) {
     final state = ref.watch(securityAlertListProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.securityAlerts)),
-      body: Column(
+    return PosListPage(
+  title: l10n.securityAlerts,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -101,7 +103,7 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
                   decoration: InputDecoration(
                     hintText: 'Search alerts...',
                     prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                    border: OutlineInputBorder(borderRadius: AppRadius.borderMd),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                   ),
                   onSubmitted: (_) => _applyFilters(),
@@ -137,29 +139,9 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
                   showSearch: false,
                   clearable: true,
                 );
-                if (context.isPhone) {
-                  return Column(
-                    children: [
-                      searchField,
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Expanded(child: severityDropdown),
-                          const SizedBox(width: 8),
-                          Expanded(child: statusDropdown),
-                        ],
-                      ),
-                    ],
-                  );
-                }
-                return Row(
-                  children: [
-                    Expanded(child: searchField),
-                    const SizedBox(width: 12),
-                    severityDropdown,
-                    const SizedBox(width: 8),
-                    statusDropdown,
-                  ],
+                return ResponsiveSearchFilterBar(
+                  searchField: searchField,
+                  filters: [severityDropdown, statusDropdown],
                 );
               },
             ),
@@ -175,7 +157,7 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> data) {
@@ -190,7 +172,7 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
         final alert = items[index] as Map<String, dynamic>;
         final severity = alert['severity']?.toString();
         final status = alert['status']?.toString() ?? 'new';
-        return Card(
+        return PosCard(
           margin: const EdgeInsets.only(bottom: 8),
           child: ListTile(
             leading: CircleAvatar(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
@@ -39,20 +39,15 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
   Widget build(BuildContext context) {
     final state = ref.watch(analyticsRevenueProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.analyticsRevenue),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.download),
-            tooltip: 'Export Revenue',
-            onPressed: () => ref.read(analyticsExportProvider.notifier).exportRevenue(),
-          ),
-        ],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.analyticsRevenue,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.download, onPressed: () => ref.read(analyticsExportProvider.notifier).exportRevenue(), tooltip: 'Export Revenue',
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -88,12 +83,12 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                       const Text('Revenue by Plan', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (byPlan.isEmpty)
-                        const Card(
+                        const PosCard(
                           child: Padding(padding: EdgeInsets.all(AppSpacing.md), child: Text('No plan data available')),
                         )
                       else
                         ...byPlan.map(
-                          (p) => Card(
+                          (p) => PosCard(
                             margin: const EdgeInsets.only(bottom: AppSpacing.xs),
                             child: ListTile(
                               leading: const CircleAvatar(
@@ -116,7 +111,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                       Text(l10n.reportsRevenueTrend, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (trend.isEmpty)
-                        const Card(
+                        const PosCard(
                           child: Padding(padding: EdgeInsets.all(AppSpacing.md), child: Text('No trend data')),
                         )
                       else
@@ -158,9 +153,9 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                   children: [
                     Text('Error: $msg'),
                     const SizedBox(height: AppSpacing.sm),
-                    ElevatedButton(
+                    PosButton(
                       onPressed: () => ref.read(analyticsRevenueProvider.notifier).load(storeId: _storeId),
-                      child: Text(l10n.retry),
+                      label: l10n.retry,
                     ),
                   ],
                 ),
@@ -170,6 +165,6 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
           ),
         ],
       ),
-    );
+);
   }
 }

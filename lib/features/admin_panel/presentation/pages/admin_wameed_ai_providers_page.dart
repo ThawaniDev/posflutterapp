@@ -27,9 +27,10 @@ class _State extends ConsumerState<AdminWameedAIProvidersPage> {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(wameedAIAdminProvidersProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.adminWameedAIProviders), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.adminWameedAIProviders,
+  showSearch: false,
+    child: switch (state) {
         WameedAIAdminListLoading() => const Center(child: PosLoading()),
         WameedAIAdminListLoaded(data: final resp) => _buildContent(resp, l10n),
         WameedAIAdminListError(message: final msg) => PosErrorState(
@@ -38,7 +39,7 @@ class _State extends ConsumerState<AdminWameedAIProvidersPage> {
         ),
         _ => Center(child: Text(l10n.loading)),
       },
-    );
+);
   }
 
   Widget _buildContent(Map<String, dynamic> resp, AppLocalizations l10n) {
@@ -153,7 +154,7 @@ class _State extends ConsumerState<AdminWameedAIProvidersPage> {
               Container(
                 width: 56,
                 height: 56,
-                decoration: BoxDecoration(color: providerColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(color: providerColor.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
                 child: Icon(providerIcon, color: providerColor, size: 28),
               ),
               const SizedBox(width: AppSpacing.md),

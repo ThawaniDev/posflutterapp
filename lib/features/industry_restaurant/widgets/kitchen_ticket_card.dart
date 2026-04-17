@@ -6,6 +6,7 @@ import '../../../core/widgets/pos_status_badge.dart';
 import '../models/kitchen_ticket.dart';
 import '../enums/kitchen_ticket_status.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class KitchenTicketCard extends StatelessWidget {
   final KitchenTicket ticket;
@@ -17,15 +18,13 @@ class KitchenTicketCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
-      ),
+      borderRadius: AppRadius.borderMd,
+      border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: AppRadius.borderMd,
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(

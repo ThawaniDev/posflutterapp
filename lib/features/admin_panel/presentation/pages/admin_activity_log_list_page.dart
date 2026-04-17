@@ -4,10 +4,12 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminActivityLogListPage extends ConsumerStatefulWidget {
   const AdminActivityLogListPage({super.key});
@@ -58,9 +60,10 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
   Widget build(BuildContext context) {
     final state = ref.watch(activityLogListProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Activity Logs')),
-      body: Column(
+    return PosListPage(
+  title: 'Activity Logs',
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -85,7 +88,7 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
                     decoration: InputDecoration(
                       hintText: l10n.searchLogs,
                       prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                      border: OutlineInputBorder(borderRadius: AppRadius.borderMd),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                     ),
                     onSubmitted: (_) => _applyFilters(),
@@ -124,7 +127,7 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> data) {
@@ -137,7 +140,7 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
       padding: const EdgeInsets.symmetric(horizontal: 16),
       itemBuilder: (context, index) {
         final log = items[index] as Map<String, dynamic>;
-        return Card(
+        return PosCard(
           margin: const EdgeInsets.only(bottom: 8),
           child: ListTile(
             leading: CircleAvatar(

@@ -258,6 +258,215 @@ class AppTheme {
 
       // ─ Badge ─
       badgeTheme: const BadgeThemeData(backgroundColor: AppColors.badge, textColor: Colors.white, smallSize: 8, largeSize: 16),
+
+      // ─ Popup Menu ─
+      popupMenuTheme: PopupMenuThemeData(
+        color: AppColors.surfaceLight,
+        surfaceTintColor: Colors.transparent,
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadius.borderLg,
+          side: const BorderSide(color: AppColors.borderSubtleLight),
+        ),
+        textStyle: AppTypography.bodyMedium.copyWith(color: AppColors.textPrimaryLight),
+      ),
+
+      // ─ Dropdown Menu ─
+      dropdownMenuTheme: DropdownMenuThemeData(
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: AppColors.inputBgLight,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          border: OutlineInputBorder(borderRadius: AppRadius.borderMd, borderSide: BorderSide.none),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: AppRadius.borderMd,
+            borderSide: BorderSide(color: AppColors.primary10),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: AppRadius.borderMd,
+            borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+          ),
+        ),
+        menuStyle: MenuStyle(
+          backgroundColor: WidgetStateProperty.all(AppColors.surfaceLight),
+          surfaceTintColor: WidgetStateProperty.all(Colors.transparent),
+          elevation: WidgetStateProperty.all(4),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: AppRadius.borderLg,
+              side: const BorderSide(color: AppColors.borderSubtleLight),
+            ),
+          ),
+        ),
+      ),
+
+      // ─ Menu (MenuBar / MenuAnchor) ─
+      menuTheme: MenuThemeData(
+        style: MenuStyle(
+          backgroundColor: WidgetStateProperty.all(AppColors.surfaceLight),
+          surfaceTintColor: WidgetStateProperty.all(Colors.transparent),
+          elevation: WidgetStateProperty.all(4),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: AppRadius.borderLg,
+              side: const BorderSide(color: AppColors.borderSubtleLight),
+            ),
+          ),
+        ),
+      ),
+
+      // ─ Menu Button ─
+      menuButtonTheme: MenuButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: WidgetStateProperty.all(AppColors.textPrimaryLight),
+          textStyle: WidgetStateProperty.all(AppTypography.bodyMedium),
+          minimumSize: WidgetStateProperty.all(const Size(0, 44)),
+          padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 16, vertical: 8)),
+        ),
+      ),
+
+      // ─ ListTile ─
+      listTileTheme: ListTileThemeData(
+        iconColor: AppColors.textMutedLight,
+        textColor: AppColors.textPrimaryLight,
+        titleTextStyle: AppTypography.titleSmall.copyWith(color: AppColors.textPrimaryLight),
+        subtitleTextStyle: AppTypography.bodySmall.copyWith(color: AppColors.textSecondaryLight),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+        dense: true,
+      ),
+
+      // ─ Expansion Tile ─
+      expansionTileTheme: ExpansionTileThemeData(
+        iconColor: AppColors.textMutedLight,
+        collapsedIconColor: AppColors.textMutedLight,
+        textColor: AppColors.primary,
+        collapsedTextColor: AppColors.textPrimaryLight,
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+        collapsedShape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+        tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+        childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+        backgroundColor: Colors.transparent,
+        collapsedBackgroundColor: Colors.transparent,
+      ),
+
+      // ─ Date Picker ─
+      datePickerTheme: DatePickerThemeData(
+        backgroundColor: AppColors.surfaceLight,
+        surfaceTintColor: Colors.transparent,
+        headerBackgroundColor: AppColors.primary,
+        headerForegroundColor: Colors.white,
+        dayForegroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return Colors.white;
+          if (states.contains(WidgetState.disabled)) return AppColors.textDisabledLight;
+          return AppColors.textPrimaryLight;
+        }),
+        dayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return AppColors.primary;
+          return null;
+        }),
+        todayForegroundColor: WidgetStateProperty.all(AppColors.primary),
+        todayBackgroundColor: WidgetStateProperty.all(Colors.transparent),
+        todayBorder: const BorderSide(color: AppColors.primary),
+        rangePickerBackgroundColor: AppColors.surfaceLight,
+        rangeSelectionBackgroundColor: AppColors.primary10,
+        rangePickerHeaderBackgroundColor: AppColors.primary,
+        rangePickerHeaderForegroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderXl),
+      ),
+
+      // ─ Time Picker ─
+      timePickerTheme: TimePickerThemeData(
+        backgroundColor: AppColors.surfaceLight,
+        hourMinuteColor: AppColors.inputBgLight,
+        hourMinuteTextColor: AppColors.textPrimaryLight,
+        dialHandColor: AppColors.primary,
+        dialBackgroundColor: AppColors.inputBgLight,
+        dialTextColor: WidgetStateColor.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return Colors.white;
+          return AppColors.textPrimaryLight;
+        }),
+        entryModeIconColor: AppColors.textMutedLight,
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderXl),
+      ),
+
+      // ─ Slider ─
+      sliderTheme: SliderThemeData(
+        activeTrackColor: AppColors.primary,
+        inactiveTrackColor: AppColors.borderLight,
+        thumbColor: AppColors.primary,
+        overlayColor: AppColors.primary20,
+        valueIndicatorColor: AppColors.primary,
+        valueIndicatorTextStyle: AppTypography.labelSmall.copyWith(color: Colors.white),
+        trackHeight: 4,
+        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
+      ),
+
+      // ─ Segmented Button ─
+      segmentedButtonTheme: SegmentedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) return AppColors.primary10;
+            return Colors.transparent;
+          }),
+          foregroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) return AppColors.primary;
+            return AppColors.textSecondaryLight;
+          }),
+          side: WidgetStateProperty.all(const BorderSide(color: AppColors.borderLight)),
+          shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: AppRadius.borderMd)),
+          textStyle: WidgetStateProperty.all(AppTypography.labelMedium),
+        ),
+      ),
+
+      // ─ Drawer ─
+      drawerTheme: const DrawerThemeData(
+        backgroundColor: AppColors.surfaceLight,
+        surfaceTintColor: Colors.transparent,
+        elevation: 1,
+        width: 280,
+      ),
+
+      // ─ Navigation Drawer ─
+      navigationDrawerTheme: NavigationDrawerThemeData(
+        backgroundColor: AppColors.surfaceLight,
+        surfaceTintColor: Colors.transparent,
+        indicatorColor: AppColors.primary10,
+        indicatorShape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppTypography.titleSmall.copyWith(color: AppColors.primary);
+          }
+          return AppTypography.titleSmall.copyWith(color: AppColors.textSecondaryLight);
+        }),
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return const IconThemeData(color: AppColors.primary, size: 22);
+          }
+          return IconThemeData(color: AppColors.textMutedLight, size: 22);
+        }),
+      ),
+
+      // ─ Search Bar ─
+      searchBarTheme: SearchBarThemeData(
+        backgroundColor: WidgetStateProperty.all(AppColors.inputBgLight),
+        surfaceTintColor: WidgetStateProperty.all(Colors.transparent),
+        elevation: WidgetStateProperty.all(0),
+        textStyle: WidgetStateProperty.all(AppTypography.bodyMedium.copyWith(color: AppColors.textPrimaryLight)),
+        hintStyle: WidgetStateProperty.all(AppTypography.bodyMedium.copyWith(color: AppColors.textDisabledLight)),
+        shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: AppRadius.borderMd)),
+        side: WidgetStateProperty.all(BorderSide(color: AppColors.primary10)),
+        padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 16)),
+      ),
+
+      // ─ Search View ─
+      searchViewTheme: SearchViewThemeData(
+        backgroundColor: AppColors.surfaceLight,
+        surfaceTintColor: Colors.transparent,
+        dividerColor: AppColors.dividerLight,
+        headerTextStyle: AppTypography.bodyMedium.copyWith(color: AppColors.textPrimaryLight),
+        headerHintStyle: AppTypography.bodyMedium.copyWith(color: AppColors.textDisabledLight),
+      ),
     );
   }
 
@@ -435,6 +644,215 @@ class AppTheme {
 
       // ─ Badge ─
       badgeTheme: const BadgeThemeData(backgroundColor: AppColors.badge, textColor: Colors.white, smallSize: 8, largeSize: 16),
+
+      // ─ Popup Menu ─
+      popupMenuTheme: PopupMenuThemeData(
+        color: AppColors.cardDark,
+        surfaceTintColor: Colors.transparent,
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadius.borderLg,
+          side: const BorderSide(color: AppColors.borderSubtleDark),
+        ),
+        textStyle: AppTypography.bodyMedium.copyWith(color: AppColors.textPrimaryDark),
+      ),
+
+      // ─ Dropdown Menu ─
+      dropdownMenuTheme: DropdownMenuThemeData(
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: AppColors.inputBgDark,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          border: OutlineInputBorder(borderRadius: AppRadius.borderMd, borderSide: BorderSide.none),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: AppRadius.borderMd,
+            borderSide: BorderSide(color: AppColors.primary10),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: AppRadius.borderMd,
+            borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+          ),
+        ),
+        menuStyle: MenuStyle(
+          backgroundColor: WidgetStateProperty.all(AppColors.cardDark),
+          surfaceTintColor: WidgetStateProperty.all(Colors.transparent),
+          elevation: WidgetStateProperty.all(4),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: AppRadius.borderLg,
+              side: const BorderSide(color: AppColors.borderSubtleDark),
+            ),
+          ),
+        ),
+      ),
+
+      // ─ Menu (MenuBar / MenuAnchor) ─
+      menuTheme: MenuThemeData(
+        style: MenuStyle(
+          backgroundColor: WidgetStateProperty.all(AppColors.cardDark),
+          surfaceTintColor: WidgetStateProperty.all(Colors.transparent),
+          elevation: WidgetStateProperty.all(4),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: AppRadius.borderLg,
+              side: const BorderSide(color: AppColors.borderSubtleDark),
+            ),
+          ),
+        ),
+      ),
+
+      // ─ Menu Button ─
+      menuButtonTheme: MenuButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: WidgetStateProperty.all(AppColors.textPrimaryDark),
+          textStyle: WidgetStateProperty.all(AppTypography.bodyMedium),
+          minimumSize: WidgetStateProperty.all(const Size(0, 44)),
+          padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 16, vertical: 8)),
+        ),
+      ),
+
+      // ─ ListTile ─
+      listTileTheme: ListTileThemeData(
+        iconColor: AppColors.textMutedDark,
+        textColor: AppColors.textPrimaryDark,
+        titleTextStyle: AppTypography.titleSmall.copyWith(color: AppColors.textPrimaryDark),
+        subtitleTextStyle: AppTypography.bodySmall.copyWith(color: AppColors.textSecondaryDark),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+        dense: true,
+      ),
+
+      // ─ Expansion Tile ─
+      expansionTileTheme: ExpansionTileThemeData(
+        iconColor: AppColors.textMutedDark,
+        collapsedIconColor: AppColors.textMutedDark,
+        textColor: AppColors.primary,
+        collapsedTextColor: AppColors.textPrimaryDark,
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+        collapsedShape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+        tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+        childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+        backgroundColor: Colors.transparent,
+        collapsedBackgroundColor: Colors.transparent,
+      ),
+
+      // ─ Date Picker ─
+      datePickerTheme: DatePickerThemeData(
+        backgroundColor: AppColors.cardDark,
+        surfaceTintColor: Colors.transparent,
+        headerBackgroundColor: AppColors.primary,
+        headerForegroundColor: Colors.white,
+        dayForegroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return Colors.white;
+          if (states.contains(WidgetState.disabled)) return AppColors.textDisabledDark;
+          return AppColors.textPrimaryDark;
+        }),
+        dayBackgroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return AppColors.primary;
+          return null;
+        }),
+        todayForegroundColor: WidgetStateProperty.all(AppColors.primary),
+        todayBackgroundColor: WidgetStateProperty.all(Colors.transparent),
+        todayBorder: const BorderSide(color: AppColors.primary),
+        rangePickerBackgroundColor: AppColors.cardDark,
+        rangeSelectionBackgroundColor: AppColors.primary10,
+        rangePickerHeaderBackgroundColor: AppColors.primary,
+        rangePickerHeaderForegroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderXl),
+      ),
+
+      // ─ Time Picker ─
+      timePickerTheme: TimePickerThemeData(
+        backgroundColor: AppColors.cardDark,
+        hourMinuteColor: AppColors.inputBgDark,
+        hourMinuteTextColor: AppColors.textPrimaryDark,
+        dialHandColor: AppColors.primary,
+        dialBackgroundColor: AppColors.inputBgDark,
+        dialTextColor: WidgetStateColor.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return Colors.white;
+          return AppColors.textPrimaryDark;
+        }),
+        entryModeIconColor: AppColors.textMutedDark,
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderXl),
+      ),
+
+      // ─ Slider ─
+      sliderTheme: SliderThemeData(
+        activeTrackColor: AppColors.primary,
+        inactiveTrackColor: AppColors.borderDark,
+        thumbColor: AppColors.primary,
+        overlayColor: AppColors.primary20,
+        valueIndicatorColor: AppColors.primary,
+        valueIndicatorTextStyle: AppTypography.labelSmall.copyWith(color: Colors.white),
+        trackHeight: 4,
+        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
+      ),
+
+      // ─ Segmented Button ─
+      segmentedButtonTheme: SegmentedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) return AppColors.primary10;
+            return Colors.transparent;
+          }),
+          foregroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) return AppColors.primary;
+            return AppColors.textSecondaryDark;
+          }),
+          side: WidgetStateProperty.all(const BorderSide(color: AppColors.borderDark)),
+          shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: AppRadius.borderMd)),
+          textStyle: WidgetStateProperty.all(AppTypography.labelMedium),
+        ),
+      ),
+
+      // ─ Drawer ─
+      drawerTheme: const DrawerThemeData(
+        backgroundColor: AppColors.cardDark,
+        surfaceTintColor: Colors.transparent,
+        elevation: 1,
+        width: 280,
+      ),
+
+      // ─ Navigation Drawer ─
+      navigationDrawerTheme: NavigationDrawerThemeData(
+        backgroundColor: AppColors.cardDark,
+        surfaceTintColor: Colors.transparent,
+        indicatorColor: AppColors.primary10,
+        indicatorShape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppTypography.titleSmall.copyWith(color: AppColors.primary);
+          }
+          return AppTypography.titleSmall.copyWith(color: AppColors.textSecondaryDark);
+        }),
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return const IconThemeData(color: AppColors.primary, size: 22);
+          }
+          return IconThemeData(color: AppColors.textMutedDark, size: 22);
+        }),
+      ),
+
+      // ─ Search Bar ─
+      searchBarTheme: SearchBarThemeData(
+        backgroundColor: WidgetStateProperty.all(AppColors.inputBgDark),
+        surfaceTintColor: WidgetStateProperty.all(Colors.transparent),
+        elevation: WidgetStateProperty.all(0),
+        textStyle: WidgetStateProperty.all(AppTypography.bodyMedium.copyWith(color: AppColors.textPrimaryDark)),
+        hintStyle: WidgetStateProperty.all(AppTypography.bodyMedium.copyWith(color: AppColors.textDisabledDark)),
+        shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: AppRadius.borderMd)),
+        side: WidgetStateProperty.all(BorderSide(color: AppColors.primary10)),
+        padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 16)),
+      ),
+
+      // ─ Search View ─
+      searchViewTheme: SearchViewThemeData(
+        backgroundColor: AppColors.cardDark,
+        surfaceTintColor: Colors.transparent,
+        dividerColor: AppColors.dividerDark,
+        headerTextStyle: AppTypography.bodyMedium.copyWith(color: AppColors.textPrimaryDark),
+        headerHintStyle: AppTypography.bodyMedium.copyWith(color: AppColors.textDisabledDark),
+      ),
     );
   }
 }

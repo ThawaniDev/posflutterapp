@@ -33,28 +33,24 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(stockAdjustmentsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.inventoryStockAdjustments),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showStockAdjustmentsInfo(context),
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(stockAdjustmentsProvider.notifier).load(),
-          ),
-        ],
-      ),
-      floatingActionButton: PosButton(
-        label: l10n.inventoryNewAdjustment,
-        icon: Icons.add,
-        onPressed: () => _showAdjustmentDialog(),
-      ),
-      body: _buildBody(state),
+    return PosListPage(
+      title: l10n.inventoryStockAdjustments,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showStockAdjustmentsInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () => ref.read(stockAdjustmentsProvider.notifier).load(),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton(label: l10n.inventoryNewAdjustment, icon: Icons.add, onPressed: () => _showAdjustmentDialog()),
+      ],
+      child: _buildBody(state),
     );
   }
 
@@ -187,8 +183,8 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
               ),
             ),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.commonCancel)),
-              TextButton(
+              PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.commonCancel),
+              PosButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     Navigator.pop(ctx, {
@@ -201,7 +197,8 @@ class _StockAdjustmentsPageState extends ConsumerState<StockAdjustmentsPage> {
                     });
                   }
                 },
-                child: Text(l10n.create),
+                variant: PosButtonVariant.ghost,
+                label: l10n.create,
               ),
             ],
           );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
@@ -46,13 +47,10 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
   Widget build(BuildContext context) {
     final state = ref.watch(finOpsOverviewProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminFinOps),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.adminFinOps,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -65,9 +63,9 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
                   children: [
                     Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
                     const SizedBox(height: AppSpacing.md),
-                    ElevatedButton(
+                    PosButton(
                       onPressed: () => ref.read(finOpsOverviewProvider.notifier).load(storeId: _storeId),
-                      child: Text(l10n.retry),
+                      label: l10n.retry,
                     ),
                   ],
                 ),
@@ -77,7 +75,7 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildContent(Map<String, dynamic> resp) {
@@ -138,9 +136,9 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
   }
 
   Widget _kpiCard(String label, String value, String subtitle, Color color) {
-    return Card(
+    return PosCard(
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      borderRadius: BorderRadius.circular(12,),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.sm),
         child: Column(
@@ -208,11 +206,11 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
   }
 
   Widget _navCard(_NavItem item) {
-    return Card(
+    return PosCard(
       elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      borderRadius: BorderRadius.circular(12,),
       child: InkWell(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.borderLg,
         onTap: item.onTap,
         child: Padding(
           padding: const EdgeInsets.all(AppSpacing.md),

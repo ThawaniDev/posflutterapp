@@ -49,6 +49,23 @@ extension ResponsiveContext on BuildContext {
         : AppSpacing.pagePaddingDesktop,
   );
 
+  /// Responsive card internal padding (12px mobile, 16px desktop).
+  EdgeInsets get responsiveCardPadding =>
+      isMobile ? AppSpacing.paddingAll12 : AppSpacing.paddingAll16;
+
+  /// Responsive card internal padding as double (12 mobile, 16 desktop).
+  double get responsiveCardPaddingValue =>
+      isMobile ? AppSpacing.cardPaddingCompact : AppSpacing.base;
+
+  /// Responsive icon size (20px mobile, 24px desktop).
+  double get responsiveIconSize => isMobile ? AppSizes.iconMd : AppSizes.iconLg;
+
+  /// Responsive icon size small (16px mobile, 20px desktop).
+  double get responsiveIconSizeSm => isMobile ? AppSizes.iconSm : AppSizes.iconMd;
+
+  /// Responsive avatar size (40px mobile, 48px desktop).
+  double get responsiveAvatarSize => isMobile ? AppSizes.avatarMd : AppSizes.avatarLg;
+
   /// Responsive grid cross-axis count.
   int get responsiveGridCount {
     if (isWide) return 4;
@@ -232,6 +249,57 @@ class ResponsiveTwoColumn extends StatelessWidget {
         Expanded(flex: leftFlex, child: left),
         SizedBox(width: spacing),
         Expanded(flex: rightFlex, child: right),
+      ],
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ResponsiveSearchFilterBar — search + filters, responsive
+// ═══════════════════════════════════════════════════════════════
+
+/// A responsive toolbar with a search field and filter widgets.
+///
+/// On **mobile**: search on top, filters in an even row below.
+/// On **desktop**: all in one row with search expanded.
+class ResponsiveSearchFilterBar extends StatelessWidget {
+  const ResponsiveSearchFilterBar({
+    super.key,
+    required this.searchField,
+    required this.filters,
+    this.spacing = AppSpacing.sm,
+  });
+
+  final Widget searchField;
+  final List<Widget> filters;
+  final double spacing;
+
+  @override
+  Widget build(BuildContext context) {
+    if (context.isPhone) {
+      return Column(
+        children: [
+          searchField,
+          SizedBox(height: spacing),
+          Row(
+            children: [
+              for (int i = 0; i < filters.length; i++) ...[
+                if (i > 0) SizedBox(width: spacing),
+                Expanded(child: filters[i]),
+              ],
+            ],
+          ),
+        ],
+      );
+    }
+    return Row(
+      children: [
+        Expanded(child: searchField),
+        SizedBox(width: spacing * 1.5),
+        for (int i = 0; i < filters.length; i++) ...[
+          if (i > 0) SizedBox(width: spacing),
+          filters[i],
+        ],
       ],
     );
   }

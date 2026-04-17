@@ -6,6 +6,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
 import 'package:wameedpos/features/companion/providers/companion_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class CompanionHomeDashboard extends ConsumerStatefulWidget {
   const CompanionHomeDashboard({super.key});
@@ -37,7 +38,7 @@ class _CompanionHomeDashboardState extends ConsumerState<CompanionHomeDashboard>
           children: [
             Text(message, style: TextStyle(color: theme.colorScheme.error)),
             AppSpacing.gapH8,
-            TextButton(onPressed: () => ref.read(companionDashboardProvider.notifier).load(), child: Text(l10n.companionRetry)),
+            PosButton(onPressed: () => ref.read(companionDashboardProvider.notifier).load(), variant: PosButtonVariant.ghost, label: l10n.companionRetry),
           ],
         ),
       ),
@@ -56,7 +57,7 @@ class _CompanionHomeDashboardState extends ConsumerState<CompanionHomeDashboard>
           padding: AppSpacing.paddingAll16,
           children: [
             // Store status toggle
-            Card(
+            PosCard(
               child: SwitchListTile(
                 secondary: Icon(
                   storeIsOpen ? Icons.storefront : Icons.store,
@@ -151,7 +152,7 @@ class _ComparisonCard extends StatelessWidget {
     final theme = Theme.of(context);
     final isUp = (changePercent ?? 0) >= 0;
 
-    return Card(
+    return PosCard(
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -168,7 +169,7 @@ class _ComparisonCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
                       color: (isUp ? AppColors.success : AppColors.error).withValues(alpha: 0.12),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: AppRadius.borderLg,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,

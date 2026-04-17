@@ -7,6 +7,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/widgets/pos_input.dart';
+import 'package:wameedpos/core/utils/locale_helpers.dart';
 import 'package:wameedpos/features/catalog/models/category.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
@@ -20,7 +21,6 @@ class CategoryListPage extends ConsumerStatefulWidget {
 }
 
 class _CategoryListPageState extends ConsumerState<CategoryListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _selectedCategoryId;
 
@@ -127,8 +127,8 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-            FilledButton(
+            PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
+            PosButton(
               onPressed: () {
                 if (nameController.text.trim().isEmpty) return;
                 Navigator.pop(ctx, {
@@ -141,7 +141,8 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
                   'is_active': isActive,
                 });
               },
-              child: Text(isEditing ? 'Update' : 'Create'),
+              variant: PosButtonVariant.soft,
+              label: isEditing ? 'Update' : 'Create',
             ),
           ],
         ),
@@ -179,7 +180,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
       context,
       title: 'Delete Category',
       message:
-          'Are you sure you want to delete "${category.name}"?'
+          'Are you sure you want to delete "${localizedName(context, name: category.name, nameAr: category.nameAr)}"?'
           '${childCount > 0 ? '\nThis category has $childCount subcategories that will also be removed.' : ''}',
       confirmLabel: 'Delete',
       cancelLabel: 'Cancel',
@@ -190,7 +191,10 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
       try {
         await ref.read(categoriesProvider.notifier).deleteCategory(category.id);
         if (mounted) {
-          showPosSuccessSnackbar(context, AppLocalizations.of(context)!.categoryDeleted(category.name));
+          showPosSuccessSnackbar(
+            context,
+            AppLocalizations.of(context)!.categoryDeleted(localizedName(context, name: category.name, nameAr: category.nameAr)),
+          );
         }
       } catch (e) {
         if (mounted) {
@@ -212,13 +216,13 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
   }
 
   String _buildCategoryPath(Category cat, List<Category> allCats) {
-    final parts = <String>[cat.name];
+    final parts = <String>[localizedName(context, name: cat.name, nameAr: cat.nameAr)];
     String? pid = cat.parentId;
     int safe = 0;
     while (pid != null && safe < 10) {
       final parent = allCats.where((c) => c.id == pid).firstOrNull;
       if (parent == null) break;
-      parts.insert(0, parent.name);
+      parts.insert(0, localizedName(context, name: parent.name, nameAr: parent.nameAr));
       pid = parent.parentId;
       safe++;
     }
@@ -231,36 +235,39 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
   Widget build(BuildContext context) {
     final categoriesState = ref.watch(categoriesProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.categories),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
-            onPressed: () => showCategoryListInfo(context),
+    return PosListPage(
+      title: l10n.categories,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
+          onPressed: () => showCategoryListInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        if (categoriesState is CategoriesLoaded) ...[
+          PosButton.icon(
+            icon: Icons.unfold_more,
+            tooltip: l10n.expandAll,
+            onPressed: () => ref.read(categoriesProvider.notifier).expandAll(),
+            variant: PosButtonVariant.ghost,
           ),
-          if (categoriesState is CategoriesLoaded) ...[
-            IconButton(
-              icon: const Icon(Icons.unfold_more),
-              tooltip: l10n.expandAll,
-              onPressed: () => ref.read(categoriesProvider.notifier).expandAll(),
-            ),
-            IconButton(
-              icon: const Icon(Icons.unfold_less),
-              tooltip: l10n.collapseAll,
-              onPressed: () => ref.read(categoriesProvider.notifier).collapseAll(),
-            ),
-          ],
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(categoriesProvider.notifier).load(),
+          PosButton.icon(
+            icon: Icons.unfold_less,
+            tooltip: l10n.collapseAll,
+            onPressed: () => ref.read(categoriesProvider.notifier).collapseAll(),
+            variant: PosButtonVariant.ghost,
           ),
         ],
-      ),
-      floatingActionButton: PosButton(label: 'New Category', icon: Icons.add, onPressed: () => _showCategoryDialog()),
-      body: _buildBody(categoriesState),
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () => ref.read(categoriesProvider.notifier).load(),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton(label: 'New Category', icon: Icons.add, onPressed: () => _showCategoryDialog()),
+      ],
+      child: _buildBody(categoriesState),
     );
   }
 

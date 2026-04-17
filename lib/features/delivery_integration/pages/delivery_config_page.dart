@@ -74,19 +74,18 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_isEditing ? l10n.deliveryEditPlatform : l10n.deliveryAddPlatform),
-        actions: [
-          if (_isEditing)
+    return PosListPage(
+  title: _isEditing ? l10n.deliveryEditPlatform : l10n.deliveryAddPlatform,
+  showSearch: false,
+  actions: [
+  if (_isEditing)
             IconButton(
               icon: const Icon(Icons.wifi_tethering),
               tooltip: l10n.deliveryTestConnection,
               onPressed: () => ref.read(deliveryConnectionTestProvider.notifier).test(widget.configId!),
             ),
-        ],
-      ),
-      body: Form(
+],
+  child: Form(
         key: _formKey,
         child: ListView(
           padding: AppSpacing.paddingAll16,
@@ -198,7 +197,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
           ],
         ),
       ),
-    );
+);
   }
 
   Widget _buildPlatformSelector() {
@@ -243,7 +242,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
         padding: AppSpacing.paddingAll12,
         decoration: BoxDecoration(
           color: AppColors.info.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(AppRadius.md),
+          borderRadius: AppRadius.borderMd,
         ),
         child: Row(
           children: [
@@ -258,7 +257,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
         padding: AppSpacing.paddingAll12,
         decoration: BoxDecoration(
           color: AppColors.success.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(AppRadius.md),
+          borderRadius: AppRadius.borderMd,
           border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
         ),
         child: Row(
@@ -276,7 +275,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
         padding: AppSpacing.paddingAll12,
         decoration: BoxDecoration(
           color: AppColors.error.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(AppRadius.md),
+          borderRadius: AppRadius.borderMd,
           border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
         ),
         child: Row(

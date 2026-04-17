@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
@@ -15,7 +15,6 @@ class AdminPermissionsPage extends ConsumerStatefulWidget {
 }
 
 class _AdminPermissionsPageState extends ConsumerState<AdminPermissionsPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
@@ -28,28 +27,25 @@ class _AdminPermissionsPageState extends ConsumerState<AdminPermissionsPage> {
     final state = ref.watch(permissionListProvider);
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.permissions)),
-      body: switch (state) {
-        PermissionListInitial() || PermissionListLoading() => const Center(child: CircularProgressIndicator()),
-        PermissionListError(message: final msg) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(msg),
-              AppSpacing.gapH16,
-              PosButton(label: l10n.retry, onPressed: () => ref.read(permissionListProvider.notifier).load()),
-            ],
-          ),
-        ),
+    final isLoading = state is PermissionListInitial || state is PermissionListLoading;
+    final hasError = state is PermissionListError;
+
+    return PosListPage(
+      title: l10n.permissions,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: () => ref.read(permissionListProvider.notifier).load(),
+      child: switch (state) {
         PermissionListLoaded(groupedPermissions: final groups) => ListView.builder(
           padding: AppSpacing.paddingAll16,
           itemCount: groups.keys.length,
           itemBuilder: (context, index) {
             final groupName = groups.keys.elementAt(index);
             final permissions = groups[groupName]!;
-            return Card(
-              margin: const EdgeInsets.only(bottom: 12),
+            return PosCard(
+              margin: const EdgeInsetsDirectional.only(bottom: 12),
               child: ExpansionTile(
                 leading: Icon(Icons.folder_outlined, color: AppColors.primary),
                 title: Text(_formatGroupName(groupName), style: theme.textTheme.titleSmall),
@@ -66,6 +62,7 @@ class _AdminPermissionsPageState extends ConsumerState<AdminPermissionsPage> {
             );
           },
         ),
+        _ => const SizedBox.shrink(),
       },
     );
   }

@@ -138,26 +138,20 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
                 spacing: 8,
                 runSpacing: 8,
                 children: [50, 100, 200, 500].map((amount) {
-                  return OutlinedButton(
+                  return PosButton(
                     onPressed: () => _onQuickAmount(amount.toDouble()),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.primary,
-                      side: const BorderSide(color: AppColors.primary),
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    ),
-                    child: Text('+$amount'),
+                    variant: PosButtonVariant.outline,
+                    label: '+$amount',
                   );
                 }).toList(),
               ),
               AppSpacing.gapH8,
               Align(
                 alignment: Alignment.centerRight,
-                child: TextButton(
+                child: PosButton(
                   onPressed: () => _amountController.text = '0.00',
-                  child: Text(
-                    AppLocalizations.of(context)!.posReset,
-                    style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight),
-                  ),
+                  variant: PosButtonVariant.ghost,
+                  label: AppLocalizations.of(context)!.posReset,
                 ),
               ),
 

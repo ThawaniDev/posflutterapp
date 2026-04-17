@@ -20,7 +20,7 @@ class VatReportCard extends StatelessWidget {
       padding: AppSpacing.paddingAll20,
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: AppRadius.borderMd,
         border: Border.all(color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.06)),
       ),
       child: Column(
@@ -39,7 +39,7 @@ class VatReportCard extends StatelessWidget {
             padding: AppSpacing.paddingAll12,
             decoration: BoxDecoration(
               color: AppColors.primary.withValues(alpha: 0.06),
-              borderRadius: BorderRadius.circular(AppRadius.sm),
+              borderRadius: AppRadius.borderSm,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -36,12 +36,15 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final state = ref.watch(deliveryLogsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.notifDeliveryLogsTitle),
-        actions: [IconButton(icon: const Icon(Icons.refresh_rounded), onPressed: _reload)],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.notifDeliveryLogsTitle,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh_rounded, onPressed: _reload,
+  ),
+],
+  child: Column(
         children: [
           _buildFilters(isDark),
           const PosDivider(),
@@ -65,7 +68,7 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildFilters(bool isDark) {

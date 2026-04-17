@@ -6,6 +6,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
 import 'package:wameedpos/features/companion/providers/companion_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Widget that displays active companion sessions with device info
 /// and the ability to end sessions remotely.
@@ -36,7 +37,7 @@ class _SessionsWidgetState extends ConsumerState<SessionsWidget> {
     return ListView(
       padding: AppSpacing.paddingAll16,
       children: [
-        Card(
+        PosCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -70,7 +71,7 @@ class _SessionsWidgetState extends ConsumerState<SessionsWidget> {
         ),
         AppSpacing.gapH16,
         // Connection guide card
-        Card(
+        PosCard(
           color: AppColors.info.withValues(alpha: 0.08),
           child: Padding(
             padding: AppSpacing.paddingAll16,

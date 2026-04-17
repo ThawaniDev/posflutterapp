@@ -8,6 +8,7 @@ import 'package:wameedpos/features/promotions/providers/promotion_providers.dart
 import 'package:wameedpos/features/promotions/pages/promotion_analytics_page.dart';
 import 'package:wameedpos/features/promotions/providers/promotion_state.dart';
 import 'package:wameedpos/features/promotions/repositories/promotion_repository.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class PromotionListPage extends ConsumerStatefulWidget {
   const PromotionListPage({super.key});
@@ -17,7 +18,6 @@ class PromotionListPage extends ConsumerStatefulWidget {
 }
 
 class _PromotionListPageState extends ConsumerState<PromotionListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _typeFilter;
@@ -50,115 +50,74 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
     final state = ref.watch(promotionsProvider);
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.featureInfoPromotionsTitle),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
-            onPressed: () => showPromotionListInfo(context),
+    return PosListPage(
+      title: l10n.featureInfoPromotionsTitle,
+      searchController: _searchController,
+      onSearchChanged: (_) => _applyFilters(),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.info_outline),
+          tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
+          onPressed: () => showPromotionListInfo(context),
+        ),
+        IconButton(icon: const Icon(Icons.filter_list), onPressed: _showFilterSheet),
+        PosButton(label: l10n.add, icon: Icons.add, onPressed: () => _openPromotionForm(context)),
+      ],
+      filters: [
+        if (_typeFilter != null)
+          Chip(
+            label: Text(_typeFilter!),
+            onDeleted: () => setState(() {
+              _typeFilter = null;
+              _applyFilters();
+            }),
           ),
-          IconButton(icon: const Icon(Icons.filter_list), onPressed: _showFilterSheet),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(onPressed: () => _openPromotionForm(context), child: const Icon(Icons.add)),
-      body: Column(
-        children: [
-          // Search bar
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: l10n.searchPromotions,
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: _searchController.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          _searchController.clear();
-                          _applyFilters();
-                        },
-                      )
-                    : null,
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              ),
-              onSubmitted: (_) => _applyFilters(),
-            ),
+        if (_activeFilter != null)
+          Chip(
+            label: Text(_activeFilter! ? 'Active' : 'Inactive'),
+            onDeleted: () => setState(() {
+              _activeFilter = null;
+              _applyFilters();
+            }),
           ),
-
-          // Filter chips
-          if (_typeFilter != null || _activeFilter != null)
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(
-                children: [
-                  if (_typeFilter != null)
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8),
-                      child: Chip(
-                        label: Text(_typeFilter!),
-                        onDeleted: () => setState(() {
-                          _typeFilter = null;
-                          _applyFilters();
-                        }),
-                      ),
-                    ),
-                  if (_activeFilter != null)
-                    Chip(
-                      label: Text(_activeFilter! ? 'Active' : 'Inactive'),
-                      onDeleted: () => setState(() {
-                        _activeFilter = null;
-                        _applyFilters();
-                      }),
-                    ),
-                ],
-              ),
-            ),
-
-          // List content
-          Expanded(
-            child: switch (state) {
-              PromotionsInitial() || PromotionsLoading() => const Center(child: CircularProgressIndicator()),
-              PromotionsError(:final message) => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.error_outline, size: 48, color: theme.colorScheme.error),
-                    const SizedBox(height: 12),
-                    Text(message, style: TextStyle(color: theme.colorScheme.error)),
-                    const SizedBox(height: 16),
-                    FilledButton.icon(onPressed: _applyFilters, icon: Icon(Icons.refresh), label: Text(l10n.retry)),
-                  ],
+      ],
+      child: switch (state) {
+        PromotionsInitial() || PromotionsLoading() => const Center(child: CircularProgressIndicator()),
+        PromotionsError(:final message) => Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.error_outline, size: 48, color: theme.colorScheme.error),
+              const SizedBox(height: 12),
+              Text(message, style: TextStyle(color: theme.colorScheme.error)),
+              const SizedBox(height: 16),
+              FilledButton.icon(onPressed: _applyFilters, icon: Icon(Icons.refresh), label: Text(l10n.retry)),
+            ],
+          ),
+        ),
+        PromotionsLoaded(:final promotions) =>
+          promotions.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.local_offer_outlined, size: 64, color: theme.colorScheme.outline),
+                      const SizedBox(height: 12),
+                      Text('No promotions found', style: theme.textTheme.bodyLarge),
+                    ],
+                  ),
+                )
+              : RefreshIndicator(
+                  onRefresh: () => ref.read(promotionsProvider.notifier).load(),
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: promotions.length,
+                    itemBuilder: (context, index) => _PromotionCard(promotion: promotions[index]),
+                  ),
                 ),
-              ),
-              PromotionsLoaded(:final promotions) =>
-                promotions.isEmpty
-                    ? Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.local_offer_outlined, size: 64, color: theme.colorScheme.outline),
-                            const SizedBox(height: 12),
-                            Text('No promotions found', style: theme.textTheme.bodyLarge),
-                          ],
-                        ),
-                      )
-                    : RefreshIndicator(
-                        onRefresh: () => ref.read(promotionsProvider.notifier).load(),
-                        child: ListView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          itemCount: promotions.length,
-                          itemBuilder: (context, index) => _PromotionCard(promotion: promotions[index]),
-                        ),
-                      ),
-            },
-          ),
-        ],
-      ),
+      },
     );
   }
 
@@ -196,12 +155,13 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
             const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
-              child: FilledButton(
+              child: PosButton(
                 onPressed: () {
                   Navigator.pop(ctx);
                   _applyFilters();
                 },
-                child: Text(l10n.apply),
+                variant: PosButtonVariant.soft,
+                label: l10n.apply,
               ),
             ),
           ],
@@ -228,10 +188,10 @@ class _PromotionCard extends ConsumerWidget {
     final isActive = promotion.isActive ?? false;
     final isCoupon = promotion.isCoupon ?? false;
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: 10),
       child: InkWell(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.borderLg,
         onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => PromotionFormPage(promotionId: promotion.id))),
         child: Padding(
           padding: const EdgeInsets.all(14),
@@ -243,7 +203,7 @@ class _PromotionCard extends ConsumerWidget {
                 height: 44,
                 decoration: BoxDecoration(
                   color: isActive ? theme.colorScheme.primaryContainer : theme.colorScheme.surfaceContainerHighest,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: AppRadius.borderLg,
                 ),
                 child: Icon(
                   isCoupon ? Icons.confirmation_number_outlined : Icons.local_offer_outlined,
@@ -348,8 +308,8 @@ class _PromotionCard extends ConsumerWidget {
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-          FilledButton(
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
+          PosButton(
             onPressed: () {
               final count = int.tryParse(countController.text) ?? 10;
               final prefix = prefixController.text.isNotEmpty ? prefixController.text : null;
@@ -358,7 +318,8 @@ class _PromotionCard extends ConsumerWidget {
               Navigator.pop(ctx);
               showPosInfoSnackbar(context, AppLocalizations.of(context)!.generatingCoupons(count.toString()));
             },
-            child: Text(l10n.generate),
+            variant: PosButtonVariant.soft,
+            label: l10n.generate,
           ),
         ],
       ),
@@ -392,7 +353,6 @@ class PromotionFormPage extends ConsumerStatefulWidget {
 }
 
 class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
@@ -460,22 +420,20 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
     if (_isEditing) {
       final detailState = ref.watch(promotionDetailProvider(widget.promotionId));
       if (detailState is PromotionDetailLoading) {
-        return Scaffold(
-          appBar: AppBar(title: const Text('Edit Promotion')),
-          body: const Center(child: CircularProgressIndicator()),
-        );
+        return PosFormPage(title: 'Edit Promotion', isLoading: true, child: const SizedBox.shrink());
       }
       if (detailState is PromotionDetailLoaded && _nameController.text.isEmpty) {
         _populateFromPromotion(detailState.promotion);
       }
     }
 
-    return Scaffold(
-      appBar: AppBar(title: Text(_isEditing ? 'Edit Promotion' : 'New Promotion')),
-      body: Form(
+    return PosFormPage(
+      title: _isEditing ? 'Edit Promotion' : 'New Promotion',
+      bottomBar: PosButton(label: _isEditing ? 'Update Promotion' : 'Create Promotion', onPressed: _submit, isFullWidth: true),
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextFormField(
               controller: _nameController,
@@ -571,18 +529,7 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
               value: _isCoupon,
               onChanged: (v) => setState(() => _isCoupon = v),
             ),
-            SwitchListTile(
-              title: Text(l10n.stackable),
-              value: _isStackable,
-              onChanged: (v) => setState(() => _isStackable = v),
-            ),
-
-            const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: FilledButton(onPressed: _submit, child: Text(_isEditing ? 'Update Promotion' : 'Create Promotion')),
-            ),
+            SwitchListTile(title: Text(l10n.stackable), value: _isStackable, onChanged: (v) => setState(() => _isStackable = v)),
           ],
         ),
       ),

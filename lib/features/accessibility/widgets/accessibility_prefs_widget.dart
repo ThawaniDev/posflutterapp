@@ -29,7 +29,7 @@ class AccessibilityPrefsWidget extends ConsumerWidget {
         padding: AppSpacing.paddingAll16,
         children: [
           // ─── Visual Settings ─────────────
-          Card(
+          PosCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -99,7 +99,7 @@ class AccessibilityPrefsWidget extends ConsumerWidget {
           ),
           AppSpacing.gapH16,
           // ─── Audio & Interaction Settings ─────────────
-          Card(
+          PosCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

@@ -32,36 +32,27 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
     final state = ref.watch(aiFeatureResultProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            const Icon(Icons.people_outline, color: AppColors.primary),
-            const SizedBox(width: 8),
-            Text(l10n.wameedAICustomerSegments),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () {
+    return PosListPage(
+  title: l10n.wameedAICustomerSegments,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () {
               setState(() => _selectedSegment = null);
               ref.read(aiFeatureResultProvider.notifier).invoke('customer_segmentation');
-            },
-          ),
-        ],
-      ),
-      body: switch (state) {
+            }, tooltip: l10n.commonRefresh,
+  ),
+],
+  child: switch (state) {
         AIFeatureResultInitial() || AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
         AIFeatureResultError(:final message) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(Icons.error_outline, color: AppColors.error, size: 48),
-              const SizedBox(height: 16),
+              AppSpacing.gapH16,
               Text(message, textAlign: TextAlign.center),
-              const SizedBox(height: 16),
+              AppSpacing.gapH16,
               PosButton(
                 label: l10n.commonRetry,
                 onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('customer_segmentation'),
@@ -71,7 +62,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
         ),
         AIFeatureResultLoaded(:final result) => _buildContent(result.data, isMobile, l10n),
       },
-    );
+);
   }
 
   Widget _buildContent(Map<String, dynamic>? data, bool isMobile, AppLocalizations l10n) {
@@ -89,7 +80,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
     final summaryText = data['summary_ar']?.toString() ?? '';
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+      padding: context.responsivePagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -101,7 +92,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
               gradient: LinearGradient(
                 colors: [AppColors.primary.withValues(alpha: 0.1), AppColors.primary.withValues(alpha: 0.03)],
               ),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: AppRadius.borderLg,
             ),
             child: Row(
               children: [
@@ -128,7 +119,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
               ],
             ),
           ),
-          const SizedBox(height: 16),
+          AppSpacing.gapH16,
 
           // AI summary
           if (summaryText.isNotEmpty) ...[
@@ -137,12 +128,12 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.05),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.borderLg,
                 border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
               ),
               child: SelectableText(summaryText, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
           ],
 
           // Segment cards
@@ -150,7 +141,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
             l10n.wameedAICustomerSegments,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
           ),
-          const SizedBox(height: 12),
+          AppSpacing.gapH12,
 
           if (segments.isEmpty)
             PosEmptyState(title: l10n.wameedAINoResults, icon: Icons.people_outline)
@@ -172,7 +163,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
             ),
 
           // Detail view for selected segment
-          if (_selectedSegment != null) ...[const SizedBox(height: 24), _buildSegmentDetail(segments, l10n)],
+          if (_selectedSegment != null) ...[AppSpacing.gapH24, _buildSegmentDetail(segments, l10n)],
         ],
       ),
     );
@@ -189,12 +180,12 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
 
     return InkWell(
       onTap: () => setState(() => _selectedSegment = isSelected ? null : name.toString()),
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: AppRadius.borderLg,
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
           color: isSelected ? color.withValues(alpha: 0.08) : Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: AppRadius.borderLg,
           border: Border.all(color: isSelected ? color : Theme.of(context).dividerColor),
         ),
         child: Column(
@@ -205,7 +196,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
               children: [
                 Container(
                   padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
+                  decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
                   child: Icon(Icons.group, size: 18, color: color),
                 ),
                 const SizedBox(width: 10),
@@ -223,7 +214,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             if (description.toString().isNotEmpty)
               Text(
                 description.toString(),
@@ -264,7 +255,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.borderLg,
         border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
       ),
       child: Column(
@@ -272,13 +263,13 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
         children: [
           Text(_selectedSegment!, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
           if (avgVisits != null) ...[
-            const SizedBox(height: 4),
+            AppSpacing.gapH4,
             Text(
               '${l10n.wameedAIAvgVisits}: $avgVisits',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
             ),
           ],
-          const SizedBox(height: 16),
+          AppSpacing.gapH16,
 
           // Marketing strategy from AI
           if (marketingStrategy.isNotEmpty) ...[
@@ -286,25 +277,25 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
               l10n.wameedAIPromotionIdeas,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
             ),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: AppColors.warning.withValues(alpha: 0.05),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: AppRadius.borderLg,
                 border: Border.all(color: AppColors.warning.withValues(alpha: 0.15)),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Icon(Icons.campaign_outlined, size: 16, color: AppColors.warning),
-                  const SizedBox(width: 8),
+                  AppSpacing.gapW8,
                   Expanded(child: SelectableText(marketingStrategy, style: Theme.of(context).textTheme.bodyMedium)),
                 ],
               ),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
           ],
 
           if (characteristics.isNotEmpty) ...[
@@ -312,7 +303,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
               l10n.wameedAICharacteristics,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
             ),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             Wrap(
               spacing: 8,
               runSpacing: 6,
@@ -325,12 +316,12 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
                   )
                   .toList(),
             ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
           ],
 
           if (topProducts.isNotEmpty) ...[
             Text(l10n.wameedAITopProducts, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             ...topProducts
                 .take(5)
                 .map(
@@ -339,7 +330,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
                     child: Row(
                       children: [
                         const Icon(Icons.circle, size: 6, color: AppColors.primary),
-                        const SizedBox(width: 8),
+                        AppSpacing.gapW8,
                         Expanded(child: Text(p['name']?.toString() ?? '', style: Theme.of(context).textTheme.bodyMedium)),
                         if (p['count'] != null)
                           Text(
@@ -350,7 +341,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
                     ),
                   ),
                 ),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
           ],
 
           if (promotionIdeas.isNotEmpty) ...[
@@ -358,7 +349,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
               l10n.wameedAIPromotionIdeas,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
             ),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             ...promotionIdeas.map(
               (p) => Padding(
                 padding: const EdgeInsets.only(bottom: 6),
@@ -366,7 +357,7 @@ class _CustomerSegmentsPageState extends ConsumerState<CustomerSegmentsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Icon(Icons.campaign_outlined, size: 16, color: AppColors.warning),
-                    const SizedBox(width: 8),
+                    AppSpacing.gapW8,
                     Expanded(child: Text('$p', style: Theme.of(context).textTheme.bodyMedium)),
                   ],
                 ),

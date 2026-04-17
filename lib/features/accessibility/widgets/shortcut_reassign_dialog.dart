@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/accessibility/services/keyboard_shortcut_service.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Dialog for reassigning a keyboard shortcut.
 /// Listens for key events and validates against reserved/conflicting shortcuts.
@@ -119,7 +120,7 @@ class _ShortcutReassignDialogState extends State<ShortcutReassignDialog> {
               padding: AppSpacing.paddingAll16,
               decoration: BoxDecoration(
                 color: theme.colorScheme.surfaceContainerHighest,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.borderLg,
                 border: Border.all(color: _error != null ? theme.colorScheme.error : theme.colorScheme.outline, width: 2),
               ),
               child: Center(
@@ -142,10 +143,11 @@ class _ShortcutReassignDialogState extends State<ShortcutReassignDialog> {
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l10n.cancel)),
-        FilledButton(
+        PosButton(onPressed: () => Navigator.of(context).pop(), variant: PosButtonVariant.ghost, label: l10n.cancel),
+        PosButton(
           onPressed: _capturedLabel != null && _error == null ? () => Navigator.of(context).pop(_capturedLabel) : null,
-          child: Text(l10n.save),
+          variant: PosButtonVariant.soft,
+          label: l10n.save,
         ),
       ],
     );

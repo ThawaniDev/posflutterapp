@@ -37,14 +37,11 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminWameedAILlmModels),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        actions: [IconButton(icon: const Icon(Icons.add_rounded), onPressed: () => _showCreateDialog(l10n))],
-      ),
-      body: switch (state) {
+    return PosListPage(
+      title: l10n.adminWameedAILlmModels,
+      showSearch: false,
+      actions: [PosButton.icon(icon: Icons.add_rounded, onPressed: () => _showCreateDialog(l10n))],
+      child: switch (state) {
         WameedAIAdminListLoading() => const Center(child: PosLoading()),
         WameedAIAdminListLoaded(data: final resp) => _buildContent(resp, l10n),
         WameedAIAdminListError(message: final msg) => PosErrorState(message: msg, onRetry: _reload),
@@ -255,7 +252,7 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
           PosButton(
             label: l10n.create,
             onPressed: () {
@@ -318,7 +315,7 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
           PosButton(
             label: l10n.save,
             onPressed: () {
@@ -331,25 +328,18 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
     );
   }
 
-  void _confirmDelete(String id, String name, AppLocalizations l10n) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.confirmDelete),
-        content: Text('${l10n.deleteModelConfirm} "$name"?'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-          PosButton(
-            label: l10n.delete,
-            variant: PosButtonVariant.danger,
-            onPressed: () {
-              Navigator.pop(ctx);
-              ref.read(wameedAIAdminActionProvider.notifier).deleteLlmModel(id);
-            },
-          ),
-        ],
-      ),
+  void _confirmDelete(String id, String name, AppLocalizations l10n) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.confirmDelete,
+      message: '${l10n.deleteModelConfirm} "$name"?',
+      confirmLabel: l10n.delete,
+      cancelLabel: l10n.cancel,
+      isDanger: true,
     );
+    if (confirmed == true) {
+      ref.read(wameedAIAdminActionProvider.notifier).deleteLlmModel(id);
+    }
   }
 
   String _fmtLargeNumber(dynamic v) {

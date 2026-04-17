@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
-import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
 import 'package:wameedpos/core/widgets/pos_mobile_data_list.dart';
 import 'package:wameedpos/core/widgets/pos_table.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
@@ -115,53 +113,45 @@ class _OrderListPageState extends ConsumerState<OrderListPage> {
     final state = ref.watch(ordersProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.orders),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showOrderListInfo(context),
-          ),
-          PopupMenuButton<String?>(
-            icon: const Icon(Icons.filter_list),
-            tooltip: l10n.ordersFilterByStatus,
-            onSelected: (value) {
-              ref.read(ordersProvider.notifier).filterByStatus(value);
-            },
-            itemBuilder: (ctx) => [
-              PopupMenuItem(value: null, child: Text(l10n.ordersAll)),
-              PopupMenuItem(value: 'new', child: Text(l10n.ordersNew)),
-              PopupMenuItem(value: 'confirmed', child: Text(l10n.ordersConfirmed)),
-              PopupMenuItem(value: 'preparing', child: Text(l10n.ordersPreparing)),
-              PopupMenuItem(value: 'ready', child: Text(l10n.ordersReady)),
-              PopupMenuItem(value: 'completed', child: Text(l10n.ordersCompleted)),
-              PopupMenuItem(value: 'cancelled', child: Text(l10n.ordersCancelled)),
-              PopupMenuItem(value: 'voided', child: Text(l10n.ordersVoided)),
-            ],
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(ordersProvider.notifier).load(),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.md),
-            child: PosTextField(
-              controller: _searchController,
-              hint: l10n.ordersSearchByNumber,
-              prefixIcon: Icons.search,
-              onSubmitted: (value) => ref.read(ordersProvider.notifier).search(value),
-            ),
-          ),
-          Expanded(child: isMobile ? _buildMobileBody(state) : _buildBody(state)),
-        ],
-      ),
+    return PosListPage(
+      title: l10n.orders,
+      searchController: _searchController,
+      searchHint: l10n.ordersSearchByNumber,
+      onSearchSubmitted: (value) => ref.read(ordersProvider.notifier).search(value),
+      filters: [
+        PopupMenuButton<String?>(
+          icon: const Icon(Icons.filter_list),
+          tooltip: l10n.ordersFilterByStatus,
+          onSelected: (value) {
+            ref.read(ordersProvider.notifier).filterByStatus(value);
+          },
+          itemBuilder: (ctx) => [
+            PopupMenuItem(value: null, child: Text(l10n.ordersAll)),
+            PopupMenuItem(value: 'new', child: Text(l10n.ordersNew)),
+            PopupMenuItem(value: 'confirmed', child: Text(l10n.ordersConfirmed)),
+            PopupMenuItem(value: 'preparing', child: Text(l10n.ordersPreparing)),
+            PopupMenuItem(value: 'ready', child: Text(l10n.ordersReady)),
+            PopupMenuItem(value: 'completed', child: Text(l10n.ordersCompleted)),
+            PopupMenuItem(value: 'cancelled', child: Text(l10n.ordersCancelled)),
+            PopupMenuItem(value: 'voided', child: Text(l10n.ordersVoided)),
+          ],
+        ),
+      ],
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showOrderListInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () => ref.read(ordersProvider.notifier).load(),
+          variant: PosButtonVariant.ghost,
+        ),
+      ],
+      child: isMobile ? _buildMobileBody(state) : _buildBody(state),
     );
   }
 

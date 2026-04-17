@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
@@ -38,9 +39,10 @@ class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDash
   Widget build(BuildContext context) {
     final state = ref.watch(analyticsDashboardProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.analyticsDashboard), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.analyticsDashboard,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -61,7 +63,7 @@ class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDash
                     Text(l10n.securityRecentActivity, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                     const SizedBox(height: AppSpacing.sm),
                     ...activity.map(
-                      (a) => Card(
+                      (a) => PosCard(
                         margin: const EdgeInsets.only(bottom: AppSpacing.xs),
                         child: ListTile(
                           leading: const Icon(Icons.history, color: AppColors.primary),
@@ -83,9 +85,9 @@ class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDash
                   children: [
                     Text('Error: $msg'),
                     const SizedBox(height: AppSpacing.sm),
-                    ElevatedButton(
+                    PosButton(
                       onPressed: () => ref.read(analyticsDashboardProvider.notifier).load(storeId: _storeId),
-                      child: Text(l10n.retry),
+                      label: l10n.retry,
                     ),
                   ],
                 ),
@@ -95,7 +97,7 @@ class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDash
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildKpiGrid(Map<String, dynamic> kpi) {
@@ -121,7 +123,7 @@ class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDash
       itemCount: items.length,
       itemBuilder: (context, index) {
         final item = items[index];
-        return Card(
+        return PosCard(
           elevation: 2,
           child: Padding(
             padding: const EdgeInsets.all(AppSpacing.sm),

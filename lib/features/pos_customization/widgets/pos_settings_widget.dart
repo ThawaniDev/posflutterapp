@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/pos_customization/providers/customization_state.dart';
 import 'package:wameedpos/features/pos_customization/providers/customization_providers.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class PosSettingsWidget extends ConsumerWidget {
   const PosSettingsWidget({super.key});
@@ -27,7 +28,7 @@ class PosSettingsWidget extends ConsumerWidget {
       ),
       final SettingsLoaded s => SingleChildScrollView(
         padding: AppSpacing.paddingAll16,
-        child: Card(
+        child: PosCard(
           child: Column(
             children: [
               _tile(Icons.palette, 'Theme', s.theme.toUpperCase()),

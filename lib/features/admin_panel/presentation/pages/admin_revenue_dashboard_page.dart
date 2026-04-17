@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
@@ -39,19 +40,15 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
   Widget build(BuildContext context) {
     final state = ref.watch(revenueDashboardProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.revenueDashboard),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => ref.read(revenueDashboardProvider.notifier).loadDashboard(storeId: _storeId),
-          ),
-        ],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.revenueDashboard,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(revenueDashboardProvider.notifier).loadDashboard(storeId: _storeId),
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -142,7 +139,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                     Text('Revenue by Status', style: Theme.of(context).textTheme.titleMedium),
                     const SizedBox(height: AppSpacing.sm),
                     ...state.revenueByStatus.map(
-                      (item) => Card(
+                      (item) => PosCard(
                         child: ListTile(
                           leading: Icon(Icons.circle, color: _statusColor(item['status'] ?? '')),
                           title: Text((item['status'] as String? ?? '').toUpperCase()),
@@ -160,11 +157,11 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _metricCard(String label, String value, IconData icon, Color color) {
-    return Card(
+    return PosCard(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: Column(

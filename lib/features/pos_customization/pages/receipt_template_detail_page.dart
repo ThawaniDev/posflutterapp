@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
-import 'package:wameedpos/core/widgets/pos_error_state.dart';
-import 'package:wameedpos/core/widgets/pos_loading_skeleton.dart';
 import 'package:wameedpos/features/pos_customization/models/receipt_layout_template.dart';
 import 'package:wameedpos/features/pos_customization/providers/template_browse_providers.dart';
 
@@ -33,18 +30,21 @@ class _ReceiptTemplateDetailPageState extends ConsumerState<ReceiptTemplateDetai
     final state = ref.watch(receiptLayoutDetailProvider(widget.slug));
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.receiptTemplateDetail)),
-      floatingActionButton: switch (state) {
-        ReceiptLayoutDetailLoaded(:final template) => FloatingActionButton.extended(
-          onPressed: () =>
-              context.push('${Routes.receiptTemplatePreview}/${template.id}?name=${Uri.encodeComponent(template.name)}'),
-          icon: const Icon(Icons.visibility_rounded),
-          label: Text(l10n.templatePreviewButton),
-        ),
-        _ => null,
-      },
-      body: switch (state) {
+    return PosListPage(
+      title: l10n.receiptTemplateDetail,
+      showSearch: false,
+      actions: [
+        if (state is ReceiptLayoutDetailLoaded)
+          PosButton(
+            label: l10n.templatePreviewButton,
+            icon: Icons.visibility_rounded,
+            size: PosButtonSize.sm,
+            onPressed: () => context.push(
+              '${Routes.receiptTemplatePreview}/${(state).template.id}?name=${Uri.encodeComponent((state).template.name)}',
+            ),
+          ),
+      ],
+      child: switch (state) {
         ReceiptLayoutDetailInitial() || ReceiptLayoutDetailLoading() => PosLoadingSkeleton.list(),
         ReceiptLayoutDetailError(:final message) => PosErrorState(
           message: message,

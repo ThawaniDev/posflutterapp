@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminAnnouncementListPage extends ConsumerStatefulWidget {
   const AdminAnnouncementListPage({super.key});
@@ -53,12 +54,15 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
   Widget build(BuildContext context) {
     final state = ref.watch(announcementListProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Platform Announcements'),
-        actions: [IconButton(icon: const Icon(Icons.add), onPressed: () {})],
-      ),
-      body: Column(
+    return PosListPage(
+  title: 'Platform Announcements',
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.add, onPressed: () {},
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
@@ -122,7 +126,7 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
                               itemBuilder: (context, index) {
                                 final ann = announcements[index];
                                 final type = ann['type'] as String?;
-                                return Card(
+                                return PosCard(
                                   child: ListTile(
                                     leading: CircleAvatar(
                                       backgroundColor: _typeColor(type).withValues(alpha: 0.2),
@@ -157,6 +161,6 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
           ),
         ],
       ),
-    );
+);
   }
 }

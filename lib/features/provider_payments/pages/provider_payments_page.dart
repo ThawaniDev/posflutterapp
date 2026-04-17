@@ -20,7 +20,6 @@ class ProviderPaymentsPage extends ConsumerStatefulWidget {
 }
 
 class _ProviderPaymentsPageState extends ConsumerState<ProviderPaymentsPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _statusFilter;
 
@@ -35,32 +34,28 @@ class _ProviderPaymentsPageState extends ConsumerState<ProviderPaymentsPage> {
   @override
   Widget build(BuildContext context) {
     final paymentsState = ref.watch(providerPaymentsListProvider);
+    final isLoading = paymentsState is ProviderPaymentsListLoading;
+    final hasError = paymentsState is ProviderPaymentsListError;
+    final isEmpty = paymentsState is ProviderPaymentsListLoaded && paymentsState.payments.isEmpty;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.sidebarPayments), centerTitle: true),
-      body: Column(
-        children: [
-          // Status filter chips
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              children: [
-                _buildFilterChip('All', null),
-                const SizedBox(width: 8),
-                _buildFilterChip('Pending', 'pending'),
-                const SizedBox(width: 8),
-                _buildFilterChip('Completed', 'completed'),
-                const SizedBox(width: 8),
-                _buildFilterChip('Failed', 'failed'),
-                const SizedBox(width: 8),
-                _buildFilterChip('Refunded', 'refunded'),
-              ],
-            ),
-          ),
-          Expanded(child: _buildBody(paymentsState)),
-        ],
-      ),
+    return PosListPage(
+      title: l10n.sidebarPayments,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? paymentsState.message : null,
+      onRetry: () => ref.read(providerPaymentsListProvider.notifier).loadPayments(status: _statusFilter),
+      isEmpty: isEmpty,
+      emptyTitle: l10n.providerPaymentNoPayments,
+      emptyIcon: Icons.payment_outlined,
+      filters: [
+        _buildFilterChip('All', null),
+        _buildFilterChip('Pending', 'pending'),
+        _buildFilterChip('Completed', 'completed'),
+        _buildFilterChip('Failed', 'failed'),
+        _buildFilterChip('Refunded', 'refunded'),
+      ],
+      child: paymentsState is ProviderPaymentsListLoaded ? _buildList(paymentsState.payments) : const SizedBox.shrink(),
     );
   }
 
@@ -78,44 +73,23 @@ class _ProviderPaymentsPageState extends ConsumerState<ProviderPaymentsPage> {
     );
   }
 
-  Widget _buildBody(ProviderPaymentsListState state) {
-    if (state is ProviderPaymentsListLoading) {
-      return Center(child: PosLoadingSkeleton.list());
-    }
-
-    if (state is ProviderPaymentsListError) {
-      return PosErrorState(
-        message: state.message,
-        onRetry: () => ref.read(providerPaymentsListProvider.notifier).loadPayments(status: _statusFilter),
-      );
-    }
-
-    if (state is ProviderPaymentsListLoaded) {
-      final payments = state.payments;
-
-      if (payments.isEmpty) {
-        return PosEmptyState(title: l10n.providerPaymentNoPayments, icon: Icons.payment_outlined);
-      }
-
-      return RefreshIndicator(
-        onRefresh: () async {
-          await ref.read(providerPaymentsListProvider.notifier).loadPayments(status: _statusFilter);
+  Widget _buildList(List<ProviderPayment> payments) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        await ref.read(providerPaymentsListProvider.notifier).loadPayments(status: _statusFilter);
+      },
+      child: ListView.separated(
+        padding: AppSpacing.paddingAllMd,
+        itemCount: payments.length,
+        separatorBuilder: (_, __) => AppSpacing.verticalSm,
+        itemBuilder: (context, index) {
+          return _PaymentListTile(
+            payment: payments[index],
+            onTap: () => context.go('${Routes.providerPaymentDetail}/${payments[index].id}'),
+          );
         },
-        child: ListView.separated(
-          padding: AppSpacing.paddingAllMd,
-          itemCount: payments.length,
-          separatorBuilder: (_, __) => AppSpacing.verticalSm,
-          itemBuilder: (context, index) {
-            return _PaymentListTile(
-              payment: payments[index],
-              onTap: () => context.go('${Routes.providerPaymentDetail}/${payments[index].id}'),
-            );
-          },
-        ),
-      );
-    }
-
-    return const SizedBox.shrink();
+      ),
+    );
   }
 }
 
@@ -213,7 +187,7 @@ class _StatusBadge extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(color: bgColor, borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(color: bgColor, borderRadius: AppRadius.borderLg),
       child: Text(
         status.label,
         style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w600),

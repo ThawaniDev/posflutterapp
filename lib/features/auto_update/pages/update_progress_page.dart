@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Full-screen update progress page showing step-by-step installation.
 /// Steps: Backup -> Download -> Verify -> Install -> Migrate -> Complete
@@ -121,20 +122,21 @@ class _UpdateProgressPageState extends ConsumerState<UpdateProgressPage> {
                     AppSpacing.gapH24,
                     Container(
                       padding: AppSpacing.paddingAll12,
-                      decoration: BoxDecoration(color: AppColors.error.withAlpha(20), borderRadius: BorderRadius.circular(8)),
+                      decoration: BoxDecoration(color: AppColors.error.withAlpha(20), borderRadius: AppRadius.borderMd),
                       child: Text(_error!, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.error)),
                     ),
                     AppSpacing.gapH16,
-                    OutlinedButton(onPressed: () => Navigator.of(context).pop(), child: Text(l10n.close)),
+                    PosButton(onPressed: () => Navigator.of(context).pop(), variant: PosButtonVariant.outline, label: l10n.close),
                   ],
                   if (_done) ...[
                     AppSpacing.gapH24,
-                    FilledButton(
+                    PosButton(
                       onPressed: () {
                         widget.onComplete();
                         Navigator.of(context).pop();
                       },
-                      child: Text(l10n.autoUpdateRestart),
+                      variant: PosButtonVariant.soft,
+                      label: l10n.autoUpdateRestart,
                     ),
                   ],
                 ],

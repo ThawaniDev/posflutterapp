@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -8,6 +9,7 @@ import '../../providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminMarketplaceSettlementListPage extends ConsumerStatefulWidget {
   const AdminMarketplaceSettlementListPage({super.key});
@@ -47,9 +49,10 @@ class _AdminMarketplaceSettlementListPageState extends ConsumerState<AdminMarket
     final listState = ref.watch(marketplaceSettlementListProvider);
     final summaryState = ref.watch(marketplaceSettlementSummaryProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.thawaniSettlements), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.thawaniSettlements,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // Summary card
@@ -74,12 +77,12 @@ class _AdminMarketplaceSettlementListPageState extends ConsumerState<AdminMarket
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildSummary(Map<String, dynamic> data) {
     final summary = data['data'] as Map<String, dynamic>? ?? data;
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.all(AppSpacing.md),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
@@ -125,7 +128,7 @@ class _AdminMarketplaceSettlementListPageState extends ConsumerState<AdminMarket
     return Column(
       children: [
         Text(value, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 4),
+        AppSpacing.gapH4,
         Text(label, style: TextStyle(color: AppColors.textSecondary, fontSize: 12)),
       ],
     );
@@ -142,7 +145,7 @@ class _AdminMarketplaceSettlementListPageState extends ConsumerState<AdminMarket
       itemBuilder: (context, index) {
         final s = settlements[index];
         final store = s['store'] as Map<String, dynamic>?;
-        return Card(
+        return PosCard(
           margin: const EdgeInsets.only(bottom: AppSpacing.sm),
           child: ListTile(
             leading: const Icon(Icons.account_balance_wallet, color: AppColors.primary),

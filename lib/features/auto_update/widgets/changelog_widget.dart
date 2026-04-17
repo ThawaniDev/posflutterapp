@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/auto_update/providers/auto_update_providers.dart';
 import 'package:wameedpos/features/auto_update/providers/auto_update_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ChangelogWidget extends ConsumerWidget {
   const ChangelogWidget({super.key});
@@ -29,7 +30,7 @@ class ChangelogWidget extends ConsumerWidget {
                 separatorBuilder: (_, __) => AppSpacing.gapH8,
                 itemBuilder: (context, index) {
                   final r = releases[index];
-                  return Card(
+                  return PosCard(
                     child: ListTile(
                       leading: const Icon(Icons.new_releases_outlined),
                       title: Text('v${r['version_number'] ?? r['version'] ?? '?'}', style: theme.textTheme.titleSmall),

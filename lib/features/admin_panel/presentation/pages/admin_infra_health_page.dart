@@ -45,9 +45,10 @@ class _State extends ConsumerState<AdminInfraHealthPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(infraHealthChecksProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.adminInfraHealth), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.adminInfraHealth,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
@@ -82,7 +83,7 @@ class _State extends ConsumerState<AdminInfraHealthPage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> resp) {
@@ -105,8 +106,8 @@ class _State extends ConsumerState<AdminInfraHealthPage> {
             'critical' => (AppColors.error, const Color(0xFFFEE2E2), Icons.cancel),
             _ => (AppColors.textSecondary, const Color(0xFFF3F4F6), Icons.help_outline),
           };
-          return Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          return PosCard(
+            borderRadius: BorderRadius.circular(10,),
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: bgColor,
@@ -126,7 +127,7 @@ class _State extends ConsumerState<AdminInfraHealthPage> {
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(color: bgColor, borderRadius: BorderRadius.circular(12)),
+                    decoration: BoxDecoration(color: bgColor, borderRadius: AppRadius.borderLg),
                     child: Text(
                       status.toUpperCase(),
                       style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: iconColor),

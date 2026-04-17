@@ -71,114 +71,107 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
     final isLoading =
         paymentsState is PaymentsLoading || sessionsState is CashSessionsLoading || expensesState is ExpensesLoading;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.dailySummaryTitle),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showDailySummaryInfo(context),
-          ),
-          IconButton(
-            icon: const Icon(Icons.chevron_left),
-            onPressed: () {
-              setState(() => _selectedDate = _selectedDate.subtract(const Duration(days: 1)));
-              _reload();
-            },
-          ),
-          TextButton(
-            onPressed: () => _pickDate(context),
-            child: Text('${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}', style: theme.textTheme.titleSmall),
-          ),
-          IconButton(
-            icon: const Icon(Icons.chevron_right),
-            onPressed: _selectedDate.isBefore(DateTime.now().subtract(const Duration(days: 1)))
-                ? () {
-                    setState(() => _selectedDate = _selectedDate.add(const Duration(days: 1)));
-                    _reload();
-                  }
-                : null,
-          ),
-          AppSpacing.gapW8,
-          OutlinedButton.icon(onPressed: () {}, icon: const Icon(Icons.print, size: 18), label: Text(l10n.dailySummaryPrint)),
-          AppSpacing.gapW12,
-        ],
-      ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : SingleChildScrollView(
-              padding: EdgeInsets.all(context.isPhone ? 12 : 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // ── Top KPI Cards ──
-                  PosKpiGrid(
-                    desktopCols: 4,
-                    mobileCols: 2,
-                    cards: [
-                      PosKpiCard(
-                        label: l10n.dailySummaryGrossRevenue,
-                        value: '${totalRevenue.toStringAsFixed(2)} \u0081',
-                        icon: Icons.trending_up,
-                        iconColor: AppColors.success,
-                      ),
-                      PosKpiCard(
-                        label: l10n.dailySummaryExpenses,
-                        value: '${totalExpenses.toStringAsFixed(2)} \u0081',
-                        icon: Icons.trending_down,
-                        iconColor: AppColors.error,
-                      ),
-                      PosKpiCard(
-                        label: l10n.dailySummaryNetRevenue,
-                        value: '${netRevenue.toStringAsFixed(2)} \u0081',
-                        icon: Icons.account_balance,
-                        iconColor: netRevenue >= 0 ? AppColors.success : AppColors.error,
-                      ),
-                      PosKpiCard(
-                        label: l10n.dailySummaryTransactions,
-                        value: '$txCount',
-                        icon: Icons.receipt,
-                        iconColor: AppColors.info,
-                      ),
-                    ],
-                  ),
-                  AppSpacing.gapH24,
-
-                  // ── Revenue by Payment Method ──
-                  context.isPhone
-                      ? Column(
-                          children: [
-                            _buildMethodBreakdownCard(theme, byMethod, totalRevenue, l10n),
-                            AppSpacing.gapH16,
-                            _buildCashVarianceCard(theme, closedSessions, totalVariance, l10n),
-                          ],
-                        )
-                      : Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(flex: 3, child: _buildMethodBreakdownCard(theme, byMethod, totalRevenue, l10n)),
-                            AppSpacing.gapW16,
-                            Expanded(flex: 2, child: _buildCashVarianceCard(theme, closedSessions, totalVariance, l10n)),
-                          ],
-                        ),
-                  AppSpacing.gapH24,
-
-                  // ── Hourly Activity ──
-                  _buildHourlyActivityCard(theme, payments, l10n),
-                  AppSpacing.gapH24,
-
-                  // ── Session Details ──
-                  _buildSessionDetailsCard(theme, sessions, l10n),
-                ],
-              ),
+    return PosListPage(
+      title: l10n.dailySummaryTitle,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showDailySummaryInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: Icons.chevron_left,
+          tooltip: '',
+          onPressed: () {
+            setState(() => _selectedDate = _selectedDate.subtract(const Duration(days: 1)));
+            _reload();
+          },
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton(
+          onPressed: () => _pickDate(context),
+          variant: PosButtonVariant.ghost,
+          label: '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
+        ),
+        PosButton.icon(
+          icon: Icons.chevron_right,
+          tooltip: '',
+          onPressed: _selectedDate.isBefore(DateTime.now().subtract(const Duration(days: 1)))
+              ? () {
+                  setState(() => _selectedDate = _selectedDate.add(const Duration(days: 1)));
+                  _reload();
+                }
+              : null,
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton(label: l10n.dailySummaryPrint, icon: Icons.print, variant: PosButtonVariant.outline, onPressed: () {}),
+      ],
+      isLoading: isLoading,
+      child: SingleChildScrollView(
+        padding: context.responsivePagePadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ── Top KPI Cards ──
+            PosKpiGrid(
+              desktopCols: 4,
+              mobileCols: 2,
+              cards: [
+                PosKpiCard(
+                  label: l10n.dailySummaryGrossRevenue,
+                  value: '${totalRevenue.toStringAsFixed(2)} \u0081',
+                  icon: Icons.trending_up,
+                  iconColor: AppColors.success,
+                ),
+                PosKpiCard(
+                  label: l10n.dailySummaryExpenses,
+                  value: '${totalExpenses.toStringAsFixed(2)} \u0081',
+                  icon: Icons.trending_down,
+                  iconColor: AppColors.error,
+                ),
+                PosKpiCard(
+                  label: l10n.dailySummaryNetRevenue,
+                  value: '${netRevenue.toStringAsFixed(2)} \u0081',
+                  icon: Icons.account_balance,
+                  iconColor: netRevenue >= 0 ? AppColors.success : AppColors.error,
+                ),
+                PosKpiCard(
+                  label: l10n.dailySummaryTransactions,
+                  value: '$txCount',
+                  icon: Icons.receipt,
+                  iconColor: AppColors.info,
+                ),
+              ],
             ),
+            AppSpacing.gapH24,
+
+            // ── Revenue by Payment Method ──
+            ResponsiveTwoColumn(
+              leftFlex: 3,
+              rightFlex: 2,
+              spacing: AppSpacing.base,
+              left: _buildMethodBreakdownCard(theme, byMethod, totalRevenue, l10n),
+              right: _buildCashVarianceCard(theme, closedSessions, totalVariance, l10n),
+            ),
+            AppSpacing.gapH24,
+
+            // ── Hourly Activity ──
+            _buildHourlyActivityCard(theme, payments, l10n),
+            AppSpacing.gapH24,
+
+            // ── Session Details ──
+            _buildSessionDetailsCard(theme, sessions, l10n),
+          ],
+        ),
+      ),
     );
   }
 
   Widget _buildMethodBreakdownCard(ThemeData theme, Map<String, double> byMethod, double total, AppLocalizations l10n) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+    return PosCard(
+      borderRadius: AppRadius.borderLg,
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -249,8 +242,8 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
   }
 
   Widget _buildCashVarianceCard(ThemeData theme, List<dynamic> closedSessions, double totalVariance, AppLocalizations l10n) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+    return PosCard(
+      borderRadius: AppRadius.borderLg,
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -305,8 +298,8 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
 
     final maxCount = byHour.values.fold<int>(0, (m, v) => v > m ? v : m);
 
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+    return PosCard(
+      borderRadius: AppRadius.borderLg,
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -358,8 +351,8 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
   }
 
   Widget _buildSessionDetailsCard(ThemeData theme, List<dynamic> sessions, AppLocalizations l10n) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+    return PosCard(
+      borderRadius: AppRadius.borderLg,
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(

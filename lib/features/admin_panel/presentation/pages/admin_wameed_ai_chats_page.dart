@@ -49,9 +49,10 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(wameedAIAdminChatsProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.adminWameedAIChats), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.adminWameedAIChats,
+  showSearch: false,
+    child: Column(
         children: [
           _buildFilters(l10n),
           const Divider(height: 1),
@@ -65,7 +66,7 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildFilters(AppLocalizations l10n) {
@@ -228,7 +229,7 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
             Container(
               width: 44,
               height: 44,
-              decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
+              decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
               child: const Icon(Icons.chat_rounded, color: AppColors.primary),
             ),
             const SizedBox(width: AppSpacing.md),
@@ -279,7 +280,7 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
                 _ => const Center(child: PosLoading()),
               },
             ),
-            actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.close))],
+            actions: [PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.close)],
           );
         },
       ),
@@ -306,7 +307,7 @@ class _State extends ConsumerState<AdminWameedAIChatsPage> {
             padding: const EdgeInsets.all(AppSpacing.sm),
             decoration: BoxDecoration(
               color: isUser ? AppColors.primary.withValues(alpha: 0.1) : AppColors.surfaceLight,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: AppRadius.borderLg,
               border: Border.all(color: isUser ? AppColors.primary.withValues(alpha: 0.3) : AppColors.borderLight),
             ),
             child: Column(

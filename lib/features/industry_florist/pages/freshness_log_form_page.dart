@@ -18,7 +18,6 @@ class FreshnessLogFormPage extends ConsumerStatefulWidget {
 }
 
 class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
@@ -78,16 +77,18 @@ class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
   Widget build(BuildContext context) {
     final productsState = ref.watch(productsProvider);
     final products = productsState is ProductsLoaded ? productsState.products : <Product>[];
-    return Scaffold(
-      appBar: AppBar(title: const Text('New Freshness Log')),
-      bottomNavigationBar: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: PosButton(label: 'Log Freshness', onPressed: _saving ? null : _handleSave, isLoading: _saving, isFullWidth: true),
+    return PosFormPage(
+      title: 'New Freshness Log',
+      bottomBar: PosButton(
+        label: 'Log Freshness',
+        onPressed: _saving ? null : _handleSave,
+        isLoading: _saving,
+        isFullWidth: true,
       ),
-      body: Form(
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosSearchableDropdown<String>(
               label: l10n.wameedAIProduct,

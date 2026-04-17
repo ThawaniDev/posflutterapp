@@ -31,7 +31,7 @@ class IncidentListWidget extends StatelessWidget {
     final isResolved = incident.isResolved;
     final severityColor = _severityColor(incident.severity);
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -51,7 +51,7 @@ class IncidentListWidget extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(color: severityColor.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(4)),
+                  decoration: BoxDecoration(color: severityColor.withValues(alpha: 0.12), borderRadius: AppRadius.borderXs),
                   child: Text(
                     incident.severity.toUpperCase(),
                     style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: severityColor),
@@ -62,7 +62,7 @@ class IncidentListWidget extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(
                     color: (isResolved ? AppColors.success : AppColors.warning).withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: AppRadius.borderXs,
                   ),
                   child: Text(
                     isResolved ? l10n.securityResolved : l10n.securityUnresolved,
@@ -93,7 +93,7 @@ class IncidentListWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: AppColors.success.withValues(alpha: 0.06),
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: AppRadius.borderXs,
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,13 +136,14 @@ class IncidentListWidget extends StatelessWidget {
           maxLines: 3,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.notifScheduleCancel)),
-          FilledButton(
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.notifScheduleCancel),
+          PosButton(
             onPressed: () {
               onResolve?.call(incidentId, notesCtrl.text);
               Navigator.pop(ctx);
             },
-            child: Text(l10n.securityResolve),
+            variant: PosButtonVariant.soft,
+            label: l10n.securityResolve,
           ),
         ],
       ),

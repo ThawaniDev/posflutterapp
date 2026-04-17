@@ -5,6 +5,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/pos_badge.dart';
 import '../models/zatca_invoice.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class InvoiceListWidget extends StatelessWidget {
   final List<ZatcaInvoice> invoices;
@@ -50,7 +51,7 @@ class InvoiceListWidget extends StatelessWidget {
             height: 40,
             decoration: BoxDecoration(
               color: _typeColor(invoice.invoiceType.value).withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(AppRadius.sm),
+              borderRadius: AppRadius.borderSm,
             ),
             child: Icon(_typeIcon(invoice.invoiceType.value), size: 20, color: _typeColor(invoice.invoiceType.value)),
           ),

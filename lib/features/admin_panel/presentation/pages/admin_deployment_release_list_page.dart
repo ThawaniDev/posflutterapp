@@ -5,9 +5,11 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminDeploymentReleaseListPage extends ConsumerStatefulWidget {
   const AdminDeploymentReleaseListPage({super.key});
@@ -57,19 +59,20 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
   Widget build(BuildContext context) {
     final state = ref.watch(deploymentReleaseListProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Deployment Releases'),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: _load)],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
-        onPressed: () {},
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-      body: Column(
+    return PosListPage(
+  title: 'Deployment Releases',
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: _load,
+  ),
+  PosButton.icon(
+    icon: Icons.add,
+    onPressed: () {},
+    tooltip: 'Add',
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // Filters
@@ -83,7 +86,7 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
                     decoration: InputDecoration(
                       hintText: 'Search versions...',
                       prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                      border: OutlineInputBorder(borderRadius: AppRadius.borderMd),
                       contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
                     ),
                     onSubmitted: (_) => _load(),
@@ -124,7 +127,7 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> data) {
@@ -139,7 +142,7 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
         final r = items[index] as Map<String, dynamic>;
         final isActive = r['is_active'] == true || r['is_active'] == 1;
         final isMandatory = r['is_mandatory'] == true || r['is_mandatory'] == 1;
-        return Card(
+        return PosCard(
           margin: const EdgeInsets.only(bottom: AppSpacing.sm),
           child: ListTile(
             leading: Icon(_platformIcon(r['platform'] ?? ''), color: isActive ? AppColors.success : AppColors.textSecondary),
@@ -153,7 +156,7 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
                 color: isActive ? AppColors.success.withOpacity(0.1) : AppColors.textSecondary.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.borderLg,
               ),
               child: Text(
                 isActive ? 'Active' : 'Inactive',

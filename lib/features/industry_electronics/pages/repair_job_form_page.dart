@@ -87,21 +87,18 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
   Widget build(BuildContext context) {
     final staffState = ref.watch(staffListProvider);
     final staffList = staffState is StaffListLoaded ? staffState.staff : <StaffUser>[];
-    return Scaffold(
-      appBar: AppBar(title: Text(_isEditing ? 'Edit Repair Job' : 'New Repair Job')),
-      bottomNavigationBar: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: PosButton(
+    return PosFormPage(
+      title: _isEditing ? 'Edit Repair Job' : 'New Repair Job',
+      bottomBar: PosButton(
           label: _isEditing ? 'Update Job' : 'Create Job',
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,
         ),
-      ),
-      body: Form(
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosTextField(
               controller: _deviceDescCtrl,

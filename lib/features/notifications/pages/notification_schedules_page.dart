@@ -175,15 +175,20 @@ class _NotificationSchedulesPageState extends ConsumerState<NotificationSchedule
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.notifSchedulesTitle),
-        actions: [
-          IconButton(icon: const Icon(Icons.refresh_rounded), onPressed: () => ref.read(schedulesProvider.notifier).load()),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(onPressed: _showCreateDialog, child: const Icon(Icons.add_rounded)),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.notifSchedulesTitle,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh_rounded, onPressed: () => ref.read(schedulesProvider.notifier).load(),
+  ),
+  PosButton.icon(
+    icon: Icons.add_rounded,
+    onPressed: _showCreateDialog,
+    tooltip: 'Add',
+  ),
+],
+  child: switch (state) {
         SchedulesInitial() || SchedulesLoading() => const Center(child: PosLoading()),
         SchedulesError(:final message) => PosErrorState(
           message: message,
@@ -208,7 +213,7 @@ class _NotificationSchedulesPageState extends ConsumerState<NotificationSchedule
                   ),
                 ),
       },
-    );
+);
   }
 
   Widget _buildScheduleCard(NotificationSchedule schedule, bool isDark) {

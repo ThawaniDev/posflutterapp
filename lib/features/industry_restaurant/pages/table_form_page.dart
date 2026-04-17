@@ -80,21 +80,18 @@ class _TableFormPageState extends ConsumerState<TableFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(_isEditing ? 'Edit Table' : 'New Table')),
-      bottomNavigationBar: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: PosButton(
+    return PosFormPage(
+      title: _isEditing ? 'Edit Table' : 'New Table',
+      bottomBar: PosButton(
           label: _isEditing ? 'Update Table' : 'Create Table',
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,
         ),
-      ),
-      body: Form(
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [

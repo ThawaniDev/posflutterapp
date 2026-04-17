@@ -17,10 +17,10 @@ class TableGridTile extends StatelessWidget {
 
     return Material(
       color: bgColor,
-      borderRadius: BorderRadius.circular(AppRadius.md),
+      borderRadius: AppRadius.borderMd,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: AppRadius.borderMd,
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(

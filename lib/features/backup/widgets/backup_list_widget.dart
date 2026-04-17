@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/backup/providers/backup_providers.dart';
 import 'package:wameedpos/features/backup/providers/backup_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class BackupListWidget extends ConsumerWidget {
   const BackupListWidget({super.key});
@@ -57,7 +58,7 @@ class BackupListWidget extends ConsumerWidget {
         final type = b['backup_type'] ?? 'manual';
         final size = (b['file_size_bytes'] as num?)?.toInt() ?? 0;
 
-        return Card(
+        return PosCard(
           margin: const EdgeInsets.only(bottom: 8),
           child: ListTile(
             leading: Icon(

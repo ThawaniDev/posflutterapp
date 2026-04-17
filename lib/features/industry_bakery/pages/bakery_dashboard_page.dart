@@ -18,27 +18,18 @@ class BakeryDashboardPage extends ConsumerStatefulWidget {
   ConsumerState<BakeryDashboardPage> createState() => _BakeryDashboardPageState();
 }
 
-class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> with SingleTickerProviderStateMixin {
-
+class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  late final TabController _tabController;
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-    _tabController.addListener(() => setState(() {}));
     Future.microtask(() => ref.read(bakeryProvider.notifier).load());
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
   void _onFabPressed() {
-    final page = switch (_tabController.index) {
+    final page = switch (_currentTab) {
       0 => const RecipeFormPage(),
       1 => const ProductionScheduleFormPage(),
       _ => const CakeOrderFormPage(),
@@ -51,92 +42,102 @@ class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> with 
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(bakeryProvider);
+    final isLoading = state is BakeryInitial || state is BakeryLoading;
+    final hasError = state is BakeryError;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.bakeryTitle),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: l10n.bakeryRecipes),
-            Tab(text: l10n.production),
-            Tab(text: 'Cake Orders'),
-          ],
-        ),
+    return PosListPage(
+      title: l10n.bakeryTitle,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: () => ref.read(bakeryProvider.notifier).load(),
+      actions: [PosButton(label: l10n.add, icon: Icons.add, onPressed: _onFabPressed)],
+      child: Column(
+        children: [
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: l10n.bakeryRecipes),
+              PosTabItem(label: l10n.production),
+              PosTabItem(label: 'Cake Orders'),
+            ],
+          ),
+          Expanded(
+            child: state is BakeryLoaded
+                ? IndexedStack(
+                    index: _currentTab,
+                    children: [
+                      state.recipes.isEmpty
+                          ? const PosEmptyState(title: 'No recipes yet', icon: Icons.bakery_dining)
+                          : ListView.builder(
+                              padding: const EdgeInsets.all(12),
+                              itemCount: state.recipes.length,
+                              itemBuilder: (context, i) {
+                                final r = state.recipes[i];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: RecipeCard(
+                                    recipe: r,
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(builder: (_) => RecipeFormPage(recipe: r)))
+                                          .then((_) => ref.read(bakeryProvider.notifier).load());
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                      state.productionSchedules.isEmpty
+                          ? const PosEmptyState(title: 'No production schedules', icon: Icons.schedule)
+                          : ListView.builder(
+                              padding: const EdgeInsets.all(12),
+                              itemCount: state.productionSchedules.length,
+                              itemBuilder: (context, i) {
+                                final s = state.productionSchedules[i];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: ProductionScheduleCard(
+                                    schedule: s,
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(builder: (_) => ProductionScheduleFormPage(schedule: s)))
+                                          .then((_) => ref.read(bakeryProvider.notifier).load());
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                      state.cakeOrders.isEmpty
+                          ? const PosEmptyState(title: 'No cake orders', icon: Icons.cake)
+                          : ListView.builder(
+                              padding: const EdgeInsets.all(12),
+                              itemCount: state.cakeOrders.length,
+                              itemBuilder: (context, i) {
+                                final c = state.cakeOrders[i];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: CakeOrderCard(
+                                    order: c,
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(builder: (_) => CakeOrderFormPage(order: c)))
+                                          .then((_) => ref.read(bakeryProvider.notifier).load());
+                                    },
+                                    onStatusChange: (status) {
+                                      ref.read(bakeryProvider.notifier).updateCakeOrderStatus(c.id, status.name);
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                    ],
+                  )
+                : const SizedBox.shrink(),
+          ),
+        ],
       ),
-      floatingActionButton: PosButton(onPressed: _onFabPressed, label: l10n.add),
-      body: switch (state) {
-        BakeryInitial() || BakeryLoading() => PosLoadingSkeleton.list(),
-        BakeryError(:final message) => PosErrorState(message: message, onRetry: () => ref.read(bakeryProvider.notifier).load()),
-        BakeryLoaded(:final recipes, :final productionSchedules, :final cakeOrders) => TabBarView(
-          controller: _tabController,
-          children: [
-            recipes.isEmpty
-                ? const PosEmptyState(title: 'No recipes yet', icon: Icons.bakery_dining)
-                : ListView.builder(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: recipes.length,
-                    itemBuilder: (context, i) {
-                      final r = recipes[i];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: RecipeCard(
-                          recipe: r,
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (_) => RecipeFormPage(recipe: r)))
-                                .then((_) => ref.read(bakeryProvider.notifier).load());
-                          },
-                        ),
-                      );
-                    },
-                  ),
-            productionSchedules.isEmpty
-                ? const PosEmptyState(title: 'No production schedules', icon: Icons.schedule)
-                : ListView.builder(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: productionSchedules.length,
-                    itemBuilder: (context, i) {
-                      final s = productionSchedules[i];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: ProductionScheduleCard(
-                          schedule: s,
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (_) => ProductionScheduleFormPage(schedule: s)))
-                                .then((_) => ref.read(bakeryProvider.notifier).load());
-                          },
-                        ),
-                      );
-                    },
-                  ),
-            cakeOrders.isEmpty
-                ? const PosEmptyState(title: 'No cake orders', icon: Icons.cake)
-                : ListView.builder(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: cakeOrders.length,
-                    itemBuilder: (context, i) {
-                      final c = cakeOrders[i];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: CakeOrderCard(
-                          order: c,
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (_) => CakeOrderFormPage(order: c)))
-                                .then((_) => ref.read(bakeryProvider.notifier).load());
-                          },
-                          onStatusChange: (status) {
-                            ref.read(bakeryProvider.notifier).updateCakeOrderStatus(c.id, status.name);
-                          },
-                        ),
-                      );
-                    },
-                  ),
-          ],
-        ),
-      },
     );
   }
 }

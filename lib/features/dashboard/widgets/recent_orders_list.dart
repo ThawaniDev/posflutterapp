@@ -6,6 +6,7 @@ import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/pos_badge.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class RecentOrdersList extends StatelessWidget {
   final List<Map<String, dynamic>> orders;

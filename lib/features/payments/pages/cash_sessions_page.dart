@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/payments/providers/payment_providers.dart';
 import 'package:wameedpos/features/payments/providers/payment_state.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class CashSessionsPage extends ConsumerStatefulWidget {
   const CashSessionsPage({super.key});
@@ -14,7 +14,6 @@ class CashSessionsPage extends ConsumerStatefulWidget {
 }
 
 class _CashSessionsPageState extends ConsumerState<CashSessionsPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
@@ -26,43 +25,40 @@ class _CashSessionsPageState extends ConsumerState<CashSessionsPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(cashSessionsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminFinOpsCashSessions),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
-            onPressed: () => showCashSessionsInfo(context),
-          ),
-        ],
-      ),
-      body: switch (state) {
-        CashSessionsInitial() || CashSessionsLoading() => const Center(child: CircularProgressIndicator()),
-        CashSessionsError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message, style: const TextStyle(color: AppColors.error)),
-              const SizedBox(height: 16),
-              ElevatedButton(onPressed: () => ref.read(cashSessionsProvider.notifier).load(), child: Text(l10n.retry)),
-            ],
-          ),
+    return PosListPage(
+      title: l10n.adminFinOpsCashSessions,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
+          onPressed: () => showCashSessionsInfo(context),
+          variant: PosButtonVariant.ghost,
         ),
-        CashSessionsLoaded(:final sessions) =>
-          sessions.isEmpty
-              ? Center(child: Text(l10n.noCashSessionsFound))
-              : ListView.builder(
-                  itemCount: sessions.length,
-                  itemBuilder: (context, index) {
-                    final session = sessions[index];
-                    return ListTile(
-                      title: Text('Terminal: ${session.terminalId ?? 'N/A'}'),
-                      subtitle: Text('Status: ${session.status?.name ?? 'unknown'}'),
-                      trailing: Text('\u0081${session.openingFloat.toStringAsFixed(2)}'),
-                    );
-                  },
-                ),
+      ],
+      isLoading: state is CashSessionsInitial || state is CashSessionsLoading,
+      hasError: state is CashSessionsError,
+      errorMessage: state is CashSessionsError ? (state).message : null,
+      onRetry: () => ref.read(cashSessionsProvider.notifier).load(),
+      isEmpty: state is CashSessionsLoaded && (state).sessions.isEmpty,
+      emptyTitle: l10n.noCashSessionsFound,
+      emptyIcon: Icons.receipt_long_outlined,
+      child: switch (state) {
+        CashSessionsLoaded(:final sessions) => ListView.builder(
+          padding: const EdgeInsets.all(16),
+          itemCount: sessions.length,
+          itemBuilder: (context, index) {
+            final session = sessions[index];
+            return PosCard(
+              child: ListTile(
+                title: Text('Terminal: ${session.terminalId ?? 'N/A'}'),
+                subtitle: Text('Status: ${session.status?.name ?? 'unknown'}'),
+                trailing: Text('\u0081${session.openingFloat.toStringAsFixed(2)}'),
+              ),
+            );
+          },
+        ),
+        _ => const SizedBox.shrink(),
       },
     );
   }

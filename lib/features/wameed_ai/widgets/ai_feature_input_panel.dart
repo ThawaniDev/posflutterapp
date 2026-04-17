@@ -12,6 +12,8 @@ import 'package:wameedpos/features/catalog/data/remote/catalog_api_service.dart'
 import 'package:wameedpos/features/catalog/models/category.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_feature_params.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 /// A panel that appears above the input bar when a feature requires user input.
 /// Shows relevant fields (text, number, date, image, dropdowns, etc.) and
@@ -136,7 +138,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
               child: Row(
                 children: [
                   const Icon(Icons.auto_awesome, size: 18, color: AppColors.primary),
-                  const SizedBox(width: 8),
+                  AppSpacing.gapW8,
                   Expanded(
                     child: Text(
                       widget.featureName,
@@ -145,7 +147,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
                   ),
                   InkWell(
                     onTap: widget.onDismiss,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.borderLg,
                     child: const Padding(padding: EdgeInsets.all(4), child: Icon(Icons.close, size: 20)),
                   ),
                 ],
@@ -162,7 +164,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    for (final field in widget.config.fields) ...[_buildField(field, theme), const SizedBox(height: 12)],
+                    for (final field in widget.config.fields) ...[_buildField(field, theme), AppSpacing.gapH12],
                   ],
                 ),
               ),
@@ -180,7 +182,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     padding: const EdgeInsets.symmetric(vertical: 12),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
                   ),
                 ),
               ),
@@ -314,13 +316,13 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: AppColors.primary.withValues(alpha: 0.06),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: AppRadius.borderLg,
               border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
             ),
             child: Row(
               children: [
                 const Icon(Icons.image, color: AppColors.primary, size: 24),
-                const SizedBox(width: 8),
+                AppSpacing.gapW8,
                 Expanded(
                   child: Text(
                     _imageName ?? AppLocalizations.of(context)!.wameedAIImageSelected,
@@ -520,7 +522,7 @@ class _AIFeatureInputPanelState extends ConsumerState<AIFeatureInputPanel> {
     return InputDecoration(
       labelText: '${field.label}${field.required ? ' *' : ''}',
       hintText: field.hint,
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+      border: OutlineInputBorder(borderRadius: AppRadius.borderLg),
       contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       isDense: true,
       filled: true,
@@ -578,7 +580,7 @@ class _ProductSearchDialogState extends State<_ProductSearchDialog> {
 
     return Dialog(
       insetPadding: const EdgeInsets.all(20),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderXl),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxHeight: 500, maxWidth: 400),
         child: Column(
@@ -602,7 +604,7 @@ class _ProductSearchDialogState extends State<_ProductSearchDialog> {
                 decoration: InputDecoration(
                   hintText: l10n.wameedAISearchProducts,
                   prefixIcon: const Icon(Icons.search, size: 20),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  border: OutlineInputBorder(borderRadius: AppRadius.borderLg),
                   isDense: true,
                   contentPadding: const EdgeInsets.symmetric(vertical: 10),
                 ),
@@ -716,7 +718,7 @@ class _CategorySearchDialogState extends State<_CategorySearchDialog> {
 
     return Dialog(
       insetPadding: const EdgeInsets.all(20),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderXl),
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxHeight: 500, maxWidth: 400),
         child: Column(
@@ -740,7 +742,7 @@ class _CategorySearchDialogState extends State<_CategorySearchDialog> {
                 decoration: InputDecoration(
                   hintText: l10n.wameedAISearchCategories,
                   prefixIcon: const Icon(Icons.search, size: 20),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  border: OutlineInputBorder(borderRadius: AppRadius.borderLg),
                   isDense: true,
                   contentPadding: const EdgeInsets.symmetric(vertical: 10),
                 ),

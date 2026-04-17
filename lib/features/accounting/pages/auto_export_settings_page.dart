@@ -15,7 +15,6 @@ class AutoExportSettingsPage extends ConsumerStatefulWidget {
 }
 
 class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   bool _enabled = false;
   String _frequency = 'daily';
@@ -86,245 +85,227 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.autoExportSettings),
-        actions: [
-          if (_hasChanges)
-            TextButton.icon(
-              onPressed: _saveConfig,
-              icon: const Icon(Icons.save, color: Colors.white),
-              label: Text(l10n.save, style: TextStyle(color: Colors.white)),
-            ),
-        ],
-      ),
-      body: switch (configState) {
-        AutoExportConfigInitial() || AutoExportConfigLoading() => PosLoadingSkeleton.list(),
+    return PosFormPage(
+      title: l10n.autoExportSettings,
+      isLoading: configState is AutoExportConfigInitial || configState is AutoExportConfigLoading,
+      actions: [
+        if (_hasChanges && configState is AutoExportConfigLoaded)
+          PosButton(label: l10n.save, icon: Icons.save, onPressed: _saveConfig),
+      ],
+      child: switch (configState) {
         AutoExportConfigError(:final message) => PosErrorState(
           message: message,
           onRetry: () => ref.read(autoExportConfigProvider.notifier).loadConfig(),
         ),
         AutoExportConfigLoaded() => _buildForm(),
+        _ => const SizedBox.shrink(),
       },
     );
   }
 
   Widget _buildForm() {
-    return SingleChildScrollView(
-      padding: AppSpacing.paddingAll16,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Enable toggle
-          Card(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              side: BorderSide(color: Theme.of(context).dividerColor),
-            ),
-            child: SwitchListTile(
-              title: const Text('Enable Auto Export', style: TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: Text(_enabled ? 'Exports will run automatically on schedule' : 'Auto export is disabled'),
-              value: _enabled,
-              onChanged: (val) => setState(() {
-                _enabled = val;
-                _hasChanges = true;
-              }),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // Enable toggle
+        PosCard(
+          elevation: 0,
+          borderRadius: AppRadius.borderMd,
+          border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
+          child: SwitchListTile(
+            title: const Text('Enable Auto Export', style: TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Text(_enabled ? 'Exports will run automatically on schedule' : 'Auto export is disabled'),
+            value: _enabled,
+            onChanged: (val) => setState(() {
+              _enabled = val;
+              _hasChanges = true;
+            }),
           ),
-          AppSpacing.gapH12,
+        ),
+        AppSpacing.gapH12,
 
-          // Frequency
-          Card(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              side: BorderSide(color: Theme.of(context).dividerColor),
-            ),
-            child: Padding(
-              padding: AppSpacing.paddingAll16,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(l10n.floristFrequency, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  AppSpacing.gapH12,
-                  SegmentedButton<String>(
-                    segments: [
-                      ButtonSegment(value: 'daily', label: Text(l10n.gamificationDaily)),
-                      ButtonSegment(value: 'weekly', label: Text(l10n.notificationsDigestWeekly)),
-                      ButtonSegment(value: 'monthly', label: Text(l10n.subscriptionMonthly)),
-                    ],
-                    selected: {_frequency},
-                    onSelectionChanged: (val) => setState(() {
-                      _frequency = val.first;
-                      _hasChanges = true;
+        // Frequency
+        PosCard(
+          elevation: 0,
+          borderRadius: AppRadius.borderMd,
+          border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
+          child: Padding(
+            padding: AppSpacing.paddingAll16,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l10n.floristFrequency, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                AppSpacing.gapH12,
+                SegmentedButton<String>(
+                  segments: [
+                    ButtonSegment(value: 'daily', label: Text(l10n.gamificationDaily)),
+                    ButtonSegment(value: 'weekly', label: Text(l10n.notificationsDigestWeekly)),
+                    ButtonSegment(value: 'monthly', label: Text(l10n.subscriptionMonthly)),
+                  ],
+                  selected: {_frequency},
+                  onSelectionChanged: (val) => setState(() {
+                    _frequency = val.first;
+                    _hasChanges = true;
+                  }),
+                ),
+                AppSpacing.gapH16,
+
+                // Day selection
+                if (_frequency == 'weekly') ...[
+                  Text(l10n.dayOfWeek),
+                  AppSpacing.gapH8,
+                  Wrap(
+                    spacing: 8,
+                    children: List.generate(7, (i) {
+                      return ChoiceChip(
+                        label: Text(_weekDays[i]),
+                        selected: _dayOfWeek == i,
+                        onSelected: (_) => setState(() {
+                          _dayOfWeek = i;
+                          _hasChanges = true;
+                        }),
+                      );
                     }),
                   ),
-                  AppSpacing.gapH16,
-
-                  // Day selection
-                  if (_frequency == 'weekly') ...[
-                    Text(l10n.dayOfWeek),
-                    AppSpacing.gapH8,
-                    Wrap(
-                      spacing: 8,
-                      children: List.generate(7, (i) {
-                        return ChoiceChip(
-                          label: Text(_weekDays[i]),
-                          selected: _dayOfWeek == i,
-                          onSelected: (_) => setState(() {
-                            _dayOfWeek = i;
-                            _hasChanges = true;
-                          }),
-                        );
-                      }),
-                    ),
-                  ],
-                  if (_frequency == 'monthly') ...[
-                    Text(l10n.dayOfMonth),
-                    AppSpacing.gapH8,
-                    PosSearchableDropdown<int>(
-                      label: l10n.dayOfMonth,
-                      items: List.generate(28, (i) => PosDropdownItem(value: i + 1, label: '${i + 1}')),
-                      selectedValue: _dayOfMonth.clamp(1, 28),
-                      onChanged: (val) {
-                        if (val != null) {
-                          setState(() {
-                            _dayOfMonth = val;
-                            _hasChanges = true;
-                          });
-                        }
-                      },
-                      showSearch: false,
-                      clearable: false,
-                    ),
-                  ],
-
-                  // Time
-                  AppSpacing.gapH16,
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.access_time),
-                    title: Text(l10n.exportTime),
-                    trailing: Text(_time.format(context), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                    onTap: () async {
-                      final picked = await showTimePicker(context: context, initialTime: _time);
-                      if (picked != null) {
+                ],
+                if (_frequency == 'monthly') ...[
+                  Text(l10n.dayOfMonth),
+                  AppSpacing.gapH8,
+                  PosSearchableDropdown<int>(
+                    label: l10n.dayOfMonth,
+                    items: List.generate(28, (i) => PosDropdownItem(value: i + 1, label: '${i + 1}')),
+                    selectedValue: _dayOfMonth.clamp(1, 28),
+                    onChanged: (val) {
+                      if (val != null) {
                         setState(() {
-                          _time = picked;
+                          _dayOfMonth = val;
                           _hasChanges = true;
                         });
                       }
                     },
+                    showSearch: false,
+                    clearable: false,
                   ),
                 ],
-              ),
-            ),
-          ),
-          AppSpacing.gapH12,
 
-          // Export types
-          Card(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              side: BorderSide(color: Theme.of(context).dividerColor),
-            ),
-            child: Padding(
-              padding: AppSpacing.paddingAll16,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Export Types', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  AppSpacing.gapH8,
-                  ..._allExportTypes.map(
-                    (t) => CheckboxListTile(
-                      title: Text(_formatExportType(t)),
-                      value: _selectedExportTypes.contains(t),
-                      dense: true,
-                      onChanged: (val) => setState(() {
-                        if (val == true) {
-                          _selectedExportTypes.add(t);
-                        } else {
-                          _selectedExportTypes.remove(t);
-                        }
+                // Time
+                AppSpacing.gapH16,
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(Icons.access_time),
+                  title: Text(l10n.exportTime),
+                  trailing: Text(_time.format(context), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                  onTap: () async {
+                    final picked = await showTimePicker(context: context, initialTime: _time);
+                    if (picked != null) {
+                      setState(() {
+                        _time = picked;
                         _hasChanges = true;
-                      }),
-                    ),
-                  ),
-                ],
-              ),
+                      });
+                    }
+                  },
+                ),
+              ],
             ),
           ),
-          AppSpacing.gapH12,
+        ),
+        AppSpacing.gapH12,
 
-          // Notification & retry
-          Card(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadius.md),
-              side: BorderSide(color: Theme.of(context).dividerColor),
-            ),
-            child: Padding(
-              padding: AppSpacing.paddingAll16,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(l10n.notifications, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                  AppSpacing.gapH12,
-                  TextField(
-                    controller: _emailController,
-                    onChanged: (_) => setState(() => _hasChanges = true),
-                    decoration: InputDecoration(
-                      labelText: l10n.accountingNotificationEmail,
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.email),
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  AppSpacing.gapH12,
-                  SwitchListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(l10n.retryOnFailure),
-                    subtitle: Text(l10n.automaticallyRetryFailedExports),
-                    value: _retryOnFailure,
+        // Export types
+        PosCard(
+          elevation: 0,
+          borderRadius: AppRadius.borderMd,
+          border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
+          child: Padding(
+            padding: AppSpacing.paddingAll16,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Export Types', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                AppSpacing.gapH8,
+                ..._allExportTypes.map(
+                  (t) => CheckboxListTile(
+                    title: Text(_formatExportType(t)),
+                    value: _selectedExportTypes.contains(t),
+                    dense: true,
                     onChanged: (val) => setState(() {
-                      _retryOnFailure = val;
+                      if (val == true) {
+                        _selectedExportTypes.add(t);
+                      } else {
+                        _selectedExportTypes.remove(t);
+                      }
                       _hasChanges = true;
                     }),
                   ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        AppSpacing.gapH12,
+
+        // Notification & retry
+        PosCard(
+          elevation: 0,
+          borderRadius: AppRadius.borderMd,
+          border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
+          child: Padding(
+            padding: AppSpacing.paddingAll16,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l10n.notifications, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                AppSpacing.gapH12,
+                TextField(
+                  controller: _emailController,
+                  onChanged: (_) => setState(() => _hasChanges = true),
+                  decoration: InputDecoration(
+                    labelText: l10n.accountingNotificationEmail,
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.email),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                AppSpacing.gapH12,
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(l10n.retryOnFailure),
+                  subtitle: Text(l10n.automaticallyRetryFailedExports),
+                  value: _retryOnFailure,
+                  onChanged: (val) => setState(() {
+                    _retryOnFailure = val;
+                    _hasChanges = true;
+                  }),
+                ),
+              ],
+            ),
+          ),
+        ),
+        AppSpacing.gapH16,
+
+        // Last/Next run info
+        if (ref.read(autoExportConfigProvider) case AutoExportConfigLoaded(:final lastRunAt, :final nextRunAt))
+          PosCard(
+            elevation: 0,
+            borderRadius: AppRadius.borderMd,
+            border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
+            color: AppColors.primary5,
+            child: Padding(
+              padding: AppSpacing.paddingAll16,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Schedule Info', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                  AppSpacing.gapH8,
+                  if (lastRunAt != null) _buildInfoRow('Last Run', _formatDate(lastRunAt)),
+                  if (nextRunAt != null) _buildInfoRow('Next Run', _formatDate(nextRunAt)),
+                  if (lastRunAt == null && nextRunAt == null)
+                    const Text('No runs scheduled yet', style: TextStyle(color: AppColors.textSecondary)),
                 ],
               ),
             ),
           ),
-          AppSpacing.gapH16,
-
-          // Last/Next run info
-          if (ref.read(autoExportConfigProvider) case AutoExportConfigLoaded(:final lastRunAt, :final nextRunAt))
-            Card(
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppRadius.md),
-                side: BorderSide(color: Theme.of(context).dividerColor),
-              ),
-              color: AppColors.primary5,
-              child: Padding(
-                padding: AppSpacing.paddingAll16,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Schedule Info', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-                    AppSpacing.gapH8,
-                    if (lastRunAt != null) _buildInfoRow('Last Run', _formatDate(lastRunAt)),
-                    if (nextRunAt != null) _buildInfoRow('Next Run', _formatDate(nextRunAt)),
-                    if (lastRunAt == null && nextRunAt == null)
-                      const Text('No runs scheduled yet', style: TextStyle(color: AppColors.textSecondary)),
-                  ],
-                ),
-              ),
-            ),
-        ],
-      ),
+      ],
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/admin_providers.dart';
@@ -6,6 +7,7 @@ import '../../providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminHealthDashboardPage extends ConsumerStatefulWidget {
   const AdminHealthDashboardPage({super.key});
@@ -67,12 +69,15 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
     final dashState = ref.watch(healthDashboardProvider);
     final storeState = ref.watch(storeHealthListProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.analyticsSystemHealth),
-        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData)],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.analyticsSystemHealth,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: _loadData,
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -85,7 +90,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
                   switch (dashState) {
                     HealthDashboardInitial() || HealthDashboardLoading() => const Center(child: CircularProgressIndicator()),
                     HealthDashboardLoaded(data: final data) => _buildDashboard(data),
-                    HealthDashboardError(message: final msg) => Card(
+                    HealthDashboardError(message: final msg) => PosCard(
                       child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: Text(msg, style: const TextStyle(color: AppColors.error)),
@@ -107,7 +112,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildDashboard(Map<String, dynamic> data) {
@@ -119,7 +124,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Score card
-        Card(
+        PosCard(
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Row(
@@ -179,7 +184,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
         ...services.map((svc) {
           final s = svc as Map<String, dynamic>;
           final status = s['status']?.toString();
-          return Card(
+          return PosCard(
             margin: const EdgeInsets.only(bottom: 8),
             child: ListTile(
               leading: Icon(_serviceIcon(s['service']?.toString()), color: _statusColor(status)),
@@ -196,7 +201,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
   Widget _statChip(String label, dynamic value, Color color) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
       child: Text(
         '$label: $value',
         style: TextStyle(fontSize: 11, color: color, fontWeight: FontWeight.w600),
@@ -214,7 +219,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
         final s = item as Map<String, dynamic>;
         final syncStatus = s['sync_status']?.toString() ?? 'ok';
         final isOk = syncStatus == 'ok';
-        return Card(
+        return PosCard(
           margin: const EdgeInsets.only(bottom: 8),
           child: ListTile(
             leading: Icon(isOk ? Icons.check_circle : Icons.error, color: isOk ? AppColors.success : AppColors.error),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
@@ -50,20 +50,15 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
   Widget build(BuildContext context) {
     final state = ref.watch(analyticsSubscriptionsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.analyticsSubscriptions),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.download),
-            tooltip: 'Export Subscriptions',
-            onPressed: () => ref.read(analyticsExportProvider.notifier).exportSubscriptions(),
-          ),
-        ],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.analyticsSubscriptions,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.download, onPressed: () => ref.read(analyticsExportProvider.notifier).exportSubscriptions(), tooltip: 'Export Subscriptions',
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -101,7 +96,7 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
                       const Text('Status Breakdown', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       ...counts.entries.map(
-                        (e) => Card(
+                        (e) => PosCard(
                           margin: const EdgeInsets.only(bottom: AppSpacing.xs),
                           child: ListTile(
                             leading: CircleAvatar(
@@ -120,12 +115,12 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
                       const Text('Lifecycle Trend', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (trend.isEmpty)
-                        const Card(
+                        const PosCard(
                           child: Padding(padding: EdgeInsets.all(AppSpacing.md), child: Text('No trend data')),
                         )
                       else
                         ...trend.map(
-                          (t) => Card(
+                          (t) => PosCard(
                             margin: const EdgeInsets.only(bottom: AppSpacing.xs),
                             child: ListTile(
                               title: Text(t['date'] as String? ?? ''),
@@ -144,9 +139,9 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
                   children: [
                     Text('Error: $msg'),
                     const SizedBox(height: AppSpacing.sm),
-                    ElevatedButton(
+                    PosButton(
                       onPressed: () => ref.read(analyticsSubscriptionsProvider.notifier).load(storeId: _storeId),
-                      child: Text(l10n.retry),
+                      label: l10n.retry,
                     ),
                   ],
                 ),
@@ -156,6 +151,6 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
           ),
         ],
       ),
-    );
+);
   }
 }

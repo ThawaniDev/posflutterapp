@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/pos_page_scaffolds.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 // ═══════════════════════════════════════════════════════════════
 // Shared Report Widgets — consistent look across all report pages
@@ -56,18 +58,18 @@ class ReportDateBar extends StatelessWidget {
           Expanded(
             child: InkWell(
               onTap: onPickDate,
-              borderRadius: BorderRadius.circular(AppRadius.sm),
+              borderRadius: AppRadius.borderSm,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
                   color: isDark ? AppColors.cardDark : AppColors.backgroundLight,
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                  borderRadius: AppRadius.borderSm,
                   border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
                 ),
                 child: Row(
                   children: [
                     Icon(Icons.calendar_today_rounded, size: 16, color: AppColors.primary),
-                    const SizedBox(width: 8),
+                    AppSpacing.gapW8,
                     Text(
                       dateRange != null
                           ? '${DateFormat('MMM d').format(dateRange!.start)} – ${DateFormat('MMM d, yyyy').format(dateRange!.end)}'
@@ -75,7 +77,7 @@ class ReportDateBar extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
                     ),
                     if (dateRange != null) ...[
-                      const SizedBox(width: 8),
+                      AppSpacing.gapW8,
                       GestureDetector(
                         onTap: onClear,
                         child: Icon(
@@ -90,7 +92,7 @@ class ReportDateBar extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 8),
+          AppSpacing.gapW8,
           IconButton.filled(
             onPressed: onRefresh,
             icon: const Icon(Icons.refresh_rounded, size: 20),
@@ -139,7 +141,7 @@ class ReportKpiCard extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : Colors.white,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
+        borderRadius: AppRadius.borderLg,
         border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       child: Column(
@@ -147,10 +149,10 @@ class ReportKpiCard extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(AppRadius.sm)),
+            decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: AppRadius.borderSm),
             child: Icon(icon, color: color, size: 16),
           ),
-          const SizedBox(height: 8),
+          AppSpacing.gapH8,
           Text(
             value,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
@@ -158,7 +160,7 @@ class ReportKpiCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 2),
+          AppSpacing.gapH2,
           Text(
             label,
             style: Theme.of(
@@ -169,7 +171,7 @@ class ReportKpiCard extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           if (subtitle != null) ...[
-            const SizedBox(height: 2),
+            AppSpacing.gapH2,
             Text(
               subtitle!,
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
@@ -191,7 +193,7 @@ class ReportKpiCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : Colors.white,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
+        borderRadius: AppRadius.borderLg,
         border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       child: Column(
@@ -199,17 +201,17 @@ class ReportKpiCard extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(AppRadius.sm)),
+            decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: AppRadius.borderSm),
             child: Icon(icon, color: color, size: 20),
           ),
-          const SizedBox(height: 12),
+          AppSpacing.gapH12,
           Text(
             value,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 2),
+          AppSpacing.gapH2,
           Text(
             label,
             style: Theme.of(
@@ -217,7 +219,7 @@ class ReportKpiCard extends StatelessWidget {
             ).textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
           ),
           if (subtitle != null) ...[
-            const SizedBox(height: 2),
+            AppSpacing.gapH2,
             Text(
               subtitle!,
               style: Theme.of(
@@ -250,7 +252,7 @@ class ReportSectionHeader extends StatelessWidget {
         children: [
           if (icon != null) ...[
             Icon(icon, size: 18, color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),
-            const SizedBox(width: 8),
+            AppSpacing.gapW8,
           ],
           Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
           if (trailing != null) ...[const Spacer(), trailing!],
@@ -277,7 +279,7 @@ class ReportDataCard extends StatelessWidget {
       padding: padding ?? const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : Colors.white,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
+        borderRadius: AppRadius.borderLg,
         border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       child: child,
@@ -323,7 +325,7 @@ class ReportRankedItem extends StatelessWidget {
               color: isTop3
                   ? AppColors.primary.withValues(alpha: 0.1)
                   : (isDark ? AppColors.hoverDark : AppColors.backgroundLight),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: AppRadius.borderMd,
             ),
             child: Center(
               child: Text(
@@ -336,7 +338,7 @@ class ReportRankedItem extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: 12),
+          AppSpacing.gapW12,
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -354,11 +356,11 @@ class ReportRankedItem extends StatelessWidget {
                       context,
                     ).textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                   ),
-                if (badges != null && badges!.isNotEmpty) ...[const SizedBox(height: 4), Wrap(spacing: 6, children: badges!)],
+                if (badges != null && badges!.isNotEmpty) ...[AppSpacing.gapH4, Wrap(spacing: 6, children: badges!)],
               ],
             ),
           ),
-          const SizedBox(width: 12),
+          AppSpacing.gapW12,
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -397,7 +399,7 @@ class ReportBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
       child: Text(
         label,
         style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color),
@@ -443,12 +445,12 @@ class ReportComparisonRow extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(color: changeColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
+            decoration: BoxDecoration(color: changeColor.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(isPositive ? Icons.trending_up_rounded : Icons.trending_down_rounded, color: changeColor, size: 14),
-                const SizedBox(width: 4),
+                AppSpacing.gapW4,
                 Text(
                   '${diff.toStringAsFixed(1)}%',
                   style: TextStyle(color: changeColor, fontWeight: FontWeight.w600, fontSize: 12),
@@ -554,17 +556,12 @@ class ReportPageScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: Text(title),
-        bottom: bottom,
-      ),
-      body: Column(
+    return PosListPage(
+      title: title,
+      showSearch: false,
+      child: Column(
         children: [
+          if (bottom != null) bottom!,
           if (filterPanel != null)
             filterPanel!
           else if (onPickDate != null && onClearDate != null && onRefresh != null)

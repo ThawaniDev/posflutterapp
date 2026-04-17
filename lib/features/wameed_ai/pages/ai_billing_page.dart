@@ -32,19 +32,18 @@ class _AIBillingPageState extends ConsumerState<AIBillingPage> {
     final state = ref.watch(aiBillingSummaryProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.wameedAIBilling),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.receipt_long_outlined),
-            tooltip: l10n.wameedAIBillingInvoices,
-            onPressed: () => context.push(Routes.wameedAIBillingInvoices),
-          ),
-          IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.read(aiBillingSummaryProvider.notifier).load()),
-        ],
-      ),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.wameedAIBilling,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.receipt_long_outlined, onPressed: () => context.push(Routes.wameedAIBillingInvoices), tooltip: l10n.wameedAIBillingInvoices,
+  ),
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(aiBillingSummaryProvider.notifier).load(),
+  ),
+],
+  child: switch (state) {
         AIBillingSummaryInitial() || AIBillingSummaryLoading() => const PosLoading(),
         AIBillingSummaryError(:final message) => PosErrorState(
           message: message,
@@ -52,7 +51,7 @@ class _AIBillingPageState extends ConsumerState<AIBillingPage> {
         ),
         AIBillingSummaryLoaded(:final summary) => _BillingContent(summary: summary, isMobile: isMobile),
       },
-    );
+);
   }
 }
 
@@ -69,7 +68,7 @@ class _BillingContent extends StatelessWidget {
     final config = summary.config;
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+      padding: context.responsivePagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -81,13 +80,13 @@ class _BillingContent extends StatelessWidget {
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: AppColors.error.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: AppRadius.borderMd,
                 border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
               ),
               child: Row(
                 children: [
                   const Icon(Icons.warning_amber_rounded, color: AppColors.error),
-                  const SizedBox(width: 8),
+                  AppSpacing.gapW8,
                   Expanded(
                     child: Text(
                       '${l10n.wameedAIBillingDisabled}${config.disabledReason != null ? ': ${config.disabledReason}' : ''}',
@@ -103,7 +102,7 @@ class _BillingContent extends StatelessWidget {
             l10n.wameedAIBillingCurrentMonth,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
           ),
-          const SizedBox(height: 16),
+          AppSpacing.gapH16,
           PosKpiGrid(
             desktopCols: 3,
             mobileCols: 2,
@@ -139,12 +138,12 @@ class _BillingContent extends StatelessWidget {
 
           // Feature Breakdown
           if (month.byFeature.isNotEmpty) ...[
-            const SizedBox(height: 24),
+            AppSpacing.gapH24,
             Text(
               l10n.wameedAIBillingByFeature,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
             ),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             if (isMobile)
               ...month.byFeature.map((f) => _FeatureCard(feature: f))
             else
@@ -168,7 +167,7 @@ class _BillingContent extends StatelessWidget {
 
           // Recent Invoices
           if (summary.recentInvoices.isNotEmpty) ...[
-            const SizedBox(height: 24),
+            AppSpacing.gapH24,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -176,13 +175,14 @@ class _BillingContent extends StatelessWidget {
                   l10n.wameedAIBillingRecentInvoices,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
                 ),
-                TextButton(
+                PosButton(
                   onPressed: () => context.push(Routes.wameedAIBillingInvoices),
-                  child: Text(l10n.wameedAIBillingViewAll),
+                  variant: PosButtonVariant.ghost,
+                  label: l10n.wameedAIBillingViewAll,
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             ...summary.recentInvoices.map((inv) => _InvoiceListTile(invoice: inv)),
           ],
         ],
@@ -237,7 +237,7 @@ class _InvoiceListTile extends StatelessWidget {
             '\$${invoice.billedAmountUsd.toStringAsFixed(3)}',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
           ),
-          const SizedBox(width: 8),
+          AppSpacing.gapW8,
           PosStatusBadge(
             label: switch (invoice.status) {
               'paid' => l10n.wameedAIBillingPaid,

@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/support/providers/support_providers.dart';
 import 'package:wameedpos/features/support/providers/support_state.dart';
@@ -59,9 +57,10 @@ class _CreateTicketPageState extends ConsumerState<CreateTicketPage> {
 
     final isLoading = actionState is TicketActionLoading;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.supportNewSupportTicket)),
-      body: Form(
+    return PosListPage(
+  title: l10n.supportNewSupportTicket,
+  showSearch: false,
+    child: Form(
         key: _formKey,
         child: ListView(
           padding: AppSpacing.paddingAll16,
@@ -144,6 +143,6 @@ class _CreateTicketPageState extends ConsumerState<CreateTicketPage> {
           ],
         ),
       ),
-    );
+);
   }
 }

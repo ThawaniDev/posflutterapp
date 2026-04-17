@@ -76,16 +76,13 @@ class _MetalRateFormPageState extends ConsumerState<MetalRateFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.jewelrySetMetalRate)),
-      bottomNavigationBar: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: PosButton(label: 'Save Rate', onPressed: _saving ? null : _handleSave, isLoading: _saving, isFullWidth: true),
-      ),
-      body: Form(
+    return PosFormPage(
+      title: l10n.jewelrySetMetalRate,
+      bottomBar: PosButton(label: 'Save Rate', onPressed: _saving ? null : _handleSave, isLoading: _saving, isFullWidth: true),
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosSearchableDropdown<MetalType>(
               label: l10n.jewelryMetalType,

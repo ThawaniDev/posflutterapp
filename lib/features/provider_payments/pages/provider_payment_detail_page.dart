@@ -21,7 +21,6 @@ class ProviderPaymentDetailPage extends ConsumerStatefulWidget {
 }
 
 class _ProviderPaymentDetailPageState extends ConsumerState<ProviderPaymentDetailPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
@@ -43,29 +42,20 @@ class _ProviderPaymentDetailPageState extends ConsumerState<ProviderPaymentDetai
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.providerPaymentDetail), centerTitle: true),
-      body: _buildBody(detailState),
+    final isLoading = detailState is ProviderPaymentDetailLoading;
+    final hasError = detailState is ProviderPaymentDetailError;
+
+    return PosListPage(
+      title: l10n.providerPaymentDetail,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? detailState.message : null,
+      onRetry: () => ref.read(providerPaymentDetailProvider.notifier).loadPayment(widget.paymentId),
+      child: detailState is ProviderPaymentDetailLoaded
+          ? _PaymentDetailContent(payment: detailState.payment)
+          : const SizedBox.shrink(),
     );
-  }
-
-  Widget _buildBody(ProviderPaymentDetailState state) {
-    if (state is ProviderPaymentDetailLoading) {
-      return Center(child: PosLoadingSkeleton.list());
-    }
-
-    if (state is ProviderPaymentDetailError) {
-      return PosErrorState(
-        message: state.message,
-        onRetry: () => ref.read(providerPaymentDetailProvider.notifier).loadPayment(widget.paymentId),
-      );
-    }
-
-    if (state is ProviderPaymentDetailLoaded) {
-      return _PaymentDetailContent(payment: state.payment);
-    }
-
-    return const SizedBox.shrink();
   }
 }
 

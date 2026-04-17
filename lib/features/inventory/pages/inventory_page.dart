@@ -15,18 +15,18 @@ class InventoryPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.inventoryManagement),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showInventoryInfo(context),
-          ),
-        ],
-      ),
-      body: GridView.count(
+    return PosListPage(
+      title: l10n.inventoryManagement,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showInventoryInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+      ],
+      child: GridView.count(
         crossAxisCount: MediaQuery.of(context).size.width > 800 ? 3 : 2,
         padding: const EdgeInsets.all(AppSpacing.lg),
         mainAxisSpacing: AppSpacing.md,

@@ -116,21 +116,18 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
   Widget build(BuildContext context) {
     final productsState = ref.watch(productsProvider);
     final products = productsState is ProductsLoaded ? productsState.products : <Product>[];
-    return Scaffold(
-      appBar: AppBar(title: Text(_isEditing ? 'Edit IMEI Record' : 'New IMEI Record')),
-      bottomNavigationBar: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: PosButton(
+    return PosFormPage(
+      title: _isEditing ? 'Edit IMEI Record' : 'New IMEI Record',
+      bottomBar: PosButton(
           label: _isEditing ? 'Update Record' : 'Create Record',
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,
         ),
-      ),
-      body: Form(
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosSearchableDropdown<String>(
               label: l10n.wameedAIProduct,

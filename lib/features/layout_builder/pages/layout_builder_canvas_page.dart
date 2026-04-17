@@ -6,7 +6,6 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/pos_card.dart';
-import 'package:wameedpos/core/widgets/pos_error_state.dart';
 import 'package:wameedpos/core/widgets/pos_loading_skeleton.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
@@ -49,50 +48,67 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.layoutBuilder),
-        actions: [
-          if (canvasState is CanvasBuilderLoaded) ...[
-            PosButton.icon(
-              icon: Icons.save_alt_rounded,
-              tooltip: l10n.layoutCreateVersion,
-              onPressed: () => _showCreateVersionDialog(l10n),
-            ),
-            AppSpacing.gapW8,
-            PosButton.icon(icon: Icons.copy_rounded, tooltip: l10n.layoutClone, onPressed: () => _showCloneDialog(l10n)),
-            AppSpacing.gapW8,
-            PosButton(
-              label: l10n.layoutSave,
-              icon: Icons.check_rounded,
-              size: PosButtonSize.sm,
-              onPressed: () => _saveCanvas(canvasState),
-            ),
-          ],
-          AppSpacing.gapW16,
+    final isLoading =
+        canvasState is CanvasBuilderInitial || canvasState is CanvasBuilderLoading || canvasState is CanvasBuilderSaving;
+    final hasError = canvasState is CanvasBuilderError;
+
+    return PosListPage(
+      title: l10n.layoutBuilder,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? canvasState.message : null,
+      onRetry: () => ref.read(canvasBuilderProvider.notifier).load(),
+      actions: [
+        if (canvasState is CanvasBuilderLoaded) ...[
+          PosButton.icon(
+            icon: Icons.save_alt_rounded,
+            tooltip: l10n.layoutCreateVersion,
+            onPressed: () => _showCreateVersionDialog(l10n),
+          ),
+          PosButton.icon(icon: Icons.copy_rounded, tooltip: l10n.layoutClone, onPressed: () => _showCloneDialog(l10n)),
+          PosButton(
+            label: l10n.layoutSave,
+            icon: Icons.check_rounded,
+            size: PosButtonSize.sm,
+            onPressed: () => _saveCanvas(canvasState),
+          ),
         ],
-      ),
-      body: switch (canvasState) {
-        CanvasBuilderInitial() || CanvasBuilderLoading() => PosLoadingSkeleton.list(),
-        CanvasBuilderSaving() => const Center(child: CircularProgressIndicator()),
-        CanvasBuilderError(:final message) => PosErrorState(
-          message: message,
-          onRetry: () => ref.read(canvasBuilderProvider.notifier).load(),
-        ),
-        CanvasBuilderLoaded(:final canvas, :final placements, :final versions) =>
-          context.isPhone
-              ? _buildMobileBody(canvas, placements, versions, canvasState, catalogState, l10n, isDark)
-              : Row(
-                  children: [
-                    // Left panel: Widget catalog
-                    SizedBox(width: 260, child: _buildWidgetCatalog(catalogState, l10n, isDark)),
-                    // Center: Canvas grid
-                    Expanded(child: _buildCanvasGrid(canvas.gridColumns, canvas.gridRows, placements, canvasState, isDark, l10n)),
-                    // Right panel: Properties + versions
-                    SizedBox(width: 280, child: _buildPropertiesPanel(placements, versions, canvasState, l10n, isDark)),
-                  ],
-                ),
-      },
+      ],
+      child: canvasState is CanvasBuilderLoaded
+          ? (context.isPhone
+                ? _buildMobileBody(
+                    canvasState.canvas,
+                    canvasState.placements,
+                    canvasState.versions,
+                    canvasState,
+                    catalogState,
+                    l10n,
+                    isDark,
+                  )
+                : SizedBox(
+                    height: MediaQuery.sizeOf(context).height - 120,
+                    child: Row(
+                      children: [
+                        SizedBox(width: 260, child: _buildWidgetCatalog(catalogState, l10n, isDark)),
+                        Expanded(
+                          child: _buildCanvasGrid(
+                            canvasState.canvas.gridColumns,
+                            canvasState.canvas.gridRows,
+                            canvasState.placements,
+                            canvasState,
+                            isDark,
+                            l10n,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 280,
+                          child: _buildPropertiesPanel(canvasState.placements, canvasState.versions, canvasState, l10n, isDark),
+                        ),
+                      ],
+                    ),
+                  ))
+          : const SizedBox.shrink(),
     );
   }
 
@@ -676,13 +692,14 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
           decoration: InputDecoration(labelText: l10n.layoutVersionLabel, hintText: l10n.layoutVersionLabelHint),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.layoutCancel)),
-          TextButton(
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.layoutCancel),
+          PosButton(
             onPressed: () {
               Navigator.pop(ctx);
               ref.read(canvasBuilderProvider.notifier).createVersion({'label': _versionLabelController.text.trim()});
             },
-            child: Text(l10n.layoutCreate),
+            variant: PosButtonVariant.ghost,
+            label: l10n.layoutCreate,
           ),
         ],
       ),
@@ -700,14 +717,15 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
           decoration: InputDecoration(labelText: l10n.layoutCloneName, hintText: l10n.layoutCloneNameHint),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.layoutCancel)),
-          TextButton(
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.layoutCancel),
+          PosButton(
             onPressed: () {
               Navigator.pop(ctx);
               ref.read(canvasBuilderProvider.notifier).cloneCanvas({'name': nameController.text.trim()});
               nameController.dispose();
             },
-            child: Text(l10n.layoutCreate),
+            variant: PosButtonVariant.ghost,
+            label: l10n.layoutCreate,
           ),
         ],
       ),

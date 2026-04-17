@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
 import 'package:wameedpos/features/companion/providers/companion_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ActiveOrdersWidget extends ConsumerStatefulWidget {
   const ActiveOrdersWidget({super.key});
@@ -36,7 +37,7 @@ class _ActiveOrdersWidgetState extends ConsumerState<ActiveOrdersWidget> {
           children: [
             Text(message, style: TextStyle(color: theme.colorScheme.error)),
             AppSpacing.gapH8,
-            TextButton(onPressed: () => ref.read(activeOrdersProvider.notifier).load(), child: Text(l10n.companionRetry)),
+            PosButton(onPressed: () => ref.read(activeOrdersProvider.notifier).load(), variant: PosButtonVariant.ghost, label: l10n.companionRetry),
           ],
         ),
       ),
@@ -93,7 +94,7 @@ class _OrderCard extends StatelessWidget {
       _ => AppColors.textSecondary,
     };
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: 8),
       child: Padding(
         padding: AppSpacing.paddingAll12,
@@ -109,7 +110,7 @@ class _OrderCard extends StatelessWidget {
                 const Spacer(),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(12)),
+                  decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.15), borderRadius: AppRadius.borderLg),
                   child: Text(
                     status.toUpperCase(),
                     style: theme.textTheme.labelSmall?.copyWith(color: statusColor, fontWeight: FontWeight.w600),

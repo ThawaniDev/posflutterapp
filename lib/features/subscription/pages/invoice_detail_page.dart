@@ -36,12 +36,11 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(invoiceDetailProvider(widget.invoiceId));
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.subscriptionInvoiceDetails),
-        centerTitle: true,
-        actions: [
-          if (state is InvoiceDetailLoaded)
+    return PosListPage(
+  title: l10n.subscriptionInvoiceDetails,
+  showSearch: false,
+  actions: [
+  if (state is InvoiceDetailLoaded)
             IconButton(
               icon: _isDownloadingPdf
                   ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
@@ -49,10 +48,9 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
               tooltip: l10n.subscriptionDownloadPdf,
               onPressed: _isDownloadingPdf ? null : () => _downloadPdf(),
             ),
-        ],
-      ),
-      body: _buildBody(state),
-    );
+],
+  child: _buildBody(state),
+);
   }
 
   Widget _buildBody(InvoiceDetailState state) {
@@ -81,7 +79,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
       padding: AppSpacing.paddingAllMd,
       children: [
         // Header Card
-        Card(
+        PosCard(
           child: Padding(
             padding: AppSpacing.paddingAllMd,
             child: Column(
@@ -112,7 +110,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
         if (invoice.lineItems != null && invoice.lineItems!.isNotEmpty) ...[
           Text(l10n.wameedAILineItems, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
           AppSpacing.verticalSm,
-          Card(
+          PosCard(
             child: Padding(
               padding: AppSpacing.paddingAllMd,
               child: Builder(
@@ -127,7 +125,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(item.description, style: const TextStyle(fontWeight: FontWeight.w500)),
-                                  const SizedBox(height: 4),
+                                  AppSpacing.gapH4,
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
@@ -219,7 +217,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
         AppSpacing.verticalMd,
 
         // Totals Card
-        Card(
+        PosCard(
           child: Padding(
             padding: AppSpacing.paddingAllMd,
             child: Column(
@@ -238,10 +236,11 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
         // Download PDF button
         SizedBox(
           width: double.infinity,
-          child: OutlinedButton.icon(
+          child: PosButton(
             onPressed: _isDownloadingPdf ? null : () => _downloadPdf(),
-            icon: const Icon(Icons.picture_as_pdf),
-            label: Text(_isDownloadingPdf ? 'Downloading...' : 'Download PDF Invoice'),
+            variant: PosButtonVariant.outline,
+            icon: Icons.picture_as_pdf,
+            label: _isDownloadingPdf ? 'Downloading...' : 'Download PDF Invoice',
           ),
         ),
       ],
@@ -252,7 +251,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
     final color = _statusColor(status);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(16)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.15), borderRadius: AppRadius.borderXl),
       child: Text(
         status.toUpperCase(),
         style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w700),

@@ -3,6 +3,7 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/delivery_integration/enums/delivery_config_platform.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class MenuSyncStatusCard extends StatelessWidget {
   final Map<String, dynamic> syncLog;
@@ -29,12 +30,10 @@ class MenuSyncStatusCard extends StatelessWidget {
       _ => (AppColors.textSecondary, Icons.help_outline),
     };
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        side: BorderSide(color: Theme.of(context).dividerColor),
-      ),
+      borderRadius: AppRadius.borderLg,
+      border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(

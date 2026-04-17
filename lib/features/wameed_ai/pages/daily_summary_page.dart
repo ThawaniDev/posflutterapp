@@ -32,45 +32,34 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
     final state = ref.watch(aiFeatureResultProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            const Icon(Icons.summarize_outlined, color: AppColors.primary),
-            const SizedBox(width: 8),
-            Text(l10n.wameedAIDailySummary),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.copy),
-            tooltip: l10n.wameedAICopyResult,
-            onPressed: () {
+    return PosListPage(
+  title: l10n.wameedAIDailySummary,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.copy, onPressed: () {
               final s = ref.read(aiFeatureResultProvider);
               if (s is AIFeatureResultLoaded) {
                 final text = s.result.data?['narrative_ar']?.toString() ?? s.result.message ?? '';
                 Clipboard.setData(ClipboardData(text: text));
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l10n.wameedAICopied)));
               }
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('daily_summary'),
-          ),
-        ],
-      ),
-      body: switch (state) {
+            }, tooltip: l10n.wameedAICopyResult,
+  ),
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('daily_summary'), tooltip: l10n.commonRefresh,
+  ),
+],
+  child: switch (state) {
         AIFeatureResultInitial() || AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
         AIFeatureResultError(:final message) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(Icons.error_outline, color: AppColors.error, size: 48),
-              const SizedBox(height: 16),
+              AppSpacing.gapH16,
               Text(message, textAlign: TextAlign.center),
-              const SizedBox(height: 16),
+              AppSpacing.gapH16,
               PosButton(
                 label: l10n.commonRetry,
                 onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('daily_summary'),
@@ -80,7 +69,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
         ),
         AIFeatureResultLoaded(:final result) => _buildContent(result.data, isMobile, l10n),
       },
-    );
+);
   }
 
   Widget _buildContent(Map<String, dynamic>? data, bool isMobile, AppLocalizations l10n) {
@@ -109,7 +98,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(Icons.receipt_long_outlined, size: 64, color: AppColors.textSecondary.withValues(alpha: 0.5)),
-              const SizedBox(height: 16),
+              AppSpacing.gapH16,
               if (headlineAr.isNotEmpty)
                 Text(
                   headlineAr,
@@ -117,7 +106,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                   textAlign: TextAlign.center,
                 ),
               if (narrativeAr.isNotEmpty) ...[
-                const SizedBox(height: 12),
+                AppSpacing.gapH12,
                 Text(
                   narrativeAr,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
@@ -150,14 +139,14 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
     }
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+      padding: context.responsivePagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Headline
           if (headlineAr.isNotEmpty) ...[
             Text(headlineAr, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
           ],
 
           // KPI cards
@@ -198,7 +187,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                 ),
             ],
           ),
-          const SizedBox(height: 24),
+          AppSpacing.gapH24,
 
           // AI Narrative
           if (narrativeAr.isNotEmpty) ...[
@@ -207,7 +196,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.05),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.borderLg,
                 border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
               ),
               child: Column(
@@ -216,25 +205,25 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
                   Row(
                     children: [
                       const Icon(Icons.auto_awesome, size: 18, color: AppColors.primary),
-                      const SizedBox(width: 8),
+                      AppSpacing.gapW8,
                       Text(
                         l10n.wameedAISummary,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
+                  AppSpacing.gapH12,
                   SelectableText(narrativeAr, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            AppSpacing.gapH20,
           ],
 
           // Top Products
           if (topProducts.isNotEmpty) ...[
             _sectionTitle(context, Icons.star_outline, l10n.wameedAIHighlights, AppColors.success),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             ...topProducts.take(10).map((p) {
               final product = p as Map<String, dynamic>;
               final name = product['name_ar']?.toString() ?? product['name']?.toString() ?? '';
@@ -242,21 +231,21 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
               final rev = (product['revenue'] as num?)?.toStringAsFixed(2) ?? '';
               return _bulletItem(context, '$name — $qty ${l10n.wameedAIItemsSold}, $rev', AppColors.success);
             }),
-            const SizedBox(height: 20),
+            AppSpacing.gapH20,
           ],
 
           // Alerts / Concerns
           if (alerts.isNotEmpty) ...[
             _sectionTitle(context, Icons.warning_amber_outlined, l10n.wameedAIConcerns, AppColors.warning),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             ...alerts.map((a) => _bulletItem(context, a.toString(), AppColors.warning)),
-            const SizedBox(height: 20),
+            AppSpacing.gapH20,
           ],
 
           // Recommendations
           if (recommendationsAr.isNotEmpty) ...[
             _sectionTitle(context, Icons.lightbulb_outline, l10n.wameedAIRecommendations, AppColors.info),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             ...recommendationsAr.map((r) => _bulletItem(context, r, AppColors.info)),
           ],
         ],
@@ -268,7 +257,7 @@ class _DailySummaryPageState extends ConsumerState<DailySummaryPage> {
     return Row(
       children: [
         Icon(icon, size: 20, color: color),
-        const SizedBox(width: 8),
+        AppSpacing.gapW8,
         Text(title, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
       ],
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/router/route_names.dart' show Routes;
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
@@ -46,14 +47,15 @@ class _State extends ConsumerState<AdminProviderRoleTemplateListPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(providerRoleTemplateListProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminProviderRoleTemplates),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: () => _loadData())],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.adminProviderRoleTemplates,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => _loadData(),
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -68,7 +70,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateListPage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> resp) {
@@ -84,8 +86,8 @@ class _State extends ConsumerState<AdminProviderRoleTemplateListPage> {
         separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.xs),
         itemBuilder: (_, i) {
           final item = items[i];
-          return Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          return PosCard(
+            borderRadius: BorderRadius.circular(10,),
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: AppColors.primary.withValues(alpha: 0.1),

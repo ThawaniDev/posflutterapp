@@ -65,25 +65,18 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
     final isMobile = context.isPhone;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            const Icon(Icons.document_scanner_outlined, color: AppColors.primary),
-            const SizedBox(width: 8),
-            Text(l10n.wameedAIInvoiceOCR),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+    return PosListPage(
+  title: l10n.wameedAIInvoiceOCR,
+  showSearch: false,
+    child: SingleChildScrollView(
+        padding: context.responsivePagePadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ─── Image Upload Zone ───────────────────────────────
             if (_selectedImage == null) _buildUploadZone(l10n, isDark) else _buildImagePreview(l10n, isMobile, isDark),
 
-            const SizedBox(height: 20),
+            AppSpacing.gapH20,
 
             // ─── Process Button ──────────────────────────────────
             if (_selectedImage != null && state is! AIFeatureResultLoading)
@@ -96,7 +89,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
                 ),
               ),
 
-            const SizedBox(height: 24),
+            AppSpacing.gapH24,
 
             // ─── Results ─────────────────────────────────────────
             switch (state) {
@@ -112,7 +105,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
                                 size: 56,
                                 color: Theme.of(context).hintColor.withValues(alpha: 0.5),
                               ),
-                              const SizedBox(height: 12),
+                              AppSpacing.gapH12,
                               Text(
                                 l10n.wameedAIUploadInvoicePrompt,
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).hintColor),
@@ -129,12 +122,12 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
                   child: Column(
                     children: [
                       SizedBox(width: 56, height: 56, child: CircularProgressIndicator(strokeWidth: 3, color: AppColors.primary)),
-                      const SizedBox(height: 20),
+                      AppSpacing.gapH20,
                       Text(
                         l10n.wameedAIProcessingInvoice,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
                       ),
-                      const SizedBox(height: 8),
+                      AppSpacing.gapH8,
                       Text(
                         l10n.wameedAIOCRProcessingHint,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
@@ -151,20 +144,20 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: AppColors.error.withValues(alpha: 0.08),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: AppRadius.borderLg,
                       border: Border.all(color: AppColors.error.withValues(alpha: 0.2)),
                     ),
                     child: Row(
                       children: [
                         const Icon(Icons.error_outline, color: AppColors.error),
-                        const SizedBox(width: 12),
+                        AppSpacing.gapW12,
                         Expanded(
                           child: Text(message, style: const TextStyle(color: AppColors.error)),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  AppSpacing.gapH12,
                   SizedBox(
                     width: double.infinity,
                     child: PosButton(label: l10n.commonRetry, icon: Icons.refresh, onPressed: _processImage),
@@ -176,7 +169,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
           ],
         ),
       ),
-    );
+);
   }
 
   Widget _buildUploadZone(AppLocalizations l10n, bool isDark) {
@@ -187,7 +180,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
         padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
         decoration: BoxDecoration(
           color: AppColors.primary.withValues(alpha: 0.03),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: AppRadius.borderXxl,
           border: Border.all(
             color: AppColors.primary.withValues(alpha: 0.2),
             width: 2,
@@ -199,26 +192,26 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
             Container(
               width: 72,
               height: 72,
-              decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(20)),
+              decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.borderXxl),
               child: const Icon(Icons.add_a_photo_outlined, size: 36, color: AppColors.primary),
             ),
-            const SizedBox(height: 20),
+            AppSpacing.gapH20,
             Text(
               l10n.wameedAISelectInvoiceImage,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
             ),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             Text(
               l10n.wameedAIUploadInvoicePrompt,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 24),
+            AppSpacing.gapH24,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildSourceChip(Icons.camera_alt, l10n.wameedAICamera, () => _pickImage(ImageSource.camera)),
-                const SizedBox(width: 16),
+                AppSpacing.gapW16,
                 _buildSourceChip(Icons.photo_library, l10n.wameedAIGallery, () => _pickImage(ImageSource.gallery)),
               ],
             ),
@@ -231,17 +224,17 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
   Widget _buildSourceChip(IconData icon, String label, VoidCallback onTap) {
     return Material(
       color: AppColors.primary.withValues(alpha: 0.08),
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: AppRadius.borderLg,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.borderLg,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(icon, size: 20, color: AppColors.primary),
-              const SizedBox(width: 8),
+              AppSpacing.gapW8,
               Text(
                 label,
                 style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600),
@@ -258,7 +251,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadius.borderXl,
         border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 8, offset: const Offset(0, 2))],
       ),
@@ -282,7 +275,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
             child: Row(
               children: [
                 const Icon(Icons.check_circle, color: AppColors.success, size: 18),
-                const SizedBox(width: 8),
+                AppSpacing.gapW8,
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -310,7 +303,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
                     backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                   ),
                 ),
-                const SizedBox(width: 8),
+                AppSpacing.gapW8,
                 // Remove image button
                 IconButton(
                   icon: const Icon(Icons.close, size: 20),
@@ -347,19 +340,19 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
-              const SizedBox(height: 20),
+              AppSpacing.gapH20,
               Text(
                 l10n.wameedAISelectInvoiceImage,
                 style: Theme.of(ctx).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
               ),
-              const SizedBox(height: 20),
+              AppSpacing.gapH20,
               ListTile(
                 leading: Container(
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
                     color: AppColors.primary.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.borderLg,
                   ),
                   child: const Icon(Icons.camera_alt, color: AppColors.primary),
                 ),
@@ -376,7 +369,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
                   height: 48,
                   decoration: BoxDecoration(
                     color: AppColors.info.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.borderLg,
                   ),
                   child: const Icon(Icons.photo_library, color: AppColors.info),
                 ),
@@ -428,7 +421,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: AppRadius.borderLg,
             border: Border.all(color: AppColors.success.withValues(alpha: 0.3)),
           ),
           child: Column(
@@ -437,7 +430,7 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
               Row(
                 children: [
                   const Icon(Icons.check_circle, color: AppColors.success, size: 20),
-                  const SizedBox(width: 8),
+                  AppSpacing.gapW8,
                   Text(
                     l10n.wameedAIInvoiceExtracted,
                     style: Theme.of(
@@ -459,13 +452,13 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
 
         // Line items
         if (lineItems.isNotEmpty) ...[
-          const SizedBox(height: 20),
+          AppSpacing.gapH20,
           Text(l10n.wameedAILineItems, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
-          const SizedBox(height: 12),
+          AppSpacing.gapH12,
           Container(
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: AppRadius.borderLg,
               border: Border.all(color: Theme.of(context).dividerColor),
             ),
             child: Column(
@@ -558,12 +551,12 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
 
         // Totals
         if (effectiveTotals.isNotEmpty) ...[
-          const SizedBox(height: 16),
+          AppSpacing.gapH16,
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: AppRadius.borderLg,
               border: Border.all(color: Theme.of(context).dividerColor),
             ),
             child: Column(
@@ -585,20 +578,20 @@ class _InvoiceOcrPageState extends ConsumerState<InvoiceOcrPage> {
 
         // Notes
         if (notes.isNotEmpty) ...[
-          const SizedBox(height: 16),
+          AppSpacing.gapH16,
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: AppColors.info.withValues(alpha: 0.05),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: AppRadius.borderLg,
               border: Border.all(color: AppColors.info.withValues(alpha: 0.15)),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Icon(Icons.note_outlined, size: 16, color: AppColors.info),
-                const SizedBox(width: 8),
+                AppSpacing.gapW8,
                 Expanded(child: Text(notes, style: Theme.of(context).textTheme.bodySmall)),
               ],
             ),

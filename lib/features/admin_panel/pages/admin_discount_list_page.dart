@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
@@ -17,7 +17,6 @@ class AdminDiscountListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminDiscountListPageState extends ConsumerState<AdminDiscountListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
@@ -38,49 +37,34 @@ class _AdminDiscountListPageState extends ConsumerState<AdminDiscountListPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(discountListProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.discounts),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              // Navigate to create discount
-            },
-          ),
-        ],
-      ),
-      body: Column(
+    final isLoading = state is DiscountListLoading;
+    final hasError = state is DiscountListError;
+    final isEmpty = state is DiscountListLoaded && state.discounts.isEmpty;
+
+    return PosListPage(
+      title: l10n.discounts,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: () => ref.read(discountListProvider.notifier).loadDiscounts(),
+      isEmpty: isEmpty,
+      emptyTitle: 'No discounts found',
+      emptyIcon: Icons.local_offer_outlined,
+      actions: [PosButton(label: l10n.add, icon: Icons.add, onPressed: () {})],
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
             child: switch (state) {
-              DiscountListLoading() => const Center(child: CircularProgressIndicator()),
-              DiscountListError(:final message) => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(message, style: const TextStyle(color: AppColors.error)),
-                    AppSpacing.gapH16,
-                    PosButton(
-                      label: l10n.retry,
-                      variant: PosButtonVariant.outline,
-                      onPressed: () => ref.read(discountListProvider.notifier).loadDiscounts(),
-                    ),
-                  ],
-                ),
+              DiscountListLoaded(:final discounts) => ListView.builder(
+                padding: AppSpacing.paddingAll16,
+                itemCount: discounts.length,
+                itemBuilder: (context, index) {
+                  final discount = discounts[index];
+                  return _DiscountCard(discount: discount);
+                },
               ),
-              DiscountListLoaded(:final discounts) =>
-                discounts.isEmpty
-                    ? const Center(child: Text('No discounts found'))
-                    : ListView.builder(
-                        padding: AppSpacing.paddingAll16,
-                        itemCount: discounts.length,
-                        itemBuilder: (context, index) {
-                          final discount = discounts[index];
-                          return _DiscountCard(discount: discount);
-                        },
-                      ),
               _ => const SizedBox.shrink(),
             },
           ),
@@ -100,13 +84,13 @@ class _DiscountCard extends StatelessWidget {
     final value = discount['value'];
     final code = discount['code'] ?? '';
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: 12),
       child: ListTile(
         leading: Container(
           width: 48,
           height: 48,
-          decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
+          decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
           alignment: Alignment.center,
           child: Text(
             type == 'percentage' ? '%' : '\u0081',

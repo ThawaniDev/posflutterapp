@@ -113,27 +113,17 @@ class _InstallmentWebViewPageState extends ConsumerState<InstallmentWebViewPage>
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: isDark ? AppColors.surfaceDark : Colors.white,
-        foregroundColor: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-        title: Row(
-          children: [
-            const Icon(Icons.payment_rounded, size: 20, color: AppColors.primary),
-            AppSpacing.gapW8,
-            Text('${widget.provider.label} ${l10n.checkout}', style: AppTypography.titleMedium),
-          ],
-        ),
-        leading: IconButton(icon: const Icon(Icons.close_rounded), onPressed: () => _confirmCancel(l10n)),
-        actions: [
-          if (_isLoading)
-            const Padding(
-              padding: EdgeInsets.only(right: 16),
-              child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)),
-            ),
-        ],
-      ),
-      body: _error != null
+    return PosListPage(
+      title: '${widget.provider.label} ${l10n.checkout}',
+      showSearch: false,
+      actions: [
+        if (_isLoading)
+          const Padding(
+            padding: EdgeInsets.only(right: 16),
+            child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)),
+          ),
+      ],
+      child: _error != null
           ? Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -155,25 +145,17 @@ class _InstallmentWebViewPageState extends ConsumerState<InstallmentWebViewPage>
     );
   }
 
-  void _confirmCancel(AppLocalizations l10n) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.cancelPayment),
-        content: Text(l10n.cancelPaymentConfirm),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.no)),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              _onPaymentCancelled();
-            },
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: Text(l10n.yes),
-          ),
-        ],
-      ),
+  void _confirmCancel(AppLocalizations l10n) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.cancelPayment,
+      message: l10n.cancelPaymentConfirm,
+      confirmLabel: l10n.yes,
+      cancelLabel: l10n.no,
     );
+    if (confirmed == true) {
+      _onPaymentCancelled();
+    }
   }
 }
 

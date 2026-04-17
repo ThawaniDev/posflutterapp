@@ -6,6 +6,7 @@ import '../../../core/widgets/pos_status_badge.dart';
 import '../models/production_schedule.dart';
 import '../enums/production_schedule_status.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ProductionScheduleCard extends StatelessWidget {
   final ProductionSchedule schedule;
@@ -16,15 +17,13 @@ class ProductionScheduleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
-      ),
+      borderRadius: AppRadius.borderMd,
+      border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: AppRadius.borderMd,
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(

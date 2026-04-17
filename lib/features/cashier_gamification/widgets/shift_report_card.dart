@@ -3,6 +3,8 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/models/cashier_shift_report.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ShiftReportCard extends StatelessWidget {
   final CashierShiftReport report;
@@ -16,21 +18,21 @@ class ShiftReportCard extends StatelessWidget {
     final theme = Theme.of(context);
     final isMobile = context.isPhone;
 
-    return Card(
+    return PosCard(
       elevation: 0.5,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      borderRadius: AppRadius.borderLg,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.borderLg,
         child: Padding(
-          padding: EdgeInsets.all(isMobile ? 12 : 16),
+          padding: context.responsivePagePadding,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  Icon(Icons.assessment_rounded, color: AppColors.primary, size: isMobile ? 20 : 24),
-                  const SizedBox(width: 8),
+                  Icon(Icons.assessment_rounded, color: AppColors.primary, size: context.responsiveIconSize),
+                  AppSpacing.gapW8,
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +53,7 @@ class ShiftReportCard extends StatelessWidget {
                   _RiskLevelChip(level: report.riskLevel, score: report.riskScore),
                 ],
               ),
-              const SizedBox(height: 12),
+              AppSpacing.gapH12,
               Wrap(
                 spacing: isMobile ? 12 : 20,
                 runSpacing: 8,
@@ -77,11 +79,11 @@ class ShiftReportCard extends StatelessWidget {
                 ],
               ),
               if (report.sentToOwner) ...[
-                const SizedBox(height: 8),
+                AppSpacing.gapH8,
                 Row(
                   children: [
                     Icon(Icons.send_rounded, size: 12, color: AppColors.success),
-                    const SizedBox(width: 4),
+                    AppSpacing.gapW4,
                     Text(l10n.notifLogSent, style: TextStyle(fontSize: 11, color: AppColors.success)),
                   ],
                 ),
@@ -117,7 +119,7 @@ class _RiskLevelChip extends StatelessWidget {
     }
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(8)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: AppRadius.borderMd),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

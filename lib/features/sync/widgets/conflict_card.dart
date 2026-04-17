@@ -3,6 +3,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/sync/models/sync_conflict.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ConflictCard extends StatelessWidget {
   final SyncConflict conflict;
@@ -16,7 +17,7 @@ class ConflictCard extends StatelessWidget {
     final theme = Theme.of(context);
     final isResolved = conflict.resolvedAt != null;
 
-    return Card(
+    return PosCard(
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -65,9 +66,13 @@ class ConflictCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  OutlinedButton(onPressed: () => onResolve!('local_wins'), child: Text(l10n.useLocal)),
+                  PosButton(onPressed: () => onResolve!('local_wins'), variant: PosButtonVariant.outline, label: l10n.useLocal),
                   AppSpacing.gapW8,
-                  FilledButton(onPressed: () => onResolve!('cloud_wins'), child: Text(l10n.useCloud)),
+                  PosButton(
+                    onPressed: () => onResolve!('cloud_wins'),
+                    variant: PosButtonVariant.soft,
+                    label: l10n.useCloud,
+                  ),
                 ],
               ),
             ],

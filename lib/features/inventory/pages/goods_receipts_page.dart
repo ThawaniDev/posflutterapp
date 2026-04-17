@@ -56,28 +56,24 @@ class _GoodsReceiptsPageState extends ConsumerState<GoodsReceiptsPage> {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(goodsReceiptsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.inventoryGoodsReceipts),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showGoodsReceiptsInfo(context),
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(goodsReceiptsProvider.notifier).load(),
-          ),
-        ],
-      ),
-      floatingActionButton: PosButton(
-        label: l10n.inventoryNewReceipt,
-        icon: Icons.add,
-        onPressed: () => context.push(Routes.goodsReceiptsAdd),
-      ),
-      body: _buildBody(state),
+    return PosListPage(
+      title: l10n.inventoryGoodsReceipts,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showGoodsReceiptsInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () => ref.read(goodsReceiptsProvider.notifier).load(),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton(label: l10n.inventoryNewReceipt, icon: Icons.add, onPressed: () => context.push(Routes.goodsReceiptsAdd)),
+      ],
+      child: _buildBody(state),
     );
   }
 

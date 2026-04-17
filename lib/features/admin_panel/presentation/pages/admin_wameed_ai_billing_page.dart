@@ -15,26 +15,18 @@ class AdminWameedAIBillingPage extends ConsumerStatefulWidget {
   ConsumerState<AdminWameedAIBillingPage> createState() => _State();
 }
 
-class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerProviderStateMixin {
-
+class _State extends ConsumerState<AdminWameedAIBillingPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  late TabController _tabCtrl;
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabCtrl = TabController(length: 3, vsync: this);
     Future.microtask(() {
       ref.read(wameedAIAdminBillingDashboardProvider.notifier).load();
       ref.read(wameedAIAdminBillingInvoicesProvider.notifier).load();
       ref.read(wameedAIAdminBillingStoresProvider.notifier).load();
     });
-  }
-
-  @override
-  void dispose() {
-    _tabCtrl.dispose();
-    super.dispose();
   }
 
   @override
@@ -51,24 +43,25 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerPr
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminWameedAIBilling),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        bottom: TabBar(
-          controller: _tabCtrl,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.white70,
-          indicatorColor: Colors.white,
-          tabs: [
-            Tab(text: l10n.overview),
-            Tab(text: l10n.invoices),
-            Tab(text: l10n.stores),
-          ],
-        ),
+    return PosListPage(
+      title: l10n.adminWameedAIBilling,
+      showSearch: false,
+      child: Column(
+        children: [
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: l10n.overview),
+              PosTabItem(label: l10n.invoices),
+              PosTabItem(label: l10n.stores),
+            ],
+          ),
+          Expanded(
+            child: IndexedStack(index: _currentTab, children: [_overviewTab(l10n), _invoicesTab(l10n), _storesTab(l10n)]),
+          ),
+        ],
       ),
-      body: TabBarView(controller: _tabCtrl, children: [_overviewTab(l10n), _invoicesTab(l10n), _storesTab(l10n)]),
     );
   }
 
@@ -154,26 +147,17 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerPr
     );
   }
 
-  void _confirmGenerate(AppLocalizations l10n) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(l10n.adminWameedAIGenerateInvoices, style: AppTypography.titleMedium),
-        content: Text(l10n.adminWameedAIGenerateInvoicesConfirm),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-          PosButton(
-            label: l10n.generate,
-            onPressed: () {
-              Navigator.pop(ctx);
-              ref.read(wameedAIAdminActionProvider.notifier).generateInvoices();
-            },
-            variant: PosButtonVariant.primary,
-            size: PosButtonSize.sm,
-          ),
-        ],
-      ),
+  void _confirmGenerate(AppLocalizations l10n) async {
+    final confirmed = await showPosConfirmDialog(
+      context,
+      title: l10n.adminWameedAIGenerateInvoices,
+      message: l10n.adminWameedAIGenerateInvoicesConfirm,
+      confirmLabel: l10n.generate,
+      cancelLabel: l10n.cancel,
     );
+    if (confirmed == true) {
+      ref.read(wameedAIAdminActionProvider.notifier).generateInvoices();
+    }
   }
 
   // ── INVOICES TAB ──
@@ -311,7 +295,7 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerPr
                     height: 44,
                     decoration: BoxDecoration(
                       color: (aiEnabled ? AppColors.success : AppColors.textMutedLight).withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: AppRadius.borderLg,
                     ),
                     child: Icon(Icons.store_rounded, color: aiEnabled ? AppColors.success : AppColors.textMutedLight),
                   ),

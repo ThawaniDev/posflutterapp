@@ -213,307 +213,267 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final isMobile = context.isPhone;
     final title = widget.isEditing
         ? AppLocalizations.of(context)!.termFormEditTitle
         : AppLocalizations.of(context)!.termFormAddTitle;
 
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        title: Text(title, style: isMobile ? AppTypography.titleMedium : AppTypography.headlineSmall),
-        leading: IconButton(icon: const Icon(Icons.arrow_back_ios_new_rounded), onPressed: () => context.pop()),
+    return PosFormPage(
+      title: title,
+      isLoading: _isLoadingInitial,
+      onBack: () => context.pop(),
+      maxWidth: AppSizes.maxWidthForm,
+      bottomBar: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          PosButton(
+            label: AppLocalizations.of(context)!.posCancel,
+            variant: PosButtonVariant.ghost,
+            onPressed: _isSaving ? null : () => context.pop(),
+          ),
+          AppSpacing.gapW12,
+          PosButton(
+            label: widget.isEditing
+                ? AppLocalizations.of(context)!.termFormSaveChanges
+                : AppLocalizations.of(context)!.termFormCreate,
+            icon: widget.isEditing ? Icons.save_outlined : Icons.add_rounded,
+            isLoading: _isSaving,
+            onPressed: _handleSubmit,
+          ),
+        ],
       ),
-      body: _isLoadingInitial
-          ? PosLoading(message: AppLocalizations.of(context)!.termFormLoading)
-          : SingleChildScrollView(
-              padding: EdgeInsets.symmetric(
-                horizontal: isMobile ? AppSpacing.md : AppSpacing.xxxl,
-                vertical: isMobile ? AppSpacing.md : AppSpacing.xl,
-              ),
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: AppSizes.maxWidthForm),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // ── Section 1: Terminal Info ────────────
-                        _buildSectionCard(
-                          icon: Icons.point_of_sale_outlined,
-                          title: AppLocalizations.of(context)!.termFormSectionTitle,
-                          subtitle: AppLocalizations.of(context)!.termFormSectionSubtitle,
-                          children: [
-                            PosTextField(
-                              controller: _nameController,
-                              label: AppLocalizations.of(context)!.termFormNameLabel,
-                              hint: AppLocalizations.of(context)!.termFormNameHint,
-                              prefixIcon: Icons.label_outline,
-                              errorText: _nameError,
-                              textInputAction: TextInputAction.next,
-                              onChanged: (_) {
-                                if (_nameError != null) setState(() => _nameError = null);
-                              },
-                            ),
-                            AppSpacing.gapH16,
-                            PosTextField(
-                              controller: _deviceIdController,
-                              label: AppLocalizations.of(context)!.termFormDeviceIdLabel,
-                              hint: AppLocalizations.of(context)!.termFormDeviceIdHint,
-                              prefixIcon: Icons.fingerprint_outlined,
-                              errorText: _deviceIdError,
-                              textInputAction: TextInputAction.next,
-                              onChanged: (_) {
-                                if (_deviceIdError != null) setState(() => _deviceIdError = null);
-                              },
-                            ),
-                            AppSpacing.gapH16,
-                            PosSearchableDropdown<String>(
-                              label: AppLocalizations.of(context)!.termFormPlatformLabel,
-                              items: _platforms.map((p) => PosDropdownItem(value: p, label: _platformLabel(p))).toList(),
-                              selectedValue: _selectedPlatform,
-                              onChanged: (v) {
-                                setState(() {
-                                  _selectedPlatform = v;
-                                });
-                              },
-                              showSearch: false,
-                            ),
-                            AppSpacing.gapH16,
-                            PosTextField(
-                              controller: _appVersionController,
-                              label: AppLocalizations.of(context)!.termFormVersionLabel,
-                              hint: AppLocalizations.of(context)!.termFormVersionHint,
-                              prefixIcon: Icons.info_outline,
-                              textInputAction: TextInputAction.next,
-                            ),
-                          ],
-                        ),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ── Section 1: Terminal Info ────────────
+            _buildSectionCard(
+              icon: Icons.point_of_sale_outlined,
+              title: AppLocalizations.of(context)!.termFormSectionTitle,
+              subtitle: AppLocalizations.of(context)!.termFormSectionSubtitle,
+              children: [
+                PosTextField(
+                  controller: _nameController,
+                  label: AppLocalizations.of(context)!.termFormNameLabel,
+                  hint: AppLocalizations.of(context)!.termFormNameHint,
+                  prefixIcon: Icons.label_outline,
+                  errorText: _nameError,
+                  textInputAction: TextInputAction.next,
+                  onChanged: (_) {
+                    if (_nameError != null) setState(() => _nameError = null);
+                  },
+                ),
+                AppSpacing.gapH16,
+                PosTextField(
+                  controller: _deviceIdController,
+                  label: AppLocalizations.of(context)!.termFormDeviceIdLabel,
+                  hint: AppLocalizations.of(context)!.termFormDeviceIdHint,
+                  prefixIcon: Icons.fingerprint_outlined,
+                  errorText: _deviceIdError,
+                  textInputAction: TextInputAction.next,
+                  onChanged: (_) {
+                    if (_deviceIdError != null) setState(() => _deviceIdError = null);
+                  },
+                ),
+                AppSpacing.gapH16,
+                PosSearchableDropdown<String>(
+                  label: AppLocalizations.of(context)!.termFormPlatformLabel,
+                  items: _platforms.map((p) => PosDropdownItem(value: p, label: _platformLabel(p))).toList(),
+                  selectedValue: _selectedPlatform,
+                  onChanged: (v) {
+                    setState(() {
+                      _selectedPlatform = v;
+                    });
+                  },
+                  showSearch: false,
+                ),
+                AppSpacing.gapH16,
+                PosTextField(
+                  controller: _appVersionController,
+                  label: AppLocalizations.of(context)!.termFormVersionLabel,
+                  hint: AppLocalizations.of(context)!.termFormVersionHint,
+                  prefixIcon: Icons.info_outline,
+                  textInputAction: TextInputAction.next,
+                ),
+              ],
+            ),
 
-                        AppSpacing.gapH24,
+            AppSpacing.gapH24,
 
-                        // ── Section 2: Device Hardware ─────────
-                        _buildSectionCard(
-                          icon: Icons.devices_outlined,
-                          title: AppLocalizations.of(context)!.termFormDeviceSection,
-                          subtitle: AppLocalizations.of(context)!.termFormDeviceSectionSub,
-                          children: [
-                            _buildFieldPair(
-                              isMobile: isMobile,
-                              first: PosTextField(
-                                controller: _deviceModelController,
-                                label: AppLocalizations.of(context)!.termFormDeviceModelLabel,
-                                hint: AppLocalizations.of(context)!.termFormDeviceModelHint,
-                                prefixIcon: Icons.phone_android_outlined,
-                                textInputAction: TextInputAction.next,
-                              ),
-                              second: PosTextField(
-                                controller: _osVersionController,
-                                label: AppLocalizations.of(context)!.termFormOsVersionLabel,
-                                hint: AppLocalizations.of(context)!.termFormOsVersionHint,
-                                prefixIcon: Icons.system_update_outlined,
-                                textInputAction: TextInputAction.next,
-                              ),
-                            ),
-                            AppSpacing.gapH16,
-                            PosTextField(
-                              controller: _serialNumberController,
-                              label: AppLocalizations.of(context)!.termFormSerialNumberLabel,
-                              hint: AppLocalizations.of(context)!.termFormSerialNumberHint,
-                              prefixIcon: Icons.qr_code_outlined,
-                              textInputAction: TextInputAction.next,
-                            ),
-                            AppSpacing.gapH16,
-                            PosToggle(
-                              value: _nfcCapable,
-                              onChanged: (v) => setState(() => _nfcCapable = v),
-                              label: AppLocalizations.of(context)!.termFormNfcCapable,
-                              subtitle: AppLocalizations.of(context)!.termFormNfcCapableSub,
-                            ),
-                          ],
-                        ),
-
-                        AppSpacing.gapH24,
-
-                        // ── Section 3: SoftPOS Configuration ───
-                        _buildSectionCard(
-                          icon: Icons.contactless_outlined,
-                          title: AppLocalizations.of(context)!.termFormSoftposSection,
-                          subtitle: AppLocalizations.of(context)!.termFormSoftposSectionSub,
-                          children: [
-                            PosToggle(
-                              value: _softposEnabled,
-                              onChanged: (v) => setState(() => _softposEnabled = v),
-                              label: AppLocalizations.of(context)!.termFormSoftposEnabled,
-                              subtitle: AppLocalizations.of(context)!.termFormSoftposEnabledSub,
-                            ),
-                            if (_softposEnabled) ...[
-                              AppSpacing.gapH16,
-                              _buildFieldPair(
-                                isMobile: isMobile,
-                                first: PosTextField(
-                                  controller: _nearpayTidController,
-                                  label: AppLocalizations.of(context)!.termFormNearpayTidLabel,
-                                  hint: AppLocalizations.of(context)!.termFormNearpayTidHint,
-                                  prefixIcon: Icons.confirmation_number_outlined,
-                                  textInputAction: TextInputAction.next,
-                                ),
-                                second: PosTextField(
-                                  controller: _nearpayMidController,
-                                  label: AppLocalizations.of(context)!.termFormNearpayMidLabel,
-                                  hint: AppLocalizations.of(context)!.termFormNearpayMidHint,
-                                  prefixIcon: Icons.store_outlined,
-                                  textInputAction: TextInputAction.next,
-                                ),
-                              ),
-                            ],
-                          ],
-                        ),
-
-                        AppSpacing.gapH24,
-
-                        // ── Section 4: Acquirer Details ────────
-                        _buildSectionCard(
-                          icon: Icons.account_balance_outlined,
-                          title: AppLocalizations.of(context)!.termFormAcquirerSection,
-                          subtitle: AppLocalizations.of(context)!.termFormAcquirerSectionSub,
-                          children: [
-                            PosSearchableDropdown<String>(
-                              label: AppLocalizations.of(context)!.termFormAcquirerSourceLabel,
-                              items: _acquirerSources
-                                  .map((s) => PosDropdownItem(value: s, label: _acquirerSourceLabel(s)))
-                                  .toList(),
-                              selectedValue: _selectedAcquirerSource,
-                              onChanged: (v) => setState(() => _selectedAcquirerSource = v),
-                              showSearch: false,
-                            ),
-                            if (_selectedAcquirerSource == 'other') ...[
-                              AppSpacing.gapH16,
-                              PosTextField(
-                                controller: _acquirerNameController,
-                                label: AppLocalizations.of(context)!.termFormAcquirerNameLabel,
-                                hint: AppLocalizations.of(context)!.termFormAcquirerNameHint,
-                                prefixIcon: Icons.business_outlined,
-                                textInputAction: TextInputAction.next,
-                              ),
-                            ],
-                            AppSpacing.gapH16,
-                            PosTextField(
-                              controller: _acquirerRefController,
-                              label: AppLocalizations.of(context)!.termFormAcquirerRefLabel,
-                              hint: AppLocalizations.of(context)!.termFormAcquirerRefHint,
-                              prefixIcon: Icons.tag_outlined,
-                              textInputAction: TextInputAction.next,
-                            ),
-                          ],
-                        ),
-
-                        AppSpacing.gapH24,
-
-                        // ── Section 5: Settlement ──────────────
-                        _buildSectionCard(
-                          icon: Icons.account_balance_wallet_outlined,
-                          title: AppLocalizations.of(context)!.termFormSettlementSection,
-                          subtitle: AppLocalizations.of(context)!.termFormSettlementSectionSub,
-                          children: [
-                            PosSearchableDropdown<String>(
-                              label: AppLocalizations.of(context)!.termFormSettlementCycleLabel,
-                              items: _settlementCycles.map((c) => PosDropdownItem(value: c, label: c)).toList(),
-                              selectedValue: _selectedSettlementCycle,
-                              onChanged: (v) => setState(() => _selectedSettlementCycle = v),
-                              showSearch: false,
-                            ),
-                            AppSpacing.gapH16,
-                            _buildFieldPair(
-                              isMobile: isMobile,
-                              first: PosTextField(
-                                controller: _settlementBankController,
-                                label: AppLocalizations.of(context)!.termFormSettlementBankLabel,
-                                hint: AppLocalizations.of(context)!.termFormSettlementBankHint,
-                                prefixIcon: Icons.account_balance_outlined,
-                                textInputAction: TextInputAction.next,
-                              ),
-                              second: PosTextField(
-                                controller: _settlementIbanController,
-                                label: AppLocalizations.of(context)!.termFormSettlementIbanLabel,
-                                hint: AppLocalizations.of(context)!.termFormSettlementIbanHint,
-                                prefixIcon: Icons.credit_card_outlined,
-                                textInputAction: TextInputAction.next,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        AppSpacing.gapH24,
-
-                        // ── Section 6: Notes ───────────────────
-                        _buildSectionCard(
-                          icon: Icons.notes_outlined,
-                          title: AppLocalizations.of(context)!.termFormNotesSection,
-                          subtitle: AppLocalizations.of(context)!.termFormNotesSectionSub,
-                          children: [
-                            PosTextField(
-                              controller: _adminNotesController,
-                              label: AppLocalizations.of(context)!.termFormAdminNotesLabel,
-                              hint: AppLocalizations.of(context)!.termFormAdminNotesHint,
-                              prefixIcon: Icons.note_outlined,
-                              maxLines: 3,
-                              textInputAction: TextInputAction.newline,
-                            ),
-                          ],
-                        ),
-
-                        AppSpacing.gapH24,
-
-                        // ── Actions ──────────────────────────────
-                        isMobile
-                            ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  PosButton(
-                                    label: widget.isEditing
-                                        ? AppLocalizations.of(context)!.termFormSaveChanges
-                                        : AppLocalizations.of(context)!.termFormCreate,
-                                    icon: widget.isEditing ? Icons.save_outlined : Icons.add_rounded,
-                                    isLoading: _isSaving,
-                                    onPressed: _handleSubmit,
-                                  ),
-                                  AppSpacing.gapH8,
-                                  PosButton(
-                                    label: AppLocalizations.of(context)!.posCancel,
-                                    variant: PosButtonVariant.outline,
-                                    onPressed: () => context.pop(),
-                                  ),
-                                ],
-                              )
-                            : Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  PosButton(
-                                    label: AppLocalizations.of(context)!.posCancel,
-                                    variant: PosButtonVariant.outline,
-                                    onPressed: () => context.pop(),
-                                  ),
-                                  AppSpacing.gapW12,
-                                  PosButton(
-                                    label: widget.isEditing
-                                        ? AppLocalizations.of(context)!.termFormSaveChanges
-                                        : AppLocalizations.of(context)!.termFormCreate,
-                                    icon: widget.isEditing ? Icons.save_outlined : Icons.add_rounded,
-                                    isLoading: _isSaving,
-                                    onPressed: _handleSubmit,
-                                  ),
-                                ],
-                              ),
-                        AppSpacing.gapH16,
-                      ],
-                    ),
+            // ── Section 2: Device Hardware ─────────
+            _buildSectionCard(
+              icon: Icons.devices_outlined,
+              title: AppLocalizations.of(context)!.termFormDeviceSection,
+              subtitle: AppLocalizations.of(context)!.termFormDeviceSectionSub,
+              children: [
+                _buildFieldPair(
+                  isMobile: isMobile,
+                  first: PosTextField(
+                    controller: _deviceModelController,
+                    label: AppLocalizations.of(context)!.termFormDeviceModelLabel,
+                    hint: AppLocalizations.of(context)!.termFormDeviceModelHint,
+                    prefixIcon: Icons.phone_android_outlined,
+                    textInputAction: TextInputAction.next,
+                  ),
+                  second: PosTextField(
+                    controller: _osVersionController,
+                    label: AppLocalizations.of(context)!.termFormOsVersionLabel,
+                    hint: AppLocalizations.of(context)!.termFormOsVersionHint,
+                    prefixIcon: Icons.system_update_outlined,
+                    textInputAction: TextInputAction.next,
                   ),
                 ),
-              ),
+                AppSpacing.gapH16,
+                PosTextField(
+                  controller: _serialNumberController,
+                  label: AppLocalizations.of(context)!.termFormSerialNumberLabel,
+                  hint: AppLocalizations.of(context)!.termFormSerialNumberHint,
+                  prefixIcon: Icons.qr_code_outlined,
+                  textInputAction: TextInputAction.next,
+                ),
+                AppSpacing.gapH16,
+                PosToggle(
+                  value: _nfcCapable,
+                  onChanged: (v) => setState(() => _nfcCapable = v),
+                  label: AppLocalizations.of(context)!.termFormNfcCapable,
+                  subtitle: AppLocalizations.of(context)!.termFormNfcCapableSub,
+                ),
+              ],
             ),
+
+            AppSpacing.gapH24,
+
+            // ── Section 3: SoftPOS Configuration ───
+            _buildSectionCard(
+              icon: Icons.contactless_outlined,
+              title: AppLocalizations.of(context)!.termFormSoftposSection,
+              subtitle: AppLocalizations.of(context)!.termFormSoftposSectionSub,
+              children: [
+                PosToggle(
+                  value: _softposEnabled,
+                  onChanged: (v) => setState(() => _softposEnabled = v),
+                  label: AppLocalizations.of(context)!.termFormSoftposEnabled,
+                  subtitle: AppLocalizations.of(context)!.termFormSoftposEnabledSub,
+                ),
+                if (_softposEnabled) ...[
+                  AppSpacing.gapH16,
+                  _buildFieldPair(
+                    isMobile: isMobile,
+                    first: PosTextField(
+                      controller: _nearpayTidController,
+                      label: AppLocalizations.of(context)!.termFormNearpayTidLabel,
+                      hint: AppLocalizations.of(context)!.termFormNearpayTidHint,
+                      prefixIcon: Icons.confirmation_number_outlined,
+                      textInputAction: TextInputAction.next,
+                    ),
+                    second: PosTextField(
+                      controller: _nearpayMidController,
+                      label: AppLocalizations.of(context)!.termFormNearpayMidLabel,
+                      hint: AppLocalizations.of(context)!.termFormNearpayMidHint,
+                      prefixIcon: Icons.store_outlined,
+                      textInputAction: TextInputAction.next,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+
+            AppSpacing.gapH24,
+
+            // ── Section 4: Acquirer Details ────────
+            _buildSectionCard(
+              icon: Icons.account_balance_outlined,
+              title: AppLocalizations.of(context)!.termFormAcquirerSection,
+              subtitle: AppLocalizations.of(context)!.termFormAcquirerSectionSub,
+              children: [
+                PosSearchableDropdown<String>(
+                  label: AppLocalizations.of(context)!.termFormAcquirerSourceLabel,
+                  items: _acquirerSources.map((s) => PosDropdownItem(value: s, label: _acquirerSourceLabel(s))).toList(),
+                  selectedValue: _selectedAcquirerSource,
+                  onChanged: (v) => setState(() => _selectedAcquirerSource = v),
+                  showSearch: false,
+                ),
+                if (_selectedAcquirerSource == 'other') ...[
+                  AppSpacing.gapH16,
+                  PosTextField(
+                    controller: _acquirerNameController,
+                    label: AppLocalizations.of(context)!.termFormAcquirerNameLabel,
+                    hint: AppLocalizations.of(context)!.termFormAcquirerNameHint,
+                    prefixIcon: Icons.business_outlined,
+                    textInputAction: TextInputAction.next,
+                  ),
+                ],
+                AppSpacing.gapH16,
+                PosTextField(
+                  controller: _acquirerRefController,
+                  label: AppLocalizations.of(context)!.termFormAcquirerRefLabel,
+                  hint: AppLocalizations.of(context)!.termFormAcquirerRefHint,
+                  prefixIcon: Icons.tag_outlined,
+                  textInputAction: TextInputAction.next,
+                ),
+              ],
+            ),
+
+            AppSpacing.gapH24,
+
+            // ── Section 5: Settlement ──────────────
+            _buildSectionCard(
+              icon: Icons.account_balance_wallet_outlined,
+              title: AppLocalizations.of(context)!.termFormSettlementSection,
+              subtitle: AppLocalizations.of(context)!.termFormSettlementSectionSub,
+              children: [
+                PosSearchableDropdown<String>(
+                  label: AppLocalizations.of(context)!.termFormSettlementCycleLabel,
+                  items: _settlementCycles.map((c) => PosDropdownItem(value: c, label: c)).toList(),
+                  selectedValue: _selectedSettlementCycle,
+                  onChanged: (v) => setState(() => _selectedSettlementCycle = v),
+                  showSearch: false,
+                ),
+                AppSpacing.gapH16,
+                _buildFieldPair(
+                  isMobile: isMobile,
+                  first: PosTextField(
+                    controller: _settlementBankController,
+                    label: AppLocalizations.of(context)!.termFormSettlementBankLabel,
+                    hint: AppLocalizations.of(context)!.termFormSettlementBankHint,
+                    prefixIcon: Icons.account_balance_outlined,
+                    textInputAction: TextInputAction.next,
+                  ),
+                  second: PosTextField(
+                    controller: _settlementIbanController,
+                    label: AppLocalizations.of(context)!.termFormSettlementIbanLabel,
+                    hint: AppLocalizations.of(context)!.termFormSettlementIbanHint,
+                    prefixIcon: Icons.credit_card_outlined,
+                    textInputAction: TextInputAction.next,
+                  ),
+                ),
+              ],
+            ),
+
+            AppSpacing.gapH24,
+
+            // ── Section 6: Notes ───────────────────
+            _buildSectionCard(
+              icon: Icons.notes_outlined,
+              title: AppLocalizations.of(context)!.termFormNotesSection,
+              subtitle: AppLocalizations.of(context)!.termFormNotesSectionSub,
+              children: [
+                PosTextField(
+                  controller: _adminNotesController,
+                  label: AppLocalizations.of(context)!.termFormAdminNotesLabel,
+                  hint: AppLocalizations.of(context)!.termFormAdminNotesHint,
+                  prefixIcon: Icons.note_outlined,
+                  maxLines: 3,
+                  textInputAction: TextInputAction.newline,
+                ),
+              ],
+            ),
+
+            AppSpacing.gapH24,
+          ],
+        ),
+      ),
     );
   }
 

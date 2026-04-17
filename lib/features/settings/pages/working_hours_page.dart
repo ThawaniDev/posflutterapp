@@ -58,62 +58,63 @@ class _WorkingHoursPageState extends ConsumerState<WorkingHoursPage> {
     final isAr = Localizations.localeOf(context).languageCode == 'ar';
     final state = ref.watch(workingHoursProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.settingsWorkingHours),
-        actions: [
-          if (_saving)
-            const Padding(
-              padding: EdgeInsets.only(right: 16),
-              child: Center(child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))),
+    final isLoading = state is WorkingHoursLoading || state is WorkingHoursInitial;
+    final hasError = state is WorkingHoursError;
+
+    final List<WorkingHour>? hours = switch (state) {
+      WorkingHoursLoaded(:final hours) => hours,
+      WorkingHoursSaved(:final hours) => hours,
+      WorkingHoursSaving(:final hours) => hours,
+      _ => null,
+    };
+
+    return PosFormPage(
+      title: l10n.settingsWorkingHours,
+      isLoading: isLoading,
+      bottomBar: hours == null
+          ? null
+          : Row(
+              children: [
+                Expanded(
+                  child: PosButton(label: l10n.save, icon: Icons.save, onPressed: _save, isLoading: _saving, isFullWidth: true),
+                ),
+              ],
             ),
-        ],
-      ),
-      body: switch (state) {
-        WorkingHoursLoading() => const Center(child: CircularProgressIndicator()),
-        WorkingHoursError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(message, textAlign: TextAlign.center),
-              AppSpacing.gapH12,
-              FilledButton(onPressed: () => ref.read(workingHoursProvider.notifier).load(_storeId!), child: Text(l10n.retry)),
-            ],
-          ),
-        ),
-        WorkingHoursLoaded(:final hours) ||
-        WorkingHoursSaved(:final hours) ||
-        WorkingHoursSaving(:final hours) => _build(hours, l10n, isAr),
-        _ => const SizedBox.shrink(),
-      },
+      child: hasError
+          ? Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(state.message, textAlign: TextAlign.center),
+                AppSpacing.gapH12,
+                PosButton(
+                  label: l10n.retry,
+                  onPressed: _storeId == null ? null : () => ref.read(workingHoursProvider.notifier).load(_storeId!),
+                ),
+              ],
+            )
+          : hours == null
+          ? const SizedBox.shrink()
+          : _build(hours, l10n, isAr),
     );
   }
 
   Widget _build(List<WorkingHour> hours, AppLocalizations l10n, bool isAr) {
     _initLocal(hours);
-    return SingleChildScrollView(
-      padding: AppSpacing.paddingAll16,
-      child: Column(
-        children: [
-          ..._localHours!.map(
-            (day) => _DayCard(
-              day: day,
-              isAr: isAr,
-              onChanged: (updated) {
-                setState(() {
-                  final idx = _localHours!.indexWhere((d) => d.dayOfWeek == updated.dayOfWeek);
-                  if (idx >= 0) _localHours![idx] = updated;
-                });
-              },
-            ),
+    return Column(
+      children: [
+        ..._localHours!.map(
+          (day) => _DayCard(
+            day: day,
+            isAr: isAr,
+            onChanged: (updated) {
+              setState(() {
+                final idx = _localHours!.indexWhere((d) => d.dayOfWeek == updated.dayOfWeek);
+                if (idx >= 0) _localHours![idx] = updated;
+              });
+            },
           ),
-          const SizedBox(height: 16),
-          SizedBox(
-            width: double.infinity,
-            child: FilledButton.icon(onPressed: _save, icon: const Icon(Icons.save, size: 18), label: Text(l10n.save)),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -130,7 +131,7 @@ class _DayCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final name = isAr ? day.dayNameAr : day.dayName;
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: 8),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -221,7 +222,7 @@ class _TimePicker extends StatelessWidget {
           onChanged('${picked.hour.toString().padLeft(2, '0')}:${picked.minute.toString().padLeft(2, '0')}:00');
         }
       },
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: AppRadius.borderMd,
       child: InputDecorator(
         decoration: InputDecoration(labelText: label, isDense: true, border: const OutlineInputBorder()),
         child: Text(text),

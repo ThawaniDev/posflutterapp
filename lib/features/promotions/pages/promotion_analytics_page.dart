@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/promotions/providers/promotion_providers.dart';
 import 'package:wameedpos/features/promotions/providers/promotion_state.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class PromotionAnalyticsPage extends ConsumerStatefulWidget {
   final String promotionId;
@@ -25,30 +26,17 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(promotionAnalyticsProvider(widget.promotionId));
-    final theme = Theme.of(context);
+    final isLoading = state is PromotionAnalyticsInitial || state is PromotionAnalyticsLoading;
+    final hasError = state is PromotionAnalyticsError;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.promotionsAnalytics)),
-      body: switch (state) {
-        PromotionAnalyticsInitial() || PromotionAnalyticsLoading() => const Center(child: CircularProgressIndicator()),
-        PromotionAnalyticsError(:final message) => Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.error_outline, size: 48, color: theme.colorScheme.error),
-              const SizedBox(height: 12),
-              Text(message, style: TextStyle(color: theme.colorScheme.error)),
-              const SizedBox(height: 16),
-              FilledButton.icon(
-                onPressed: () => ref.read(promotionAnalyticsProvider(widget.promotionId).notifier).load(),
-                icon: const Icon(Icons.refresh),
-                label: Text(l10n.commonRetry),
-              ),
-            ],
-          ),
-        ),
-        PromotionAnalyticsLoaded(:final analytics) => _buildAnalytics(context, analytics),
-      },
+    return PosListPage(
+      title: l10n.promotionsAnalytics,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: () => ref.read(promotionAnalyticsProvider(widget.promotionId).notifier).load(),
+      child: state is PromotionAnalyticsLoaded ? _buildAnalytics(context, state.analytics) : const SizedBox.shrink(),
     );
   }
 
@@ -99,7 +87,7 @@ class _PromotionAnalyticsPageState extends ConsumerState<PromotionAnalyticsPage>
         const SizedBox(height: 24),
         Text(l10n.promotionsPerformance, style: theme.textTheme.titleMedium),
         const SizedBox(height: 8),
-        Card(
+        PosCard(
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(

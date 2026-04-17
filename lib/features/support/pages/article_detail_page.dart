@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
-import 'package:wameedpos/core/widgets/pos_error_state.dart';
-import 'package:wameedpos/core/widgets/pos_loading_skeleton.dart';
 import 'package:wameedpos/features/support/enums/knowledge_base_category.dart';
 import 'package:wameedpos/features/support/providers/support_providers.dart';
 import 'package:wameedpos/features/support/providers/support_state.dart';
@@ -43,9 +41,10 @@ class _ArticleDetailPageState extends ConsumerState<ArticleDetailPage> {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.supportKnowledgeBase)),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.supportKnowledgeBase,
+  showSearch: false,
+    child: switch (state) {
         KbArticleInitial() || KbArticleLoading() => Center(child: PosLoadingSkeleton.list()),
         KbArticleError(:final message) => PosErrorState(
           message: message,
@@ -85,6 +84,6 @@ class _ArticleDetailPageState extends ConsumerState<ArticleDetailPage> {
           );
         }(),
       },
-    );
+);
   }
 }

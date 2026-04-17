@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminABTestResultsPage extends ConsumerStatefulWidget {
   final String testId;
@@ -26,16 +28,17 @@ class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage>
   Widget build(BuildContext context) {
     final state = ref.watch(abTestResultsProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.abTestResults)),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.abTestResults,
+  showSearch: false,
+    child: switch (state) {
         ABTestResultsInitial() || ABTestResultsLoading() => const Center(child: CircularProgressIndicator()),
         ABTestResultsLoaded(:final test, :final results, :final winner, :final confidence) => SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Card(
+              PosCard(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -59,7 +62,7 @@ class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage>
                 const Text('No results yet')
               else
                 ...results.map(
-                  (r) => Card(
+                  (r) => PosCard(
                     child: Padding(
                       padding: const EdgeInsets.all(16),
                       child: Column(
@@ -117,6 +120,6 @@ class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage>
           ),
         ),
       },
-    );
+);
   }
 }

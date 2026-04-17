@@ -9,6 +9,7 @@ import 'package:wameedpos/features/reports/widgets/report_charts.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class StaffPerformancePage extends ConsumerStatefulWidget {
   const StaffPerformancePage({super.key});
@@ -149,7 +150,7 @@ class _StaffList extends StatelessWidget {
                             color: i < 3
                                 ? AppColors.primary.withValues(alpha: 0.1)
                                 : (isDark ? AppColors.hoverDark : AppColors.backgroundLight),
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: AppRadius.borderLg,
                           ),
                           child: Center(
                             child: Text(
@@ -174,7 +175,7 @@ class _StaffList extends StatelessWidget {
                                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
                                       decoration: BoxDecoration(
                                         color: AppColors.primary.withValues(alpha: 0.1),
-                                        borderRadius: BorderRadius.circular(6),
+                                        borderRadius: AppRadius.borderSm,
                                       ),
                                       child: Text(
                                         '#${i + 1}',

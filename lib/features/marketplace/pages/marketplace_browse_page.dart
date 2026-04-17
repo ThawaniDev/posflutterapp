@@ -5,13 +5,7 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/widgets/pos_error_state.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
-import 'package:wameedpos/core/widgets/pos_loading_skeleton.dart';
 import 'package:wameedpos/features/marketplace/models/marketplace_listing.dart';
 import 'package:wameedpos/features/marketplace/providers/marketplace_providers.dart';
 import 'package:wameedpos/features/marketplace/providers/marketplace_state.dart';
@@ -57,21 +51,20 @@ class _MarketplaceBrowsePageState extends ConsumerState<MarketplaceBrowsePage> {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.marketplaceTitle),
-        actions: [
-          PosButton(
+    return PosListPage(
+  title: l10n.marketplaceTitle,
+  showSearch: false,
+  actions: [
+  PosButton(
             label: l10n.marketplaceMyPurchases,
             icon: Icons.shopping_bag_outlined,
             size: PosButtonSize.sm,
             variant: PosButtonVariant.outline,
             onPressed: () => context.push(Routes.myPurchases),
           ),
-          AppSpacing.gapW16,
-        ],
-      ),
-      body: Column(
+  AppSpacing.gapW16,
+],
+  child: Column(
         children: [
           // Search & filter bar
           _buildFilterBar(state, l10n, isDark),
@@ -99,7 +92,7 @@ class _MarketplaceBrowsePageState extends ConsumerState<MarketplaceBrowsePage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildFilterBar(MarketplaceListingsState state, AppLocalizations l10n, bool isDark) {

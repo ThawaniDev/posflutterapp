@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
 
@@ -31,13 +33,8 @@ class AIUsageBanner extends ConsumerWidget {
       ),
     ];
 
-    return Container(
-      padding: EdgeInsets.all(isMobile ? 12 : 16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Theme.of(context).dividerColor),
-      ),
+    return PosCard(
+      padding: context.responsivePagePadding,
       child: isMobile ? _buildMobileGrid(context, stats) : _buildDesktopRow(context, stats),
     );
   }
@@ -92,12 +89,12 @@ class AIUsageBanner extends ConsumerWidget {
       child: Column(
         children: [
           Icon(icon, color: color, size: 20),
-          const SizedBox(height: 4),
+          AppSpacing.gapH4,
           Text(
             value,
             style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700, color: color),
           ),
-          const SizedBox(height: 2),
+          AppSpacing.gapH2,
           Text(
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),

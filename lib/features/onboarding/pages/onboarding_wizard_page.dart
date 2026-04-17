@@ -196,7 +196,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
                 'Step ${_currentIndex + 1} of ${_steps.length}',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
               ),
-              TextButton(onPressed: _isSubmitting ? null : _skipWizard, child: const Text('Skip Setup')),
+              PosButton(onPressed: _isSubmitting ? null : _skipWizard, variant: PosButtonVariant.ghost, label: 'Skip Setup'),
             ],
           ),
           const SizedBox(height: AppSpacing.sm),

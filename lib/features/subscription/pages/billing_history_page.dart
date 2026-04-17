@@ -36,9 +36,10 @@ class _BillingHistoryPageState extends ConsumerState<BillingHistoryPage> {
   Widget build(BuildContext context) {
     final invoicesState = ref.watch(invoicesProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.subscriptionBillingHistory), centerTitle: true),
-      body: Column(
+    return PosListPage(
+  title: l10n.subscriptionBillingHistory,
+  showSearch: false,
+    child: Column(
         children: [
           // Status filter chips
           SingleChildScrollView(
@@ -61,7 +62,7 @@ class _BillingHistoryPageState extends ConsumerState<BillingHistoryPage> {
           Expanded(child: _buildBody(invoicesState)),
         ],
       ),
-    );
+);
   }
 
   Widget _buildFilterChip(String label, String? value) {
@@ -116,7 +117,7 @@ class _BillingHistoryPageState extends ConsumerState<BillingHistoryPage> {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () => context.go('${Routes.invoiceDetail}/${invoices[index].id}'),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.borderLg,
                     child: InvoiceTile(invoice: invoices[index]),
                   );
                 },

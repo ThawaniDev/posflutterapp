@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
@@ -15,16 +16,14 @@ class AdminInfraBackupsPage extends ConsumerStatefulWidget {
   ConsumerState<AdminInfraBackupsPage> createState() => _State();
 }
 
-class _State extends ConsumerState<AdminInfraBackupsPage> with SingleTickerProviderStateMixin {
-
+class _State extends ConsumerState<AdminInfraBackupsPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
-  late final TabController _tabController;
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       _loadData();
@@ -44,34 +43,23 @@ class _State extends ConsumerState<AdminInfraBackupsPage> with SingleTickerProvi
   }
 
   @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminInfraBackups),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: Colors.white,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.white70,
-          tabs: [
-            Tab(text: 'Database'),
-            Tab(text: l10n.hwProvider),
-          ],
-        ),
-      ),
-      body: Column(
+    return PosListPage(
+      title: l10n.adminInfraBackups,
+      showSearch: false,
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: 'Database'),
+              PosTabItem(label: l10n.hwProvider),
+            ],
+          ),
           Expanded(
-            child: TabBarView(controller: _tabController, children: [_DatabaseBackupsTab(), _ProviderBackupsTab()]),
+            child: IndexedStack(index: _currentTab, children: [_DatabaseBackupsTab(), _ProviderBackupsTab()]),
           ),
         ],
       ),
@@ -107,8 +95,8 @@ class _DatabaseBackupsTab extends ConsumerWidget {
       itemBuilder: (_, i) {
         final item = items[i];
         final status = item['status']?.toString() ?? '';
-        return Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        return PosCard(
+          borderRadius: BorderRadius.circular(10,),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: status == 'completed' ? const Color(0xFFDCFCE7) : const Color(0xFFFEF3C7),
@@ -159,8 +147,8 @@ class _ProviderBackupsTab extends ConsumerWidget {
       itemBuilder: (_, i) {
         final item = items[i];
         final status = item['status']?.toString() ?? '';
-        return Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        return PosCard(
+          borderRadius: BorderRadius.circular(10,),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: status == 'success' ? const Color(0xFFDCFCE7) : const Color(0xFFFEE2E2),

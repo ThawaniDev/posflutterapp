@@ -223,8 +223,8 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.commonCancel)),
-          TextButton(
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.commonCancel),
+          PosButton(
             onPressed: () {
               if (nameController.text.trim().isEmpty) return;
               final data = <String, dynamic>{
@@ -249,7 +249,8 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
               };
               Navigator.pop(ctx, data);
             },
-            child: Text(isEditing ? l10n.commonUpdate : l10n.commonCreate),
+            variant: PosButtonVariant.ghost,
+            label: isEditing ? l10n.commonUpdate : l10n.commonCreate,
           ),
         ],
       ),
@@ -302,40 +303,31 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
     final l10n = AppLocalizations.of(context)!;
     final suppliersState = ref.watch(suppliersProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.supplierTitle),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showSupplierListInfo(context),
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(suppliersProvider.notifier).load(),
-          ),
-        ],
-      ),
-      floatingActionButton: PosButton(label: l10n.supplierNew, icon: Icons.add, onPressed: () => _showSupplierDialog()),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: PosTextField(
-              controller: _searchController,
-              hint: l10n.supplierSearchHint,
-              prefixIcon: Icons.search,
-              onSubmitted: (value) => ref.read(suppliersProvider.notifier).search(value),
-              onChanged: (value) {
-                if (value.isEmpty) ref.read(suppliersProvider.notifier).search(null);
-              },
-            ),
-          ),
-          Expanded(child: _buildBody(suppliersState)),
-        ],
-      ),
+    return PosListPage(
+      title: l10n.supplierTitle,
+      searchController: _searchController,
+      searchHint: l10n.supplierSearchHint,
+      onSearchSubmitted: (v) => ref.read(suppliersProvider.notifier).search(v),
+      onSearchClear: () {
+        _searchController.clear();
+        ref.read(suppliersProvider.notifier).search(null);
+      },
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showSupplierListInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () => ref.read(suppliersProvider.notifier).load(),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton(label: l10n.supplierNew, icon: Icons.add, onPressed: () => _showSupplierDialog()),
+      ],
+      child: _buildBody(suppliersState),
     );
   }
 
@@ -388,7 +380,7 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
             ),
           ),
         ),
-        actions: [TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.commonClose))],
+        actions: [PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.commonClose)],
       ),
     );
   }
@@ -459,7 +451,7 @@ class _SupplierListPageState extends ConsumerState<SupplierListPage> {
                 Container(
                   width: 36,
                   height: 36,
-                  decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
+                  decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
                   child: Icon(Icons.local_shipping_outlined, size: 18, color: AppColors.info),
                 ),
                 const SizedBox(width: AppSpacing.sm),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
@@ -17,7 +17,6 @@ class AdminInvoiceListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminInvoiceListPageState extends ConsumerState<AdminInvoiceListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String? _statusFilter;
@@ -44,14 +43,25 @@ class _AdminInvoiceListPageState extends ConsumerState<AdminInvoiceListPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(invoiceListProvider);
+    final isLoading = state is InvoiceListLoading;
+    final hasError = state is InvoiceListError;
+    final isEmpty = state is InvoiceListLoaded && state.invoices.isEmpty;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.invoices)),
-      body: Column(
+    return PosListPage(
+      title: l10n.invoices,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: () => ref.read(invoiceListProvider.notifier).loadInvoices(status: _statusFilter, storeId: _storeId),
+      isEmpty: isEmpty,
+      emptyTitle: l10n.noInvoicesFound,
+      emptyIcon: Icons.receipt_long_outlined,
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 16, vertical: 8),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -59,7 +69,7 @@ class _AdminInvoiceListPageState extends ConsumerState<AdminInvoiceListPage> {
                   _FilterChip(label: l10n.all, selected: _statusFilter == null, onSelected: () => _onFilterChanged(null)),
                   for (final s in ['pending', 'paid', 'overdue', 'cancelled'])
                     Padding(
-                      padding: const EdgeInsets.only(left: 8),
+                      padding: const EdgeInsetsDirectional.only(start: 8),
                       child: _FilterChip(
                         label: s[0].toUpperCase() + s.substring(1),
                         selected: _statusFilter == s,
@@ -72,33 +82,14 @@ class _AdminInvoiceListPageState extends ConsumerState<AdminInvoiceListPage> {
           ),
           Expanded(
             child: switch (state) {
-              InvoiceListLoading() => const Center(child: CircularProgressIndicator()),
-              InvoiceListError(:final message) => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(message, style: const TextStyle(color: AppColors.error)),
-                    AppSpacing.gapH16,
-                    PosButton(
-                      label: l10n.retry,
-                      variant: PosButtonVariant.outline,
-                      onPressed: () =>
-                          ref.read(invoiceListProvider.notifier).loadInvoices(status: _statusFilter, storeId: _storeId),
-                    ),
-                  ],
-                ),
+              InvoiceListLoaded(:final invoices) => ListView.builder(
+                padding: AppSpacing.paddingAll16,
+                itemCount: invoices.length,
+                itemBuilder: (context, index) {
+                  final invoice = invoices[index];
+                  return _InvoiceCard(invoice: invoice);
+                },
               ),
-              InvoiceListLoaded(:final invoices) =>
-                invoices.isEmpty
-                    ? Center(child: Text(l10n.noInvoicesFound))
-                    : ListView.builder(
-                        padding: AppSpacing.paddingAll16,
-                        itemCount: invoices.length,
-                        itemBuilder: (context, index) {
-                          final invoice = invoices[index];
-                          return _InvoiceCard(invoice: invoice);
-                        },
-                      ),
               _ => const SizedBox.shrink(),
             },
           ),
@@ -148,7 +139,7 @@ class _InvoiceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final status = invoice['status'] ?? '';
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: 12),
       child: ListTile(
         leading: const Icon(Icons.receipt_long, color: AppColors.primary),
@@ -166,7 +157,7 @@ class _InvoiceCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
                 color: _statusColor(status).withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: AppRadius.borderMd,
               ),
               child: Text(
                 status.toUpperCase(),

@@ -40,15 +40,16 @@ class _State extends ConsumerState<AdminWameedAIFeaturesPage> {
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.adminWameedAIFeatures), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.adminWameedAIFeatures,
+  showSearch: false,
+    child: switch (state) {
         WameedAIAdminListLoading() => const Center(child: PosLoading()),
         WameedAIAdminListLoaded(data: final resp) => _buildContent(resp, l10n),
         WameedAIAdminListError(message: final msg) => PosErrorState(message: msg, onRetry: _reload),
         _ => Center(child: Text(l10n.loading)),
       },
-    );
+);
   }
 
   Widget _buildContent(Map<String, dynamic> resp, AppLocalizations l10n) {

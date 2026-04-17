@@ -4,9 +4,11 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminDeploymentOverviewPage extends ConsumerStatefulWidget {
   const AdminDeploymentOverviewPage({super.key});
@@ -42,14 +44,15 @@ class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOve
   Widget build(BuildContext context) {
     final state = ref.watch(deploymentOverviewProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.deploymentOverview),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData)],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.deploymentOverview,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: _loadData,
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -64,7 +67,7 @@ class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOve
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildOverview(Map<String, dynamic> data) {
@@ -78,7 +81,7 @@ class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOve
       itemBuilder: (context, index) {
         final p = platforms[index] as Map<String, dynamic>;
         final activeRelease = p['active_release'] as Map<String, dynamic>?;
-        return Card(
+        return PosCard(
           margin: const EdgeInsets.only(bottom: AppSpacing.md),
           child: Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
@@ -98,7 +101,7 @@ class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOve
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                       decoration: BoxDecoration(
                         color: AppColors.primary.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: AppRadius.borderLg,
                       ),
                       child: Text(
                         '${p['total_releases']} releases',

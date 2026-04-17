@@ -20,7 +20,6 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
@@ -101,7 +100,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.loginEmail,
                         hintText: AppLocalizations.of(context)!.loginEmailHint,
-                        prefixIcon: Icon(Icons.email_outlined),
+                        prefixIcon: const Icon(Icons.email_outlined),
                       ),
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
@@ -119,9 +118,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         prefixIcon: const Icon(Icons.lock_outline),
                         suffixIcon: IconButton(
                           icon: Icon(_obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined),
-                          onPressed: () {
-                            setState(() => _obscurePassword = !_obscurePassword);
-                          },
+                          onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                         ),
                       ),
                       obscureText: _obscurePassword,
@@ -145,12 +142,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(AppLocalizations.of(context)!.loginNoAccount, style: Theme.of(context).textTheme.bodyMedium),
-                        TextButton(
+                        PosButton(
                           onPressed: isLoading ? null : () => context.push(Routes.register),
-                          child: Text(
-                            AppLocalizations.of(context)!.loginRegister,
-                            style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
-                          ),
+                          variant: PosButtonVariant.ghost,
+                          label: AppLocalizations.of(context)!.loginRegister,
                         ),
                       ],
                     ),

@@ -4,6 +4,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/pos_status_badge.dart';
 import '../models/bakery_recipe.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class RecipeCard extends StatelessWidget {
   final BakeryRecipe recipe;
@@ -17,15 +18,13 @@ class RecipeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderMd,
+      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: AppRadius.borderMd,
         child: Padding(
           padding: AppSpacing.paddingCard,
           child: Column(
@@ -36,7 +35,7 @@ class RecipeCard extends StatelessWidget {
                   Container(
                     width: 40,
                     height: 40,
-                    decoration: BoxDecoration(color: AppColors.primary10, borderRadius: BorderRadius.circular(AppRadius.sm)),
+                    decoration: BoxDecoration(color: AppColors.primary10, borderRadius: AppRadius.borderSm),
                     child: const Icon(Icons.bakery_dining, color: AppColors.primary, size: 22),
                   ),
                   AppSpacing.gapW12,

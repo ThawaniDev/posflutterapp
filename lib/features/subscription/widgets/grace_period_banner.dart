@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Banner widget shown when the subscription is in a grace period or about to expire.
 class GracePeriodBanner extends StatelessWidget {
@@ -24,7 +25,7 @@ class GracePeriodBanner extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
         color: bannerColor.withValues(alpha: isUrgent ? 0.9 : 0.15),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: AppRadius.borderMd,
         border: Border.all(color: bannerColor, width: 1),
       ),
       child: Row(
@@ -53,14 +54,9 @@ class GracePeriodBanner extends StatelessWidget {
           ),
           if (onRenewPressed != null) ...[
             AppSpacing.horizontalSm,
-            ElevatedButton(
+            PosButton(
               onPressed: onRenewPressed,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: isUrgent ? Colors.white : bannerColor,
-                foregroundColor: isUrgent ? bannerColor : Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              ),
-              child: Text(l10n.subscriptionRenewNow),
+              label: l10n.subscriptionRenewNow,
             ),
           ],
         ],

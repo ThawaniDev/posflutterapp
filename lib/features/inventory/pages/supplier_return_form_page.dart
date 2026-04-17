@@ -104,12 +104,29 @@ class _SupplierReturnFormPageState extends ConsumerState<SupplierReturnFormPage>
     final prodState = ref.watch(productsProvider);
     final productList = prodState is ProductsLoaded ? prodState.products : <Product>[];
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.supplierReturnNew)),
-      body: Form(
+    return PosFormPage(
+      title: l10n.supplierReturnNew,
+      bottomBar: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          PosButton(
+            label: l10n.commonCancel,
+            variant: PosButtonVariant.ghost,
+            onPressed: _isSaving ? null : () => Navigator.of(context).maybePop(),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          PosButton(
+            label: _isSaving ? l10n.inventorySaving : l10n.supplierReturnCreateBtn,
+            icon: Icons.check,
+            isLoading: _isSaving,
+            onPressed: _isSaving ? null : _handleSave,
+          ),
+        ],
+      ),
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             PosSearchableDropdown<String>(
               items: supplierList.map((s) => PosDropdownItem(value: s.id, label: s.name)).toList(),
@@ -138,7 +155,7 @@ class _SupplierReturnFormPageState extends ConsumerState<SupplierReturnFormPage>
             ..._items.asMap().entries.map((entry) {
               final index = entry.key;
               final item = entry.value;
-              return Card(
+              return PosCard(
                 margin: const EdgeInsets.only(bottom: AppSpacing.md),
                 child: Padding(
                   padding: const EdgeInsets.all(AppSpacing.md),
@@ -211,11 +228,6 @@ class _SupplierReturnFormPageState extends ConsumerState<SupplierReturnFormPage>
               );
             }),
             PosButton(label: l10n.inventoryAddItemLabel, icon: Icons.add, variant: PosButtonVariant.outline, onPressed: _addItem),
-            const SizedBox(height: AppSpacing.xl),
-            PosButton(
-              label: _isSaving ? l10n.inventorySaving : l10n.supplierReturnCreateBtn,
-              onPressed: _isSaving ? null : _handleSave,
-            ),
           ],
         ),
       ),

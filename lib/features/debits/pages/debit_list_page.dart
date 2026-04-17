@@ -84,68 +84,50 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(debitsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.debitsTitle),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showDebitListInfo(context),
-          ),
-          PopupMenuButton<String?>(
-            icon: const Icon(Icons.filter_list),
-            tooltip: l10n.debitsFilterByStatus,
-            onSelected: (value) {
-              ref.read(debitsProvider.notifier).filterByStatus(value);
-            },
-            itemBuilder: (ctx) => [
-              PopupMenuItem(value: null, child: Text(l10n.debitsAll)),
-              PopupMenuItem(value: 'pending', child: Text(l10n.debitsStatusPending)),
-              PopupMenuItem(value: 'partially_allocated', child: Text(l10n.debitsStatusPartiallyAllocated)),
-              PopupMenuItem(value: 'fully_allocated', child: Text(l10n.debitsStatusFullyAllocated)),
-              PopupMenuItem(value: 'reversed', child: Text(l10n.debitsStatusReversed)),
-            ],
-          ),
-          PopupMenuButton<String?>(
-            icon: const Icon(Icons.category_outlined),
-            tooltip: l10n.debitsFilterByType,
-            onSelected: (value) {
-              ref.read(debitsProvider.notifier).filterByType(value);
-            },
-            itemBuilder: (ctx) => [
-              PopupMenuItem(value: null, child: Text(l10n.debitsAll)),
-              PopupMenuItem(value: 'customer_credit', child: Text(l10n.debitsTypeCustomerCredit)),
-              PopupMenuItem(value: 'supplier_return', child: Text(l10n.debitsTypeSupplierReturn)),
-              PopupMenuItem(value: 'inventory_adjustment', child: Text(l10n.debitsTypeInventoryAdjustment)),
-              PopupMenuItem(value: 'manual_credit', child: Text(l10n.debitsTypeManualCredit)),
-            ],
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(debitsProvider.notifier).load(),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push(Routes.debitsCreate),
-        child: const Icon(Icons.add),
-      ),
-      body: Column(
+    return PosListPage(
+      title: l10n.debitsTitle,
+      searchController: _searchController,
+      onSearchChanged: (value) => ref.read(debitsProvider.notifier).search(value),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.info_outline),
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showDebitListInfo(context),
+        ),
+        PopupMenuButton<String?>(
+          icon: const Icon(Icons.filter_list),
+          tooltip: l10n.debitsFilterByStatus,
+          onSelected: (value) {
+            ref.read(debitsProvider.notifier).filterByStatus(value);
+          },
+          itemBuilder: (ctx) => [
+            PopupMenuItem(value: null, child: Text(l10n.debitsAll)),
+            PopupMenuItem(value: 'pending', child: Text(l10n.debitsStatusPending)),
+            PopupMenuItem(value: 'partially_allocated', child: Text(l10n.debitsStatusPartiallyAllocated)),
+            PopupMenuItem(value: 'fully_allocated', child: Text(l10n.debitsStatusFullyAllocated)),
+            PopupMenuItem(value: 'reversed', child: Text(l10n.debitsStatusReversed)),
+          ],
+        ),
+        PopupMenuButton<String?>(
+          icon: const Icon(Icons.category_outlined),
+          tooltip: l10n.debitsFilterByType,
+          onSelected: (value) {
+            ref.read(debitsProvider.notifier).filterByType(value);
+          },
+          itemBuilder: (ctx) => [
+            PopupMenuItem(value: null, child: Text(l10n.debitsAll)),
+            PopupMenuItem(value: 'customer_credit', child: Text(l10n.debitsTypeCustomerCredit)),
+            PopupMenuItem(value: 'supplier_return', child: Text(l10n.debitsTypeSupplierReturn)),
+            PopupMenuItem(value: 'inventory_adjustment', child: Text(l10n.debitsTypeInventoryAdjustment)),
+            PopupMenuItem(value: 'manual_credit', child: Text(l10n.debitsTypeManualCredit)),
+          ],
+        ),
+        PosButton(label: l10n.add, icon: Icons.add, onPressed: () => context.push(Routes.debitsCreate)),
+      ],
+      child: Column(
         children: [
           // Summary cards
           if (state is DebitsLoaded && state.summary != null) _buildSummary(state.summary!, l10n),
-          // Search
-          Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: PosTextField(
-              controller: _searchController,
-              hint: l10n.debitsSearchHint,
-              prefixIcon: Icons.search,
-              onSubmitted: (value) => ref.read(debitsProvider.notifier).search(value),
-            ),
-          ),
           Expanded(child: _buildBody(state, l10n)),
         ],
       ),
@@ -318,8 +300,16 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
               ),
             ),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
-              TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(l10n.debitsAllocate)),
+              PosButton(
+                onPressed: () => Navigator.pop(ctx, false),
+                variant: PosButtonVariant.ghost,
+                label: l10n.cancel,
+              ),
+              PosButton(
+                onPressed: () => Navigator.pop(ctx, true),
+                variant: PosButtonVariant.ghost,
+                label: l10n.debitsAllocate,
+              ),
             ],
           );
         },
@@ -373,11 +363,15 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l10n.cancel)),
-          TextButton(
+          PosButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            variant: PosButtonVariant.ghost,
+            label: l10n.cancel,
+          ),
+          PosButton(
             onPressed: () => Navigator.pop(ctx, true),
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: Text(l10n.debitsReverse),
+            variant: PosButtonVariant.ghost,
+            label: l10n.debitsReverse,
           ),
         ],
       ),

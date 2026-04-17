@@ -41,19 +41,19 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
     final sessionsState = ref.watch(cashSessionsProvider);
 
     final isMobile = context.isPhone;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.cashMgmtTitle),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
-            onPressed: () => showCashManagementInfo(context),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(isMobile ? 12 : 16),
+    return PosListPage(
+      title: AppLocalizations.of(context)!.cashMgmtTitle,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
+          onPressed: () => showCashManagementInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+      ],
+      child: SingleChildScrollView(
+        padding: context.responsivePagePadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -86,8 +86,8 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
     };
 
     if (activeSession != null) {
-      return Card(
-        shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+      return PosCard(
+        borderRadius: AppRadius.borderLg,
         child: Padding(
           padding: AppSpacing.paddingAll16,
           child: Column(
@@ -216,8 +216,8 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
     }
 
     // No active session — show open button
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+    return PosCard(
+      borderRadius: AppRadius.borderLg,
       child: Padding(
         padding: AppSpacing.paddingAll24,
         child: Column(
@@ -245,8 +245,8 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
   Widget _buildDenominationCounter(ThemeData theme) {
     final total = PaymentCalculationService.calculateDenominationTotal(_denominationCounts);
 
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+    return PosCard(
+      borderRadius: AppRadius.borderMd,
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -263,7 +263,6 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                         dc.denomination.label,
                         style: theme.textTheme.bodyMedium?.copyWith(
                           fontWeight: dc.denomination.isCoin ? FontWeight.normal : FontWeight.w600,
-                          fontSize: context.isPhone ? 12 : null,
                         ),
                       ),
                     ),
@@ -282,7 +281,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                             horizontal: context.isPhone ? 4 : 8,
                           ),
                         ),
-                        style: TextStyle(fontSize: context.isPhone ? 13 : null),
+                        style: theme.textTheme.bodySmall,
                         onChanged: (v) {
                           setState(() {
                             dc.count = int.tryParse(v) ?? 0;
@@ -296,7 +295,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                     Expanded(
                       child: Text(
                         '${dc.total.toStringAsFixed(2)} \u0081',
-                        style: theme.textTheme.bodyMedium?.copyWith(fontSize: context.isPhone ? 12 : null),
+                        style: theme.textTheme.bodyMedium,
                         textAlign: TextAlign.end,
                       ),
                     ),
@@ -325,7 +324,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
   Widget _buildSessionHistory(CashSessionsState state) {
     return switch (state) {
       CashSessionsInitial() || CashSessionsLoading() => const Center(child: CircularProgressIndicator()),
-      CashSessionsError(:final message) => Card(
+      CashSessionsError(:final message) => PosCard(
         color: AppColors.error.withValues(alpha: 0.08),
         child: Padding(
           padding: AppSpacing.paddingAll16,
@@ -334,7 +333,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
       ),
       CashSessionsLoaded(:final sessions) =>
         sessions.isEmpty
-            ? Card(
+            ? PosCard(
                 child: Padding(
                   padding: AppSpacing.paddingAll24,
                   child: Center(
@@ -349,8 +348,8 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                 children: sessions.map((session) {
                   final isActive = session.status?.value == 'open';
                   final hasVariance = session.variance != null && session.variance!.abs() > 5;
-                  return Card(
-                    shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+                  return PosCard(
+                    borderRadius: AppRadius.borderMd,
                     child: ListTile(
                       leading: Icon(
                         isActive ? Icons.lock_open : Icons.lock,
@@ -424,8 +423,12 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
           autofocus: true,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(AppLocalizations.of(ctx)!.posCancel)),
-          FilledButton(
+          PosButton(
+            onPressed: () => Navigator.pop(ctx),
+            variant: PosButtonVariant.ghost,
+            label: AppLocalizations.of(ctx)!.posCancel,
+          ),
+          PosButton(
             onPressed: () {
               final amount = double.tryParse(_openingFloatController.text);
               if (amount != null && amount >= 0) {
@@ -434,7 +437,8 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                 _openingFloatController.clear();
               }
             },
-            child: Text(AppLocalizations.of(ctx)!.cashMgmtOpenSession),
+            variant: PosButtonVariant.soft,
+            label: AppLocalizations.of(ctx)!.cashMgmtOpenSession,
           ),
         ],
       ),
@@ -466,8 +470,12 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(AppLocalizations.of(ctx)!.posCancel)),
-          FilledButton(
+          PosButton(
+            onPressed: () => Navigator.pop(ctx),
+            variant: PosButtonVariant.ghost,
+            label: AppLocalizations.of(ctx)!.posCancel,
+          ),
+          PosButton(
             onPressed: () {
               ref.read(cashSessionsProvider.notifier).closeSession(sessionId, {
                 'actual_cash': totalCount,
@@ -476,8 +484,8 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
               Navigator.pop(ctx);
               _closeNotesController.clear();
             },
-            style: FilledButton.styleFrom(backgroundColor: AppColors.warning),
-            child: Text(AppLocalizations.of(ctx)!.cashMgmtCloseSession),
+            variant: PosButtonVariant.soft,
+            label: AppLocalizations.of(ctx)!.cashMgmtCloseSession,
           ),
         ],
       ),
@@ -533,8 +541,12 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(AppLocalizations.of(ctx)!.posCancel)),
-          FilledButton(
+          PosButton(
+            onPressed: () => Navigator.pop(ctx),
+            variant: PosButtonVariant.ghost,
+            label: AppLocalizations.of(ctx)!.posCancel,
+          ),
+          PosButton(
             onPressed: () {
               final amount = double.tryParse(amountController.text);
               if (amount != null && amount > 0 && reasonController.text.isNotEmpty) {
@@ -548,7 +560,8 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                 Navigator.pop(ctx);
               }
             },
-            child: Text(AppLocalizations.of(ctx)!.cashMgmtRecord),
+            variant: PosButtonVariant.soft,
+            label: AppLocalizations.of(ctx)!.cashMgmtRecord,
           ),
         ],
       ),

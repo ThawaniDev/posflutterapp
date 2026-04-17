@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/settings/enums/locale_direction.dart';
 import 'package:wameedpos/features/settings/models/supported_locale.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class LocaleSelector extends StatelessWidget {
   final List<SupportedLocale> locales;
@@ -16,7 +17,7 @@ class LocaleSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    return Card(
+    return PosCard(
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(

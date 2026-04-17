@@ -20,7 +20,6 @@ class WorkingHoursPage extends ConsumerStatefulWidget {
 }
 
 class _WorkingHoursPageState extends ConsumerState<WorkingHoursPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   bool _isSaving = false;
 
@@ -135,37 +134,24 @@ class _WorkingHoursPageState extends ConsumerState<WorkingHoursPage> {
       _populateFromServer(hoursState.hours);
     }
 
-    return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
-      appBar: AppBar(
-        title: Text(l10n.branchesWorkingHours),
-        backgroundColor: AppColors.surfaceLight,
-        foregroundColor: AppColors.textPrimaryLight,
-        elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: AppSpacing.md),
-            child: PosButton(label: l10n.save, size: PosButtonSize.sm, isLoading: _isSaving, onPressed: _isSaving ? null : _save),
-          ),
-        ],
-      ),
-      body: _buildBody(hoursState),
-    );
-  }
+    final isLoading = hoursState is WorkingHoursLoading;
+    final hasError = hoursState is WorkingHoursError;
 
-  Widget _buildBody(WorkingHoursState hoursState) {
-    if (hoursState is WorkingHoursLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (hoursState is WorkingHoursError) {
-      return Center(child: Text('Error: ${hoursState.message}'));
-    }
-
-    return ListView.separated(
-      padding: const EdgeInsets.all(AppSpacing.xl),
-      itemCount: 7,
-      separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.md),
-      itemBuilder: (context, i) => _buildDayCard(i),
+    return PosFormPage(
+      title: l10n.branchesWorkingHours,
+      isLoading: isLoading,
+      bottomBar: PosButton(label: l10n.save, isLoading: _isSaving, onPressed: _isSaving ? null : _save, isFullWidth: true),
+      child: hasError
+          ? Center(child: Text('Error: ${hoursState.message}'))
+          : Column(
+              children: List.generate(
+                7,
+                (i) => Padding(
+                  padding: EdgeInsets.only(bottom: i < 6 ? AppSpacing.md : 0),
+                  child: _buildDayCard(i),
+                ),
+              ),
+            ),
     );
   }
 

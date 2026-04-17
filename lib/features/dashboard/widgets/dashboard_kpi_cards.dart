@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/pos_card.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class DashboardKpiCards extends StatelessWidget {
   final Map<String, dynamic> stats;

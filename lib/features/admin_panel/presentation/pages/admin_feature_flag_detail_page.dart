@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminFeatureFlagDetailPage extends ConsumerStatefulWidget {
   final String flagId;
@@ -26,16 +28,17 @@ class _AdminFeatureFlagDetailPageState extends ConsumerState<AdminFeatureFlagDet
   Widget build(BuildContext context) {
     final state = ref.watch(featureFlagDetailProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.featureFlagDetail)),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.featureFlagDetail,
+  showSearch: false,
+    child: switch (state) {
         FeatureFlagDetailInitial() || FeatureFlagDetailLoading() => const Center(child: CircularProgressIndicator()),
         FeatureFlagDetailLoaded(:final flag, :final abTests) => SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Card(
+              PosCard(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -63,7 +66,7 @@ class _AdminFeatureFlagDetailPageState extends ConsumerState<AdminFeatureFlagDet
                 const Text('No A/B tests linked to this flag')
               else
                 ...abTests.map(
-                  (test) => Card(
+                  (test) => PosCard(
                     child: ListTile(
                       title: Text(test['name'] as String? ?? ''),
                       subtitle: Text('Status: ${test['status'] ?? 'draft'}'),
@@ -85,6 +88,6 @@ class _AdminFeatureFlagDetailPageState extends ConsumerState<AdminFeatureFlagDet
           ),
         ),
       },
-    );
+);
   }
 }

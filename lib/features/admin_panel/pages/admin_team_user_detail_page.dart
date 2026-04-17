@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
@@ -16,7 +16,6 @@ class AdminTeamUserDetailPage extends ConsumerStatefulWidget {
 }
 
 class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
@@ -28,11 +27,12 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
   Widget build(BuildContext context) {
     final state = ref.watch(adminTeamUserDetailProvider);
     final theme = Theme.of(context);
+    final isLoading = state is AdminTeamUserDetailInitial || state is AdminTeamUserDetailLoading;
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Team Member')),
-      body: switch (state) {
-        AdminTeamUserDetailInitial() || AdminTeamUserDetailLoading() => const Center(child: CircularProgressIndicator()),
+    return PosFormPage(
+      title: 'Team Member',
+      isLoading: isLoading,
+      child: switch (state) {
         AdminTeamUserDetailError(message: final msg) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -44,6 +44,7 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
           ),
         ),
         AdminTeamUserDetailLoaded(user: final user) => _buildUserDetail(user, theme),
+        _ => const SizedBox.shrink(),
       },
     );
   }
@@ -53,135 +54,128 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
     final roles = user['roles'] as List<dynamic>? ?? <dynamic>[];
     final twoFactor = user['two_factor_enabled'] == true;
 
-    return SingleChildScrollView(
-      padding: AppSpacing.paddingAll16,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // ─── Header ───────────────────────────────
-          Card(
-            child: Padding(
-              padding: AppSpacing.paddingAll16,
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 32,
-                    backgroundColor: isActive ? AppColors.success.withValues(alpha: 0.1) : AppColors.error.withValues(alpha: 0.1),
-                    child: Icon(Icons.person, size: 32, color: isActive ? AppColors.success : AppColors.error),
-                  ),
-                  AppSpacing.gapW16,
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(user['name'] as String? ?? '', style: theme.textTheme.titleLarge),
-                        Text(
-                          user['email'] as String? ?? '',
-                          style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
-                        ),
-                        AppSpacing.gapH4,
-                        Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: isActive
-                                    ? AppColors.success.withValues(alpha: 0.1)
-                                    : AppColors.error.withValues(alpha: 0.1),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Text(
-                                isActive ? 'Active' : 'Inactive',
-                                style: theme.textTheme.labelSmall?.copyWith(
-                                  color: isActive ? AppColors.success : AppColors.error,
-                                ),
-                              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // ─── Header ───────────────────────────────
+        PosCard(
+          child: Padding(
+            padding: AppSpacing.paddingAll16,
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 32,
+                  backgroundColor: isActive ? AppColors.success.withValues(alpha: 0.1) : AppColors.error.withValues(alpha: 0.1),
+                  child: Icon(Icons.person, size: 32, color: isActive ? AppColors.success : AppColors.error),
+                ),
+                AppSpacing.gapW16,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(user['name'] as String? ?? '', style: theme.textTheme.titleLarge),
+                      Text(
+                        user['email'] as String? ?? '',
+                        style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
+                      ),
+                      AppSpacing.gapH4,
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: isActive ? AppColors.success.withValues(alpha: 0.1) : AppColors.error.withValues(alpha: 0.1),
+                              borderRadius: AppRadius.borderLg,
                             ),
-                            if (twoFactor) ...[
-                              const SizedBox(width: 8),
-                              Icon(Icons.verified_user, size: 16, color: AppColors.success),
-                              const SizedBox(width: 4),
-                              Text('2FA', style: theme.textTheme.labelSmall),
-                            ],
+                            child: Text(
+                              isActive ? 'Active' : 'Inactive',
+                              style: theme.textTheme.labelSmall?.copyWith(color: isActive ? AppColors.success : AppColors.error),
+                            ),
+                          ),
+                          if (twoFactor) ...[
+                            const SizedBox(width: 8),
+                            Icon(Icons.verified_user, size: 16, color: AppColors.success),
+                            const SizedBox(width: 4),
+                            Text('2FA', style: theme.textTheme.labelSmall),
                           ],
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          AppSpacing.gapH16,
+        ),
+        AppSpacing.gapH16,
 
-          // ─── Details ──────────────────────────────
-          Card(
-            child: Padding(
-              padding: AppSpacing.paddingAll16,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(l10n.wameedAISuggestionBody, style: theme.textTheme.titleMedium),
-                  AppSpacing.gapH8,
-                  _detailRow('Phone', user['phone'] as String? ?? 'N/A'),
-                  _detailRow('Last Login', user['last_login_at'] as String? ?? 'Never'),
-                  _detailRow('Last Login IP', user['last_login_ip'] as String? ?? 'N/A'),
-                  _detailRow('Created', user['created_at'] as String? ?? 'N/A'),
-                ],
-              ),
+        // ─── Details ──────────────────────────────
+        PosCard(
+          child: Padding(
+            padding: AppSpacing.paddingAll16,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(l10n.wameedAISuggestionBody, style: theme.textTheme.titleMedium),
+                AppSpacing.gapH8,
+                _detailRow('Phone', user['phone'] as String? ?? 'N/A'),
+                _detailRow('Last Login', user['last_login_at'] as String? ?? 'Never'),
+                _detailRow('Last Login IP', user['last_login_ip'] as String? ?? 'N/A'),
+                _detailRow('Created', user['created_at'] as String? ?? 'N/A'),
+              ],
             ),
           ),
-          AppSpacing.gapH16,
+        ),
+        AppSpacing.gapH16,
 
-          // ─── Roles ────────────────────────────────
-          Text('Roles (${roles.length})', style: theme.textTheme.titleMedium),
-          AppSpacing.gapH8,
-          if (roles.isEmpty)
-            const Card(
-              child: Padding(padding: EdgeInsets.all(16), child: Text('No roles assigned')),
-            )
-          else
-            ...roles.map((r) {
-              final role = r as Map<String, dynamic>;
-              return Card(
-                child: ListTile(
-                  dense: true,
-                  leading: const Icon(Icons.security, size: 20),
-                  title: Text(role['name'] as String? ?? ''),
-                  subtitle: Text(role['slug'] as String? ?? ''),
-                ),
-              );
-            }),
-          AppSpacing.gapH24,
-
-          // ─── Actions ──────────────────────────────
-          Row(
-            children: [
-              Expanded(
-                child: PosButton(
-                  label: isActive ? 'Deactivate' : 'Activate',
-                  variant: isActive ? PosButtonVariant.danger : PosButtonVariant.primary,
-                  onPressed: () {
-                    final userId = user['id'] as String;
-                    if (isActive) {
-                      ref.read(teamActionProvider.notifier).deactivateUser(userId);
-                    } else {
-                      ref.read(teamActionProvider.notifier).activateUser(userId);
-                    }
-                    Navigator.pop(context);
-                  },
-                ),
+        // ─── Roles ────────────────────────────────
+        Text('Roles (${roles.length})', style: theme.textTheme.titleMedium),
+        AppSpacing.gapH8,
+        if (roles.isEmpty)
+          const PosCard(
+            child: Padding(padding: EdgeInsets.all(16), child: Text('No roles assigned')),
+          )
+        else
+          ...roles.map((r) {
+            final role = r as Map<String, dynamic>;
+            return PosCard(
+              child: ListTile(
+                dense: true,
+                leading: const Icon(Icons.security, size: 20),
+                title: Text(role['name'] as String? ?? ''),
+                subtitle: Text(role['slug'] as String? ?? ''),
               ),
-            ],
-          ),
-        ],
-      ),
+            );
+          }),
+        AppSpacing.gapH24,
+
+        // ─── Actions ──────────────────────────────
+        Row(
+          children: [
+            Expanded(
+              child: PosButton(
+                label: isActive ? 'Deactivate' : 'Activate',
+                variant: isActive ? PosButtonVariant.danger : PosButtonVariant.primary,
+                onPressed: () {
+                  final userId = user['id'] as String;
+                  if (isActive) {
+                    ref.read(teamActionProvider.notifier).deactivateUser(userId);
+                  } else {
+                    ref.read(teamActionProvider.notifier).activateUser(userId);
+                  }
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
   Widget _detailRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsetsDirectional.symmetric(vertical: 4),
       child: Row(
         children: [
           Expanded(

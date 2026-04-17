@@ -19,8 +19,8 @@ class BranchFormPage extends ConsumerStatefulWidget {
   ConsumerState<BranchFormPage> createState() => _BranchFormPageState();
 }
 
-class _BranchFormPageState extends ConsumerState<BranchFormPage> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _BranchFormPageState extends ConsumerState<BranchFormPage> {
+  int _currentTab = 0;
   final _formKey = GlobalKey<FormState>();
 
   bool get _isEditing => widget.existingBranch != null;
@@ -90,7 +90,6 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> with SingleTick
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 6, vsync: this);
 
     final b = widget.existingBranch;
     _nameCtrl = TextEditingController(text: b?.name ?? '');
@@ -144,7 +143,6 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> with SingleTick
 
   @override
   void dispose() {
-    _tabController.dispose();
     for (final c in [
       _nameCtrl,
       _nameArCtrl,
@@ -290,7 +288,6 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> with SingleTick
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     ref.listen<BranchFormState>(branchFormProvider, (prev, next) {
       if (next is BranchFormSuccess) {
@@ -306,51 +303,49 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> with SingleTick
     final formState = ref.watch(branchFormProvider);
     final isSaving = formState is BranchFormSaving;
 
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        title: Text(_isEditing ? l10n.branchesEditBranch : l10n.branchesCreateBranch),
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        foregroundColor: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-        elevation: 0,
-        bottom: TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          labelColor: AppColors.primary,
-          unselectedLabelColor: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-          indicatorColor: AppColors.primary,
-          tabs: [
-            Tab(text: l10n.branchesBasicInfo),
-            Tab(text: l10n.branchesLocation),
-            Tab(text: l10n.branchesContact),
-            Tab(text: l10n.branchesOperational),
-            Tab(text: l10n.branchesLegal),
-            Tab(text: l10n.branchesSocialInfo),
-          ],
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: AppSpacing.md),
-            child: PosButton(
-              label: _isEditing ? l10n.branchesUpdated.split(' ').first : l10n.branchesCreated.split(' ').first,
-              size: PosButtonSize.sm,
-              isLoading: isSaving,
-              onPressed: isSaving ? null : _save,
-            ),
+    return PosFormPage(
+      title: _isEditing ? l10n.branchesEditBranch : l10n.branchesCreateBranch,
+      bottomBar: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          PosButton(label: l10n.cancel, variant: PosButtonVariant.ghost, onPressed: () => context.pop()),
+          AppSpacing.gapW12,
+          PosButton(
+            label: _isEditing ? l10n.save : l10n.create,
+            icon: Icons.check,
+            isLoading: isSaving,
+            onPressed: isSaving ? null : _save,
           ),
         ],
       ),
-      body: Form(
+      child: Form(
         key: _formKey,
-        child: TabBarView(
-          controller: _tabController,
+        child: Column(
           children: [
-            _basicInfoTab(l10n),
-            _locationTab(l10n),
-            _contactTab(l10n),
-            _operationalTab(l10n),
-            _legalTab(l10n),
-            _socialTab(l10n),
+            PosTabs(
+              selectedIndex: _currentTab,
+              onChanged: (i) => setState(() => _currentTab = i),
+              tabs: [
+                PosTabItem(label: l10n.branchesBasicInfo),
+                PosTabItem(label: l10n.branchesLocation),
+                PosTabItem(label: l10n.branchesContact),
+                PosTabItem(label: l10n.branchesOperational),
+                PosTabItem(label: l10n.branchesLegal),
+                PosTabItem(label: l10n.branchesSocialInfo),
+              ],
+            ),
+            AppSpacing.gapH16,
+            IndexedStack(
+              index: _currentTab,
+              children: [
+                _basicInfoTab(l10n),
+                _locationTab(l10n),
+                _contactTab(l10n),
+                _operationalTab(l10n),
+                _legalTab(l10n),
+                _socialTab(l10n),
+              ],
+            ),
           ],
         ),
       ),

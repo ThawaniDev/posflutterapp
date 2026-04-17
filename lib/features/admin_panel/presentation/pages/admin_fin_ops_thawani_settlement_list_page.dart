@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
@@ -16,16 +17,14 @@ class AdminFinOpsThawaniSettlementListPage extends ConsumerStatefulWidget {
   ConsumerState<AdminFinOpsThawaniSettlementListPage> createState() => _State();
 }
 
-class _State extends ConsumerState<AdminFinOpsThawaniSettlementListPage> with SingleTickerProviderStateMixin {
-
+class _State extends ConsumerState<AdminFinOpsThawaniSettlementListPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
-  late TabController _tabController;
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       _loadData();
@@ -47,33 +46,22 @@ class _State extends ConsumerState<AdminFinOpsThawaniSettlementListPage> with Si
   }
 
   @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.thawaniIntegration),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        bottom: TabBar(
-          controller: _tabController,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.white70,
-          indicatorColor: Colors.white,
-          tabs: [
-            Tab(text: l10n.thawaniSettlements),
-            Tab(text: l10n.orders),
-            Tab(text: 'Configs'),
-          ],
-        ),
-      ),
-      body: Column(
+    return PosListPage(
+      title: l10n.thawaniIntegration,
+      showSearch: false,
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: l10n.thawaniSettlements),
+              PosTabItem(label: l10n.orders),
+              PosTabItem(label: 'Configs'),
+            ],
+          ),
           AdminStatsKpiSection(
             provider: finOpsStatsProvider,
             cardBuilder: (data) {
@@ -88,7 +76,7 @@ class _State extends ConsumerState<AdminFinOpsThawaniSettlementListPage> with Si
             },
           ),
           Expanded(
-            child: TabBarView(controller: _tabController, children: [_SettlementsTab(), _OrdersTab(), _StoreConfigsTab()]),
+            child: IndexedStack(index: _currentTab, children: [_SettlementsTab(), _OrdersTab(), _StoreConfigsTab()]),
           ),
         ],
       ),
@@ -126,8 +114,8 @@ class _SettlementsTab extends ConsumerWidget {
           final item = items[i];
           final amount = num.tryParse(item['total_amount']?.toString() ?? '') ?? 0;
           final status = (item['status'] ?? '').toString();
-          return Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          return PosCard(
+            borderRadius: BorderRadius.circular(10,),
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: const Color(0xFF059669).withValues(alpha: 0.1),
@@ -155,7 +143,7 @@ class _SettlementsTab extends ConsumerWidget {
     };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
       child: Text(
         status.toUpperCase(),
         style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: color),
@@ -190,8 +178,8 @@ class _OrdersTab extends ConsumerWidget {
       itemBuilder: (_, i) {
         final item = items[i];
         final amount = num.tryParse(item['amount']?.toString() ?? '') ?? 0;
-        return Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        return PosCard(
+          borderRadius: BorderRadius.circular(10,),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: const Color(0xFF2563EB).withValues(alpha: 0.1),
@@ -238,8 +226,8 @@ class _StoreConfigsTab extends ConsumerWidget {
       separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.xs),
       itemBuilder: (_, i) {
         final item = items[i];
-        return Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        return PosCard(
+          borderRadius: BorderRadius.circular(10,),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: const Color(0xFFF59E0B).withValues(alpha: 0.1),

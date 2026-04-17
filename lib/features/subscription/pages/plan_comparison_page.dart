@@ -47,10 +47,11 @@ class _PlanComparisonPageState extends ConsumerState<PlanComparisonPage> {
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.subscriptionComparePlans), centerTitle: true),
-      body: _buildBody(plansState, subState),
-    );
+    return PosListPage(
+  title: l10n.subscriptionComparePlans,
+  showSearch: false,
+    child: _buildBody(plansState, subState),
+);
   }
 
   Widget _buildBody(PlansState plansState, SubscriptionState subState) {
@@ -89,7 +90,7 @@ class _PlanComparisonPageState extends ConsumerState<PlanComparisonPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
                       color: AppColors.success.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: AppRadius.borderLg,
                     ),
                     child: Text(l10n.subscriptionSavePercent,
                       style: TextStyle(fontSize: 12, color: AppColors.success, fontWeight: FontWeight.bold),

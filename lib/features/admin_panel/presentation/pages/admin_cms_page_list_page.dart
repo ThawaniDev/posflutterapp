@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminCmsPageListPage extends ConsumerStatefulWidget {
   const AdminCmsPageListPage({super.key});
@@ -56,12 +57,15 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(cmsPageListProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.cmsPages),
-        actions: [IconButton(icon: const Icon(Icons.add), onPressed: () {})],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.cmsPages,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.add, onPressed: () {},
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
@@ -114,7 +118,7 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         itemBuilder: (context, index) {
                           final page = pages[index];
-                          return Card(
+                          return PosCard(
                             child: ListTile(
                               title: Text(page['title'] ?? ''),
                               subtitle: Text('/${page['slug'] ?? ''} • ${page['page_type'] ?? 'general'}'),
@@ -139,6 +143,6 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
           ),
         ],
       ),
-    );
+);
   }
 }

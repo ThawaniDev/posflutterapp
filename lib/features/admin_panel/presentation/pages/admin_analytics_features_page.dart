@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
@@ -38,9 +39,10 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
   Widget build(BuildContext context) {
     final state = ref.watch(analyticsFeaturesProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Feature Adoption'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: 'Feature Adoption',
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -54,13 +56,13 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
                     const Text('Feature Adoption', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                     const SizedBox(height: AppSpacing.sm),
                     if (features.isEmpty)
-                      const Card(
+                      const PosCard(
                         child: Padding(padding: EdgeInsets.all(AppSpacing.md), child: Text('No feature data available')),
                       )
                     else
                       ...features.map((f) {
                         final adoption = (f['adoption_percentage'] as num? ?? 0).toDouble();
-                        return Card(
+                        return PosCard(
                           margin: const EdgeInsets.only(bottom: AppSpacing.sm),
                           child: Padding(
                             padding: const EdgeInsets.all(AppSpacing.md),
@@ -107,7 +109,7 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
                       const Text('Trend', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       ...trend.map(
-                        (t) => Card(
+                        (t) => PosCard(
                           margin: const EdgeInsets.only(bottom: AppSpacing.xs),
                           child: ListTile(
                             title: Text(t['date'] as String? ?? ''),
@@ -125,9 +127,9 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
                   children: [
                     Text('Error: $msg'),
                     const SizedBox(height: AppSpacing.sm),
-                    ElevatedButton(
+                    PosButton(
                       onPressed: () => ref.read(analyticsFeaturesProvider.notifier).load(storeId: _storeId),
-                      child: Text(l10n.retry),
+                      label: l10n.retry,
                     ),
                   ],
                 ),
@@ -137,6 +139,6 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
           ),
         ],
       ),
-    );
+);
   }
 }

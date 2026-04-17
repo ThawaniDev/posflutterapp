@@ -6,7 +6,9 @@ import '../../../../core/providers/branch_context_provider.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import '../../widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminSecurityAlertsPage extends ConsumerStatefulWidget {
   const AdminSecurityAlertsPage({super.key});
@@ -44,9 +46,10 @@ class _AdminSecurityAlertsPageState extends ConsumerState<AdminSecurityAlertsPag
   Widget build(BuildContext context) {
     final state = ref.watch(secCenterAlertListProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.securityAlerts), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.securityAlerts,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -60,7 +63,7 @@ class _AdminSecurityAlertsPageState extends ConsumerState<AdminSecurityAlertsPag
                     const SizedBox(height: AppSpacing.md),
                     Text(msg, textAlign: TextAlign.center),
                     const SizedBox(height: AppSpacing.md),
-                    ElevatedButton(onPressed: () => _loadData(), child: Text(l10n.retry)),
+                    PosButton(onPressed: () => _loadData(), label: l10n.retry),
                   ],
                 ),
               ),
@@ -70,7 +73,7 @@ class _AdminSecurityAlertsPageState extends ConsumerState<AdminSecurityAlertsPag
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> data) {
@@ -86,7 +89,7 @@ class _AdminSecurityAlertsPageState extends ConsumerState<AdminSecurityAlertsPag
         itemBuilder: (context, index) {
           final item = items[index] as Map<String, dynamic>;
           final severity = item['severity']?.toString() ?? '';
-          return Card(
+          return PosCard(
             margin: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: ListTile(
               leading: Icon(

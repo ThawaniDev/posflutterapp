@@ -28,16 +28,17 @@ class _AISettingsPageState extends ConsumerState<AISettingsPage> {
     final state = ref.watch(aiFeaturesProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.wameedAISettings)),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.wameedAISettings,
+  showSearch: false,
+    child: switch (state) {
         AIFeaturesInitial() || AIFeaturesLoading() => const PosLoading(),
         AIFeaturesError(:final message) => PosErrorState(
           message: message,
           onRetry: () => ref.read(aiFeaturesProvider.notifier).load(),
         ),
         AIFeaturesLoaded(:final features) => ListView.builder(
-          padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+          padding: context.responsivePagePadding,
           itemCount: features.length,
           itemBuilder: (context, index) {
             final feature = features[index];
@@ -46,7 +47,7 @@ class _AISettingsPageState extends ConsumerState<AISettingsPage> {
             final desc = isAr ? (feature.descriptionAr ?? feature.description ?? '') : (feature.description ?? '');
             final isEnabled = feature.storeConfigs?.firstOrNull?.isEnabled ?? true;
 
-            return Card(
+            return PosCard(
               margin: const EdgeInsets.only(bottom: 8),
               child: ListTile(
                 leading: Icon(Icons.auto_awesome, color: isEnabled ? AppColors.primary : AppColors.textSecondary),
@@ -64,6 +65,6 @@ class _AISettingsPageState extends ConsumerState<AISettingsPage> {
           },
         ),
       },
-    );
+);
   }
 }

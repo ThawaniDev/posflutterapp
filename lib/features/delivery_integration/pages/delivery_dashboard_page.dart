@@ -19,24 +19,17 @@ class DeliveryDashboardPage extends ConsumerStatefulWidget {
   ConsumerState<DeliveryDashboardPage> createState() => _DeliveryDashboardPageState();
 }
 
-class _DeliveryDashboardPageState extends ConsumerState<DeliveryDashboardPage> with SingleTickerProviderStateMixin {
-  late final TabController _tabController;
+class _DeliveryDashboardPageState extends ConsumerState<DeliveryDashboardPage> {
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
     Future.microtask(() {
       ref.read(deliveryStatsProvider.notifier).load();
       ref.read(deliveryConfigsProvider.notifier).load();
       ref.read(deliveryOrdersProvider.notifier).load();
     });
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 
   void _refreshAll() {
@@ -50,32 +43,32 @@ class _DeliveryDashboardPageState extends ConsumerState<DeliveryDashboardPage> w
     final l10n = AppLocalizations.of(context)!;
     final statsState = ref.watch(deliveryStatsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.deliveryIntegration),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showDeliveryDashboardInfo(context),
-          ),
-          IconButton(
-            icon: const Icon(Icons.sync),
-            tooltip: l10n.deliveryMenuSync,
-            onPressed: () => context.push(Routes.deliveryMenuSync),
-          ),
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _refreshAll),
-        ],
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: l10n.deliveryOverview),
-            Tab(text: l10n.deliveryPlatforms),
-            Tab(text: l10n.deliveryOrders),
-          ],
+    return PosListPage(
+      title: l10n.deliveryIntegration,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showDeliveryDashboardInfo(context),
         ),
+        PosButton.icon(icon: Icons.sync, tooltip: l10n.deliveryMenuSync, onPressed: () => context.push(Routes.deliveryMenuSync)),
+        PosButton.icon(icon: Icons.refresh, onPressed: _refreshAll),
+      ],
+      child: Column(
+        children: [
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: l10n.deliveryOverview),
+              PosTabItem(label: l10n.deliveryPlatforms),
+              PosTabItem(label: l10n.deliveryOrders),
+            ],
+          ),
+          IndexedStack(index: _currentTab, children: [_buildOverview(statsState), _buildPlatforms(), _buildOrders()]),
+        ],
       ),
-      body: TabBarView(controller: _tabController, children: [_buildOverview(statsState), _buildPlatforms(), _buildOrders()]),
     );
   }
 
@@ -151,7 +144,7 @@ class _DeliveryDashboardPageState extends ConsumerState<DeliveryDashboardPage> w
                   label: '${l10n.deliveryViewPending} ($pendingOrders)',
                   color: AppColors.warning,
                   onTap: () {
-                    _tabController.animateTo(2);
+                    setState(() => _currentTab = 2);
                     ref.read(deliveryOrdersProvider.notifier).load(status: 'pending');
                   },
                 ),
@@ -212,10 +205,11 @@ class _DeliveryDashboardPageState extends ConsumerState<DeliveryDashboardPage> w
                     if (index == configs.length) {
                       return Padding(
                         padding: AppSpacing.paddingV16,
-                        child: OutlinedButton.icon(
+                        child: PosButton(
                           onPressed: () => context.push(Routes.deliveryConfig),
-                          icon: const Icon(Icons.add),
-                          label: Text(l10n.deliveryAddPlatform),
+                          variant: PosButtonVariant.outline,
+                          icon: Icons.add,
+                          label: l10n.deliveryAddPlatform,
                         ),
                       );
                     }
@@ -356,8 +350,12 @@ class _DeliveryDashboardPageState extends ConsumerState<DeliveryDashboardPage> w
           maxLines: 3,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.deliveryCancel)),
-          FilledButton(onPressed: () => Navigator.pop(ctx, controller.text), child: Text(l10n.deliveryReject)),
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.deliveryCancel),
+          PosButton(
+            onPressed: () => Navigator.pop(ctx, controller.text),
+            variant: PosButtonVariant.soft,
+            label: l10n.deliveryReject,
+          ),
         ],
       ),
     );
@@ -382,7 +380,7 @@ class _PlatformBreakdownTile extends StatelessWidget {
       padding: AppSpacing.paddingAll12,
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: AppRadius.borderMd,
         border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: Row(
@@ -418,15 +416,13 @@ class _ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        side: BorderSide(color: color.withValues(alpha: 0.3)),
-      ),
+      borderRadius: AppRadius.borderLg,
+      border: Border.fromBorderSide(BorderSide(color: color.withValues(alpha: 0.3))),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
+        borderRadius: AppRadius.borderLg,
         child: Padding(
           padding: AppSpacing.paddingAll16,
           child: Row(
@@ -465,7 +461,7 @@ class _FilterChip extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
           color: isSelected ? chipColor.withValues(alpha: 0.12) : Colors.transparent,
-          borderRadius: BorderRadius.circular(AppRadius.full),
+          borderRadius: AppRadius.borderFull,
           border: Border.all(color: isSelected ? chipColor : Theme.of(context).dividerColor),
         ),
         child: Text(

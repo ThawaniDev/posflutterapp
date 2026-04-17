@@ -5,9 +5,8 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/features/branches/models/store.dart';
 import 'package:wameedpos/features/branches/providers/branch_providers.dart';
 import 'package:wameedpos/features/branches/providers/branch_state.dart';
 import 'package:wameedpos/features/staff/enums/employment_type.dart';
@@ -24,8 +23,6 @@ class StaffListPage extends ConsumerStatefulWidget {
 }
 
 class _StaffListPageState extends ConsumerState<StaffListPage> {
-
-  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _statusFilter;
   String? _employmentTypeFilter;
@@ -57,169 +54,32 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
         );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final state = ref.watch(staffListProvider);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final l10n = AppLocalizations.of(context)!;
-    final isMobile = context.isPhone;
-
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: Text(l10n.staffMembers),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showStaffListInfo(context),
-          ),
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _loadStaff),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => context.push(Routes.staffMembersCreate),
-        icon: const Icon(Icons.person_add),
-        label: Text(isMobile ? '' : l10n.staffAddMember),
-        isExtended: !isMobile,
-      ),
-      body: Column(
-        children: [
-          // Store selector
-          _buildStoreSelector(context, isDark, l10n),
-          // Search bar
-          Padding(
-            padding: EdgeInsets.all(isMobile ? 12 : 16),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: l10n.staffSearchHint,
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: _searchController.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          _searchController.clear();
-                          _loadStaff();
-                        },
-                      )
-                    : null,
-                border: const OutlineInputBorder(),
-                isDense: isMobile,
-              ),
-              onSubmitted: (_) => _loadStaff(),
-            ),
-          ),
-          // Filter chips
-          SizedBox(
-            height: isMobile ? 40 : 48,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 16),
-              children: [
-                _buildFilterChip(
-                  label: l10n.allStatus,
-                  selected: _statusFilter == null,
-                  onSelected: () {
-                    setState(() => _statusFilter = null);
-                    _loadStaff();
-                  },
-                ),
-                for (final status in StaffStatus.values) ...[
-                  AppSpacing.gapW8,
-                  _buildFilterChip(
-                    label: status.value.replaceAll('_', ' ').toUpperCase(),
-                    selected: _statusFilter == status.value,
-                    onSelected: () {
-                      setState(() => _statusFilter = status.value);
-                      _loadStaff();
-                    },
-                  ),
-                ],
-                AppSpacing.gapW16,
-                const VerticalDivider(),
-                AppSpacing.gapW8,
-                _buildFilterChip(
-                  label: l10n.txAllTypes,
-                  selected: _employmentTypeFilter == null,
-                  onSelected: () {
-                    setState(() => _employmentTypeFilter = null);
-                    _loadStaff();
-                  },
-                ),
-                for (final type in EmploymentType.values) ...[
-                  AppSpacing.gapW8,
-                  _buildFilterChip(
-                    label: type.value.replaceAll('_', ' ').toUpperCase(),
-                    selected: _employmentTypeFilter == type.value,
-                    onSelected: () {
-                      setState(() => _employmentTypeFilter = type.value);
-                      _loadStaff();
-                    },
-                  ),
-                ],
-              ],
-            ),
-          ),
-          AppSpacing.gapH8,
-          // Staff list
-          Expanded(
-            child: switch (state) {
-              StaffListInitial() || StaffListLoading() => PosLoadingSkeleton.list(),
-              StaffListError(message: final msg) => PosErrorState(message: msg, onRetry: _loadStaff),
-              StaffListLoaded(staff: final staff) =>
-                staff.isEmpty
-                    ? PosEmptyState(title: l10n.staffNoMembers, icon: Icons.people_outline)
-                    : RefreshIndicator(
-                        onRefresh: () async => _loadStaff(),
-                        child: ListView.builder(
-                          padding: const EdgeInsets.only(bottom: 80),
-                          itemCount: staff.length,
-                          itemBuilder: (context, index) => _StaffCard(
-                            staff: staff[index],
-                            onTap: () => context.push('${Routes.staffMembers}/${staff[index].id}'),
-                            onDelete: () => _confirmDelete(context, staff[index]),
-                          ),
-                        ),
-                      ),
-            },
-          ),
-        ],
-      ),
-    );
+  PosBadgeVariant _statusVariant(StaffStatus? status) {
+    switch (status) {
+      case StaffStatus.active:
+        return PosBadgeVariant.success;
+      case StaffStatus.onLeave:
+        return PosBadgeVariant.warning;
+      case StaffStatus.inactive:
+      case null:
+        return PosBadgeVariant.neutral;
+    }
   }
 
-  Widget _buildStoreSelector(BuildContext context, bool isDark, AppLocalizations l10n) {
-    final branchState = ref.watch(branchListProvider);
-    final stores = branchState is BranchListLoaded ? branchState.branches : <Store>[];
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-      child: PosSearchableDropdown<String>(
-        label: l10n.staffSelectStore,
-        items: stores.map((s) => PosDropdownItem<String>(value: s.id, label: s.name)).toList(),
-        selectedValue: _selectedStoreId,
-        onChanged: (value) {
-          setState(() => _selectedStoreId = value);
-          _loadStaff();
-        },
-        showSearch: true,
-        clearable: true,
-      ),
-    );
+  String _statusLabel(StaffStatus? status, AppLocalizations l10n) {
+    switch (status) {
+      case StaffStatus.active:
+        return l10n.branchesActive;
+      case StaffStatus.inactive:
+        return l10n.branchesInactive;
+      case StaffStatus.onLeave:
+        return 'On Leave';
+      case null:
+        return '-';
+    }
   }
 
-  Widget _buildFilterChip({required String label, required bool selected, required VoidCallback onSelected}) {
-    return FilterChip(
-      label: Text(label, style: const TextStyle(fontSize: 12)),
-      selected: selected,
-      onSelected: (_) => onSelected(),
-      visualDensity: VisualDensity.compact,
-    );
-  }
-
-  Future<void> _confirmDelete(BuildContext context, StaffUser staff) async {
+  Future<void> _confirmDelete(StaffUser staff) async {
     final l10n = AppLocalizations.of(context)!;
     final confirmed = await showPosConfirmDialog(
       context,
@@ -243,133 +103,193 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
       }
     }
   }
-}
-
-// ═══════════════════════════════════════════════════════════════
-// Staff Card Widget
-// ═══════════════════════════════════════════════════════════════
-
-class _StaffCard extends StatelessWidget {
-  final StaffUser staff;
-  final VoidCallback onTap;
-  final VoidCallback onDelete;
-
-  const _StaffCard({required this.staff, required this.onTap, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final colorScheme = Theme.of(context).colorScheme;
+    final state = ref.watch(staffListProvider);
+    final branchState = ref.watch(branchListProvider);
 
-    return Card(
-      margin: EdgeInsets.symmetric(
-        horizontal: MediaQuery.sizeOf(context).width < AppSizes.breakpointTablet ? 12 : 16,
-        vertical: MediaQuery.sizeOf(context).width < AppSizes.breakpointTablet ? 3 : 4,
-      ),
-      elevation: 0,
-      color: isDark ? AppColors.cardDark : AppColors.cardLight,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        child: Padding(
-          padding: AppSpacing.paddingAll16,
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 24,
-                backgroundColor: colorScheme.primaryContainer,
-                backgroundImage: staff.photoUrl != null ? NetworkImage(staff.photoUrl!) : null,
-                child: staff.photoUrl == null
-                    ? Text(
-                        '${staff.firstName[0]}${staff.lastName[0]}',
-                        style: TextStyle(color: colorScheme.onPrimaryContainer, fontWeight: FontWeight.bold),
-                      )
-                    : null,
-              ),
-              AppSpacing.gapW16,
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${staff.firstName} ${staff.lastName}',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    AppSpacing.gapH4,
-                    Row(
-                      children: [
-                        _StatusBadge(status: staff.status),
-                        AppSpacing.gapW8,
-                        Text(
-                          staff.employmentType.value.replaceAll('_', ' ').toUpperCase(),
-                          style: Theme.of(context).textTheme.labelSmall?.copyWith(color: colorScheme.outline),
-                        ),
-                      ],
-                    ),
-                    if (staff.email != null) ...[
-                      AppSpacing.gapH2,
-                      Text(staff.email!, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: colorScheme.outline)),
-                    ],
-                  ],
-                ),
-              ),
-              PopupMenuButton<String>(
-                onSelected: (value) {
-                  switch (value) {
-                    case 'edit':
-                      onTap();
-                    case 'delete':
-                      onDelete();
-                  }
-                },
-                itemBuilder: (_) => [
-                  PopupMenuItem(
-                    value: 'edit',
-                    child: ListTile(leading: Icon(Icons.edit), title: Text(l10n.edit), dense: true),
-                  ),
-                  PopupMenuItem(
-                    value: 'delete',
-                    child: ListTile(
-                      leading: Icon(Icons.delete, color: AppColors.error),
-                      title: Text(l10n.delete, style: TextStyle(color: AppColors.error)),
-                      dense: true,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+    final isLoading = state is StaffListInitial || state is StaffListLoading;
+    final hasError = state is StaffListError;
+    final errorMessage = state is StaffListError ? state.message : null;
+    final staff = state is StaffListLoaded ? state.staff : const <StaffUser>[];
+
+    final stores = branchState is BranchListLoaded ? branchState.branches : const [];
+
+    // Status filter options
+    final statusOptions = <PosDropdownItem<String?>>[
+      PosDropdownItem<String?>(value: null, label: l10n.allStatus),
+      for (final s in StaffStatus.values)
+        PosDropdownItem<String?>(value: s.value, label: s.value.replaceAll('_', ' ').toUpperCase()),
+    ];
+
+    // Employment type filter options
+    final typeOptions = <PosDropdownItem<String?>>[
+      PosDropdownItem<String?>(value: null, label: l10n.txAllTypes),
+      for (final t in EmploymentType.values)
+        PosDropdownItem<String?>(value: t.value, label: t.value.replaceAll('_', ' ').toUpperCase()),
+    ];
+
+    // Store filter options
+    final storeOptions = <PosDropdownItem<String?>>[
+      PosDropdownItem<String?>(value: null, label: l10n.staffSelectStore),
+      for (final s in stores) PosDropdownItem<String?>(value: s.id, label: s.name),
+    ];
+
+    return PosListPage(
+      title: l10n.staffMembers,
+      searchController: _searchController,
+      searchHint: l10n.staffSearchHint,
+      onSearchSubmitted: (_) => _loadStaff(),
+      onSearchClear: () {
+        _searchController.clear();
+        _loadStaff();
+      },
+      filters: [
+        SizedBox(
+          width: 180,
+          child: PosSearchableDropdown<String?>(
+            items: storeOptions,
+            selectedValue: _selectedStoreId,
+            onChanged: (v) {
+              setState(() => _selectedStoreId = v);
+              _loadStaff();
+            },
+            showSearch: true,
+            clearable: true,
           ),
         ),
+        SizedBox(
+          width: 160,
+          child: PosSearchableDropdown<String?>(
+            items: statusOptions,
+            selectedValue: _statusFilter,
+            onChanged: (v) {
+              setState(() => _statusFilter = v);
+              _loadStaff();
+            },
+            showSearch: false,
+            clearable: true,
+          ),
+        ),
+        SizedBox(
+          width: 160,
+          child: PosSearchableDropdown<String?>(
+            items: typeOptions,
+            selectedValue: _employmentTypeFilter,
+            onChanged: (v) {
+              setState(() => _employmentTypeFilter = v);
+              _loadStaff();
+            },
+            showSearch: false,
+            clearable: true,
+          ),
+        ),
+      ],
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showStaffListInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(icon: Icons.refresh, onPressed: _loadStaff, variant: PosButtonVariant.ghost),
+        PosButton(label: l10n.staffAddMember, icon: Icons.person_add, onPressed: () => context.push(Routes.staffMembersCreate)),
+      ],
+      child: PosDataTable<StaffUser>(
+        items: staff,
+        isLoading: isLoading,
+        error: errorMessage,
+        onRetry: hasError ? _loadStaff : null,
+        emptyConfig: PosTableEmptyConfig(
+          icon: Icons.people_outline,
+          title: l10n.staffNoMembers,
+          action: () => context.push(Routes.staffMembersCreate),
+          actionLabel: l10n.staffAddMember,
+        ),
+        onRowTap: (s) => context.push('${Routes.staffMembers}/${s.id}'),
+        columns: [
+          PosTableColumn(title: l10n.staffMembers),
+          PosTableColumn(title: 'Role / Type'),
+          PosTableColumn(title: l10n.allStatus),
+          PosTableColumn(title: 'Contact'),
+          PosTableColumn(title: 'Hire Date'),
+        ],
+        cellBuilder: (s, colIndex, col) {
+          switch (colIndex) {
+            case 0:
+              return _StaffNameCell(staff: s);
+            case 1:
+              return Text(s.employmentType.value.replaceAll('_', ' ').toUpperCase(), style: AppTypography.tableCell);
+            case 2:
+              return PosBadge(label: _statusLabel(s.status, l10n), variant: _statusVariant(s.status));
+            case 3:
+              return Text(s.email ?? s.phone ?? '-', style: AppTypography.tableCell);
+            case 4:
+              return Text(
+                '${s.hireDate.year}-${s.hireDate.month.toString().padLeft(2, '0')}-${s.hireDate.day.toString().padLeft(2, '0')}',
+                style: AppTypography.tableCell,
+              );
+            default:
+              return const SizedBox.shrink();
+          }
+        },
+        actions: [
+          PosTableRowAction<StaffUser>(
+            label: l10n.edit,
+            icon: Icons.edit_outlined,
+            onTap: (s) => context.push('${Routes.staffMembers}/${s.id}'),
+          ),
+          PosTableRowAction<StaffUser>(
+            label: l10n.delete,
+            icon: Icons.delete_outline,
+            isDestructive: true,
+            onTap: _confirmDelete,
+          ),
+        ],
       ),
     );
   }
 }
 
-class _StatusBadge extends StatelessWidget {
-  final StaffStatus? status;
-
-  const _StatusBadge({this.status});
+class _StaffNameCell extends StatelessWidget {
+  const _StaffNameCell({required this.staff});
+  final StaffUser staff;
 
   @override
   Widget build(BuildContext context) {
-    final (color, label) = switch (status) {
-      StaffStatus.active => (AppColors.success, 'Active'),
-      StaffStatus.inactive => (AppColors.textSecondary, 'Inactive'),
-      StaffStatus.onLeave => (AppColors.warning, 'On Leave'),
-      null => (AppColors.textSecondary, 'Unknown'),
-    };
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(12)),
-      child: Text(
-        label,
-        style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          PosAvatar(imageUrl: staff.photoUrl, name: '${staff.firstName} ${staff.lastName}'.trim(), radius: 16),
+          AppSpacing.gapW12,
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  '${staff.firstName} ${staff.lastName}',
+                  style: AppTypography.tableCellBold,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                if (staff.email != null)
+                  Text(
+                    staff.email!,
+                    style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

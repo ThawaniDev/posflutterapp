@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminArticleListPage extends ConsumerStatefulWidget {
   const AdminArticleListPage({super.key});
@@ -56,12 +57,15 @@ class _AdminArticleListPageState extends ConsumerState<AdminArticleListPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(articleListProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Knowledge Base Articles'),
-        actions: [IconButton(icon: const Icon(Icons.add), onPressed: () {})],
-      ),
-      body: Column(
+    return PosListPage(
+  title: 'Knowledge Base Articles',
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.add, onPressed: () {},
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
@@ -120,7 +124,7 @@ class _AdminArticleListPageState extends ConsumerState<AdminArticleListPage> {
                               padding: const EdgeInsets.symmetric(horizontal: 16),
                               itemBuilder: (context, index) {
                                 final article = articles[index];
-                                return Card(
+                                return PosCard(
                                   child: ListTile(
                                     title: Text(article['title'] ?? ''),
                                     subtitle: Text(article['category'] ?? 'No category'),
@@ -145,6 +149,6 @@ class _AdminArticleListPageState extends ConsumerState<AdminArticleListPage> {
           ),
         ],
       ),
-    );
+);
   }
 }

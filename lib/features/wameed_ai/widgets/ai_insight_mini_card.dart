@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class AIInsightMiniCard extends StatelessWidget {
   final String title;
@@ -23,51 +25,44 @@ class AIInsightMiniCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final cardColor = color ?? AppColors.primary;
 
-    return InkWell(
+    return PosCard(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: cardColor.withValues(alpha: 0.2)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(color: cardColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
-                  child: Icon(icon, size: 18, color: cardColor),
-                ),
-                const Spacer(),
-                if (trend != null)
-                  Text(
-                    trend!,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: trend!.startsWith('+')
-                          ? AppColors.success
-                          : (trend!.startsWith('-') ? AppColors.error : Theme.of(context).hintColor),
-                      fontWeight: FontWeight.w600,
-                    ),
+      padding: const EdgeInsets.all(14),
+      border: Border.all(color: cardColor.withValues(alpha: 0.2)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(color: cardColor.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
+                child: Icon(icon, size: 18, color: cardColor),
+              ),
+              const Spacer(),
+              if (trend != null)
+                Text(
+                  trend!,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: trend!.startsWith('+')
+                        ? AppColors.success
+                        : (trend!.startsWith('-') ? AppColors.error : Theme.of(context).hintColor),
+                    fontWeight: FontWeight.w600,
                   ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Text(value, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
-            const SizedBox(height: 2),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(value, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800)),
+          const SizedBox(height: 2),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ),
     );
   }

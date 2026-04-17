@@ -4,10 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
-import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/pos_badge.dart';
 import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
 import 'package:wameedpos/core/widgets/pos_table.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/inventory/enums/supplier_return_status.dart';
@@ -104,70 +102,56 @@ class _SupplierReturnsPageState extends ConsumerState<SupplierReturnsPage> {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(supplierReturnsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.supplierReturnsTitle),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showSupplierReturnsInfo(context),
+    return PosListPage(
+      title: l10n.supplierReturnsTitle,
+      searchController: _searchController,
+      searchHint: l10n.supplierReturnSearchHint,
+      onSearchSubmitted: (v) => ref.read(supplierReturnsProvider.notifier).searchReturns(v),
+      onSearchClear: () {
+        _searchController.clear();
+        ref.read(supplierReturnsProvider.notifier).searchReturns(null);
+      },
+      filters: [
+        SizedBox(
+          width: 180,
+          child: PosSearchableDropdown<String?>(
+            items: SupplierReturnStatus.values
+                .map((s) => PosDropdownItem<String?>(value: s.value, label: _statusLabel(s, l10n)))
+                .toList(),
+            selectedValue: _selectedStatus,
+            onChanged: (v) {
+              setState(() => _selectedStatus = v);
+              ref.read(supplierReturnsProvider.notifier).filterByStatus(v);
+            },
+            hint: l10n.inventoryFilterByStatus,
+            showSearch: false,
+            clearable: true,
           ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(supplierReturnsProvider.notifier).load(),
-          ),
-        ],
-      ),
-      floatingActionButton: PosButton(
-        label: l10n.supplierReturnNew,
-        icon: Icons.add,
-        onPressed: () async {
-          final created = await context.push<bool>(Routes.supplierReturnsAdd);
-          if (created == true) ref.read(supplierReturnsProvider.notifier).load();
-        },
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: Row(
-              children: [
-                Expanded(
-                  child: PosTextField(
-                    controller: _searchController,
-                    hint: l10n.supplierReturnSearchHint,
-                    prefixIcon: Icons.search,
-                    onSubmitted: (v) => ref.read(supplierReturnsProvider.notifier).searchReturns(v),
-                    onChanged: (v) {
-                      if (v.isEmpty) ref.read(supplierReturnsProvider.notifier).searchReturns(null);
-                    },
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.md),
-                SizedBox(
-                  width: 180,
-                  child: PosSearchableDropdown<String?>(
-                    items: SupplierReturnStatus.values
-                        .map((s) => PosDropdownItem<String?>(value: s.value, label: _statusLabel(s, l10n)))
-                        .toList(),
-                    selectedValue: _selectedStatus,
-                    onChanged: (v) {
-                      setState(() => _selectedStatus = v);
-                      ref.read(supplierReturnsProvider.notifier).filterByStatus(v);
-                    },
-                    hint: l10n.inventoryFilterByStatus,
-                    showSearch: false,
-                    clearable: true,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(child: _buildBody(state)),
-        ],
-      ),
+        ),
+      ],
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showSupplierReturnsInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () => ref.read(supplierReturnsProvider.notifier).load(),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton(
+          label: l10n.supplierReturnNew,
+          icon: Icons.add,
+          onPressed: () async {
+            final created = await context.push<bool>(Routes.supplierReturnsAdd);
+            if (created == true) ref.read(supplierReturnsProvider.notifier).load();
+          },
+        ),
+      ],
+      child: _buildBody(state),
     );
   }
 

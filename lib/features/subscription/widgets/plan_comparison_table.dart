@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Side-by-side plan comparison table widget.
 class PlanComparisonTable extends StatelessWidget {
@@ -61,7 +63,7 @@ class PlanComparisonTable extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.only(top: 4),
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                        decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(10)),
+                        decoration: BoxDecoration(color: AppColors.primary, borderRadius: AppRadius.borderMd),
                         child: Text(l10n.subscriptionCurrent, style: TextStyle(color: Colors.white, fontSize: 10)),
                       ),
                   ],
@@ -128,15 +130,12 @@ class PlanComparisonTable extends StatelessWidget {
                 plans.map((plan) {
                   final isCurrent = plan.id == currentPlanId;
                   if (isCurrent) {
-                    return Text(l10n.subscriptionCurrentPlan,
+                    return Text(
+                      l10n.subscriptionCurrentPlan,
                       style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600),
                     );
                   }
-                  return ElevatedButton(
-                    onPressed: () => onSelectPlan!(plan),
-                    style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)),
-                    child: Text(l10n.subscriptionSelect),
-                  );
+                  return PosButton(onPressed: () => onSelectPlan!(plan), label: l10n.subscriptionSelect);
                 }).toList(),
               ),
           ],

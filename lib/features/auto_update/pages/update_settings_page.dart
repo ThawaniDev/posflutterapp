@@ -65,19 +65,16 @@ class _UpdateSettingsPageState extends ConsumerState<UpdateSettingsPage> {
     final theme = Theme.of(context);
 
     if (_loading) {
-      return Scaffold(
-        appBar: AppBar(title: Text(l10n.autoUpdateSettings)),
-        body: const Center(child: CircularProgressIndicator()),
-      );
+      return PosFormPage(title: l10n.autoUpdateSettings, isLoading: true, child: const SizedBox.shrink());
     }
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.autoUpdateSettings)),
-      body: ListView(
-        padding: AppSpacing.paddingAll16,
+    return PosFormPage(
+      title: l10n.autoUpdateSettings,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Auto-update toggle
-          Card(
+          PosCard(
             child: SwitchListTile(
               secondary: const Icon(Icons.system_update),
               title: Text(l10n.autoUpdateEnable),
@@ -91,7 +88,7 @@ class _UpdateSettingsPageState extends ConsumerState<UpdateSettingsPage> {
           ),
           AppSpacing.gapH16,
           // Maintenance window
-          Card(
+          PosCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -156,7 +153,7 @@ class _UpdateSettingsPageState extends ConsumerState<UpdateSettingsPage> {
           ),
           AppSpacing.gapH16,
           // Update channel
-          Card(
+          PosCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

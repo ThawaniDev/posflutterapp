@@ -4,6 +4,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/pos_status_badge.dart';
 import '../models/open_tab.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class OpenTabCard extends StatelessWidget {
   final OpenTab tab;
@@ -16,15 +17,13 @@ class OpenTabCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isOpen = tab.closedAt == null;
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
-      ),
+      borderRadius: AppRadius.borderMd,
+      border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: AppRadius.borderMd,
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Row(

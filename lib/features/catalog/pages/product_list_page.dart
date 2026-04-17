@@ -11,6 +11,7 @@ import 'package:wameedpos/core/widgets/pos_input.dart';
 import 'package:wameedpos/core/widgets/pos_mobile_data_list.dart';
 import 'package:wameedpos/core/widgets/pos_table.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/core/utils/locale_helpers.dart';
 import 'package:wameedpos/features/catalog/models/category.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
@@ -24,7 +25,6 @@ class ProductListPage extends ConsumerStatefulWidget {
 }
 
 class _ProductListPageState extends ConsumerState<ProductListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   bool _isGridView = false;
@@ -50,7 +50,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
       context,
       title: 'Delete Product',
       message:
-          'Are you sure you want to delete "${product.name}"?\n'
+          'Are you sure you want to delete "${localizedName(context, name: product.name, nameAr: product.nameAr)}"?\n'
           'This action will soft-delete the product.',
       confirmLabel: 'Delete',
       cancelLabel: 'Cancel',
@@ -61,7 +61,10 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
       try {
         await ref.read(productsProvider.notifier).deleteProduct(product.id);
         if (mounted) {
-          showPosSuccessSnackbar(context, AppLocalizations.of(context)!.productDeleted(product.name));
+          showPosSuccessSnackbar(
+            context,
+            AppLocalizations.of(context)!.productDeleted(localizedName(context, name: product.name, nameAr: product.nameAr)),
+          );
         }
       } catch (e) {
         if (mounted) {
@@ -75,7 +78,10 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
     try {
       await ref.read(productsProvider.notifier).duplicateProduct(product.id);
       if (mounted) {
-        showPosSuccessSnackbar(context, AppLocalizations.of(context)!.productDuplicated(product.name));
+        showPosSuccessSnackbar(
+          context,
+          AppLocalizations.of(context)!.productDuplicated(localizedName(context, name: product.name, nameAr: product.nameAr)),
+        );
       }
     } catch (e) {
       if (mounted) {
@@ -104,39 +110,38 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
     final categories = categoriesState is CategoriesLoaded ? categoriesState.categories : <Category>[];
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.products),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
-            onPressed: () => showProductListInfo(context),
+    return PosListPage(
+      title: l10n.products,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: AppLocalizations.of(context)!.featureInfoTooltip,
+          onPressed: () => showProductListInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: _showFilters ? Icons.filter_list_off : Icons.filter_list,
+          tooltip: _showFilters ? 'Hide filters' : 'Show filters',
+          onPressed: () => setState(() => _showFilters = !_showFilters),
+          variant: PosButtonVariant.ghost,
+        ),
+        if (!isMobile)
+          PosButton.icon(
+            icon: _isGridView ? Icons.view_list : Icons.grid_view,
+            tooltip: _isGridView ? 'List view' : 'Grid view',
+            onPressed: () => setState(() => _isGridView = !_isGridView),
+            variant: PosButtonVariant.ghost,
           ),
-          IconButton(
-            icon: Icon(_showFilters ? Icons.filter_list_off : Icons.filter_list),
-            tooltip: _showFilters ? 'Hide filters' : 'Show filters',
-            onPressed: () => setState(() => _showFilters = !_showFilters),
-          ),
-          if (!isMobile)
-            IconButton(
-              icon: Icon(_isGridView ? Icons.view_list : Icons.grid_view),
-              tooltip: _isGridView ? 'List view' : 'Grid view',
-              onPressed: () => setState(() => _isGridView = !_isGridView),
-            ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(productsProvider.notifier).load(),
-          ),
-        ],
-      ),
-      floatingActionButton: PosButton(
-        label: isMobile ? '' : 'Add Product',
-        icon: Icons.add,
-        onPressed: () => context.push(Routes.productsAdd),
-      ),
-      body: isMobile
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () => ref.read(productsProvider.notifier).load(),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton(label: 'Add Product', icon: Icons.add, onPressed: () => context.push(Routes.productsAdd)),
+      ],
+      child: isMobile
           ? _buildMobileBody(productsState, categories)
           : Row(
               children: [
@@ -200,7 +205,13 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                 _buildCategoryChip('All', null, selectedCategoryId == null),
                 ...categories
                     .where((c) => c.parentId == null)
-                    .map((c) => _buildCategoryChip(c.name, c.id, selectedCategoryId == c.id)),
+                    .map(
+                      (c) => _buildCategoryChip(
+                        localizedName(context, name: c.name, nameAr: c.nameAr),
+                        c.id,
+                        selectedCategoryId == c.id,
+                      ),
+                    ),
               ],
             ),
           ),
@@ -261,10 +272,14 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.error_outline, size: 48, color: AppColors.error),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             Text(error, textAlign: TextAlign.center),
-            const SizedBox(height: 16),
-            FilledButton(onPressed: () => ref.read(productsProvider.notifier).load(), child: Text(l10n.retry)),
+            AppSpacing.gapH16,
+            PosButton(
+              onPressed: () => ref.read(productsProvider.notifier).load(),
+              variant: PosButtonVariant.soft,
+              label: l10n.retry,
+            ),
           ],
         ),
       );
@@ -276,7 +291,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.inventory_2_outlined, size: 56, color: Theme.of(context).hintColor),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             Text(l10n.posNoProducts),
           ],
         ),
@@ -302,7 +317,9 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
 
     String categoryName(String? catId) {
       if (catId == null) return '';
-      return categories.where((c) => c.id == catId).firstOrNull?.name ?? '';
+      final cat = categories.where((c) => c.id == catId).firstOrNull;
+      if (cat == null) return '';
+      return localizedName(context, name: cat.name, nameAr: cat.nameAr);
     }
 
     return Column(
@@ -318,7 +335,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                 return MobileListCard(
                   onTap: () => context.push('${Routes.products}/${product.id}'),
                   leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: AppRadius.borderMd,
                     child: product.imageUrl != null
                         ? Image.network(
                             product.imageUrl!,
@@ -330,7 +347,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                         : _mobileProductPlaceholder(),
                   ),
                   title: Text(
-                    product.name,
+                    localizedName(context, name: product.name, nameAr: product.nameAr),
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -362,17 +379,17 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                             context,
                           ).textTheme.labelSmall?.copyWith(color: AppColors.success, fontWeight: FontWeight.w600),
                         ),
-                      const SizedBox(height: 4),
+                      AppSpacing.gapH4,
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
                         decoration: BoxDecoration(
                           color: product.isActive == true
                               ? AppColors.success.withValues(alpha: 0.1)
                               : AppColors.error.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(4),
+                          borderRadius: AppRadius.borderXs,
                         ),
                         child: Text(
-                          product.isActive == true ? 'Active' : 'Inactive',
+                          product.isActive == true ? l10n.active : l10n.inactive,
                           style: TextStyle(
                             fontSize: 10,
                             color: product.isActive == true ? AppColors.success : AppColors.error,
@@ -402,7 +419,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
     return Container(
       width: 48,
       height: 48,
-      decoration: BoxDecoration(color: AppColors.primary10, borderRadius: BorderRadius.circular(8)),
+      decoration: BoxDecoration(color: AppColors.primary10, borderRadius: AppRadius.borderMd),
       child: Icon(Icons.inventory_2_outlined, size: 24, color: AppColors.primary),
     );
   }
@@ -436,7 +453,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
             const SizedBox(width: AppSpacing.md),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.xs),
-              decoration: BoxDecoration(color: AppColors.primary10, borderRadius: BorderRadius.circular(8)),
+              decoration: BoxDecoration(color: AppColors.primary10, borderRadius: AppRadius.borderMd),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -501,7 +518,14 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
             width: 220,
             child: PosSearchableDropdown<String>(
               selectedValue: state is ProductsLoaded ? state.selectedCategoryId : null,
-              items: categories.map((c) => PosDropdownItem(value: c.id, label: c.name)).toList(),
+              items: categories
+                  .map(
+                    (c) => PosDropdownItem(
+                      value: c.id,
+                      label: localizedName(context, name: c.name, nameAr: c.nameAr),
+                    ),
+                  )
+                  .toList(),
               onChanged: (id) => ref.read(productsProvider.notifier).filterByCategory(id),
               hint: 'All categories',
               clearable: true,
@@ -586,7 +610,9 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
 
     String categoryName(String? catId) {
       if (catId == null) return '—';
-      return categories.where((c) => c.id == catId).firstOrNull?.name ?? '—';
+      final cat = categories.where((c) => c.id == catId).firstOrNull;
+      if (cat == null) return '—';
+      return localizedName(context, name: cat.name, nameAr: cat.nameAr);
     }
 
     return PosDataTable<Product>(
@@ -626,7 +652,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
               children: [
                 if (product.imageUrl != null) ...[
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: AppRadius.borderSm,
                     child: Image.network(
                       product.imageUrl!,
                       width: 36,
@@ -646,7 +672,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        product.name,
+                        localizedName(context, name: product.name, nameAr: product.nameAr),
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
                       ),
@@ -688,10 +714,10 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                 color: product.isActive == true
                     ? AppColors.success.withValues(alpha: 0.1)
                     : AppColors.error.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: AppRadius.borderXs,
               ),
               child: Text(
-                product.isActive == true ? 'Active' : 'Inactive',
+                product.isActive == true ? l10n.active : l10n.inactive,
                 style: Theme.of(
                   context,
                 ).textTheme.labelSmall?.copyWith(color: product.isActive == true ? AppColors.success : AppColors.error),
@@ -735,7 +761,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
     return Container(
       width: 36,
       height: 36,
-      decoration: BoxDecoration(color: AppColors.primary10, borderRadius: BorderRadius.circular(6)),
+      decoration: BoxDecoration(color: AppColors.primary10, borderRadius: AppRadius.borderSm),
       child: Icon(Icons.inventory_2_outlined, size: 18, color: AppColors.primary),
     );
   }
@@ -793,7 +819,7 @@ class _CategorySidebar extends StatelessWidget {
     for (final cat in nodes) {
       widgets.add(
         _SidebarItem(
-          label: cat.name,
+          label: localizedName(context, name: cat.name, nameAr: cat.nameAr),
           icon: Icons.category_outlined,
           isSelected: selectedCategoryId == cat.id,
           depth: depth,
@@ -873,15 +899,14 @@ class _ProductGridCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderLg,
+
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderLight)),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.borderLg,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -914,12 +939,12 @@ class _ProductGridCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product.name,
+                    localizedName(context, name: product.name, nameAr: product.nameAr),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 2),
+                  AppSpacing.gapH2,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

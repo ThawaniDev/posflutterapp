@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
@@ -27,9 +28,10 @@ class _AdminProviderUserDetailPageState extends ConsumerState<AdminProviderUserD
   Widget build(BuildContext context) {
     final state = ref.watch(providerUserDetailProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.userDetail)),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.userDetail,
+  showSearch: false,
+    child: switch (state) {
         ProviderUserDetailLoading() => const Center(child: CircularProgressIndicator()),
         ProviderUserDetailError(:final message) => Center(
           child: Text(message, style: const TextStyle(color: AppColors.error)),
@@ -37,7 +39,7 @@ class _AdminProviderUserDetailPageState extends ConsumerState<AdminProviderUserD
         ProviderUserDetailLoaded(:final user) => _buildDetail(user),
         _ => const SizedBox.shrink(),
       },
-    );
+);
   }
 
   Widget _buildDetail(Map<String, dynamic> user) {
@@ -70,7 +72,7 @@ class _AdminProviderUserDetailPageState extends ConsumerState<AdminProviderUserD
           AppSpacing.gapH24,
 
           // Info card
-          Card(
+          PosCard(
             child: Padding(
               padding: AppSpacing.paddingAll16,
               child: Column(
@@ -94,7 +96,7 @@ class _AdminProviderUserDetailPageState extends ConsumerState<AdminProviderUserD
           AppSpacing.gapH16,
 
           // Actions
-          Card(
+          PosCard(
             child: Padding(
               padding: AppSpacing.paddingAll16,
               child: Column(

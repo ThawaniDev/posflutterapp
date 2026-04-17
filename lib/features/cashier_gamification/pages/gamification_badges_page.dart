@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_providers.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_state.dart';
 import 'package:wameedpos/features/cashier_gamification/widgets/badge_card.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class GamificationBadgesPage extends ConsumerStatefulWidget {
   const GamificationBadgesPage({super.key});
@@ -14,25 +15,17 @@ class GamificationBadgesPage extends ConsumerStatefulWidget {
   ConsumerState<GamificationBadgesPage> createState() => _GamificationBadgesPageState();
 }
 
-class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage> with SingleTickerProviderStateMixin {
-
+class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  late TabController _tabController;
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
     Future.microtask(() {
       ref.read(badgesProvider.notifier).load();
       ref.read(badgeAwardsProvider.notifier).load();
     });
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 
   void _showCreateBadgeDialog() {
@@ -55,17 +48,17 @@ class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage>
                 controller: slugC,
                 decoration: InputDecoration(labelText: l10n.slug),
               ),
-              const SizedBox(height: 8),
+              AppSpacing.gapH8,
               TextField(
                 controller: nameEnC,
                 decoration: const InputDecoration(labelText: 'Name (EN)'),
               ),
-              const SizedBox(height: 8),
+              AppSpacing.gapH8,
               TextField(
                 controller: nameArC,
                 decoration: const InputDecoration(labelText: 'Name (AR)'),
               ),
-              const SizedBox(height: 8),
+              AppSpacing.gapH8,
               DropdownButtonFormField<String>(
                 value: triggerType,
                 decoration: const InputDecoration(labelText: 'Trigger Type'),
@@ -81,13 +74,13 @@ class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage>
                 ],
                 onChanged: (v) => triggerType = v ?? triggerType,
               ),
-              const SizedBox(height: 8),
+              AppSpacing.gapH8,
               TextField(
                 controller: thresholdC,
                 decoration: const InputDecoration(labelText: 'Threshold'),
                 keyboardType: TextInputType.number,
               ),
-              const SizedBox(height: 8),
+              AppSpacing.gapH8,
               DropdownButtonFormField<String>(
                 value: period,
                 decoration: InputDecoration(labelText: l10n.period),
@@ -103,8 +96,12 @@ class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage>
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(AppLocalizations.of(context)!.commonCancel)),
-          FilledButton(
+          PosButton(
+            onPressed: () => Navigator.pop(ctx),
+            variant: PosButtonVariant.ghost,
+            label: AppLocalizations.of(context)!.commonCancel,
+          ),
+          PosButton(
             onPressed: () {
               ref.read(badgesProvider.notifier).create({
                 'slug': slugC.text,
@@ -118,7 +115,8 @@ class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage>
               });
               Navigator.pop(ctx);
             },
-            child: Text(AppLocalizations.of(context)!.commonCreate),
+            variant: PosButtonVariant.soft,
+            label: AppLocalizations.of(context)!.commonCreate,
           ),
         ],
       ),
@@ -132,46 +130,39 @@ class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage>
     final awardsState = ref.watch(badgeAwardsProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            const Icon(Icons.workspace_premium_rounded, color: AppColors.primary),
-            const SizedBox(width: 8),
-            Text(l10n.gamificationBadges),
-          ],
+    return PosListPage(
+      title: l10n.gamificationBadges,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.auto_fix_high_rounded,
+          tooltip: l10n.gamificationSeedBadges,
+          onPressed: () => ref.read(badgesProvider.notifier).seed(),
         ),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: l10n.gamificationBadgeDefinitions),
-            Tab(text: l10n.gamificationBadgeAwards),
-          ],
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () {
+            ref.read(badgesProvider.notifier).load();
+            ref.read(badgeAwardsProvider.notifier).load();
+          },
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.auto_fix_high_rounded),
-            tooltip: l10n.gamificationSeedBadges,
-            onPressed: () => ref.read(badgesProvider.notifier).seed(),
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () {
-              ref.read(badgesProvider.notifier).load();
-              ref.read(badgeAwardsProvider.notifier).load();
-            },
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(onPressed: _showCreateBadgeDialog, child: const Icon(Icons.add)),
-      body: TabBarView(
-        controller: _tabController,
+        PosButton(label: l10n.commonCreate, icon: Icons.add, size: PosButtonSize.sm, onPressed: _showCreateBadgeDialog),
+      ],
+      child: Column(
         children: [
-          // Tab 1: Badge Definitions
-          _buildBadgesTab(badgesState, l10n, isMobile),
-          // Tab 2: Badge Awards
-          _buildAwardsTab(awardsState, l10n, isMobile),
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: l10n.gamificationBadgeDefinitions),
+              PosTabItem(label: l10n.gamificationBadgeAwards),
+            ],
+          ),
+          IndexedStack(
+            index: _currentTab,
+            children: [_buildBadgesTab(badgesState, l10n, isMobile), _buildAwardsTab(awardsState, l10n, isMobile)],
+          ),
         ],
       ),
     );
@@ -185,7 +176,7 @@ class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage>
         badges.isEmpty
             ? Center(child: Text(l10n.gamificationNoBadges))
             : ListView.builder(
-                padding: EdgeInsets.all(isMobile ? 12 : 16),
+                padding: context.responsivePagePadding,
                 itemCount: badges.length,
                 itemBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.only(bottom: 8),
@@ -207,11 +198,11 @@ class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage>
         awards.isEmpty
             ? Center(child: Text(l10n.gamificationNoAwards))
             : ListView.builder(
-                padding: EdgeInsets.all(isMobile ? 12 : 16),
+                padding: context.responsivePagePadding,
                 itemCount: awards.length,
                 itemBuilder: (context, index) {
                   final award = awards[index];
-                  return Card(
+                  return PosCard(
                     margin: const EdgeInsets.only(bottom: 8),
                     child: ListTile(
                       leading: Text(award.badge?.icon ?? '🏅', style: const TextStyle(fontSize: 24)),

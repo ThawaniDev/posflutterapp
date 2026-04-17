@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/sync/providers/sync_providers.dart';
 import 'package:wameedpos/features/sync/services/connectivity_service.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class InitialSyncScreen extends ConsumerStatefulWidget {
   final VoidCallback onComplete;
@@ -98,8 +99,8 @@ class _InitialSyncScreenState extends ConsumerState<InitialSyncScreen> {
       body: Center(
         child: SizedBox(
           width: 400,
-          child: Card(
-            shape: RoundedRectangleBorder(borderRadius: AppRadius.borderXl),
+          child: PosCard(
+            borderRadius: AppRadius.borderXl,
             child: Padding(
               padding: AppSpacing.paddingAll24,
               child: Column(
@@ -162,7 +163,7 @@ class _InitialSyncScreenState extends ConsumerState<InitialSyncScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        OutlinedButton(onPressed: widget.onComplete, child: Text(l10n.skipOffline)),
+                        PosButton(onPressed: widget.onComplete, variant: PosButtonVariant.outline, label: l10n.skipOffline),
                         AppSpacing.gapW12,
                         FilledButton.icon(
                           onPressed: () {

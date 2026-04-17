@@ -36,12 +36,15 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(thawaniSyncLogsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.syncLogs),
-        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: _applyFilters)],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.syncLogs,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: _applyFilters,
+  ),
+],
+  child: Column(
         children: [
           // Filters
           Padding(
@@ -126,7 +129,7 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildLogItem(Map<String, dynamic> log) {
@@ -148,13 +151,11 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
     final directionIcon = direction == 'outgoing' ? Icons.arrow_upward : Icons.arrow_downward;
     final createdAt = log['created_at']?.toString() ?? '';
 
-    return Card(
+    return PosCard(
       elevation: 0,
       margin: const EdgeInsets.only(bottom: 6),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.sm),
-        side: BorderSide(color: statusColor.withValues(alpha: 0.3)),
-      ),
+      borderRadius: AppRadius.borderSm,
+      border: Border.fromBorderSide(BorderSide(color: statusColor.withValues(alpha: 0.3))),
       child: ExpansionTile(
         leading: CircleAvatar(
           radius: 16,
@@ -179,7 +180,7 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
         ),
         trailing: Container(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-          decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
+          decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
           child: Text(
             status.toUpperCase(),
             style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: statusColor),

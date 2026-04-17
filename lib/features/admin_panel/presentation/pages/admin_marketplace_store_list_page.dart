@@ -5,9 +5,11 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminMarketplaceStoreListPage extends ConsumerStatefulWidget {
   const AdminMarketplaceStoreListPage({super.key});
@@ -55,9 +57,10 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
   Widget build(BuildContext context) {
     final state = ref.watch(marketplaceStoreListProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.marketplaceStores), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.marketplaceStores,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
@@ -117,7 +120,7 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> data) {
@@ -132,7 +135,7 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
         final s = stores[index];
         final isConnected = s['is_connected'] == true;
         final store = s['store'] as Map<String, dynamic>?;
-        return Card(
+        return PosCard(
           margin: const EdgeInsets.only(bottom: AppSpacing.sm),
           child: ListTile(
             leading: Icon(Icons.storefront, color: isConnected ? AppColors.success : AppColors.textSecondary),
@@ -142,7 +145,7 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
                 color: (isConnected ? AppColors.success : AppColors.textSecondary).withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.borderLg,
               ),
               child: Text(
                 isConnected ? 'CONNECTED' : 'DISCONNECTED',

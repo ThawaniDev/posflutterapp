@@ -7,6 +7,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/auto_update/providers/auto_update_providers.dart';
 import 'package:wameedpos/features/auto_update/providers/auto_update_state.dart';
 import 'package:wameedpos/features/auto_update/widgets/update_status_widget.dart';
@@ -19,13 +20,12 @@ class AutoUpdateDashboardPage extends ConsumerStatefulWidget {
   ConsumerState<AutoUpdateDashboardPage> createState() => _AutoUpdateDashboardPageState();
 }
 
-class _AutoUpdateDashboardPageState extends ConsumerState<AutoUpdateDashboardPage> with SingleTickerProviderStateMixin {
-  late final TabController _tabController;
+class _AutoUpdateDashboardPageState extends ConsumerState<AutoUpdateDashboardPage> {
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
     _loadData();
   }
 
@@ -47,71 +47,71 @@ class _AutoUpdateDashboardPageState extends ConsumerState<AutoUpdateDashboardPag
   }
 
   @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final historyState = ref.watch(updateHistoryProvider);
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.autoUpdateTitle),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: AppLocalizations.of(context)!.syncStatus),
-            Tab(text: AppLocalizations.of(context)!.autoUpdateChangelog),
-            Tab(text: AppLocalizations.of(context)!.autoUpdateHistory),
-          ],
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
+    return PosListPage(
+      title: l10n.autoUpdateTitle,
+      showSearch: false,
+      child: Column(
         children: [
-          const UpdateStatusWidget(),
-          const ChangelogWidget(),
-          // History tab
-          switch (historyState) {
-            HistoryInitial() => const Center(child: Text('Loading history...')),
-            HistoryLoading() => const Center(child: CircularProgressIndicator()),
-            HistoryError(:final message) => Center(
-              child: Text(message, style: TextStyle(color: theme.colorScheme.error)),
-            ),
-            HistoryLoaded(:final entries) =>
-              entries.isEmpty
-                  ? const Center(child: Text('No update history'))
-                  : ListView.builder(
-                      padding: AppSpacing.paddingAll16,
-                      itemCount: entries.length,
-                      itemBuilder: (context, index) {
-                        final e = entries[index];
-                        final rel = e['app_release'] as Map<String, dynamic>? ?? {};
-                        return ListTile(
-                          leading: Icon(
-                            e['status'] == 'installed'
-                                ? Icons.check_circle
-                                : e['status'] == 'failed'
-                                ? Icons.error
-                                : Icons.downloading,
-                            color: e['status'] == 'installed'
-                                ? AppColors.success
-                                : e['status'] == 'failed'
-                                ? AppColors.error
-                                : AppColors.warning,
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: l10n.syncStatus),
+              PosTabItem(label: l10n.autoUpdateChangelog),
+              PosTabItem(label: l10n.autoUpdateHistory),
+            ],
+          ),
+          Expanded(
+            child: IndexedStack(
+              index: _currentTab,
+              children: [
+                const UpdateStatusWidget(),
+                const ChangelogWidget(),
+                switch (historyState) {
+                  HistoryInitial() => const Center(child: Text('Loading history...')),
+                  HistoryLoading() => const Center(child: CircularProgressIndicator()),
+                  HistoryError(:final message) => Center(
+                    child: Text(message, style: TextStyle(color: theme.colorScheme.error)),
+                  ),
+                  HistoryLoaded(:final entries) =>
+                    entries.isEmpty
+                        ? const Center(child: Text('No update history'))
+                        : ListView.builder(
+                            padding: AppSpacing.paddingAll16,
+                            itemCount: entries.length,
+                            itemBuilder: (context, index) {
+                              final e = entries[index];
+                              final rel = e['app_release'] as Map<String, dynamic>? ?? {};
+                              return ListTile(
+                                leading: Icon(
+                                  e['status'] == 'installed'
+                                      ? Icons.check_circle
+                                      : e['status'] == 'failed'
+                                      ? Icons.error
+                                      : Icons.downloading,
+                                  color: e['status'] == 'installed'
+                                      ? AppColors.success
+                                      : e['status'] == 'failed'
+                                      ? AppColors.error
+                                      : AppColors.warning,
+                                ),
+                                title: Text('v${rel['version_number'] ?? '?'}'),
+                                subtitle: Text(e['status']?.toString() ?? ''),
+                                trailing: e['error_message'] != null
+                                    ? Tooltip(message: e['error_message'].toString(), child: const Icon(Icons.info_outline))
+                                    : null,
+                              );
+                            },
                           ),
-                          title: Text('v${rel['version_number'] ?? '?'}'),
-                          subtitle: Text(e['status']?.toString() ?? ''),
-                          trailing: e['error_message'] != null
-                              ? Tooltip(message: e['error_message'].toString(), child: const Icon(Icons.info_outline))
-                              : null,
-                        );
-                      },
-                    ),
-          },
+                },
+              ],
+            ),
+          ),
         ],
       ),
     );

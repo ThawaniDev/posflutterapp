@@ -3,6 +3,7 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/delivery_integration/enums/delivery_config_platform.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class DeliveryPlatformCard extends StatelessWidget {
   final Map<String, dynamic> config;
@@ -27,15 +28,15 @@ class DeliveryPlatformCard extends StatelessWidget {
     final platformIcon = platform?.icon ?? Icons.delivery_dining;
     final platformName = platform?.label ?? platformSlug;
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        side: BorderSide(color: isEnabled ? platformColor.withValues(alpha: 0.3) : Theme.of(context).dividerColor),
+      borderRadius: AppRadius.borderLg,
+      border: Border.fromBorderSide(
+        BorderSide(color: isEnabled ? platformColor.withValues(alpha: 0.3) : Theme.of(context).dividerColor),
       ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
+        borderRadius: AppRadius.borderLg,
         child: Padding(
           padding: AppSpacing.paddingAll16,
           child: Column(

@@ -41,24 +41,21 @@ class _ThawaniCategoryMappingsPageState extends ConsumerState<ThawaniCategoryMap
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.categoryMappings),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.cloud_upload),
-            tooltip: 'Push to Thawani',
-            onPressed: isLoading ? null : () => ref.read(thawaniSyncProvider.notifier).pushCategories(),
-          ),
-          IconButton(
-            icon: const Icon(Icons.cloud_download),
-            tooltip: 'Pull from Thawani',
-            onPressed: isLoading ? null : () => ref.read(thawaniSyncProvider.notifier).pullCategories(),
-          ),
-          IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.read(thawaniCategoryMappingsProvider.notifier).load()),
-        ],
-      ),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.categoryMappings,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.cloud_upload, onPressed: isLoading ? null : () => ref.read(thawaniSyncProvider.notifier).pushCategories(), tooltip: 'Push to Thawani',
+  ),
+  PosButton.icon(
+    icon: Icons.cloud_download, onPressed: isLoading ? null : () => ref.read(thawaniSyncProvider.notifier).pullCategories(), tooltip: 'Pull from Thawani',
+  ),
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(thawaniCategoryMappingsProvider.notifier).load(),
+  ),
+],
+  child: switch (state) {
         ThawaniCategoryMappingsInitial() || ThawaniCategoryMappingsLoading() => Center(child: PosLoadingSkeleton.list()),
         ThawaniCategoryMappingsError(:final message) => PosErrorState(
           message: message,
@@ -82,13 +79,11 @@ class _ThawaniCategoryMappingsPageState extends ConsumerState<ThawaniCategoryMap
               _ => AppColors.textSecondary,
             };
 
-            return Card(
+            return PosCard(
               elevation: 0,
               margin: const EdgeInsets.only(bottom: 8),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppRadius.md),
-                side: BorderSide(color: Theme.of(context).dividerColor),
-              ),
+              borderRadius: AppRadius.borderMd,
+              border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
               child: ListTile(
                 leading: CircleAvatar(
                   backgroundColor: statusColor.withValues(alpha: 0.1),
@@ -116,7 +111,7 @@ class _ThawaniCategoryMappingsPageState extends ConsumerState<ThawaniCategoryMap
                 ),
                 trailing: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                  decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
                   child: Text(
                     syncStatus.toUpperCase(),
                     style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: statusColor),
@@ -127,6 +122,6 @@ class _ThawaniCategoryMappingsPageState extends ConsumerState<ThawaniCategoryMap
           },
         ),
       },
-    );
+);
   }
 }

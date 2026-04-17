@@ -76,26 +76,20 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: Text(l10n.staffCreateRole),
-        actions: [
-          PosButton(
-            label: l10n.create,
-            icon: Icons.check,
-            isLoading: _isSaving,
-            onPressed: _handleCreate,
-            size: PosButtonSize.sm,
-          ),
-          const SizedBox(width: AppSpacing.sm),
+    return PosFormPage(
+      title: l10n.staffCreateRole,
+      bottomBar: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          PosButton(label: l10n.cancel, variant: PosButtonVariant.ghost, onPressed: () => Navigator.pop(context)),
+          AppSpacing.gapW12,
+          PosButton(label: l10n.create, icon: Icons.check, isLoading: _isSaving, onPressed: _handleCreate),
         ],
       ),
-      body: Form(
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // ─── Basic Info ────────────────────────────────
             Text(
@@ -177,14 +171,13 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
       final permissions = entry.value;
       final selected = permissions.where((p) => _selectedPermissionIds.contains(p.id));
 
-      return Card(
+      return PosCard(
         elevation: 0,
         color: isDark ? AppColors.cardDark : AppColors.cardLight,
         margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-        ),
+        borderRadius: AppRadius.borderMd,
+
+        border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
         child: ExpansionTile(
           leading: Icon(
             _moduleIcon(module),

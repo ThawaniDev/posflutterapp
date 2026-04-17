@@ -63,8 +63,16 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(AppLocalizations.of(ctx)!.posCancel)),
-          TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(AppLocalizations.of(ctx)!.sessionsOpenSession)),
+          PosButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            variant: PosButtonVariant.ghost,
+            label: AppLocalizations.of(ctx)!.posCancel,
+          ),
+          PosButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            variant: PosButtonVariant.ghost,
+            label: AppLocalizations.of(ctx)!.sessionsOpenSession,
+          ),
         ],
       ),
     );
@@ -105,11 +113,15 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(AppLocalizations.of(ctx)!.posCancel)),
-          TextButton(
-            style: TextButton.styleFrom(foregroundColor: AppColors.error),
+          PosButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            variant: PosButtonVariant.ghost,
+            label: AppLocalizations.of(ctx)!.posCancel,
+          ),
+          PosButton(
             onPressed: () => Navigator.pop(ctx, true),
-            child: Text(AppLocalizations.of(ctx)!.sessionsCloseSession),
+            variant: PosButtonVariant.ghost,
+            label: AppLocalizations.of(ctx)!.sessionsCloseSession,
           ),
         ],
       ),
@@ -129,52 +141,19 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(posSessionsProvider);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildToolbar(context, isDark, state),
-          Expanded(child: _buildTable(state)),
-        ],
-      ),
-    );
-  }
-
-  // ──────────────────────────────────────────────────────────
-  // Toolbar
-  // ──────────────────────────────────────────────────────────
-
-  Widget _buildToolbar(BuildContext context, bool isDark, PosSessionsState state) {
+    final l10n = AppLocalizations.of(context)!;
     final isLoaded = state is PosSessionsLoaded;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxxl, vertical: AppSpacing.lg),
-      child: Row(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(AppLocalizations.of(context)!.sessionsTitle, style: AppTypography.headlineMedium),
-              Text(
-                isLoaded
-                    ? '${state.total} ${state.total == 1 ? AppLocalizations.of(context)!.sessionsSessionSingular : AppLocalizations.of(context)!.sessionsSessionPlural}'
-                    : AppLocalizations.of(context)!.sessionsHistory,
-                style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
-              ),
-            ],
-          ),
-          const Spacer(),
 
-          // Open session button
-          PosButton(
-            label: AppLocalizations.of(context)!.sessionsOpenSession,
-            icon: Icons.play_circle_outline_rounded,
-            onPressed: _handleOpenSession,
-          ),
-        ],
-      ),
+    return PosListPage(
+      title: l10n.sessionsTitle,
+      subtitle: isLoaded
+          ? '${state.total} ${state.total == 1 ? l10n.sessionsSessionSingular : l10n.sessionsSessionPlural}'
+          : l10n.sessionsHistory,
+      showSearch: false,
+      actions: [
+        PosButton(label: l10n.sessionsOpenSession, icon: Icons.play_circle_outline_rounded, onPressed: _handleOpenSession),
+      ],
+      child: _buildTable(state),
     );
   }
 

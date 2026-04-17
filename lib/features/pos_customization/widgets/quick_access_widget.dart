@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/pos_customization/providers/customization_state.dart';
 import 'package:wameedpos/features/pos_customization/providers/customization_providers.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class QuickAccessWidget extends ConsumerWidget {
   const QuickAccessWidget({super.key});
@@ -29,7 +30,7 @@ class QuickAccessWidget extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Card(
+            PosCard(
               child: Padding(
                 padding: AppSpacing.paddingAll16,
                 child: Row(
@@ -74,7 +75,7 @@ class QuickAccessWidget extends ConsumerWidget {
                     }
                   } catch (_) {}
 
-                  return Card(
+                  return PosCard(
                     color: bgColor,
                     child: Center(
                       child: Text(

@@ -113,14 +113,7 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
         _populateFromStaff(detailState.staff);
       }
       if (detailState is StaffDetailLoading) {
-        return Scaffold(
-          backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-          appBar: AppBar(
-            backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-            title: Text(l10n.staffEditMember),
-          ),
-          body: const Center(child: CircularProgressIndicator()),
-        );
+        return PosFormPage(title: l10n.staffEditMember, isLoading: true, child: const SizedBox.shrink());
       }
     }
 
@@ -137,16 +130,20 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
     final formState = ref.watch(staffFormProvider);
     final isSaving = formState is StaffFormSaving;
 
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: Text(_isEditing ? l10n.staffEditMember : l10n.staffAddMember),
+    return PosFormPage(
+      title: _isEditing ? l10n.staffEditMember : l10n.staffAddMember,
+      bottomBar: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          PosButton(label: l10n.cancel, variant: PosButtonVariant.ghost, onPressed: () => Navigator.of(context).pop()),
+          AppSpacing.gapW12,
+          PosButton(label: l10n.save, icon: Icons.check, isLoading: isSaving, onPressed: isSaving ? null : _submit),
+        ],
       ),
-      body: Form(
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: AppSpacing.paddingAll16,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Store Selection Section
             _buildSectionTitle(context, l10n.staffStoreAssignment, Icons.store_outlined, isDark),
@@ -290,7 +287,7 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
             ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 12),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppRadius.sm),
+                borderRadius: AppRadius.borderSm,
                 side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
               ),
               tileColor: isDark ? AppColors.inputBgDark : AppColors.inputBgLight,
@@ -338,13 +335,12 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
                 },
               ),
             if (_isEditing)
-              Card(
+              PosCard(
                 elevation: 0,
                 color: isDark ? AppColors.cardDark : AppColors.cardLight,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.md),
-                  side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-                ),
+                borderRadius: AppRadius.borderMd,
+
+                border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
                 child: ListTile(
                   leading: const Icon(Icons.pin, color: AppColors.primary),
                   title: Text(l10n.staffChangePin),
@@ -415,13 +411,11 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
     if (_isEditing) {
       final detailState = ref.watch(staffDetailProvider(widget.staffId!));
       if (detailState is StaffDetailLoaded && detailState.staff.userId != null) {
-        return Card(
+        return PosCard(
           elevation: 0,
           color: isDark ? AppColors.cardDark : AppColors.cardLight,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.md),
-            side: BorderSide(color: AppColors.success.withValues(alpha: 0.3)),
-          ),
+          borderRadius: AppRadius.borderMd,
+          border: Border.fromBorderSide(BorderSide(color: AppColors.success.withValues(alpha: 0.3))),
           child: ListTile(
             leading: const Icon(Icons.check_circle, color: AppColors.success),
             title: Text(l10n.staffUserAccountLinked),
@@ -527,8 +521,8 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
           maxLength: 6,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-          FilledButton(
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
+          PosButton(
             onPressed: () async {
               if (pinController.text.length >= 4) {
                 Navigator.pop(ctx);
@@ -544,7 +538,8 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
                 }
               }
             },
-            child: Text(l10n.save),
+            variant: PosButtonVariant.soft,
+            label: l10n.save,
           ),
         ],
       ),

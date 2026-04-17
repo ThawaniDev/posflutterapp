@@ -91,39 +91,43 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(purchaseOrdersProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.inventoryPurchaseOrders),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showPurchaseOrdersInfo(context),
-          ),
-          PopupMenuButton<String?>(
-            icon: const Icon(Icons.filter_list),
-            tooltip: l10n.inventoryFilterByStatus,
-            onSelected: (value) {
-              ref.read(purchaseOrdersProvider.notifier).filterByStatus(value);
-            },
-            itemBuilder: (ctx) => [
-              PopupMenuItem(value: null, child: Text(l10n.inventoryAll)),
-              PopupMenuItem(value: 'draft', child: Text(l10n.inventoryDraft)),
-              PopupMenuItem(value: 'sent', child: Text(l10n.inventorySent)),
-              PopupMenuItem(value: 'partially_received', child: Text(l10n.inventoryPartiallyReceived)),
-              PopupMenuItem(value: 'fully_received', child: Text(l10n.inventoryFullyReceived)),
-              PopupMenuItem(value: 'cancelled', child: Text(l10n.inventoryCancelled)),
+    return PosListPage(
+      title: l10n.inventoryPurchaseOrders,
+      filters: [
+        SizedBox(
+          width: 180,
+          child: PosSearchableDropdown<String?>(
+            items: [
+              PosDropdownItem<String?>(value: null, label: l10n.inventoryAll),
+              PosDropdownItem<String?>(value: 'draft', label: l10n.inventoryDraft),
+              PosDropdownItem<String?>(value: 'sent', label: l10n.inventorySent),
+              PosDropdownItem<String?>(value: 'partially_received', label: l10n.inventoryPartiallyReceived),
+              PosDropdownItem<String?>(value: 'fully_received', label: l10n.inventoryFullyReceived),
+              PosDropdownItem<String?>(value: 'cancelled', label: l10n.inventoryCancelled),
             ],
+            selectedValue: null,
+            onChanged: (value) => ref.read(purchaseOrdersProvider.notifier).filterByStatus(value),
+            showSearch: false,
+            clearable: true,
           ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(purchaseOrdersProvider.notifier).load(),
-          ),
-        ],
-      ),
-      floatingActionButton: PosButton(label: l10n.inventoryNewPO, icon: Icons.add, onPressed: () => _showCreateDialog()),
-      body: _buildBody(state),
+        ),
+      ],
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showPurchaseOrdersInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () => ref.read(purchaseOrdersProvider.notifier).load(),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton(label: l10n.inventoryNewPO, icon: Icons.add, onPressed: () => _showCreateDialog()),
+      ],
+      child: _buildBody(state),
     );
   }
 
@@ -284,8 +288,8 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
               ),
             ),
             actions: [
-              TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.commonCancel)),
-              TextButton(
+              PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.commonCancel),
+              PosButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     Navigator.pop(ctx, {
@@ -301,7 +305,8 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
                     });
                   }
                 },
-                child: Text(l10n.commonCreate),
+                variant: PosButtonVariant.ghost,
+                label: l10n.commonCreate,
               ),
             ],
           );

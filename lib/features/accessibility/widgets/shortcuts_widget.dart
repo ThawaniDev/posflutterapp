@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/accessibility/providers/accessibility_providers.dart';
 import 'package:wameedpos/features/accessibility/providers/accessibility_state.dart';
 import 'package:wameedpos/features/accessibility/services/keyboard_shortcut_service.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ShortcutsWidget extends ConsumerWidget {
   const ShortcutsWidget({super.key});
@@ -35,7 +36,7 @@ class ShortcutsWidget extends ConsumerWidget {
           ),
           AppSpacing.gapH16,
           // ─── Navigation Shortcuts ─────────────
-          Card(
+          PosCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -102,7 +103,7 @@ class _ShortcutGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return PosCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

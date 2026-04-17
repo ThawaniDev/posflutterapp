@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import '../nice_to_have_providers.dart';
 import '../nice_to_have_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class GamificationWidget extends ConsumerWidget {
   const GamificationWidget({super.key});
@@ -25,7 +26,7 @@ class GamificationWidget extends ConsumerWidget {
             AppSpacing.gapH8,
             ...challenges.map((c) {
               final ch = c as Map<String, dynamic>;
-              return Card(
+              return PosCard(
                 child: ListTile(
                   leading: const Icon(Icons.emoji_events),
                   title: Text(ch['name_en']?.toString() ?? 'Challenge'),
@@ -52,7 +53,7 @@ class GamificationWidget extends ConsumerWidget {
             AppSpacing.gapH8,
             ...tiers.map((t) {
               final tier = t as Map<String, dynamic>;
-              return Card(
+              return PosCard(
                 child: ListTile(
                   leading: const Icon(Icons.star),
                   title: Text(tier['tier_name_en']?.toString() ?? 'Tier'),

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
@@ -18,7 +17,6 @@ class AdminActivityLogPage extends ConsumerStatefulWidget {
 }
 
 class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String? _actionFilter;
@@ -50,14 +48,19 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
     final state = ref.watch(activityLogProvider);
     final theme = Theme.of(context);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.activityLog)),
-      body: Column(
+    final isLoading = state is ActivityLogInitial || state is ActivityLogLoading;
+    final hasError = state is ActivityLogError;
+
+    return PosListPage(
+      title: l10n.activityLog,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: _loadLogs,
+      child: Column(
         children: [
-          AdminBranchBar(
-            selectedStoreId: _storeId,
-            onBranchChanged: _onBranchChanged,
-          ), // ─── Filters ──────────────────────────────
+          AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Container(
             padding: AppSpacing.paddingAll16,
             decoration: BoxDecoration(
@@ -113,21 +116,8 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
               ],
             ),
           ),
-
-          // ─── Content ──────────────────────────────
           Expanded(
             child: switch (state) {
-              ActivityLogInitial() || ActivityLogLoading() => const Center(child: CircularProgressIndicator()),
-              ActivityLogError(message: final msg) => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(msg),
-                    AppSpacing.gapH16,
-                    PosButton(label: l10n.retry, onPressed: _loadLogs),
-                  ],
-                ),
-              ),
               ActivityLogLoaded(logs: final logs, total: final total, currentPage: final page, lastPage: final lastPage) =>
                 Column(
                   children: [
@@ -144,7 +134,7 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
                               separatorBuilder: (_, __) => AppSpacing.gapH4,
                               itemBuilder: (context, index) {
                                 final log = logs[index];
-                                return Card(
+                                return PosCard(
                                   child: ListTile(
                                     dense: true,
                                     leading: _actionIcon(log['action'] as String? ?? ''),
@@ -199,6 +189,7 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
                       ),
                   ],
                 ),
+              _ => const SizedBox.shrink(),
             },
           ),
         ],

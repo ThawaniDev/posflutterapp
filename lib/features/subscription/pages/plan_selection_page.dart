@@ -47,20 +47,18 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.subscriptionChooseYourPlan),
-        centerTitle: true,
-        actions: [
-          TextButton.icon(
+    return PosListPage(
+  title: l10n.subscriptionChooseYourPlan,
+  showSearch: false,
+  actions: [
+  TextButton.icon(
             onPressed: () => context.go(Routes.planComparison),
             icon: const Icon(Icons.compare_arrows, size: 18),
             label: Text(l10n.subscriptionCompare),
           ),
-        ],
-      ),
-      body: _buildBody(plansState, subscriptionState),
-    );
+],
+  child: _buildBody(plansState, subscriptionState),
+);
   }
 
   Widget _buildBody(PlansState plansState, SubscriptionState subState) {
@@ -81,7 +79,7 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
               style: TextStyle(color: AppColors.error),
             ),
             AppSpacing.verticalMd,
-            ElevatedButton(onPressed: () => ref.read(plansProvider.notifier).loadPlans(), child: Text(l10n.retry)),
+            PosButton(onPressed: () => ref.read(plansProvider.notifier).loadPlans(), label: l10n.retry),
           ],
         ),
       );
@@ -119,7 +117,7 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                   decoration: BoxDecoration(
                     color: AppColors.success.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.borderLg,
                   ),
                   child: Text(l10n.subscriptionSavePercent,
                     style: TextStyle(fontSize: 12, color: AppColors.success, fontWeight: FontWeight.bold),

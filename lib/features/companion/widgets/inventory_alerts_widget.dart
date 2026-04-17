@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
 import 'package:wameedpos/features/companion/providers/companion_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class InventoryAlertsWidget extends ConsumerStatefulWidget {
   const InventoryAlertsWidget({super.key});
@@ -36,7 +37,7 @@ class _InventoryAlertsWidgetState extends ConsumerState<InventoryAlertsWidget> {
           children: [
             Text(message, style: TextStyle(color: theme.colorScheme.error)),
             AppSpacing.gapH8,
-            TextButton(onPressed: () => ref.read(inventoryAlertsProvider.notifier).load(), child: Text(l10n.companionRetry)),
+            PosButton(onPressed: () => ref.read(inventoryAlertsProvider.notifier).load(), variant: PosButtonVariant.ghost, label: l10n.companionRetry),
           ],
         ),
       ),
@@ -47,7 +48,7 @@ class _InventoryAlertsWidgetState extends ConsumerState<InventoryAlertsWidget> {
           Row(
             children: [
               Expanded(
-                child: Card(
+                child: PosCard(
                   color: AppColors.warning.withValues(alpha: 0.1),
                   child: Padding(
                     padding: AppSpacing.paddingAll12,
@@ -64,7 +65,7 @@ class _InventoryAlertsWidgetState extends ConsumerState<InventoryAlertsWidget> {
               ),
               AppSpacing.gapW12,
               Expanded(
-                child: Card(
+                child: PosCard(
                   color: AppColors.error.withValues(alpha: 0.1),
                   child: Padding(
                     padding: AppSpacing.paddingAll12,
@@ -117,7 +118,7 @@ class _AlertTile extends StatelessWidget {
     final minStock = alert['min_stock'] as int? ?? 0;
     final isOutOfStock = currentStock == 0;
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: CircleAvatar(
@@ -137,7 +138,7 @@ class _AlertTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
           decoration: BoxDecoration(
             color: (isOutOfStock ? AppColors.error : AppColors.warning).withValues(alpha: 0.15),
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: AppRadius.borderLg,
           ),
           child: Text(
             isOutOfStock ? l10n.companionOutOfStock : l10n.companionLowStock,

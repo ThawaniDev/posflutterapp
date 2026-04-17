@@ -19,7 +19,6 @@ class RoleDetailPage extends ConsumerStatefulWidget {
 }
 
 class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
@@ -109,32 +108,38 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: Text(roleState is RoleDetailLoaded ? roleState.role.displayName : l10n.staffRoleDetails),
-        actions: [
-          if (!isPredefined && !_isEditing)
-            IconButton(icon: const Icon(Icons.edit), tooltip: 'Edit role', onPressed: () => setState(() => _isEditing = true)),
-          if (_isEditing) ...[
-            TextButton(
-              onPressed: () {
-                _populateForm();
-                setState(() {
-                  _isEditing = false;
-                  _hasChanges = false;
-                });
-              },
-              child: Text(l10n.cancel),
-            ),
-            const SizedBox(width: AppSpacing.xs),
-            PosButton(label: l10n.save, isLoading: isSaving, onPressed: _hasChanges ? _handleSave : null, size: PosButtonSize.sm),
-            const SizedBox(width: AppSpacing.sm),
-          ],
-        ],
-      ),
-      body: _buildBody(roleState, permState, isDark, l10n),
+    return PosFormPage(
+      title: roleState is RoleDetailLoaded ? roleState.role.displayName : l10n.staffRoleDetails,
+      actions: [
+        if (!isPredefined && !_isEditing)
+          PosButton.icon(
+            icon: Icons.edit,
+            tooltip: 'Edit role',
+            onPressed: () => setState(() => _isEditing = true),
+            variant: PosButtonVariant.ghost,
+          ),
+      ],
+      bottomBar: _isEditing
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                PosButton(
+                  label: l10n.cancel,
+                  variant: PosButtonVariant.ghost,
+                  onPressed: () {
+                    _populateForm();
+                    setState(() {
+                      _isEditing = false;
+                      _hasChanges = false;
+                    });
+                  },
+                ),
+                AppSpacing.gapW12,
+                PosButton(label: l10n.save, isLoading: isSaving, onPressed: _hasChanges ? _handleSave : null),
+              ],
+            )
+          : null,
+      child: _buildBody(roleState, permState, isDark, l10n),
     );
   }
 
@@ -180,7 +185,7 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
               margin: const EdgeInsets.only(bottom: AppSpacing.md),
               decoration: BoxDecoration(
                 color: AppColors.info.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: AppRadius.borderMd,
                 border: Border.all(color: AppColors.info.withValues(alpha: 0.3)),
               ),
               child: Row(
@@ -257,14 +262,13 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
       final permissions = entry.value;
       final moduleSelected = permissions.where((p) => _selectedPermissionIds.contains(p.id));
 
-      return Card(
+      return PosCard(
         elevation: 0,
         color: isDark ? AppColors.cardDark : AppColors.cardLight,
         margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-        ),
+        borderRadius: AppRadius.borderMd,
+
+        border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
         child: ExpansionTile(
           leading: Icon(
             _moduleIcon(module),

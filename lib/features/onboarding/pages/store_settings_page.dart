@@ -20,7 +20,6 @@ class StoreSettingsPage extends ConsumerStatefulWidget {
 }
 
 class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   bool _isSaving = false;
 
@@ -166,87 +165,67 @@ class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
       }
     }
 
-    return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
-      appBar: AppBar(
-        title: const Text('Store Settings'),
-        backgroundColor: AppColors.surfaceLight,
-        foregroundColor: AppColors.textPrimaryLight,
-        elevation: 0,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: AppSpacing.md),
-            child: PosButton(label: l10n.save, size: PosButtonSize.sm, isLoading: _isSaving, onPressed: _isSaving ? null : _save),
-          ),
-        ],
-      ),
-      body: _buildBody(settingsState),
+    final isLoading = settingsState is StoreSettingsLoading;
+    final hasError = settingsState is StoreSettingsError;
+
+    return PosFormPage(
+      title: 'Store Settings',
+      isLoading: isLoading,
+      bottomBar: PosButton(label: l10n.save, isLoading: _isSaving, onPressed: _isSaving ? null : _save, isFullWidth: true),
+      child: hasError
+          ? Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Error: ${settingsState.message}'),
+                  const SizedBox(height: AppSpacing.md),
+                  PosButton(label: l10n.retry, onPressed: () => ref.read(storeSettingsProvider(widget.storeId).notifier).load()),
+                ],
+              ),
+            )
+          : _buildContent(),
     );
   }
 
-  Widget _buildBody(StoreSettingsState settingsState) {
-    if (settingsState is StoreSettingsLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (settingsState is StoreSettingsError) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('Error: ${settingsState.message}'),
-            const SizedBox(height: AppSpacing.md),
-            PosButton(label: l10n.retry, onPressed: () => ref.read(storeSettingsProvider(widget.storeId).notifier).load()),
-          ],
-        ),
-      );
-    }
-
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppSpacing.xl),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSection('Tax Configuration', Icons.receipt_long, [
-            _buildTextField('Tax Label', _taxLabelCtrl, hint: 'VAT'),
-            _buildTextField('Tax Rate (%)', _taxRateCtrl, hint: '15', keyboard: TextInputType.number),
-            _buildTextField('Tax Number', _taxNumberCtrl, hint: 'Optional'),
-            _buildSwitch('Prices Include Tax', _pricesIncludeTax, (v) => setState(() => _pricesIncludeTax = v)),
-          ]),
-          const SizedBox(height: AppSpacing.xl),
-          _buildSection('Receipt', Icons.receipt, [
-            _buildTextField('Receipt Header', _receiptHeaderCtrl, hint: 'Custom header text', maxLines: 2),
-            _buildTextField('Receipt Footer', _receiptFooterCtrl, hint: 'Thank you for shopping!', maxLines: 2),
-            _buildSwitch('Show Logo', _receiptShowLogo, (v) => setState(() => _receiptShowLogo = v)),
-            _buildSwitch('Show Tax Breakdown', _receiptShowTaxBreakdown, (v) => setState(() => _receiptShowTaxBreakdown = v)),
-          ]),
-          const SizedBox(height: AppSpacing.xl),
-          _buildSection('Currency', Icons.attach_money, [
-            _buildTextField('Currency Code', _currencyCodeCtrl, hint: '\u0081'),
-            _buildTextField('Currency Symbol', _currencySymbolCtrl, hint: '﷼'),
-            _buildTextField('Decimal Places', _decimalPlacesCtrl, hint: '2', keyboard: TextInputType.number),
-          ]),
-          const SizedBox(height: AppSpacing.xl),
-          _buildSection('POS Behaviour', Icons.point_of_sale, [
-            _buildSwitch('Allow Negative Stock', _allowNegativeStock, (v) => setState(() => _allowNegativeStock = v)),
-            _buildSwitch(
-              'Require Customer for Sale',
-              _requireCustomerForSale,
-              (v) => setState(() => _requireCustomerForSale = v),
-            ),
-            _buildSwitch('Auto-Print Receipt', _autoPrintReceipt, (v) => setState(() => _autoPrintReceipt = v)),
-            _buildSwitch('Enable Tips', _enableTips, (v) => setState(() => _enableTips = v)),
-            _buildSwitch('Kitchen Display', _enableKitchenDisplay, (v) => setState(() => _enableKitchenDisplay = v)),
-            _buildTextField('Session Timeout (min)', _sessionTimeoutCtrl, hint: '480', keyboard: TextInputType.number),
-            _buildTextField('Max Discount (%)', _maxDiscountCtrl, hint: '100', keyboard: TextInputType.number),
-          ]),
-          const SizedBox(height: AppSpacing.xl),
-          _buildSection('Alerts', Icons.notifications_active, [
-            _buildSwitch('Low Stock Alert', _lowStockAlert, (v) => setState(() => _lowStockAlert = v)),
-            _buildTextField('Low Stock Threshold', _lowStockThresholdCtrl, hint: '5', keyboard: TextInputType.number),
-          ]),
-          const SizedBox(height: AppSpacing.xxxl),
-        ],
-      ),
+  Widget _buildContent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildSection('Tax Configuration', Icons.receipt_long, [
+          _buildTextField('Tax Label', _taxLabelCtrl, hint: 'VAT'),
+          _buildTextField('Tax Rate (%)', _taxRateCtrl, hint: '15', keyboard: TextInputType.number),
+          _buildTextField('Tax Number', _taxNumberCtrl, hint: 'Optional'),
+          _buildSwitch('Prices Include Tax', _pricesIncludeTax, (v) => setState(() => _pricesIncludeTax = v)),
+        ]),
+        const SizedBox(height: AppSpacing.xl),
+        _buildSection('Receipt', Icons.receipt, [
+          _buildTextField('Receipt Header', _receiptHeaderCtrl, hint: 'Custom header text', maxLines: 2),
+          _buildTextField('Receipt Footer', _receiptFooterCtrl, hint: 'Thank you for shopping!', maxLines: 2),
+          _buildSwitch('Show Logo', _receiptShowLogo, (v) => setState(() => _receiptShowLogo = v)),
+          _buildSwitch('Show Tax Breakdown', _receiptShowTaxBreakdown, (v) => setState(() => _receiptShowTaxBreakdown = v)),
+        ]),
+        const SizedBox(height: AppSpacing.xl),
+        _buildSection('Currency', Icons.attach_money, [
+          _buildTextField('Currency Code', _currencyCodeCtrl, hint: '\u0081'),
+          _buildTextField('Currency Symbol', _currencySymbolCtrl, hint: '﷼'),
+          _buildTextField('Decimal Places', _decimalPlacesCtrl, hint: '2', keyboard: TextInputType.number),
+        ]),
+        const SizedBox(height: AppSpacing.xl),
+        _buildSection('POS Behaviour', Icons.point_of_sale, [
+          _buildSwitch('Allow Negative Stock', _allowNegativeStock, (v) => setState(() => _allowNegativeStock = v)),
+          _buildSwitch('Require Customer for Sale', _requireCustomerForSale, (v) => setState(() => _requireCustomerForSale = v)),
+          _buildSwitch('Auto-Print Receipt', _autoPrintReceipt, (v) => setState(() => _autoPrintReceipt = v)),
+          _buildSwitch('Enable Tips', _enableTips, (v) => setState(() => _enableTips = v)),
+          _buildSwitch('Kitchen Display', _enableKitchenDisplay, (v) => setState(() => _enableKitchenDisplay = v)),
+          _buildTextField('Session Timeout (min)', _sessionTimeoutCtrl, hint: '480', keyboard: TextInputType.number),
+          _buildTextField('Max Discount (%)', _maxDiscountCtrl, hint: '100', keyboard: TextInputType.number),
+        ]),
+        const SizedBox(height: AppSpacing.xl),
+        _buildSection('Alerts', Icons.notifications_active, [
+          _buildSwitch('Low Stock Alert', _lowStockAlert, (v) => setState(() => _lowStockAlert = v)),
+          _buildTextField('Low Stock Threshold', _lowStockThresholdCtrl, hint: '5', keyboard: TextInputType.number),
+        ]),
+      ],
     );
   }
 

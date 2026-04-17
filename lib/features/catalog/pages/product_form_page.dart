@@ -31,10 +31,9 @@ class ProductFormPage extends ConsumerStatefulWidget {
   ConsumerState<ProductFormPage> createState() => _ProductFormPageState();
 }
 
-class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTickerProviderStateMixin {
-
+class _ProductFormPageState extends ConsumerState<ProductFormPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  late TabController _tabController;
+  int _currentTab = 0;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -92,7 +91,6 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 7, vsync: this);
 
     if (widget.initialBarcode != null && widget.initialBarcode!.isNotEmpty) {
       _barcodeController.text = widget.initialBarcode!;
@@ -109,7 +107,6 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
 
   @override
   void dispose() {
-    _tabController.dispose();
     _nameController.dispose();
     _nameArController.dispose();
     _descriptionController.dispose();
@@ -274,24 +271,10 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
     final isSaving = detailState is ProductDetailSaving;
     final isLoading = _isEditing && (detailState is ProductDetailLoading || detailState is ProductDetailInitial);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_isEditing ? 'Edit Product' : 'Add Product'),
-        bottom: TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          tabs: [
-            Tab(icon: Icon(Icons.info_outline, size: 18), text: 'Basic Info'),
-            Tab(icon: Icon(Icons.attach_money, size: 18), text: 'Pricing'),
-            Tab(icon: Icon(Icons.style_outlined, size: 18), text: 'Variants'),
-            Tab(icon: Icon(Icons.tune, size: 18), text: 'Modifiers'),
-            Tab(icon: Icon(Icons.qr_code, size: 18), text: 'Barcodes'),
-            Tab(icon: Icon(Icons.local_shipping_outlined, size: 18), text: l10n.supplierTitle),
-            Tab(icon: Icon(Icons.image_outlined, size: 18), text: l10n.branchesMedia),
-          ],
-        ),
-      ),
-      bottomNavigationBar: Padding(
+    return PosFormPage(
+      title: _isEditing ? 'Edit Product' : 'Add Product',
+      isLoading: isLoading,
+      bottomBar: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: PosButton(
           label: isSaving ? 'Saving...' : (_isEditing ? 'Update Product' : 'Create Product'),
@@ -300,23 +283,38 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
           isFullWidth: true,
         ),
       ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : Form(
-              key: _formKey,
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  _buildBasicTab(categoriesState),
-                  _buildPricingTab(),
-                  _buildVariantsTab(),
-                  _buildModifiersTab(),
-                  _buildBarcodesTab(),
-                  _buildSuppliersTab(suppliersState),
-                  _buildMediaTab(),
-                ],
-              ),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            PosTabs(
+              selectedIndex: _currentTab,
+              onChanged: (i) => setState(() => _currentTab = i),
+              tabs: [
+                PosTabItem(label: 'Basic Info', icon: Icons.info_outline),
+                PosTabItem(label: 'Pricing', icon: Icons.attach_money),
+                PosTabItem(label: 'Variants', icon: Icons.style_outlined),
+                PosTabItem(label: 'Modifiers', icon: Icons.tune),
+                PosTabItem(label: 'Barcodes', icon: Icons.qr_code),
+                PosTabItem(label: l10n.supplierTitle, icon: Icons.local_shipping_outlined),
+                PosTabItem(label: l10n.branchesMedia, icon: Icons.image_outlined),
+              ],
             ),
+            IndexedStack(
+              index: _currentTab,
+              children: [
+                _buildBasicTab(categoriesState),
+                _buildPricingTab(),
+                _buildVariantsTab(),
+                _buildModifiersTab(),
+                _buildBarcodesTab(),
+                _buildSuppliersTab(suppliersState),
+                _buildMediaTab(),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -496,7 +494,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
               final sell = double.tryParse(_sellPriceController.text) ?? 0;
               final cost = double.tryParse(_costPriceController.text) ?? 0;
               final margin = sell > 0 ? ((sell - cost) / sell * 100) : 0;
-              return Card(
+              return PosCard(
                 color: AppColors.info.withValues(alpha: 0.05),
                 child: Padding(
                   padding: const EdgeInsets.all(AppSpacing.md),
@@ -565,7 +563,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
             _emptyState('No store-specific price overrides.', Icons.store_outlined)
           else
             ..._storePrices.map(
-              (sp) => Card(
+              (sp) => PosCard(
                 margin: const EdgeInsets.only(bottom: AppSpacing.sm),
                 child: ListTile(
                   leading: const Icon(Icons.store, size: 20),
@@ -619,7 +617,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
           _emptyState('No variants. Add sizes, colours, etc.', Icons.style_outlined)
         else
           ..._variants.map(
-            (v) => Card(
+            (v) => PosCard(
               margin: const EdgeInsets.only(bottom: AppSpacing.sm),
               child: ListTile(
                 title: Text(v.variantValue, style: const TextStyle(fontWeight: FontWeight.w600)),
@@ -640,10 +638,10 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
                         color: v.isActive == true
                             ? AppColors.success.withValues(alpha: 0.1)
                             : AppColors.error.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(4),
+                        borderRadius: AppRadius.borderXs,
                       ),
                       child: Text(
-                        v.isActive == true ? 'Active' : 'Inactive',
+                        v.isActive == true ? l10n.active : l10n.inactive,
                         style: Theme.of(
                           context,
                         ).textTheme.labelSmall?.copyWith(color: v.isActive == true ? AppColors.success : AppColors.error),
@@ -687,14 +685,15 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-          FilledButton(
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
+          PosButton(
             onPressed: () {
               if (valueController.text.trim().isEmpty) return;
               Navigator.pop(ctx);
               // API sync would happen through provider in production
             },
-            child: Text(l10n.add),
+            variant: PosButtonVariant.soft,
+            label: l10n.add,
           ),
         ],
       ),
@@ -736,7 +735,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
         else
           ..._modifierGroups.map((group) {
             final options = _modifierOptions.where((o) => o.modifierGroupId == group.id).toList();
-            return Card(
+            return PosCard(
               margin: const EdgeInsets.only(bottom: AppSpacing.md),
               child: Padding(
                 padding: const EdgeInsets.all(AppSpacing.md),
@@ -769,9 +768,10 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
                             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                             decoration: BoxDecoration(
                               color: AppColors.warning.withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(4),
+                              borderRadius: AppRadius.borderXs,
                             ),
-                            child: Text(l10n.staffRequired,
+                            child: Text(
+                              l10n.staffRequired,
                               style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.warning),
                             ),
                           ),
@@ -864,13 +864,14 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-            FilledButton(
+            PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
+            PosButton(
               onPressed: () {
                 if (nameController.text.trim().isEmpty) return;
                 Navigator.pop(ctx);
               },
-              child: Text(l10n.add),
+              variant: PosButtonVariant.soft,
+              label: l10n.add,
             ),
           ],
         ),
@@ -923,7 +924,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
 
         // Primary barcode from product
         if (_barcodeController.text.isNotEmpty)
-          Card(
+          PosCard(
             margin: const EdgeInsets.only(bottom: AppSpacing.sm),
             child: ListTile(
               leading: const Icon(Icons.qr_code, size: 20),
@@ -932,7 +933,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
                   color: AppColors.primary.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: AppRadius.borderXs,
                 ),
                 child: Text(l10n.staffPrimary, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.primary)),
               ),
@@ -943,7 +944,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
           _emptyState('No barcodes assigned to this product.', Icons.qr_code)
         else
           ..._barcodes.map(
-            (b) => Card(
+            (b) => PosCard(
               margin: const EdgeInsets.only(bottom: AppSpacing.sm),
               child: ListTile(
                 leading: const Icon(Icons.qr_code_2, size: 20),
@@ -953,9 +954,12 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
                           color: AppColors.primary.withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(4),
+                          borderRadius: AppRadius.borderXs,
                         ),
-                        child: Text(l10n.staffPrimary, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.primary)),
+                        child: Text(
+                          l10n.staffPrimary,
+                          style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.primary),
+                        ),
                       )
                     : null,
               ),
@@ -996,13 +1000,14 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-          FilledButton(
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
+          PosButton(
             onPressed: () {
               if (barcodeController.text.trim().isEmpty) return;
               Navigator.pop(ctx);
             },
-            child: Text(l10n.add),
+            variant: PosButtonVariant.soft,
+            label: l10n.add,
           ),
         ],
       ),
@@ -1046,7 +1051,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
         else
           ..._productSuppliers.map((ps) {
             final supplier = allSuppliers.where((s) => s.id == ps.supplierId).firstOrNull;
-            return Card(
+            return PosCard(
               margin: const EdgeInsets.only(bottom: AppSpacing.sm),
               child: ListTile(
                 leading: CircleAvatar(
@@ -1130,13 +1135,14 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-            FilledButton(
+            PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
+            PosButton(
               onPressed: () {
                 if (selectedSupplierId == null) return;
                 Navigator.pop(ctx);
               },
-              child: const Text('Link'),
+              variant: PosButtonVariant.soft,
+              label: 'Link',
             ),
           ],
         ),
@@ -1164,14 +1170,14 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
         // Preview
         if (_imageUrlController.text.isNotEmpty)
           ClipRRect(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: AppRadius.borderLg,
             child: Image.network(
               _imageUrlController.text,
               height: 200,
               fit: BoxFit.cover,
               errorBuilder: (_, __, ___) => Container(
                 height: 200,
-                decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -1190,7 +1196,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
             height: 200,
             decoration: BoxDecoration(
               color: AppColors.primary10,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: AppRadius.borderLg,
               border: Border.all(color: AppColors.borderLight, style: BorderStyle.solid),
             ),
             child: Center(

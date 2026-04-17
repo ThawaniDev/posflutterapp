@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class SyncLogList extends StatelessWidget {
   final List<Map<String, dynamic>> logs;
@@ -22,7 +23,7 @@ class SyncLogList extends StatelessWidget {
       );
     }
 
-    return Card(
+    return PosCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

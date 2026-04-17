@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
@@ -96,7 +97,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                                                 subtitle: formatCurrency(peak['total_revenue'] as num),
                                               ),
                                             ),
-                                            const SizedBox(width: 12),
+                                            AppSpacing.gapW12,
                                             Expanded(
                                               child: ReportKpiCard(
                                                 label: l10n.totalRevenue,
@@ -107,7 +108,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(height: 12),
+                                        AppSpacing.gapH12,
                                         ReportKpiCard(
                                           label: l10n.staffTotalOrders,
                                           value: '$totalOrders',
@@ -127,7 +128,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                                             subtitle: formatCurrency(peak['total_revenue'] as num),
                                           ),
                                         ),
-                                        const SizedBox(width: 12),
+                                        AppSpacing.gapW12,
                                         Expanded(
                                           child: ReportKpiCard(
                                             label: l10n.totalRevenue,
@@ -136,7 +137,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                                             color: AppColors.success,
                                           ),
                                         ),
-                                        const SizedBox(width: 12),
+                                        AppSpacing.gapW12,
                                         Expanded(
                                           child: ReportKpiCard(
                                             label: l10n.staffTotalOrders,
@@ -147,7 +148,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                                         ),
                                       ],
                                     ),
-                              const SizedBox(height: 24),
+                              AppSpacing.gapH24,
                             ],
                           );
                         },
@@ -159,7 +160,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                     ReportDataCard(
                       child: ReportHourlyChart(data: hours, valueKey: 'total_revenue'),
                     ),
-                    const SizedBox(height: 24),
+                    AppSpacing.gapH24,
 
                     ReportSectionHeader(title: l10n.reportsRevenueByHour, icon: Icons.bar_chart_rounded),
                     ReportDataCard(
@@ -167,7 +168,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                       child: Column(
                         children: [
                           for (int i = 0; i < hours.length; i++) ...[
-                            if (i > 0) const SizedBox(height: 8),
+                            if (i > 0) AppSpacing.gapH8,
                             _HourRow(
                               hour: _formatHour(hours[i]['hour'] as int),
                               revenue: double.tryParse(hours[i]['total_revenue'].toString()) ?? 0.0,
@@ -182,7 +183,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    AppSpacing.gapH20,
                   ],
                 ),
       },
@@ -218,11 +219,11 @@ class _HourRow extends StatelessWidget {
             textAlign: TextAlign.right,
           ),
         ),
-        const SizedBox(width: 12),
+        AppSpacing.gapW12,
         Expanded(
           child: ReportBar(value: revenue, maxValue: maxRevenue, color: AppColors.primary, height: 24),
         ),
-        const SizedBox(width: 12),
+        AppSpacing.gapW12,
         SizedBox(
           width: 90,
           child: Column(

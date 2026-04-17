@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
@@ -40,20 +40,15 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
     final state = ref.watch(analyticsStoresProvider);
     final exportState = ref.watch(analyticsExportProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.analyticsStores),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.download),
-            tooltip: 'Export Stores',
-            onPressed: () => ref.read(analyticsExportProvider.notifier).exportStores(),
-          ),
-        ],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.analyticsStores,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.download, onPressed: () => ref.read(analyticsExportProvider.notifier).exportStores(), tooltip: 'Export Stores',
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           if (exportState is AnalyticsExportSuccess)
@@ -61,9 +56,10 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
               content: Text('Export ready: ${exportState.recordCount} records'),
               backgroundColor: AppColors.success.withValues(alpha: 0.08),
               actions: [
-                TextButton(
+                PosButton(
                   onPressed: () => ref.read(analyticsExportProvider.notifier).exportStores(),
-                  child: const Text('Export Again'),
+                  variant: PosButtonVariant.ghost,
+                  label: 'Export Again',
                 ),
               ],
             ),
@@ -97,12 +93,12 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                       const Text('Health Summary', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (health.isEmpty)
-                        const Card(
+                        const PosCard(
                           child: Padding(padding: EdgeInsets.all(AppSpacing.md), child: Text('No health data today')),
                         )
                       else
                         ...health.entries.map(
-                          (e) => Card(
+                          (e) => PosCard(
                             margin: const EdgeInsets.only(bottom: AppSpacing.xs),
                             child: ListTile(
                               leading: Icon(
@@ -121,7 +117,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                       const Text('Top Stores', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       ...stores.map(
-                        (s) => Card(
+                        (s) => PosCard(
                           margin: const EdgeInsets.only(bottom: AppSpacing.xs),
                           child: ListTile(
                             leading: CircleAvatar(
@@ -150,9 +146,9 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                   children: [
                     Text('Error: $msg'),
                     const SizedBox(height: AppSpacing.sm),
-                    ElevatedButton(
+                    PosButton(
                       onPressed: () => ref.read(analyticsStoresProvider.notifier).load(storeId: _storeId),
-                      child: Text(l10n.retry),
+                      label: l10n.retry,
                     ),
                   ],
                 ),
@@ -162,6 +158,6 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
           ),
         ],
       ),
-    );
+);
   }
 }

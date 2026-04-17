@@ -9,6 +9,7 @@ import 'package:wameedpos/features/reports/widgets/report_charts.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class PaymentMethodsPage extends ConsumerStatefulWidget {
   const PaymentMethodsPage({super.key});
@@ -163,7 +164,7 @@ class _PaymentList extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                        decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
                         child: Icon(_iconForMethod(method), color: color, size: 22),
                       ),
                       const SizedBox(width: 14),

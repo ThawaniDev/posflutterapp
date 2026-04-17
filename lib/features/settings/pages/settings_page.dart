@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/router/route_names.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
@@ -10,10 +12,11 @@ class SettingsPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.settings)),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
+    return PosListPage(
+      title: l10n.settings,
+      showSearch: false,
+      child: ListView(
+        padding: AppSpacing.paddingAll16,
         children: [
           _SettingsSection(
             title: l10n.settingsGeneral,
@@ -38,7 +41,7 @@ class SettingsPage extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          AppSpacing.gapH16,
           _SettingsSection(
             title: l10n.settingsBusiness,
             items: [
@@ -68,7 +71,7 @@ class SettingsPage extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          AppSpacing.gapH16,
           _SettingsSection(
             title: l10n.settingsSystem,
             items: [
@@ -121,7 +124,7 @@ class _SettingsSection extends StatelessWidget {
             ),
           ),
         ),
-        Card(
+        PosCard(
           child: Column(
             children: items.asMap().entries.map((entry) {
               final isLast = entry.key == items.length - 1;

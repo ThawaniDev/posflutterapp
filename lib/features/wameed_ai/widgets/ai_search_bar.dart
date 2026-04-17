@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AISearchBar extends ConsumerStatefulWidget {
   const AISearchBar({super.key});
@@ -45,7 +46,7 @@ class _AISearchBarState extends ConsumerState<AISearchBar> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: AppRadius.borderXl,
             border: Border.all(color: AppColors.primary.withValues(alpha: 0.2)),
           ),
           child: Column(
@@ -86,36 +87,33 @@ class _AISearchBarState extends ConsumerState<AISearchBar> {
         ),
         if (state is AISmartSearchLoaded) ...[
           const SizedBox(height: 12),
-          Container(
-            constraints: const BoxConstraints(maxHeight: 300),
+          PosCard(
             padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Theme.of(context).cardColor,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Theme.of(context).dividerColor),
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.auto_awesome, size: 16, color: AppColors.primary),
-                      const SizedBox(width: 8),
-                      Text(
-                        l10n.wameedAISearchResults,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        icon: const Icon(Icons.close, size: 16),
-                        onPressed: () => ref.read(aiSmartSearchProvider.notifier).reset(),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  if (state.result.data != null) _buildResultData(state.result.data!),
-                ],
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 300),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.auto_awesome, size: 16, color: AppColors.primary),
+                        const SizedBox(width: 8),
+                        Text(
+                          l10n.wameedAISearchResults,
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                        ),
+                        const Spacer(),
+                        IconButton(
+                          icon: const Icon(Icons.close, size: 16),
+                          onPressed: () => ref.read(aiSmartSearchProvider.notifier).reset(),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    if (state.result.data != null) _buildResultData(state.result.data!),
+                  ],
+                ),
               ),
             ),
           ),

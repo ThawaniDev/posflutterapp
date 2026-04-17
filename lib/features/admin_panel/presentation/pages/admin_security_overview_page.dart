@@ -6,7 +6,9 @@ import '../../../../core/providers/branch_context_provider.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import '../../widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminSecurityOverviewPage extends ConsumerStatefulWidget {
   const AdminSecurityOverviewPage({super.key});
@@ -38,9 +40,10 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
   Widget build(BuildContext context) {
     final state = ref.watch(securityOverviewProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.adminSecurity), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.adminSecurity,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -54,9 +57,9 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
                     const SizedBox(height: AppSpacing.md),
                     Text(msg, textAlign: TextAlign.center),
                     const SizedBox(height: AppSpacing.md),
-                    ElevatedButton(
+                    PosButton(
                       onPressed: () => ref.read(securityOverviewProvider.notifier).load(storeId: _storeId),
-                      child: Text(l10n.retry),
+                      label: l10n.retry,
                     ),
                   ],
                 ),
@@ -67,7 +70,7 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildOverview(Map<String, dynamic> data) {
@@ -127,7 +130,7 @@ class _SectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return PosCard(
       elevation: 2,
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),

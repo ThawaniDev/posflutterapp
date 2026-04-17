@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/pos_card.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class BranchOverviewCard extends StatelessWidget {
   final List<Map<String, dynamic>> branches;
@@ -71,7 +72,7 @@ class _BranchComparisonChart extends StatelessWidget {
               toY: sales,
               color: _branchColors[i % _branchColors.length],
               width: 18,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadius.xs)),
             ),
           ],
         ),

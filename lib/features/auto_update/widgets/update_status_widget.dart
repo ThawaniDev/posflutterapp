@@ -6,6 +6,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/auto_update/providers/auto_update_providers.dart';
 import 'package:wameedpos/features/auto_update/providers/auto_update_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class UpdateStatusWidget extends ConsumerWidget {
   const UpdateStatusWidget({super.key});
@@ -22,7 +23,7 @@ class UpdateStatusWidget extends ConsumerWidget {
       UpdateCheckError(:final message) => Center(
         child: Text(message, style: TextStyle(color: theme.colorScheme.error)),
       ),
-      final UpdateCheckLoaded s => Card(
+      final UpdateCheckLoaded s => PosCard(
         margin: AppSpacing.paddingAll16,
         child: Padding(
           padding: AppSpacing.paddingAll16,

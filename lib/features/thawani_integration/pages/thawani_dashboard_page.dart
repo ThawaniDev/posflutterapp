@@ -16,25 +16,17 @@ class ThawaniDashboardPage extends ConsumerStatefulWidget {
   ConsumerState<ThawaniDashboardPage> createState() => _ThawaniDashboardPageState();
 }
 
-class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> with SingleTickerProviderStateMixin {
-
+class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  late final TabController _tabController;
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
     Future.microtask(() {
       ref.read(thawaniStatsProvider.notifier).load();
       ref.read(thawaniConfigProvider.notifier).load();
     });
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 
   @override
@@ -53,30 +45,31 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.thawaniIntegration),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              ref.read(thawaniStatsProvider.notifier).load();
-              ref.read(thawaniConfigProvider.notifier).load();
-            },
-          ),
-        ],
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: AppLocalizations.of(context)!.thawaniOverview),
-            Tab(text: AppLocalizations.of(context)!.thawaniSettings),
-            Tab(text: AppLocalizations.of(context)!.thawaniOrders),
-          ],
+    return PosListPage(
+      title: AppLocalizations.of(context)!.thawaniIntegration,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.refresh,
+          onPressed: () {
+            ref.read(thawaniStatsProvider.notifier).load();
+            ref.read(thawaniConfigProvider.notifier).load();
+          },
         ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [_buildOverview(statsState), _buildSettings(actionState), _buildOrders()],
+      ],
+      child: Column(
+        children: [
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: AppLocalizations.of(context)!.thawaniOverview),
+              PosTabItem(label: AppLocalizations.of(context)!.thawaniSettings),
+              PosTabItem(label: AppLocalizations.of(context)!.thawaniOrders),
+            ],
+          ),
+          IndexedStack(index: _currentTab, children: [_buildOverview(statsState), _buildSettings(actionState), _buildOrders()]),
+        ],
       ),
     );
   }
@@ -104,15 +97,13 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
           padding: AppSpacing.paddingAll16,
           children: [
             // Connection status banner
-            Card(
+            PosCard(
               elevation: 0,
               color: isConnected ? AppColors.success.withValues(alpha: 0.1) : AppColors.warning.withValues(alpha: 0.1),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppRadius.md),
-                side: BorderSide(
+              borderRadius: AppRadius.borderMd,
+              border: Border.fromBorderSide(BorderSide(
                   color: isConnected ? AppColors.success.withValues(alpha: 0.3) : AppColors.warning.withValues(alpha: 0.3),
-                ),
-              ),
+                )),
               child: Padding(
                 padding: AppSpacing.paddingAll16,
                 child: Row(
@@ -183,26 +174,25 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
             ),
             if (failedSyncsToday > 0) ...[
               AppSpacing.gapH12,
-              Card(
+              PosCard(
                 elevation: 0,
                 color: AppColors.error.withValues(alpha: 0.1),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadius.md),
-                  side: BorderSide(color: AppColors.error.withValues(alpha: 0.3)),
-                ),
+                borderRadius: AppRadius.borderMd,
+                border: Border.fromBorderSide(BorderSide(color: AppColors.error.withValues(alpha: 0.3))),
                 child: ListTile(
                   leading: Icon(Icons.warning_amber, color: AppColors.error),
                   title: Text(
                     '$failedSyncsToday failed syncs today',
                     style: TextStyle(color: AppColors.error, fontWeight: FontWeight.w600),
                   ),
-                  trailing: TextButton(onPressed: () => context.push(Routes.thawaniSyncLogs), child: const Text('View Logs')),
+                  trailing: PosButton(onPressed: () => context.push(Routes.thawaniSyncLogs), variant: PosButtonVariant.ghost, label: 'View Logs'),
                 ),
               ),
             ],
             AppSpacing.gapH24,
             // Quick Actions
-            Text(l10n.deliveryQuickActions,
+            Text(
+              l10n.deliveryQuickActions,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Theme.of(context).textTheme.bodyLarge?.color),
             ),
             AppSpacing.gapH12,
@@ -234,12 +224,10 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
 
   Widget _statCard(String label, String value, IconData icon, Color color) {
     return Expanded(
-      child: Card(
+      child: PosCard(
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppRadius.md),
-          side: BorderSide(color: Theme.of(context).dividerColor),
-        ),
+        borderRadius: AppRadius.borderMd,
+        border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
         child: Padding(
           padding: AppSpacing.paddingAll16,
           child: Column(
@@ -322,13 +310,11 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
     required Color color,
     required VoidCallback onTap,
   }) {
-    return Card(
+    return PosCard(
       elevation: 0,
       margin: const EdgeInsets.only(bottom: 8),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
-      ),
+      borderRadius: AppRadius.borderMd,
+      border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: color.withValues(alpha: 0.1),

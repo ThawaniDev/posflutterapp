@@ -6,6 +6,7 @@ import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/pos_badge.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/debits/enums/debit_enums.dart';
 import 'package:wameedpos/features/debits/models/debit.dart';
 import 'package:wameedpos/features/debits/repositories/debit_repository.dart';
@@ -109,62 +110,48 @@ class _DebitDetailPageState extends ConsumerState<DebitDetailPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.debitsDetail),
-        actions: [
-          if (_debit != null && _debit!.canEdit)
-            IconButton(
-              icon: const Icon(Icons.edit_outlined),
-              tooltip: l10n.edit,
-              onPressed: () async {
-                await context.push('${Routes.debits}/${_debit!.id}/edit');
-                _loadDebit();
-              },
-            ),
-          IconButton(icon: const Icon(Icons.refresh), tooltip: l10n.commonRefresh, onPressed: _loadDebit),
-        ],
-      ),
-      body: _buildContent(l10n),
+    return PosListPage(
+      title: l10n.debitsDetail,
+      showSearch: false,
+      isLoading: _isLoading,
+      hasError: _error != null,
+      errorMessage: _error,
+      onRetry: _loadDebit,
+      actions: [
+        if (_debit != null && _debit!.canEdit)
+          PosButton(
+            label: l10n.edit,
+            icon: Icons.edit_outlined,
+            variant: PosButtonVariant.outline,
+            onPressed: () async {
+              await context.push('${Routes.debits}/${_debit!.id}/edit');
+              _loadDebit();
+            },
+          ),
+      ],
+      child: _debit == null ? const SizedBox.shrink() : _buildContent(l10n),
     );
   }
 
   Widget _buildContent(AppLocalizations l10n) {
-    if (_isLoading) return const Center(child: CircularProgressIndicator());
-    if (_error != null) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(_error!, style: const TextStyle(color: AppColors.error)),
-            AppSpacing.gapH12,
-            ElevatedButton(onPressed: _loadDebit, child: Text(l10n.retry)),
-          ],
-        ),
-      );
-    }
-
     final debit = _debit!;
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Status & Amount header
-          _buildHeader(debit, l10n),
-          AppSpacing.gapH24,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Status & Amount header
+        _buildHeader(debit, l10n),
+        AppSpacing.gapH24,
 
-          // Debit info card
-          _buildInfoCard(debit, l10n),
-          AppSpacing.gapH24,
+        // Debit info card
+        _buildInfoCard(debit, l10n),
+        AppSpacing.gapH24,
 
-          // Customer info
-          if (debit.customer != null) ...[_buildCustomerCard(debit.customer!, l10n), AppSpacing.gapH24],
+        // Customer info
+        if (debit.customer != null) ...[_buildCustomerCard(debit.customer!, l10n), AppSpacing.gapH24],
 
-          // Allocations
-          _buildAllocationsSection(debit, l10n),
-        ],
-      ),
+        // Allocations
+        _buildAllocationsSection(debit, l10n),
+      ],
     );
   }
 

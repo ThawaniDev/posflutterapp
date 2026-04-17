@@ -3,6 +3,7 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/security/models/device_registration.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class DeviceListWidget extends StatelessWidget {
   final List<DeviceRegistration> devices;
@@ -49,7 +50,7 @@ class _DeviceTile extends StatelessWidget {
     final theme = Theme.of(context);
     final statusColor = device.isActive ? AppColors.success : AppColors.textSecondary;
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: 8),
       child: Padding(
         padding: AppSpacing.paddingAll12,
@@ -91,15 +92,16 @@ class _DeviceTile extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(
+                  PosButton(
                     onPressed: isActionLoading ? null : (onDeactivate != null ? () => onDeactivate!(device.id) : null),
-                    child: Text(l10n.securityDeactivate),
+                    variant: PosButtonVariant.ghost,
+                    label: l10n.securityDeactivate,
                   ),
                   AppSpacing.gapW8,
-                  TextButton(
+                  PosButton(
                     onPressed: isActionLoading ? null : (onRemoteWipe != null ? () => onRemoteWipe!(device.id) : null),
-                    style: TextButton.styleFrom(foregroundColor: AppColors.error),
-                    child: Text(l10n.securityRemoteWipe),
+                    variant: PosButtonVariant.ghost,
+                    label: l10n.securityRemoteWipe,
                   ),
                 ],
               ),

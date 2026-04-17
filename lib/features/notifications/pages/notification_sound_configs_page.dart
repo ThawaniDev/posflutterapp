@@ -28,14 +28,15 @@ class _NotificationSoundConfigsPageState extends ConsumerState<NotificationSound
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(soundConfigsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.notifSoundConfigsTitle),
-        actions: [
-          IconButton(icon: const Icon(Icons.refresh_rounded), onPressed: () => ref.read(soundConfigsProvider.notifier).load()),
-        ],
-      ),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.notifSoundConfigsTitle,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh_rounded, onPressed: () => ref.read(soundConfigsProvider.notifier).load(),
+  ),
+],
+  child: switch (state) {
         SoundConfigsInitial() || SoundConfigsLoading() => const Center(child: PosLoading()),
         SoundConfigsError(:final message) => PosErrorState(
           message: message,
@@ -51,7 +52,7 @@ class _NotificationSoundConfigsPageState extends ConsumerState<NotificationSound
                   itemBuilder: (context, index) => _buildConfigCard(configs[index]),
                 ),
       },
-    );
+);
   }
 
   Widget _buildConfigCard(NotificationSoundConfig config) {

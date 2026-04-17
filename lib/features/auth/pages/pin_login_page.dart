@@ -9,6 +9,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/auth/providers/auth_providers.dart';
 import 'package:wameedpos/features/auth/providers/auth_state.dart';
 import 'package:wameedpos/features/auth/repositories/auth_repository.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class PinLoginPage extends ConsumerStatefulWidget {
   const PinLoginPage({super.key});
@@ -153,12 +154,10 @@ class _PinLoginPageState extends ConsumerState<PinLoginPage> {
                   const SizedBox(height: AppSpacing.xl),
 
                   // Switch to email login
-                  TextButton(
+                  PosButton(
                     onPressed: () => context.go(Routes.login),
-                    child: Text(
-                      AppLocalizations.of(context)!.pinLoginSignInWithEmail,
-                      style: TextStyle(color: AppColors.primary),
-                    ),
+                    variant: PosButtonVariant.ghost,
+                    label: AppLocalizations.of(context)!.pinLoginSignInWithEmail,
                   ),
                 ],
               ),
@@ -198,15 +197,7 @@ class _PinLoginPageState extends ConsumerState<PinLoginPage> {
     return SizedBox(
       width: 72,
       height: 56,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: isSpecial
-              ? Theme.of(context).colorScheme.surfaceContainerHighest
-              : Theme.of(context).colorScheme.surface,
-          foregroundColor: isSpecial ? Theme.of(context).colorScheme.onSurface : Theme.of(context).colorScheme.onSurface,
-          elevation: 1,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        ),
+      child: PosButton(
         onPressed: _isLoading
             ? null
             : () {
@@ -219,7 +210,7 @@ class _PinLoginPageState extends ConsumerState<PinLoginPage> {
                   _addDigit(key);
                 }
               },
-        child: Text(key, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500)),
+        label: key,
       ),
     );
   }

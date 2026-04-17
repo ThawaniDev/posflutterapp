@@ -147,7 +147,7 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
               padding: AppSpacing.paddingAll16,
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.08),
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadius.lg)),
               ),
               child: Row(
                 children: [
@@ -230,7 +230,7 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l10n.cancel)),
+                  PosButton(onPressed: () => Navigator.of(context).pop(), variant: PosButtonVariant.ghost, label: l10n.cancel),
                   AppSpacing.gapW8,
                   FilledButton.icon(
                     onPressed: () {

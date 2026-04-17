@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Card widget for displaying a subscription add-on.
 class AddOnCard extends StatelessWidget {
@@ -27,12 +28,9 @@ class AddOnCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Card(
+    return PosCard(
       elevation: isActive ? 2 : 1,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: isActive ? const BorderSide(color: AppColors.success, width: 1.5) : BorderSide.none,
-      ),
+      borderRadius: AppRadius.borderLg,
       child: Padding(
         padding: AppSpacing.paddingAllMd,
         child: Column(
@@ -47,11 +45,9 @@ class AddOnCard extends StatelessWidget {
                 if (isActive)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: AppColors.success.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(l10n.active,
+                    decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.15), borderRadius: AppRadius.borderLg),
+                    child: Text(
+                      l10n.active,
                       style: TextStyle(color: AppColors.success, fontSize: 12, fontWeight: FontWeight.w600),
                     ),
                   ),
@@ -78,20 +74,8 @@ class AddOnCard extends StatelessWidget {
                 ),
                 if (onToggle != null)
                   isActive
-                      ? OutlinedButton(
-                          onPressed: onToggle,
-                          style: OutlinedButton.styleFrom(
-                            side: const BorderSide(color: AppColors.error),
-                            foregroundColor: AppColors.error,
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          ),
-                          child: Text(l10n.remove),
-                        )
-                      : ElevatedButton(
-                          onPressed: onToggle,
-                          style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)),
-                          child: Text(l10n.add),
-                        ),
+                      ? PosButton(onPressed: onToggle, variant: PosButtonVariant.outline, label: l10n.remove)
+                      : PosButton(onPressed: onToggle, label: l10n.add),
               ],
             ),
             if (isActive && expiresAt != null) ...[

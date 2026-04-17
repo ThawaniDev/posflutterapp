@@ -3,6 +3,7 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/hardware/providers/hardware_providers.dart';
 import 'package:wameedpos/features/hardware/providers/hardware_state.dart';
 import 'package:wameedpos/features/hardware/widgets/certified_hardware_list.dart';
@@ -36,9 +37,10 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
     final modelsState = ref.watch(supportedModelsProvider);
     final logsState = ref.watch(eventLogListProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.hardwareManagement)),
-      body: RefreshIndicator(
+    return PosListPage(
+      title: l10n.hardwareManagement,
+      showSearch: false,
+      child: RefreshIndicator(
         onRefresh: () async {
           await ref.read(hardwareConfigListProvider.notifier).load();
           await ref.read(eventLogListProvider.notifier).load(perPage: 10);
@@ -91,7 +93,7 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
       HardwareConfigListInitial() || HardwareConfigListLoading() => const Center(child: CircularProgressIndicator()),
       HardwareConfigListLoaded(:final configs) =>
         configs.isEmpty
-            ? Card(
+            ? PosCard(
                 child: Padding(
                   padding: AppSpacing.paddingAll24,
                   child: Center(
@@ -125,8 +127,8 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
 
   Widget _buildTestSection() {
     final testState = ref.watch(deviceTestProvider);
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+    return PosCard(
+      borderRadius: AppRadius.borderMd,
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: switch (testState) {
@@ -182,7 +184,7 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
   }
 
   Widget _errorCard(String message) {
-    return Card(
+    return PosCard(
       color: AppColors.error.withValues(alpha: 0.08),
       child: Padding(
         padding: AppSpacing.paddingAll16,

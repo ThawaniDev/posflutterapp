@@ -42,23 +42,27 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(commissionProvider(widget.staffId));
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: Text('${widget.staffName} - ${l10n.staffCommissions}'),
-        actions: [
-          IconButton(icon: const Icon(Icons.date_range), onPressed: _pickDateRange, tooltip: l10n.staffFilterByDate),
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _load),
-        ],
-      ),
-      body: switch (state) {
-        CommissionInitial() || CommissionLoading() => PosLoadingSkeleton.list(),
-        CommissionError(message: final msg) => PosErrorState(message: msg, onRetry: _load),
+    return PosListPage(
+      title: '${widget.staffName} - ${l10n.staffCommissions}',
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.date_range,
+          tooltip: l10n.staffFilterByDate,
+          onPressed: _pickDateRange,
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(icon: Icons.refresh, tooltip: l10n.commonRefresh, onPressed: _load, variant: PosButtonVariant.ghost),
+      ],
+      isLoading: state is CommissionInitial || state is CommissionLoading,
+      hasError: state is CommissionError,
+      errorMessage: state is CommissionError ? (state).message : null,
+      onRetry: _load,
+      child: switch (state) {
         CommissionLoaded(summary: final summary) => _buildContent(context, summary),
+        _ => const SizedBox.shrink(),
       },
     );
   }
@@ -123,13 +127,12 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
         ),
         AppSpacing.gapH16,
 
-        Card(
+        PosCard(
           elevation: 0,
           color: isDark ? AppColors.cardDark : AppColors.cardLight,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.md),
-            side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-          ),
+          borderRadius: AppRadius.borderMd,
+
+          border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
           child: Padding(
             padding: AppSpacing.paddingAll24,
             child: totalOrders == 0
@@ -174,8 +177,8 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
   }
 
   Future<void> _pickDateRange() async {
-    final range = await showDateRangePicker(
-      context: context,
+    final range = await showPosDateRangePicker(
+      context,
       firstDate: DateTime(2020),
       lastDate: DateTime.now().add(const Duration(days: 365)),
       initialDateRange: _dateRange,

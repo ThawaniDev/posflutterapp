@@ -49,9 +49,10 @@ class _State extends ConsumerState<AdminFinOpsCashSessionListPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(finOpsCashSessionsProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.adminFinOpsCashSessions), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.adminFinOpsCashSessions,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -97,7 +98,7 @@ class _State extends ConsumerState<AdminFinOpsCashSessionListPage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> resp) {
@@ -115,8 +116,8 @@ class _State extends ConsumerState<AdminFinOpsCashSessionListPage> {
           final item = items[i];
           final status = (item['status'] ?? '').toString();
           final variance = num.tryParse(item['variance']?.toString() ?? '') ?? 0;
-          return Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          return PosCard(
+            borderRadius: BorderRadius.circular(10,),
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: status == 'open'
@@ -147,7 +148,7 @@ class _State extends ConsumerState<AdminFinOpsCashSessionListPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: (status == 'open' ? AppColors.success : AppColors.textMutedLight).withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.borderLg,
                 ),
                 child: Text(
                   status.toUpperCase(),

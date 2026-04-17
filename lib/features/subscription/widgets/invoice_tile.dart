@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/subscription/models/invoice.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// A list tile widget for displaying an invoice summary.
 class InvoiceTile extends StatelessWidget {
@@ -12,7 +13,7 @@ class InvoiceTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final statusName = invoice.status?.name ?? 'unknown';
-    return Card(
+    return PosCard(
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         leading: CircleAvatar(
@@ -43,7 +44,7 @@ class InvoiceTile extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               decoration: BoxDecoration(
                 color: _statusColor(statusName).withOpacity(0.15),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.borderLg,
               ),
               child: Text(
                 statusName,

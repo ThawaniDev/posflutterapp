@@ -37,17 +37,15 @@ class _DeliveryWebhookLogsPageState extends ConsumerState<DeliveryWebhookLogsPag
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(deliveryWebhookLogsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.deliveryWebhookLogs),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => ref.read(deliveryWebhookLogsProvider.notifier).load(platform: _selectedPlatform),
-          ),
-        ],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.deliveryWebhookLogs,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(deliveryWebhookLogsProvider.notifier).load(platform: _selectedPlatform),
+  ),
+],
+  child: Column(
         children: [
           // Platform filter
           Container(
@@ -109,7 +107,7 @@ class _DeliveryWebhookLogsPageState extends ConsumerState<DeliveryWebhookLogsPag
           ),
         ],
       ),
-    );
+);
   }
 }
 
@@ -134,13 +132,11 @@ class _WebhookLogCard extends StatelessWidget {
     final platformColor = enumPlatform?.color ?? AppColors.textSecondary;
     final platformLabel = enumPlatform?.label ?? platform;
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: 12),
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
-      ),
+      borderRadius: AppRadius.borderMd,
+      border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
       child: ExpansionTile(
         tilePadding: const EdgeInsets.symmetric(horizontal: 16),
         childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -268,7 +264,7 @@ class _JsonSection extends StatelessWidget {
           padding: AppSpacing.paddingAll12,
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surfaceContainerHighest,
-            borderRadius: BorderRadius.circular(AppRadius.sm),
+            borderRadius: AppRadius.borderSm,
           ),
           child: SelectableText(
             jsonStr,
@@ -299,7 +295,7 @@ class _StatusBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(AppRadius.sm)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: AppRadius.borderSm),
       child: Text(
         label,
         style: TextStyle(fontSize: 11, color: color, fontWeight: FontWeight.w600),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminABTestListPage extends ConsumerStatefulWidget {
   const AdminABTestListPage({super.key});
@@ -50,12 +52,15 @@ class _AdminABTestListPageState extends ConsumerState<AdminABTestListPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(abTestListProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminABTests),
-        actions: [IconButton(icon: const Icon(Icons.add), onPressed: () {})],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.adminABTests,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.add, onPressed: () {},
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -81,7 +86,7 @@ class _AdminABTestListPageState extends ConsumerState<AdminABTestListPage> {
                             itemBuilder: (context, index) {
                               final test = tests[index];
                               final status = test['status'] as String? ?? 'draft';
-                              return Card(
+                              return PosCard(
                                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                                 child: ListTile(
                                   title: Text(test['name'] as String? ?? ''),
@@ -105,7 +110,7 @@ class _AdminABTestListPageState extends ConsumerState<AdminABTestListPage> {
                     const SizedBox(height: 8),
                     Text(message),
                     const SizedBox(height: 16),
-                    ElevatedButton(onPressed: () => _loadTests(), child: Text(l10n.retry)),
+                    PosButton(onPressed: () => _loadTests(), label: l10n.retry),
                   ],
                 ),
               ),
@@ -113,6 +118,6 @@ class _AdminABTestListPageState extends ConsumerState<AdminABTestListPage> {
           ),
         ],
       ),
-    );
+);
   }
 }

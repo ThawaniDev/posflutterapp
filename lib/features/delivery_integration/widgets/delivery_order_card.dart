@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/pos_status_badge.dart';
 import 'package:wameedpos/features/delivery_integration/enums/delivery_order_status.dart';
 import 'package:wameedpos/features/delivery_integration/enums/delivery_config_platform.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class DeliveryOrderCard extends StatelessWidget {
   final Map<String, dynamic> order;
@@ -26,15 +27,15 @@ class DeliveryOrderCard extends StatelessWidget {
     final itemsCount = order['items_count'] as int?;
     final createdAt = order['created_at'] as String?;
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        side: BorderSide(color: status.isActionable ? status.color.withValues(alpha: 0.3) : Theme.of(context).dividerColor),
+      borderRadius: AppRadius.borderLg,
+      border: Border.fromBorderSide(
+        BorderSide(color: status.isActionable ? status.color.withValues(alpha: 0.3) : Theme.of(context).dividerColor),
       ),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
+        borderRadius: AppRadius.borderLg,
         child: Padding(
           padding: AppSpacing.paddingAll16,
           child: Column(

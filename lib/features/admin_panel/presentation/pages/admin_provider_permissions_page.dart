@@ -45,13 +45,10 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(providerPermissionListProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminProviderPermissions),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.adminProviderPermissions,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
@@ -90,7 +87,7 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> resp) {
@@ -120,8 +117,8 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
             ),
             ...entry.value.map((item) {
               final isActive = item['is_active'] == true || item['is_active'] == 1;
-              return Card(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              return PosCard(
+                borderRadius: BorderRadius.circular(10,),
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundColor: isActive ? const Color(0xFFDCFCE7) : const Color(0xFFF3F4F6),
@@ -133,7 +130,7 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
                       color: isActive ? const Color(0xFFDCFCE7) : const Color(0xFFF3F4F6),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: AppRadius.borderLg,
                     ),
                     child: Text(
                       isActive ? 'Active' : 'Inactive',

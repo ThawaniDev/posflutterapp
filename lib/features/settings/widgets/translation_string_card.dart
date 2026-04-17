@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/settings/models/master_translation_string.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class TranslationStringCard extends StatelessWidget {
   final MasterTranslationString translation;
@@ -14,7 +15,7 @@ class TranslationStringCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    return Card(
+    return PosCard(
       child: Padding(
         padding: AppSpacing.paddingAll12,
         child: Column(

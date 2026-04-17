@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
@@ -18,7 +17,6 @@ class AdminRevenueDashboardPage extends ConsumerStatefulWidget {
 }
 
 class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboardPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
@@ -43,25 +41,21 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(revenueDashboardProvider);
+    final isLoading = state is RevenueDashboardLoading;
+    final hasError = state is RevenueDashboardError;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.revenueDashboard)),
-      body: Column(
+    return PosListPage(
+      title: l10n.revenueDashboard,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: () => _loadDashboard(),
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
             child: switch (state) {
-              RevenueDashboardLoading() => const Center(child: CircularProgressIndicator()),
-              RevenueDashboardError(:final message) => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(message, style: const TextStyle(color: AppColors.error)),
-                    AppSpacing.gapH16,
-                    PosButton(label: l10n.retry, variant: PosButtonVariant.outline, onPressed: () => _loadDashboard()),
-                  ],
-                ),
-              ),
               final RevenueDashboardLoaded loaded => SingleChildScrollView(
                 padding: AppSpacing.paddingAll16,
                 child: Column(
@@ -102,7 +96,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                     AppSpacing.gapH24,
                     Text(l10n.reportsRevenue, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                     AppSpacing.gapH16,
-                    Card(
+                    PosCard(
                       child: Padding(
                         padding: AppSpacing.paddingAll16,
                         child: Column(

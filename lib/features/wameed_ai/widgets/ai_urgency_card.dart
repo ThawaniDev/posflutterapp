@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class AIUrgencyCard extends StatelessWidget {
   final String title;
@@ -44,57 +46,50 @@ class AIUrgencyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return PosCard(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(12),
-          border: Border(left: BorderSide(color: _urgencyColor, width: 4)),
-          boxShadow: [BoxShadow(color: _urgencyColor.withValues(alpha: 0.08), blurRadius: 8, offset: const Offset(0, 2))],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                if (icon != null) ...[Icon(icon, size: 20, color: _urgencyColor), const SizedBox(width: 8)],
-                Expanded(
-                  child: Text(
-                    title,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+      padding: const EdgeInsets.all(14),
+      border: Border(left: BorderSide(color: _urgencyColor, width: 4)),
+      shadow: [BoxShadow(color: _urgencyColor.withValues(alpha: 0.08), blurRadius: 8, offset: const Offset(0, 2))],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              if (icon != null) ...[Icon(icon, size: 20, color: _urgencyColor), const SizedBox(width: 8)],
+              Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                  decoration: BoxDecoration(color: _urgencyColor.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(6)),
-                  child: Text(
-                    _urgencyLabel,
-                    style: Theme.of(
-                      context,
-                    ).textTheme.labelSmall?.copyWith(color: _urgencyColor, fontWeight: FontWeight.w700, fontSize: 10),
-                  ),
-                ),
-                if (trailing != null) ...[const SizedBox(width: 8), trailing!],
-              ],
-            ),
-            if (subtitle != null) ...[
-              const SizedBox(height: 6),
-              Text(
-                subtitle!,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
               ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(color: _urgencyColor.withValues(alpha: 0.12), borderRadius: AppRadius.borderSm),
+                child: Text(
+                  _urgencyLabel,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.labelSmall?.copyWith(color: _urgencyColor, fontWeight: FontWeight.w700, fontSize: 10),
+                ),
+              ),
+              if (trailing != null) ...[const SizedBox(width: 8), trailing!],
             ],
-            if (children != null && children!.isNotEmpty) ...[const SizedBox(height: 10), ...children!],
+          ),
+          if (subtitle != null) ...[
+            const SizedBox(height: 6),
+            Text(
+              subtitle!,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
           ],
-        ),
+          if (children != null && children!.isNotEmpty) ...[const SizedBox(height: 10), ...children!],
+        ],
       ),
     );
   }

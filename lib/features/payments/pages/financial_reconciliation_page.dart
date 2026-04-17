@@ -39,25 +39,25 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     final sessionsState = ref.watch(cashSessionsProvider);
     final expensesState = ref.watch(expensesProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.finReconTitle),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showFinancialReconciliationInfo(context),
-          ),
-          TextButton.icon(
-            onPressed: () => _pickDate(context),
-            icon: const Icon(Icons.calendar_today, size: 18),
-            label: Text('${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}'),
-          ),
-          AppSpacing.gapW12,
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(context.isPhone ? 12 : 16),
+    return PosListPage(
+      title: l10n.finReconTitle,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showFinancialReconciliationInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton(
+          label: '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
+          icon: Icons.calendar_today,
+          variant: PosButtonVariant.outline,
+          onPressed: () => _pickDate(context),
+        ),
+      ],
+      child: SingleChildScrollView(
+        padding: context.responsivePagePadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -91,18 +91,20 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
                       Row(
                         children: [
                           Expanded(
-                            child: OutlinedButton.icon(
+                            child: PosButton(
                               onPressed: () {},
-                              icon: const Icon(Icons.print, size: 18),
-                              label: Text(l10n.finReconPrintReport),
+                              variant: PosButtonVariant.outline,
+                              icon: Icons.print,
+                              label: l10n.finReconPrintReport,
                             ),
                           ),
                           AppSpacing.gapW8,
                           Expanded(
-                            child: OutlinedButton.icon(
+                            child: PosButton(
                               onPressed: () {},
-                              icon: const Icon(Icons.download, size: 18),
-                              label: Text(l10n.finReconExportPdf),
+                              variant: PosButtonVariant.outline,
+                              icon: Icons.download,
+                              label: l10n.finReconExportPdf,
                             ),
                           ),
                         ],
@@ -118,16 +120,18 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      OutlinedButton.icon(
+                      PosButton(
                         onPressed: () {},
-                        icon: const Icon(Icons.print, size: 18),
-                        label: Text(l10n.finReconPrintReport),
+                        variant: PosButtonVariant.outline,
+                        icon: Icons.print,
+                        label: l10n.finReconPrintReport,
                       ),
                       AppSpacing.gapW8,
-                      OutlinedButton.icon(
+                      PosButton(
                         onPressed: () {},
-                        icon: const Icon(Icons.download, size: 18),
-                        label: Text(l10n.finReconExportPdf),
+                        variant: PosButtonVariant.outline,
+                        icon: Icons.download,
+                        label: l10n.finReconExportPdf,
                       ),
                       AppSpacing.gapW8,
                       FilledButton.icon(
@@ -152,8 +156,8 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     final totalRevenue = payments.fold<double>(0, (sum, p) => sum + p.amount);
     final txCount = payments.length;
 
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+    return PosCard(
+      borderRadius: AppRadius.borderLg,
       child: Padding(
         padding: AppSpacing.paddingAll24,
         child: Column(
@@ -183,8 +187,8 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
 
     final total = byMethod.values.fold<double>(0, (s, v) => s + v);
 
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+    return PosCard(
+      borderRadius: AppRadius.borderLg,
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -241,8 +245,8 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
     final totalActual = closedSessions.fold<double>(0, (sum, s) => sum + (s.actualCash ?? 0));
     final totalVariance = totalActual - totalExpected;
 
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+    return PosCard(
+      borderRadius: AppRadius.borderLg,
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -279,8 +283,8 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
       byCategory[key] = (byCategory[key] ?? 0) + e.amount;
     }
 
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
+    return PosCard(
+      borderRadius: AppRadius.borderLg,
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -319,8 +323,8 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
 
   Widget _buildCompactDenominations(ThemeData theme, AppLocalizations l10n) {
     final total = PaymentCalculationService.calculateDenominationTotal(_denominationCounts);
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+    return PosCard(
+      borderRadius: AppRadius.borderMd,
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(

@@ -69,21 +69,18 @@ class _ArrangementFormPageState extends ConsumerState<ArrangementFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(_isEditing ? 'Edit Arrangement' : 'New Arrangement')),
-      bottomNavigationBar: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: PosButton(
+    return PosFormPage(
+      title: _isEditing ? 'Edit Arrangement' : 'New Arrangement',
+      bottomBar: PosButton(
           label: _isEditing ? 'Update Arrangement' : 'Create Arrangement',
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,
         ),
-      ),
-      body: Form(
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosTextField(controller: _nameCtrl, label: l10n.arrangementName, hint: 'e.g. Classic Rose Bouquet'),
             SizedBox(height: AppSpacing.md),

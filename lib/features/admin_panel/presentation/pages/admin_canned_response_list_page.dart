@@ -5,9 +5,11 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminCannedResponseListPage extends ConsumerStatefulWidget {
   const AdminCannedResponseListPage({super.key});
@@ -55,9 +57,10 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
   Widget build(BuildContext context) {
     final state = ref.watch(cannedResponseListProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.cannedResponses), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.cannedResponses,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
@@ -120,7 +123,7 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> data) {
@@ -134,7 +137,7 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
       itemBuilder: (context, index) {
         final r = responses[index];
         final isActive = r['is_active'] == true;
-        return Card(
+        return PosCard(
           margin: const EdgeInsets.only(bottom: AppSpacing.sm),
           child: ListTile(
             leading: Icon(Icons.quickreply, color: isActive ? AppColors.primary : AppColors.textSecondary),
@@ -149,7 +152,7 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
                     margin: const EdgeInsets.only(right: 8),
                     decoration: BoxDecoration(
                       color: AppColors.info.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: AppRadius.borderMd,
                     ),
                     child: Text(r['category'].toString(), style: const TextStyle(fontSize: 11)),
                   ),

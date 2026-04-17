@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -9,6 +10,7 @@ import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminNotificationLogListPage extends ConsumerStatefulWidget {
   const AdminNotificationLogListPage({super.key});
@@ -68,9 +70,10 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
   Widget build(BuildContext context) {
     final state = ref.watch(notificationLogListProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.notificationLogs)),
-      body: Column(
+    return PosListPage(
+  title: l10n.notificationLogs,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -94,7 +97,7 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
                   decoration: InputDecoration(
                     hintText: 'Search notification logs...',
                     prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                    border: OutlineInputBorder(borderRadius: AppRadius.borderMd),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                   ),
                   onSubmitted: (_) => _applyFilters(),
@@ -132,29 +135,9 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
                   showSearch: false,
                   clearable: true,
                 );
-                if (context.isPhone) {
-                  return Column(
-                    children: [
-                      searchField,
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Expanded(child: channelDropdown),
-                          const SizedBox(width: 8),
-                          Expanded(child: statusDropdown),
-                        ],
-                      ),
-                    ],
-                  );
-                }
-                return Row(
-                  children: [
-                    Expanded(child: searchField),
-                    const SizedBox(width: 12),
-                    channelDropdown,
-                    const SizedBox(width: 8),
-                    statusDropdown,
-                  ],
+                return ResponsiveSearchFilterBar(
+                  searchField: searchField,
+                  filters: [channelDropdown, statusDropdown],
                 );
               },
             ),
@@ -170,7 +153,7 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> data) {
@@ -186,7 +169,7 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
         final channel = log['channel']?.toString();
         final status = log['status']?.toString() ?? 'pending';
         final isFailed = status == 'failed';
-        return Card(
+        return PosCard(
           margin: const EdgeInsets.only(bottom: 8),
           child: ListTile(
             leading: CircleAvatar(

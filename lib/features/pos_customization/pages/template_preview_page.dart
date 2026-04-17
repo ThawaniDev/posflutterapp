@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
-import 'package:wameedpos/core/widgets/pos_error_state.dart';
 import 'package:wameedpos/features/pos_customization/pages/iframe_helper_stub.dart'
     if (dart.library.js_interop) 'package:wameedpos/features/pos_customization/pages/iframe_helper_web.dart';
 import 'package:wameedpos/features/pos_customization/repositories/customization_repository.dart';
@@ -96,14 +96,12 @@ class _TemplatePreviewPageState extends ConsumerState<TemplatePreviewPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${l10n.templatePreviewTitle}: ${widget.templateName}'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh_rounded),
-            tooltip: l10n.templatePreviewRefresh,
-            onPressed: () {
+    return PosListPage(
+  title: '${l10n.templatePreviewTitle}: ${widget.templateName}',
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh_rounded, onPressed: () {
               setState(() {
                 _isLoading = true;
                 _errorMessage = null;
@@ -111,11 +109,10 @@ class _TemplatePreviewPageState extends ConsumerState<TemplatePreviewPage> {
                 _previewUrl = null;
               });
               _fetchAndLoad();
-            },
-          ),
-        ],
-      ),
-      body: _errorMessage != null
+            }, tooltip: l10n.templatePreviewRefresh,
+  ),
+],
+  child: _errorMessage != null
           ? PosErrorState(
               message: _errorMessage!,
               onRetry: () {
@@ -142,6 +139,6 @@ class _TemplatePreviewPageState extends ConsumerState<TemplatePreviewPage> {
                   ),
               ],
             ),
-    );
+);
   }
 }

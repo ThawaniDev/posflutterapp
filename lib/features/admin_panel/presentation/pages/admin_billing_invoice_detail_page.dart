@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
@@ -37,9 +38,10 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
   Widget build(BuildContext context) {
     final state = ref.watch(billingInvoiceDetailProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.invoiceDetail), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.invoiceDetail,
+  showSearch: false,
+    child: switch (state) {
         BillingInvoiceDetailLoading() => const Center(child: CircularProgressIndicator()),
         BillingInvoiceDetailLoaded(invoice: final inv) => SingleChildScrollView(
           padding: const EdgeInsets.all(AppSpacing.md),
@@ -47,7 +49,7 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header
-              Card(
+              PosCard(
                 child: Padding(
                   padding: const EdgeInsets.all(AppSpacing.md),
                   child: Column(
@@ -64,7 +66,7 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                             decoration: BoxDecoration(
                               color: _statusColor(inv['status'] ?? '').withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(16),
+                              borderRadius: AppRadius.borderXl,
                             ),
                             child: Text(
                               (inv['status'] as String? ?? '').toUpperCase(),
@@ -90,7 +92,7 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
               const SizedBox(height: AppSpacing.sm),
               if (inv['line_items'] != null)
                 ...List<Map<String, dynamic>>.from(inv['line_items'] as List).map(
-                  (item) => Card(
+                  (item) => PosCard(
                     child: ListTile(
                       title: Text(item['description'] ?? ''),
                       subtitle: Text('Qty: ${item['quantity']} × ${item['unit_price']} \u0081'),
@@ -140,12 +142,13 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
               const SizedBox(height: AppSpacing.sm),
               SizedBox(
                 width: double.infinity,
-                child: OutlinedButton.icon(
+                child: PosButton(
                   onPressed: () {
                     // Download PDF
                   },
-                  icon: const Icon(Icons.picture_as_pdf),
-                  label: Text(l10n.subscriptionDownloadPdf),
+                  variant: PosButtonVariant.outline,
+                  icon: Icons.picture_as_pdf,
+                  label: l10n.subscriptionDownloadPdf,
                 ),
               ),
             ],
@@ -154,7 +157,7 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
         BillingInvoiceDetailError(message: final msg) => Center(child: Text('Error: $msg')),
         _ => Center(child: Text(l10n.loading)),
       },
-    );
+);
   }
 
   Widget _infoRow(String label, String value) {

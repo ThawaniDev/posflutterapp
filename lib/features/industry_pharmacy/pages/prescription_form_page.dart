@@ -85,21 +85,18 @@ class _PrescriptionFormPageState extends ConsumerState<PrescriptionFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(_isEditing ? 'Edit Prescription' : 'New Prescription')),
-      bottomNavigationBar: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: PosButton(
+    return PosFormPage(
+      title: _isEditing ? 'Edit Prescription' : 'New Prescription',
+      bottomBar: PosButton(
           label: _isEditing ? 'Update Prescription' : 'Create Prescription',
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,
         ),
-      ),
-      body: Form(
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosTextField(controller: _prescriptionNumberCtrl, label: 'Prescription Number', hint: 'e.g. RX-001234'),
             SizedBox(height: AppSpacing.md),

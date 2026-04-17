@@ -82,16 +82,13 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
   Widget build(BuildContext context) {
     final staffState = ref.watch(staffListProvider);
     final staffList = staffState is StaffListLoaded ? staffState.staff : <StaffUser>[];
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.jewelryNewBuyback)),
-      bottomNavigationBar: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: PosButton(label: 'Record Buyback', onPressed: _saving ? null : _handleSave, isLoading: _saving, isFullWidth: true),
-      ),
-      body: Form(
+    return PosFormPage(
+      title: l10n.jewelryNewBuyback,
+      bottomBar: PosButton(label: 'Record Buyback', onPressed: _saving ? null : _handleSave, isLoading: _saving, isFullWidth: true),
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosSearchableDropdown<MetalType>(
               label: l10n.jewelryMetalType,

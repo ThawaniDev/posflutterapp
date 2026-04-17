@@ -56,9 +56,10 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
       _loaded = true;
     }
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Payment Retry Rules'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+      title: 'Payment Retry Rules',
+      showSearch: false,
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -69,7 +70,7 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Card(
+                    PosCard(
                       child: Padding(
                         padding: const EdgeInsets.all(AppSpacing.md),
                         child: Column(
@@ -130,15 +131,7 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
 
                             SizedBox(
                               width: double.infinity,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primary,
-                                  foregroundColor: Colors.white,
-                                  padding: const EdgeInsets.symmetric(vertical: 14),
-                                ),
-                                onPressed: _saveRules,
-                                child: const Text('Save Rules', style: TextStyle(fontSize: 16)),
-                              ),
+                              child: PosButton(onPressed: _saveRules, label: 'Save Rules'),
                             ),
                           ],
                         ),
@@ -148,7 +141,7 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
                     const SizedBox(height: AppSpacing.md),
 
                     // Info card
-                    Card(
+                    PosCard(
                       color: AppColors.info.withValues(alpha: 0.08),
                       child: Padding(
                         padding: const EdgeInsets.all(AppSpacing.md),

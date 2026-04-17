@@ -65,16 +65,13 @@ class _OpenTabFormPageState extends ConsumerState<OpenTabFormPage> {
     final tables = restState is RestaurantLoaded ? restState.tables : <RestaurantTable>[];
     final ordersState = ref.watch(ordersProvider);
     final orders = ordersState is OrdersLoaded ? ordersState.orders : <Order>[];
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.openTab)),
-      bottomNavigationBar: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: PosButton(label: l10n.openTab, onPressed: _saving ? null : _handleSave, isLoading: _saving, isFullWidth: true),
-      ),
-      body: Form(
+    return PosFormPage(
+      title: l10n.openTab,
+      bottomBar: PosButton(label: l10n.openTab, onPressed: _saving ? null : _handleSave, isLoading: _saving, isFullWidth: true),
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosTextField(controller: _customerNameCtrl, label: l10n.deliveryCustomerName, hint: 'Tab owner name'),
             SizedBox(height: AppSpacing.md),

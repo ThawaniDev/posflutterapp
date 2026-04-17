@@ -17,21 +17,16 @@ class CustomerReportPage extends ConsumerStatefulWidget {
   ConsumerState<CustomerReportPage> createState() => _CustomerReportPageState();
 }
 
-class _CustomerReportPageState extends ConsumerState<CustomerReportPage> with TickerProviderStateMixin {
-
+class _CustomerReportPageState extends ConsumerState<CustomerReportPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  late final TabController _tabController;
+  int _currentTab = 0;
   ReportFilters _filters = const ReportFilters();
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(topCustomersProvider.notifier).load(filters: _filters);
-    });
-    _tabController.addListener(() {
-      if (!_tabController.indexIsChanging) _onTabChanged(_tabController.index);
     });
   }
 
@@ -46,42 +41,35 @@ class _CustomerReportPageState extends ConsumerState<CustomerReportPage> with Ti
 
   void _onFiltersChanged(ReportFilters filters) {
     setState(() => _filters = filters);
-    _onTabChanged(_tabController.index);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
+    _onTabChanged(_currentTab);
   }
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: Text(l10n.customerReportsTitle),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: l10n.customerReportsTopCustomers),
-            Tab(text: l10n.customerReportsRetention),
-          ],
-        ),
-      ),
-      body: Column(
+    return PosListPage(
+      title: l10n.customerReportsTitle,
+      showSearch: false,
+      child: Column(
         children: [
-          ReportFilterPanel(
-            filters: _filters,
-            onFiltersChanged: _onFiltersChanged,
-            onRefresh: () => _onTabChanged(_tabController.index),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: PosTabs(
+              selectedIndex: _currentTab,
+              onChanged: (i) => setState(() {
+                _currentTab = i;
+                _onTabChanged(i);
+              }),
+              tabs: [
+                PosTabItem(label: l10n.customerReportsTopCustomers),
+                PosTabItem(label: l10n.customerReportsRetention),
+              ],
+            ),
           ),
+          ReportFilterPanel(filters: _filters, onFiltersChanged: _onFiltersChanged, onRefresh: () => _onTabChanged(_currentTab)),
           Expanded(
-            child: TabBarView(controller: _tabController, children: const [_TopCustomersTab(), _RetentionTab()]),
+            child: IndexedStack(index: _currentTab, children: const [_TopCustomersTab(), _RetentionTab()]),
           ),
         ],
       ),

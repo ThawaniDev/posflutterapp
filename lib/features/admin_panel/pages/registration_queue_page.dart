@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
@@ -19,7 +17,6 @@ class RegistrationQueuePage extends ConsumerStatefulWidget {
 }
 
 class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _storeId;
@@ -76,67 +73,32 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Registration Queue')),
-      body: Column(
+    return PosListPage(
+      title: 'Registration Queue',
+      searchController: _searchController,
+      onSearchChanged: (_) {},
+      isLoading: state is RegistrationListLoading || actionState is AdminActionLoading,
+      hasError: state is RegistrationListError,
+      errorMessage: state is RegistrationListError ? state.message : null,
+      onRetry: _load,
+      isEmpty: state is RegistrationListLoaded && state.registrations.isEmpty,
+      emptyTitle: 'No registrations found',
+      emptyIcon: Icons.how_to_reg_outlined,
+      filters: _statusOptions.map((status) {
+        return _buildStatusChip(
+          label: _statusLabels[status]!,
+          selected: _statusFilter == status,
+          color: _statusColor(status),
+          onTap: () => setState(() {
+            _statusFilter = status;
+            _currentPage = 1;
+            _load();
+          }),
+        );
+      }).toList(),
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
-          // ─── Filter Bar ─────────────────────────────────
-          Container(
-            padding: AppSpacing.paddingAll16,
-            decoration: BoxDecoration(
-              color: AppColors.surfaceLight,
-              border: Border(bottom: BorderSide(color: AppColors.borderLight)),
-            ),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: PosTextField(
-                        controller: _searchController,
-                        hint: 'Search registrations...',
-                        prefixIcon: Icons.search,
-                        onSubmitted: (_) {
-                          _currentPage = 1;
-                          _load();
-                        },
-                      ),
-                    ),
-                    AppSpacing.gapW12,
-                    PosButton(
-                      label: l10n.search,
-                      onPressed: () {
-                        _currentPage = 1;
-                        _load();
-                      },
-                      size: PosButtonSize.md,
-                    ),
-                  ],
-                ),
-                AppSpacing.gapH12,
-                Row(
-                  children: _statusOptions.map((status) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: AppSpacing.sm),
-                      child: _buildStatusChip(
-                        label: _statusLabels[status]!,
-                        selected: _statusFilter == status,
-                        color: _statusColor(status),
-                        onTap: () => setState(() {
-                          _statusFilter = status;
-                          _currentPage = 1;
-                          _load();
-                        }),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ],
-            ),
-          ),
-
-          // ─── Content ────────────────────────────────────
           Expanded(child: _buildBody(state, actionState, theme)),
         ],
       ),
@@ -156,7 +118,7 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.xs),
+        padding: const EdgeInsetsDirectional.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.xs),
         decoration: BoxDecoration(
           color: selected ? color.withValues(alpha: 0.1) : Colors.transparent,
           borderRadius: AppRadius.borderFull,
@@ -175,36 +137,7 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
   }
 
   Widget _buildBody(RegistrationListState state, AdminActionState actionState, ThemeData theme) {
-    if (state is RegistrationListLoading || actionState is AdminActionLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (state is RegistrationListError) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
-            AppSpacing.gapH12,
-            Text(state.message, style: theme.textTheme.bodyMedium),
-            AppSpacing.gapH16,
-            PosButton(label: l10n.retry, variant: PosButtonVariant.outline, onPressed: _load),
-          ],
-        ),
-      );
-    }
     if (state is RegistrationListLoaded) {
-      if (state.registrations.isEmpty) {
-        return Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.how_to_reg_outlined, size: 64, color: AppColors.textMutedLight),
-              AppSpacing.gapH12,
-              Text('No registrations found', style: theme.textTheme.titleMedium),
-            ],
-          ),
-        );
-      }
       return Column(
         children: [
           Expanded(
@@ -232,12 +165,11 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
     final status = reg['status'] as String? ?? 'pending';
     final createdAt = reg['created_at'] as String? ?? '';
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadius.borderLg,
-        side: BorderSide(color: AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderLg,
+
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderLight)),
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -370,7 +302,7 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
           maxLines: 3,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.cancel)),
+          PosButton(onPressed: () => Navigator.of(ctx).pop(), variant: PosButtonVariant.ghost, label: l10n.cancel),
           PosButton(
             label: l10n.deliveryReject,
             variant: PosButtonVariant.danger,

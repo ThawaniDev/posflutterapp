@@ -29,9 +29,10 @@ class _MyPurchasesPageState extends ConsumerState<MyPurchasesPage> {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.marketplaceMyPurchases)),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.marketplaceMyPurchases,
+  showSearch: false,
+    child: switch (state) {
         MyPurchasesInitial() || MyPurchasesLoading() => PosLoadingSkeleton.list(),
         MyPurchasesError(:final message) => PosErrorState(
           message: message,
@@ -64,7 +65,7 @@ class _MyPurchasesPageState extends ConsumerState<MyPurchasesPage> {
           ),
         ),
       },
-    );
+);
   }
 
   Widget _buildPurchasesTab(List<TemplatePurchase> purchases, AppLocalizations l10n, bool isDark) {

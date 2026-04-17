@@ -32,21 +32,22 @@ class _AIBillingInvoicesPageState extends ConsumerState<AIBillingInvoicesPage> {
     final state = ref.watch(aiBillingInvoicesProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.wameedAIBillingInvoices),
-        actions: [
-          IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.read(aiBillingInvoicesProvider.notifier).load()),
-        ],
-      ),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.wameedAIBillingInvoices,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(aiBillingInvoicesProvider.notifier).load(),
+  ),
+],
+  child: switch (state) {
         AIBillingInvoicesInitial() || AIBillingInvoicesLoading() => const PosLoading(),
         AIBillingInvoicesError(:final message) => PosErrorState(
           message: message,
           onRetry: () => ref.read(aiBillingInvoicesProvider.notifier).load(),
         ),
         AIBillingInvoicesLoaded(:final invoices, :final currentPage, :final lastPage, :final total, :final perPage) => Padding(
-          padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+          padding: context.responsivePagePadding,
           child: isMobile
               ? _MobileInvoiceList(invoices: invoices, currentPage: currentPage, lastPage: lastPage, total: total)
               : PosDataTable<AIBillingInvoicePreview>(
@@ -96,7 +97,7 @@ class _AIBillingInvoicesPageState extends ConsumerState<AIBillingInvoicesPage> {
                 ),
         ),
       },
-    );
+);
   }
 }
 
@@ -118,7 +119,7 @@ class _MobileInvoiceList extends ConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.receipt_long_outlined, size: 48, color: AppColors.textSecondary),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             Text(l10n.wameedAIBillingNoInvoices),
           ],
         ),
@@ -149,7 +150,7 @@ class _MobileInvoiceList extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text('\$${inv.billedAmountUsd.toStringAsFixed(3)}', style: const TextStyle(fontWeight: FontWeight.w600)),
-                    const SizedBox(height: 4),
+                    AppSpacing.gapH4,
                     PosStatusBadge(
                       label: switch (inv.status) {
                         'paid' => l10n.wameedAIBillingPaid,

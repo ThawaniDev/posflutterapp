@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
@@ -7,6 +8,7 @@ import 'package:wameedpos/features/cashier_gamification/data/gamification_reposi
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_providers.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_state.dart';
 import 'package:wameedpos/features/cashier_gamification/widgets/shift_report_card.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class GamificationShiftReportsPage extends ConsumerStatefulWidget {
   const GamificationShiftReportsPage({super.key});
@@ -51,25 +53,16 @@ class _GamificationShiftReportsPageState extends ConsumerState<GamificationShift
     final state = ref.watch(shiftReportsProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            const Icon(Icons.assessment_rounded, color: AppColors.primary),
-            const SizedBox(width: 8),
-            Text(l10n.gamificationShiftReports),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(shiftReportsProvider.notifier).load(),
-          ),
-        ],
-      ),
-      body: _buildContent(state, l10n, isMobile),
-    );
+    return PosListPage(
+  title: l10n.gamificationShiftReports,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(shiftReportsProvider.notifier).load(), tooltip: l10n.commonRefresh,
+  ),
+],
+  child: _buildContent(state, l10n, isMobile),
+);
   }
 
   Widget _buildContent(ShiftReportsState state, AppLocalizations l10n, bool isMobile) {
@@ -80,10 +73,10 @@ class _GamificationShiftReportsPageState extends ConsumerState<GamificationShift
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.error_outline, size: 48, color: AppColors.error),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             Text(message, textAlign: TextAlign.center),
-            const SizedBox(height: 12),
-            ElevatedButton(onPressed: () => ref.read(shiftReportsProvider.notifier).load(), child: Text(l10n.commonRetry)),
+            AppSpacing.gapH12,
+            PosButton(onPressed: () => ref.read(shiftReportsProvider.notifier).load(), label: l10n.commonRetry),
           ],
         ),
       ),
@@ -94,13 +87,13 @@ class _GamificationShiftReportsPageState extends ConsumerState<GamificationShift
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(Icons.assessment_outlined, size: 64, color: Colors.grey.shade400),
-                    const SizedBox(height: 12),
+                    AppSpacing.gapH12,
                     Text(l10n.gamificationNoReports, style: TextStyle(color: Colors.grey.shade600)),
                   ],
                 ),
               )
             : ListView.builder(
-                padding: EdgeInsets.all(isMobile ? 12 : 16),
+                padding: context.responsivePagePadding,
                 itemCount: reports.length,
                 itemBuilder: (context, index) => Padding(
                   padding: const EdgeInsets.only(bottom: 8),
@@ -187,7 +180,7 @@ class _ReportDetailSheetState extends ConsumerState<_ReportDetailSheet> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text('${r['cashier']} — ${r['date']}', style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
             _DetailRow(l10n.gamificationTransactions, '${r['transactions']}'),
             _DetailRow(l10n.gamificationRevenue, '${(r['revenue'] as double).toStringAsFixed(2)}'),
             _DetailRow(l10n.gamificationItemsPerMinute, '${(r['ipm'] as double).toStringAsFixed(2)}'),
@@ -195,9 +188,9 @@ class _ReportDetailSheetState extends ConsumerState<_ReportDetailSheet> {
             _DetailRow('Returns', '${r['returns']}'),
             _DetailRow(l10n.gamificationRiskScore, '${(r['risk'] as double).toStringAsFixed(0)} (${r['risk_level']})'),
             if ((summary as String).isNotEmpty) ...[
-              const SizedBox(height: 12),
+              AppSpacing.gapH12,
               Text(l10n.gamificationSummary, style: const TextStyle(fontWeight: FontWeight.bold)),
-              const SizedBox(height: 4),
+              AppSpacing.gapH4,
               Text(summary),
             ],
           ],

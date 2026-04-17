@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
@@ -47,20 +48,17 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
   Widget build(BuildContext context) {
     final state = ref.watch(adminUserListProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Admin Team'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.person_add),
-            tooltip: 'Invite Admin',
-            onPressed: () {
+    return PosListPage(
+  title: 'Admin Team',
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.person_add, onPressed: () {
               // Navigate to invite page
-            },
-          ),
-        ],
-      ),
-      body: Column(
+            }, tooltip: 'Invite Admin',
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -95,7 +93,7 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
           Expanded(child: _buildContent(state)),
         ],
       ),
-    );
+);
   }
 
   Widget _buildContent(AdminUserListState state) {
@@ -121,7 +119,7 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
     final has2fa = admin['two_factor_enabled'] == true;
     final roles = admin['roles'] as List? ?? [];
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: ListTile(
         leading: CircleAvatar(
@@ -147,7 +145,7 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
                       color: AppColors.error.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: AppRadius.borderXs,
                     ),
                     child: Text(l10n.inactive, style: TextStyle(fontSize: 10, color: AppColors.error)),
                   ),
@@ -156,7 +154,7 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
                       color: AppColors.primary.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: AppRadius.borderXs,
                     ),
                     child: Text((r as Map)['role_name']?.toString() ?? 'Role', style: const TextStyle(fontSize: 10)),
                   ),

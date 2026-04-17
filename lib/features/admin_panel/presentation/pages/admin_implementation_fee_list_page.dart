@@ -51,14 +51,17 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
   Widget build(BuildContext context) {
     final state = ref.watch(implementationFeeListProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.implementationFees), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
-        onPressed: _showCreateDialog,
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.implementationFees,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.add,
+    onPressed: _showCreateDialog,
+    tooltip: 'Add',
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // Type filter
@@ -110,7 +113,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _typeChip(String label, String value) {
@@ -145,7 +148,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
     final isPaid = status == 'paid';
     final typeIcons = {'setup': Icons.settings, 'training': Icons.school, 'custom_dev': Icons.code};
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
@@ -179,7 +182,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: isPaid ? AppColors.success.withValues(alpha: 0.15) : AppColors.warning.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.borderLg,
                   ),
                   child: Text(
                     status.toUpperCase(),
@@ -255,9 +258,8 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
+          PosButton(
             onPressed: () async {
               await ref.read(implementationFeeActionProvider.notifier).createFee({
                 'fee_type': feeType,
@@ -269,7 +271,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
               if (ctx.mounted) Navigator.pop(ctx);
               ref.read(implementationFeeListProvider.notifier).loadFees();
             },
-            child: Text(l10n.create),
+            label: l10n.create,
           ),
         ],
       ),
@@ -301,9 +303,8 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
+          PosButton(
             onPressed: () async {
               await ref.read(implementationFeeActionProvider.notifier).updateFee(fee['id'], {
                 'amount': double.tryParse(amountCtrl.text) ?? 0,
@@ -312,7 +313,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
               if (ctx.mounted) Navigator.pop(ctx);
               ref.read(implementationFeeListProvider.notifier).loadFees();
             },
-            child: Text(l10n.hwUpdate),
+            label: l10n.hwUpdate,
           ),
         ],
       ),

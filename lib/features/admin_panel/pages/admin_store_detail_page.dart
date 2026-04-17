@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_input.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
@@ -18,25 +16,17 @@ class AdminStoreDetailPage extends ConsumerStatefulWidget {
   ConsumerState<AdminStoreDetailPage> createState() => _AdminStoreDetailPageState();
 }
 
-class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> with SingleTickerProviderStateMixin {
-
+class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  late TabController _tabController;
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
     Future.microtask(() {
       ref.read(adminStoreDetailProvider.notifier).load(widget.storeId);
       ref.read(limitOverrideProvider.notifier).load(widget.storeId);
     });
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 
   @override
@@ -55,47 +45,37 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Store Details'),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: l10n.overview),
-            Tab(text: 'Metrics'),
-            Tab(text: l10n.settingsPosLimits),
-          ],
-        ),
+    final isLoading = storeState is AdminStoreDetailLoading || actionState is AdminActionLoading;
+    final hasError = storeState is AdminStoreDetailError;
+
+    return PosListPage(
+      title: 'Store Details',
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? storeState.message : null,
+      onRetry: () => ref.read(adminStoreDetailProvider.notifier).load(widget.storeId),
+      child: Column(
+        children: [
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: l10n.overview),
+              const PosTabItem(label: 'Metrics'),
+              PosTabItem(label: l10n.settingsPosLimits),
+            ],
+          ),
+          Expanded(child: _buildContent(storeState, theme)),
+        ],
       ),
-      body: _buildContent(storeState, actionState, theme),
     );
   }
 
-  Widget _buildContent(AdminStoreDetailState storeState, AdminActionState actionState, ThemeData theme) {
-    if (storeState is AdminStoreDetailLoading || actionState is AdminActionLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (storeState is AdminStoreDetailError) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.error_outline, size: 48, color: AppColors.error),
-            AppSpacing.gapH12,
-            Text(storeState.message, style: theme.textTheme.bodyMedium),
-            AppSpacing.gapH16,
-            PosButton(
-              label: l10n.retry,
-              variant: PosButtonVariant.outline,
-              onPressed: () => ref.read(adminStoreDetailProvider.notifier).load(widget.storeId),
-            ),
-          ],
-        ),
-      );
-    }
+  Widget _buildContent(AdminStoreDetailState storeState, ThemeData theme) {
     if (storeState is AdminStoreDetailLoaded) {
-      return TabBarView(
-        controller: _tabController,
+      return IndexedStack(
+        index: _currentTab,
         children: [_buildOverviewTab(storeState.store, theme), _buildMetricsTab(theme), _buildLimitsTab(theme)],
       );
     }
@@ -119,12 +99,11 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // ─── Status + Name Header ─────────────────────
-          Card(
+          PosCard(
             elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: AppRadius.borderLg,
-              side: BorderSide(color: AppColors.borderLight),
-            ),
+            borderRadius: AppRadius.borderLg,
+
+            border: Border.fromBorderSide(BorderSide(color: AppColors.borderLight)),
             child: Padding(
               padding: AppSpacing.paddingAll20,
               child: Column(
@@ -241,12 +220,11 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
   }
 
   Widget _buildInfoSection(ThemeData theme, String title, List<Widget> rows) {
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadius.borderLg,
-        side: BorderSide(color: AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderLg,
+
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderLight)),
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -371,12 +349,10 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
   }) {
     return SizedBox(
       width: width ?? 150,
-      child: Card(
+      child: PosCard(
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: AppRadius.borderLg,
-          side: BorderSide(color: color.withValues(alpha: 0.2)),
-        ),
+        borderRadius: AppRadius.borderLg,
+        border: Border.fromBorderSide(BorderSide(color: color.withValues(alpha: 0.2))),
         child: Padding(
           padding: AppSpacing.paddingAll16,
           child: Column(
@@ -477,12 +453,11 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
     final reason = override['reason'] as String?;
     final expiresAt = override['expires_at'] as String?;
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: AppRadius.borderMd,
-        side: BorderSide(color: AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderMd,
+
+      border: Border.fromBorderSide(BorderSide(color: AppColors.borderLight)),
       child: ListTile(
         leading: Icon(Icons.tune, color: AppColors.info),
         title: Text(key, style: const TextStyle(fontWeight: FontWeight.w600)),
@@ -512,7 +487,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
         title: const Text('Suspend Store'),
         content: PosTextField(controller: reasonCtrl, label: l10n.reason, hint: 'Enter suspension reason', maxLines: 3),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.cancel)),
+          PosButton(onPressed: () => Navigator.of(ctx).pop(), variant: PosButtonVariant.ghost, label: l10n.cancel),
           PosButton(
             label: l10n.suspend,
             variant: PosButtonVariant.danger,
@@ -546,7 +521,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.cancel)),
+          PosButton(onPressed: () => Navigator.of(ctx).pop(), variant: PosButtonVariant.ghost, label: l10n.cancel),
           PosButton(
             label: 'Set Override',
             onPressed: () {

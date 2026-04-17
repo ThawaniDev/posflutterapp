@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
@@ -60,9 +61,10 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
   Widget build(BuildContext context) {
     final state = ref.watch(providerUserListProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.providerUsers)),
-      body: Column(
+    return PosListPage(
+  title: l10n.providerUsers,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -149,7 +151,7 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
           Expanded(child: _buildContent(state)),
         ],
       ),
-    );
+);
   }
 
   Widget _buildFilterChip(String label, bool selected, VoidCallback onTap) {
@@ -191,7 +193,7 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
 
   Widget _buildUserCard(Map<String, dynamic> user) {
     final isActive = user['is_active'] == true;
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: ListTile(
         leading: CircleAvatar(
@@ -209,7 +211,7 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: AppRadius.borderXs,
                   ),
                   child: Text(user['role']?.toString() ?? 'unknown', style: const TextStyle(fontSize: 11)),
                 ),

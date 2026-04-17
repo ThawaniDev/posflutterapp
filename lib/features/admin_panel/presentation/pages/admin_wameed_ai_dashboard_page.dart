@@ -41,15 +41,16 @@ class _State extends ConsumerState<AdminWameedAIDashboardPage> {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(wameedAIAdminDashboardProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.adminWameedAIDashboard), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.adminWameedAIDashboard,
+  showSearch: false,
+    child: switch (state) {
         WameedAIAdminDashboardLoading() => const Center(child: PosLoading()),
         WameedAIAdminDashboardLoaded(data: final resp) => _buildContent(resp, l10n),
         WameedAIAdminDashboardError(message: final msg) => PosErrorState(message: msg, onRetry: _load),
         _ => Center(child: Text(l10n.loading)),
       },
-    );
+);
   }
 
   Widget _buildContent(Map<String, dynamic> resp, AppLocalizations l10n) {

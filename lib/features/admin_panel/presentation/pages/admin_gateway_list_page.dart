@@ -40,14 +40,17 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(gatewayListProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Payment Gateways'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
-        onPressed: _showCreateDialog,
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-      body: Column(
+    return PosListPage(
+  title: 'Payment Gateways',
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.add,
+    onPressed: _showCreateDialog,
+    tooltip: 'Add',
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // Environment filter
@@ -83,7 +86,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _filterChip(String label, String value) {
@@ -104,7 +107,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
     final env = gw['environment'] ?? '';
     final hasCreds = gw['has_credentials'] == true;
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
@@ -122,7 +125,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
                     color: env == 'production'
                         ? AppColors.success.withValues(alpha: 0.15)
                         : AppColors.warning.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.borderLg,
                   ),
                   child: Text(
                     env.toUpperCase(),
@@ -233,9 +236,8 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
+          PosButton(
             onPressed: () async {
               await ref.read(gatewayActionProvider.notifier).createGateway({
                 'gateway_name': nameCtrl.text,
@@ -247,7 +249,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
               if (ctx.mounted) Navigator.pop(ctx);
               ref.read(gatewayListProvider.notifier).loadGateways(storeId: _storeId);
             },
-            child: Text(l10n.create),
+            label: l10n.create,
           ),
         ],
       ),
@@ -279,9 +281,8 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
+          PosButton(
             onPressed: () async {
               await ref.read(gatewayActionProvider.notifier).updateGateway(gw['id'], {
                 'gateway_name': nameCtrl.text,
@@ -290,7 +291,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
               if (ctx.mounted) Navigator.pop(ctx);
               ref.read(gatewayListProvider.notifier).loadGateways(storeId: _storeId);
             },
-            child: Text(l10n.hwUpdate),
+            label: l10n.hwUpdate,
           ),
         ],
       ),

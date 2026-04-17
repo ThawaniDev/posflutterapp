@@ -15,7 +15,6 @@ class AccountMappingPage extends ConsumerStatefulWidget {
 }
 
 class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final Map<String, TextEditingController> _accountIdControllers = {};
   final Map<String, TextEditingController> _accountNameControllers = {};
@@ -43,26 +42,23 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
   @override
   Widget build(BuildContext context) {
     final mappingState = ref.watch(accountMappingProvider);
+    final isLoading = mappingState is AccountMappingInitial || mappingState is AccountMappingLoading;
+    final hasError = mappingState is AccountMappingError;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.accountingMappings),
-        actions: [
-          if (_hasUnsavedChanges)
-            TextButton.icon(
-              onPressed: mappingState is AccountMappingLoading ? null : _saveMappings,
-              icon: const Icon(Icons.save, color: Colors.white),
-              label: Text(l10n.save, style: TextStyle(color: Colors.white)),
-            ),
-        ],
-      ),
-      body: switch (mappingState) {
-        AccountMappingInitial() || AccountMappingLoading() => PosLoadingSkeleton.list(),
-        AccountMappingError(:final message) => PosErrorState(
-          message: message,
-          onRetry: () => ref.read(accountMappingProvider.notifier).loadMappings(),
-        ),
+    return PosListPage(
+      title: l10n.accountingMappings,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? mappingState.message : null,
+      onRetry: () => ref.read(accountMappingProvider.notifier).loadMappings(),
+      actions: [
+        if (_hasUnsavedChanges && mappingState is AccountMappingLoaded)
+          PosButton(label: l10n.save, icon: Icons.save, onPressed: _saveMappings),
+      ],
+      child: switch (mappingState) {
         AccountMappingLoaded(:final mappings, :final posAccountKeys) => _buildMappingForm(mappings, posAccountKeys),
+        _ => const SizedBox.shrink(),
       },
     );
   }
@@ -143,12 +139,10 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
       _ => AppColors.textSecondary,
     };
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
-      ),
+      borderRadius: AppRadius.borderMd,
+      border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
       child: Padding(
         padding: AppSpacing.paddingAll12,
         child: Column(
@@ -161,7 +155,7 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(color: dirColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(4)),
+                  decoration: BoxDecoration(color: dirColor.withValues(alpha: 0.1), borderRadius: AppRadius.borderXs),
                   child: Text(
                     direction.toUpperCase(),
                     style: TextStyle(color: dirColor, fontSize: 11, fontWeight: FontWeight.w600),

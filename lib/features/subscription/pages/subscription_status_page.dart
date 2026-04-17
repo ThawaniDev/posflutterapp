@@ -49,20 +49,16 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.subscriptionMySubscription),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.receipt_long),
-            tooltip: l10n.subscriptionBillingHistory,
-            onPressed: () => context.go(Routes.billingHistory),
-          ),
-        ],
-      ),
-      body: _buildBody(subState, usageState),
-    );
+    return PosListPage(
+  title: l10n.subscriptionMySubscription,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.receipt_long, onPressed: () => context.go(Routes.billingHistory), tooltip: l10n.subscriptionBillingHistory,
+  ),
+],
+  child: _buildBody(subState, usageState),
+);
   }
 
   Widget _buildBody(SubscriptionState subState, UsageState usageState) {
@@ -95,10 +91,10 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
           AppSpacing.verticalSm,
           Text(l10n.subscriptionChoosePlan),
           AppSpacing.verticalLg,
-          ElevatedButton.icon(
+          PosButton(
             onPressed: () => context.go(Routes.planSelection),
-            icon: const Icon(Icons.rocket_launch),
-            label: Text(l10n.subscriptionBrowsePlans),
+            icon: Icons.rocket_launch,
+            label: l10n.subscriptionBrowsePlans,
           ),
         ],
       ),
@@ -138,7 +134,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
             ),
 
           // Status card
-          Card(
+          PosCard(
             child: Padding(
               padding: AppSpacing.paddingAllMd,
               child: Column(
@@ -221,10 +217,10 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
           AppSpacing.verticalMd,
 
           if (sub.status.name == 'cancelled' || sub.status.name == 'grace')
-            ElevatedButton.icon(
+            PosButton(
               onPressed: () => ref.read(subscriptionProvider.notifier).resume(),
-              icon: const Icon(Icons.play_arrow),
-              label: Text(l10n.subscriptionResumeSubscription),
+              icon: Icons.play_arrow,
+              label: l10n.subscriptionResumeSubscription,
             )
           else
             OutlinedButton.icon(
@@ -258,16 +254,15 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.subscriptionKeepPlan)),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.subscriptionKeepPlan),
+          PosButton(
             onPressed: () {
               Navigator.pop(ctx);
               ref
                   .read(subscriptionProvider.notifier)
                   .cancel(reason: reasonController.text.isNotEmpty ? reasonController.text : null);
             },
-            child: Text(l10n.subscriptionCancelSubscription),
+            label: l10n.subscriptionCancelSubscription,
           ),
         ],
       ),

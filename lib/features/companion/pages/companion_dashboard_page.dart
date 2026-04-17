@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
 import 'package:wameedpos/features/companion/widgets/companion_home_dashboard.dart';
 import 'package:wameedpos/features/companion/widgets/quick_stats_widget.dart';
@@ -19,13 +20,12 @@ class CompanionDashboardPage extends ConsumerStatefulWidget {
   ConsumerState<CompanionDashboardPage> createState() => _CompanionDashboardPageState();
 }
 
-class _CompanionDashboardPageState extends ConsumerState<CompanionDashboardPage> with SingleTickerProviderStateMixin {
-  late final TabController _tabController;
+class _CompanionDashboardPageState extends ConsumerState<CompanionDashboardPage> {
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 9, vsync: this);
     Future.microtask(() {
       ref.read(companionDashboardProvider.notifier).load();
       ref.read(quickStatsProvider.notifier).load();
@@ -35,45 +35,44 @@ class _CompanionDashboardPageState extends ConsumerState<CompanionDashboardPage>
   }
 
   @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.companionTitle),
-        bottom: TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          tabs: [
-            Tab(icon: const Icon(Icons.home), text: l10n.companionDashboard),
-            Tab(icon: const Icon(Icons.dashboard), text: l10n.companionQuickStats),
-            Tab(icon: const Icon(Icons.summarize), text: l10n.companionSummary),
-            Tab(icon: const Icon(Icons.bar_chart), text: l10n.companionSales),
-            Tab(icon: const Icon(Icons.shopping_cart), text: l10n.companionActiveOrdersTitle),
-            Tab(icon: const Icon(Icons.inventory_2), text: l10n.companionInventory),
-            Tab(icon: const Icon(Icons.people), text: l10n.companionStaff),
-            Tab(icon: const Icon(Icons.touch_app), text: l10n.companionQuickActions),
-            Tab(icon: const Icon(Icons.settings), text: l10n.companionPreferences),
-          ],
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          CompanionHomeDashboard(),
-          QuickStatsWidget(),
-          MobileSummaryWidget(),
-          SalesSummaryWidget(),
-          ActiveOrdersWidget(),
-          InventoryAlertsWidget(),
-          ActiveStaffWidget(),
-          QuickActionsWidget(),
-          PreferencesWidget(),
+    return PosListPage(
+      title: l10n.companionTitle,
+      showSearch: false,
+      child: Column(
+        children: [
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: l10n.companionDashboard, icon: Icons.home),
+              PosTabItem(label: l10n.companionQuickStats, icon: Icons.dashboard),
+              PosTabItem(label: l10n.companionSummary, icon: Icons.summarize),
+              PosTabItem(label: l10n.companionSales, icon: Icons.bar_chart),
+              PosTabItem(label: l10n.companionActiveOrdersTitle, icon: Icons.shopping_cart),
+              PosTabItem(label: l10n.companionInventory, icon: Icons.inventory_2),
+              PosTabItem(label: l10n.companionStaff, icon: Icons.people),
+              PosTabItem(label: l10n.companionQuickActions, icon: Icons.touch_app),
+              PosTabItem(label: l10n.companionPreferences, icon: Icons.settings),
+            ],
+          ),
+          Expanded(
+            child: IndexedStack(
+              index: _currentTab,
+              children: const [
+                CompanionHomeDashboard(),
+                QuickStatsWidget(),
+                MobileSummaryWidget(),
+                SalesSummaryWidget(),
+                ActiveOrdersWidget(),
+                InventoryAlertsWidget(),
+                ActiveStaffWidget(),
+                QuickActionsWidget(),
+                PreferencesWidget(),
+              ],
+            ),
+          ),
         ],
       ),
     );

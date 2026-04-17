@@ -66,7 +66,7 @@ class SessionListWidget extends StatelessWidget {
     final statusColor = isActive ? AppColors.success : AppColors.textSecondary;
     final statusLabel = isActive ? l10n.securityActive : l10n.securityEnded;
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: 8),
       child: Padding(
         padding: const EdgeInsets.all(12),
@@ -82,7 +82,7 @@ class SessionListWidget extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(4)),
+                  decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.12), borderRadius: AppRadius.borderXs),
                   child: Text(
                     statusLabel,
                     style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: statusColor),

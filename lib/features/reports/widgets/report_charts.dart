@@ -187,7 +187,7 @@ class ReportBarChart extends StatelessWidget {
           toY: val,
           color: c1,
           width: secondaryValueKey != null ? 8 : 14,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadius.xs)),
         ),
       ];
       if (secondaryValueKey != null) {
@@ -197,7 +197,7 @@ class ReportBarChart extends StatelessWidget {
             toY: v2,
             color: c2,
             width: 8,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(4)),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadius.xs)),
           ),
         );
       }
@@ -557,7 +557,7 @@ class _ChartContainer extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : Colors.white,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
+        borderRadius: AppRadius.borderLg,
         border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       child: Column(
@@ -619,7 +619,7 @@ class _EmptyChart extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         color: isDark ? AppColors.cardDark : Colors.white,
-        borderRadius: BorderRadius.circular(AppRadius.lg),
+        borderRadius: AppRadius.borderLg,
         border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
       ),
       child: Center(

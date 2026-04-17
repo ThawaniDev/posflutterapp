@@ -124,100 +124,96 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: _isSelectionMode ? Text(l10n.notificationsSelected(_selectedIds.length)) : Text(l10n.notificationsTitle),
-        leading: _isSelectionMode ? IconButton(icon: const Icon(Icons.close), onPressed: _clearSelection) : null,
-        actions: [
-          if (_isSelectionMode) ...[
-            IconButton(
-              icon: const Icon(Icons.delete_outline),
-              tooltip: l10n.notificationsBulkDelete,
-              onPressed: actionState is NotificationActionLoading ? null : _bulkDelete,
+    return PosListPage(
+      title: _isSelectionMode ? l10n.notificationsSelected(_selectedIds.length) : l10n.notificationsTitle,
+      showSearch: false,
+      onBack: _isSelectionMode ? _clearSelection : null,
+      actions: [
+        if (_isSelectionMode) ...[
+          PosButton.icon(
+            icon: Icons.delete_outline,
+            tooltip: l10n.notificationsBulkDelete,
+            onPressed: actionState is NotificationActionLoading ? null : _bulkDelete,
+          ),
+        ] else ...[
+          if (unreadState is UnreadCountLoaded && unreadState.count > 0)
+            PosCountBadge(
+              count: unreadState.count,
+              child: PosButton.icon(
+                icon: Icons.notifications_active_outlined,
+                tooltip: l10n.notificationsUnread(unreadState.count),
+                onPressed: () {},
+              ),
             ),
-          ] else ...[
-            if (unreadState is UnreadCountLoaded && unreadState.count > 0)
-              Padding(
-                padding: const EdgeInsets.only(right: 4),
-                child: PosCountBadge(
-                  count: unreadState.count,
-                  child: IconButton(
-                    icon: const Icon(Icons.notifications_active_outlined),
-                    tooltip: l10n.notificationsUnread(unreadState.count),
-                    onPressed: () {},
-                  ),
+          PosButton.icon(
+            icon: Icons.done_all_rounded,
+            tooltip: l10n.notificationsMarkAllAsRead,
+            onPressed: actionState is NotificationActionLoading
+                ? null
+                : () => ref.read(notificationActionProvider.notifier).markAllAsRead(),
+          ),
+          PosButton.icon(
+            icon: _showStats ? Icons.bar_chart_rounded : Icons.bar_chart_outlined,
+            tooltip: l10n.notifStatsTitle,
+            onPressed: () => setState(() => _showStats = !_showStats),
+          ),
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert),
+            tooltip: l10n.notifMoreActions,
+            onSelected: (value) {
+              switch (value) {
+                case 'preferences':
+                  context.go(Routes.notificationPreferences);
+                case 'schedules':
+                  context.go(Routes.notificationSchedules);
+                case 'delivery_logs':
+                  context.go(Routes.notificationDeliveryLogs);
+                case 'sound_configs':
+                  context.go(Routes.notificationSoundConfigs);
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'preferences',
+                child: ListTile(
+                  leading: const Icon(Icons.tune_rounded, size: 20),
+                  title: Text(l10n.notificationsPreferences, style: AppTypography.bodyMedium),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
                 ),
               ),
-            IconButton(
-              icon: const Icon(Icons.done_all_rounded),
-              tooltip: l10n.notificationsMarkAllAsRead,
-              onPressed: actionState is NotificationActionLoading
-                  ? null
-                  : () => ref.read(notificationActionProvider.notifier).markAllAsRead(),
-            ),
-            IconButton(
-              icon: Icon(_showStats ? Icons.bar_chart_rounded : Icons.bar_chart_outlined),
-              tooltip: l10n.notifStatsTitle,
-              onPressed: () => setState(() => _showStats = !_showStats),
-            ),
-            PopupMenuButton<String>(
-              icon: const Icon(Icons.more_vert),
-              tooltip: l10n.notifMoreActions,
-              onSelected: (value) {
-                switch (value) {
-                  case 'preferences':
-                    context.go(Routes.notificationPreferences);
-                  case 'schedules':
-                    context.go(Routes.notificationSchedules);
-                  case 'delivery_logs':
-                    context.go(Routes.notificationDeliveryLogs);
-                  case 'sound_configs':
-                    context.go(Routes.notificationSoundConfigs);
-                }
-              },
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  value: 'preferences',
-                  child: ListTile(
-                    leading: const Icon(Icons.tune_rounded, size: 20),
-                    title: Text(l10n.notificationsPreferences, style: AppTypography.bodyMedium),
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                  ),
+              PopupMenuItem(
+                value: 'schedules',
+                child: ListTile(
+                  leading: const Icon(Icons.schedule_rounded, size: 20),
+                  title: Text(l10n.notifSchedulesTitle, style: AppTypography.bodyMedium),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
                 ),
-                PopupMenuItem(
-                  value: 'schedules',
-                  child: ListTile(
-                    leading: const Icon(Icons.schedule_rounded, size: 20),
-                    title: Text(l10n.notifSchedulesTitle, style: AppTypography.bodyMedium),
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                  ),
+              ),
+              PopupMenuItem(
+                value: 'delivery_logs',
+                child: ListTile(
+                  leading: const Icon(Icons.local_shipping_outlined, size: 20),
+                  title: Text(l10n.notifDeliveryLogsTitle, style: AppTypography.bodyMedium),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
                 ),
-                PopupMenuItem(
-                  value: 'delivery_logs',
-                  child: ListTile(
-                    leading: const Icon(Icons.local_shipping_outlined, size: 20),
-                    title: Text(l10n.notifDeliveryLogsTitle, style: AppTypography.bodyMedium),
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                  ),
+              ),
+              PopupMenuItem(
+                value: 'sound_configs',
+                child: ListTile(
+                  leading: const Icon(Icons.volume_up_outlined, size: 20),
+                  title: Text(l10n.notifSoundConfigsTitle, style: AppTypography.bodyMedium),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
                 ),
-                PopupMenuItem(
-                  value: 'sound_configs',
-                  child: ListTile(
-                    leading: const Icon(Icons.volume_up_outlined, size: 20),
-                    title: Text(l10n.notifSoundConfigsTitle, style: AppTypography.bodyMedium),
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                  ),
-                ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ],
-      ),
-      body: Column(
+      ],
+      child: Column(
         children: [
           if (_showStats) ...[const NotificationStatsWidget(), const PosDivider()],
           _buildToolbar(isDark),

@@ -116,25 +116,17 @@ class _SupplierReturnDetailPageState extends ConsumerState<SupplierReturnDetailP
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.supplierReturnDetail),
-        actions: [IconButton(icon: const Icon(Icons.refresh), tooltip: l10n.commonRefresh, onPressed: _loadDetail)],
-      ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _error != null
-          ? Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(_error!, style: TextStyle(color: AppColors.error)),
-                  const SizedBox(height: AppSpacing.md),
-                  PosButton(label: l10n.commonRetry, onPressed: _loadDetail),
-                ],
-              ),
-            )
-          : _buildContent(l10n),
+    return PosListPage(
+      title: l10n.supplierReturnDetail,
+      showSearch: false,
+      actions: [
+        PosButton.icon(icon: Icons.refresh, tooltip: l10n.commonRefresh, onPressed: _loadDetail, variant: PosButtonVariant.ghost),
+      ],
+      isLoading: _isLoading,
+      hasError: _error != null,
+      errorMessage: _error,
+      onRetry: _loadDetail,
+      child: _returnData == null ? const SizedBox.shrink() : _buildContent(l10n),
     );
   }
 
@@ -294,7 +286,7 @@ class _SupplierReturnDetailPageState extends ConsumerState<SupplierReturnDetailP
   Widget _chip(String label, String value) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
-      decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(4)),
+      decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.1), borderRadius: AppRadius.borderXs),
       child: Text('$label: $value', style: Theme.of(context).textTheme.bodySmall),
     );
   }

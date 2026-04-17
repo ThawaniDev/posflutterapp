@@ -30,9 +30,10 @@ class _AdminInstallmentProvidersPageState extends ConsumerState<AdminInstallment
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.installmentProviders), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.installmentProviders,
+  showSearch: false,
+    child: switch (state) {
         InstallmentAdminInitial() || InstallmentAdminLoading() => const Center(child: CircularProgressIndicator()),
         InstallmentAdminError(:final message) => Center(
           child: Column(
@@ -48,7 +49,7 @@ class _AdminInstallmentProvidersPageState extends ConsumerState<AdminInstallment
         ),
         InstallmentAdminLoaded(:final providers) => _buildProviderList(providers, l10n, isDark),
       },
-    );
+);
   }
 
   Widget _buildProviderList(List<InstallmentProviderConfig> providers, AppLocalizations l10n, bool isDark) {

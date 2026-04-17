@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
@@ -17,7 +17,6 @@ class AdminSubscriptionListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminSubscriptionListPageState extends ConsumerState<AdminSubscriptionListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String? _statusFilter;
@@ -44,15 +43,25 @@ class _AdminSubscriptionListPageState extends ConsumerState<AdminSubscriptionLis
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(subscriptionListProvider);
+    final isLoading = state is SubscriptionListLoading;
+    final hasError = state is SubscriptionListError;
+    final isEmpty = state is SubscriptionListLoaded && state.subscriptions.isEmpty;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.subscriptions)),
-      body: Column(
+    return PosListPage(
+      title: l10n.subscriptions,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: () => ref.read(subscriptionListProvider.notifier).loadSubscriptions(status: _statusFilter, storeId: _storeId),
+      isEmpty: isEmpty,
+      emptyTitle: l10n.noSubscriptionsFound,
+      emptyIcon: Icons.subscriptions_outlined,
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
-          // Status filter chips
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: 16, vertical: 8),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -60,7 +69,7 @@ class _AdminSubscriptionListPageState extends ConsumerState<AdminSubscriptionLis
                   _FilterChip(label: l10n.all, selected: _statusFilter == null, onSelected: () => _onFilterChanged(null)),
                   for (final s in ['active', 'trial', 'grace', 'cancelled'])
                     Padding(
-                      padding: const EdgeInsets.only(left: 8),
+                      padding: const EdgeInsetsDirectional.only(start: 8),
                       child: _FilterChip(
                         label: s[0].toUpperCase() + s.substring(1),
                         selected: _statusFilter == s,
@@ -73,33 +82,14 @@ class _AdminSubscriptionListPageState extends ConsumerState<AdminSubscriptionLis
           ),
           Expanded(
             child: switch (state) {
-              SubscriptionListLoading() => const Center(child: CircularProgressIndicator()),
-              SubscriptionListError(:final message) => Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(message, style: const TextStyle(color: AppColors.error)),
-                    AppSpacing.gapH16,
-                    PosButton(
-                      label: l10n.retry,
-                      variant: PosButtonVariant.outline,
-                      onPressed: () =>
-                          ref.read(subscriptionListProvider.notifier).loadSubscriptions(status: _statusFilter, storeId: _storeId),
-                    ),
-                  ],
-                ),
+              SubscriptionListLoaded(:final subscriptions) => ListView.builder(
+                padding: AppSpacing.paddingAll16,
+                itemCount: subscriptions.length,
+                itemBuilder: (context, index) {
+                  final sub = subscriptions[index];
+                  return _SubscriptionCard(subscription: sub);
+                },
               ),
-              SubscriptionListLoaded(:final subscriptions) =>
-                subscriptions.isEmpty
-                    ? Center(child: Text(l10n.noSubscriptionsFound))
-                    : ListView.builder(
-                        padding: AppSpacing.paddingAll16,
-                        itemCount: subscriptions.length,
-                        itemBuilder: (context, index) {
-                          final sub = subscriptions[index];
-                          return _SubscriptionCard(subscription: sub);
-                        },
-                      ),
               _ => const SizedBox.shrink(),
             },
           ),
@@ -150,7 +140,7 @@ class _SubscriptionCard extends StatelessWidget {
     final status = subscription['status'] ?? '';
     final plan = subscription['plan'] as Map<String, dynamic>?;
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: 12),
       child: ListTile(
         title: Text(plan?['name'] ?? 'Unknown Plan', style: const TextStyle(fontWeight: FontWeight.w600)),
@@ -160,7 +150,7 @@ class _SubscriptionCard extends StatelessWidget {
         ),
         trailing: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-          decoration: BoxDecoration(color: _statusColor(status).withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+          decoration: BoxDecoration(color: _statusColor(status).withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
           child: Text(
             status.toUpperCase(),
             style: TextStyle(color: _statusColor(status), fontSize: 12, fontWeight: FontWeight.bold),

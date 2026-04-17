@@ -5,6 +5,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/pos_status_badge.dart';
 import '../models/repair_job.dart';
 import '../enums/repair_job_status.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class RepairJobCard extends StatelessWidget {
   final RepairJob job;
@@ -16,15 +17,13 @@ class RepairJobCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderMd,
+      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: AppRadius.borderMd,
         child: Padding(
           padding: AppSpacing.paddingCard,
           child: Column(
@@ -37,7 +36,7 @@ class RepairJobCard extends StatelessWidget {
                     height: 40,
                     decoration: BoxDecoration(
                       color: AppColors.info.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(AppRadius.sm),
+                      borderRadius: AppRadius.borderSm,
                     ),
                     child: const Icon(Icons.build, color: AppColors.info, size: 22),
                   ),

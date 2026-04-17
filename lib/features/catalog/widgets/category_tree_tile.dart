@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/utils/locale_helpers.dart';
 import 'package:wameedpos/features/catalog/models/category.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// A single node in the category tree.
 /// Renders with indentation based on [depth] and shows expand/collapse
@@ -36,6 +38,8 @@ class CategoryTreeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
     final indent = depth * 28.0;
 
     return Material(
@@ -54,7 +58,7 @@ class CategoryTreeTile extends StatelessWidget {
                     ? IconButton(
                         padding: EdgeInsets.zero,
                         iconSize: 18,
-                        icon: Icon(isExpanded ? Icons.expand_more : Icons.chevron_right, color: AppColors.textMutedLight),
+                        icon: Icon(isExpanded ? Icons.expand_more : Icons.chevron_right, color: mutedColor),
                         onPressed: onToggleExpand,
                       )
                     : const SizedBox.shrink(),
@@ -64,10 +68,10 @@ class CategoryTreeTile extends StatelessWidget {
               Container(
                 width: 36,
                 height: 36,
-                decoration: BoxDecoration(color: AppColors.primary10, borderRadius: BorderRadius.circular(8)),
+                decoration: BoxDecoration(color: AppColors.primary10, borderRadius: AppRadius.borderMd),
                 child: category.imageUrl != null
                     ? ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: AppRadius.borderMd,
                         child: Image.network(
                           category.imageUrl!,
                           fit: BoxFit.cover,
@@ -87,27 +91,17 @@ class CategoryTreeTile extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            category.name,
+                            localizedName(context, name: category.name, nameAr: category.nameAr),
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        if (category.nameAr != null) ...[
-                          const SizedBox(width: AppSpacing.xs),
-                          Flexible(
-                            child: Text(
-                              '(${category.nameAr})',
-                              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
                       ],
                     ),
                     if (category.description != null && category.description!.isNotEmpty)
                       Text(
                         category.description!,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: mutedColor),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -122,10 +116,10 @@ class CategoryTreeTile extends StatelessWidget {
                   color: category.isActive == true
                       ? AppColors.success.withValues(alpha: 0.1)
                       : AppColors.error.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: AppRadius.borderXs,
                 ),
                 child: Text(
-                  category.isActive == true ? 'Active' : 'Inactive',
+                  category.isActive == true ? l10n.active : l10n.inactive,
                   style: Theme.of(
                     context,
                   ).textTheme.labelSmall?.copyWith(color: category.isActive == true ? AppColors.success : AppColors.error),
@@ -141,7 +135,7 @@ class CategoryTreeTile extends StatelessWidget {
                     message: 'Sort order',
                     child: Text(
                       '#${category.sortOrder}',
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.textMutedLight),
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(color: mutedColor),
                     ),
                   ),
                 ),

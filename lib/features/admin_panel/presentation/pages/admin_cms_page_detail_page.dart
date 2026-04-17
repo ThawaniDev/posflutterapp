@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AdminCmsPageDetailPage extends ConsumerStatefulWidget {
   final String pageId;
@@ -23,9 +25,10 @@ class _AdminCmsPageDetailPageState extends ConsumerState<AdminCmsPageDetailPage>
   Widget build(BuildContext context) {
     final state = ref.watch(cmsPageDetailProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('CMS Page Detail')),
-      body: switch (state) {
+    return PosListPage(
+  title: 'CMS Page Detail',
+  showSearch: false,
+    child: switch (state) {
         CmsPageDetailInitial() || CmsPageDetailLoading() => const Center(child: CircularProgressIndicator()),
         CmsPageDetailError(:final message) => Center(
           child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
@@ -35,7 +38,7 @@ class _AdminCmsPageDetailPageState extends ConsumerState<AdminCmsPageDetailPage>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Card(
+              PosCard(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -67,7 +70,7 @@ class _AdminCmsPageDetailPageState extends ConsumerState<AdminCmsPageDetailPage>
                 ),
               ),
               const SizedBox(height: 16),
-              Card(
+              PosCard(
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -90,7 +93,7 @@ class _AdminCmsPageDetailPageState extends ConsumerState<AdminCmsPageDetailPage>
           ),
         ),
       },
-    );
+);
   }
 
   Widget _infoRow(String label, String value) => Padding(

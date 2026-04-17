@@ -57,14 +57,17 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
   Widget build(BuildContext context) {
     final state = ref.watch(hardwareSaleListProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.hardwareSales), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.primary,
-        onPressed: _showCreateDialog,
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.hardwareSales,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.add,
+    onPressed: _showCreateDialog,
+    tooltip: 'Add',
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // Search
@@ -82,7 +85,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
                     _applyFilters();
                   },
                 ),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                border: OutlineInputBorder(borderRadius: AppRadius.borderMd),
               ),
               onSubmitted: (_) => _applyFilters(),
             ),
@@ -127,7 +130,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _filterChip(String label, String value) {
@@ -152,7 +155,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
     };
     final type = sale['item_type'] ?? 'other';
 
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
@@ -255,9 +258,8 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
+          PosButton(
             onPressed: () async {
               await ref.read(hardwareSaleActionProvider.notifier).createSale({
                 'item_type': itemType,
@@ -270,7 +272,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
               if (ctx.mounted) Navigator.pop(ctx);
               ref.read(hardwareSaleListProvider.notifier).loadSales();
             },
-            child: Text(l10n.create),
+            label: l10n.create,
           ),
         ],
       ),
@@ -307,9 +309,8 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
+          PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.cancel),
+          PosButton(
             onPressed: () async {
               await ref.read(hardwareSaleActionProvider.notifier).updateSale(sale['id'], {
                 'item_description': descCtrl.text,
@@ -319,7 +320,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
               if (ctx.mounted) Navigator.pop(ctx);
               ref.read(hardwareSaleListProvider.notifier).loadSales();
             },
-            child: Text(l10n.hwUpdate),
+            label: l10n.hwUpdate,
           ),
         ],
       ),

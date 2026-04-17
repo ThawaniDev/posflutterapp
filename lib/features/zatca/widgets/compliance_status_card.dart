@@ -20,7 +20,7 @@ class ComplianceStatusCard extends StatelessWidget {
       padding: AppSpacing.paddingAll20,
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: AppRadius.borderMd,
         border: Border.all(
           color: isDark
               ? Colors.white.withValues(alpha: 0.1)

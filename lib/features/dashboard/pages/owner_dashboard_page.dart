@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/dashboard/providers/dashboard_providers.dart';
 import 'package:wameedpos/features/dashboard/providers/dashboard_state.dart';
 import 'package:wameedpos/features/dashboard/widgets/active_cashiers_list.dart';
@@ -39,33 +38,15 @@ class _OwnerDashboardPageState extends ConsumerState<OwnerDashboardPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(ownerDashboardProvider);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return switch (state) {
-      OwnerDashboardInitial() || OwnerDashboardLoading() => const Center(child: CircularProgressIndicator()),
+      OwnerDashboardInitial() || OwnerDashboardLoading() => const PosLoading(),
       OwnerDashboardError(:final message) => Center(
-        child: Padding(
-          padding: AppSpacing.paddingAll16,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.error_outline_rounded, size: 48, color: AppColors.error),
-              AppSpacing.gapH12,
-              Text(
-                message,
-                style: AppTypography.bodyLarge.copyWith(
-                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              AppSpacing.gapH16,
-              FilledButton.icon(
-                onPressed: () => ref.read(ownerDashboardProvider.notifier).load(),
-                icon: const Icon(Icons.refresh),
-                label: Text(l10n.commonRetry),
-              ),
-            ],
-          ),
+        child: PosEmptyState(
+          title: message,
+          icon: Icons.error_outline_rounded,
+          actionLabel: l10n.commonRetry,
+          onAction: () => ref.read(ownerDashboardProvider.notifier).load(),
         ),
       ),
       OwnerDashboardLoaded(
@@ -86,7 +67,7 @@ class _OwnerDashboardPageState extends ConsumerState<OwnerDashboardPage> {
             builder: (context, constraints) {
               final isWide = constraints.maxWidth > 900;
               final isMobile = context.isPhone;
-              final gap = isMobile ? 12.0 : 16.0;
+              final gap = context.responsiveCardPaddingValue;
               final padding = isMobile ? const EdgeInsets.all(12.0) : AppSpacing.paddingAll16;
 
               return ListView(

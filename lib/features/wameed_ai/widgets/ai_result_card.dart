@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_feature_result.dart';
 
 class AIResultCard extends StatelessWidget {
@@ -15,13 +17,8 @@ class AIResultCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
-      ),
+    return PosCard(
+      border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -76,10 +73,7 @@ class AIResultCard extends StatelessWidget {
   Widget _metaChip(BuildContext context, IconData icon, String text) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: Theme.of(context).dividerColor.withValues(alpha: 0.3),
-        borderRadius: BorderRadius.circular(6),
-      ),
+      decoration: BoxDecoration(color: Theme.of(context).dividerColor.withValues(alpha: 0.3), borderRadius: AppRadius.borderSm),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -141,7 +135,7 @@ class AIResultCard extends StatelessWidget {
             return Container(
               margin: const EdgeInsets.only(bottom: 8, left: 8),
               padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor, borderRadius: BorderRadius.circular(8)),
+              decoration: BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor, borderRadius: AppRadius.borderMd),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: item.entries.map((e) => _buildKeyValue(context, e.key, e.value)).toList(),
@@ -180,7 +174,7 @@ class AIResultCard extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(left: 8),
           padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor, borderRadius: BorderRadius.circular(8)),
+          decoration: BoxDecoration(color: Theme.of(context).scaffoldBackgroundColor, borderRadius: AppRadius.borderMd),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: map.entries.map((e) {

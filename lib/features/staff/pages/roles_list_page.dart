@@ -19,7 +19,6 @@ class RolesListPage extends ConsumerStatefulWidget {
 }
 
 class _RolesListPageState extends ConsumerState<RolesListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
@@ -59,30 +58,25 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: Text(l10n.staffRolesPermissions),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showRolesListInfo(context),
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(rolesProvider.notifier).load(),
-          ),
-        ],
-      ),
-      floatingActionButton: PosButton(
-        label: l10n.staffNewRole,
-        icon: Icons.add,
-        onPressed: () => context.push(Routes.staffRoleCreate),
-      ),
-      body: _buildBody(rolesState, isDark, l10n),
+    return PosListPage(
+      title: l10n.staffRolesPermissions,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showRolesListInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () => ref.read(rolesProvider.notifier).load(),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton(label: l10n.staffNewRole, icon: Icons.add, onPressed: () => context.push(Routes.staffRoleCreate)),
+      ],
+      child: _buildBody(rolesState, isDark, l10n),
     );
   }
 
@@ -183,16 +177,15 @@ class _RoleCard extends StatelessWidget {
     final isPredefined = role.isPredefined == true;
     final permCount = role.permissions?.length ?? 0;
 
-    return Card(
+    return PosCard(
       elevation: 0,
       color: isDark ? AppColors.cardDark : AppColors.cardLight,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderLg,
+
+      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.borderLg,
         child: Padding(
           padding: const EdgeInsets.all(AppSpacing.lg),
           child: Row(
@@ -203,7 +196,7 @@ class _RoleCard extends StatelessWidget {
                 height: 48,
                 decoration: BoxDecoration(
                   color: isPredefined ? AppColors.primary10 : AppColors.info.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: AppRadius.borderLg,
                 ),
                 child: Icon(
                   isPredefined ? Icons.verified_user : Icons.admin_panel_settings,
@@ -230,7 +223,7 @@ class _RoleCard extends StatelessWidget {
                           const SizedBox(width: AppSpacing.xs),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                            decoration: BoxDecoration(color: AppColors.primary10, borderRadius: BorderRadius.circular(4)),
+                            decoration: BoxDecoration(color: AppColors.primary10, borderRadius: AppRadius.borderXs),
                             child: Text(
                               l10n.staffSystemRole,
                               style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.primary),

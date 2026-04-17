@@ -6,7 +6,6 @@ import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/utils/validators.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/auth/providers/auth_providers.dart';
 import 'package:wameedpos/features/auth/providers/auth_state.dart';
@@ -74,9 +73,10 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.authCreateAccount), centerTitle: true),
-      body: SafeArea(
+    return PosListPage(
+  title: l10n.authCreateAccount,
+  showSearch: false,
+    child: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(AppSpacing.xl),
@@ -245,12 +245,10 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(l10n.authAlreadyHaveAccount, style: Theme.of(context).textTheme.bodyMedium),
-                        TextButton(
+                        PosButton(
                           onPressed: isLoading ? null : () => context.pop(),
-                          child: Text(
-                            l10n.authSignIn,
-                            style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
-                          ),
+                          variant: PosButtonVariant.ghost,
+                          label: l10n.authSignIn,
                         ),
                       ],
                     ),
@@ -261,6 +259,6 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
           ),
         ),
       ),
-    );
+);
   }
 }

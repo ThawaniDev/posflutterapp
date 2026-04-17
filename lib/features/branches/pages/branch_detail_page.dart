@@ -17,45 +17,40 @@ class BranchDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final state = ref.watch(branchDetailProvider(branchId));
 
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        title: Text(l10n.branchesBranchDetail),
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        foregroundColor: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
-        elevation: 0,
-        actions: [
-          if (state is BranchDetailLoaded)
-            PopupMenuButton<String>(
-              onSelected: (v) => _onAction(context, ref, v, state.branch),
-              itemBuilder: (context) => [
-                PopupMenuItem(value: 'edit', child: Text(l10n.branchesEditBranch)),
-                PopupMenuItem(value: 'settings', child: Text(l10n.branchesSettings)),
-                PopupMenuItem(value: 'working_hours', child: Text(l10n.branchesWorkingHours)),
-                const PopupMenuDivider(),
+    return PosListPage(
+      title: l10n.branchesBranchDetail,
+      showSearch: false,
+      actions: [
+        if (state is BranchDetailLoaded)
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert),
+            onSelected: (v) => _onAction(context, ref, v, state.branch),
+            itemBuilder: (context) => [
+              PopupMenuItem(value: 'edit', child: Text(l10n.branchesEditBranch)),
+              PopupMenuItem(value: 'settings', child: Text(l10n.branchesSettings)),
+              PopupMenuItem(value: 'working_hours', child: Text(l10n.branchesWorkingHours)),
+              const PopupMenuDivider(),
+              PopupMenuItem(
+                value: 'toggle',
+                child: Text(state.branch.isActive ? l10n.branchesDeactivated : l10n.branchesActivated),
+              ),
+              if (!state.branch.isMainBranch)
                 PopupMenuItem(
-                  value: 'toggle',
-                  child: Text(state.branch.isActive ? l10n.branchesDeactivated : l10n.branchesActivated),
+                  value: 'delete',
+                  child: Text(l10n.branchesDeleteBranch, style: const TextStyle(color: AppColors.error)),
                 ),
-                if (!state.branch.isMainBranch)
-                  PopupMenuItem(
-                    value: 'delete',
-                    child: Text(l10n.branchesDeleteBranch, style: const TextStyle(color: AppColors.error)),
-                  ),
-              ],
-            ),
-        ],
-      ),
-      body: switch (state) {
-        BranchDetailInitial() || BranchDetailLoading() => const Center(child: CircularProgressIndicator()),
-        BranchDetailError(:final message) => PosErrorState(
-          message: message,
-          onRetry: () => ref.read(branchDetailProvider(branchId).notifier).load(branchId),
-        ),
+            ],
+          ),
+      ],
+      isLoading: state is BranchDetailInitial || state is BranchDetailLoading,
+      hasError: state is BranchDetailError,
+      errorMessage: state is BranchDetailError ? (state).message : null,
+      onRetry: () => ref.read(branchDetailProvider(branchId).notifier).load(branchId),
+      child: switch (state) {
         BranchDetailLoaded(:final branch) => _buildContent(context, branch),
+        _ => const SizedBox.shrink(),
       },
     );
   }

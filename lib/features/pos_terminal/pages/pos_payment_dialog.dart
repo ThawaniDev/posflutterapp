@@ -306,16 +306,11 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
                     spacing: 8,
                     runSpacing: 8,
                     children: _quickDenominations().map((amount) {
-                      return OutlinedButton(
+                      return PosButton(
                         onPressed: () => _onQuickCash(amount),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.primary,
-                          side: const BorderSide(color: AppColors.primary),
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                        ),
-                        child: Text(
-                          '${AppLocalizations.of(context)!.sarCurrency} ${amount.toStringAsFixed(amount == amount.roundToDouble() ? 0 : 2)}',
-                        ),
+                        variant: PosButtonVariant.outline,
+                        label:
+                            '${AppLocalizations.of(context)!.sarCurrency} ${amount.toStringAsFixed(amount == amount.roundToDouble() ? 0 : 2)}',
                       );
                     }).toList(),
                   ),

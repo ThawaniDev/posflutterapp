@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_typography.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 // ─────────────────────────────────────────────────────────────
 // POS CARD — unified card wrapper
@@ -134,12 +135,12 @@ class PosKpiCard extends StatelessWidget {
                 if (trend != null)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                    decoration: BoxDecoration(color: trendColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
+                    decoration: BoxDecoration(color: trendColor.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(isPositive ? Icons.trending_up : Icons.trending_down, size: 10, color: trendColor),
-                        const SizedBox(width: 2),
+                        AppSpacing.gapW2,
                         Text(
                           '${isPositive ? '+' : ''}${trend!.toStringAsFixed(1)}%',
                           style: TextStyle(fontSize: 9, fontWeight: FontWeight.w700, color: trendColor),
@@ -149,7 +150,7 @@ class PosKpiCard extends StatelessWidget {
                   ),
               ],
             ),
-          const SizedBox(height: 8),
+          AppSpacing.gapH8,
           // Value
           Text(
             value,
@@ -158,7 +159,7 @@ class PosKpiCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 2),
+          AppSpacing.gapH2,
           // Label
           Text(
             label,
@@ -168,7 +169,7 @@ class PosKpiCard extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           if (subtitle != null) ...[
-            const SizedBox(height: 2),
+            AppSpacing.gapH2,
             Text(
               subtitle!,
               style: AppTypography.micro.copyWith(color: mutedColor, fontSize: 9),
@@ -215,7 +216,7 @@ class PosKpiCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(isPositive ? Icons.trending_up : Icons.trending_down, size: 12, color: trendColor),
-                      const SizedBox(width: 2),
+                      AppSpacing.gapW2,
                       Text(
                         '${isPositive ? '+' : ''}${trend!.toStringAsFixed(1)}%',
                         style: AppTypography.micro.copyWith(color: trendColor, fontWeight: FontWeight.w600),
@@ -228,7 +229,7 @@ class PosKpiCard extends StatelessWidget {
           AppSpacing.gapH8,
           // Value
           Text(value, style: AppTypography.headlineMedium, maxLines: 1, overflow: TextOverflow.ellipsis),
-          const SizedBox(height: 2),
+          AppSpacing.gapH2,
           // Label
           Text(
             label,
@@ -237,11 +238,11 @@ class PosKpiCard extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           if (trendLabel != null) ...[
-            const SizedBox(height: 2),
+            AppSpacing.gapH2,
             Text(trendLabel!, style: AppTypography.micro.copyWith(color: mutedColor), maxLines: 1),
           ],
           if (subtitle != null) ...[
-            const SizedBox(height: 2),
+            AppSpacing.gapH2,
             Text(
               subtitle!,
               style: AppTypography.micro.copyWith(color: mutedColor, fontSize: 10),

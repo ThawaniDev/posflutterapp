@@ -108,16 +108,17 @@ class _AIFeatureDetailPageState extends ConsumerState<AIFeatureDetailPage> {
     final resultState = ref.watch(aiFeatureResultProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(_featureTitle())),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+    return PosListPage(
+  title: _featureTitle(),
+  showSearch: false,
+    child: SingleChildScrollView(
+        padding: context.responsivePagePadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (_params.isNotEmpty) ...[
               Text(l10n.wameedAIParameters, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
-              const SizedBox(height: 12),
+              AppSpacing.gapH12,
               ..._params.map(
                 (p) => Padding(
                   padding: const EdgeInsets.only(bottom: 12),
@@ -130,7 +131,7 @@ class _AIFeatureDetailPageState extends ConsumerState<AIFeatureDetailPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 8),
+              AppSpacing.gapH8,
             ],
             SizedBox(
               width: isMobile ? double.infinity : 200,
@@ -141,17 +142,17 @@ class _AIFeatureDetailPageState extends ConsumerState<AIFeatureDetailPage> {
                 isLoading: resultState is AIFeatureResultLoading,
               ),
             ),
-            const SizedBox(height: 24),
+            AppSpacing.gapH24,
             switch (resultState) {
               AIFeatureResultInitial() => const SizedBox.shrink(),
               AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
               AIFeatureResultError(:final message) => Container(
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
                 child: Row(
                   children: [
                     const Icon(Icons.error_outline, color: AppColors.error),
-                    const SizedBox(width: 12),
+                    AppSpacing.gapW12,
                     Expanded(
                       child: Text(message, style: const TextStyle(color: AppColors.error)),
                     ),
@@ -163,7 +164,7 @@ class _AIFeatureDetailPageState extends ConsumerState<AIFeatureDetailPage> {
           ],
         ),
       ),
-    );
+);
   }
 }
 

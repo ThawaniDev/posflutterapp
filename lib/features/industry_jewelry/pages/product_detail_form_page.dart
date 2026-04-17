@@ -105,21 +105,18 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
   Widget build(BuildContext context) {
     final productsState = ref.watch(productsProvider);
     final products = productsState is ProductsLoaded ? productsState.products : <Product>[];
-    return Scaffold(
-      appBar: AppBar(title: Text(_isEditing ? 'Edit Product Detail' : 'New Jewelry Detail')),
-      bottomNavigationBar: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: PosButton(
+    return PosFormPage(
+      title: _isEditing ? 'Edit Product Detail' : 'New Jewelry Detail',
+      bottomBar: PosButton(
           label: _isEditing ? 'Update Detail' : 'Create Detail',
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,
         ),
-      ),
-      body: Form(
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosSearchableDropdown<String>(
               label: l10n.wameedAIProduct,

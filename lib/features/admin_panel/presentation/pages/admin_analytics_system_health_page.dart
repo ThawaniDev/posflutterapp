@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
@@ -39,9 +39,10 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
   Widget build(BuildContext context) {
     final state = ref.watch(analyticsSystemHealthProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.analyticsSystemHealth), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.analyticsSystemHealth,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -84,13 +85,13 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
                       Text(l10n.syncStatus, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (syncStatus.isEmpty)
-                        const Card(
+                        const PosCard(
                           child: Padding(padding: EdgeInsets.all(AppSpacing.md), child: Text('No sync data')),
                         )
                       else
                         ...syncStatus.entries.map((e) {
                           final isOk = e.key == 'ok' || e.key == 'synced';
-                          return Card(
+                          return PosCard(
                             margin: const EdgeInsets.only(bottom: AppSpacing.xs),
                             child: ListTile(
                               leading: Icon(
@@ -111,9 +112,9 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
                   children: [
                     Text('Error: $msg'),
                     const SizedBox(height: AppSpacing.sm),
-                    ElevatedButton(
+                    PosButton(
                       onPressed: () => ref.read(analyticsSystemHealthProvider.notifier).load(storeId: _storeId),
-                      child: Text(l10n.retry),
+                      label: l10n.retry,
                     ),
                   ],
                 ),
@@ -123,6 +124,6 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
           ),
         ],
       ),
-    );
+);
   }
 }

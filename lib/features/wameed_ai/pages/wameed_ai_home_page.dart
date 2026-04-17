@@ -45,50 +45,37 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
     final chatListState = ref.watch(aiChatListProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            const Icon(Icons.auto_awesome, color: AppColors.primary),
-            const SizedBox(width: 8),
-            Text(l10n.wameedAI),
-          ],
+    return PosListPage(
+      title: l10n.wameedAI,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.receipt_outlined,
+          onPressed: () => context.push(Routes.wameedAIBilling),
+          tooltip: l10n.wameedAIBilling,
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.receipt_outlined),
-            tooltip: l10n.wameedAIBilling,
-            onPressed: () => context.push(Routes.wameedAIBilling),
-          ),
-          IconButton(
-            icon: const Icon(Icons.bar_chart_outlined),
-            tooltip: l10n.wameedAIUsage,
-            onPressed: () => context.push(Routes.wameedAIUsage),
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            tooltip: l10n.wameedAISettings,
-            onPressed: () => context.push(Routes.wameedAISettings),
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () {
-              ref.read(aiChatListProvider.notifier).load();
-              ref.read(aiUsageProvider.notifier).load();
-            },
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _openNewChat,
-        icon: const Icon(Icons.add),
-        label: Text(l10n.wameedAINewChat),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+        PosButton.icon(
+          icon: Icons.bar_chart_outlined,
+          onPressed: () => context.push(Routes.wameedAIUsage),
+          tooltip: l10n.wameedAIUsage,
+        ),
+        PosButton.icon(
+          icon: Icons.settings_outlined,
+          onPressed: () => context.push(Routes.wameedAISettings),
+          tooltip: l10n.wameedAISettings,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh,
+          onPressed: () {
+            ref.read(aiChatListProvider.notifier).load();
+            ref.read(aiUsageProvider.notifier).load();
+          },
+          tooltip: l10n.commonRefresh,
+        ),
+        PosButton(label: l10n.wameedAINewChat, icon: Icons.add, size: PosButtonSize.sm, onPressed: _openNewChat),
+      ],
+      child: SingleChildScrollView(
+        padding: context.responsivePagePadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -102,12 +89,12 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: AppRadius.borderLg,
               ),
               child: Row(
                 children: [
                   const Icon(Icons.auto_awesome, size: 36, color: AppColors.primary),
-                  const SizedBox(width: 16),
+                  AppSpacing.gapW16,
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +105,7 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
                             context,
                           ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
                         ),
-                        const SizedBox(height: 4),
+                        AppSpacing.gapH4,
                         Text(
                           l10n.wameedAIWelcomeSubtitle,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).hintColor),
@@ -129,13 +116,13 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
                 ],
               ),
             ),
-            SizedBox(height: isMobile ? 16 : AppSpacing.lg),
+            AppSpacing.gapH16,
             const AIUsageBanner(),
-            SizedBox(height: isMobile ? 16 : AppSpacing.lg),
+            AppSpacing.gapH16,
 
             // Chat history
             Text(l10n.wameedAIRecentChats, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             switch (chatListState) {
               AIChatListInitial() || AIChatListLoading() => const PosLoading(),
               AIChatListError(:final message) => PosErrorState(
@@ -160,7 +147,7 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: chats.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 8),
+      separatorBuilder: (_, __) => AppSpacing.gapH8,
       itemBuilder: (context, index) {
         final chat = chats[index];
         return _buildChatTile(chat);
@@ -173,17 +160,11 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
     final theme = Theme.of(context);
     final timeAgo = chat.lastMessageAt != null ? _formatTimeAgo(l10n, chat.lastMessageAt!) : '';
 
-    return InkWell(
+    return PosCard(
       onTap: () => _openChat(chat.id),
-      onLongPress: () => _showChatOptionsSheet(chat),
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: theme.cardColor,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: theme.dividerColor),
-        ),
+      padding: const EdgeInsets.all(16),
+      child: GestureDetector(
+        onLongPress: () => _showChatOptionsSheet(chat),
         child: Row(
           children: [
             CircleAvatar(
@@ -191,7 +172,7 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
               backgroundColor: AppColors.primary.withValues(alpha: 0.1),
               child: const Icon(Icons.chat_outlined, color: AppColors.primary, size: 20),
             ),
-            const SizedBox(width: 12),
+            AppSpacing.gapW12,
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,14 +183,14 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(height: 4),
+                  AppSpacing.gapH4,
                   Row(
                     children: [
                       if (chat.llmModel != null) ...[
                         Text(chat.llmModel!.displayName, style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor)),
-                        const SizedBox(width: 8),
+                        AppSpacing.gapW8,
                         Text('•', style: TextStyle(color: theme.hintColor)),
-                        const SizedBox(width: 8),
+                        AppSpacing.gapW8,
                       ],
                       Text(
                         '${chat.messageCount} ${l10n.wameedAIMessages}',
@@ -224,7 +205,7 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(timeAgo, style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor)),
-                const SizedBox(height: 4),
+                AppSpacing.gapH4,
                 Icon(Icons.chevron_right, color: theme.hintColor, size: 18),
               ],
             ),
@@ -299,8 +280,8 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
           },
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.commonCancel)),
-          TextButton(
+          PosButton(onPressed: () => Navigator.of(ctx).pop(), variant: PosButtonVariant.ghost, label: l10n.commonCancel),
+          PosButton(
             onPressed: () {
               final title = controller.text.trim();
               if (title.isNotEmpty) {
@@ -311,7 +292,8 @@ class _WameedAIHomePageState extends ConsumerState<WameedAIHomePage> {
               }
               Navigator.of(ctx).pop();
             },
-            child: Text(l10n.commonRename),
+            variant: PosButtonVariant.ghost,
+            label: l10n.commonRename,
           ),
         ],
       ),

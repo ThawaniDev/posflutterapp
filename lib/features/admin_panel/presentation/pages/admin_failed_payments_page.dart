@@ -39,19 +39,15 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
   Widget build(BuildContext context) {
     final state = ref.watch(failedPaymentsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.failedPayments),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => ref.read(failedPaymentsProvider.notifier).loadFailedPayments(storeId: _storeId),
-          ),
-        ],
-      ),
-      body: Column(
+    return PosListPage(
+  title: l10n.failedPayments,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(failedPaymentsProvider.notifier).loadFailedPayments(storeId: _storeId),
+  ),
+],
+  child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -80,11 +76,11 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _failedPaymentCard(Map<String, dynamic> invoice) {
-    return Card(
+    return PosCard(
       margin: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.md),
@@ -130,7 +126,7 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: AppColors.error.withValues(alpha: 0.15),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.borderLg,
                   ),
                   child: Text(
                     'FAILED',

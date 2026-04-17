@@ -108,21 +108,18 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
   Widget build(BuildContext context) {
     final restState = ref.watch(restaurantProvider);
     final tables = restState is RestaurantLoaded ? restState.tables : <RestaurantTable>[];
-    return Scaffold(
-      appBar: AppBar(title: Text(_isEditing ? 'Edit Reservation' : 'New Reservation')),
-      bottomNavigationBar: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: PosButton(
+    return PosFormPage(
+      title: _isEditing ? 'Edit Reservation' : 'New Reservation',
+      bottomBar: PosButton(
           label: _isEditing ? 'Update Reservation' : 'Create Reservation',
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,
         ),
-      ),
-      body: Form(
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosTextField(controller: _customerNameCtrl, label: l10n.deliveryCustomerName, hint: 'Full name'),
             SizedBox(height: AppSpacing.md),

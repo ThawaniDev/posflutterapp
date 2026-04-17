@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wameedpos/core/widgets/pos_badge.dart';
-import 'package:wameedpos/core/widgets/pos_table.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/inventory/models/stock_movement.dart';
 import 'package:wameedpos/features/inventory/providers/inventory_providers.dart';
 import 'package:wameedpos/features/inventory/providers/inventory_state.dart';
@@ -34,18 +33,17 @@ class _StockMovementsPageState extends ConsumerState<StockMovementsPage> {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(stockMovementsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.inventoryStockMovements),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(stockMovementsProvider.notifier).load(productId: widget.productId),
-          ),
-        ],
-      ),
-      body: _buildBody(state),
+    return PosListPage(
+      title: l10n.inventoryStockMovements,
+      actions: [
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () => ref.read(stockMovementsProvider.notifier).load(productId: widget.productId),
+          variant: PosButtonVariant.ghost,
+        ),
+      ],
+      child: _buildBody(state),
     );
   }
 

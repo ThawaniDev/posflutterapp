@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
@@ -15,16 +16,14 @@ class AdminFinOpsAccountingConfigListPage extends ConsumerStatefulWidget {
   ConsumerState<AdminFinOpsAccountingConfigListPage> createState() => _State();
 }
 
-class _State extends ConsumerState<AdminFinOpsAccountingConfigListPage> with SingleTickerProviderStateMixin {
-
+class _State extends ConsumerState<AdminFinOpsAccountingConfigListPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
-  late TabController _tabController;
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       _loadData();
@@ -45,39 +44,25 @@ class _State extends ConsumerState<AdminFinOpsAccountingConfigListPage> with Sin
   }
 
   @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.sidebarAccounting),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        bottom: TabBar(
-          controller: _tabController,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.white70,
-          indicatorColor: Colors.white,
-          tabs: [
-            Tab(text: 'Configs'),
-            Tab(text: 'Mappings'),
-            Tab(text: 'Exports'),
-            Tab(text: l10n.accountingAutoExport),
-          ],
-        ),
-      ),
-      body: Column(
+    return PosListPage(
+      title: l10n.sidebarAccounting,
+      showSearch: false,
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: 'Configs'),
+              PosTabItem(label: 'Mappings'),
+              PosTabItem(label: 'Exports'),
+              PosTabItem(label: l10n.accountingAutoExport),
+            ],
+          ),
           Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: [_ConfigsTab(), _MappingsTab(), _ExportsTab(), _AutoExportTab()],
-            ),
+            child: IndexedStack(index: _currentTab, children: [_ConfigsTab(), _MappingsTab(), _ExportsTab(), _AutoExportTab()]),
           ),
         ],
       ),
@@ -110,8 +95,8 @@ class _ConfigsTab extends ConsumerWidget {
       separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.xs),
       itemBuilder: (_, i) {
         final item = items[i];
-        return Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        return PosCard(
+          borderRadius: BorderRadius.circular(10,),
           child: ListTile(
             leading: const CircleAvatar(
               backgroundColor: Color(0xFFE8F5E9),
@@ -140,7 +125,6 @@ class _MappingsTab extends ConsumerStatefulWidget {
 }
 
 class _MappingsTabState extends ConsumerState<_MappingsTab> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
@@ -200,8 +184,8 @@ class _ExportsTab extends ConsumerWidget {
       itemBuilder: (_, i) {
         final item = items[i];
         final status = (item['status'] ?? '').toString();
-        return Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        return PosCard(
+          borderRadius: BorderRadius.circular(10,),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: const Color(0xFF1E88E5).withValues(alpha: 0.1),
@@ -228,7 +212,7 @@ class _ExportsTab extends ConsumerWidget {
     };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
       child: Text(
         status.toUpperCase(),
         style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: color),
@@ -262,8 +246,8 @@ class _AutoExportTab extends ConsumerWidget {
       separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.xs),
       itemBuilder: (_, i) {
         final item = items[i];
-        return Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        return PosCard(
+          borderRadius: BorderRadius.circular(10,),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: const Color(0xFF7C3AED).withValues(alpha: 0.1),

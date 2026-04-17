@@ -628,6 +628,7 @@ class _PosSearchableDropdownState<T> extends State<PosSearchableDropdown<T>> {
             child: Icon(widget.prefixIcon, size: 20, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
           ),
         Flexible(
+          fit: FlexFit.tight,
           child: hasValue
               ? Text(
                   item.label,

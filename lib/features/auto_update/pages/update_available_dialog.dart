@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Dialog shown when a new update is available.
 /// Offers: Install Now, Schedule, or Remind Later.
@@ -77,7 +78,7 @@ class UpdateAvailableDialog extends StatelessWidget {
               AppSpacing.gapH12,
               Container(
                 padding: AppSpacing.paddingAll8,
-                decoration: BoxDecoration(color: AppColors.error.withAlpha(20), borderRadius: BorderRadius.circular(8)),
+                decoration: BoxDecoration(color: AppColors.error.withAlpha(20), borderRadius: AppRadius.borderMd),
                 child: Row(
                   children: [
                     const Icon(Icons.info_outline, color: AppColors.error, size: 16),
@@ -104,20 +105,22 @@ class UpdateAvailableDialog extends StatelessWidget {
       actionsAlignment: MainAxisAlignment.center,
       actions: [
         if (!isForceUpdate)
-          TextButton(
+          PosButton(
             onPressed: () {
               Navigator.of(context).pop();
               onRemindLater();
             },
-            child: Text(l10n.autoUpdateRemindLater),
+            variant: PosButtonVariant.ghost,
+            label: l10n.autoUpdateRemindLater,
           ),
         if (!isForceUpdate)
-          OutlinedButton(
+          PosButton(
             onPressed: () {
               Navigator.of(context).pop();
               onSchedule();
             },
-            child: Text(l10n.autoUpdateSchedule),
+            variant: PosButtonVariant.outline,
+            label: l10n.autoUpdateSchedule,
           ),
         FilledButton.icon(
           icon: const Icon(Icons.download),

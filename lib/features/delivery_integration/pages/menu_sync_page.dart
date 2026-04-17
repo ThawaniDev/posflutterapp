@@ -28,12 +28,15 @@ class MenuSyncPage extends ConsumerWidget {
     final logsAsync = ref.watch(_syncLogsProvider);
     final configsState = ref.watch(deliveryConfigsProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.deliveryMenuSync),
-        actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: () => ref.invalidate(_syncLogsProvider))],
-      ),
-      body: ListView(
+    return PosListPage(
+  title: l10n.deliveryMenuSync,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.invalidate(_syncLogsProvider),
+  ),
+],
+  child: ListView(
         padding: AppSpacing.paddingAll16,
         children: [
           // Sync trigger section
@@ -75,7 +78,7 @@ class MenuSyncPage extends ConsumerWidget {
           ),
         ],
       ),
-    );
+);
   }
 }
 
@@ -104,12 +107,10 @@ class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
       enabledPlatforms.addAll((widget.configsState as DeliveryConfigsLoaded).configs.where((c) => c['is_enabled'] == true));
     }
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.lg),
-        side: BorderSide(color: AppColors.info.withValues(alpha: 0.3)),
-      ),
+      borderRadius: AppRadius.borderLg,
+      border: Border.fromBorderSide(BorderSide(color: AppColors.info.withValues(alpha: 0.3))),
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -170,7 +171,7 @@ class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
                 padding: AppSpacing.paddingAll12,
                 decoration: BoxDecoration(
                   color: AppColors.success.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(AppRadius.md),
+                  borderRadius: AppRadius.borderMd,
                 ),
                 child: Row(
                   children: [
@@ -192,7 +193,7 @@ class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
                 padding: AppSpacing.paddingAll12,
                 decoration: BoxDecoration(
                   color: AppColors.error.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(AppRadius.md),
+                  borderRadius: AppRadius.borderMd,
                 ),
                 child: Row(
                   children: [

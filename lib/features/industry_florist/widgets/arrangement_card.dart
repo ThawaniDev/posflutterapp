@@ -5,6 +5,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/pos_status_badge.dart';
 import '../models/flower_arrangement.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class ArrangementCard extends StatelessWidget {
   final FlowerArrangement arrangement;
@@ -19,15 +20,13 @@ class ArrangementCard extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderMd,
+      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: AppRadius.borderMd,
         child: Padding(
           padding: AppSpacing.paddingCard,
           child: Column(
@@ -40,7 +39,7 @@ class ArrangementCard extends StatelessWidget {
                     height: 40,
                     decoration: BoxDecoration(
                       color: AppColors.rose.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(AppRadius.sm),
+                      borderRadius: AppRadius.borderSm,
                     ),
                     child: const Icon(Icons.local_florist, color: AppColors.rose, size: 22),
                   ),

@@ -4,6 +4,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/pos_status_badge.dart';
 import '../models/flower_subscription.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class FlowerSubscriptionCard extends StatelessWidget {
   final FlowerSubscription subscription;
@@ -16,15 +17,13 @@ class FlowerSubscriptionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isActive = subscription.isActive ?? true;
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: Theme.of(context).dividerColor),
-      ),
+      borderRadius: AppRadius.borderMd,
+      border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: AppRadius.borderMd,
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(
@@ -84,16 +83,7 @@ class FlowerSubscriptionCard extends StatelessWidget {
                 AppSpacing.gapH8,
                 SizedBox(
                   width: double.infinity,
-                  child: OutlinedButton(
-                    onPressed: onToggle,
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: isActive ? AppColors.warning : AppColors.success,
-                      side: BorderSide(color: isActive ? AppColors.warning : AppColors.success),
-                      padding: const EdgeInsets.symmetric(vertical: 6),
-                      textStyle: AppTypography.labelSmall,
-                    ),
-                    child: Text(isActive ? 'Pause' : 'Resume'),
-                  ),
+                  child: PosButton(onPressed: onToggle, variant: PosButtonVariant.outline, label: isActive ? 'Pause' : 'Resume'),
                 ),
               ],
             ],

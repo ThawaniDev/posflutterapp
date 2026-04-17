@@ -9,6 +9,7 @@ import 'package:wameedpos/features/reports/widgets/report_charts.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class CategoryBreakdownPage extends ConsumerStatefulWidget {
   const CategoryBreakdownPage({super.key});
@@ -133,7 +134,7 @@ class _CategoryList extends StatelessWidget {
                               height: 32,
                               decoration: BoxDecoration(
                                 color: AppColors.primary.withValues(alpha: 0.1),
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: AppRadius.borderMd,
                               ),
                               child: Center(
                                 child: Text(

@@ -6,6 +6,8 @@ import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_providers.dart';
 import 'package:wameedpos/features/wameed_ai/providers/wameed_ai_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class AIDashboardWidget extends ConsumerStatefulWidget {
   const AIDashboardWidget({super.key});
@@ -30,7 +32,7 @@ class _AIDashboardWidgetState extends ConsumerState<AIDashboardWidget> {
 
     return InkWell(
       onTap: () => context.push(Routes.wameedAI),
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: AppRadius.borderXl,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -39,7 +41,7 @@ class _AIDashboardWidgetState extends ConsumerState<AIDashboardWidget> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AppRadius.borderXl,
           border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
         ),
         child: Column(
@@ -52,7 +54,7 @@ class _AIDashboardWidgetState extends ConsumerState<AIDashboardWidget> {
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withValues(alpha: 0.12),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: AppRadius.borderLg,
                   ),
                   child: const Icon(Icons.auto_awesome, size: 20, color: AppColors.primary),
                 ),
@@ -98,7 +100,7 @@ class _AIDashboardWidgetState extends ConsumerState<AIDashboardWidget> {
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: Theme.of(context).scaffoldBackgroundColor,
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: AppRadius.borderMd,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

@@ -20,7 +20,6 @@ class ShiftSchedulePage extends ConsumerStatefulWidget {
 }
 
 class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   DateTimeRange? _dateRange;
   String? _statusFilter;
@@ -45,57 +44,51 @@ class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(shiftProvider);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: Text(l10n.staffShiftSchedule),
-        actions: [
-          IconButton(icon: Icon(Icons.date_range), onPressed: _pickDateRange, tooltip: l10n.staffFilterByDate),
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _loadShifts),
-        ],
-      ),
-      floatingActionButton: PosButton(
-        onPressed: () => _showCreateShiftDialog(context, state),
-        // icon: const Icon(Icons.add),
-        label: l10n.staffAddShift,
-      ),
-      body: Column(
-        children: [
-          // Status filter chips
-          SizedBox(
-            height: 48,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              children: [
-                FilterChip(
-                  label: Text(l10n.all, style: TextStyle(fontSize: 12)),
-                  selected: _statusFilter == null,
-                  onSelected: (_) {
-                    setState(() => _statusFilter = null);
-                    _loadShifts();
-                  },
-                  visualDensity: VisualDensity.compact,
-                ),
-                for (final status in ShiftScheduleStatus.values) ...[
-                  AppSpacing.gapW8,
-                  FilterChip(
-                    label: Text(status.value.toUpperCase(), style: const TextStyle(fontSize: 12)),
-                    selected: _statusFilter == status.value,
-                    onSelected: (_) {
-                      setState(() => _statusFilter = status.value);
-                      _loadShifts();
-                    },
-                    visualDensity: VisualDensity.compact,
-                  ),
-                ],
-              ],
-            ),
+    return PosListPage(
+      title: l10n.staffShiftSchedule,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.date_range,
+          tooltip: l10n.staffFilterByDate,
+          onPressed: _pickDateRange,
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(icon: Icons.refresh, tooltip: l10n.commonRefresh, onPressed: _loadShifts, variant: PosButtonVariant.ghost),
+        PosButton(label: l10n.staffAddShift, icon: Icons.add, onPressed: () => _showCreateShiftDialog(context, state)),
+      ],
+      isLoading: state is ShiftInitial || state is ShiftLoading,
+      hasError: state is ShiftError,
+      errorMessage: state is ShiftError ? (state).message : null,
+      onRetry: _loadShifts,
+      isEmpty: state is ShiftLoaded && (state).shifts.isEmpty,
+      emptyTitle: 'No shifts found',
+      emptyIcon: Icons.calendar_today,
+      filters: [
+        FilterChip(
+          label: Text(l10n.all, style: const TextStyle(fontSize: 12)),
+          selected: _statusFilter == null,
+          onSelected: (_) {
+            setState(() => _statusFilter = null);
+            _loadShifts();
+          },
+          visualDensity: VisualDensity.compact,
+        ),
+        for (final status in ShiftScheduleStatus.values)
+          FilterChip(
+            label: Text(status.value.toUpperCase(), style: const TextStyle(fontSize: 12)),
+            selected: _statusFilter == status.value,
+            onSelected: (_) {
+              setState(() => _statusFilter = status.value);
+              _loadShifts();
+            },
+            visualDensity: VisualDensity.compact,
           ),
+      ],
+      child: Column(
+        children: [
           // Active date filter
           if (_dateRange != null)
             Container(
@@ -120,23 +113,19 @@ class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
           // Shift list
           Expanded(
             child: switch (state) {
-              ShiftInitial() || ShiftLoading() => PosLoadingSkeleton.list(),
-              ShiftError(message: final msg) => PosErrorState(message: msg, onRetry: _loadShifts),
-              ShiftLoaded(shifts: final shifts) =>
-                shifts.isEmpty
-                    ? const PosEmptyState(title: 'No shifts found', icon: Icons.calendar_today)
-                    : RefreshIndicator(
-                        onRefresh: () async => _loadShifts(),
-                        child: ListView.builder(
-                          padding: const EdgeInsets.only(bottom: 80),
-                          itemCount: shifts.length,
-                          itemBuilder: (context, index) => _ShiftCard(
-                            shift: shifts[index],
-                            dateFormat: _dateFormat,
-                            onDelete: () => _confirmDeleteShift(context, shifts[index]),
-                          ),
-                        ),
-                      ),
+              ShiftLoaded(shifts: final shifts) => RefreshIndicator(
+                onRefresh: () async => _loadShifts(),
+                child: ListView.builder(
+                  padding: const EdgeInsets.only(bottom: 80),
+                  itemCount: shifts.length,
+                  itemBuilder: (context, index) => _ShiftCard(
+                    shift: shifts[index],
+                    dateFormat: _dateFormat,
+                    onDelete: () => _confirmDeleteShift(context, shifts[index]),
+                  ),
+                ),
+              ),
+              _ => const SizedBox.shrink(),
             },
           ),
         ],
@@ -145,8 +134,8 @@ class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
   }
 
   Future<void> _pickDateRange() async {
-    final range = await showDateRangePicker(
-      context: context,
+    final range = await showPosDateRangePicker(
+      context,
       firstDate: DateTime(2020),
       lastDate: DateTime.now().add(const Duration(days: 365)),
       initialDateRange: _dateRange,
@@ -225,13 +214,12 @@ class _ShiftCard extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final (statusColor, statusLabel) = _statusInfo(shift.status);
 
-    return Card(
+    return PosCard(
       elevation: 0,
       color: isDark ? AppColors.cardDark : AppColors.cardLight,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderMd,
+
+      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: Padding(
         padding: AppSpacing.paddingAll16,
@@ -242,7 +230,7 @@ class _ShiftCard extends StatelessWidget {
             Container(
               width: 60,
               padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(color: colorScheme.primaryContainer, borderRadius: BorderRadius.circular(8)),
+              decoration: BoxDecoration(color: colorScheme.primaryContainer, borderRadius: AppRadius.borderMd),
               child: Column(
                 children: [
                   Text(
@@ -275,7 +263,7 @@ class _ShiftCard extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
                           color: statusColor.withValues(alpha: 0.15),
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: AppRadius.borderLg,
                         ),
                         child: Text(
                           statusLabel,
@@ -338,7 +326,6 @@ class _CreateShiftDialog extends ConsumerStatefulWidget {
 }
 
 class _CreateShiftDialogState extends ConsumerState<_CreateShiftDialog> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   StaffUser? _selectedStaff;
   ShiftTemplate? _selectedTemplate;
@@ -404,8 +391,8 @@ class _CreateShiftDialogState extends ConsumerState<_CreateShiftDialog> {
         ),
       ),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(context), child: Text(l10n.cancel)),
-        FilledButton(
+        PosButton(onPressed: () => Navigator.pop(context), variant: PosButtonVariant.ghost, label: l10n.cancel),
+        PosButton(
           onPressed: _selectedStaff == null || _selectedTemplate == null
               ? null
               : () => widget.onCreate({
@@ -414,7 +401,8 @@ class _CreateShiftDialogState extends ConsumerState<_CreateShiftDialog> {
                   'shift_template_id': _selectedTemplate!.id,
                   'date': _dateFormat.format(_selectedDate),
                 }),
-          child: Text(l10n.create),
+          variant: PosButtonVariant.soft,
+          label: l10n.create,
         ),
       ],
     );

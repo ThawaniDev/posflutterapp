@@ -31,33 +31,24 @@ class _ExpiryManagerPageState extends ConsumerState<ExpiryManagerPage> {
     final state = ref.watch(aiFeatureResultProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            const Icon(Icons.timer_outlined, color: AppColors.warning),
-            const SizedBox(width: 8),
-            Text(l10n.wameedAIExpiryManager),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('expiry_manager'),
-          ),
-        ],
-      ),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.wameedAIExpiryManager,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('expiry_manager'), tooltip: l10n.commonRefresh,
+  ),
+],
+  child: switch (state) {
         AIFeatureResultInitial() || AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
         AIFeatureResultError(:final message) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(Icons.error_outline, color: AppColors.error, size: 48),
-              const SizedBox(height: 16),
+              AppSpacing.gapH16,
               Text(message, textAlign: TextAlign.center),
-              const SizedBox(height: 16),
+              AppSpacing.gapH16,
               PosButton(
                 label: l10n.commonRetry,
                 onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('expiry_manager'),
@@ -67,7 +58,7 @@ class _ExpiryManagerPageState extends ConsumerState<ExpiryManagerPage> {
         ),
         AIFeatureResultLoaded(:final result) => _buildContent(result.data, isMobile, l10n),
       },
-    );
+);
   }
 
   Widget _buildContent(Map<String, dynamic>? data, bool isMobile, AppLocalizations l10n) {
@@ -86,7 +77,7 @@ class _ExpiryManagerPageState extends ConsumerState<ExpiryManagerPage> {
     final summaryText = data['summary_ar']?.toString() ?? data['summary']?.toString() ?? '';
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+      padding: context.responsivePagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -107,25 +98,25 @@ class _ExpiryManagerPageState extends ConsumerState<ExpiryManagerPage> {
 
           // AI summary text
           if (summaryText.isNotEmpty) ...[
-            const SizedBox(height: 16),
+            AppSpacing.gapH16,
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.05),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.borderLg,
                 border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
               ),
               child: SelectableText(summaryText, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
             ),
           ],
 
-          const SizedBox(height: 24),
+          AppSpacing.gapH24,
           Text(
             l10n.wameedAIExpiringProducts,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
           ),
-          const SizedBox(height: 12),
+          AppSpacing.gapH12,
 
           if (expiringProducts.isEmpty)
             PosEmptyState(title: l10n.wameedAINoExpiringProducts, icon: Icons.check_circle_outline)
@@ -181,14 +172,14 @@ class _ExpiryManagerPageState extends ConsumerState<ExpiryManagerPage> {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: AppRadius.borderLg,
         border: Border.all(color: color.withValues(alpha: 0.2)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(icon, size: 18, color: color),
-          const SizedBox(width: 8),
+          AppSpacing.gapW8,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -209,7 +200,7 @@ class _ExpiryManagerPageState extends ConsumerState<ExpiryManagerPage> {
     final color = days <= 3 ? AppColors.error : (days <= 7 ? AppColors.warning : AppColors.success);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(6)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: AppRadius.borderSm),
       child: Text(
         '$days days',
         style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w700, color: color),
@@ -222,7 +213,7 @@ class _ExpiryManagerPageState extends ConsumerState<ExpiryManagerPage> {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: Theme.of(context).dividerColor.withValues(alpha: 0.3),
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: AppRadius.borderSm,
       ),
       child: Text(text, style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w500)),
     );
@@ -231,7 +222,7 @@ class _ExpiryManagerPageState extends ConsumerState<ExpiryManagerPage> {
   Widget _discountChip(BuildContext context, String text) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(6)),
+      decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.12), borderRadius: AppRadius.borderSm),
       child: Text(
         text,
         style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600, color: AppColors.success),

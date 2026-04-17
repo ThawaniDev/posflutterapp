@@ -3,6 +3,8 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/models/cashier_anomaly.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class AnomalyCard extends StatelessWidget {
   final CashierAnomaly anomaly;
@@ -19,21 +21,19 @@ class AnomalyCard extends StatelessWidget {
     final title = locale == 'ar' ? (anomaly.titleAr ?? anomaly.titleEn ?? '') : (anomaly.titleEn ?? '');
     final description = locale == 'ar' ? (anomaly.descriptionAr ?? anomaly.descriptionEn ?? '') : (anomaly.descriptionEn ?? '');
 
-    return Card(
+    return PosCard(
       elevation: 0.5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: _severityColor.withValues(alpha: 0.3), width: 1),
-      ),
+      borderRadius: AppRadius.borderLg,
+      border: Border.fromBorderSide(BorderSide(color: _severityColor.withValues(alpha: 0.3))),
       child: Padding(
-        padding: EdgeInsets.all(isMobile ? 12 : 16),
+        padding: context.responsivePagePadding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Icon(_severityIcon, color: _severityColor, size: isMobile ? 20 : 24),
-                const SizedBox(width: 8),
+                Icon(_severityIcon, color: _severityColor, size: context.responsiveIconSize),
+                AppSpacing.gapW8,
                 Expanded(
                   child: Text(
                     title,
@@ -46,10 +46,10 @@ class AnomalyCard extends StatelessWidget {
               ],
             ),
             if (description.isNotEmpty) ...[
-              const SizedBox(height: 8),
+              AppSpacing.gapH8,
               Text(description, style: theme.textTheme.bodySmall, maxLines: 3, overflow: TextOverflow.ellipsis),
             ],
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             Wrap(
               spacing: 8,
               runSpacing: 4,
@@ -62,7 +62,7 @@ class AnomalyCard extends StatelessWidget {
               ],
             ),
             if (!anomaly.isReviewed && onReview != null) ...[
-              const SizedBox(height: 8),
+              AppSpacing.gapH8,
               Align(
                 alignment: AlignmentDirectional.centerEnd,
                 child: TextButton.icon(
@@ -74,14 +74,14 @@ class AnomalyCard extends StatelessWidget {
               ),
             ],
             if (anomaly.isReviewed) ...[
-              const SizedBox(height: 4),
+              AppSpacing.gapH4,
               Row(
                 children: [
                   Icon(Icons.check_circle_rounded, color: AppColors.success, size: 14),
-                  const SizedBox(width: 4),
+                  AppSpacing.gapW4,
                   Text('Reviewed', style: TextStyle(fontSize: 12, color: AppColors.success)),
                   if (anomaly.reviewNotes != null && anomaly.reviewNotes!.isNotEmpty) ...[
-                    const SizedBox(width: 8),
+                    AppSpacing.gapW8,
                     Expanded(
                       child: Text(
                         anomaly.reviewNotes!,
@@ -149,7 +149,7 @@ class _SeverityChip extends StatelessWidget {
     }
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(8)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: AppRadius.borderMd),
       child: Text(
         severity.toUpperCase(),
         style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: color),

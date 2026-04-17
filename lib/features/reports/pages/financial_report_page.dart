@@ -18,24 +18,19 @@ class FinancialReportPage extends ConsumerStatefulWidget {
   ConsumerState<FinancialReportPage> createState() => _FinancialReportPageState();
 }
 
-class _FinancialReportPageState extends ConsumerState<FinancialReportPage> with TickerProviderStateMixin {
-
+class _FinancialReportPageState extends ConsumerState<FinancialReportPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  late final TabController _tabController;
+  int _currentTab = 0;
   ReportFilters _filters = const ReportFilters();
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) => _loadCurrentTab());
-    _tabController.addListener(() {
-      if (!_tabController.indexIsChanging) _loadCurrentTab();
-    });
   }
 
   void _loadCurrentTab() {
-    switch (_tabController.index) {
+    switch (_currentTab) {
       case 0:
         ref.read(financialDailyPlProvider.notifier).load(filters: _filters);
       case 1:
@@ -51,31 +46,27 @@ class _FinancialReportPageState extends ConsumerState<FinancialReportPage> with 
   }
 
   @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: Text(l10n.reportsFinancial),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: [
-            Tab(text: l10n.reportsDailyPl),
-            Tab(text: l10n.expenses),
-            Tab(text: l10n.cashVariance),
-          ],
-        ),
-      ),
-      body: Column(
+    return PosListPage(
+      title: l10n.reportsFinancial,
+      showSearch: false,
+      child: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: PosTabs(
+              selectedIndex: _currentTab,
+              onChanged: (i) => setState(() {
+                _currentTab = i;
+                _loadCurrentTab();
+              }),
+              tabs: [
+                PosTabItem(label: l10n.reportsDailyPl),
+                PosTabItem(label: l10n.expenses),
+                PosTabItem(label: l10n.cashVariance),
+              ],
+            ),
+          ),
           ReportFilterPanel(
             filters: _filters,
             onFiltersChanged: _onFiltersChanged,
@@ -84,7 +75,7 @@ class _FinancialReportPageState extends ConsumerState<FinancialReportPage> with 
             showStaffFilter: true,
           ),
           Expanded(
-            child: TabBarView(controller: _tabController, children: const [_DailyPlTab(), _ExpensesTab(), _CashVarianceTab()]),
+            child: IndexedStack(index: _currentTab, children: const [_DailyPlTab(), _ExpensesTab(), _CashVarianceTab()]),
           ),
         ],
       ),
@@ -258,7 +249,7 @@ class _ExpensesTab extends ConsumerWidget {
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                   color: AppColors.warning.withValues(alpha: 0.1),
-                                  borderRadius: BorderRadius.circular(8),
+                                  borderRadius: AppRadius.borderMd,
                                 ),
                                 child: Icon(Icons.category_rounded, color: AppColors.warning, size: 18),
                               ),
@@ -372,7 +363,7 @@ class _CashVarianceTab extends ConsumerWidget {
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: color.withValues(alpha: 0.03),
-                      borderRadius: BorderRadius.circular(AppRadius.lg),
+                      borderRadius: AppRadius.borderLg,
                       border: Border.all(color: color.withValues(alpha: 0.25)),
                     ),
                     child: Column(
@@ -384,7 +375,7 @@ class _CashVarianceTab extends ConsumerWidget {
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 color: color.withValues(alpha: 0.1),
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: AppRadius.borderMd,
                               ),
                               child: Icon(
                                 isShort ? Icons.arrow_downward_rounded : Icons.arrow_upward_rounded,

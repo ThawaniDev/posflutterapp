@@ -22,20 +22,13 @@ class StaffDetailPage extends ConsumerStatefulWidget {
   ConsumerState<StaffDetailPage> createState() => _StaffDetailPageState();
 }
 
-class _StaffDetailPageState extends ConsumerState<StaffDetailPage> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _StaffDetailPageState extends ConsumerState<StaffDetailPage> {
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
     Future.microtask(() => ref.read(staffDetailProvider(widget.staffId).notifier).load());
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 
   @override
@@ -44,38 +37,37 @@ class _StaffDetailPageState extends ConsumerState<StaffDetailPage> with SingleTi
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: Text(state is StaffDetailLoaded ? '${state.staff.firstName} ${state.staff.lastName}' : l10n.staffMemberDetails),
-        actions: [
-          if (state is StaffDetailLoaded)
-            IconButton(
-              icon: const Icon(Icons.edit),
-              tooltip: l10n.edit,
-              onPressed: () async {
-                final result = await context.push<bool>('${Routes.staffMembers}/${widget.staffId}/edit');
-                if (result == true && mounted) {
-                  ref.read(staffDetailProvider(widget.staffId).notifier).load();
-                }
-              },
-            ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.retry,
-            onPressed: () => ref.read(staffDetailProvider(widget.staffId).notifier).load(),
+    return PosListPage(
+      title: state is StaffDetailLoaded ? '${state.staff.firstName} ${state.staff.lastName}' : l10n.staffMemberDetails,
+      showSearch: false,
+      actions: [
+        if (state is StaffDetailLoaded)
+          PosButton.icon(
+            icon: Icons.edit,
+            tooltip: l10n.edit,
+            onPressed: () async {
+              final result = await context.push<bool>('${Routes.staffMembers}/${widget.staffId}/edit');
+              if (result == true && mounted) {
+                ref.read(staffDetailProvider(widget.staffId).notifier).load();
+              }
+            },
+            variant: PosButtonVariant.ghost,
           ),
-        ],
-      ),
-      body: switch (state) {
-        StaffDetailInitial() || StaffDetailLoading() || StaffDetailSaving() => PosLoadingSkeleton.list(),
-        StaffDetailError(message: final msg) => PosErrorState(
-          message: msg,
-          onRetry: () => ref.read(staffDetailProvider(widget.staffId).notifier).load(),
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.retry,
+          onPressed: () => ref.read(staffDetailProvider(widget.staffId).notifier).load(),
+          variant: PosButtonVariant.ghost,
         ),
+      ],
+      isLoading: state is StaffDetailInitial || state is StaffDetailLoading || state is StaffDetailSaving,
+      hasError: state is StaffDetailError,
+      errorMessage: state is StaffDetailError ? (state).message : null,
+      onRetry: () => ref.read(staffDetailProvider(widget.staffId).notifier).load(),
+      child: switch (state) {
         StaffDetailLoaded(staff: final staff) => _buildContent(context, staff, isDark, l10n),
         StaffDetailSaved(staff: final staff) => _buildContent(context, staff, isDark, l10n),
+        _ => const SizedBox.shrink(),
       },
     );
   }
@@ -86,25 +78,23 @@ class _StaffDetailPageState extends ConsumerState<StaffDetailPage> with SingleTi
         // Profile header
         _ProfileHeader(staff: staff, isDark: isDark, l10n: l10n),
         // Tab bar
-        Container(
-          color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-          child: TabBar(
-            controller: _tabController,
-            labelColor: AppColors.primary,
-            unselectedLabelColor: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
-            indicatorColor: AppColors.primary,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
             tabs: [
-              Tab(text: l10n.staffOverview),
-              Tab(text: l10n.staffBranches),
-              Tab(text: l10n.staffAttendanceTab),
-              Tab(text: l10n.staffActivity),
+              PosTabItem(label: l10n.staffOverview),
+              PosTabItem(label: l10n.staffBranches),
+              PosTabItem(label: l10n.staffAttendanceTab),
+              PosTabItem(label: l10n.staffActivity),
             ],
           ),
         ),
         // Tab views
         Expanded(
-          child: TabBarView(
-            controller: _tabController,
+          child: IndexedStack(
+            index: _currentTab,
             children: [
               _OverviewTab(staff: staff, isDark: isDark, l10n: l10n),
               _BranchAssignmentsTab(staff: staff, isDark: isDark, l10n: l10n),
@@ -207,7 +197,7 @@ class _StatusBadge extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(color: color.withValues(alpha: 0.15), borderRadius: AppRadius.borderLg),
       child: Text(
         label,
         style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color),
@@ -349,13 +339,12 @@ class _BranchAssignmentsTab extends ConsumerWidget {
           itemCount: assignments.length,
           itemBuilder: (context, index) {
             final a = assignments[index];
-            return Card(
+            return PosCard(
               elevation: 0,
               margin: const EdgeInsets.only(bottom: 8),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppRadius.md),
-                side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-              ),
+              borderRadius: AppRadius.borderMd,
+
+              border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
               color: isDark ? AppColors.cardDark : AppColors.cardLight,
               child: ListTile(
                 leading: Container(
@@ -363,7 +352,7 @@ class _BranchAssignmentsTab extends ConsumerWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     color: a.isPrimary ? AppColors.primary10 : (isDark ? AppColors.hoverDark : AppColors.hoverLight),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: AppRadius.borderMd,
                   ),
                   child: Icon(
                     Icons.store,
@@ -385,7 +374,7 @@ class _BranchAssignmentsTab extends ConsumerWidget {
                 trailing: a.isPrimary
                     ? Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                        decoration: BoxDecoration(color: AppColors.primary10, borderRadius: BorderRadius.circular(12)),
+                        decoration: BoxDecoration(color: AppColors.primary10, borderRadius: AppRadius.borderLg),
                         child: Text(
                           l10n.staffPrimary,
                           style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.primary),
@@ -446,13 +435,12 @@ class _AttendanceTabState extends ConsumerState<_AttendanceTab> {
                 itemBuilder: (context, index) {
                   final r = records[index];
                   final isOpen = r.clockOutAt == null;
-                  return Card(
+                  return PosCard(
                     elevation: 0,
                     margin: const EdgeInsets.only(bottom: 8),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppRadius.md),
-                      side: BorderSide(color: widget.isDark ? AppColors.borderDark : AppColors.borderLight),
-                    ),
+                    borderRadius: AppRadius.borderMd,
+
+                    border: Border.fromBorderSide(BorderSide(color: widget.isDark ? AppColors.borderDark : AppColors.borderLight)),
                     color: widget.isDark ? AppColors.cardDark : AppColors.cardLight,
                     child: Padding(
                       padding: AppSpacing.paddingAll16,
@@ -505,7 +493,7 @@ class _AttendanceTabState extends ConsumerState<_AttendanceTab> {
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                               decoration: BoxDecoration(
                                 color: AppColors.warning.withValues(alpha: 0.15),
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: AppRadius.borderLg,
                               ),
                               child: Text(
                                 widget.l10n.staffActive,
@@ -587,13 +575,12 @@ class _ActivityTabState extends ConsumerState<_ActivityTab> {
       itemBuilder: (context, index) {
         final a = _activities[index];
         final createdAt = a['created_at'] as DateTime?;
-        return Card(
+        return PosCard(
           elevation: 0,
           margin: const EdgeInsets.only(bottom: 8),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppRadius.md),
-            side: BorderSide(color: widget.isDark ? AppColors.borderDark : AppColors.borderLight),
-          ),
+          borderRadius: AppRadius.borderMd,
+
+          border: Border.fromBorderSide(BorderSide(color: widget.isDark ? AppColors.borderDark : AppColors.borderLight)),
           color: widget.isDark ? AppColors.cardDark : AppColors.cardLight,
           child: ListTile(
             leading: Icon(Icons.history, color: widget.isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
@@ -864,7 +851,7 @@ class _LinkableUsersDialogState extends State<_LinkableUsersDialog> {
           ],
         ),
       ),
-      actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(widget.l10n.cancel))],
+      actions: [PosButton(onPressed: () => Navigator.of(context).pop(), variant: PosButtonVariant.ghost, label: widget.l10n.cancel)],
     );
   }
 }
@@ -883,12 +870,11 @@ class _SectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderMd,
+
+      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
       color: isDark ? AppColors.cardDark : AppColors.cardLight,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

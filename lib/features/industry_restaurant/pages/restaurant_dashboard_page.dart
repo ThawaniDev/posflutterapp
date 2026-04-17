@@ -19,27 +19,18 @@ class RestaurantDashboardPage extends ConsumerStatefulWidget {
   ConsumerState<RestaurantDashboardPage> createState() => _RestaurantDashboardPageState();
 }
 
-class _RestaurantDashboardPageState extends ConsumerState<RestaurantDashboardPage> with SingleTickerProviderStateMixin {
-
+class _RestaurantDashboardPageState extends ConsumerState<RestaurantDashboardPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  late final TabController _tabController;
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-    _tabController.addListener(() => setState(() {}));
     Future.microtask(() => ref.read(restaurantProvider.notifier).load());
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
   void _onFabPressed() {
-    final page = switch (_tabController.index) {
+    final page = switch (_currentTab) {
       0 => const TableFormPage(),
       2 => const ReservationFormPage(),
       3 => const OpenTabFormPage(),
@@ -54,117 +45,119 @@ class _RestaurantDashboardPageState extends ConsumerState<RestaurantDashboardPag
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(restaurantProvider);
-    final showFab = _tabController.index != 1; // No FAB for Kitchen tab
+    final isLoading = state is RestaurantInitial || state is RestaurantLoading;
+    final hasError = state is RestaurantError;
+    final showAdd = _currentTab != 1;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.restaurantTitle),
-        bottom: TabBar(
-          controller: _tabController,
-          isScrollable: true,
-          tabs: [
-            Tab(text: l10n.restaurantTables),
-            Tab(text: 'Kitchen'),
-            Tab(text: l10n.restaurantReservations),
-            Tab(text: l10n.restaurantOpenTabs),
-          ],
-        ),
+    return PosListPage(
+      title: l10n.restaurantTitle,
+      showSearch: false,
+      isLoading: isLoading,
+      hasError: hasError,
+      errorMessage: hasError ? state.message : null,
+      onRetry: () => ref.read(restaurantProvider.notifier).load(),
+      actions: showAdd ? [PosButton(label: l10n.add, icon: Icons.add, onPressed: _onFabPressed)] : const [],
+      child: Column(
+        children: [
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: l10n.restaurantTables),
+              PosTabItem(label: 'Kitchen'),
+              PosTabItem(label: l10n.restaurantReservations),
+              PosTabItem(label: l10n.restaurantOpenTabs),
+            ],
+          ),
+          Expanded(
+            child: state is RestaurantLoaded
+                ? IndexedStack(
+                    index: _currentTab,
+                    children: [
+                      state.tables.isEmpty
+                          ? const PosEmptyState(title: 'No tables configured', icon: Icons.table_bar)
+                          : GridView.builder(
+                              padding: const EdgeInsets.all(16),
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 12,
+                                crossAxisSpacing: 12,
+                              ),
+                              itemCount: state.tables.length,
+                              itemBuilder: (context, i) {
+                                final t = state.tables[i];
+                                return TableGridTile(
+                                  table: t,
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(builder: (_) => TableFormPage(table: t)))
+                                        .then((_) => ref.read(restaurantProvider.notifier).load());
+                                  },
+                                );
+                              },
+                            ),
+                      state.kitchenTickets.isEmpty
+                          ? const PosEmptyState(title: 'No kitchen tickets', icon: Icons.restaurant)
+                          : ListView.builder(
+                              padding: const EdgeInsets.all(12),
+                              itemCount: state.kitchenTickets.length,
+                              itemBuilder: (context, i) {
+                                final k = state.kitchenTickets[i];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: KitchenTicketCard(
+                                    ticket: k,
+                                    onStatusChange: (newStatus) {
+                                      ref.read(restaurantProvider.notifier).updateKitchenTicketStatus(k.id, newStatus.value);
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                      state.reservations.isEmpty
+                          ? const PosEmptyState(title: 'No reservations', icon: Icons.event_seat)
+                          : ListView.builder(
+                              padding: const EdgeInsets.all(12),
+                              itemCount: state.reservations.length,
+                              itemBuilder: (context, i) {
+                                final r = state.reservations[i];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: ReservationCard(
+                                    reservation: r,
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(builder: (_) => ReservationFormPage(reservation: r)))
+                                          .then((_) => ref.read(restaurantProvider.notifier).load());
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                      state.openTabs.isEmpty
+                          ? const PosEmptyState(title: 'No open tabs', icon: Icons.receipt_long)
+                          : ListView.builder(
+                              padding: const EdgeInsets.all(12),
+                              itemCount: state.openTabs.length,
+                              itemBuilder: (context, i) {
+                                final tab = state.openTabs[i];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 8),
+                                  child: OpenTabCard(
+                                    tab: tab,
+                                    onClose: () {
+                                      ref.read(restaurantProvider.notifier).closeTab(tab.id);
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                    ],
+                  )
+                : const SizedBox.shrink(),
+          ),
+        ],
       ),
-      floatingActionButton: showFab ? FloatingActionButton(onPressed: _onFabPressed, child: const Icon(Icons.add)) : null,
-      body: switch (state) {
-        RestaurantInitial() || RestaurantLoading() => PosLoadingSkeleton.list(),
-        RestaurantError(:final message) => PosErrorState(
-          message: message,
-          onRetry: () => ref.read(restaurantProvider.notifier).load(),
-        ),
-        RestaurantLoaded(:final tables, :final kitchenTickets, :final reservations, :final openTabs) => TabBarView(
-          controller: _tabController,
-          children: [
-            // --- Tables (GridView) ---
-            tables.isEmpty
-                ? const PosEmptyState(title: 'No tables configured', icon: Icons.table_bar)
-                : GridView.builder(
-                    padding: const EdgeInsets.all(16),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 12,
-                      crossAxisSpacing: 12,
-                    ),
-                    itemCount: tables.length,
-                    itemBuilder: (context, i) {
-                      final t = tables[i];
-                      return TableGridTile(
-                        table: t,
-                        onTap: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (_) => TableFormPage(table: t)))
-                              .then((_) => ref.read(restaurantProvider.notifier).load());
-                        },
-                      );
-                    },
-                  ),
-            // --- Kitchen Tickets ---
-            kitchenTickets.isEmpty
-                ? const PosEmptyState(title: 'No kitchen tickets', icon: Icons.restaurant)
-                : ListView.builder(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: kitchenTickets.length,
-                    itemBuilder: (context, i) {
-                      final k = kitchenTickets[i];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: KitchenTicketCard(
-                          ticket: k,
-                          onStatusChange: (newStatus) {
-                            ref.read(restaurantProvider.notifier).updateKitchenTicketStatus(k.id, newStatus.value);
-                          },
-                        ),
-                      );
-                    },
-                  ),
-            // --- Reservations ---
-            reservations.isEmpty
-                ? const PosEmptyState(title: 'No reservations', icon: Icons.event_seat)
-                : ListView.builder(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: reservations.length,
-                    itemBuilder: (context, i) {
-                      final r = reservations[i];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: ReservationCard(
-                          reservation: r,
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (_) => ReservationFormPage(reservation: r)))
-                                .then((_) => ref.read(restaurantProvider.notifier).load());
-                          },
-                        ),
-                      );
-                    },
-                  ),
-            // --- Open Tabs ---
-            openTabs.isEmpty
-                ? const PosEmptyState(title: 'No open tabs', icon: Icons.receipt_long)
-                : ListView.builder(
-                    padding: const EdgeInsets.all(12),
-                    itemCount: openTabs.length,
-                    itemBuilder: (context, i) {
-                      final tab = openTabs[i];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: OpenTabCard(
-                          tab: tab,
-                          onClose: () {
-                            ref.read(restaurantProvider.notifier).closeTab(tab.id);
-                          },
-                        ),
-                      );
-                    },
-                  ),
-          ],
-        ),
-      },
     );
   }
 }

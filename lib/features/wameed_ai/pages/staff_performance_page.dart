@@ -30,33 +30,24 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
     final state = ref.watch(aiFeatureResultProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            const Icon(Icons.leaderboard, color: AppColors.primary),
-            const SizedBox(width: 8),
-            Text(l10n.wameedAIStaffPerformance),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('staff_performance'),
-          ),
-        ],
-      ),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.wameedAIStaffPerformance,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('staff_performance'), tooltip: l10n.commonRefresh,
+  ),
+],
+  child: switch (state) {
         AIFeatureResultInitial() || AIFeatureResultLoading() => PosLoading(message: l10n.wameedAIAnalyzing),
         AIFeatureResultError(:final message) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(Icons.error_outline, color: AppColors.error, size: 48),
-              const SizedBox(height: 16),
+              AppSpacing.gapH16,
               Text(message, textAlign: TextAlign.center),
-              const SizedBox(height: 16),
+              AppSpacing.gapH16,
               PosButton(
                 label: l10n.commonRetry,
                 onPressed: () => ref.read(aiFeatureResultProvider.notifier).invoke('staff_performance'),
@@ -66,7 +57,7 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
         ),
         AIFeatureResultLoaded(:final result) => _buildContent(result.data, isMobile, l10n),
       },
-    );
+);
   }
 
   Widget _buildContent(Map<String, dynamic>? data, bool isMobile, AppLocalizations l10n) {
@@ -92,7 +83,7 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
     );
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+      padding: context.responsivePagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -103,7 +94,7 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: AppColors.primary.withValues(alpha: 0.05),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.borderLg,
                 border: Border.all(color: AppColors.primary.withValues(alpha: 0.15)),
               ),
               child: Column(
@@ -112,24 +103,24 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
                   Row(
                     children: [
                       const Icon(Icons.insights, size: 20, color: AppColors.info),
-                      const SizedBox(width: 8),
+                      AppSpacing.gapW8,
                       Text(
                         l10n.wameedAITeamInsights,
                         style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  AppSpacing.gapH8,
                   SelectableText(teamSummary, style: Theme.of(context).textTheme.bodyMedium?.copyWith(height: 1.6)),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            AppSpacing.gapH20,
           ],
 
           // Leaderboard
           Text(l10n.wameedAILeaderboard, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700)),
-          const SizedBox(height: 12),
+          AppSpacing.gapH12,
 
           if (staff.isEmpty)
             PosEmptyState(title: l10n.wameedAINoResults, icon: Icons.people_outline)
@@ -138,7 +129,7 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: staff.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 8),
+              separatorBuilder: (_, __) => AppSpacing.gapH8,
               itemBuilder: (context, index) {
                 final member = staff[index];
                 return _buildStaffCard(member, index, l10n);
@@ -147,18 +138,18 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
 
           // Improvement areas
           if (improvementAreas.isNotEmpty) ...[
-            const SizedBox(height: 24),
+            AppSpacing.gapH24,
             Row(
               children: [
                 const Icon(Icons.school_outlined, size: 20, color: AppColors.success),
-                const SizedBox(width: 8),
+                AppSpacing.gapW8,
                 Text(
                   l10n.wameedAICoachingTips,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ],
             ),
-            const SizedBox(height: 12),
+            AppSpacing.gapH12,
             ...improvementAreas.map(
               (tip) => Container(
                 width: double.infinity,
@@ -166,14 +157,14 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: AppColors.success.withValues(alpha: 0.05),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: AppRadius.borderLg,
                   border: Border.all(color: AppColors.success.withValues(alpha: 0.15)),
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Icon(Icons.lightbulb_outline, size: 16, color: AppColors.success),
-                    const SizedBox(width: 8),
+                    AppSpacing.gapW8,
                     Expanded(child: Text(tip, style: Theme.of(context).textTheme.bodyMedium)),
                   ],
                 ),
@@ -212,7 +203,7 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.borderLg,
         border: Border.all(color: rank < 3 ? medalColors[rank].withValues(alpha: 0.3) : Theme.of(context).dividerColor),
       ),
       child: Row(
@@ -230,7 +221,7 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
                     textAlign: TextAlign.center,
                   ),
           ),
-          const SizedBox(width: 12),
+          AppSpacing.gapW12,
 
           // Staff info
           Expanded(
@@ -238,7 +229,7 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(name.toString(), style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700)),
-                const SizedBox(height: 4),
+                AppSpacing.gapH4,
                 Wrap(
                   spacing: 8,
                   runSpacing: 4,

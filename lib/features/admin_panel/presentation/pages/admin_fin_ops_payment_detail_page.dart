@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
@@ -27,9 +28,10 @@ class _State extends ConsumerState<AdminFinOpsPaymentDetailPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(finOpsPaymentDetailProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.providerPaymentDetail), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.providerPaymentDetail,
+  showSearch: false,
+    child: switch (state) {
         FinOpsDetailLoading() => const Center(child: CircularProgressIndicator()),
         FinOpsDetailLoaded(data: final resp) => _buildDetail(resp),
         FinOpsDetailError(message: final msg) => Center(
@@ -37,7 +39,7 @@ class _State extends ConsumerState<AdminFinOpsPaymentDetailPage> {
         ),
         _ => Center(child: Text(l10n.loading)),
       },
-    );
+);
   }
 
   Widget _buildDetail(Map<String, dynamic> resp) {
@@ -47,8 +49,8 @@ class _State extends ConsumerState<AdminFinOpsPaymentDetailPage> {
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Column(
         children: [
-          Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          PosCard(
+            borderRadius: BorderRadius.circular(12,),
             child: Padding(
               padding: const EdgeInsets.all(AppSpacing.md),
               child: Column(

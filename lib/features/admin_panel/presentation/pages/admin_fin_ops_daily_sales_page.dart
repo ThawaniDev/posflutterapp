@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
@@ -15,16 +16,14 @@ class AdminFinOpsDailySalesPage extends ConsumerStatefulWidget {
   ConsumerState<AdminFinOpsDailySalesPage> createState() => _State();
 }
 
-class _State extends ConsumerState<AdminFinOpsDailySalesPage> with SingleTickerProviderStateMixin {
-
+class _State extends ConsumerState<AdminFinOpsDailySalesPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
-  late TabController _tabController;
+  int _currentTab = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
     Future.microtask(() {
       _storeId = ref.read(resolvedStoreIdProvider);
       _loadData();
@@ -44,34 +43,23 @@ class _State extends ConsumerState<AdminFinOpsDailySalesPage> with SingleTickerP
   }
 
   @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminFinOpsSalesReports),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        bottom: TabBar(
-          controller: _tabController,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.white70,
-          indicatorColor: Colors.white,
-          tabs: [
-            Tab(text: l10n.dailySummary),
-            Tab(text: l10n.adminFinOpsByProduct),
-          ],
-        ),
-      ),
-      body: Column(
+    return PosListPage(
+      title: l10n.adminFinOpsSalesReports,
+      showSearch: false,
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
+          PosTabs(
+            selectedIndex: _currentTab,
+            onChanged: (i) => setState(() => _currentTab = i),
+            tabs: [
+              PosTabItem(label: l10n.dailySummary),
+              PosTabItem(label: l10n.adminFinOpsByProduct),
+            ],
+          ),
           Expanded(
-            child: TabBarView(controller: _tabController, children: [_DailySummaryTab(), _ProductSalesTab()]),
+            child: IndexedStack(index: _currentTab, children: [_DailySummaryTab(), _ProductSalesTab()]),
           ),
         ],
       ),
@@ -106,8 +94,8 @@ class _DailySummaryTab extends ConsumerWidget {
         final item = items[i];
         final total = num.tryParse(item['total_sales']?.toString() ?? '') ?? 0;
         final orders = item['order_count'] ?? item['total_orders'] ?? 0;
-        return Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        return PosCard(
+          borderRadius: BorderRadius.circular(10,),
           child: Padding(
             padding: const EdgeInsets.all(AppSpacing.sm),
             child: Row(
@@ -176,8 +164,8 @@ class _ProductSalesTab extends ConsumerWidget {
         final item = items[i];
         final revenue = num.tryParse(item['total_revenue']?.toString() ?? '') ?? 0;
         final qty = item['total_quantity'] ?? item['quantity_sold'] ?? 0;
-        return Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        return PosCard(
+          borderRadius: BorderRadius.circular(10,),
           child: Padding(
             padding: const EdgeInsets.all(AppSpacing.sm),
             child: Row(

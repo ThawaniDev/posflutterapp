@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
@@ -28,13 +29,10 @@ class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(providerRoleTemplateDetailProvider);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.adminProviderRoleTemplateDetail),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-      ),
-      body: switch (state) {
+    return PosListPage(
+  title: l10n.adminProviderRoleTemplateDetail,
+  showSearch: false,
+    child: switch (state) {
         ProviderRoleTemplateDetailLoading() => const Center(child: CircularProgressIndicator()),
         ProviderRoleTemplateDetailLoaded(data: final data) => _buildDetail(data),
         ProviderRoleTemplateDetailError(message: final msg) => Center(
@@ -42,7 +40,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
         ),
         _ => Center(child: Text(l10n.loading)),
       },
-    );
+);
   }
 
   Widget _buildDetail(Map<String, dynamic> resp) {
@@ -56,8 +54,8 @@ class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header card
-          Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          PosCard(
+            borderRadius: BorderRadius.circular(12,),
             child: Padding(
               padding: const EdgeInsets.all(AppSpacing.md),
               child: Column(
@@ -115,7 +113,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
           const SizedBox(height: AppSpacing.xs),
 
           if (permissions.isEmpty)
-            Card(
+            PosCard(
               child: Padding(
                 padding: EdgeInsets.all(AppSpacing.md),
                 child: Center(
@@ -139,8 +137,8 @@ class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
     }
 
     return grouped.entries.map((entry) {
-      return Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      return PosCard(
+        borderRadius: BorderRadius.circular(10,),
         margin: const EdgeInsets.only(bottom: AppSpacing.xs),
         child: ExpansionTile(
           leading: const Icon(Icons.folder_outlined, size: 20),

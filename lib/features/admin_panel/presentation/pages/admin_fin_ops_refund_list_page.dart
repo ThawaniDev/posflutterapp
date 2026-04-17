@@ -49,9 +49,10 @@ class _State extends ConsumerState<AdminFinOpsRefundListPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(finOpsRefundsProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.posRefunds), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
-      body: Column(
+    return PosListPage(
+  title: l10n.posRefunds,
+  showSearch: false,
+    child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -97,7 +98,7 @@ class _State extends ConsumerState<AdminFinOpsRefundListPage> {
           ),
         ],
       ),
-    );
+);
   }
 
   Widget _buildList(Map<String, dynamic> resp) {
@@ -115,8 +116,8 @@ class _State extends ConsumerState<AdminFinOpsRefundListPage> {
           final item = items[i];
           final status = (item['status'] ?? '').toString();
           final amount = num.tryParse(item['amount']?.toString() ?? '') ?? 0;
-          return Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          return PosCard(
+            borderRadius: BorderRadius.circular(10,),
             child: ListTile(
               leading: CircleAvatar(
                 backgroundColor: _statusColor(status).withValues(alpha: 0.15),
@@ -145,7 +146,7 @@ class _State extends ConsumerState<AdminFinOpsRefundListPage> {
   Widget _statusChip(String status) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(color: _statusColor(status).withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(color: _statusColor(status).withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
       child: Text(
         status.toUpperCase(),
         style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: _statusColor(status)),

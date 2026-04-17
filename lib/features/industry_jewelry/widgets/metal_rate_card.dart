@@ -4,6 +4,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../enums/metal_type.dart';
 import '../models/daily_metal_rate.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 class MetalRateCard extends StatelessWidget {
   final DailyMetalRate rate;
@@ -15,15 +16,13 @@ class MetalRateCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Card(
+    return PosCard(
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(AppRadius.md),
-        side: BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight),
-      ),
+      borderRadius: AppRadius.borderMd,
+      border: Border.fromBorderSide(BorderSide(color: isDark ? AppColors.borderDark : AppColors.borderLight)),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadius.md),
+        borderRadius: AppRadius.borderMd,
         child: Padding(
           padding: AppSpacing.paddingCard,
           child: Row(
@@ -33,7 +32,7 @@ class MetalRateCard extends StatelessWidget {
                 height: 48,
                 decoration: BoxDecoration(
                   color: _metalColor.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                  borderRadius: AppRadius.borderSm,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

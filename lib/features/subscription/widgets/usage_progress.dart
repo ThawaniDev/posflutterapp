@@ -42,7 +42,7 @@ class UsageProgress extends StatelessWidget {
           ),
           AppSpacing.verticalXs,
           ClipRRect(
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: AppRadius.borderSm,
             child: LinearProgressIndicator(
               value: isUnlimited ? 0 : progress,
               minHeight: 8,

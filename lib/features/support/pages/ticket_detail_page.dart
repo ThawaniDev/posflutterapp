@@ -5,10 +5,6 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
-import 'package:wameedpos/core/widgets/pos_button.dart';
-import 'package:wameedpos/core/widgets/pos_card.dart';
-import 'package:wameedpos/core/widgets/pos_error_state.dart';
-import 'package:wameedpos/core/widgets/pos_loading_skeleton.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/support/enums/ticket_status.dart';
 import 'package:wameedpos/features/support/models/support_ticket.dart';
@@ -80,11 +76,11 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
       }
     });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.supportTicketDetail),
-        actions: [
-          if (detailState is TicketDetailLoaded && detailState.ticket.status != TicketStatus.closed)
+    return PosListPage(
+  title: l10n.supportTicketDetail,
+  showSearch: false,
+  actions: [
+  if (detailState is TicketDetailLoaded && detailState.ticket.status != TicketStatus.closed)
             PosButton(
               label: l10n.supportCloseTicket,
               variant: PosButtonVariant.outline,
@@ -92,10 +88,9 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
               icon: Icons.check_circle_outline_rounded,
               onPressed: actionState is TicketActionLoading ? null : () => _confirmCloseTicket(l10n),
             ),
-          AppSpacing.gapW8,
-        ],
-      ),
-      body: switch (detailState) {
+  AppSpacing.gapW8,
+],
+  child: switch (detailState) {
         TicketDetailInitial() || TicketDetailLoading() => Center(child: PosLoadingSkeleton.list()),
         TicketDetailError(:final message) => PosErrorState(
           message: message,
@@ -129,7 +124,7 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
           ],
         ),
       },
-    );
+);
   }
 
   void _confirmCloseTicket(AppLocalizations l10n) async {

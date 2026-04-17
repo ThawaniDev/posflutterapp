@@ -51,46 +51,35 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
     final state = ref.watch(transactionDetailProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.txDetailTitle),
-        actions: [
-          if (state is TransactionDetailLoaded && state.transaction.status != TransactionStatus.voided)
-            IconButton(
-              icon: const Icon(Icons.block_outlined),
-              tooltip: l10n.txVoidAction,
-              color: AppColors.error,
-              onPressed: () => _handleVoid(l10n),
-            ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(transactionDetailProvider.notifier).load(widget.transactionId),
+    return PosListPage(
+      title: l10n.txDetailTitle,
+      showSearch: false,
+      actions: [
+        if (state is TransactionDetailLoaded && state.transaction.status != TransactionStatus.voided)
+          PosButton.icon(
+            icon: Icons.block_outlined,
+            tooltip: l10n.txVoidAction,
+            onPressed: () => _handleVoid(l10n),
+            variant: PosButtonVariant.ghost,
           ),
-        ],
-      ),
-      body: _buildBody(state, l10n, isDark),
+        PosButton.icon(
+          icon: Icons.refresh,
+          tooltip: l10n.commonRefresh,
+          onPressed: () => ref.read(transactionDetailProvider.notifier).load(widget.transactionId),
+          variant: PosButtonVariant.ghost,
+        ),
+      ],
+      isLoading: state is TransactionDetailLoading || state is TransactionDetailInitial,
+      hasError: state is TransactionDetailError,
+      errorMessage: state is TransactionDetailError ? (state).message : null,
+      onRetry: () => ref.read(transactionDetailProvider.notifier).load(widget.transactionId),
+      child: _buildBody(state, l10n, isDark),
     );
   }
 
   Widget _buildBody(TransactionDetailState state, AppLocalizations l10n, bool isDark) {
-    if (state is TransactionDetailLoading || state is TransactionDetailInitial) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    if (state is TransactionDetailError) {
-      return Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(state.message, style: const TextStyle(color: AppColors.error)),
-            AppSpacing.gapH12,
-            ElevatedButton(
-              onPressed: () => ref.read(transactionDetailProvider.notifier).load(widget.transactionId),
-              child: Text(l10n.commonRetry),
-            ),
-          ],
-        ),
-      );
+    if (state is TransactionDetailLoading || state is TransactionDetailInitial || state is TransactionDetailError) {
+      return const SizedBox.shrink();
     }
     final loaded = state as TransactionDetailLoaded;
     final tx = loaded.transaction;
@@ -98,7 +87,7 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
     final isMobile = context.isPhone;
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(isMobile ? 12 : AppSpacing.lg),
+      padding: context.responsivePagePadding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -127,7 +116,7 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
         children: [
           Container(
             padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+            decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
             child: const Icon(Icons.receipt_long_rounded, size: 28, color: AppColors.primary),
           ),
           AppSpacing.gapW12,
@@ -136,7 +125,7 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(tx.transactionNumber, style: AppTypography.titleMedium.copyWith(fontWeight: FontWeight.w700)),
-                const SizedBox(height: 4),
+                AppSpacing.gapH4,
                 Wrap(
                   spacing: 8,
                   children: [
@@ -314,7 +303,7 @@ class _TransactionDetailPageState extends ConsumerState<TransactionDetailPage> {
         children: [
           Container(
             padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(6)),
+            decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.1), borderRadius: AppRadius.borderSm),
             child: Icon(_paymentIcon(payment.method), size: 16, color: AppColors.info),
           ),
           AppSpacing.gapW8,

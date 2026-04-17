@@ -21,7 +21,6 @@ class DashboardPage extends ConsumerStatefulWidget {
 }
 
 class _DashboardPageState extends ConsumerState<DashboardPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   ReportFilters _filters = const ReportFilters();
 
@@ -47,29 +46,24 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     final state = ref.watch(dashboardProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
-      appBar: AppBar(
-        backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: Text(l10n.featureInfoReportsTitle),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: l10n.featureInfoTooltip,
-            onPressed: () => showReportsDashboardInfo(context),
-          ),
-          IconButton.filled(
-            onPressed: _loadData,
-            icon: const Icon(Icons.refresh_rounded, size: 20),
-            style: IconButton.styleFrom(
-              backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-              foregroundColor: AppColors.primary,
-            ),
-          ),
-          const SizedBox(width: 8),
-        ],
-      ),
-      body: Column(
+    return PosListPage(
+      title: l10n.featureInfoReportsTitle,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.info_outline,
+          tooltip: l10n.featureInfoTooltip,
+          onPressed: () => showReportsDashboardInfo(context),
+          variant: PosButtonVariant.ghost,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh_rounded,
+          tooltip: l10n.commonRefresh,
+          onPressed: _loadData,
+          variant: PosButtonVariant.ghost,
+        ),
+      ],
+      child: Column(
         children: [
           ReportFilterPanel(filters: _filters, onFiltersChanged: _onFiltersChanged, onRefresh: _loadData),
           Expanded(
@@ -238,13 +232,13 @@ class _ReportNavGrid extends StatelessWidget {
       children: items.map((item) {
         return Material(
           color: isDark ? AppColors.cardDark : Colors.white,
-          borderRadius: BorderRadius.circular(AppRadius.lg),
+          borderRadius: AppRadius.borderLg,
           child: InkWell(
             onTap: () => context.go(item.route),
-            borderRadius: BorderRadius.circular(AppRadius.lg),
+            borderRadius: AppRadius.borderLg,
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppRadius.lg),
+                borderRadius: AppRadius.borderLg,
                 border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
               ),
               child: Column(
@@ -252,7 +246,7 @@ class _ReportNavGrid extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(color: item.color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                    decoration: BoxDecoration(color: item.color.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
                     child: Icon(item.icon, color: item.color, size: 22),
                   ),
                   const SizedBox(height: 8),

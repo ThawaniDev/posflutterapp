@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/models/gamification_settings.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_providers.dart';
 import 'package:wameedpos/features/cashier_gamification/providers/gamification_state.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class GamificationSettingsPage extends ConsumerStatefulWidget {
   const GamificationSettingsPage({super.key});
@@ -35,25 +37,16 @@ class _GamificationSettingsPageState extends ConsumerState<GamificationSettingsP
     final state = ref.watch(gamificationSettingsProvider);
     final isMobile = context.isPhone;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            const Icon(Icons.settings_rounded, color: AppColors.primary),
-            const SizedBox(width: 8),
-            Text(l10n.gamificationSettings),
-          ],
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: l10n.commonRefresh,
-            onPressed: () => ref.read(gamificationSettingsProvider.notifier).load(),
-          ),
-        ],
-      ),
-      body: _buildContent(state, l10n, isMobile),
-    );
+    return PosListPage(
+  title: l10n.gamificationSettings,
+  showSearch: false,
+  actions: [
+  PosButton.icon(
+    icon: Icons.refresh, onPressed: () => ref.read(gamificationSettingsProvider.notifier).load(), tooltip: l10n.commonRefresh,
+  ),
+],
+  child: _buildContent(state, l10n, isMobile),
+);
   }
 
   Widget _buildContent(GamificationSettingsState state, AppLocalizations l10n, bool isMobile) {
@@ -64,21 +57,21 @@ class _GamificationSettingsPageState extends ConsumerState<GamificationSettingsP
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.error_outline, size: 48, color: AppColors.error),
-            const SizedBox(height: 8),
+            AppSpacing.gapH8,
             Text(message, textAlign: TextAlign.center),
-            const SizedBox(height: 12),
-            ElevatedButton(
+            AppSpacing.gapH12,
+            PosButton(
               onPressed: () => ref.read(gamificationSettingsProvider.notifier).load(),
-              child: Text(l10n.commonRetry),
+              label: l10n.commonRetry,
             ),
           ],
         ),
       ),
       GamificationSettingsLoaded(:final settings) => ListView(
-        padding: EdgeInsets.all(isMobile ? 12 : 20),
+        padding: context.responsivePagePadding,
         children: [
           // Feature toggles
-          Card(
+          PosCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -127,9 +120,9 @@ class _GamificationSettingsPageState extends ConsumerState<GamificationSettingsP
               ],
             ),
           ),
-          const SizedBox(height: 16),
+          AppSpacing.gapH16,
           // Anomaly detection thresholds
-          Card(
+          PosCard(
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -139,7 +132,7 @@ class _GamificationSettingsPageState extends ConsumerState<GamificationSettingsP
                     l10n.gamificationAnomalyThresholds,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 12),
+                  AppSpacing.gapH12,
                   _SliderSetting(
                     label: l10n.gamificationZScoreThreshold,
                     value: settings.anomalyZScoreThreshold,
@@ -152,9 +145,9 @@ class _GamificationSettingsPageState extends ConsumerState<GamificationSettingsP
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          AppSpacing.gapH16,
           // Risk score weights
-          Card(
+          PosCard(
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -164,7 +157,7 @@ class _GamificationSettingsPageState extends ConsumerState<GamificationSettingsP
                     l10n.gamificationRiskWeights,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 12),
+                  AppSpacing.gapH12,
                   _SliderSetting(
                     label: l10n.gamificationVoidWeight,
                     value: settings.riskScoreVoidWeight,

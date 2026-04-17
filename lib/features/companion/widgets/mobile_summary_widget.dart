@@ -6,6 +6,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
 import 'package:wameedpos/features/companion/providers/companion_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 
 /// Widget that shows the mobile summary view — essentially what the
 /// companion mobile app would see as its dashboard.
@@ -37,7 +38,7 @@ class MobileSummaryWidget extends ConsumerWidget {
           padding: AppSpacing.paddingAll16,
           children: [
             // ─── Revenue Banner ─────────────
-            Card(
+            PosCard(
               color: AppColors.primary,
               child: Padding(
                 padding: AppSpacing.paddingAll16,
