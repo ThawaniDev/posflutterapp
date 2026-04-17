@@ -47,10 +47,11 @@ class ProviderPaymentApiService {
     double? taxAmount,
     String? subscriptionPlanId,
     String? addOnId,
+    String? purposeReferenceId,
     String? notes,
   }) async {
     // Map subscription/addon IDs to purpose_reference_id
-    final purposeReferenceId = subscriptionPlanId ?? addOnId;
+    final refId = purposeReferenceId ?? subscriptionPlanId ?? addOnId;
 
     final response = await _dio.post(
       ApiEndpoints.providerPaymentsInitiate,
@@ -59,7 +60,7 @@ class ProviderPaymentApiService {
         'purpose_label': purposeLabel,
         'amount': amount,
         if (currency != null) 'currency': currency,
-        if (purposeReferenceId != null) 'purpose_reference_id': purposeReferenceId,
+        if (refId != null) 'purpose_reference_id': refId,
         if (notes != null) 'notes': notes,
       },
     );

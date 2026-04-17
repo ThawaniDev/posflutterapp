@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
@@ -172,6 +174,38 @@ class _InvoiceDetailContent extends StatelessWidget {
             ),
             AppSpacing.gapH12,
             ...invoice.payments.map((p) => _PaymentListTile(payment: p)),
+          ],
+
+          // Pay Now button for unpaid invoices
+          if (invoice.status != 'paid') ...[
+            AppSpacing.gapH24,
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  context.go(
+                    Routes.providerPaymentCheckout,
+                    extra: {
+                      'purpose': 'ai_billing',
+                      'purpose_label': 'AI Billing — ${invoice.invoiceNumber}',
+                      'amount': invoice.billedAmountUsd,
+                      'currency': 'USD',
+                      'purpose_reference_id': invoice.id,
+                      'notes': 'AI Billing Invoice ${invoice.invoiceNumber}',
+                      'on_success_route': Routes.wameedAIBillingInvoices,
+                    },
+                  );
+                },
+                icon: const Icon(Icons.payment),
+                label: Text(l10n.posCompletePayment),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+              ),
+            ),
           ],
         ],
       ),

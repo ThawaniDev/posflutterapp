@@ -18,7 +18,10 @@ class PaymentCheckoutPage extends ConsumerStatefulWidget {
   final double? taxAmount;
   final String? subscriptionPlanId;
   final String? addOnId;
+  final String? purposeReferenceId;
+  final String? currency;
   final String? notes;
+  final String? onSuccessRoute;
 
   const PaymentCheckoutPage({
     super.key,
@@ -28,7 +31,10 @@ class PaymentCheckoutPage extends ConsumerStatefulWidget {
     this.taxAmount,
     this.subscriptionPlanId,
     this.addOnId,
+    this.purposeReferenceId,
+    this.currency,
     this.notes,
+    this.onSuccessRoute,
   });
 
   @override
@@ -61,6 +67,8 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
           taxAmount: widget.taxAmount,
           subscriptionPlanId: widget.subscriptionPlanId,
           addOnId: widget.addOnId,
+          purposeReferenceId: widget.purposeReferenceId,
+          currency: widget.currency,
           notes: widget.notes,
         );
   }
@@ -79,7 +87,7 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
           onNavigationRequest: (request) {
             // Detect return URL to navigate back
             if (request.url.contains('/provider-payments/return') || request.url.contains('/payment/result')) {
-              context.go(Routes.providerPayments);
+              context.go(widget.onSuccessRoute ?? Routes.providerPayments);
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;

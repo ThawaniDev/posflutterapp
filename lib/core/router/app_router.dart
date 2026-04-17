@@ -599,7 +599,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                 taxAmount: (extra['tax_amount'] as num?)?.toDouble(),
                 subscriptionPlanId: extra['subscription_plan_id'] as String?,
                 addOnId: extra['add_on_id'] as String?,
+                purposeReferenceId: extra['purpose_reference_id'] as String?,
+                currency: extra['currency'] as String?,
                 notes: extra['notes'] as String?,
+                onSuccessRoute: extra['on_success_route'] as String?,
               );
             },
           ),

@@ -36,6 +36,8 @@ class ProviderPaymentRepository {
     double? taxAmount,
     String? subscriptionPlanId,
     String? addOnId,
+    String? purposeReferenceId,
+    String? currency,
     String? notes,
   }) async {
     try {
@@ -46,6 +48,8 @@ class ProviderPaymentRepository {
         taxAmount: taxAmount,
         subscriptionPlanId: subscriptionPlanId,
         addOnId: addOnId,
+        purposeReferenceId: purposeReferenceId,
+        currency: currency,
         notes: notes,
       );
     } catch (e) {
