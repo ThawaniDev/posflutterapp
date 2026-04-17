@@ -6,8 +6,6 @@ import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/features/onboarding/providers/store_onboarding_providers.dart';
-import 'package:wameedpos/features/onboarding/providers/store_onboarding_state.dart';
 import 'package:wameedpos/features/predefined_catalog/models/predefined_category.dart';
 import 'package:wameedpos/features/predefined_catalog/providers/predefined_catalog_providers.dart';
 import 'package:wameedpos/features/predefined_catalog/providers/predefined_catalog_state.dart';
@@ -21,43 +19,28 @@ class PredefinedCatalogPage extends ConsumerStatefulWidget {
 
 class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
   AppLocalizations get l10n => AppLocalizations.of(context)!;
-  String? _selectedBusinessTypeId;
 
   @override
   void initState() {
     super.initState();
     Future.microtask(() {
       ref.read(predefinedCategoriesProvider.notifier).load();
-      ref.read(businessTypesProvider.notifier).load();
     });
   }
 
-  void _onBusinessTypeChanged(String? businessTypeId) {
-    setState(() => _selectedBusinessTypeId = businessTypeId);
-    ref.read(predefinedCategoriesProvider.notifier).filterByBusinessType(businessTypeId);
-    if (businessTypeId != null) {
-      ref.read(predefinedCategoryTreeProvider.notifier).load(businessTypeId);
-    }
-  }
-
   Future<void> _handleCloneAll() async {
-    if (_selectedBusinessTypeId == null) {
-      showPosWarningSnackbar(context, AppLocalizations.of(context)!.selectBusinessTypeFirst);
-      return;
-    }
-
     final confirmed = await showPosConfirmDialog(
       context,
       title: l10n.pcCloneAllProducts,
       message:
-          'This will clone all predefined categories and products for the '
-          'selected business type to your store. Continue?',
+          'This will clone all predefined categories and products for your '
+          'business type to your store. Continue?',
       confirmLabel: l10n.pcCloneAll,
       cancelLabel: l10n.commonCancel,
     );
 
     if (confirmed == true && mounted) {
-      await ref.read(cloneProvider.notifier).cloneAll(_selectedBusinessTypeId!);
+      await ref.read(cloneProvider.notifier).cloneAll();
       final cloneState = ref.read(cloneProvider);
       if (mounted) {
         if (cloneState is CloneSuccess) {
@@ -106,20 +89,16 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
       title: l10n.sidebarPredefinedCatalog,
       showSearch: false,
       actions: [
-        if (_selectedBusinessTypeId != null)
-          PosButton(
-            label: l10n.pcCloneAll,
-            icon: Icons.copy_all,
-            onPressed: isCloning ? null : _handleCloneAll,
-            variant: PosButtonVariant.soft,
-            size: PosButtonSize.sm,
-          ),
+        PosButton(
+          label: l10n.pcCloneAll,
+          icon: Icons.copy_all,
+          onPressed: isCloning ? null : _handleCloneAll,
+          variant: PosButtonVariant.soft,
+          size: PosButtonSize.sm,
+        ),
       ],
       child: Column(
         children: [
-          // Business type filter
-          _buildBusinessTypeFilter(),
-
           // Loading overlay for cloning
           if (isCloning) const LinearProgressIndicator(),
 
@@ -128,66 +107,6 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
         ],
       ),
     );
-  }
-
-  Widget _buildBusinessTypeFilter() {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: AppColors.borderLight)),
-      ),
-      child: Row(
-        children: [
-          Icon(Icons.business, size: 20, color: AppColors.textMutedLight),
-          const SizedBox(width: AppSpacing.sm),
-          Text(l10n.pcBusinessTypeColon),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(children: _businessTypeChips()),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  List<Widget> _businessTypeChips() {
-    final btState = ref.watch(businessTypesProvider);
-
-    if (btState is BusinessTypesLoading || btState is BusinessTypesInitial) {
-      return [
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-          child: SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
-        ),
-      ];
-    }
-
-    if (btState is BusinessTypesError) {
-      return [Text(btState.message, style: const TextStyle(color: AppColors.error))];
-    }
-
-    if (btState is! BusinessTypesLoaded) {
-      return const [];
-    }
-
-    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
-
-    return btState.templates.map((bt) {
-      final isSelected = _selectedBusinessTypeId == bt.id;
-      return Padding(
-        padding: const EdgeInsets.only(right: AppSpacing.xs),
-        child: FilterChip(
-          selected: isSelected,
-          label: Text(isArabic ? bt.nameAr : bt.nameEn),
-          onSelected: (selected) {
-            _onBusinessTypeChanged(selected ? bt.id : null);
-          },
-        ),
-      );
-    }).toList();
   }
 
   Widget _buildBody(PredefinedCategoriesState state) {
@@ -204,9 +123,7 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
         return PosEmptyState(
           icon: Icons.category_outlined,
           title: l10n.pcNoPredefinedCategories,
-          subtitle: _selectedBusinessTypeId != null
-              ? 'No categories available for this business type.'
-              : 'Select a business type to browse predefined categories.',
+          subtitle: 'No predefined categories available for your business type.',
         );
       }
 

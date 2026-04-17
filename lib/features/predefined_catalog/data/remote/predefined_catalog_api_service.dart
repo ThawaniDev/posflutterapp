@@ -132,8 +132,8 @@ class PredefinedCatalogApiService {
   }
 
   /// POST /predefined-catalog/clone-all
-  Future<Map<String, dynamic>> cloneAll(String businessTypeId) async {
-    final response = await _dio.post(ApiEndpoints.predefinedCloneAll, data: {'business_type_id': businessTypeId});
+  Future<Map<String, dynamic>> cloneAll() async {
+    final response = await _dio.post(ApiEndpoints.predefinedCloneAll);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return apiResponse.data as Map<String, dynamic>;
   }

@@ -202,10 +202,10 @@ class CloneNotifier extends StateNotifier<CloneState> {
     }
   }
 
-  Future<void> cloneAll(String businessTypeId) async {
+  Future<void> cloneAll() async {
     state = const CloneInProgress();
     try {
-      final result = await _api.cloneAll(businessTypeId);
+      final result = await _api.cloneAll();
       state = CloneSuccess(message: 'All predefined products cloned successfully', result: result);
     } on DioException catch (e) {
       state = CloneError(message: _extractError(e));

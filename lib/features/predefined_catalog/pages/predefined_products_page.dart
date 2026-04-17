@@ -44,13 +44,13 @@ class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage>
   Future<void> _handleCloneProduct(PredefinedProduct product) async {
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Clone Product',
+      title: l10n.pcCloneProduct,
       message:
           'Clone "${product.name}" to your store?'
           '${product.nameAr != null ? '\n${product.nameAr}' : ''}'
           '\nPrice: ${product.sellPrice.toStringAsFixed(2)}',
-      confirmLabel: 'Clone',
-      cancelLabel: 'Cancel',
+      confirmLabel: l10n.pcClone,
+      cancelLabel: l10n.commonCancel,
     );
 
     if (confirmed == true && mounted) {
@@ -69,6 +69,7 @@ class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final productsState = ref.watch(predefinedProductsProvider);
     final cloneState = ref.watch(cloneProvider);
     final isCloning = cloneState is CloneInProgress;
@@ -108,7 +109,7 @@ class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage>
       if (state.products.isEmpty) {
         return PosEmptyState(
           icon: Icons.inventory_2_outlined,
-          title: 'No predefined products found',
+          title: l10n.pcNoPredefinedProducts,
           subtitle: state.searchQuery != null ? 'Try a different search term.' : 'No products available in this category.',
         );
       }
@@ -152,7 +153,7 @@ class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage>
                     icon: const Icon(Icons.chevron_left),
                     onPressed: state.currentPage > 1 ? () => ref.read(predefinedProductsProvider.notifier).previousPage() : null,
                   ),
-                  Text('Page ${state.currentPage} of ${state.lastPage}'),
+                  Text(l10n.pcPageOfLast(state.currentPage.toString(), state.lastPage.toString())),
                   IconButton(
                     icon: const Icon(Icons.chevron_right),
                     onPressed: state.hasMore ? () => ref.read(predefinedProductsProvider.notifier).nextPage() : null,
@@ -178,6 +179,7 @@ class _ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     return PosCard(
@@ -256,7 +258,7 @@ class _ProductCard extends StatelessWidget {
 
             // Clone button
             PosButton(
-              label: 'Clone',
+              label: l10n.pcClone,
               icon: Icons.content_copy,
               size: PosButtonSize.sm,
               variant: PosButtonVariant.outline,
