@@ -173,9 +173,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     // Snackbar errors
     ref.listen<AIChatState>(aiActiveChatProvider, (prev, next) {
       if (next is AIChatLoaded && next.errorMessage != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(next.errorMessage!), backgroundColor: AppColors.error),
-        );
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.errorMessage!), backgroundColor: AppColors.error));
       }
     });
 
@@ -248,19 +246,10 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       child: Row(
         children: [
           Builder(
-            builder: (ctx) => IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () => Scaffold.of(ctx).openDrawer(),
-              tooltip: 'Menu',
-            ),
+            builder: (ctx) =>
+                IconButton(icon: const Icon(Icons.menu), onPressed: () => Scaffold.of(ctx).openDrawer(), tooltip: 'Menu'),
           ),
-          _UpgradePill(),
           const Spacer(),
-          IconButton(
-            icon: const Icon(Icons.person_add_alt_outlined),
-            onPressed: () {},
-            tooltip: 'Share',
-          ),
           IconButton(
             icon: const Icon(Icons.add_comment_outlined),
             onPressed: _startNewChat,
@@ -387,8 +376,6 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
             ),
           ),
           const Spacer(),
-          _UpgradePill(),
-          const SizedBox(width: 12),
           if (modelsState is AIModelsLoaded)
             AIModelSelector(
               models: modelsState.models,
@@ -399,17 +386,6 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                 }
               },
             ),
-          const SizedBox(width: 4),
-          IconButton(
-            icon: const Icon(Icons.ios_share_outlined),
-            tooltip: 'Share',
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.more_horiz),
-            tooltip: 'More',
-            onPressed: () {},
-          ),
         ],
       ),
     );
@@ -430,22 +406,11 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           child: Row(
             children: [
               if (isMobile)
-                IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () => Navigator.of(context).maybePop(),
-                )
+                IconButton(icon: const Icon(Icons.close), onPressed: () => Navigator.of(context).maybePop())
               else
-                IconButton(
-                  icon: const Icon(Icons.view_sidebar_outlined),
-                  tooltip: 'Collapse',
-                  onPressed: () {},
-                ),
+                const SizedBox(width: 8),
               const Spacer(),
-              IconButton(
-                icon: const Icon(Icons.edit_square),
-                tooltip: l10n.wameedAINewChat,
-                onPressed: _startNewChat,
-              ),
+              IconButton(icon: const Icon(Icons.edit_square), tooltip: l10n.wameedAINewChat, onPressed: _startNewChat),
             ],
           ),
         ),
@@ -461,22 +426,14 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               isDense: true,
               filled: true,
               fillColor: theme.cardColor,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
               contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
             ),
           ),
         ),
         const SizedBox(height: 8),
         // "Wameed AI" pinned entry
-        _SidebarTile(
-          icon: Icons.auto_awesome,
-          label: l10n.wameedAI,
-          selected: true,
-          onTap: _startNewChat,
-        ),
+        _SidebarTile(icon: Icons.auto_awesome, label: l10n.wameedAI, selected: true, onTap: _startNewChat),
         _SidebarTile(
           icon: Icons.apps_outlined,
           label: l10n.wameedAIFeatures,
@@ -499,7 +456,11 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Text(state.message, style: TextStyle(color: theme.hintColor), textAlign: TextAlign.center),
+          child: Text(
+            state.message,
+            style: TextStyle(color: theme.hintColor),
+            textAlign: TextAlign.center,
+          ),
         ),
       );
     }
@@ -530,17 +491,13 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             decoration: BoxDecoration(
-              color: chat.id == activeId
-                  ? AppColors.primary.withValues(alpha: 0.08)
-                  : Colors.transparent,
+              color: chat.id == activeId ? AppColors.primary.withValues(alpha: 0.08) : Colors.transparent,
             ),
             child: Text(
               chat.title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                fontWeight: chat.id == activeId ? FontWeight.w600 : FontWeight.w400,
-              ),
+              style: theme.textTheme.bodyMedium?.copyWith(fontWeight: chat.id == activeId ? FontWeight.w600 : FontWeight.w400),
             ),
           ),
         );
@@ -571,10 +528,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               children: [
                 Container(
                   padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.1),
-                    borderRadius: AppRadius.borderXl,
-                  ),
+                  decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.borderXl),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -584,10 +538,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                         child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
                       ),
                       AppSpacing.gapW8,
-                      Text(
-                        l10n.wameedAIThinking,
-                        style: theme.textTheme.bodySmall?.copyWith(color: AppColors.primary),
-                      ),
+                      Text(l10n.wameedAIThinking, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.primary)),
                     ],
                   ),
                 ),
@@ -621,10 +572,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               child: Container(
                 width: 220,
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                decoration: BoxDecoration(
-                  color: theme.cardColor,
-                  borderRadius: BorderRadius.circular(14),
-                ),
+                decoration: BoxDecoration(color: theme.cardColor, borderRadius: BorderRadius.circular(14)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -688,10 +636,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           Container(
             width: 44,
             height: 44,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.1),
-              borderRadius: AppRadius.borderMd,
-            ),
+            decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
             child: const Icon(Icons.image, color: AppColors.primary),
           ),
           AppSpacing.gapW8,
@@ -725,12 +670,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     final hasText = _controller.text.trim().isNotEmpty;
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(
-        12,
-        4,
-        12,
-        keyboardVisible ? 8 : (isMobile ? bottomPad + 8 : 16),
-      ),
+      padding: EdgeInsets.fromLTRB(12, 4, 12, keyboardVisible ? 8 : (isMobile ? bottomPad + 8 : 16)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -747,48 +687,31 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
             child: Container(
               constraints: const BoxConstraints(maxHeight: 120, minHeight: 48),
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: theme.cardColor,
-                borderRadius: BorderRadius.circular(28),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _controller,
-                      focusNode: _focusNode,
-                      maxLines: null,
-                      textInputAction: isMobile ? TextInputAction.send : TextInputAction.newline,
-                      onChanged: (_) => setState(() {}),
-                      onSubmitted: isMobile ? (_) => _sendMessage() : null,
-                      decoration: InputDecoration(
-                        hintText: isMobile ? l10n.wameedAIChatHint : l10n.wameedAIChatHintDesktop,
-                        border: InputBorder.none,
-                        isCollapsed: true,
-                        contentPadding: const EdgeInsets.symmetric(vertical: 14),
-                        hintStyle: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
-                      ),
-                    ),
-                  ),
-                  if (!hasText)
-                    IconButton(
-                      icon: Icon(Icons.mic_none_outlined, color: theme.hintColor),
-                      onPressed: () {},
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                    ),
-                ],
+              decoration: BoxDecoration(color: theme.cardColor, borderRadius: BorderRadius.circular(28)),
+              child: TextField(
+                controller: _controller,
+                focusNode: _focusNode,
+                maxLines: null,
+                textInputAction: isMobile ? TextInputAction.send : TextInputAction.newline,
+                onChanged: (_) => setState(() {}),
+                onSubmitted: isMobile ? (_) => _sendMessage() : null,
+                decoration: InputDecoration(
+                  hintText: isMobile ? l10n.wameedAIChatHint : l10n.wameedAIChatHintDesktop,
+                  border: InputBorder.none,
+                  isCollapsed: true,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 14),
+                  hintStyle: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
+                ),
               ),
             ),
           ),
           const SizedBox(width: 8),
-          // Send / voice button
+          // Send button
           _CircleIconButton(
-            icon: hasText ? Icons.arrow_upward : Icons.graphic_eq,
-            onPressed: isSending ? null : _sendMessage,
-            backgroundColor: hasText ? AppColors.primary : Colors.white,
-            iconColor: hasText ? Colors.white : Colors.black,
+            icon: Icons.arrow_upward,
+            onPressed: (isSending || !hasText) ? null : _sendMessage,
+            backgroundColor: hasText ? AppColors.primary : theme.cardColor,
+            iconColor: hasText ? Colors.white : theme.hintColor,
             size: 44,
           ),
         ],
@@ -961,14 +884,10 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       final chat = await ref.read(aiChatListProvider.notifier).createChat(title: name);
       if (chat != null) {
         ref.read(aiActiveChatProvider.notifier).setChat(chat);
-        await ref
-            .read(aiActiveChatProvider.notifier)
-            .sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
+        await ref.read(aiActiveChatProvider.notifier).sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
       }
     } else {
-      await ref
-          .read(aiActiveChatProvider.notifier)
-          .sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
+      await ref.read(aiActiveChatProvider.notifier).sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
     }
     _scrollToBottom();
   }
@@ -1048,49 +967,13 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   // ─── Sidebar background tint ───────────────────────────────────
 
   Color _sidebarColor(ThemeData theme) {
-    return theme.brightness == Brightness.dark
-        ? theme.scaffoldBackgroundColor
-        : theme.cardColor.withValues(alpha: 0.5);
+    return theme.brightness == Brightness.dark ? theme.scaffoldBackgroundColor : theme.cardColor.withValues(alpha: 0.5);
   }
 }
 
 // ─────────────────────────────────────────────────────────────────
 // ─── Helper widgets ──────────────────────────────────────────────
 // ─────────────────────────────────────────────────────────────────
-
-class _UpgradePill extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        // TODO: link to subscription / upgrade flow
-      },
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: AppColors.primary.withValues(alpha: 0.18),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: const Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.auto_awesome, size: 14, color: AppColors.primary),
-            SizedBox(width: 4),
-            Text(
-              'Upgrade',
-              style: TextStyle(
-                color: AppColors.primary,
-                fontWeight: FontWeight.w600,
-                fontSize: 13,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class _CircleIconButton extends StatelessWidget {
   final IconData icon;
@@ -1132,13 +1015,7 @@ class _SidebarTile extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
-  const _SidebarTile({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-    this.trailing,
-    this.selected = false,
-  });
+  const _SidebarTile({required this.icon, required this.label, required this.onTap, this.trailing, this.selected = false});
 
   @override
   Widget build(BuildContext context) {
@@ -1147,9 +1024,7 @@ class _SidebarTile extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        decoration: BoxDecoration(
-          color: selected ? AppColors.primary.withValues(alpha: 0.10) : Colors.transparent,
-        ),
+        decoration: BoxDecoration(color: selected ? AppColors.primary.withValues(alpha: 0.10) : Colors.transparent),
         child: Row(
           children: [
             Icon(icon, size: 18, color: selected ? AppColors.primary : theme.iconTheme.color),
@@ -1157,9 +1032,7 @@ class _SidebarTile extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
-                ),
+                style: theme.textTheme.bodyMedium?.copyWith(fontWeight: selected ? FontWeight.w600 : FontWeight.w500),
               ),
             ),
             if (trailing != null) trailing!,
@@ -1185,10 +1058,7 @@ class _AttachmentTile extends StatelessWidget {
       borderRadius: BorderRadius.circular(14),
       child: Container(
         height: 96,
-        decoration: BoxDecoration(
-          color: theme.cardColor,
-          borderRadius: BorderRadius.circular(14),
-        ),
+        decoration: BoxDecoration(color: theme.cardColor, borderRadius: BorderRadius.circular(14)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -1209,13 +1079,7 @@ class _ActionRow extends StatelessWidget {
   final Widget? trailing;
   final VoidCallback onTap;
 
-  const _ActionRow({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.onTap,
-    this.trailing,
-  });
+  const _ActionRow({required this.icon, required this.title, required this.subtitle, required this.onTap, this.trailing});
 
   @override
   Widget build(BuildContext context) {
@@ -1280,10 +1144,7 @@ class _FeaturesBottomSheet extends ConsumerWidget {
             child: Container(
               width: 40,
               height: 4,
-              decoration: BoxDecoration(
-                color: theme.hintColor.withValues(alpha: 0.3),
-                borderRadius: BorderRadius.circular(2),
-              ),
+              decoration: BoxDecoration(color: theme.hintColor.withValues(alpha: 0.3), borderRadius: BorderRadius.circular(2)),
             ),
           ),
           Padding(
@@ -1292,10 +1153,7 @@ class _FeaturesBottomSheet extends ConsumerWidget {
               children: [
                 const Icon(Icons.auto_awesome, color: AppColors.primary, size: 22),
                 const SizedBox(width: 8),
-                Text(
-                  l10n.wameedAIFeatures,
-                  style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                ),
+                Text(l10n.wameedAIFeatures, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
               ],
             ),
           ),
@@ -1303,69 +1161,61 @@ class _FeaturesBottomSheet extends ConsumerWidget {
           Divider(color: theme.dividerColor, height: 1),
           Expanded(
             child: switch (cardsState) {
-              AIFeatureCardsInitial() || AIFeatureCardsLoading() => const Center(
-                  child: CircularProgressIndicator(),
-                ),
+              AIFeatureCardsInitial() || AIFeatureCardsLoading() => const Center(child: CircularProgressIndicator()),
               AIFeatureCardsError(:final message) => Center(child: Text(message)),
               AIFeatureCardsLoaded(:final categories) => ListView.builder(
-                  controller: scrollController,
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                  itemCount: categories.length,
-                  itemBuilder: (ctx, i) {
-                    final category = categories[i];
-                    final categoryName = category['name'] as String? ?? '';
-                    final features = (category['features'] as List<dynamic>? ?? [])
-                        .map((f) => AIFeatureCard.fromJson(f as Map<String, dynamic>))
-                        .toList();
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 12, 16, 6),
-                          child: Text(
-                            categoryName,
-                            style: theme.textTheme.labelLarge?.copyWith(
-                              color: theme.hintColor,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                controller: scrollController,
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                itemCount: categories.length,
+                itemBuilder: (ctx, i) {
+                  final category = categories[i];
+                  final categoryName = category['name'] as String? ?? '';
+                  final features = (category['features'] as List<dynamic>? ?? [])
+                      .map((f) => AIFeatureCard.fromJson(f as Map<String, dynamic>))
+                      .toList();
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 12, 16, 6),
+                        child: Text(
+                          categoryName,
+                          style: theme.textTheme.labelLarge?.copyWith(color: theme.hintColor, fontWeight: FontWeight.w600),
                         ),
-                        ...features.map(
-                          (f) => InkWell(
-                            onTap: () => onFeatureSelected(f.slug, f.displayName),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                              child: Row(
-                                children: [
-                                  const Icon(Icons.auto_awesome, size: 20, color: AppColors.primary),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          f.displayName,
-                                          style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
-                                        ),
-                                        if (f.description != null) ...[
-                                          const SizedBox(height: 2),
-                                          Text(
-                                            f.description!,
-                                            style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
-                                          ),
-                                        ],
+                      ),
+                      ...features.map(
+                        (f) => InkWell(
+                          onTap: () => onFeatureSelected(f.slug, f.displayName),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.auto_awesome, size: 20, color: AppColors.primary),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        f.displayName,
+                                        style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+                                      ),
+                                      if (f.description != null) ...[
+                                        const SizedBox(height: 2),
+                                        Text(f.description!, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
                                       ],
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    );
-                  },
-                ),
+                      ),
+                    ],
+                  );
+                },
+              ),
             },
           ),
         ],
