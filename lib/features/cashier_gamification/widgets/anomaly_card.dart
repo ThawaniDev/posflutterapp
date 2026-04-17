@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/models/cashier_anomaly.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AnomalyCard extends StatelessWidget {
   final CashierAnomaly anomaly;
@@ -11,6 +12,7 @@ class AnomalyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final isMobile = context.isPhone;
     final locale = Localizations.localeOf(context).languageCode;
@@ -52,8 +54,8 @@ class AnomalyCard extends StatelessWidget {
               spacing: 8,
               runSpacing: 4,
               children: [
-                _InfoTag(label: 'Cashier', value: anomaly.cashier?.name ?? '—'),
-                _InfoTag(label: 'Date', value: anomaly.detectedDate),
+                _InfoTag(label: l10n.posCashier, value: anomaly.cashier?.name ?? '—'),
+                _InfoTag(label: l10n.txColDate, value: anomaly.detectedDate),
                 _InfoTag(label: 'Risk', value: anomaly.riskScore.toStringAsFixed(0)),
                 if (anomaly.metricName != null)
                   _InfoTag(label: anomaly.metricName!, value: anomaly.metricValue.toStringAsFixed(2)),

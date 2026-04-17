@@ -8,6 +8,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminActivityLogPage extends ConsumerStatefulWidget {
   const AdminActivityLogPage({super.key});
@@ -17,6 +18,8 @@ class AdminActivityLogPage extends ConsumerStatefulWidget {
 }
 
 class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String? _actionFilter;
   String? _entityTypeFilter;
@@ -48,7 +51,7 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Activity Log')),
+      appBar: AppBar(title: Text(l10n.activityLog)),
       body: Column(
         children: [
           AdminBranchBar(
@@ -91,8 +94,8 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
                 Expanded(
                   child: PosSearchableDropdown<String>(
                     items: [
-                      PosDropdownItem(value: 'admin_role', label: 'Roles'),
-                      PosDropdownItem(value: 'admin_user', label: 'Users'),
+                      PosDropdownItem(value: 'admin_role', label: l10n.roles),
+                      PosDropdownItem(value: 'admin_user', label: l10n.users),
                     ],
                     selectedValue: _entityTypeFilter,
                     onChanged: (val) {
@@ -121,7 +124,7 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
                   children: [
                     Text(msg),
                     AppSpacing.gapH16,
-                    PosButton(label: 'Retry', onPressed: _loadLogs),
+                    PosButton(label: l10n.retry, onPressed: _loadLogs),
                   ],
                 ),
               ),

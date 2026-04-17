@@ -9,6 +9,7 @@ import '../providers/jewelry_providers.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ProductDetailFormPage extends ConsumerStatefulWidget {
   final JewelryProductDetail? detail;
@@ -19,6 +20,8 @@ class ProductDetailFormPage extends ConsumerStatefulWidget {
 }
 
 class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
   bool get _isEditing => widget.detail != null;
@@ -119,7 +122,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
             PosSearchableDropdown<String>(
-              label: 'Product',
+              label: l10n.wameedAIProduct,
               items: products.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
               selectedValue: _selectedProductId,
               onChanged: _isEditing ? null : (v) => setState(() => _selectedProductId = v),
@@ -127,7 +130,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<MetalType>(
-              label: 'Metal Type',
+              label: l10n.jewelryMetalType,
               items: MetalType.values
                   .map((m) => PosDropdownItem(value: m, label: m.value[0].toUpperCase() + m.value.substring(1)))
                   .toList(),
@@ -139,7 +142,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
               clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _karatCtrl, label: 'Karat', hint: 'e.g. 24K, 22K, 18K'),
+            PosTextField(controller: _karatCtrl, label: l10n.jewelryKarat, hint: 'e.g. 24K, 22K, 18K'),
             SizedBox(height: AppSpacing.md),
             Row(
               children: [

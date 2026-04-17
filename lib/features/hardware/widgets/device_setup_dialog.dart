@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/hardware/enums/connection_type.dart';
 import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Dialog for adding or editing a hardware device configuration
 class DeviceSetupDialog extends StatefulWidget {
@@ -27,6 +28,8 @@ class DeviceSetupDialog extends StatefulWidget {
 }
 
 class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late HardwareDeviceType _selectedType;
   late ConnectionType _selectedConnection;
   late TextEditingController _nameController;
@@ -169,7 +172,7 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
                   children: [
                     // Device Type
                     if (!widget.isEditing) ...[
-                      Text('Device Type', style: theme.textTheme.labelLarge),
+                      Text(l10n.hwDeviceType, style: theme.textTheme.labelLarge),
                       AppSpacing.gapH8,
                       PosSearchableDropdown<HardwareDeviceType>(
                         items: HardwareDeviceType.values.map((t) {
@@ -186,12 +189,12 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
                     ],
 
                     // Device Name
-                    Text('Device Name', style: theme.textTheme.labelLarge),
+                    Text(l10n.hwDeviceName, style: theme.textTheme.labelLarge),
                     AppSpacing.gapH8,
                     TextField(
                       controller: _nameController,
-                      decoration: const InputDecoration(
-                        hintText: 'e.g. Main Receipt Printer',
+                      decoration: InputDecoration(
+                        hintText: l10n.hwDeviceNameHint,
                         border: OutlineInputBorder(),
                         isDense: true,
                       ),
@@ -199,7 +202,7 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
                     AppSpacing.gapH16,
 
                     // Connection Type
-                    Text('Connection', style: theme.textTheme.labelLarge),
+                    Text(l10n.hwConnection, style: theme.textTheme.labelLarge),
                     AppSpacing.gapH8,
                     Wrap(
                       spacing: 8,
@@ -227,7 +230,7 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Cancel')),
+                  TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l10n.cancel)),
                   AppSpacing.gapW8,
                   FilledButton.icon(
                     onPressed: () {
@@ -256,19 +259,19 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
     // Network fields: IP + Port
     if (_selectedConnection == ConnectionType.network) {
       fields.addAll([
-        Text('IP Address', style: theme.textTheme.labelLarge),
+        Text(l10n.hwIpAddress, style: theme.textTheme.labelLarge),
         AppSpacing.gapH8,
         TextField(
           controller: _ipController,
-          decoration: const InputDecoration(hintText: '192.168.1.100', border: OutlineInputBorder(), isDense: true),
+          decoration: InputDecoration(hintText: l10n.hwIpAddressHint, border: OutlineInputBorder(), isDense: true),
           keyboardType: TextInputType.number,
         ),
         AppSpacing.gapH12,
-        Text('Port', style: theme.textTheme.labelLarge),
+        Text(l10n.hwPort, style: theme.textTheme.labelLarge),
         AppSpacing.gapH8,
         TextField(
           controller: _portController,
-          decoration: const InputDecoration(hintText: '9100', border: OutlineInputBorder(), isDense: true),
+          decoration: InputDecoration(hintText: l10n.hwPortHint, border: OutlineInputBorder(), isDense: true),
           keyboardType: TextInputType.number,
         ),
         AppSpacing.gapH16,
@@ -278,14 +281,14 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
     // Serial fields: COM Port + Baud Rate
     if (_selectedConnection == ConnectionType.serial) {
       fields.addAll([
-        Text('COM Port', style: theme.textTheme.labelLarge),
+        Text(l10n.hwComPort, style: theme.textTheme.labelLarge),
         AppSpacing.gapH8,
         TextField(
           controller: _comPortController,
-          decoration: const InputDecoration(hintText: 'COM3', border: OutlineInputBorder(), isDense: true),
+          decoration: InputDecoration(hintText: l10n.hwComPortHint, border: OutlineInputBorder(), isDense: true),
         ),
         AppSpacing.gapH12,
-        Text('Baud Rate', style: theme.textTheme.labelLarge),
+        Text(l10n.hwBaudRate, style: theme.textTheme.labelLarge),
         AppSpacing.gapH8,
         PosSearchableDropdown<int>(
           items: [2400, 4800, 9600, 19200, 38400, 57600, 115200].map((b) {
@@ -306,19 +309,19 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
     switch (_selectedType) {
       case HardwareDeviceType.receiptPrinter:
         fields.addAll([
-          Text('Paper Width', style: theme.textTheme.labelLarge),
+          Text(l10n.hwPaperWidth, style: theme.textTheme.labelLarge),
           AppSpacing.gapH8,
           SegmentedButton<int>(
-            segments: const [
-              ButtonSegment(value: 58, label: Text('58mm')),
-              ButtonSegment(value: 80, label: Text('80mm')),
+            segments: [
+              ButtonSegment(value: 58, label: Text(l10n.hardware58mm)),
+              ButtonSegment(value: 80, label: Text(l10n.hardware80mm)),
             ],
             selected: {_paperWidth},
             onSelectionChanged: (v) => setState(() => _paperWidth = v.first),
           ),
           AppSpacing.gapH12,
           SwitchListTile(
-            title: const Text('Auto-cut after print'),
+            title: Text(l10n.hwAutoCutAfterPrint),
             value: _autoCut,
             onChanged: (v) => setState(() => _autoCut = v),
             contentPadding: EdgeInsets.zero,
@@ -326,19 +329,19 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
         ]);
       case HardwareDeviceType.weighingScale:
         fields.addAll([
-          Text('Weight Unit', style: theme.textTheme.labelLarge),
+          Text(l10n.hwWeightUnit, style: theme.textTheme.labelLarge),
           AppSpacing.gapH8,
           SegmentedButton<String>(
-            segments: const [
-              ButtonSegment(value: 'kg', label: Text('kg')),
+            segments: [
+              ButtonSegment(value: 'kg', label: Text(l10n.hardwareKg)),
               ButtonSegment(value: 'g', label: Text('g')),
-              ButtonSegment(value: 'lb', label: Text('lb')),
+              ButtonSegment(value: 'lb', label: Text(l10n.hardwareLb)),
             ],
             selected: {_scaleUnit},
             onSelectionChanged: (v) => setState(() => _scaleUnit = v.first),
           ),
           AppSpacing.gapH12,
-          Text('Decimal Places', style: theme.textTheme.labelLarge),
+          Text(l10n.hwDecimalPlaces, style: theme.textTheme.labelLarge),
           AppSpacing.gapH8,
           SegmentedButton<int>(
             segments: const [
@@ -352,23 +355,23 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
         ]);
       case HardwareDeviceType.cardTerminal:
         fields.addAll([
-          Text('Provider', style: theme.textTheme.labelLarge),
+          Text(l10n.hwProvider, style: theme.textTheme.labelLarge),
           AppSpacing.gapH8,
           SegmentedButton<String>(
-            segments: const [
-              ButtonSegment(value: 'nearpay', label: Text('NearPay')),
-              ButtonSegment(value: 'nexo', label: Text('Nexo')),
+            segments: [
+              ButtonSegment(value: 'nearpay', label: Text(l10n.hardwareNearPay)),
+              ButtonSegment(value: 'nexo', label: Text(l10n.hardwareNexo)),
             ],
             selected: {_terminalProvider},
             onSelectionChanged: (v) => setState(() => _terminalProvider = v.first),
           ),
           AppSpacing.gapH12,
-          Text('Environment', style: theme.textTheme.labelLarge),
+          Text(l10n.hwEnvironment, style: theme.textTheme.labelLarge),
           AppSpacing.gapH8,
           SegmentedButton<String>(
-            segments: const [
-              ButtonSegment(value: 'sandbox', label: Text('Sandbox')),
-              ButtonSegment(value: 'production', label: Text('Production')),
+            segments: [
+              ButtonSegment(value: 'sandbox', label: Text(l10n.sandbox)),
+              ButtonSegment(value: 'production', label: Text(l10n.production)),
             ],
             selected: {_terminalEnvironment},
             onSelectionChanged: (v) => setState(() => _terminalEnvironment = v.first),

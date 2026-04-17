@@ -9,6 +9,7 @@ import '../providers/electronics_providers.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ImeiRecordFormPage extends ConsumerStatefulWidget {
   final DeviceImeiRecord? record;
@@ -19,6 +20,8 @@ class ImeiRecordFormPage extends ConsumerStatefulWidget {
 }
 
 class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
   bool get _isEditing => widget.record != null;
@@ -130,7 +133,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
             PosSearchableDropdown<String>(
-              label: 'Product',
+              label: l10n.wameedAIProduct,
               items: products.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
               selectedValue: _selectedProductId,
               onChanged: _isEditing ? null : (v) => setState(() => _selectedProductId = v),
@@ -149,7 +152,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
             PosTextField(controller: _serialNumberCtrl, label: 'Serial Number (optional)', hint: 'Device serial number'),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<ConditionGrade>(
-              label: 'Condition Grade',
+              label: l10n.electronicsConditionGrade,
               items: ConditionGrade.values.map((g) => PosDropdownItem(value: g, label: 'Grade ${g.value}')).toList(),
               selectedValue: _conditionGrade,
               onChanged: (v) => setState(() => _conditionGrade = v),
@@ -166,7 +169,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
             if (_isEditing) ...[
               SizedBox(height: AppSpacing.md),
               PosSearchableDropdown<DeviceImeiStatus>(
-                label: 'Status',
+                label: l10n.status,
                 items: DeviceImeiStatus.values.map((s) => PosDropdownItem(value: s, label: s.value)).toList(),
                 selectedValue: _status,
                 onChanged: (v) => setState(() => _status = v),

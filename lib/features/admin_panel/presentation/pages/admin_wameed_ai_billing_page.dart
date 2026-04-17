@@ -16,6 +16,8 @@ class AdminWameedAIBillingPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late TabController _tabCtrl;
 
   @override
@@ -210,7 +212,7 @@ class _State extends ConsumerState<AdminWameedAIBillingPage> with SingleTickerPr
                       DataColumn(label: Text(l10n.store, style: AppTypography.labelSmall)),
                       DataColumn(label: Text(l10n.invoiceNumber, style: AppTypography.labelSmall)),
                       DataColumn(label: Text(l10n.period, style: AppTypography.labelSmall)),
-                      DataColumn(label: Text('Amount', style: AppTypography.labelSmall)),
+                      DataColumn(label: Text(l10n.debitsAmount, style: AppTypography.labelSmall)),
                       DataColumn(label: Text(l10n.status, style: AppTypography.labelSmall)),
                       DataColumn(label: Text(l10n.dueDate, style: AppTypography.labelSmall)),
                       DataColumn(label: Text(l10n.actions, style: AppTypography.labelSmall)),

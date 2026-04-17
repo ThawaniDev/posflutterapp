@@ -70,8 +70,8 @@ class AccessibilityPrefsWidget extends ConsumerWidget {
                   trailing: SizedBox(
                     width: 160,
                     child: PosSearchableDropdown<String>(
-                      items: const [
-                        PosDropdownItem(value: 'none', label: 'None'),
+                      items: [
+                        PosDropdownItem(value: 'none', label: l10n.notificationsDigestNone),
                         PosDropdownItem(value: 'protanopia', label: 'Protanopia'),
                         PosDropdownItem(value: 'deuteranopia', label: 'Deuteranopia'),
                         PosDropdownItem(value: 'tritanopia', label: 'Tritanopia'),

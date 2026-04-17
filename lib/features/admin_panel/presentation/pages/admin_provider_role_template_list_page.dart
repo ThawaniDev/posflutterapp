@@ -8,6 +8,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminProviderRoleTemplateListPage extends ConsumerStatefulWidget {
   const AdminProviderRoleTemplateListPage({super.key});
@@ -17,6 +18,8 @@ class AdminProviderRoleTemplateListPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminProviderRoleTemplateListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -45,7 +48,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Role Templates'),
+        title: Text(l10n.adminProviderRoleTemplates),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: () => _loadData())],
@@ -60,7 +63,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateListPage> {
               ProviderRoleTemplateListError(message: final msg) => Center(
                 child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
               ),
-              _ => const Center(child: Text('Loading...')),
+              _ => Center(child: Text(l10n.loading)),
             },
           ),
         ],

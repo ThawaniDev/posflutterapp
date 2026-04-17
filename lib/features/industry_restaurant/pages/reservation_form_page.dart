@@ -6,6 +6,7 @@ import '../models/table_reservation.dart';
 import '../providers/restaurant_providers.dart';
 import '../models/restaurant_table.dart';
 import '../providers/restaurant_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ReservationFormPage extends ConsumerStatefulWidget {
   final TableReservation? reservation;
@@ -16,6 +17,8 @@ class ReservationFormPage extends ConsumerStatefulWidget {
 }
 
 class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
   bool get _isEditing => widget.reservation != null;
@@ -121,16 +124,16 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            PosTextField(controller: _customerNameCtrl, label: 'Customer Name', hint: 'Full name'),
+            PosTextField(controller: _customerNameCtrl, label: l10n.deliveryCustomerName, hint: 'Full name'),
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _customerPhoneCtrl,
-              label: 'Phone (optional)',
+              label: l10n.authPhoneOptional,
               hint: '+968 XXXX XXXX',
               keyboardType: TextInputType.phone,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _partySizeCtrl, label: 'Party Size', hint: '2', keyboardType: TextInputType.number),
+            PosTextField(controller: _partySizeCtrl, label: l10n.restaurantPartySize, hint: '2', keyboardType: TextInputType.number),
             SizedBox(height: AppSpacing.md),
             GestureDetector(
               onTap: _pickDate,
@@ -139,7 +142,7 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
                   controller: TextEditingController(
                     text: '${_reservationDate.day}/${_reservationDate.month}/${_reservationDate.year}',
                   ),
-                  label: 'Reservation Date',
+                  label: l10n.reservationDate,
                   suffixIcon: Icons.calendar_today,
                   readOnly: true,
                 ),
@@ -151,7 +154,7 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
               child: AbsorbPointer(
                 child: PosTextField(
                   controller: _reservationTimeCtrl,
-                  label: 'Time',
+                  label: l10n.time,
                   hint: 'HH:MM',
                   suffixIcon: Icons.access_time,
                   readOnly: true,
@@ -159,17 +162,17 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
               ),
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _durationCtrl, label: 'Duration (minutes)', hint: '60', keyboardType: TextInputType.number),
+            PosTextField(controller: _durationCtrl, label: l10n.durationMinutes, hint: '60', keyboardType: TextInputType.number),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
-              label: 'Table (optional)',
+              label: l10n.tableOptional,
               items: tables.map((t) => PosDropdownItem(value: t.id, label: t.displayName ?? 'Table ${t.tableNumber}')).toList(),
               selectedValue: _selectedTableId,
               onChanged: (v) => setState(() => _selectedTableId = v),
               showSearch: true,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _notesCtrl, label: 'Notes (optional)', hint: 'Special requests, allergies...', maxLines: 3),
+            PosTextField(controller: _notesCtrl, label: l10n.notesOptional, hint: 'Special requests, allergies...', maxLines: 3),
           ],
         ),
       ),

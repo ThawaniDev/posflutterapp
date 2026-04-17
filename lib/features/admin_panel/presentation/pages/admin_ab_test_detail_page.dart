@@ -3,6 +3,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminABTestDetailPage extends ConsumerStatefulWidget {
   final String testId;
@@ -13,6 +14,8 @@ class AdminABTestDetailPage extends ConsumerStatefulWidget {
 }
 
 class _AdminABTestDetailPageState extends ConsumerState<AdminABTestDetailPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -24,7 +27,7 @@ class _AdminABTestDetailPageState extends ConsumerState<AdminABTestDetailPage> {
     final state = ref.watch(abTestDetailProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('A/B Test Detail')),
+      appBar: AppBar(title: Text(l10n.abTestDetail)),
       body: switch (state) {
         ABTestDetailInitial() || ABTestDetailLoading() => const Center(child: CircularProgressIndicator()),
         ABTestDetailLoaded(:final test, :final variants) => SingleChildScrollView(
@@ -77,12 +80,12 @@ class _AdminABTestDetailPageState extends ConsumerState<AdminABTestDetailPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   if (test['status'] == 'draft')
-                    ElevatedButton.icon(onPressed: () {}, icon: const Icon(Icons.play_arrow), label: const Text('Start')),
+                    ElevatedButton.icon(onPressed: () {}, icon: Icon(Icons.play_arrow), label: Text(l10n.notificationsQuietStart)),
                   if (test['status'] == 'running')
                     ElevatedButton.icon(
                       onPressed: () {},
                       icon: const Icon(Icons.stop),
-                      label: const Text('Stop'),
+                      label: Text(l10n.stop),
                       style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
                     ),
                   ElevatedButton.icon(onPressed: () {}, icon: const Icon(Icons.bar_chart), label: const Text('View Results')),

@@ -7,6 +7,7 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminAnalyticsSubscriptionsPage extends ConsumerStatefulWidget {
   const AdminAnalyticsSubscriptionsPage({super.key});
@@ -16,6 +17,8 @@ class AdminAnalyticsSubscriptionsPage extends ConsumerStatefulWidget {
 }
 
 class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalyticsSubscriptionsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -49,7 +52,7 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Subscription Analytics'),
+        title: Text(l10n.analyticsSubscriptions),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         actions: [
@@ -143,7 +146,7 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
                     const SizedBox(height: AppSpacing.sm),
                     ElevatedButton(
                       onPressed: () => ref.read(analyticsSubscriptionsProvider.notifier).load(storeId: _storeId),
-                      child: const Text('Retry'),
+                      child: Text(l10n.retry),
                     ),
                   ],
                 ),

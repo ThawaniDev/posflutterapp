@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Card widget displaying a single subscription plan.
 class PlanCard extends StatelessWidget {
@@ -13,6 +14,7 @@ class PlanCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final price = isAnnual ? (plan.annualPrice ?? plan.monthlyPrice) : plan.monthlyPrice;
     final period = isAnnual ? '/year' : '/month';
     final isHighlighted = plan.isHighlighted;
@@ -38,8 +40,7 @@ class PlanCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                     decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(20)),
-                    child: const Text(
-                      'Popular',
+                    child: Text(l10n.subscriptionPopular,
                       style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -85,7 +86,7 @@ class PlanCard extends StatelessWidget {
                   backgroundColor: isHighlighted ? AppColors.primary : null,
                   foregroundColor: isHighlighted ? Colors.white : null,
                 ),
-                child: const Text('Select Plan'),
+                child: Text(l10n.subscriptionSelectPlan),
               ),
             ),
           ],

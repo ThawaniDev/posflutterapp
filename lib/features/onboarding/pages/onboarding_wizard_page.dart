@@ -22,6 +22,8 @@ class OnboardingWizardPage extends ConsumerStatefulWidget {
 }
 
 class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   static const _steps = OnboardingStep.values;
 
   int _currentIndex = 0;
@@ -467,7 +469,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         ),
         const SizedBox(height: AppSpacing.lg),
         SwitchListTile(
-          title: const Text('Prices Include Tax'),
+          title: Text(l10n.settingsPricesIncludeTax),
           subtitle: const Text('When enabled, product prices are displayed with tax included.'),
           value: _pricesIncludeTax,
           activeColor: AppColors.primary,
@@ -590,7 +592,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         children: [
           if (!isFirst) ...[
             PosButton(
-              label: 'Back',
+              label: l10n.back,
               variant: PosButtonVariant.outline,
               size: PosButtonSize.lg,
               onPressed: _isSubmitting ? null : _back,

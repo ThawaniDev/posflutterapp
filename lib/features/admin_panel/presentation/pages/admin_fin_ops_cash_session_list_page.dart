@@ -8,6 +8,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminFinOpsCashSessionListPage extends ConsumerStatefulWidget {
   const AdminFinOpsCashSessionListPage({super.key});
@@ -17,6 +18,8 @@ class AdminFinOpsCashSessionListPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminFinOpsCashSessionListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String? _statusFilter;
 
@@ -47,7 +50,7 @@ class _State extends ConsumerState<AdminFinOpsCashSessionListPage> {
     final state = ref.watch(finOpsCashSessionsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Cash Sessions'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.adminFinOpsCashSessions), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -68,15 +71,15 @@ class _State extends ConsumerState<AdminFinOpsCashSessionListPage> {
             padding: const EdgeInsets.all(AppSpacing.sm),
             child: PosSearchableDropdown<String>(
               items: [
-                PosDropdownItem(value: 'open', label: 'Open'),
-                PosDropdownItem(value: 'closed', label: 'Closed'),
+                PosDropdownItem(value: 'open', label: l10n.open),
+                PosDropdownItem(value: 'closed', label: l10n.posClosed),
               ],
               selectedValue: _statusFilter,
               onChanged: (v) {
                 setState(() => _statusFilter = v);
                 _applyFilter();
               },
-              label: 'Status',
+              label: l10n.status,
               hint: 'All Statuses',
               showSearch: false,
               clearable: true,
@@ -100,7 +103,7 @@ class _State extends ConsumerState<AdminFinOpsCashSessionListPage> {
   Widget _buildList(Map<String, dynamic> resp) {
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No cash sessions found'));
+    if (items.isEmpty) return Center(child: Text(l10n.noCashSessionsFound));
 
     return RefreshIndicator(
       onRefresh: () async => _applyFilter(),

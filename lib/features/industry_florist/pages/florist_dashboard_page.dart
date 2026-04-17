@@ -9,6 +9,7 @@ import 'package:wameedpos/features/industry_florist/widgets/flower_subscription_
 import 'package:wameedpos/features/industry_florist/pages/arrangement_form_page.dart';
 import 'package:wameedpos/features/industry_florist/pages/freshness_log_form_page.dart';
 import 'package:wameedpos/features/industry_florist/pages/subscription_form_page.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class FloristDashboardPage extends ConsumerStatefulWidget {
   const FloristDashboardPage({super.key});
@@ -18,6 +19,8 @@ class FloristDashboardPage extends ConsumerStatefulWidget {
 }
 
 class _FloristDashboardPageState extends ConsumerState<FloristDashboardPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late final TabController _tabController;
 
   @override
@@ -51,13 +54,13 @@ class _FloristDashboardPageState extends ConsumerState<FloristDashboardPage> wit
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Florist'),
+        title: Text(l10n.floristTitle),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Arrangements'),
+          tabs: [
+            Tab(text: l10n.floristArrangements),
             Tab(text: 'Freshness'),
-            Tab(text: 'Subscriptions'),
+            Tab(text: l10n.subscriptions),
           ],
         ),
       ),

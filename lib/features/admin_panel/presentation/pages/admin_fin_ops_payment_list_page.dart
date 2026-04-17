@@ -9,6 +9,7 @@ import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_payment_detail_page.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminFinOpsPaymentListPage extends ConsumerStatefulWidget {
   const AdminFinOpsPaymentListPage({super.key});
@@ -18,6 +19,8 @@ class AdminFinOpsPaymentListPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String? _methodFilter;
 
@@ -48,7 +51,7 @@ class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
     final state = ref.watch(finOpsPaymentsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Payments'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.sidebarPayments), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -116,7 +119,7 @@ class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
   Widget _buildList(Map<String, dynamic> resp) {
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No payments found'));
+    if (items.isEmpty) return Center(child: Text(l10n.providerPaymentNoPayments));
 
     return RefreshIndicator(
       onRefresh: () async => _applyFilter(),

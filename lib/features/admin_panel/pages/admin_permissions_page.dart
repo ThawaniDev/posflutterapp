@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminPermissionsPage extends ConsumerStatefulWidget {
   const AdminPermissionsPage({super.key});
@@ -14,6 +15,8 @@ class AdminPermissionsPage extends ConsumerStatefulWidget {
 }
 
 class _AdminPermissionsPageState extends ConsumerState<AdminPermissionsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -26,7 +29,7 @@ class _AdminPermissionsPageState extends ConsumerState<AdminPermissionsPage> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Permissions')),
+      appBar: AppBar(title: Text(l10n.permissions)),
       body: switch (state) {
         PermissionListInitial() || PermissionListLoading() => const Center(child: CircularProgressIndicator()),
         PermissionListError(message: final msg) => Center(
@@ -35,7 +38,7 @@ class _AdminPermissionsPageState extends ConsumerState<AdminPermissionsPage> {
             children: [
               Text(msg),
               AppSpacing.gapH16,
-              PosButton(label: 'Retry', onPressed: () => ref.read(permissionListProvider.notifier).load()),
+              PosButton(label: l10n.retry, onPressed: () => ref.read(permissionListProvider.notifier).load()),
             ],
           ),
         ),

@@ -22,6 +22,8 @@ class LabelListPage extends ConsumerStatefulWidget {
 }
 
 class _LabelListPageState extends ConsumerState<LabelListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -69,11 +71,11 @@ class _LabelListPageState extends ConsumerState<LabelListPage> {
       body: Padding(
         padding: const EdgeInsets.all(AppSpacing.base),
         child: PosDataTable<LabelTemplate>(
-          columns: const [
-            PosTableColumn(title: 'Name'),
-            PosTableColumn(title: 'Size'),
-            PosTableColumn(title: 'Type'),
-            PosTableColumn(title: 'Status'),
+          columns: [
+            PosTableColumn(title: l10n.name),
+            PosTableColumn(title: l10n.labelSize),
+            PosTableColumn(title: l10n.txColType),
+            PosTableColumn(title: l10n.status),
           ],
           items: templates,
           isLoading: isLoading,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/catalog/models/category.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// A single node in the category tree.
 /// Renders with indentation based on [depth] and shows expand/collapse
@@ -34,6 +35,7 @@ class CategoryTreeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final indent = depth * 28.0;
 
     return Material(
@@ -145,11 +147,11 @@ class CategoryTreeTile extends StatelessWidget {
                 ),
 
               // Actions
-              IconButton(icon: const Icon(Icons.add, size: 18), tooltip: 'Add subcategory', onPressed: onAddChild),
-              IconButton(icon: const Icon(Icons.edit_outlined, size: 18), tooltip: 'Edit', onPressed: onEdit),
+              IconButton(icon: Icon(Icons.add, size: 18), tooltip: l10n.addSubcategory, onPressed: onAddChild),
+              IconButton(icon: Icon(Icons.edit_outlined, size: 18), tooltip: l10n.edit, onPressed: onEdit),
               IconButton(
                 icon: Icon(Icons.delete_outline, size: 18, color: AppColors.error),
-                tooltip: 'Delete',
+                tooltip: l10n.delete,
                 onPressed: onDelete,
               ),
             ],

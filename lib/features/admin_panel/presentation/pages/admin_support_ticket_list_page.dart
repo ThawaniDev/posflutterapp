@@ -9,6 +9,7 @@ import '../../providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminSupportTicketListPage extends ConsumerStatefulWidget {
   const AdminSupportTicketListPage({super.key});
@@ -18,6 +19,8 @@ class AdminSupportTicketListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _statusFilter;
   String? _priorityFilter;
@@ -84,7 +87,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
     final state = ref.watch(ticketListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Support Tickets'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.adminSupportTickets), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -107,7 +110,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
                 TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
-                    hintText: 'Search tickets...',
+                    hintText: l10n.supportSearchTickets,
                     prefixIcon: const Icon(Icons.search),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.clear),
@@ -127,17 +130,17 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
                         children: [
                           PosSearchableDropdown<String>(
                             items: [
-                              PosDropdownItem(value: 'open', label: 'Open'),
-                              PosDropdownItem(value: 'in_progress', label: 'In Progress'),
-                              PosDropdownItem(value: 'resolved', label: 'Resolved'),
-                              PosDropdownItem(value: 'closed', label: 'Closed'),
+                              PosDropdownItem(value: 'open', label: l10n.open),
+                              PosDropdownItem(value: 'in_progress', label: l10n.statusInProgress),
+                              PosDropdownItem(value: 'resolved', label: l10n.resolved),
+                              PosDropdownItem(value: 'closed', label: l10n.posClosed),
                             ],
                             selectedValue: _statusFilter,
                             onChanged: (v) {
                               setState(() => _statusFilter = v);
                               _applyFilters();
                             },
-                            label: 'Status',
+                            label: l10n.status,
                             hint: 'All',
                             showSearch: false,
                             clearable: true,
@@ -145,17 +148,17 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
                           const SizedBox(height: AppSpacing.sm),
                           PosSearchableDropdown<String>(
                             items: [
-                              PosDropdownItem(value: 'low', label: 'Low'),
-                              PosDropdownItem(value: 'medium', label: 'Medium'),
-                              PosDropdownItem(value: 'high', label: 'High'),
-                              PosDropdownItem(value: 'critical', label: 'Critical'),
+                              PosDropdownItem(value: 'low', label: l10n.notifPriorityLow),
+                              PosDropdownItem(value: 'medium', label: l10n.supportPriorityMedium),
+                              PosDropdownItem(value: 'high', label: l10n.notifPriorityHigh),
+                              PosDropdownItem(value: 'critical', label: l10n.supportPriorityCritical),
                             ],
                             selectedValue: _priorityFilter,
                             onChanged: (v) {
                               setState(() => _priorityFilter = v);
                               _applyFilters();
                             },
-                            label: 'Priority',
+                            label: l10n.supportPriority,
                             hint: 'All',
                             showSearch: false,
                             clearable: true,
@@ -163,18 +166,18 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
                           const SizedBox(height: AppSpacing.sm),
                           PosSearchableDropdown<String>(
                             items: [
-                              PosDropdownItem(value: 'billing', label: 'Billing'),
-                              PosDropdownItem(value: 'technical', label: 'Technical'),
-                              PosDropdownItem(value: 'zatca', label: 'ZATCA'),
-                              PosDropdownItem(value: 'feature_request', label: 'Feature'),
-                              PosDropdownItem(value: 'general', label: 'General'),
+                              PosDropdownItem(value: 'billing', label: l10n.supportKbBilling),
+                              PosDropdownItem(value: 'technical', label: l10n.supportCategoryTechnical),
+                              PosDropdownItem(value: 'zatca', label: l10n.sidebarZatca),
+                              PosDropdownItem(value: 'feature_request', label: l10n.feature),
+                              PosDropdownItem(value: 'general', label: l10n.settingsGeneral),
                             ],
                             selectedValue: _categoryFilter,
                             onChanged: (v) {
                               setState(() => _categoryFilter = v);
                               _applyFilters();
                             },
-                            label: 'Category',
+                            label: l10n.category,
                             hint: 'All',
                             showSearch: false,
                             clearable: true,
@@ -186,17 +189,17 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
                           Expanded(
                             child: PosSearchableDropdown<String>(
                               items: [
-                                PosDropdownItem(value: 'open', label: 'Open'),
-                                PosDropdownItem(value: 'in_progress', label: 'In Progress'),
-                                PosDropdownItem(value: 'resolved', label: 'Resolved'),
-                                PosDropdownItem(value: 'closed', label: 'Closed'),
+                                PosDropdownItem(value: 'open', label: l10n.open),
+                                PosDropdownItem(value: 'in_progress', label: l10n.statusInProgress),
+                                PosDropdownItem(value: 'resolved', label: l10n.resolved),
+                                PosDropdownItem(value: 'closed', label: l10n.posClosed),
                               ],
                               selectedValue: _statusFilter,
                               onChanged: (v) {
                                 setState(() => _statusFilter = v);
                                 _applyFilters();
                               },
-                              label: 'Status',
+                              label: l10n.status,
                               hint: 'All',
                               showSearch: false,
                               clearable: true,
@@ -206,17 +209,17 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
                           Expanded(
                             child: PosSearchableDropdown<String>(
                               items: [
-                                PosDropdownItem(value: 'low', label: 'Low'),
-                                PosDropdownItem(value: 'medium', label: 'Medium'),
-                                PosDropdownItem(value: 'high', label: 'High'),
-                                PosDropdownItem(value: 'critical', label: 'Critical'),
+                                PosDropdownItem(value: 'low', label: l10n.notifPriorityLow),
+                                PosDropdownItem(value: 'medium', label: l10n.supportPriorityMedium),
+                                PosDropdownItem(value: 'high', label: l10n.notifPriorityHigh),
+                                PosDropdownItem(value: 'critical', label: l10n.supportPriorityCritical),
                               ],
                               selectedValue: _priorityFilter,
                               onChanged: (v) {
                                 setState(() => _priorityFilter = v);
                                 _applyFilters();
                               },
-                              label: 'Priority',
+                              label: l10n.supportPriority,
                               hint: 'All',
                               showSearch: false,
                               clearable: true,
@@ -226,18 +229,18 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
                           Expanded(
                             child: PosSearchableDropdown<String>(
                               items: [
-                                PosDropdownItem(value: 'billing', label: 'Billing'),
-                                PosDropdownItem(value: 'technical', label: 'Technical'),
-                                PosDropdownItem(value: 'zatca', label: 'ZATCA'),
-                                PosDropdownItem(value: 'feature_request', label: 'Feature'),
-                                PosDropdownItem(value: 'general', label: 'General'),
+                                PosDropdownItem(value: 'billing', label: l10n.supportKbBilling),
+                                PosDropdownItem(value: 'technical', label: l10n.supportCategoryTechnical),
+                                PosDropdownItem(value: 'zatca', label: l10n.sidebarZatca),
+                                PosDropdownItem(value: 'feature_request', label: l10n.feature),
+                                PosDropdownItem(value: 'general', label: l10n.settingsGeneral),
                               ],
                               selectedValue: _categoryFilter,
                               onChanged: (v) {
                                 setState(() => _categoryFilter = v);
                                 _applyFilters();
                               },
-                              label: 'Category',
+                              label: l10n.category,
                               hint: 'All',
                               showSearch: false,
                               clearable: true,

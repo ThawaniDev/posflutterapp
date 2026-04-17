@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminPlanDetailPage extends ConsumerStatefulWidget {
   final String planId;
@@ -15,6 +16,8 @@ class AdminPlanDetailPage extends ConsumerStatefulWidget {
 }
 
 class _AdminPlanDetailPageState extends ConsumerState<AdminPlanDetailPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -26,7 +29,7 @@ class _AdminPlanDetailPageState extends ConsumerState<AdminPlanDetailPage> {
     final state = ref.watch(planDetailProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Plan Details')),
+      appBar: AppBar(title: Text(l10n.planDetails)),
       body: switch (state) {
         PlanDetailLoading() => const Center(child: CircularProgressIndicator()),
         PlanDetailError(:final message) => Center(
@@ -36,7 +39,7 @@ class _AdminPlanDetailPageState extends ConsumerState<AdminPlanDetailPage> {
               Text(message, style: const TextStyle(color: AppColors.error)),
               AppSpacing.gapH16,
               PosButton(
-                label: 'Retry',
+                label: l10n.retry,
                 variant: PosButtonVariant.outline,
                 onPressed: () => ref.read(planDetailProvider.notifier).loadPlan(widget.planId),
               ),
@@ -56,6 +59,7 @@ class _PlanDetailBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final features = plan['features'] as List? ?? [];
     final limits = plan['limits'] as List? ?? [];
 
@@ -79,9 +83,9 @@ class _PlanDetailBody extends StatelessWidget {
                   AppSpacing.gapH8,
                   Row(
                     children: [
-                      _PriceChip(label: 'Monthly', price: plan['monthly_price']?.toString() ?? '0'),
+                      _PriceChip(label: l10n.subscriptionMonthly, price: plan['monthly_price']?.toString() ?? '0'),
                       AppSpacing.gapW8,
-                      if (plan['annual_price'] != null) _PriceChip(label: 'Annual', price: plan['annual_price'].toString()),
+                      if (plan['annual_price'] != null) _PriceChip(label: l10n.subscriptionAnnual, price: plan['annual_price'].toString()),
                     ],
                   ),
                 ],
@@ -93,7 +97,7 @@ class _PlanDetailBody extends StatelessWidget {
 
           // Features
           if (features.isNotEmpty) ...[
-            const Text('Features', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+            Text(l10n.subscriptionFeatures, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
             AppSpacing.gapH8,
             ...features.map(
               (f) => ListTile(
@@ -110,7 +114,7 @@ class _PlanDetailBody extends StatelessWidget {
 
           // Limits
           if (limits.isNotEmpty) ...[
-            const Text('Limits', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+            Text(l10n.settingsPosLimits, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
             AppSpacing.gapH8,
             ...limits.map(
               (l) => ListTile(

@@ -10,6 +10,7 @@ import 'package:wameedpos/features/industry_restaurant/widgets/open_tab_card.dar
 import 'package:wameedpos/features/industry_restaurant/pages/table_form_page.dart';
 import 'package:wameedpos/features/industry_restaurant/pages/reservation_form_page.dart';
 import 'package:wameedpos/features/industry_restaurant/pages/open_tab_form_page.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class RestaurantDashboardPage extends ConsumerStatefulWidget {
   const RestaurantDashboardPage({super.key});
@@ -19,6 +20,8 @@ class RestaurantDashboardPage extends ConsumerStatefulWidget {
 }
 
 class _RestaurantDashboardPageState extends ConsumerState<RestaurantDashboardPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late final TabController _tabController;
 
   @override
@@ -55,15 +58,15 @@ class _RestaurantDashboardPageState extends ConsumerState<RestaurantDashboardPag
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Restaurant'),
+        title: Text(l10n.restaurantTitle),
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,
-          tabs: const [
-            Tab(text: 'Tables'),
+          tabs: [
+            Tab(text: l10n.restaurantTables),
             Tab(text: 'Kitchen'),
-            Tab(text: 'Reservations'),
-            Tab(text: 'Open Tabs'),
+            Tab(text: l10n.restaurantReservations),
+            Tab(text: l10n.restaurantOpenTabs),
           ],
         ),
       ),

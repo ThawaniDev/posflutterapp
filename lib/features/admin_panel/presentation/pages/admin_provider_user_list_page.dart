@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminProviderUserListPage extends ConsumerStatefulWidget {
   const AdminProviderUserListPage({super.key});
@@ -16,6 +17,8 @@ class AdminProviderUserListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _storeId;
   String? _roleFilter;
@@ -58,7 +61,7 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
     final state = ref.watch(providerUserListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Provider Users')),
+      appBar: AppBar(title: Text(l10n.providerUsers)),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),

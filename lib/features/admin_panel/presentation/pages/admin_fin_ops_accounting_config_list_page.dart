@@ -6,6 +6,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminFinOpsAccountingConfigListPage extends ConsumerStatefulWidget {
   const AdminFinOpsAccountingConfigListPage({super.key});
@@ -15,6 +16,8 @@ class AdminFinOpsAccountingConfigListPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminFinOpsAccountingConfigListPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   late TabController _tabController;
 
@@ -51,7 +54,7 @@ class _State extends ConsumerState<AdminFinOpsAccountingConfigListPage> with Sin
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Accounting'),
+        title: Text(l10n.sidebarAccounting),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         bottom: TabBar(
@@ -59,11 +62,11 @@ class _State extends ConsumerState<AdminFinOpsAccountingConfigListPage> with Sin
           labelColor: Colors.white,
           unselectedLabelColor: Colors.white70,
           indicatorColor: Colors.white,
-          tabs: const [
+          tabs: [
             Tab(text: 'Configs'),
             Tab(text: 'Mappings'),
             Tab(text: 'Exports'),
-            Tab(text: 'Auto Export'),
+            Tab(text: l10n.accountingAutoExport),
           ],
         ),
       ),
@@ -85,6 +88,7 @@ class _State extends ConsumerState<AdminFinOpsAccountingConfigListPage> with Sin
 class _ConfigsTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(finOpsAccountingConfigsProvider);
     return switch (state) {
       FinOpsListLoading() => const Center(child: CircularProgressIndicator()),
@@ -92,7 +96,7 @@ class _ConfigsTab extends ConsumerWidget {
       FinOpsListError(message: final msg) => Center(
         child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
       ),
-      _ => const Center(child: Text('Loading...')),
+      _ => Center(child: Text(l10n.loading)),
     };
   }
 
@@ -136,6 +140,8 @@ class _MappingsTab extends ConsumerStatefulWidget {
 }
 
 class _MappingsTabState extends ConsumerState<_MappingsTab> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -146,7 +152,7 @@ class _MappingsTabState extends ConsumerState<_MappingsTab> {
   Widget build(BuildContext context) {
     // Account mappings are typically loaded from the accounting configs detail
     // For the list view, show a placeholder that directs to config detail
-    return const Center(
+    return Center(
       child: Padding(
         padding: EdgeInsets.all(AppSpacing.md),
         child: Column(
@@ -154,7 +160,7 @@ class _MappingsTabState extends ConsumerState<_MappingsTab> {
           children: [
             Icon(Icons.account_tree, size: 48, color: AppColors.textMutedLight),
             SizedBox(height: AppSpacing.sm),
-            Text('Account Mappings', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text(l10n.accountingMappings, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             SizedBox(height: AppSpacing.xs),
             Text(
               'Select an accounting config to view its account mappings.',
@@ -171,6 +177,7 @@ class _MappingsTabState extends ConsumerState<_MappingsTab> {
 class _ExportsTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(finOpsAccountingExportsProvider);
     return switch (state) {
       FinOpsListLoading() => const Center(child: CircularProgressIndicator()),
@@ -178,7 +185,7 @@ class _ExportsTab extends ConsumerWidget {
       FinOpsListError(message: final msg) => Center(
         child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
       ),
-      _ => const Center(child: Text('Loading...')),
+      _ => Center(child: Text(l10n.loading)),
     };
   }
 
@@ -233,6 +240,7 @@ class _ExportsTab extends ConsumerWidget {
 class _AutoExportTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(finOpsAutoExportConfigsProvider);
     return switch (state) {
       FinOpsListLoading() => const Center(child: CircularProgressIndicator()),
@@ -240,7 +248,7 @@ class _AutoExportTab extends ConsumerWidget {
       FinOpsListError(message: final msg) => Center(
         child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
       ),
-      _ => const Center(child: Text('Loading...')),
+      _ => Center(child: Text(l10n.loading)),
     };
   }
 

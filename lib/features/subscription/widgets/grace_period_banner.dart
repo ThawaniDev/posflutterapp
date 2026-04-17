@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Banner widget shown when the subscription is in a grace period or about to expire.
 class GracePeriodBanner extends StatelessWidget {
@@ -12,6 +13,7 @@ class GracePeriodBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final daysLeft = gracePeriodEndsAt.difference(DateTime.now()).inDays;
     final isUrgent = daysLeft <= 3 || isExpired;
     final bannerColor = isUrgent ? AppColors.error : AppColors.warning;
@@ -58,7 +60,7 @@ class GracePeriodBanner extends StatelessWidget {
                 foregroundColor: isUrgent ? bannerColor : Colors.white,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               ),
-              child: const Text('Renew Now'),
+              child: Text(l10n.subscriptionRenewNow),
             ),
           ],
         ],

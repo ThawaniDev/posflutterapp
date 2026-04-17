@@ -12,6 +12,7 @@ import 'package:wameedpos/features/hardware/providers/hardware_providers.dart';
 import 'package:wameedpos/features/hardware/providers/hardware_state.dart';
 import 'package:wameedpos/features/hardware/services/hardware_auto_detector.dart';
 import 'package:wameedpos/features/hardware/services/hardware_manager.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Real-time connected devices panel showing all peripherals grouped by connection type.
 class ConnectedDevicesPanel extends ConsumerWidget {
@@ -376,6 +377,7 @@ class _NetworkScanSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
       color: isDark ? AppColors.surfaceDark : null,
@@ -388,7 +390,7 @@ class _NetworkScanSection extends StatelessWidget {
               children: [
                 Icon(Icons.radar, size: 20, color: isDark ? AppColors.textSecondary : Colors.grey.shade700),
                 AppSpacing.gapW8,
-                Expanded(child: Text('Network Discovery', style: AppTypography.titleSmall)),
+                Expanded(child: Text(l10n.networkDiscovery, style: AppTypography.titleSmall)),
                 switch (scanState) {
                   NetworkScanIdle() || NetworkScanComplete() || NetworkScanError() => TextButton.icon(
                     onPressed: () => ref.read(networkScanProvider.notifier).scan(),

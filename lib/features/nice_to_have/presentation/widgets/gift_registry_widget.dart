@@ -4,12 +4,14 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import '../nice_to_have_providers.dart';
 import '../nice_to_have_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class GiftRegistryWidget extends ConsumerWidget {
   const GiftRegistryWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(giftRegistryProvider);
     return switch (state) {
       GiftRegistryInitial() || GiftRegistryLoading() => const Center(child: CircularProgressIndicator()),
@@ -18,7 +20,7 @@ class GiftRegistryWidget extends ConsumerWidget {
       ),
       GiftRegistryLoaded(:final registries) =>
         registries.isEmpty
-            ? const Center(child: Text('No gift registries'))
+            ? Center(child: Text(l10n.noGiftRegistries))
             : ListView.builder(
                 padding: AppSpacing.paddingAll16,
                 itemCount: registries.length,

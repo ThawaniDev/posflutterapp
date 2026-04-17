@@ -11686,4 +11686,1003 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get providerPaymentPurposeOther => 'أخرى';
+
+  @override
+  String get pinLoginTitle => 'أدخل رمز PIN';
+
+  @override
+  String get pinLoginNoStore =>
+      'لم يتم العثور على جلسة متجر. يرجى تسجيل الدخول بالبريد الإلكتروني.';
+
+  @override
+  String get pinLoginEmailInstead =>
+      'تسجيل الدخول بالبريد الإلكتروني بدلاً من ذلك';
+
+  @override
+  String get categoryMappings => 'تعيينات الفئات';
+
+  @override
+  String get syncManagement => 'إدارة المزامنة';
+
+  @override
+  String get syncLogs => 'سجلات المزامنة';
+
+  @override
+  String get newExport => 'تصدير جديد';
+
+  @override
+  String get autoExportSettings => 'إعدادات التصدير التلقائي';
+
+  @override
+  String get dayOfWeek => 'يوم الأسبوع';
+
+  @override
+  String get dayOfMonth => 'يوم الشهر';
+
+  @override
+  String get exportTime => 'وقت التصدير';
+
+  @override
+  String get retryOnFailure => 'إعادة المحاولة عند الفشل';
+
+  @override
+  String get automaticallyRetryFailedExports =>
+      'إعادة محاولة التصدير الفاشل تلقائياً';
+
+  @override
+  String get mapPosAccountsToProviderAccounts =>
+      'ربط حسابات نقاط البيع بحسابات المزود';
+
+  @override
+  String get viewAndManageExports => 'عرض وإدارة التصادير';
+
+  @override
+  String get scheduleAutomaticExports => 'جدولة التصادير التلقائية';
+
+  @override
+  String get connect => 'اتصال';
+
+  @override
+  String get supportedLanguages => 'اللغات المدعومة';
+
+  @override
+  String get noPublishedVersionsYet => 'لا توجد إصدارات منشورة بعد';
+
+  @override
+  String get translationVersions => 'إصدارات الترجمة';
+
+  @override
+  String get noCashSessionsFound => 'لم يتم العثور على جلسات نقدية';
+
+  @override
+  String get openingCheckout => 'جاري فتح الدفع...';
+
+  @override
+  String get sellPrice => 'سعر البيع';
+
+  @override
+  String get offerPrice => 'سعر العرض';
+
+  @override
+  String get costPrice => 'سعر التكلفة';
+
+  @override
+  String get productNotFound => 'لم يتم العثور على المنتج';
+
+  @override
+  String get networkDiscovery => 'اكتشاف الشبكة';
+
+  @override
+  String get searchPromotions => 'البحث عن العروض...';
+
+  @override
+  String get analytics => 'التحليلات';
+
+  @override
+  String get generateCoupons => 'إنشاء قسائم';
+
+  @override
+  String get applyCoupon => 'تطبيق القسيمة';
+
+  @override
+  String get couponCode => 'رمز القسيمة';
+
+  @override
+  String get enterCouponCode => 'أدخل رمز القسيمة';
+
+  @override
+  String get promotionName => 'اسم العرض *';
+
+  @override
+  String get buyQuantity => 'كمية الشراء';
+
+  @override
+  String get getQuantity => 'كمية الهدية';
+
+  @override
+  String get getDiscount => 'نسبة الخصم %';
+
+  @override
+  String get bundlePrice => 'سعر الحزمة';
+
+  @override
+  String get minOrderTotal => 'الحد الأدنى لإجمالي الطلب';
+
+  @override
+  String get maxUses => 'الحد الأقصى للاستخدام';
+
+  @override
+  String get maxPerCustomer => 'الحد الأقصى لكل عميل';
+
+  @override
+  String get requiresCouponCode => 'يتطلب رمز قسيمة';
+
+  @override
+  String get stackable => 'قابل للتجميع';
+
+  @override
+  String get count => 'العدد *';
+
+  @override
+  String get prefixOptional => 'البادئة (اختياري)';
+
+  @override
+  String get maxUsesPerCouponOptional =>
+      'الحد الأقصى للاستخدام لكل قسيمة (اختياري)';
+
+  @override
+  String get expandAll => 'توسيع الكل';
+
+  @override
+  String get collapseAll => 'طي الكل';
+
+  @override
+  String get addSubcategory => 'إضافة فئة فرعية';
+
+  @override
+  String get noSignagePlaylists => 'لا توجد قوائم عرض';
+
+  @override
+  String get noAppointments => 'لا توجد مواعيد';
+
+  @override
+  String get enterACustomerIdToViewWishlist =>
+      'أدخل معرف العميل لعرض قائمة الرغبات';
+
+  @override
+  String get wishlistIsEmpty => 'قائمة الرغبات فارغة';
+
+  @override
+  String get noGiftRegistries => 'لا توجد سجلات هدايا';
+
+  @override
+  String get noSyncHistoryYet => 'لا يوجد سجل مزامنة بعد';
+
+  @override
+  String get recentSyncActivity => 'نشاط المزامنة الأخير';
+
+  @override
+  String get noBackupsYet => 'لا توجد نسخ احتياطية بعد';
+
+  @override
+  String get editReservation => 'تعديل الحجز';
+
+  @override
+  String get reservationDate => 'تاريخ الحجز';
+
+  @override
+  String get time => 'الوقت';
+
+  @override
+  String get durationMinutes => 'المدة (دقائق)';
+
+  @override
+  String get tableOptional => 'الطاولة (اختياري)';
+
+  @override
+  String get editTable => 'تعديل الطاولة';
+
+  @override
+  String get displayNameOptional => 'الاسم المعروض (اختياري)';
+
+  @override
+  String get zoneOptional => 'المنطقة (اختياري)';
+
+  @override
+  String get positionX => 'الموقع X';
+
+  @override
+  String get positionY => 'الموقع Y';
+
+  @override
+  String get openTab => 'فتح حساب';
+
+  @override
+  String get recipeName => 'اسم الوصفة';
+
+  @override
+  String get expectedYield => 'الإنتاج المتوقع';
+
+  @override
+  String get prepTimeMin => 'وقت التحضير (دقيقة)';
+
+  @override
+  String get bakeTimeMin => 'وقت الخبز (دقيقة)';
+
+  @override
+  String get bakeTempC => 'درجة حرارة الخبز (°م)';
+
+  @override
+  String get instructions => 'التعليمات';
+
+  @override
+  String get scheduleDate => 'تاريخ الجدول';
+
+  @override
+  String get plannedBatches => 'الدفعات المخطط لها';
+
+  @override
+  String get plannedYield => 'الإنتاج المخطط';
+
+  @override
+  String get actualBatches => 'الدفعات الفعلية';
+
+  @override
+  String get actualYield => 'الإنتاج الفعلي';
+
+  @override
+  String get arrangementName => 'اسم التنسيق';
+
+  @override
+  String get occasionOptional => 'المناسبة (اختياري)';
+
+  @override
+  String get noDataForSelectedPeriod => 'لا توجد بيانات للفترة المحددة';
+
+  @override
+  String get noSalesDataYetToday => 'لا توجد بيانات مبيعات اليوم بعد';
+
+  @override
+  String get sku => ':SKU';
+
+  @override
+  String get deleteRole => 'حذف الدور';
+
+  @override
+  String get planDetails => 'تفاصيل الخطة';
+
+  @override
+  String get usage => 'الاستخدام';
+
+  @override
+  String get manageAddons => 'إدارة الإضافات';
+
+  @override
+  String get viewInvoices => 'عرض الفواتير';
+
+  @override
+  String get renews => 'يُجدد';
+
+  @override
+  String get productsUsed => 'المنتجات المستخدمة';
+
+  @override
+  String get needHelp => 'تحتاج مساعدة؟';
+
+  @override
+  String get contactSupport => 'اتصل بالدعم';
+
+  @override
+  String get achievements => 'الإنجازات';
+
+  @override
+  String get noBadgesEarnedYet => 'لم يتم الحصول على شارات بعد';
+
+  @override
+  String get badgeCollection => 'مجموعة الشارات';
+
+  @override
+  String get noSubscriptionsFound => 'لم يتم العثور على اشتراكات';
+
+  @override
+  String get noGatewaysConfigured => 'لم يتم تكوين بوابات';
+
+  @override
+  String get noAnnouncementsFound => 'لم يتم العثور على إعلانات';
+
+  @override
+  String get noSettlements => 'لا توجد تسويات';
+
+  @override
+  String get uiError => 'خطأ';
+
+  @override
+  String get back => 'رجوع';
+
+  @override
+  String get plan => 'الخطة';
+
+  @override
+  String get id => 'المعرف';
+
+  @override
+  String get role => 'الدور';
+
+  @override
+  String get item => 'عنصر';
+
+  @override
+  String get card => 'بطاقة';
+
+  @override
+  String get unpaid => 'غير مدفوع';
+
+  @override
+  String get due => 'مستحق';
+
+  @override
+  String get approved => 'مُعتمد';
+
+  @override
+  String get rejected => 'مرفوض';
+
+  @override
+  String get published => 'منشور';
+
+  @override
+  String get archived => 'مؤرشف';
+
+  @override
+  String get filter => 'تصفية';
+
+  @override
+  String get sort => 'ترتيب';
+
+  @override
+  String get selectAll => 'تحديد الكل';
+
+  @override
+  String get deselectAll => 'إلغاء تحديد الكل';
+
+  @override
+  String get copy => 'نسخ';
+
+  @override
+  String get upload => 'رفع';
+
+  @override
+  String get share => 'مشاركة';
+
+  @override
+  String get branchMgr => 'مدير الفرع';
+
+  @override
+  String get health => 'الحالة';
+
+  @override
+  String get configuration => 'الإعدادات';
+
+  @override
+  String get customRange => 'نطاق مخصص';
+
+  @override
+  String get somethingWentWrong => 'حدث خطأ ما';
+
+  @override
+  String get view => 'عرض';
+
+  @override
+  String get stop => 'إيقاف';
+
+  @override
+  String get pause => 'إيقاف مؤقت';
+
+  @override
+  String get resume => 'استئناف';
+
+  @override
+  String get refund => 'استرداد';
+
+  @override
+  String get reportsTodaysOverview => 'نظرة عامة اليوم';
+
+  @override
+  String get reportsVsYesterday => 'مقارنة بالأمس';
+
+  @override
+  String get reportsTopProductsToday => 'أفضل المنتجات اليوم';
+
+  @override
+  String get reportsFeatureGuide => 'دليل الميزات';
+
+  @override
+  String get reportsRevenueTrend => 'اتجاه الإيرادات';
+
+  @override
+  String get reportsBreakdown => 'التفاصيل';
+
+  @override
+  String get reportsCostOfGoods => 'تكلفة البضائع';
+
+  @override
+  String get reportsTaxCollected => 'الضريبة المحصلة';
+
+  @override
+  String get reportsCashRevenue => 'إيرادات نقدية';
+
+  @override
+  String get reportsCardRevenue => 'إيرادات البطاقات';
+
+  @override
+  String get reportsOtherRevenue => 'إيرادات أخرى';
+
+  @override
+  String get reportsDailyBreakdown => 'التفاصيل اليومية';
+
+  @override
+  String get reportsPnlTrend => 'اتجاه الربح والخسارة';
+
+  @override
+  String get reportsCogs => 'تكلفة المبيعات';
+
+  @override
+  String get reportsNoDataForPeriod => 'لا توجد بيانات للفترة';
+
+  @override
+  String get reportsExpenseDistribution => 'توزيع المصروفات';
+
+  @override
+  String get reportsByCategory => 'حسب الفئة';
+
+  @override
+  String get reportsNoExpensesRecorded => 'لا توجد مصروفات مسجلة';
+
+  @override
+  String get reportsTotalVariance => 'إجمالي الفرق';
+
+  @override
+  String get reportsOverPlus => 'زيادة (+)';
+
+  @override
+  String get reportsShortMinus => 'نقص (-)';
+
+  @override
+  String get reportsNoClosedSessions => 'لا توجد جلسات مغلقة';
+
+  @override
+  String get reportsExpected => 'المتوقع';
+
+  @override
+  String get reportsActual => 'الفعلي';
+
+  @override
+  String get reportsTotalProfit => 'إجمالي الربح';
+
+  @override
+  String get reportsTopProductsByRevenue => 'أفضل المنتجات حسب الإيرادات';
+
+  @override
+  String get reportsProductsRankedByRevenue => 'المنتجات مرتبة حسب الإيرادات';
+
+  @override
+  String get reportsNoProductData => 'لا توجد بيانات منتجات للفترة المحددة';
+
+  @override
+  String get reportsTotalQtySold => 'إجمالي الكمية المباعة';
+
+  @override
+  String get reportsPaymentDistribution => 'توزيع المدفوعات';
+
+  @override
+  String get reportsBreakdownByMethod => 'التفاصيل حسب الطريقة';
+
+  @override
+  String get reportsNoPaymentData => 'لا توجد بيانات دفع للفترة المحددة';
+
+  @override
+  String get reportsMethodsUsed => 'الطرق المستخدمة';
+
+  @override
+  String get reportsAvgPerTx => 'المتوسط لكل معاملة';
+
+  @override
+  String get reportsHourlyPattern => 'النمط بالساعة';
+
+  @override
+  String get reportsRevenueByHour => 'الإيرادات حسب الساعة';
+
+  @override
+  String get reportsNoHourlyData => 'لا توجد بيانات ساعية للفترة المحددة';
+
+  @override
+  String get reportsPeakHour => 'ساعة الذروة';
+
+  @override
+  String get reportsRevenueByStaff => 'الإيرادات حسب الموظف';
+
+  @override
+  String get reportsStaffRankedByRevenue => 'الموظفون مرتبون حسب الإيرادات';
+
+  @override
+  String get reportsNoStaffData => 'لا توجد بيانات أداء الموظفين';
+
+  @override
+  String get reportsAvgPerStaff => 'المتوسط لكل موظف';
+
+  @override
+  String get reportsNoCustomerData => 'لا توجد بيانات عملاء';
+
+  @override
+  String get reportsSpendByCustomer => 'الإنفاق حسب العميل';
+
+  @override
+  String get reportsRankedBySpend => 'مرتبون حسب الإنفاق';
+
+  @override
+  String get reportsTotalSpend => 'إجمالي الإنفاق';
+
+  @override
+  String get reportsRepeatRate => 'معدل التكرار';
+
+  @override
+  String get reportsRepeatCustomers => 'عملاء متكررون';
+
+  @override
+  String get reportsNew30d => 'جديد (30 يوم)';
+
+  @override
+  String get reportsActive30d => 'نشط (30 يوم)';
+
+  @override
+  String get reportsLoyaltyPoints => 'نقاط الولاء';
+
+  @override
+  String get reportsAverages => 'المتوسطات';
+
+  @override
+  String get reportsAvgVisits => 'متوسط الزيارات';
+
+  @override
+  String get reportsAvgSpend => 'متوسط الإنفاق';
+
+  @override
+  String get reportsAvgLoyaltyPoints => 'متوسط نقاط الولاء';
+
+  @override
+  String get reportsNoCategoryData => 'لا توجد بيانات فئات للفترة المحددة';
+
+  @override
+  String get reportsRevenueShare => 'حصة الإيرادات';
+
+  @override
+  String get reportsRevenueByCategory => 'الإيرادات حسب الفئة';
+
+  @override
+  String get reportsCategories => 'الفئات';
+
+  @override
+  String get reportsTotalStockValue => 'إجمالي قيمة المخزون';
+
+  @override
+  String get reportsTotalItems => 'إجمالي العناصر';
+
+  @override
+  String get reportsProductCount => 'عدد المنتجات';
+
+  @override
+  String get reportsStockValueDistribution => 'توزيع قيمة المخزون';
+
+  @override
+  String get reportsNoStockData => 'لا توجد بيانات مخزون';
+
+  @override
+  String get reportsProductTurnover => 'دوران المنتجات';
+
+  @override
+  String get reportsNoTurnoverData => 'لا توجد بيانات دوران';
+
+  @override
+  String get reportsShrinkageByReason => 'الانكماش حسب السبب';
+
+  @override
+  String get reportsNoShrinkageData => 'لا توجد بيانات انكماش';
+
+  @override
+  String get reportsShrinkageByProduct => 'الانكماش حسب المنتج';
+
+  @override
+  String get reportsAllStockLevelsOk => 'جميع مستويات المخزون جيدة';
+
+  @override
+  String get reportsLowStockItems => 'عناصر منخفضة المخزون';
+
+  @override
+  String get filterCash => 'نقدي';
+
+  @override
+  String get filterCard => 'بطاقة';
+
+  @override
+  String get filterGiftCard => 'بطاقة هدايا';
+
+  @override
+  String get filterMobile => 'جوال';
+
+  @override
+  String get filterBankTransfer => 'تحويل بنكي';
+
+  @override
+  String get filterCompleted => 'مكتمل';
+
+  @override
+  String get filterRefunded => 'مسترد';
+
+  @override
+  String get filterPartialRefund => 'استرداد جزئي';
+
+  @override
+  String get filterMin => 'الحد الأدنى';
+
+  @override
+  String get filterMax => 'الحد الأقصى';
+
+  @override
+  String get reportsRevenue => 'الإيرادات';
+
+  @override
+  String get filterSortQuantity => 'الكمية';
+
+  @override
+  String get filterSortProfit => 'الربح';
+
+  @override
+  String get filterSortOrders => 'الطلبات';
+
+  @override
+  String get filterSortName => 'الاسم';
+
+  @override
+  String get companionAppPreferences => 'تفضيلات التطبيق';
+
+  @override
+  String get companionTheme => 'المظهر';
+
+  @override
+  String get companionLanguage => 'اللغة';
+
+  @override
+  String get companionEnglish => 'الإنجليزية';
+
+  @override
+  String get companionCompactMode => 'الوضع المدمج';
+
+  @override
+  String get companionNotifications => 'الإشعارات';
+
+  @override
+  String get companionBiometricLock => 'القفل البيومتري';
+
+  @override
+  String get companionDefaultPage => 'الصفحة الافتراضية';
+
+  @override
+  String get companionCurrencyDisplay => 'عرض العملة';
+
+  @override
+  String get companionPending => 'قيد الانتظار';
+
+  @override
+  String get catalogProductVisibleInPos => 'المنتج مرئي في نقطة البيع';
+
+  @override
+  String get catalogWeighable => 'قابل للوزن';
+
+  @override
+  String get catalogAgeRestricted => 'مقيد بالعمر';
+
+  @override
+  String get catalogAddVariant => 'إضافة متغير';
+
+  @override
+  String get catalogAddModifierGroup => 'إضافة مجموعة تعديل';
+
+  @override
+  String get catalogVisibleInPosCatalog => 'مرئي في نقطة البيع والكتالوج';
+
+  @override
+  String get catalogNoCategoriesYet => 'لا توجد فئات بعد';
+
+  @override
+  String get staffClockIn => 'تسجيل الحضور';
+
+  @override
+  String get staffClockOut => 'تسجيل الانصراف';
+
+  @override
+  String get statusScheduled => 'مجدول';
+
+  @override
+  String get statusPlanned => 'مخطط';
+
+  @override
+  String get statusInProgress => 'قيد التنفيذ';
+
+  @override
+  String get statusCancelled => 'ملغي';
+
+  @override
+  String get paymentsCountRequired => 'العدد *';
+
+  @override
+  String get paymentsPrefixOptional => 'البادئة (اختياري)';
+
+  @override
+  String get paymentsMaxUsesPerCoupon =>
+      'الحد الأقصى لاستخدام كل قسيمة (اختياري)';
+
+  @override
+  String get accountingDayOfMonth => 'يوم من الشهر';
+
+  @override
+  String get accountingNotificationEmail =>
+      'البريد الإلكتروني للإشعارات (اختياري)';
+
+  @override
+  String get jewelrySetMetalRate => 'تعيين سعر المعدن';
+
+  @override
+  String get hardware58mm => '58 مم';
+
+  @override
+  String get hardware80mm => '80 مم';
+
+  @override
+  String get hardwareKg => 'كجم';
+
+  @override
+  String get hardwareG => 'جم';
+
+  @override
+  String get hardwareLb => 'رطل';
+
+  @override
+  String get hardwareNearPay => 'NearPay';
+
+  @override
+  String get hardwareNexo => 'Nexo';
+
+  @override
+  String get promotionsDeletePromotion => 'حذف العرض';
+
+  @override
+  String get promotionsCouponCode => 'رمز القسيمة';
+
+  @override
+  String get promotionsEnterCouponCode => 'أدخل رمز القسيمة';
+
+  @override
+  String get reportsTotalRevenue => 'إجمالي الإيرادات';
+
+  @override
+  String get reportsTransactions => 'المعاملات';
+
+  @override
+  String get reportsNetRevenue => 'صافي الإيرادات';
+
+  @override
+  String get reportsAvgBasket => 'متوسط السلة';
+
+  @override
+  String get reportsNetProfit => 'صافي الربح';
+
+  @override
+  String get reportsTotalExpenses => 'إجمالي المصروفات';
+
+  @override
+  String get reportsTotalOrders => 'إجمالي الطلبات';
+
+  @override
+  String get reportsTopCustomers2 => 'أفضل العملاء';
+
+  @override
+  String get reportsTotalCustomers => 'إجمالي العملاء';
+
+  @override
+  String get reportsSessions => 'الجلسات';
+
+  @override
+  String get reportsStaffMembers => 'أعضاء الفريق';
+
+  @override
+  String get reportsFilterStaff => 'الموظف';
+
+  @override
+  String get reportsFilterCategory => 'الفئة';
+
+  @override
+  String get reportsFilterPayment => 'الدفع';
+
+  @override
+  String get reportsFilterStatus => 'الحالة';
+
+  @override
+  String get reportsProducts => 'المنتجات';
+
+  @override
+  String get presetToday => 'اليوم';
+
+  @override
+  String get presetYesterday => 'أمس';
+
+  @override
+  String get presetLast7Days => 'آخر 7 أيام';
+
+  @override
+  String get presetLast30Days => 'آخر 30 يوماً';
+
+  @override
+  String get presetThisMonth => 'هذا الشهر';
+
+  @override
+  String get presetLastMonth => 'الشهر الماضي';
+
+  @override
+  String get presetThisQuarter => 'هذا الربع';
+
+  @override
+  String get presetCustom => 'مخصص';
+
+  @override
+  String get reportNavSales => 'المبيعات';
+
+  @override
+  String get reportNavProducts => 'المنتجات';
+
+  @override
+  String get reportNavCategories => 'الفئات';
+
+  @override
+  String get reportNavStaff => 'الموظفين';
+
+  @override
+  String get reportNavHourly => 'بالساعة';
+
+  @override
+  String get reportNavPayments => 'المدفوعات';
+
+  @override
+  String get reportNavInventory => 'المخزون';
+
+  @override
+  String get reportNavFinancial => 'المالية';
+
+  @override
+  String get reportNavCustomers => 'العملاء';
+
+  @override
+  String get reportAllTime => 'كل الأوقات';
+
+  @override
+  String get reportFilters => 'التصفية';
+
+  @override
+  String get reportAllBranches => 'جميع الفروع';
+
+  @override
+  String reportQtyPrefix(String value) {
+    return 'الكمية: $value';
+  }
+
+  @override
+  String get reportRevenue => 'الإيرادات';
+
+  @override
+  String reportNOrders(String count) {
+    return '$count طلبات';
+  }
+
+  @override
+  String reportNetPrefix(String value) {
+    return 'صافي: $value';
+  }
+
+  @override
+  String reportNSold(String count) {
+    return '$count مباع';
+  }
+
+  @override
+  String reportProfitAmount(String value) {
+    return 'ربح $value';
+  }
+
+  @override
+  String reportCostAmount(String value) {
+    return 'تكلفة $value';
+  }
+
+  @override
+  String reportNReturns(String count) {
+    return '$count مرتجعات';
+  }
+
+  @override
+  String reportNProducts(String count) {
+    return '$count منتجات';
+  }
+
+  @override
+  String reportAvgAmount(String value) {
+    return 'متوسط $value';
+  }
+
+  @override
+  String reportNVisitsAvg(String visits, String avg) {
+    return '$visits زيارات · متوسط $avg';
+  }
+
+  @override
+  String reportNPts(String count) {
+    return '$count نقطة';
+  }
+
+  @override
+  String reportQtyTimesAvg(String qty, String cost) {
+    return 'الكمية: $qty × $cost';
+  }
+
+  @override
+  String reportCogsStock(String cogs, String stock) {
+    return 'تكلفة البضاعة: $cogs · المخزون: $stock';
+  }
+
+  @override
+  String get reportHealthy => 'صحي';
+
+  @override
+  String get reportSlow => 'بطيء';
+
+  @override
+  String reportNUnits(String count) {
+    return '$count وحدات';
+  }
+
+  @override
+  String reportNUnitsLost(String count) {
+    return '$count وحدات مفقودة';
+  }
+
+  @override
+  String reportStockReorder(String current, String reorder) {
+    return 'المخزون: $current · إعادة طلب عند: $reorder';
+  }
+
+  @override
+  String reportNeedN(String count) {
+    return 'بحاجة $count';
+  }
+
+  @override
+  String reportNTransactions(String count) {
+    return '$count معاملات';
+  }
+
+  @override
+  String reportOpenedAt(String time) {
+    return 'افتُتح: $time';
+  }
+
+  @override
+  String reportTodayVsYesterday(String today, String yesterday) {
+    return 'اليوم: $today  •  أمس: $yesterday';
+  }
+
+  @override
+  String get reportLegendRevenue => 'الإيرادات';
+
+  @override
+  String get reportLegendCost => 'التكلفة';
+
+  @override
+  String get reportLegendNetProfit => 'صافي الربح';
 }

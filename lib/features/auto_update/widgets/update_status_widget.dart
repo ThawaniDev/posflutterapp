@@ -5,12 +5,14 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/auto_update/providers/auto_update_providers.dart';
 import 'package:wameedpos/features/auto_update/providers/auto_update_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class UpdateStatusWidget extends ConsumerWidget {
   const UpdateStatusWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(updateCheckProvider);
     final theme = Theme.of(context);
 
@@ -46,7 +48,7 @@ class UpdateStatusWidget extends ConsumerWidget {
               ),
               if (s.isForceUpdate) ...[
                 AppSpacing.gapH8,
-                Chip(label: const Text('Required Update'), backgroundColor: theme.colorScheme.errorContainer),
+                Chip(label: Text(l10n.autoUpdateRequired), backgroundColor: theme.colorScheme.errorContainer),
               ],
               if (s.releaseNotes != null) ...[AppSpacing.gapH12, Text(s.releaseNotes!, style: theme.textTheme.bodyMedium)],
               if (s.updateAvailable) ...[

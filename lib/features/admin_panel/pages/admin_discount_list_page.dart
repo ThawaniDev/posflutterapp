@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminDiscountListPage extends ConsumerStatefulWidget {
   const AdminDiscountListPage({super.key});
@@ -16,6 +17,8 @@ class AdminDiscountListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminDiscountListPageState extends ConsumerState<AdminDiscountListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -37,7 +40,7 @@ class _AdminDiscountListPageState extends ConsumerState<AdminDiscountListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Discounts'),
+        title: Text(l10n.discounts),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -60,7 +63,7 @@ class _AdminDiscountListPageState extends ConsumerState<AdminDiscountListPage> {
                     Text(message, style: const TextStyle(color: AppColors.error)),
                     AppSpacing.gapH16,
                     PosButton(
-                      label: 'Retry',
+                      label: l10n.retry,
                       variant: PosButtonVariant.outline,
                       onPressed: () => ref.read(discountListProvider.notifier).loadDiscounts(),
                     ),

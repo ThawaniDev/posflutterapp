@@ -8,6 +8,7 @@ import '../providers/restaurant_state.dart';
 import 'package:wameedpos/features/orders/models/order.dart';
 import 'package:wameedpos/features/orders/providers/order_providers.dart';
 import 'package:wameedpos/features/orders/providers/order_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class OpenTabFormPage extends ConsumerStatefulWidget {
   const OpenTabFormPage({super.key});
@@ -17,6 +18,8 @@ class OpenTabFormPage extends ConsumerStatefulWidget {
 }
 
 class _OpenTabFormPageState extends ConsumerState<OpenTabFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
 
@@ -63,20 +66,20 @@ class _OpenTabFormPageState extends ConsumerState<OpenTabFormPage> {
     final ordersState = ref.watch(ordersProvider);
     final orders = ordersState is OrdersLoaded ? ordersState.orders : <Order>[];
     return Scaffold(
-      appBar: AppBar(title: const Text('Open Tab')),
+      appBar: AppBar(title: Text(l10n.openTab)),
       bottomNavigationBar: Padding(
         padding: AppSpacing.paddingAll16,
-        child: PosButton(label: 'Open Tab', onPressed: _saving ? null : _handleSave, isLoading: _saving, isFullWidth: true),
+        child: PosButton(label: l10n.openTab, onPressed: _saving ? null : _handleSave, isLoading: _saving, isFullWidth: true),
       ),
       body: Form(
         key: _formKey,
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            PosTextField(controller: _customerNameCtrl, label: 'Customer Name', hint: 'Tab owner name'),
+            PosTextField(controller: _customerNameCtrl, label: l10n.deliveryCustomerName, hint: 'Tab owner name'),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
-              label: 'Order',
+              label: l10n.wameedAIOrder,
               items: orders.map((o) => PosDropdownItem(value: o.id, label: o.orderNumber)).toList(),
               selectedValue: _selectedOrderId,
               onChanged: (v) => setState(() => _selectedOrderId = v),
@@ -84,7 +87,7 @@ class _OpenTabFormPageState extends ConsumerState<OpenTabFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
-              label: 'Table (optional)',
+              label: l10n.tableOptional,
               items: tables.map((t) => PosDropdownItem(value: t.id, label: t.displayName ?? 'Table ${t.tableNumber}')).toList(),
               selectedValue: _selectedTableId,
               onChanged: (v) => setState(() => _selectedTableId = v),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/settings/models/master_translation_string.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class TranslationStringCard extends StatelessWidget {
   final MasterTranslationString translation;
@@ -11,6 +12,7 @@ class TranslationStringCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return Card(
       child: Padding(
@@ -31,7 +33,7 @@ class TranslationStringCard extends StatelessWidget {
                   labelStyle: const TextStyle(fontSize: 10),
                   visualDensity: VisualDensity.compact,
                 ),
-                if (onEdit != null) IconButton(icon: const Icon(Icons.edit, size: 18), onPressed: onEdit, tooltip: 'Edit'),
+                if (onEdit != null) IconButton(icon: Icon(Icons.edit, size: 18), onPressed: onEdit, tooltip: l10n.edit),
               ],
             ),
             AppSpacing.gapH8,

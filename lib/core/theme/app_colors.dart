@@ -84,6 +84,27 @@ class AppColors {
   static const Color dividerLight = Color(0xFFF1F5F9); // slate-100
   static const Color dividerDark = Color(0xFF1E293B); // slate-800
 
+  // ─── Focus / Ring ─────────────────────────────────────────
+  static Color focusRing = primary.withValues(alpha: 0.35);
+  static Color focusRingDark = primary.withValues(alpha: 0.45);
+
+  // ─── Overlay ─────────────────────────────────────────────
+  static const Color overlayLight = Color(0x33000000); // 20% black
+  static const Color overlayDark = Color(0x66000000); // 40% black
+  static const Color overlayScrim = Color(0x80000000); // 50% black
+
+  // ─── Skeleton / Shimmer ──────────────────────────────────
+  static const Color skeletonBaseLight = Color(0xFFE2E8F0); // slate-200
+  static const Color skeletonBaseDark = Color(0xFF334155); // slate-700
+  static const Color skeletonHighlightLight = Color(0xFFF1F5F9); // slate-100
+  static const Color skeletonHighlightDark = Color(0xFF475569); // slate-600
+
+  // ─── Hover Row / Zebra ───────────────────────────────────
+  static const Color tableRowHoverLight = Color(0xFFF8FAFC); // slate-50
+  static const Color tableRowHoverDark = Color(0xFF1E293B); // slate-800
+  static const Color tableRowAltLight = Color(0xFFFAFAFA);
+  static const Color tableRowAltDark = Color(0xFF162032);
+
   // ─── Gradient ────────────────────────────────────────────
   static const LinearGradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,

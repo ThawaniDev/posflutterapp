@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/accounting/providers/accounting_providers.dart';
 import 'package:wameedpos/features/accounting/providers/accounting_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AutoExportSettingsPage extends ConsumerStatefulWidget {
   const AutoExportSettingsPage({super.key});
@@ -14,6 +15,8 @@ class AutoExportSettingsPage extends ConsumerStatefulWidget {
 }
 
 class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   bool _enabled = false;
   String _frequency = 'daily';
   int _dayOfWeek = 0;
@@ -85,13 +88,13 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Auto Export Settings'),
+        title: Text(l10n.autoExportSettings),
         actions: [
           if (_hasChanges)
             TextButton.icon(
               onPressed: _saveConfig,
               icon: const Icon(Icons.save, color: Colors.white),
-              label: const Text('Save', style: TextStyle(color: Colors.white)),
+              label: Text(l10n.save, style: TextStyle(color: Colors.white)),
             ),
         ],
       ),
@@ -143,13 +146,13 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Frequency', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text(l10n.floristFrequency, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   AppSpacing.gapH12,
                   SegmentedButton<String>(
-                    segments: const [
-                      ButtonSegment(value: 'daily', label: Text('Daily')),
-                      ButtonSegment(value: 'weekly', label: Text('Weekly')),
-                      ButtonSegment(value: 'monthly', label: Text('Monthly')),
+                    segments: [
+                      ButtonSegment(value: 'daily', label: Text(l10n.gamificationDaily)),
+                      ButtonSegment(value: 'weekly', label: Text(l10n.notificationsDigestWeekly)),
+                      ButtonSegment(value: 'monthly', label: Text(l10n.subscriptionMonthly)),
                     ],
                     selected: {_frequency},
                     onSelectionChanged: (val) => setState(() {
@@ -161,7 +164,7 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
 
                   // Day selection
                   if (_frequency == 'weekly') ...[
-                    const Text('Day of Week'),
+                    Text(l10n.dayOfWeek),
                     AppSpacing.gapH8,
                     Wrap(
                       spacing: 8,
@@ -178,10 +181,10 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
                     ),
                   ],
                   if (_frequency == 'monthly') ...[
-                    const Text('Day of Month'),
+                    Text(l10n.dayOfMonth),
                     AppSpacing.gapH8,
                     PosSearchableDropdown<int>(
-                      label: 'Day of Month',
+                      label: l10n.dayOfMonth,
                       items: List.generate(28, (i) => PosDropdownItem(value: i + 1, label: '${i + 1}')),
                       selectedValue: _dayOfMonth.clamp(1, 28),
                       onChanged: (val) {
@@ -202,7 +205,7 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
                   ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: const Icon(Icons.access_time),
-                    title: const Text('Export Time'),
+                    title: Text(l10n.exportTime),
                     trailing: Text(_time.format(context), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                     onTap: () async {
                       final picked = await showTimePicker(context: context, initialTime: _time);
@@ -267,13 +270,13 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Notifications', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text(l10n.notifications, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   AppSpacing.gapH12,
                   TextField(
                     controller: _emailController,
                     onChanged: (_) => setState(() => _hasChanges = true),
-                    decoration: const InputDecoration(
-                      labelText: 'Notification Email (optional)',
+                    decoration: InputDecoration(
+                      labelText: l10n.accountingNotificationEmail,
                       border: OutlineInputBorder(),
                       prefixIcon: Icon(Icons.email),
                     ),
@@ -282,8 +285,8 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
                   AppSpacing.gapH12,
                   SwitchListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: const Text('Retry on Failure'),
-                    subtitle: const Text('Automatically retry failed exports'),
+                    title: Text(l10n.retryOnFailure),
+                    subtitle: Text(l10n.automaticallyRetryFailedExports),
                     value: _retryOnFailure,
                     onChanged: (val) => setState(() {
                       _retryOnFailure = val;

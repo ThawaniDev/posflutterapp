@@ -15,6 +15,8 @@ class EnrollmentWizard extends StatefulWidget {
 }
 
 class _EnrollmentWizardState extends State<EnrollmentWizard> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _otpController = TextEditingController();
   String _environment = 'simulation';
   bool _isLoading = false;
@@ -44,7 +46,7 @@ class _EnrollmentWizardState extends State<EnrollmentWizard> {
             children: [
               const Icon(Icons.security_outlined, color: AppColors.primary, size: 28),
               AppSpacing.gapH8,
-              Text('ZATCA Enrollment', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+              Text(l10n.zatcaEnrollment, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
             ],
           ),
           AppSpacing.gapH12,
@@ -55,12 +57,12 @@ class _EnrollmentWizardState extends State<EnrollmentWizard> {
           ),
           AppSpacing.gapH20,
           // Environment toggle
-          Text('Environment', style: theme.textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w500)),
+          Text(l10n.hwEnvironment, style: theme.textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w500)),
           AppSpacing.gapH4,
           SegmentedButton<String>(
-            segments: const [
+            segments: [
               ButtonSegment(value: 'simulation', label: Text('Simulation'), icon: Icon(Icons.science_outlined)),
-              ButtonSegment(value: 'production', label: Text('Production'), icon: Icon(Icons.cloud_done_outlined)),
+              ButtonSegment(value: 'production', label: Text(l10n.production), icon: Icon(Icons.cloud_done_outlined)),
             ],
             selected: {_environment},
             onSelectionChanged: (p0) => setState(() => _environment = p0.first),

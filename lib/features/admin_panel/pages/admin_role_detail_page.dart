@@ -6,6 +6,7 @@ import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminRoleDetailPage extends ConsumerStatefulWidget {
   final String roleId;
@@ -16,6 +17,8 @@ class AdminRoleDetailPage extends ConsumerStatefulWidget {
 }
 
 class _AdminRoleDetailPageState extends ConsumerState<AdminRoleDetailPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -28,7 +31,7 @@ class _AdminRoleDetailPageState extends ConsumerState<AdminRoleDetailPage> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Role Details')),
+      appBar: AppBar(title: Text(l10n.staffRoleDetails)),
       body: switch (state) {
         AdminRoleDetailInitial() || AdminRoleDetailLoading() => const Center(child: CircularProgressIndicator()),
         AdminRoleDetailError(message: final msg) => Center(
@@ -37,7 +40,7 @@ class _AdminRoleDetailPageState extends ConsumerState<AdminRoleDetailPage> {
             children: [
               Text(msg, style: theme.textTheme.bodyLarge),
               AppSpacing.gapH16,
-              PosButton(label: 'Retry', onPressed: () => ref.read(adminRoleDetailProvider.notifier).load(widget.roleId)),
+              PosButton(label: l10n.retry, onPressed: () => ref.read(adminRoleDetailProvider.notifier).load(widget.roleId)),
             ],
           ),
         ),
@@ -93,8 +96,8 @@ class _AdminRoleDetailPageState extends ConsumerState<AdminRoleDetailPage> {
           Text('Permissions (${permissions.length})', style: theme.textTheme.titleMedium),
           AppSpacing.gapH8,
           if (permissions.isEmpty)
-            const Card(
-              child: Padding(padding: EdgeInsets.all(16), child: Text('No permissions assigned')),
+            Card(
+              child: Padding(padding: EdgeInsets.all(16), child: Text(l10n.noPermissionsAssigned)),
             )
           else
             ...permissions.map((p) {

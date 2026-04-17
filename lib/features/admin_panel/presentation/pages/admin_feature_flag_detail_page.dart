@@ -3,6 +3,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminFeatureFlagDetailPage extends ConsumerStatefulWidget {
   final String flagId;
@@ -13,6 +14,8 @@ class AdminFeatureFlagDetailPage extends ConsumerStatefulWidget {
 }
 
 class _AdminFeatureFlagDetailPageState extends ConsumerState<AdminFeatureFlagDetailPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -24,7 +27,7 @@ class _AdminFeatureFlagDetailPageState extends ConsumerState<AdminFeatureFlagDet
     final state = ref.watch(featureFlagDetailProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Feature Flag Detail')),
+      appBar: AppBar(title: Text(l10n.featureFlagDetail)),
       body: switch (state) {
         FeatureFlagDetailInitial() || FeatureFlagDetailLoading() => const Center(child: CircularProgressIndicator()),
         FeatureFlagDetailLoaded(:final flag, :final abTests) => SingleChildScrollView(

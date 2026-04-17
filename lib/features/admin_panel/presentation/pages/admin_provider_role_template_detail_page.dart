@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminProviderRoleTemplateDetailPage extends ConsumerStatefulWidget {
   final String templateId;
@@ -15,6 +16,8 @@ class AdminProviderRoleTemplateDetailPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -27,7 +30,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Role Template Detail'),
+        title: Text(l10n.adminProviderRoleTemplateDetail),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
       ),
@@ -37,7 +40,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
         ProviderRoleTemplateDetailError(message: final msg) => Center(
           child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
         ),
-        _ => const Center(child: Text('Loading...')),
+        _ => Center(child: Text(l10n.loading)),
       },
     );
   }
@@ -112,11 +115,11 @@ class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
           const SizedBox(height: AppSpacing.xs),
 
           if (permissions.isEmpty)
-            const Card(
+            Card(
               child: Padding(
                 padding: EdgeInsets.all(AppSpacing.md),
                 child: Center(
-                  child: Text('No permissions assigned', style: TextStyle(color: AppColors.textSecondary)),
+                  child: Text(l10n.noPermissionsAssigned, style: TextStyle(color: AppColors.textSecondary)),
                 ),
               ),
             )

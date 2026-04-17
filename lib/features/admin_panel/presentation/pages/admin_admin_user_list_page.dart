@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminAdminUserListPage extends ConsumerStatefulWidget {
   const AdminAdminUserListPage({super.key});
@@ -16,6 +17,8 @@ class AdminAdminUserListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _storeId;
 
@@ -109,7 +112,7 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
                 padding: AppSpacing.paddingAll8,
                 itemBuilder: (context, index) => _buildAdminCard(admins[index]),
               ),
-      _ => const Center(child: Text('Loading...')),
+      _ => Center(child: Text(l10n.loading)),
     };
   }
 
@@ -146,7 +149,7 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
                       color: AppColors.error.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: const Text('Inactive', style: TextStyle(fontSize: 10, color: AppColors.error)),
+                    child: Text(l10n.inactive, style: TextStyle(fontSize: 10, color: AppColors.error)),
                   ),
                 for (final r in roles)
                   Container(

@@ -739,7 +739,11 @@ class _DefaultHeader extends StatelessWidget {
                       final l10n = AppLocalizations.of(ctx);
                       return Text(
                         l10n?.sidebarStoreName ?? 'Store Name',
-                        style: AppTypography.caption.copyWith(color: AppColors.textMutedLight),
+                        style: AppTypography.caption.copyWith(
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.textMutedDark
+                              : AppColors.textMutedLight,
+                        ),
                       );
                     },
                   ),
@@ -773,7 +777,7 @@ class _CollapseToggle extends StatelessWidget {
             Icon(
               isCollapsed ? Icons.chevron_right_rounded : Icons.chevron_left_rounded,
               size: 20,
-              color: AppColors.textMutedLight,
+              color: Theme.of(context).brightness == Brightness.dark ? AppColors.textMutedDark : AppColors.textMutedLight,
             ),
           ],
         ),

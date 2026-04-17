@@ -10,6 +10,7 @@ import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_infra_failed_jobs_page.dart';
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_infra_backups_page.dart';
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_infra_health_page.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminInfraOverviewPage extends ConsumerStatefulWidget {
   const AdminInfraOverviewPage({super.key});
@@ -19,6 +20,8 @@ class AdminInfraOverviewPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminInfraOverviewPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -40,7 +43,7 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
     final state = ref.watch(infraOverviewProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Infrastructure'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.adminInfrastructure), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -56,12 +59,12 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
                     const SizedBox(height: AppSpacing.md),
                     ElevatedButton(
                       onPressed: () => ref.read(infraOverviewProvider.notifier).load(storeId: _storeId),
-                      child: const Text('Retry'),
+                      child: Text(l10n.retry),
                     ),
                   ],
                 ),
               ),
-              _ => const Center(child: Text('Loading...')),
+              _ => Center(child: Text(l10n.loading)),
             },
           ),
         ],
@@ -98,19 +101,19 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
                 ),
                 PosKpiCard(
                   icon: Icons.backup,
-                  label: 'Backups',
+                  label: l10n.adminInfraBackups,
                   value: '${backups['completed'] ?? 0} / ${backups['total'] ?? 0}',
                   iconColor: AppColors.info,
                 ),
                 PosKpiCard(
                   icon: Icons.monitor_heart,
-                  label: 'Health Checks',
+                  label: l10n.adminInfraHealth,
                   value: '${health['healthy'] ?? 0} healthy',
                   iconColor: (health['critical'] ?? 0) > 0 ? AppColors.error : AppColors.success,
                 ),
                 PosKpiCard(
                   icon: Icons.cloud_sync,
-                  label: 'Provider Backups',
+                  label: l10n.providerBackups,
                   value: '${providerBackups['healthy'] ?? 0} / ${providerBackups['total'] ?? 0}',
                   iconColor: (providerBackups['critical'] ?? 0) > 0 ? AppColors.warning : AppColors.success,
                 ),
@@ -171,7 +174,7 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
                 InfraListLoading() => const Center(child: CircularProgressIndicator()),
                 InfraListLoaded(data: final resp) => _buildMetrics(resp, scrollController),
                 InfraListError(message: final msg) => Center(child: Text('Error: $msg')),
-                _ => const Center(child: Text('Loading...')),
+                _ => Center(child: Text(l10n.loading)),
               },
             ),
           );
@@ -185,7 +188,7 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
     return ListView(
       controller: scrollController,
       children: [
-        const Text('Server Metrics', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        Text(l10n.adminInfraServerMetrics, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const Divider(),
         ...data.entries.map(
           (e) => ListTile(

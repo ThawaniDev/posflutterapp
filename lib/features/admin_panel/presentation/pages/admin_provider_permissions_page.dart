@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminProviderPermissionsPage extends ConsumerStatefulWidget {
   const AdminProviderPermissionsPage({super.key});
@@ -16,6 +17,8 @@ class AdminProviderPermissionsPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminProviderPermissionsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String? _groupFilter;
 
@@ -44,7 +47,7 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Provider Permissions'),
+        title: Text(l10n.adminProviderPermissions),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
       ),
@@ -55,21 +58,21 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
             padding: const EdgeInsets.all(AppSpacing.sm),
             child: PosSearchableDropdown<String>(
               items: [
-                PosDropdownItem(value: 'orders', label: 'Orders'),
-                PosDropdownItem(value: 'products', label: 'Products'),
-                PosDropdownItem(value: 'stores', label: 'Stores'),
-                PosDropdownItem(value: 'staff', label: 'Staff'),
-                PosDropdownItem(value: 'reports', label: 'Reports'),
-                PosDropdownItem(value: 'settings', label: 'Settings'),
-                PosDropdownItem(value: 'customers', label: 'Customers'),
-                PosDropdownItem(value: 'payments', label: 'Payments'),
+                PosDropdownItem(value: 'orders', label: l10n.orders),
+                PosDropdownItem(value: 'products', label: l10n.products),
+                PosDropdownItem(value: 'stores', label: l10n.stores),
+                PosDropdownItem(value: 'staff', label: l10n.staff),
+                PosDropdownItem(value: 'reports', label: l10n.reports),
+                PosDropdownItem(value: 'settings', label: l10n.settings),
+                PosDropdownItem(value: 'customers', label: l10n.customers),
+                PosDropdownItem(value: 'payments', label: l10n.sidebarPayments),
               ],
               selectedValue: _groupFilter,
               onChanged: (v) {
                 setState(() => _groupFilter = v);
                 _applyFilter();
               },
-              label: 'Group',
+              label: l10n.group,
               hint: 'All Groups',
               showSearch: false,
               clearable: true,
@@ -82,7 +85,7 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
               ProviderPermissionListError(message: final msg) => Center(
                 child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
               ),
-              _ => const Center(child: Text('Loading...')),
+              _ => Center(child: Text(l10n.loading)),
             },
           ),
         ],

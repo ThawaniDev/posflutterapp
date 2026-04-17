@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Card widget for displaying a subscription add-on.
 class AddOnCard extends StatelessWidget {
@@ -25,6 +26,7 @@ class AddOnCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       elevation: isActive ? 2 : 1,
       shape: RoundedRectangleBorder(
@@ -49,8 +51,7 @@ class AddOnCard extends StatelessWidget {
                       color: AppColors.success.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Text(
-                      'Active',
+                    child: Text(l10n.active,
                       style: TextStyle(color: AppColors.success, fontSize: 12, fontWeight: FontWeight.w600),
                     ),
                   ),
@@ -84,12 +85,12 @@ class AddOnCard extends StatelessWidget {
                             foregroundColor: AppColors.error,
                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                           ),
-                          child: const Text('Remove'),
+                          child: Text(l10n.remove),
                         )
                       : ElevatedButton(
                           onPressed: onToggle,
                           style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)),
-                          child: const Text('Add'),
+                          child: Text(l10n.add),
                         ),
               ],
             ),

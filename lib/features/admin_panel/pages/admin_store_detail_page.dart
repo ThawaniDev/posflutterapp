@@ -7,6 +7,7 @@ import 'package:wameedpos/core/widgets/pos_input.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminStoreDetailPage extends ConsumerStatefulWidget {
   final String storeId;
@@ -18,6 +19,8 @@ class AdminStoreDetailPage extends ConsumerStatefulWidget {
 }
 
 class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late TabController _tabController;
 
   @override
@@ -57,10 +60,10 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
         title: const Text('Store Details'),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Overview'),
+          tabs: [
+            Tab(text: l10n.overview),
             Tab(text: 'Metrics'),
-            Tab(text: 'Limits'),
+            Tab(text: l10n.settingsPosLimits),
           ],
         ),
       ),
@@ -82,7 +85,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
             Text(storeState.message, style: theme.textTheme.bodyMedium),
             AppSpacing.gapH16,
             PosButton(
-              label: 'Retry',
+              label: l10n.retry,
               variant: PosButtonVariant.outline,
               onPressed: () => ref.read(adminStoreDetailProvider.notifier).load(widget.storeId),
             ),
@@ -161,7 +164,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
                       const Spacer(),
                       if (isActive)
                         PosButton(
-                          label: 'Suspend',
+                          label: l10n.suspend,
                           variant: PosButtonVariant.danger,
                           size: PosButtonSize.sm,
                           icon: Icons.block,
@@ -169,7 +172,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
                         )
                       else
                         PosButton(
-                          label: 'Activate',
+                          label: l10n.activate,
                           variant: PosButtonVariant.primary,
                           size: PosButtonSize.sm,
                           icon: Icons.check_circle_outline,
@@ -321,7 +324,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
             children: [
               _metricCard(
                 theme,
-                label: 'Products',
+                label: l10n.products,
                 value: '${data['products_count'] ?? 0}',
                 icon: Icons.inventory_2_outlined,
                 color: AppColors.info,
@@ -329,7 +332,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
               ),
               _metricCard(
                 theme,
-                label: 'Orders',
+                label: l10n.orders,
                 value: '${data['orders_count'] ?? 0}',
                 icon: Icons.receipt_outlined,
                 color: AppColors.success,
@@ -337,7 +340,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
               ),
               _metricCard(
                 theme,
-                label: 'Staff',
+                label: l10n.staff,
                 value: '${data['staff_count'] ?? 0}',
                 icon: Icons.people_outlined,
                 color: AppColors.purple,
@@ -345,7 +348,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
               ),
               _metricCard(
                 theme,
-                label: 'Revenue',
+                label: l10n.reportsRevenue,
                 value: '${data['revenue'] ?? 0}',
                 icon: Icons.attach_money,
                 color: AppColors.primary,
@@ -411,7 +414,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
             Text(state.message),
             AppSpacing.gapH16,
             PosButton(
-              label: 'Retry',
+              label: l10n.retry,
               variant: PosButtonVariant.outline,
               onPressed: () => ref.read(limitOverrideProvider.notifier).load(widget.storeId),
             ),
@@ -427,7 +430,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Limit Overrides', style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
+                Text(l10n.limitOverrides, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
                 PosButton(
                   label: 'Add Override',
                   size: PosButtonSize.sm,
@@ -507,11 +510,11 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Suspend Store'),
-        content: PosTextField(controller: reasonCtrl, label: 'Reason', hint: 'Enter suspension reason', maxLines: 3),
+        content: PosTextField(controller: reasonCtrl, label: l10n.reason, hint: 'Enter suspension reason', maxLines: 3),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.cancel)),
           PosButton(
-            label: 'Suspend',
+            label: l10n.suspend,
             variant: PosButtonVariant.danger,
             onPressed: () {
               ref.read(adminActionProvider.notifier).suspendStore(widget.storeId, reason: reasonCtrl.text);
@@ -539,11 +542,11 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> wit
             AppSpacing.gapH12,
             PosTextField(controller: valueCtrl, label: 'Override Value', hint: 'Enter value', keyboardType: TextInputType.number),
             AppSpacing.gapH12,
-            PosTextField(controller: reasonCtrl, label: 'Reason (optional)', hint: 'Why is this override needed?'),
+            PosTextField(controller: reasonCtrl, label: l10n.subscriptionCancelReasonLabel, hint: 'Why is this override needed?'),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.cancel)),
           PosButton(
             label: 'Set Override',
             onPressed: () {

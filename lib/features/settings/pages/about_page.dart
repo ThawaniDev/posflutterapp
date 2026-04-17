@@ -30,7 +30,7 @@ class AboutPage extends ConsumerWidget {
               child: Icon(Icons.point_of_sale, size: 40, color: theme.colorScheme.primary),
             ),
             const SizedBox(height: 16),
-            Text('Wameed POS', style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
+            Text(l10n.appTitle, style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
             const SizedBox(height: 4),
             Text(l10n.settingsAboutVersion('1.0.0'), style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor)),
             const SizedBox(height: 32),

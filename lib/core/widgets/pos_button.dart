@@ -173,8 +173,9 @@ class PosButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = _enabled ? _bg(context) : AppColors.borderLight;
-    final fg = _enabled ? _fg(context) : AppColors.textDisabledLight;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bg = _enabled ? _bg(context) : (isDark ? AppColors.borderDark : AppColors.borderLight);
+    final fg = _enabled ? _fg(context) : (isDark ? AppColors.textDisabledDark : AppColors.textDisabledLight);
     final border = _enabled ? _border(context) : null;
 
     Widget child = Row(
@@ -209,13 +210,24 @@ class PosButton extends StatelessWidget {
         if (states.contains(WidgetState.hovered)) {
           return fg.withValues(alpha: 0.05);
         }
+        if (states.contains(WidgetState.focused)) {
+          return fg.withValues(alpha: 0.06);
+        }
         return null;
       }),
       elevation: WidgetStateProperty.all(0),
       padding: WidgetStateProperty.all(_padding),
       minimumSize: WidgetStateProperty.all(Size(0, _height)),
       textStyle: WidgetStateProperty.all(_textStyle),
-      shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: resolvedBorderRadius, side: border ?? BorderSide.none)),
+      shape: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.focused)) {
+          return RoundedRectangleBorder(
+            borderRadius: resolvedBorderRadius,
+            side: BorderSide(color: isDark ? AppColors.focusRingDark : AppColors.focusRing, width: 2),
+          );
+        }
+        return RoundedRectangleBorder(borderRadius: resolvedBorderRadius, side: border ?? BorderSide.none);
+      }),
     );
 
     return isFullWidth
@@ -246,8 +258,9 @@ class _PosIconButton extends PosButton {
 
   @override
   Widget build(BuildContext context) {
-    final bg = _enabled ? _bg(context) : AppColors.borderLight;
-    final fg = _enabled ? _fg(context) : AppColors.textDisabledLight;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bg = _enabled ? _bg(context) : (isDark ? AppColors.borderDark : AppColors.borderLight);
+    final fg = _enabled ? _fg(context) : (isDark ? AppColors.textDisabledDark : AppColors.textDisabledLight);
 
     Widget btn = Material(
       color: bg,

@@ -7,7 +7,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/pos_card.dart';
-import 'package:wameedpos/core/widgets/pos_empty_state.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/widgets/pos_error_state.dart';
 import 'package:wameedpos/core/widgets/pos_loading_skeleton.dart';
 import 'package:wameedpos/core/widgets/pos_input.dart';

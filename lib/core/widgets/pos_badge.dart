@@ -28,7 +28,7 @@ class PosBadge extends StatelessWidget {
   final Color? customBgColor;
   final bool isSmall;
 
-  Color get _fg {
+  Color _fg(bool isDark) {
     if (customColor != null) return customColor!;
     switch (variant) {
       case PosBadgeVariant.success:
@@ -42,11 +42,11 @@ class PosBadge extends StatelessWidget {
       case PosBadgeVariant.primary:
         return AppColors.primary;
       case PosBadgeVariant.neutral:
-        return AppColors.textSecondaryLight;
+        return isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
     }
   }
 
-  Color get _bg {
+  Color _bg(bool isDark) {
     if (customBgColor != null) return customBgColor!;
     switch (variant) {
       case PosBadgeVariant.success:
@@ -60,26 +60,29 @@ class PosBadge extends StatelessWidget {
       case PosBadgeVariant.primary:
         return AppColors.primary10;
       case PosBadgeVariant.neutral:
-        return AppColors.inputBgLight;
+        return isDark ? AppColors.surfaceDark : AppColors.inputBgLight;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final fg = _fg(isDark);
+    final bg = _bg(isDark);
     final textStyle = isSmall ? AppTypography.micro : AppTypography.labelSmall;
     final hPad = isSmall ? 6.0 : 8.0;
     final vPad = isSmall ? 2.0 : 4.0;
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: hPad, vertical: vPad),
-      decoration: BoxDecoration(color: _bg, borderRadius: AppRadius.borderFull),
+      decoration: BoxDecoration(color: bg, borderRadius: AppRadius.borderFull),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (icon != null) ...[Icon(icon, size: isSmall ? 10 : 12, color: _fg), SizedBox(width: isSmall ? 3 : 4)],
+          if (icon != null) ...[Icon(icon, size: isSmall ? 10 : 12, color: fg), SizedBox(width: isSmall ? 3 : 4)],
           Text(
             label,
-            style: textStyle.copyWith(color: _fg, fontWeight: FontWeight.w600),
+            style: textStyle.copyWith(color: fg, fontWeight: FontWeight.w600),
           ),
         ],
       ),

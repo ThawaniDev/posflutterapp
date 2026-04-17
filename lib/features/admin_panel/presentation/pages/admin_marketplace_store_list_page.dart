@@ -7,6 +7,7 @@ import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminMarketplaceStoreListPage extends ConsumerStatefulWidget {
   const AdminMarketplaceStoreListPage({super.key});
@@ -16,6 +17,8 @@ class AdminMarketplaceStoreListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplaceStoreListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _connectedFilter;
   String? _storeId;
@@ -53,7 +56,7 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
     final state = ref.watch(marketplaceStoreListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Marketplace Stores'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.marketplaceStores), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -85,15 +88,15 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
                 Expanded(
                   child: PosSearchableDropdown<String>(
                     items: [
-                      PosDropdownItem(value: '1', label: 'Connected'),
-                      PosDropdownItem(value: '0', label: 'Disconnected'),
+                      PosDropdownItem(value: '1', label: l10n.hardwareConnected),
+                      PosDropdownItem(value: '0', label: l10n.hardwareDisconnected),
                     ],
                     selectedValue: _connectedFilter,
                     onChanged: (v) {
                       setState(() => _connectedFilter = v);
                       _applyFilters();
                     },
-                    label: 'Status',
+                    label: l10n.status,
                     hint: 'All',
                     showSearch: false,
                     clearable: true,

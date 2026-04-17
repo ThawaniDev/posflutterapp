@@ -7,6 +7,7 @@ import '../providers/florist_providers.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class FreshnessLogFormPage extends ConsumerStatefulWidget {
   final FlowerFreshnessLog? log;
@@ -17,6 +18,8 @@ class FreshnessLogFormPage extends ConsumerStatefulWidget {
 }
 
 class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
 
@@ -87,7 +90,7 @@ class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
             PosSearchableDropdown<String>(
-              label: 'Product',
+              label: l10n.wameedAIProduct,
               items: products.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
               selectedValue: _selectedProductId,
               onChanged: (v) => setState(() => _selectedProductId = v),
@@ -120,7 +123,7 @@ class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _quantityCtrl,
-                    label: 'Quantity',
+                    label: l10n.labelsQuantity,
                     hint: '0',
                     keyboardType: TextInputType.number,
                   ),

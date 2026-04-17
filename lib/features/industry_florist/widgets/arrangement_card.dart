@@ -4,6 +4,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/pos_status_badge.dart';
 import '../models/flower_arrangement.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ArrangementCard extends StatelessWidget {
   final FlowerArrangement arrangement;
@@ -15,6 +16,7 @@ class ArrangementCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Card(
@@ -53,7 +55,7 @@ class ArrangementCard extends StatelessWidget {
                     ),
                   ),
                   if (arrangement.isTemplate == true)
-                    const PosStatusBadge(label: 'Template', variant: PosStatusBadgeVariant.info),
+                    PosStatusBadge(label: l10n.labelTemplate, variant: PosStatusBadgeVariant.info),
                   if (onEdit != null)
                     IconButton(
                       icon: const Icon(Icons.edit_outlined, size: 20),

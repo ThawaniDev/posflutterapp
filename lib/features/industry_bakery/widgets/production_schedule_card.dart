@@ -5,6 +5,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/pos_status_badge.dart';
 import '../models/production_schedule.dart';
 import '../enums/production_schedule_status.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ProductionScheduleCard extends StatelessWidget {
   final ProductionSchedule schedule;
@@ -14,6 +15,7 @@ class ProductionScheduleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -45,7 +47,7 @@ class ProductionScheduleCard extends StatelessWidget {
                       style: AppTypography.titleSmall.copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
-                  _buildStatusBadge(),
+                  _buildStatusBadge(context),
                 ],
               ),
               AppSpacing.gapH8,
@@ -86,14 +88,15 @@ class ProductionScheduleCard extends StatelessWidget {
     );
   }
 
-  PosStatusBadge _buildStatusBadge() {
+  PosStatusBadge _buildStatusBadge(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final status = schedule.status ?? ProductionScheduleStatus.planned;
     return switch (status) {
-      ProductionScheduleStatus.scheduled => PosStatusBadge(label: 'Scheduled', variant: PosStatusBadgeVariant.info),
-      ProductionScheduleStatus.planned => PosStatusBadge(label: 'Planned', variant: PosStatusBadgeVariant.neutral),
-      ProductionScheduleStatus.inProgress => PosStatusBadge(label: 'In Progress', variant: PosStatusBadgeVariant.warning),
-      ProductionScheduleStatus.completed => PosStatusBadge(label: 'Completed', variant: PosStatusBadgeVariant.success),
-      ProductionScheduleStatus.cancelled => PosStatusBadge(label: 'Cancelled', variant: PosStatusBadgeVariant.error),
+      ProductionScheduleStatus.scheduled => PosStatusBadge(label: l10n.statusScheduled, variant: PosStatusBadgeVariant.info),
+      ProductionScheduleStatus.planned => PosStatusBadge(label: l10n.statusPlanned, variant: PosStatusBadgeVariant.neutral),
+      ProductionScheduleStatus.inProgress => PosStatusBadge(label: l10n.statusInProgress, variant: PosStatusBadgeVariant.warning),
+      ProductionScheduleStatus.completed => PosStatusBadge(label: l10n.ordersCompleted, variant: PosStatusBadgeVariant.success),
+      ProductionScheduleStatus.cancelled => PosStatusBadge(label: l10n.ordersCancelled, variant: PosStatusBadgeVariant.error),
     };
   }
 

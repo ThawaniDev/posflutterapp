@@ -3,12 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/pos_customization/providers/customization_state.dart';
 import 'package:wameedpos/features/pos_customization/providers/customization_providers.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ReceiptTemplateWidget extends ConsumerWidget {
   const ReceiptTemplateWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(receiptTemplateProvider);
     final theme = Theme.of(context);
 
@@ -65,14 +67,14 @@ class ReceiptTemplateWidget extends ConsumerWidget {
               const Divider(height: 1),
               SwitchListTile(
                 secondary: const Icon(Icons.qr_code),
-                title: const Text('Show Barcode'),
+                title: Text(l10n.settingsReceiptShowBarcode),
                 value: s.showBarcode,
                 onChanged: (v) => ref.read(receiptTemplateProvider.notifier).update({'show_barcode': v}),
               ),
               const Divider(height: 1),
               ListTile(
                 leading: const Icon(Icons.straighten),
-                title: const Text('Paper Width'),
+                title: Text(l10n.hwPaperWidth),
                 subtitle: Text('${s.paperWidthMm}mm'),
               ),
             ],

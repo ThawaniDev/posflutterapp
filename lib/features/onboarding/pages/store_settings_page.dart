@@ -20,6 +20,8 @@ class StoreSettingsPage extends ConsumerStatefulWidget {
 }
 
 class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   bool _isSaving = false;
 
   // Tax
@@ -174,7 +176,7 @@ class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: AppSpacing.md),
-            child: PosButton(label: 'Save', size: PosButtonSize.sm, isLoading: _isSaving, onPressed: _isSaving ? null : _save),
+            child: PosButton(label: l10n.save, size: PosButtonSize.sm, isLoading: _isSaving, onPressed: _isSaving ? null : _save),
           ),
         ],
       ),
@@ -193,7 +195,7 @@ class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
           children: [
             Text('Error: ${settingsState.message}'),
             const SizedBox(height: AppSpacing.md),
-            PosButton(label: 'Retry', onPressed: () => ref.read(storeSettingsProvider(widget.storeId).notifier).load()),
+            PosButton(label: l10n.retry, onPressed: () => ref.read(storeSettingsProvider(widget.storeId).notifier).load()),
           ],
         ),
       );

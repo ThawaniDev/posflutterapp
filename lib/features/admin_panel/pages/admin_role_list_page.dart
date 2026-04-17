@@ -7,6 +7,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminRoleListPage extends ConsumerStatefulWidget {
   const AdminRoleListPage({super.key});
@@ -16,6 +17,8 @@ class AdminRoleListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminRoleListPageState extends ConsumerState<AdminRoleListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -29,14 +32,14 @@ class _AdminRoleListPageState extends ConsumerState<AdminRoleListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Platform Roles'),
+        title: Text(l10n.adminPlatformRoles),
         actions: [
           IconButton(
             icon: const Icon(Icons.shield_outlined),
-            tooltip: 'Permissions',
+            tooltip: l10n.permissions,
             onPressed: () => context.push(Routes.adminPermissions),
           ),
-          IconButton(icon: const Icon(Icons.add), tooltip: 'Create Role', onPressed: () => context.push(Routes.adminRoleCreate)),
+          IconButton(icon: Icon(Icons.add), tooltip: l10n.createRole, onPressed: () => context.push(Routes.adminRoleCreate)),
         ],
       ),
       body: switch (state) {
@@ -47,7 +50,7 @@ class _AdminRoleListPageState extends ConsumerState<AdminRoleListPage> {
             children: [
               Text(msg, style: theme.textTheme.bodyLarge),
               AppSpacing.gapH16,
-              PosButton(label: 'Retry', onPressed: () => ref.read(adminRoleListProvider.notifier).load()),
+              PosButton(label: l10n.retry, onPressed: () => ref.read(adminRoleListProvider.notifier).load()),
             ],
           ),
         ),
@@ -79,7 +82,7 @@ class _AdminRoleListPageState extends ConsumerState<AdminRoleListPage> {
                                   color: AppColors.primary.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                child: Text('System', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.primary)),
+                                child: Text(l10n.settingsSystem, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.primary)),
                               ),
                             const SizedBox(width: 8),
                             Text('${role['permissions_count'] ?? 0} perms', style: theme.textTheme.bodySmall),

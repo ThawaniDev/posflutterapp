@@ -5660,7 +5660,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get commonType => 'ধরন';
 
   @override
-  String get commonViewAll => 'View All';
+  String get commonViewAll => 'দেখুন সব';
 
   @override
   String get customersNoCustomersFound => 'কোনো গ্রাহক পাওয়া যায়নি';
@@ -6206,11 +6206,11 @@ class AppLocalizationsBn extends AppLocalizations {
   String get notifStatsByChannel => 'By চ্যানেল';
 
   @override
-  String get notifDeleteConfirmTitle => 'Delete Notifications';
+  String get notifDeleteConfirmTitle => 'মুছুন বিজ্ঞপ্তি';
 
   @override
   String notifDeleteConfirmMessage(int count) {
-    return 'Delete $count selected notifications?';
+    return 'মুছুন $count selected notifications?';
   }
 
   @override
@@ -6223,7 +6223,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get notifEmptySubtitle => 'You\'re all caught up';
 
   @override
-  String get notifDeleteSingleTitle => 'Delete Notification';
+  String get notifDeleteSingleTitle => 'মুছুন বিজ্ঞপ্তি';
 
   @override
   String get notifDeleteSingleMessage =>
@@ -6233,21 +6233,21 @@ class AppLocalizationsBn extends AppLocalizations {
   String get notifJustNow => 'Just now';
 
   @override
-  String get notifPrefPaymentAlerts => 'Payment Alerts';
+  String get notifPrefPaymentAlerts => 'পেমেন্ট Alerts';
 
   @override
   String get notifPrefPaymentAlertsSubtitle =>
-      'Payment confirmations and refund alerts';
+      'পেমেন্ট confirmations and refund alerts';
 
   @override
-  String get notifPrefStaffEvents => 'Staff Events';
+  String get notifPrefStaffEvents => 'কর্মী ইভেন্ট';
 
   @override
   String get notifPrefStaffEventsSubtitle =>
-      'Staff schedule and attendance updates';
+      'কর্মী schedule and attendance updates';
 
   @override
-  String get notifPrefEmail => 'Email';
+  String get notifPrefEmail => 'ইমেইল';
 
   @override
   String get notifPrefSms => 'SMS';
@@ -6259,27 +6259,27 @@ class AppLocalizationsBn extends AppLocalizations {
   String get notifLogSent => 'Sent';
 
   @override
-  String get notifLogFailed => 'Failed';
+  String get notifLogFailed => 'ব্যর্থ';
 
   @override
-  String get notifScheduleValidation => 'Title and message are required';
+  String get notifScheduleValidation => 'শিরোনাম and message are required';
 
   @override
-  String get notifScheduleCreatedSuccess => 'Schedule created successfully';
+  String get notifScheduleCreatedSuccess => 'শিডিউল created successfully';
 
   @override
   String get notifSchedulesEmptySubtitle =>
       'Tap + to create a scheduled notification';
 
   @override
-  String get notifScheduleCancelConfirmTitle => 'Cancel Schedule';
+  String get notifScheduleCancelConfirmTitle => 'বাতিল শিডিউল';
 
   @override
   String get notifScheduleCancelConfirmMessage =>
       'Are you sure you want to cancel this scheduled notification?';
 
   @override
-  String get notifScheduleType => 'Schedule Type';
+  String get notifScheduleType => 'শিডিউল ধরন';
 
   @override
   String get notifScheduleTypeOnce => 'Once';
@@ -6288,13 +6288,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get notifScheduleTypeRecurring => 'Recurring';
 
   @override
-  String get notifActionMarkedAsRead => 'Notification marked as read';
+  String get notifActionMarkedAsRead => 'বিজ্ঞপ্তি marked as read';
 
   @override
-  String get notifActionAllMarkedAsRead => 'All notifications marked as read';
+  String get notifActionAllMarkedAsRead => 'সব notifications marked as read';
 
   @override
-  String get notifActionDeleted => 'Notification deleted';
+  String get notifActionDeleted => 'বিজ্ঞপ্তি deleted';
 
   @override
   String notifActionBulkDeleted(int count) {
@@ -9052,7 +9052,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get wameedAIBilling => 'AI Billing';
 
   @override
-  String get wameedAIBillingDashboard => 'Billing Dashboard';
+  String get wameedAIBillingDashboard => 'Billing ড্যাশবোর্ড';
 
   @override
   String get wameedAIBillingCurrentMonth => 'Current Month';
@@ -9067,10 +9067,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get wameedAIBillingMargin => 'Margin';
 
   @override
-  String get wameedAIBillingLimitUsage => 'Limit Usage';
+  String get wameedAIBillingLimitUsage => 'সীমা ব্যবহার';
 
   @override
-  String get wameedAIBillingNoLimit => 'No Limit';
+  String get wameedAIBillingNoLimit => 'কোনো সীমা';
 
   @override
   String get wameedAIBillingRequests => 'Requests';
@@ -9079,34 +9079,34 @@ class AppLocalizationsBn extends AppLocalizations {
   String get wameedAIBillingTokens => 'tokens';
 
   @override
-  String get wameedAIBillingByFeature => 'Usage by Feature';
+  String get wameedAIBillingByFeature => 'ব্যবহার by ফিচার';
 
   @override
-  String get wameedAIBillingFeature => 'Feature';
+  String get wameedAIBillingFeature => 'ফিচার';
 
   @override
-  String get wameedAIBillingRecentInvoices => 'Recent Invoices';
+  String get wameedAIBillingRecentInvoices => 'Recent চালান';
 
   @override
-  String get wameedAIBillingInvoices => 'Invoices';
+  String get wameedAIBillingInvoices => 'চালান';
 
   @override
-  String get wameedAIBillingInvoiceNumber => 'Invoice #';
+  String get wameedAIBillingInvoiceNumber => 'চালান #';
 
   @override
   String get wameedAIBillingPeriod => 'Period';
 
   @override
-  String get wameedAIBillingAmount => 'Amount';
+  String get wameedAIBillingAmount => 'পরিমাণ';
 
   @override
-  String get wameedAIBillingStatus => 'Status';
+  String get wameedAIBillingStatus => 'অবস্থা';
 
   @override
-  String get wameedAIBillingDueDate => 'Due Date';
+  String get wameedAIBillingDueDate => 'Due তারিখ';
 
   @override
-  String get wameedAIBillingPending => 'Pending';
+  String get wameedAIBillingPending => 'মুলতুবি';
 
   @override
   String get wameedAIBillingPaid => 'Paid';
@@ -9118,26 +9118,26 @@ class AppLocalizationsBn extends AppLocalizations {
   String get wameedAIBillingPaidAt => 'Paid At';
 
   @override
-  String get wameedAIBillingNoInvoices => 'No invoices yet';
+  String get wameedAIBillingNoInvoices => 'কোনো invoices yet';
 
   @override
-  String get wameedAIBillingInvoiceDetail => 'Invoice Detail';
+  String get wameedAIBillingInvoiceDetail => 'চালান বিস্তারিত';
 
   @override
   String get wameedAIBillingLineItems => 'Line Items';
 
   @override
-  String get wameedAIBillingPaymentHistory => 'Payment History';
+  String get wameedAIBillingPaymentHistory => 'পেমেন্ট ইতিহাস';
 
   @override
   String get wameedAIBillingDisabled =>
       'AI is currently disabled for your store';
 
   @override
-  String get wameedAIBillingViewAll => 'View All';
+  String get wameedAIBillingViewAll => 'দেখুন সব';
 
   @override
-  String get wameedAINewChat => 'New Chat';
+  String get wameedAINewChat => 'নতুন Chat';
 
   @override
   String get wameedAIAssistant => 'Wameed AI Assistant';
@@ -9150,7 +9150,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get wameedAIRecentChats => 'Recent Chats';
 
   @override
-  String get wameedAINoChats => 'No conversations yet';
+  String get wameedAINoChats => 'কোনো conversations yet';
 
   @override
   String get wameedAINoChatsSubtitle =>
@@ -9190,7 +9190,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get wameedAIThinking => 'Thinking...';
 
   @override
-  String get wameedAIImageAttached => 'Image attached';
+  String get wameedAIImageAttached => 'ছবি attached';
 
   @override
   String get wameedAIChatHint => 'Ask Wameed AI...';
@@ -9202,10 +9202,10 @@ class AppLocalizationsBn extends AppLocalizations {
   String get wameedAIAnalyzing => 'AI is analyzing your data...';
 
   @override
-  String get wameedAIFeatures => 'AI Features';
+  String get wameedAIFeatures => 'AI ফিচার';
 
   @override
-  String get wameedAISelectModel => 'Select Model';
+  String get wameedAISelectModel => 'নির্বাচন Model';
 
   @override
   String get wameedAIScoreExcellent => 'Excellent';
@@ -9214,25 +9214,25 @@ class AppLocalizationsBn extends AppLocalizations {
   String get wameedAIScoreGood => 'Good';
 
   @override
-  String get wameedAIScoreAverage => 'Average';
+  String get wameedAIScoreAverage => 'গড়';
 
   @override
-  String get wameedAIScoreBelowAverage => 'Below Average';
+  String get wameedAIScoreBelowAverage => 'Below গড়';
 
   @override
   String get wameedAIScoreNeedsImprovement => 'Needs Improvement';
 
   @override
-  String get wameedAILowStock => 'Low Stock';
+  String get wameedAILowStock => 'Low স্টক';
 
   @override
-  String get wameedAIUnknownProduct => 'Unknown Product';
+  String get wameedAIUnknownProduct => 'Unknown পণ্য';
 
   @override
-  String get wameedAIStock => 'Stock';
+  String get wameedAIStock => 'স্টক';
 
   @override
-  String get wameedAIOrder => 'Order';
+  String get wameedAIOrder => 'অর্ডার';
 
   @override
   String get wameedAIAvgPerDay => 'Avg/day';
@@ -9258,7 +9258,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get wameedAIAvg => 'Avg';
 
   @override
-  String get wameedAIVoid => 'Void';
+  String get wameedAIVoid => 'বাতিল';
 
   @override
   String get wameedAIAvgVisits => 'Avg visits';
@@ -9300,22 +9300,22 @@ class AppLocalizationsBn extends AppLocalizations {
   String get wameedAIMonthDec => 'Dec';
 
   @override
-  String get wameedAISelectDate => 'Select date';
+  String get wameedAISelectDate => 'নির্বাচন date';
 
   @override
-  String get wameedAISearchProducts => 'Search products...';
+  String get wameedAISearchProducts => 'অনুসন্ধান products...';
 
   @override
-  String get wameedAISearchCategories => 'Search categories...';
+  String get wameedAISearchCategories => 'অনুসন্ধান categories...';
 
   @override
-  String get wameedAINoProductsFound => 'No products found';
+  String get wameedAINoProductsFound => 'কোনো products found';
 
   @override
-  String get wameedAINoCategoriesFound => 'No categories found';
+  String get wameedAINoCategoriesFound => 'কোনো categories found';
 
   @override
-  String get wameedAIDefault => 'Default';
+  String get wameedAIDefault => 'ডিফল্ট';
 
   @override
   String wameedAIFieldRequired(String field) {
@@ -11291,22 +11291,22 @@ class AppLocalizationsBn extends AppLocalizations {
       'The unread count badge in the AppBar shows how many unread notifications you have.';
 
   @override
-  String get sidebarGroupPlatformAdmin => 'Platform Admin';
+  String get sidebarGroupPlatformAdmin => 'Platform অ্যাডমিন';
 
   @override
-  String get sidebarAdminWameedAI => 'Wameed AI Admin';
+  String get sidebarAdminWameedAI => 'Wameed AI অ্যাডমিন';
 
   @override
-  String get adminWameedAIDashboard => 'AI Dashboard';
+  String get adminWameedAIDashboard => 'AI ড্যাশবোর্ড';
 
   @override
-  String get adminWameedAIUsageLogs => 'Usage Logs';
+  String get adminWameedAIUsageLogs => 'ব্যবহার লগ';
 
   @override
   String get adminWameedAIProviders => 'AI Providers';
 
   @override
-  String get adminWameedAIFeatures => 'AI Features';
+  String get adminWameedAIFeatures => 'AI ফিচার';
 
   @override
   String get adminWameedAILlmModels => 'LLM Models';
@@ -11318,94 +11318,94 @@ class AppLocalizationsBn extends AppLocalizations {
   String get adminWameedAIBilling => 'AI Billing';
 
   @override
-  String get adminWameedAITotalRequests => 'Total Requests';
+  String get adminWameedAITotalRequests => 'মোট Requests';
 
   @override
-  String get adminWameedAISuccessRate => 'Success Rate';
+  String get adminWameedAISuccessRate => 'সফল হার';
 
   @override
-  String get adminWameedAITotalTokens => 'Total Tokens';
+  String get adminWameedAITotalTokens => 'মোট Tokens';
 
   @override
-  String get adminWameedAITotalCost => 'Total Cost';
+  String get adminWameedAITotalCost => 'মোট Cost';
 
   @override
-  String get adminWameedAIActiveStores => 'Active Stores';
+  String get adminWameedAIActiveStores => 'সক্রিয় Stores';
 
   @override
-  String get adminWameedAIUniqueUsers => 'Unique Users';
+  String get adminWameedAIUniqueUsers => 'Unique ব্যবহারকারী';
 
   @override
   String get adminWameedAIAvgLatency => 'Avg Latency';
 
   @override
-  String get adminWameedAITotalChats => 'Total Chats';
+  String get adminWameedAITotalChats => 'মোট Chats';
 
   @override
-  String get adminWameedAIResponseTime => 'Avg Response Time';
+  String get adminWameedAIResponseTime => 'Avg Response সময়';
 
   @override
   String get adminWameedAICostByModel => 'Cost by Model';
 
   @override
-  String get adminWameedAIUsageByFeature => 'Usage by Feature';
+  String get adminWameedAIUsageByFeature => 'ব্যবহার by ফিচার';
 
   @override
-  String get adminWameedAIUsageByStore => 'Usage by Store';
+  String get adminWameedAIUsageByStore => 'ব্যবহার by স্টোর';
 
   @override
-  String get adminWameedAITopUsers => 'Top Users';
+  String get adminWameedAITopUsers => 'শীর্ষ ব্যবহারকারী';
 
   @override
-  String get adminWameedAIActiveUsers => 'Active Users';
+  String get adminWameedAIActiveUsers => 'সক্রিয় ব্যবহারকারী';
 
   @override
-  String get adminWameedAITotalProviders => 'Total Providers';
+  String get adminWameedAITotalProviders => 'মোট Providers';
 
   @override
-  String get adminWameedAITotalModelsKpi => 'Total Models';
+  String get adminWameedAITotalModelsKpi => 'মোট Models';
 
   @override
   String get adminWameedAIModelsWithKeys => 'Models With Keys';
 
   @override
-  String get adminWameedAIActiveProviders => 'Active Providers';
+  String get adminWameedAIActiveProviders => 'সক্রিয় Providers';
 
   @override
   String get adminWameedAIConfiguredModels => 'configured models';
 
   @override
-  String get adminWameedAITotalFeatures => 'Total Features';
+  String get adminWameedAITotalFeatures => 'মোট ফিচার';
 
   @override
-  String get adminWameedAIEnabledFeatures => 'Enabled Features';
+  String get adminWameedAIEnabledFeatures => 'সক্রিয় ফিচার';
 
   @override
-  String get adminWameedAIFeatureCategories => 'Feature Categories';
+  String get adminWameedAIFeatureCategories => 'ফিচার বিভাগ';
 
   @override
-  String get adminWameedAIEnableRate => 'Enable Rate';
+  String get adminWameedAIEnableRate => 'সক্রিয় হার';
 
   @override
   String get adminWameedAICategories => 'categories';
 
   @override
-  String get adminWameedAIActiveModels => 'Active Models';
+  String get adminWameedAIActiveModels => 'সক্রিয় Models';
 
   @override
-  String get adminWameedAITotalRequestsModel => 'Total Requests';
+  String get adminWameedAITotalRequestsModel => 'মোট Requests';
 
   @override
-  String get adminWameedAITotalCostModel => 'Total Cost';
+  String get adminWameedAITotalCostModel => 'মোট Cost';
 
   @override
   String get adminWameedAIAcrossAllModels => 'across all models';
 
   @override
-  String get adminWameedAICreateModel => 'Create Model';
+  String get adminWameedAICreateModel => 'তৈরি করুন Model';
 
   @override
-  String get adminWameedAITotalMessages => 'Total Messages';
+  String get adminWameedAITotalMessages => 'মোট Messages';
 
   @override
   String get adminWameedAIAllConversations => 'all conversations';
@@ -11423,7 +11423,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get adminWameedAIInPage => 'in page of';
 
   @override
-  String get adminWameedAITotalRevenue => 'Total Revenue';
+  String get adminWameedAITotalRevenue => 'মোট রাজস্ব';
 
   @override
   String get adminWameedAIAllTime => 'all time';
@@ -11441,7 +11441,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get adminWameedAIWithBilling => 'with billing';
 
   @override
-  String get adminWameedAIGenerateInvoices => 'Generate Invoices';
+  String get adminWameedAIGenerateInvoices => 'Generate চালান';
 
   @override
   String get adminWameedAIGenerateInvoicesConfirm =>
@@ -11456,13 +11456,13 @@ class AppLocalizationsBn extends AppLocalizations {
       'No stores with AI billing configured';
 
   @override
-  String get adminWameedAICacheHitRate => 'Cache Hit Rate';
+  String get adminWameedAICacheHitRate => 'Cache Hit হার';
 
   @override
-  String get adminWameedAITopFeature => 'Top Feature';
+  String get adminWameedAITopFeature => 'শীর্ষ ফিচার';
 
   @override
-  String get adminWameedAITopModel => 'Top Model';
+  String get adminWameedAITopModel => 'শীর্ষ Model';
 
   @override
   String get adminWameedAIUniqueStoresUsing => 'unique stores using AI';
@@ -11474,31 +11474,31 @@ class AppLocalizationsBn extends AppLocalizations {
   String get adjustFilters => 'Try adjusting your filters';
 
   @override
-  String get apply => 'Apply';
+  String get apply => 'প্রয়োগ';
 
   @override
   String get cached => 'Cached';
 
   @override
-  String get confirmDelete => 'Confirm Delete';
+  String get confirmDelete => 'নিশ্চিত মুছুন';
 
   @override
   String get cost => 'Cost';
 
   @override
-  String get defaults => 'Default';
+  String get defaults => 'ডিফল্ট';
 
   @override
-  String get displayName => 'Display Name';
+  String get displayName => 'ডিসপ্লে নাম';
 
   @override
-  String get errorLoadingData => 'Error Loading Data';
+  String get errorLoadingData => 'ত্রুটি লোড হচ্ছে Data';
 
   @override
   String get errors => 'Errors';
 
   @override
-  String get feature => 'Feature';
+  String get feature => 'ফিচার';
 
   @override
   String get from => 'From';
@@ -11507,7 +11507,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get generate => 'Generate';
 
   @override
-  String get hasDefault => 'Default';
+  String get hasDefault => 'ডিফল্ট';
 
   @override
   String get latency => 'Latency';
@@ -11525,7 +11525,7 @@ class AppLocalizationsBn extends AppLocalizations {
   String get models => 'Models';
 
   @override
-  String get optional => 'Optional';
+  String get optional => 'ঐচ্ছিক';
 
   @override
   String get overview => 'Overview';
@@ -11543,13 +11543,13 @@ class AppLocalizationsBn extends AppLocalizations {
   String get showing => 'Showing';
 
   @override
-  String get store => 'Store';
+  String get store => 'স্টোর';
 
   @override
   String get stores => 'Stores';
 
   @override
-  String get success => 'Success';
+  String get success => 'সফল';
 
   @override
   String get to => 'To';
@@ -11558,25 +11558,25 @@ class AppLocalizationsBn extends AppLocalizations {
   String get tokens => 'Tokens';
 
   @override
-  String get user => 'User';
+  String get user => 'ব্যবহারকারী';
 
   @override
-  String get users => 'Users';
+  String get users => 'ব্যবহারকারী';
 
   @override
-  String get allFeatures => 'All Features';
+  String get allFeatures => 'সব ফিচার';
 
   @override
-  String get allModels => 'All Models';
+  String get allModels => 'সব Models';
 
   @override
-  String get dueDate => 'Due Date';
+  String get dueDate => 'Due তারিখ';
 
   @override
-  String get inputPrice => 'Input Price / 1K tokens';
+  String get inputPrice => 'Input মূল্য / 1K tokens';
 
   @override
-  String get invoiceNumber => 'Invoice #';
+  String get invoiceNumber => 'চালান #';
 
   @override
   String get leaveBlankToKeep => 'Leave blank to keep current';
@@ -11585,34 +11585,34 @@ class AppLocalizationsBn extends AppLocalizations {
   String get modelId => 'Model ID';
 
   @override
-  String get noChatsFound => 'No chats found';
+  String get noChatsFound => 'কোনো chats found';
 
   @override
-  String get noInvoicesFound => 'No invoices found';
+  String get noInvoicesFound => 'কোনো invoices found';
 
   @override
-  String get noLogsFound => 'No usage logs found';
+  String get noLogsFound => 'কোনো usage logs found';
 
   @override
-  String get noStoresFound => 'No stores found';
+  String get noStoresFound => 'কোনো stores found';
 
   @override
   String get of_ => 'of';
 
   @override
-  String get outputPrice => 'Output Price / 1K tokens';
+  String get outputPrice => 'Output মূল্য / 1K tokens';
 
   @override
-  String get rateLimited => 'Rate Limited';
+  String get rateLimited => 'হার Limited';
 
   @override
-  String get searchChats => 'Search chats...';
+  String get searchChats => 'অনুসন্ধান chats...';
 
   @override
-  String get searchLogs => 'Search logs...';
+  String get searchLogs => 'অনুসন্ধান logs...';
 
   @override
-  String get selectProvider => 'Select provider';
+  String get selectProvider => 'নির্বাচন provider';
 
   @override
   String get untitledChat => 'Untitled Chat';
@@ -11628,32 +11628,32 @@ class AppLocalizationsBn extends AppLocalizations {
   String get successful => 'Successful';
 
   @override
-  String get providerPaymentsTitle => 'Payments';
+  String get providerPaymentsTitle => 'পেমেন্ট';
 
   @override
-  String get providerPaymentDetail => 'Payment Details';
+  String get providerPaymentDetail => 'পেমেন্ট Details';
 
   @override
-  String get providerPaymentCheckout => 'Complete Payment';
+  String get providerPaymentCheckout => 'সম্পন্ন পেমেন্ট';
 
   @override
   String get providerPaymentInitiating => 'Initiating payment...';
 
   @override
-  String get providerPaymentCancelTitle => 'Cancel Payment?';
+  String get providerPaymentCancelTitle => 'বাতিল পেমেন্ট?';
 
   @override
   String get providerPaymentCancelBody =>
       'Are you sure you want to cancel this payment? You can retry later.';
 
   @override
-  String get providerPaymentContinue => 'Continue Payment';
+  String get providerPaymentContinue => 'Continue পেমেন্ট';
 
   @override
-  String get providerPaymentCancel => 'Cancel';
+  String get providerPaymentCancel => 'বাতিল';
 
   @override
-  String get providerPaymentNoPayments => 'No payments found';
+  String get providerPaymentNoPayments => 'কোনো payments found';
 
   @override
   String get providerPaymentPurpose => 'Purpose';
@@ -11665,61 +11665,61 @@ class AppLocalizationsBn extends AppLocalizations {
   String get providerPaymentGateway => 'Gateway';
 
   @override
-  String get providerPaymentTranRef => 'Transaction Ref';
+  String get providerPaymentTranRef => 'লেনদেন Ref';
 
   @override
-  String get providerPaymentDate => 'Date';
+  String get providerPaymentDate => 'তারিখ';
 
   @override
-  String get providerPaymentAmount => 'Amount';
+  String get providerPaymentAmount => 'পরিমাণ';
 
   @override
-  String get providerPaymentTax => 'Tax';
+  String get providerPaymentTax => 'কর';
 
   @override
-  String get providerPaymentTotal => 'Total';
+  String get providerPaymentTotal => 'মোট';
 
   @override
-  String get providerPaymentAmountBreakdown => 'Amount Breakdown';
+  String get providerPaymentAmountBreakdown => 'পরিমাণ Breakdown';
 
   @override
   String get providerPaymentGatewayResponse => 'Gateway Response';
 
   @override
-  String get providerPaymentResponseStatus => 'Response Status';
+  String get providerPaymentResponseStatus => 'Response অবস্থা';
 
   @override
   String get providerPaymentResponseCode => 'Response Code';
 
   @override
-  String get providerPaymentResponseMessage => 'Response Message';
+  String get providerPaymentResponseMessage => 'Response বার্তা';
 
   @override
-  String get providerPaymentCardType => 'Card Type';
+  String get providerPaymentCardType => 'কার্ড ধরন';
 
   @override
-  String get providerPaymentCardScheme => 'Card Scheme';
+  String get providerPaymentCardScheme => 'কার্ড Scheme';
 
   @override
-  String get providerPaymentTracking => 'Tracking';
+  String get providerPaymentTracking => 'ট্র্যাকিং';
 
   @override
-  String get providerPaymentEmailSent => 'Email Sent';
+  String get providerPaymentEmailSent => 'ইমেইল Sent';
 
   @override
-  String get providerPaymentInvoiceGenerated => 'Invoice Generated';
+  String get providerPaymentInvoiceGenerated => 'চালান Generated';
 
   @override
-  String get providerPaymentEmailError => 'Email Error';
+  String get providerPaymentEmailError => 'ইমেইল ত্রুটি';
 
   @override
-  String get providerPaymentRefundInfo => 'Refund Information';
+  String get providerPaymentRefundInfo => 'ফেরত Information';
 
   @override
-  String get providerPaymentRefundAmount => 'Refund Amount';
+  String get providerPaymentRefundAmount => 'ফেরত পরিমাণ';
 
   @override
-  String get providerPaymentRefundTranRef => 'Refund Txn Ref';
+  String get providerPaymentRefundTranRef => 'ফেরত Txn Ref';
 
   @override
   String get providerPaymentRefundReason => 'Reason';
@@ -11728,40 +11728,40 @@ class AppLocalizationsBn extends AppLocalizations {
   String get providerPaymentRefundedAt => 'Refunded At';
 
   @override
-  String get providerPaymentEmailLogs => 'Email Logs';
+  String get providerPaymentEmailLogs => 'ইমেইল লগ';
 
   @override
-  String get providerPaymentResendEmail => 'Resend Confirmation Email';
+  String get providerPaymentResendEmail => 'Resend Confirmation ইমেইল';
 
   @override
   String get providerPaymentCopied => 'Copied to clipboard';
 
   @override
-  String get providerPaymentFilterAll => 'All';
+  String get providerPaymentFilterAll => 'সব';
 
   @override
-  String get providerPaymentFilterPending => 'Pending';
+  String get providerPaymentFilterPending => 'মুলতুবি';
 
   @override
-  String get providerPaymentFilterCompleted => 'Completed';
+  String get providerPaymentFilterCompleted => 'সম্পন্ন';
 
   @override
-  String get providerPaymentFilterFailed => 'Failed';
+  String get providerPaymentFilterFailed => 'ব্যর্থ';
 
   @override
   String get providerPaymentFilterRefunded => 'Refunded';
 
   @override
-  String get providerPaymentStatusPending => 'Pending';
+  String get providerPaymentStatusPending => 'মুলতুবি';
 
   @override
   String get providerPaymentStatusProcessing => 'Processing';
 
   @override
-  String get providerPaymentStatusCompleted => 'Completed';
+  String get providerPaymentStatusCompleted => 'সম্পন্ন';
 
   @override
-  String get providerPaymentStatusFailed => 'Failed';
+  String get providerPaymentStatusFailed => 'ব্যর্থ';
 
   @override
   String get providerPaymentStatusRefunded => 'Refunded';
@@ -11770,20 +11770,1023 @@ class AppLocalizationsBn extends AppLocalizations {
   String get providerPaymentStatusVoided => 'Voided';
 
   @override
-  String get providerPaymentPurposeSubscription => 'Subscription';
+  String get providerPaymentPurposeSubscription => 'সাবস্ক্রিপশন';
 
   @override
-  String get providerPaymentPurposePlanAddon => 'Plan Add-on';
+  String get providerPaymentPurposePlanAddon => 'প্ল্যান Add-on';
 
   @override
   String get providerPaymentPurposeAiBilling => 'AI Billing';
 
   @override
-  String get providerPaymentPurposeHardware => 'Hardware';
+  String get providerPaymentPurposeHardware => 'হার্ডওয়্যার';
 
   @override
   String get providerPaymentPurposeImplementationFee => 'Implementation Fee';
 
   @override
   String get providerPaymentPurposeOther => 'Other';
+
+  @override
+  String get pinLoginTitle => 'পিন লিখুন';
+
+  @override
+  String get pinLoginNoStore =>
+      'কোনো স্টোর সেশন পাওয়া যায়নি। ইমেইল দিয়ে সাইন ইন করুন।';
+
+  @override
+  String get pinLoginEmailInstead => 'পরিবর্তে ইমেইল দিয়ে সাইন ইন করুন';
+
+  @override
+  String get categoryMappings => 'ক্যাটাগরি ম্যাপিং';
+
+  @override
+  String get syncManagement => 'সিঙ্ক ব্যবস্থাপনা';
+
+  @override
+  String get syncLogs => 'সিঙ্ক লগ';
+
+  @override
+  String get newExport => 'নতুন এক্সপোর্ট';
+
+  @override
+  String get autoExportSettings => 'স্বয়ংক্রিয় এক্সপোর্ট সেটিংস';
+
+  @override
+  String get dayOfWeek => 'সপ্তাহের দিন';
+
+  @override
+  String get dayOfMonth => 'মাসের দিন';
+
+  @override
+  String get exportTime => 'এক্সপোর্ট সময়';
+
+  @override
+  String get retryOnFailure => 'ব্যর্থতায় পুনরায় চেষ্টা';
+
+  @override
+  String get automaticallyRetryFailedExports =>
+      'ব্যর্থ এক্সপোর্ট স্বয়ংক্রিয়ভাবে পুনরায় চেষ্টা করুন';
+
+  @override
+  String get mapPosAccountsToProviderAccounts =>
+      'POS অ্যাকাউন্ট প্রোভাইডার অ্যাকাউন্টে ম্যাপ করুন';
+
+  @override
+  String get viewAndManageExports => 'এক্সপোর্ট দেখুন ও পরিচালনা করুন';
+
+  @override
+  String get scheduleAutomaticExports => 'স্বয়ংক্রিয় এক্সপোর্ট সময়সূচী করুন';
+
+  @override
+  String get connect => 'সংযোগ করুন';
+
+  @override
+  String get supportedLanguages => 'সমর্থিত ভাষা';
+
+  @override
+  String get noPublishedVersionsYet => 'এখনও কোনো সংস্করণ প্রকাশিত হয়নি';
+
+  @override
+  String get translationVersions => 'অনুবাদ সংস্করণ';
+
+  @override
+  String get noCashSessionsFound => 'কোনো নগদ সেশন পাওয়া যায়নি';
+
+  @override
+  String get openingCheckout => 'চেকআউট খুলছে...';
+
+  @override
+  String get sellPrice => 'বিক্রয় মূল্য';
+
+  @override
+  String get offerPrice => 'অফার মূল্য';
+
+  @override
+  String get costPrice => 'ক্রয় মূল্য';
+
+  @override
+  String get productNotFound => 'পণ্য পাওয়া যায়নি';
+
+  @override
+  String get networkDiscovery => 'নেটওয়ার্ক আবিষ্কার';
+
+  @override
+  String get searchPromotions => 'প্রচারণা অনুসন্ধান...';
+
+  @override
+  String get analytics => 'বিশ্লেষণ';
+
+  @override
+  String get generateCoupons => 'কুপন তৈরি করুন';
+
+  @override
+  String get applyCoupon => 'কুপন প্রয়োগ করুন';
+
+  @override
+  String get couponCode => 'কুপন কোড';
+
+  @override
+  String get enterCouponCode => 'কুপন কোড লিখুন';
+
+  @override
+  String get promotionName => 'প্রচারণার নাম *';
+
+  @override
+  String get buyQuantity => 'ক্রয় পরিমাণ';
+
+  @override
+  String get getQuantity => 'পাওয়ার পরিমাণ';
+
+  @override
+  String get getDiscount => 'ছাড় %';
+
+  @override
+  String get bundlePrice => 'বান্ডেল মূল্য';
+
+  @override
+  String get minOrderTotal => 'ন্যূনতম অর্ডার মোট';
+
+  @override
+  String get maxUses => 'সর্বোচ্চ ব্যবহার';
+
+  @override
+  String get maxPerCustomer => 'প্রতি গ্রাহকে সর্বোচ্চ';
+
+  @override
+  String get requiresCouponCode => 'কুপন কোড প্রয়োজন';
+
+  @override
+  String get stackable => 'স্ট্যাকযোগ্য';
+
+  @override
+  String get count => 'গণনা *';
+
+  @override
+  String get prefixOptional => 'উপসর্গ (ঐচ্ছিক)';
+
+  @override
+  String get maxUsesPerCouponOptional =>
+      'প্রতি কুপনে সর্বোচ্চ ব্যবহার (ঐচ্ছিক)';
+
+  @override
+  String get expandAll => 'সব প্রসারিত করুন';
+
+  @override
+  String get collapseAll => 'সব সংকুচিত করুন';
+
+  @override
+  String get addSubcategory => 'উপবিভাগ যোগ করুন';
+
+  @override
+  String get noSignagePlaylists => 'কোনো সাইনেজ প্লেলিস্ট নেই';
+
+  @override
+  String get noAppointments => 'কোনো অ্যাপয়েন্টমেন্ট নেই';
+
+  @override
+  String get enterACustomerIdToViewWishlist =>
+      'উইশলিস্ট দেখতে গ্রাহক আইডি লিখুন';
+
+  @override
+  String get wishlistIsEmpty => 'উইশলিস্ট খালি';
+
+  @override
+  String get noGiftRegistries => 'কোনো গিফট রেজিস্ট্রি নেই';
+
+  @override
+  String get noSyncHistoryYet => 'এখনও কোনো সিঙ্ক ইতিহাস নেই';
+
+  @override
+  String get recentSyncActivity => 'সাম্প্রতিক সিঙ্ক কার্যকলাপ';
+
+  @override
+  String get noBackupsYet => 'এখনও কোনো ব্যাকআপ নেই';
+
+  @override
+  String get editReservation => 'রিজার্ভেশন সম্পাদনা';
+
+  @override
+  String get reservationDate => 'রিজার্ভেশন তারিখ';
+
+  @override
+  String get time => 'সময়';
+
+  @override
+  String get durationMinutes => 'সময়কাল (মিনিট)';
+
+  @override
+  String get tableOptional => 'টেবিল (ঐচ্ছিক)';
+
+  @override
+  String get editTable => 'টেবিল সম্পাদনা';
+
+  @override
+  String get displayNameOptional => 'প্রদর্শন নাম (ঐচ্ছিক)';
+
+  @override
+  String get zoneOptional => 'জোন (ঐচ্ছিক)';
+
+  @override
+  String get positionX => 'অবস্থান X';
+
+  @override
+  String get positionY => 'অবস্থান Y';
+
+  @override
+  String get openTab => 'ওপেন ট্যাব';
+
+  @override
+  String get recipeName => 'রেসিপির নাম';
+
+  @override
+  String get expectedYield => 'প্রত্যাশিত উৎপাদন';
+
+  @override
+  String get prepTimeMin => 'প্রস্তুতি সময় (মিনিট)';
+
+  @override
+  String get bakeTimeMin => 'বেক সময় (মিনিট)';
+
+  @override
+  String get bakeTempC => 'বেক তাপমাত্রা (°C)';
+
+  @override
+  String get instructions => 'নির্দেশনা';
+
+  @override
+  String get scheduleDate => 'শিড্যুল তারিখ';
+
+  @override
+  String get plannedBatches => 'পরিকল্পিত ব্যাচ';
+
+  @override
+  String get plannedYield => 'পরিকল্পিত উৎপাদন';
+
+  @override
+  String get actualBatches => 'প্রকৃত ব্যাচ';
+
+  @override
+  String get actualYield => 'প্রকৃত উৎপাদন';
+
+  @override
+  String get arrangementName => 'অ্যারেঞ্জমেন্টের নাম';
+
+  @override
+  String get occasionOptional => 'উপলক্ষ (ঐচ্ছিক)';
+
+  @override
+  String get noDataForSelectedPeriod =>
+      'নির্বাচিত সময়কালের জন্য কোনো ডেটা নেই';
+
+  @override
+  String get noSalesDataYetToday => 'আজ এখনও কোনো বিক্রয় ডেটা নেই';
+
+  @override
+  String get sku => 'SKU:';
+
+  @override
+  String get deleteRole => 'ভূমিকা মুছুন';
+
+  @override
+  String get planDetails => 'প্ল্যান বিস্তারিত';
+
+  @override
+  String get usage => 'ব্যবহার';
+
+  @override
+  String get manageAddons => 'অ্যাড-অন পরিচালনা';
+
+  @override
+  String get viewInvoices => 'চালান দেখুন';
+
+  @override
+  String get renews => 'পুনর্নবীকরণ';
+
+  @override
+  String get productsUsed => 'ব্যবহৃত পণ্য';
+
+  @override
+  String get needHelp => 'সাহায্য দরকার?';
+
+  @override
+  String get contactSupport => 'সাপোর্টে যোগাযোগ করুন';
+
+  @override
+  String get achievements => 'অর্জন';
+
+  @override
+  String get noBadgesEarnedYet => 'এখনও কোনো ব্যাজ অর্জিত হয়নি';
+
+  @override
+  String get badgeCollection => 'ব্যাজ সংগ্রহ';
+
+  @override
+  String get noSubscriptionsFound => 'কোনো সাবস্ক্রিপশন পাওয়া যায়নি';
+
+  @override
+  String get noGatewaysConfigured => 'কোনো গেটওয়ে কনফিগার করা নেই';
+
+  @override
+  String get noAnnouncementsFound => 'কোনো ঘোষণা পাওয়া যায়নি';
+
+  @override
+  String get noSettlements => 'কোনো নিষ্পত্তি নেই';
+
+  @override
+  String get uiError => 'ত্রুটি';
+
+  @override
+  String get back => 'পিছনে';
+
+  @override
+  String get plan => 'প্ল্যান';
+
+  @override
+  String get id => 'আইডি';
+
+  @override
+  String get role => 'ভূমিকা';
+
+  @override
+  String get item => 'আইটেম';
+
+  @override
+  String get card => 'কার্ড';
+
+  @override
+  String get unpaid => 'অপ্রদত্ত';
+
+  @override
+  String get due => 'বকেয়া';
+
+  @override
+  String get approved => 'অনুমোদিত';
+
+  @override
+  String get rejected => 'প্রত্যাখ্যাত';
+
+  @override
+  String get published => 'প্রকাশিত';
+
+  @override
+  String get archived => 'সংরক্ষণাগারভুক্ত';
+
+  @override
+  String get filter => 'ফিল্টার';
+
+  @override
+  String get sort => 'সাজান';
+
+  @override
+  String get selectAll => 'সব নির্বাচন করুন';
+
+  @override
+  String get deselectAll => 'সব নির্বাচন বাতিল';
+
+  @override
+  String get copy => 'কপি';
+
+  @override
+  String get upload => 'আপলোড';
+
+  @override
+  String get share => 'শেয়ার';
+
+  @override
+  String get branchMgr => 'ব্রাঞ্চ ম্যানেজার';
+
+  @override
+  String get health => 'স্বাস্থ্য';
+
+  @override
+  String get configuration => 'কনফিগারেশন';
+
+  @override
+  String get customRange => 'কাস্টম রেঞ্জ';
+
+  @override
+  String get somethingWentWrong => 'কিছু ভুল হয়েছে';
+
+  @override
+  String get view => 'দেখুন';
+
+  @override
+  String get stop => 'বন্ধ';
+
+  @override
+  String get pause => 'বিরতি';
+
+  @override
+  String get resume => 'পুনরায় শুরু';
+
+  @override
+  String get refund => 'ফেরত';
+
+  @override
+  String get reportsTodaysOverview => 'আজকের সারসংক্ষেপ';
+
+  @override
+  String get reportsVsYesterday => 'গতকালের তুলনায়';
+
+  @override
+  String get reportsTopProductsToday => 'আজকের শীর্ষ পণ্য';
+
+  @override
+  String get reportsFeatureGuide => 'বৈশিষ্ট্য গাইড';
+
+  @override
+  String get reportsRevenueTrend => 'রাজস্ব প্রবণতা';
+
+  @override
+  String get reportsBreakdown => 'বিশ্লেষণ';
+
+  @override
+  String get reportsCostOfGoods => 'পণ্যের খরচ';
+
+  @override
+  String get reportsTaxCollected => 'সংগৃহীত কর';
+
+  @override
+  String get reportsCashRevenue => 'নগদ রাজস্ব';
+
+  @override
+  String get reportsCardRevenue => 'কার্ড রাজস্ব';
+
+  @override
+  String get reportsOtherRevenue => 'অন্যান্য রাজস্ব';
+
+  @override
+  String get reportsDailyBreakdown => 'দৈনিক বিশ্লেষণ';
+
+  @override
+  String get reportsPnlTrend => 'লাভ-ক্ষতি প্রবণতা';
+
+  @override
+  String get reportsCogs => 'বিক্রয়ের খরচ';
+
+  @override
+  String get reportsNoDataForPeriod => 'এই সময়ের জন্য কোনো ডেটা নেই';
+
+  @override
+  String get reportsExpenseDistribution => 'ব্যয় বন্টন';
+
+  @override
+  String get reportsByCategory => 'বিভাগ অনুযায়ী';
+
+  @override
+  String get reportsNoExpensesRecorded => 'কোনো ব্যয় রেকর্ড করা হয়নি';
+
+  @override
+  String get reportsTotalVariance => 'মোট বিচ্যুতি';
+
+  @override
+  String get reportsOverPlus => 'বেশি (+)';
+
+  @override
+  String get reportsShortMinus => 'কম (-)';
+
+  @override
+  String get reportsNoClosedSessions => 'কোনো বন্ধ সেশন নেই';
+
+  @override
+  String get reportsExpected => 'প্রত্যাশিত';
+
+  @override
+  String get reportsActual => 'প্রকৃত';
+
+  @override
+  String get reportsTotalProfit => 'মোট মুনাফা';
+
+  @override
+  String get reportsTopProductsByRevenue => 'রাজস্ব অনুযায়ী শীর্ষ পণ্য';
+
+  @override
+  String get reportsProductsRankedByRevenue =>
+      'রাজস্ব অনুযায়ী পণ্যের র‍্যাংকিং';
+
+  @override
+  String get reportsNoProductData => 'নির্বাচিত সময়ের জন্য কোনো পণ্য ডেটা নেই';
+
+  @override
+  String get reportsTotalQtySold => 'মোট বিক্রিত পরিমাণ';
+
+  @override
+  String get reportsPaymentDistribution => 'পেমেন্ট বন্টন';
+
+  @override
+  String get reportsBreakdownByMethod => 'পদ্ধতি অনুযায়ী বিশ্লেষণ';
+
+  @override
+  String get reportsNoPaymentData =>
+      'নির্বাচিত সময়ের জন্য কোনো পেমেন্ট ডেটা নেই';
+
+  @override
+  String get reportsMethodsUsed => 'ব্যবহৃত পদ্ধতি';
+
+  @override
+  String get reportsAvgPerTx => 'প্রতি লেনদেনে গড়';
+
+  @override
+  String get reportsHourlyPattern => 'ঘণ্টাভিত্তিক প্যাটার্ন';
+
+  @override
+  String get reportsRevenueByHour => 'ঘণ্টা অনুযায়ী রাজস্ব';
+
+  @override
+  String get reportsNoHourlyData =>
+      'নির্বাচিত সময়ের জন্য কোনো ঘণ্টাভিত্তিক ডেটা নেই';
+
+  @override
+  String get reportsPeakHour => 'পিক আওয়ার';
+
+  @override
+  String get reportsRevenueByStaff => 'কর্মী অনুযায়ী রাজস্ব';
+
+  @override
+  String get reportsStaffRankedByRevenue =>
+      'রাজস্ব অনুযায়ী কর্মীদের র‍্যাংকিং';
+
+  @override
+  String get reportsNoStaffData => 'কোনো কর্মী কর্মক্ষমতা ডেটা নেই';
+
+  @override
+  String get reportsAvgPerStaff => 'প্রতি কর্মীর গড়';
+
+  @override
+  String get reportsNoCustomerData => 'কোনো গ্রাহক ডেটা নেই';
+
+  @override
+  String get reportsSpendByCustomer => 'গ্রাহক অনুযায়ী ব্যয়';
+
+  @override
+  String get reportsRankedBySpend => 'ব্যয় অনুযায়ী র‍্যাংকিং';
+
+  @override
+  String get reportsTotalSpend => 'মোট ব্যয়';
+
+  @override
+  String get reportsRepeatRate => 'পুনরাবৃত্তি হার';
+
+  @override
+  String get reportsRepeatCustomers => 'পুনরাবৃত্ত গ্রাহক';
+
+  @override
+  String get reportsNew30d => 'নতুন (৩০ দিন)';
+
+  @override
+  String get reportsActive30d => 'সক্রিয় (৩০ দিন)';
+
+  @override
+  String get reportsLoyaltyPoints => 'লয়ালটি পয়েন্ট';
+
+  @override
+  String get reportsAverages => 'গড়সমূহ';
+
+  @override
+  String get reportsAvgVisits => 'গড় ভিজিট';
+
+  @override
+  String get reportsAvgSpend => 'গড় ব্যয়';
+
+  @override
+  String get reportsAvgLoyaltyPoints => 'গড় লয়ালটি পয়েন্ট';
+
+  @override
+  String get reportsNoCategoryData =>
+      'নির্বাচিত সময়ের জন্য কোনো বিভাগ ডেটা নেই';
+
+  @override
+  String get reportsRevenueShare => 'রাজস্ব শেয়ার';
+
+  @override
+  String get reportsRevenueByCategory => 'বিভাগ অনুযায়ী রাজস্ব';
+
+  @override
+  String get reportsCategories => 'বিভাগসমূহ';
+
+  @override
+  String get reportsTotalStockValue => 'মোট স্টক মূল্য';
+
+  @override
+  String get reportsTotalItems => 'মোট আইটেম';
+
+  @override
+  String get reportsProductCount => 'পণ্যের সংখ্যা';
+
+  @override
+  String get reportsStockValueDistribution => 'স্টক মূল্য বন্টন';
+
+  @override
+  String get reportsNoStockData => 'কোনো স্টক ডেটা নেই';
+
+  @override
+  String get reportsProductTurnover => 'পণ্যের টার্নওভার';
+
+  @override
+  String get reportsNoTurnoverData => 'কোনো টার্নওভার ডেটা নেই';
+
+  @override
+  String get reportsShrinkageByReason => 'কারণ অনুযায়ী অপচয়';
+
+  @override
+  String get reportsNoShrinkageData => 'কোনো অপচয় ডেটা নেই';
+
+  @override
+  String get reportsShrinkageByProduct => 'পণ্য অনুযায়ী অপচয়';
+
+  @override
+  String get reportsAllStockLevelsOk => 'সব স্টক লেভেল ঠিক আছে';
+
+  @override
+  String get reportsLowStockItems => 'কম স্টক আইটেম';
+
+  @override
+  String get filterCash => 'নগদ';
+
+  @override
+  String get filterCard => 'কার্ড';
+
+  @override
+  String get filterGiftCard => 'গিফট কার্ড';
+
+  @override
+  String get filterMobile => 'মোবাইল';
+
+  @override
+  String get filterBankTransfer => 'ব্যাংক ট্রান্সফার';
+
+  @override
+  String get filterCompleted => 'সম্পন্ন';
+
+  @override
+  String get filterRefunded => 'ফেরত দেওয়া';
+
+  @override
+  String get filterPartialRefund => 'আংশিক ফেরত';
+
+  @override
+  String get filterMin => 'ন্যূনতম';
+
+  @override
+  String get filterMax => 'সর্বোচ্চ';
+
+  @override
+  String get reportsRevenue => 'রাজস্ব';
+
+  @override
+  String get filterSortQuantity => 'পরিমাণ';
+
+  @override
+  String get filterSortProfit => 'মুনাফা';
+
+  @override
+  String get filterSortOrders => 'অর্ডার';
+
+  @override
+  String get filterSortName => 'নাম';
+
+  @override
+  String get companionAppPreferences => 'অ্যাপ পছন্দসমূহ';
+
+  @override
+  String get companionTheme => 'থিম';
+
+  @override
+  String get companionLanguage => 'ভাষা';
+
+  @override
+  String get companionEnglish => 'ইংরেজি';
+
+  @override
+  String get companionCompactMode => 'কমপ্যাক্ট মোড';
+
+  @override
+  String get companionNotifications => 'বিজ্ঞপ্তি';
+
+  @override
+  String get companionBiometricLock => 'বায়োমেট্রিক লক';
+
+  @override
+  String get companionDefaultPage => 'ডিফল্ট পেজ';
+
+  @override
+  String get companionCurrencyDisplay => 'মুদ্রা প্রদর্শন';
+
+  @override
+  String get companionPending => 'মুলতুবি';
+
+  @override
+  String get catalogProductVisibleInPos => 'পণ্যটি POS-এ দৃশ্যমান';
+
+  @override
+  String get catalogWeighable => 'ওজনযোগ্য';
+
+  @override
+  String get catalogAgeRestricted => 'বয়স সীমাবদ্ধ';
+
+  @override
+  String get catalogAddVariant => 'ভ্যারিয়েন্ট যোগ করুন';
+
+  @override
+  String get catalogAddModifierGroup => 'মডিফায়ার গ্রুপ যোগ করুন';
+
+  @override
+  String get catalogVisibleInPosCatalog => 'POS এবং ক্যাটালগে দৃশ্যমান';
+
+  @override
+  String get catalogNoCategoriesYet => 'এখনও কোনো বিভাগ নেই';
+
+  @override
+  String get staffClockIn => 'ক্লক ইন';
+
+  @override
+  String get staffClockOut => 'ক্লক আউট';
+
+  @override
+  String get statusScheduled => 'নির্ধারিত';
+
+  @override
+  String get statusPlanned => 'পরিকল্পিত';
+
+  @override
+  String get statusInProgress => 'চলমান';
+
+  @override
+  String get statusCancelled => 'বাতিল';
+
+  @override
+  String get paymentsCountRequired => 'সংখ্যা *';
+
+  @override
+  String get paymentsPrefixOptional => 'প্রিফিক্স (ঐচ্ছিক)';
+
+  @override
+  String get paymentsMaxUsesPerCoupon =>
+      'প্রতি কুপনে সর্বোচ্চ ব্যবহার (ঐচ্ছিক)';
+
+  @override
+  String get accountingDayOfMonth => 'মাসের দিন';
+
+  @override
+  String get accountingNotificationEmail => 'নোটিফিকেশন ইমেইল (ঐচ্ছিক)';
+
+  @override
+  String get jewelrySetMetalRate => 'ধাতুর দর সেট করুন';
+
+  @override
+  String get hardware58mm => '58mm';
+
+  @override
+  String get hardware80mm => '80mm';
+
+  @override
+  String get hardwareKg => 'কেজি';
+
+  @override
+  String get hardwareG => 'গ্রাম';
+
+  @override
+  String get hardwareLb => 'পাউন্ড';
+
+  @override
+  String get hardwareNearPay => 'NearPay';
+
+  @override
+  String get hardwareNexo => 'Nexo';
+
+  @override
+  String get promotionsDeletePromotion => 'প্রমোশন মুছুন';
+
+  @override
+  String get promotionsCouponCode => 'কুপন কোড';
+
+  @override
+  String get promotionsEnterCouponCode => 'কুপন কোড লিখুন';
+
+  @override
+  String get reportsTotalRevenue => 'মোট রাজস্ব';
+
+  @override
+  String get reportsTransactions => 'লেনদেন';
+
+  @override
+  String get reportsNetRevenue => 'নিট রাজস্ব';
+
+  @override
+  String get reportsAvgBasket => 'গড় ঝুড়ি';
+
+  @override
+  String get reportsNetProfit => 'নিট মুনাফা';
+
+  @override
+  String get reportsTotalExpenses => 'মোট ব্যয়';
+
+  @override
+  String get reportsTotalOrders => 'মোট অর্ডার';
+
+  @override
+  String get reportsTopCustomers2 => 'শীর্ষ গ্রাহক';
+
+  @override
+  String get reportsTotalCustomers => 'মোট গ্রাহক';
+
+  @override
+  String get reportsSessions => 'সেশন';
+
+  @override
+  String get reportsStaffMembers => 'কর্মী সদস্য';
+
+  @override
+  String get reportsFilterStaff => 'কর্মী';
+
+  @override
+  String get reportsFilterCategory => 'বিভাগ';
+
+  @override
+  String get reportsFilterPayment => 'পেমেন্ট';
+
+  @override
+  String get reportsFilterStatus => 'অবস্থা';
+
+  @override
+  String get reportsProducts => 'পণ্যসমূহ';
+
+  @override
+  String get presetToday => 'আজ';
+
+  @override
+  String get presetYesterday => 'গতকাল';
+
+  @override
+  String get presetLast7Days => 'শেষ ৭ দিন';
+
+  @override
+  String get presetLast30Days => 'শেষ ৩০ দিন';
+
+  @override
+  String get presetThisMonth => 'এই মাস';
+
+  @override
+  String get presetLastMonth => 'গত মাস';
+
+  @override
+  String get presetThisQuarter => 'এই ত্রৈমাসিক';
+
+  @override
+  String get presetCustom => 'কাস্টম';
+
+  @override
+  String get reportNavSales => 'বিক্রয়';
+
+  @override
+  String get reportNavProducts => 'পণ্য';
+
+  @override
+  String get reportNavCategories => 'বিভাগ';
+
+  @override
+  String get reportNavStaff => 'কর্মী';
+
+  @override
+  String get reportNavHourly => 'ঘণ্টাভিত্তিক';
+
+  @override
+  String get reportNavPayments => 'পেমেন্ট';
+
+  @override
+  String get reportNavInventory => 'ইনভেন্টরি';
+
+  @override
+  String get reportNavFinancial => 'আর্থিক';
+
+  @override
+  String get reportNavCustomers => 'গ্রাহক';
+
+  @override
+  String get reportAllTime => 'সব সময়';
+
+  @override
+  String get reportFilters => 'ফিল্টার';
+
+  @override
+  String get reportAllBranches => 'সব শাখা';
+
+  @override
+  String reportQtyPrefix(String value) {
+    return 'পরিমাণ: $value';
+  }
+
+  @override
+  String get reportRevenue => 'রাজস্ব';
+
+  @override
+  String reportNOrders(String count) {
+    return '$count অর্ডার';
+  }
+
+  @override
+  String reportNetPrefix(String value) {
+    return 'নেট: $value';
+  }
+
+  @override
+  String reportNSold(String count) {
+    return '$count বিক্রিত';
+  }
+
+  @override
+  String reportProfitAmount(String value) {
+    return 'লাভ $value';
+  }
+
+  @override
+  String reportCostAmount(String value) {
+    return 'খরচ $value';
+  }
+
+  @override
+  String reportNReturns(String count) {
+    return '$count ফেরত';
+  }
+
+  @override
+  String reportNProducts(String count) {
+    return '$count পণ্য';
+  }
+
+  @override
+  String reportAvgAmount(String value) {
+    return 'গড় $value';
+  }
+
+  @override
+  String reportNVisitsAvg(String visits, String avg) {
+    return '$visits ভিজিট · গড় $avg';
+  }
+
+  @override
+  String reportNPts(String count) {
+    return '$count পয়েন্ট';
+  }
+
+  @override
+  String reportQtyTimesAvg(String qty, String cost) {
+    return 'পরিমাণ: $qty × $cost';
+  }
+
+  @override
+  String reportCogsStock(String cogs, String stock) {
+    return 'COGS: $cogs · স্টক: $stock';
+  }
+
+  @override
+  String get reportHealthy => 'স্বাস্থ্যকর';
+
+  @override
+  String get reportSlow => 'ধীর';
+
+  @override
+  String reportNUnits(String count) {
+    return '$count ইউনিট';
+  }
+
+  @override
+  String reportNUnitsLost(String count) {
+    return '$count ইউনিট হারিয়ে গেছে';
+  }
+
+  @override
+  String reportStockReorder(String current, String reorder) {
+    return 'স্টক: $current · পুনরায় অর্ডার: $reorder';
+  }
+
+  @override
+  String reportNeedN(String count) {
+    return 'প্রয়োজন $count';
+  }
+
+  @override
+  String reportNTransactions(String count) {
+    return '$count লেনদেন';
+  }
+
+  @override
+  String reportOpenedAt(String time) {
+    return 'খোলা: $time';
+  }
+
+  @override
+  String reportTodayVsYesterday(String today, String yesterday) {
+    return 'আজ: $today  •  গতকাল: $yesterday';
+  }
+
+  @override
+  String get reportLegendRevenue => 'রাজস্ব';
+
+  @override
+  String get reportLegendCost => 'খরচ';
+
+  @override
+  String get reportLegendNetProfit => 'নিট মুনাফা';
 }

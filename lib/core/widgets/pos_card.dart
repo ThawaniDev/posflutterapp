@@ -631,7 +631,15 @@ class PosStaffCard extends StatelessWidget {
           ),
           AppSpacing.gapH8,
           Text(name, style: AppTypography.titleSmall, maxLines: 1, overflow: TextOverflow.ellipsis),
-          Text(role, style: AppTypography.caption.copyWith(color: AppColors.textMutedLight)),
+          Builder(
+            builder: (ctx) {
+              final isDark = Theme.of(ctx).brightness == Brightness.dark;
+              return Text(
+                role,
+                style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              );
+            },
+          ),
         ],
       ),
     );
@@ -691,7 +699,15 @@ class PosSubscriptionCard extends StatelessWidget {
               if (billingCycle != null)
                 Padding(
                   padding: const EdgeInsets.only(left: 4, bottom: 4),
-                  child: Text('/ $billingCycle', style: AppTypography.caption.copyWith(color: AppColors.textMutedLight)),
+                  child: Builder(
+                    builder: (ctx) {
+                      final isDark = Theme.of(ctx).brightness == Brightness.dark;
+                      return Text(
+                        '/ $billingCycle',
+                        style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      );
+                    },
+                  ),
                 ),
             ],
           ),

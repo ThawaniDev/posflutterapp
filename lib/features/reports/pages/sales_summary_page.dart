@@ -8,6 +8,7 @@ import 'package:wameedpos/features/reports/providers/report_state.dart';
 import 'package:wameedpos/features/reports/widgets/report_charts.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class SalesSummaryPage extends ConsumerStatefulWidget {
   const SalesSummaryPage({super.key});
@@ -17,6 +18,8 @@ class SalesSummaryPage extends ConsumerStatefulWidget {
 }
 
 class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   ReportFilters _filters = const ReportFilters();
 
   @override
@@ -40,7 +43,7 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return ReportPageScaffold(
-      title: 'Sales Summary',
+      title: l10n.sidebarSalesSummary,
       filterPanel: ReportFilterPanel(
         filters: _filters,
         onFiltersChanged: _onFiltersChanged,
@@ -60,25 +63,25 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
             ReportKpiGrid(
               cards: [
                 ReportKpiCard(
-                  label: 'Total Revenue',
+                  label: l10n.totalRevenue,
                   value: formatCurrency(totals['total_revenue'] as num),
                   icon: Icons.trending_up_rounded,
                   color: AppColors.success,
                 ),
                 ReportKpiCard(
-                  label: 'Net Revenue',
+                  label: l10n.netRevenue,
                   value: formatCurrency(totals['net_revenue'] as num),
                   icon: Icons.account_balance_wallet_rounded,
                   color: AppColors.primary,
                 ),
                 ReportKpiCard(
-                  label: 'Transactions',
+                  label: l10n.transactions,
                   value: '${totals['total_transactions']}',
                   icon: Icons.receipt_long_rounded,
                   color: AppColors.info,
                 ),
                 ReportKpiCard(
-                  label: 'Avg Basket',
+                  label: l10n.txStatsAvgBasket,
                   value: formatCurrency(totals['avg_basket_size'] as num),
                   icon: Icons.shopping_basket_rounded,
                   color: AppColors.warning,
@@ -89,13 +92,13 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
 
             // Revenue Trend Chart
             if (daily.length > 1) ...[
-              const ReportSectionHeader(title: 'Revenue Trend', icon: Icons.show_chart_rounded),
+              ReportSectionHeader(title: l10n.reportsRevenueTrend, icon: Icons.show_chart_rounded),
               ReportDataCard(
                 child: ReportLineChart(
                   data: daily,
                   xKey: 'period',
                   yKeys: const ['total_revenue', 'net_revenue'],
-                  yLabels: const ['Revenue', 'Net Revenue'],
+                  yLabels: [l10n.reportRevenue, l10n.netRevenue],
                   colors: [AppColors.primary, AppColors.success],
                   showArea: true,
                 ),
@@ -103,39 +106,39 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
               const SizedBox(height: 20),
             ],
 
-            const ReportSectionHeader(title: 'Breakdown', icon: Icons.pie_chart_rounded),
+            ReportSectionHeader(title: l10n.reportsBreakdown, icon: Icons.pie_chart_rounded),
             ReportDataCard(
               child: Column(
                 children: [
-                  ReportStatRow(label: 'Cost of Goods', value: formatCurrency(totals['total_cost'] as num)),
+                  ReportStatRow(label: l10n.reportsCostOfGoods, value: formatCurrency(totals['total_cost'] as num)),
                   ReportStatRow(
-                    label: 'Discounts',
+                    label: l10n.discounts,
                     value: formatCurrency(totals['total_discount'] as num),
                     valueColor: AppColors.warning,
                   ),
-                  ReportStatRow(label: 'Tax Collected', value: formatCurrency(totals['total_tax'] as num)),
+                  ReportStatRow(label: l10n.reportsTaxCollected, value: formatCurrency(totals['total_tax'] as num)),
                   ReportStatRow(
-                    label: 'Refunds',
+                    label: l10n.posRefunds,
                     value: formatCurrency(totals['total_refunds'] as num),
                     valueColor: AppColors.error,
                   ),
                   const Divider(height: 24),
-                  ReportStatRow(label: 'Cash Revenue', value: formatCurrency(totals['cash_revenue'] as num)),
-                  ReportStatRow(label: 'Card Revenue', value: formatCurrency(totals['card_revenue'] as num)),
-                  ReportStatRow(label: 'Other Revenue', value: formatCurrency(totals['other_revenue'] as num)),
-                  ReportStatRow(label: 'Unique Customers', value: '${totals['unique_customers']}'),
+                  ReportStatRow(label: l10n.reportsCashRevenue, value: formatCurrency(totals['cash_revenue'] as num)),
+                  ReportStatRow(label: l10n.reportsCardRevenue, value: formatCurrency(totals['card_revenue'] as num)),
+                  ReportStatRow(label: l10n.reportsOtherRevenue, value: formatCurrency(totals['other_revenue'] as num)),
+                  ReportStatRow(label: l10n.promotionsUniqueCustomers, value: '${totals['unique_customers']}'),
                 ],
               ),
             ),
 
             const SizedBox(height: 24),
 
-            const ReportSectionHeader(title: 'Daily Breakdown', icon: Icons.calendar_month_rounded),
+            ReportSectionHeader(title: l10n.reportsDailyBreakdown, icon: Icons.calendar_month_rounded),
             if (daily.isEmpty)
-              const ReportDataCard(
+              ReportDataCard(
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 24),
-                  child: Center(child: Text('No data for selected period')),
+                  child: Center(child: Text(l10n.noDataForSelectedPeriod)),
                 ),
               )
             else
@@ -158,7 +161,7 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
                                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
                                   ),
                                   Text(
-                                    '${daily[i]['total_transactions']} orders',
+                                    l10n.reportNOrders(daily[i]['total_transactions'].toString()),
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                       color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                                     ),
@@ -174,7 +177,7 @@ class _SalesSummaryPageState extends ConsumerState<SalesSummaryPage> {
                                   style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                                 ),
                                 Text(
-                                  'Net: ${formatCurrency(daily[i]['net_revenue'] as num)}',
+                                  l10n.reportNetPrefix(formatCurrency(daily[i]['net_revenue'] as num)),
                                   style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.success, fontSize: 11),
                                 ),
                               ],

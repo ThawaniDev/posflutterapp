@@ -7,6 +7,7 @@ import 'package:wameedpos/features/subscription/services/feature_gate_service.da
 import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_providers.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Provider for UpgradePromptService.
 final upgradePromptServiceProvider = Provider<UpgradePromptService>((ref) {
@@ -118,6 +119,7 @@ class _FeatureGateDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final plansState = ref.watch(plansProvider);
     List<SubscriptionPlan> plans = [];
     if (plansState is PlansLoaded) {
@@ -228,7 +230,7 @@ class _FeatureGateDialog extends ConsumerWidget {
             onUpgrade?.call();
           },
           icon: const Icon(Icons.upgrade, size: 18),
-          label: const Text('Upgrade Plan'),
+          label: Text(l10n.subscriptionUpgrade),
         ),
       ],
     );
@@ -247,6 +249,7 @@ class _LimitReachedDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final percentage = planLimit > 0 ? (currentUsage / planLimit * 100).clamp(0.0, 100.0) : 100.0;
 
     return AlertDialog(
@@ -267,7 +270,7 @@ class _LimitReachedDialog extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Limit Reached', style: AppTypography.titleMedium),
+                Text(l10n.subscriptionLimitReached, style: AppTypography.titleMedium),
                 AppSpacing.gapH4,
                 Text(resourceName, style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary)),
               ],
@@ -293,7 +296,7 @@ class _LimitReachedDialog extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Usage', style: AppTypography.labelSmall),
+                    Text(l10n.usage, style: AppTypography.labelSmall),
                     Text(
                       '$currentUsage / $planLimit',
                       style: AppTypography.labelSmall.copyWith(color: AppColors.error, fontWeight: FontWeight.w700),
@@ -328,7 +331,7 @@ class _LimitReachedDialog extends StatelessWidget {
             onUpgrade?.call();
           },
           icon: const Icon(Icons.upgrade, size: 18),
-          label: const Text('Upgrade Plan'),
+          label: Text(l10n.subscriptionUpgrade),
         ),
       ],
     );

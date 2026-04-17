@@ -8,6 +8,7 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_providers.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
 import 'package:wameedpos/features/subscription/widgets/invoice_tile.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Page showing invoice/billing history with filtering and pagination.
 class BillingHistoryPage extends ConsumerStatefulWidget {
@@ -18,6 +19,8 @@ class BillingHistoryPage extends ConsumerStatefulWidget {
 }
 
 class _BillingHistoryPageState extends ConsumerState<BillingHistoryPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _statusFilter;
   int _currentPage = 1;
 
@@ -34,7 +37,7 @@ class _BillingHistoryPageState extends ConsumerState<BillingHistoryPage> {
     final invoicesState = ref.watch(invoicesProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Billing History'), centerTitle: true),
+      appBar: AppBar(title: Text(l10n.subscriptionBillingHistory), centerTitle: true),
       body: Column(
         children: [
           // Status filter chips
@@ -96,7 +99,7 @@ class _BillingHistoryPageState extends ConsumerState<BillingHistoryPage> {
       }
 
       if (invoices.isEmpty) {
-        return const PosEmptyState(title: 'No invoices found', icon: Icons.receipt_long);
+        return PosEmptyState(title: l10n.noInvoicesFound, icon: Icons.receipt_long);
       }
 
       return Column(

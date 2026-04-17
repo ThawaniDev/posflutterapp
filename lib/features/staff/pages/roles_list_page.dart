@@ -19,6 +19,8 @@ class RolesListPage extends ConsumerStatefulWidget {
 }
 
 class _RolesListPageState extends ConsumerState<RolesListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -70,7 +72,7 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
           ),
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(rolesProvider.notifier).load(),
           ),
         ],
@@ -177,6 +179,7 @@ class _RoleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isPredefined = role.isPredefined == true;
     final permCount = role.permissions?.length ?? 0;
 
@@ -260,7 +263,7 @@ class _RoleCard extends StatelessWidget {
               if (onDelete != null)
                 IconButton(
                   icon: Icon(Icons.delete_outline, color: AppColors.error),
-                  tooltip: 'Delete role',
+                  tooltip: l10n.deleteRole,
                   onPressed: onDelete,
                 ),
               Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.onSurfaceVariant),

@@ -7,6 +7,7 @@ import '../providers/electronics_providers.dart';
 import 'package:wameedpos/features/staff/models/staff_user.dart';
 import 'package:wameedpos/features/staff/providers/staff_providers.dart';
 import 'package:wameedpos/features/staff/providers/staff_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class TradeInFormPage extends ConsumerStatefulWidget {
   final TradeInRecord? record;
@@ -17,6 +18,8 @@ class TradeInFormPage extends ConsumerStatefulWidget {
 }
 
 class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
 
@@ -71,7 +74,7 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
     final staffState = ref.watch(staffListProvider);
     final staffList = staffState is StaffListLoaded ? staffState.staff : <StaffUser>[];
     return Scaffold(
-      appBar: AppBar(title: const Text('New Trade-In')),
+      appBar: AppBar(title: Text(l10n.electronicsNewTradeIn)),
       bottomNavigationBar: Padding(
         padding: AppSpacing.paddingAll16,
         child: PosButton(
@@ -101,7 +104,7 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
-              label: 'Condition Grade',
+              label: l10n.electronicsConditionGrade,
               items: ['A', 'B', 'C', 'D'].map((g) => PosDropdownItem(value: g, label: 'Grade $g')).toList(),
               selectedValue: _conditionGradeCtrl.text.isEmpty ? null : _conditionGradeCtrl.text,
               onChanged: (v) => setState(() => _conditionGradeCtrl.text = v ?? ''),
@@ -117,7 +120,7 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
-              label: 'Staff Member',
+              label: l10n.staffMember,
               items: staffList.map((s) => PosDropdownItem(value: s.id, label: '${s.firstName} ${s.lastName}')).toList(),
               selectedValue: _selectedStaffUserId,
               onChanged: (v) => setState(() => _selectedStaffUserId = v),

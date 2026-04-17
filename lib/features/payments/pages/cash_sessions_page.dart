@@ -14,6 +14,8 @@ class CashSessionsPage extends ConsumerStatefulWidget {
 }
 
 class _CashSessionsPageState extends ConsumerState<CashSessionsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -26,7 +28,7 @@ class _CashSessionsPageState extends ConsumerState<CashSessionsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cash Sessions'),
+        title: Text(l10n.adminFinOpsCashSessions),
         actions: [
           IconButton(
             icon: const Icon(Icons.info_outline),
@@ -43,13 +45,13 @@ class _CashSessionsPageState extends ConsumerState<CashSessionsPage> {
             children: [
               Text(message, style: const TextStyle(color: AppColors.error)),
               const SizedBox(height: 16),
-              ElevatedButton(onPressed: () => ref.read(cashSessionsProvider.notifier).load(), child: const Text('Retry')),
+              ElevatedButton(onPressed: () => ref.read(cashSessionsProvider.notifier).load(), child: Text(l10n.retry)),
             ],
           ),
         ),
         CashSessionsLoaded(:final sessions) =>
           sessions.isEmpty
-              ? const Center(child: Text('No cash sessions found'))
+              ? Center(child: Text(l10n.noCashSessionsFound))
               : ListView.builder(
                   itemCount: sessions.length,
                   itemBuilder: (context, index) {

@@ -4,12 +4,14 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/companion/providers/companion_state.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class QuickStatsWidget extends ConsumerWidget {
   const QuickStatsWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(quickStatsProvider);
     final theme = Theme.of(context);
 
@@ -41,23 +43,23 @@ class QuickStatsWidget extends ConsumerWidget {
               _buildStatRow(context, [
                 _StatTile(
                   icon: Icons.attach_money,
-                  label: 'Revenue',
+                  label: l10n.reportsRevenue,
                   value: '$currency ${todayRevenue.toStringAsFixed(2)}',
                   color: AppColors.success,
                 ),
-                _StatTile(icon: Icons.receipt_long, label: 'Transactions', value: '$todayTransactions', color: AppColors.info),
+                _StatTile(icon: Icons.receipt_long, label: l10n.transactions, value: '$todayTransactions', color: AppColors.info),
               ]),
               AppSpacing.gapH12,
               _buildStatRow(context, [
-                _StatTile(icon: Icons.shopping_bag, label: 'Orders', value: '$todayOrders', color: AppColors.warning),
-                _StatTile(icon: Icons.pending_actions, label: 'Pending', value: '$pendingOrders', color: AppColors.error),
+                _StatTile(icon: Icons.shopping_bag, label: l10n.orders, value: '$todayOrders', color: AppColors.warning),
+                _StatTile(icon: Icons.pending_actions, label: l10n.pending, value: '$pendingOrders', color: AppColors.error),
               ]),
               AppSpacing.gapH12,
               _buildStatRow(context, [
-                _StatTile(icon: Icons.people, label: 'Active Staff', value: '$activeStaff', color: AppColors.info),
+                _StatTile(icon: Icons.people, label: l10n.companionActiveStaff, value: '$activeStaff', color: AppColors.info),
                 _StatTile(
                   icon: Icons.inventory_2,
-                  label: 'Low Stock',
+                  label: l10n.reportsLowStock,
                   value: '$lowStockItems',
                   color: lowStockItems > 0 ? AppColors.error : AppColors.textSecondary,
                 ),

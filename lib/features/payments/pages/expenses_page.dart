@@ -16,6 +16,8 @@ class ExpensesPage extends ConsumerStatefulWidget {
 }
 
 class _ExpensesPageState extends ConsumerState<ExpensesPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -29,7 +31,7 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Expenses'),
+        title: Text(l10n.expenses),
         actions: [
           IconButton(
             icon: const Icon(Icons.info_outline),
@@ -39,7 +41,7 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
           FilledButton.icon(
             onPressed: () => _showCreateExpenseDialog(context),
             icon: const Icon(Icons.add, size: 18),
-            label: const Text('New Expense'),
+            label: Text(l10n.newExpense),
           ),
           AppSpacing.gapW12,
         ],
@@ -54,7 +56,7 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
               AppSpacing.gapH12,
               Text(message),
               AppSpacing.gapH12,
-              FilledButton(onPressed: () => ref.read(expensesProvider.notifier).load(), child: const Text('Retry')),
+              FilledButton(onPressed: () => ref.read(expensesProvider.notifier).load(), child: Text(l10n.retry)),
             ],
           ),
         ),
@@ -66,9 +68,9 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
                     children: [
                       Icon(Icons.receipt_long, size: 64, color: theme.hintColor),
                       AppSpacing.gapH12,
-                      Text('No expenses recorded', style: theme.textTheme.titleSmall),
+                      Text(l10n.noExpensesRecorded, style: theme.textTheme.titleSmall),
                       AppSpacing.gapH8,
-                      Text('Tap + to add an expense', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+                      Text(l10n.tapToAddExpense, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
                     ],
                   ),
                 )
@@ -148,7 +150,7 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          title: const Text('Record Expense'),
+          title: Text(l10n.recordExpense),
           content: SizedBox(
             width: 400,
             child: Column(
@@ -171,7 +173,7 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
                       .toList(),
                   selectedValue: selectedCategory,
                   onChanged: (v) => setDialogState(() => selectedCategory = v),
-                  label: 'Category',
+                  label: l10n.category,
                   showSearch: false,
                   clearable: false,
                 ),
@@ -179,13 +181,13 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
                 TextField(
                   controller: descriptionController,
                   maxLines: 2,
-                  decoration: const InputDecoration(labelText: 'Description (optional)', border: OutlineInputBorder()),
+                  decoration: InputDecoration(labelText: l10n.descriptionOptional, border: OutlineInputBorder()),
                 ),
               ],
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
             FilledButton(
               onPressed: () {
                 final amount = double.tryParse(amountController.text);
@@ -199,7 +201,7 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
                 });
                 Navigator.pop(ctx);
               },
-              child: const Text('Save'),
+              child: Text(l10n.save),
             ),
           ],
         ),

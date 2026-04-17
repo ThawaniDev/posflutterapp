@@ -10,6 +10,7 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/subscription/widgets/grace_period_banner.dart';
 import 'package:wameedpos/features/subscription/widgets/subscription_badge.dart';
 import 'package:wameedpos/features/subscription/widgets/usage_progress.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Page showing the current subscription status, usage, and management actions.
 class SubscriptionStatusPage extends ConsumerStatefulWidget {
@@ -20,6 +21,8 @@ class SubscriptionStatusPage extends ConsumerStatefulWidget {
 }
 
 class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -48,12 +51,12 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Subscription'),
+        title: Text(l10n.subscriptionMySubscription),
         centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.receipt_long),
-            tooltip: 'Billing History',
+            tooltip: l10n.subscriptionBillingHistory,
             onPressed: () => context.go(Routes.billingHistory),
           ),
         ],
@@ -88,14 +91,14 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
         children: [
           Icon(Icons.card_membership, size: 64, color: AppColors.textSecondary),
           AppSpacing.verticalLg,
-          Text('No Active Subscription', style: Theme.of(context).textTheme.titleLarge),
+          Text(l10n.subscriptionNoActiveSubscription, style: Theme.of(context).textTheme.titleLarge),
           AppSpacing.verticalSm,
-          const Text('Choose a plan to get started with your POS.'),
+          Text(l10n.subscriptionChoosePlan),
           AppSpacing.verticalLg,
           ElevatedButton.icon(
             onPressed: () => context.go(Routes.planSelection),
             icon: const Icon(Icons.rocket_launch),
-            label: const Text('Browse Plans'),
+            label: Text(l10n.subscriptionBrowsePlans),
           ),
         ],
       ),
@@ -144,7 +147,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Current Plan', style: Theme.of(context).textTheme.titleMedium),
+                      Text(l10n.subscriptionCurrentPlan, style: Theme.of(context).textTheme.titleMedium),
                       SubscriptionBadge(status: sub.status.name),
                     ],
                   ),
@@ -172,7 +175,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
 
           // Usage section
           if (usageState is UsageLoaded && usageState.usageItems.isNotEmpty) ...[
-            Text('Plan Usage', style: Theme.of(context).textTheme.titleMedium),
+            Text(l10n.subscriptionPlanUsage, style: Theme.of(context).textTheme.titleMedium),
             AppSpacing.verticalSm,
             ...usageState.usageItems.map(
               (item) => UsageProgress(
@@ -187,30 +190,30 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
           AppSpacing.verticalLg,
 
           // Actions
-          Text('Actions', style: Theme.of(context).textTheme.titleMedium),
+          Text(l10n.actions, style: Theme.of(context).textTheme.titleMedium),
           AppSpacing.verticalSm,
 
           ListTile(
             leading: const Icon(Icons.swap_horiz),
-            title: const Text('Change Plan'),
+            title: Text(l10n.subscriptionChangePlan),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.go(Routes.planSelection),
           ),
           ListTile(
             leading: const Icon(Icons.compare_arrows),
-            title: const Text('Compare Plans'),
+            title: Text(l10n.subscriptionComparePlans),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.go(Routes.planComparison),
           ),
           ListTile(
             leading: const Icon(Icons.extension),
-            title: const Text('Add-Ons'),
+            title: Text(l10n.subscriptionAddOns),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.go(Routes.subscriptionAddOns),
           ),
           ListTile(
             leading: const Icon(Icons.receipt_long),
-            title: const Text('Billing History'),
+            title: Text(l10n.subscriptionBillingHistory),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.go(Routes.billingHistory),
           ),
@@ -221,13 +224,13 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
             ElevatedButton.icon(
               onPressed: () => ref.read(subscriptionProvider.notifier).resume(),
               icon: const Icon(Icons.play_arrow),
-              label: const Text('Resume Subscription'),
+              label: Text(l10n.subscriptionResumeSubscription),
             )
           else
             OutlinedButton.icon(
               onPressed: _confirmCancel,
               icon: Icon(Icons.cancel, color: AppColors.error),
-              label: Text('Cancel Subscription', style: TextStyle(color: AppColors.error)),
+              label: Text(l10n.subscriptionCancelSubscription, style: TextStyle(color: AppColors.error)),
               style: OutlinedButton.styleFrom(side: BorderSide(color: AppColors.error)),
             ),
         ],
@@ -241,21 +244,21 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Cancel Subscription?'),
+        title: Text(l10n.subscriptionCancelConfirmTitle),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('Are you sure you want to cancel? You may lose access to premium features.'),
+            Text(l10n.subscriptionCancelConfirmMessage),
             AppSpacing.verticalMd,
             TextField(
               controller: reasonController,
-              decoration: const InputDecoration(labelText: 'Reason (optional)', border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.subscriptionCancelReasonLabel, border: OutlineInputBorder()),
               maxLines: 2,
             ),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Keep Plan')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.subscriptionKeepPlan)),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
             onPressed: () {
@@ -264,7 +267,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
                   .read(subscriptionProvider.notifier)
                   .cancel(reason: reasonController.text.isNotEmpty ? reasonController.text : null);
             },
-            child: const Text('Cancel Subscription'),
+            child: Text(l10n.subscriptionCancelSubscription),
           ),
         ],
       ),

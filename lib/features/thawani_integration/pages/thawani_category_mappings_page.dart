@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/thawani_integration/providers/thawani_providers.dart';
 import 'package:wameedpos/features/thawani_integration/providers/thawani_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ThawaniCategoryMappingsPage extends ConsumerStatefulWidget {
   const ThawaniCategoryMappingsPage({super.key});
@@ -14,6 +15,8 @@ class ThawaniCategoryMappingsPage extends ConsumerStatefulWidget {
 }
 
 class _ThawaniCategoryMappingsPageState extends ConsumerState<ThawaniCategoryMappingsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -40,7 +43,7 @@ class _ThawaniCategoryMappingsPageState extends ConsumerState<ThawaniCategoryMap
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Category Mappings'),
+        title: Text(l10n.categoryMappings),
         actions: [
           IconButton(
             icon: const Icon(Icons.cloud_upload),

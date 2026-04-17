@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/accounting/providers/accounting_providers.dart';
 import 'package:wameedpos/features/accounting/providers/accounting_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AccountingSettingsPage extends ConsumerStatefulWidget {
   const AccountingSettingsPage({super.key});
@@ -14,6 +15,8 @@ class AccountingSettingsPage extends ConsumerStatefulWidget {
 }
 
 class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String _selectedProvider = 'quickbooks';
 
   @override
@@ -39,7 +42,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
     });
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Accounting Integration')),
+      appBar: AppBar(title: Text(l10n.accountingTitle)),
       body: switch (connectionState) {
         AccountingConnectionInitial() || AccountingConnectionLoading() => PosLoadingSkeleton.list(),
         AccountingConnectionError(:final message) => PosErrorState(
@@ -153,26 +156,26 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Quick Actions', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text(l10n.deliveryQuickActions, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   AppSpacing.gapH12,
                   ListTile(
                     leading: const Icon(Icons.sync),
-                    title: const Text('Account Mappings'),
-                    subtitle: const Text('Map POS accounts to provider accounts'),
+                    title: Text(l10n.accountingMappings),
+                    subtitle: Text(l10n.mapPosAccountsToProviderAccounts),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {}, // Navigate to mapping page
                   ),
                   ListTile(
                     leading: const Icon(Icons.file_download),
-                    title: const Text('Export History'),
-                    subtitle: const Text('View and manage exports'),
+                    title: Text(l10n.accountingExportHistory),
+                    subtitle: Text(l10n.viewAndManageExports),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {}, // Navigate to export page
                   ),
                   ListTile(
                     leading: const Icon(Icons.schedule),
-                    title: const Text('Auto Export Settings'),
-                    subtitle: const Text('Schedule automatic exports'),
+                    title: Text(l10n.autoExportSettings),
+                    subtitle: Text(l10n.scheduleAutomaticExports),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {}, // Navigate to auto-export page
                   ),
@@ -186,7 +189,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
           OutlinedButton.icon(
             onPressed: actionLoading ? null : _showDisconnectDialog,
             icon: const Icon(Icons.link_off, color: AppColors.error),
-            label: const Text('Disconnect', style: TextStyle(color: AppColors.error)),
+            label: Text(l10n.accountingDisconnect, style: TextStyle(color: AppColors.error)),
             style: OutlinedButton.styleFrom(
               side: const BorderSide(color: AppColors.error),
               padding: AppSpacing.paddingV12,
@@ -317,7 +320,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.cancel)),
           ElevatedButton(
             onPressed: () {
               Navigator.of(ctx).pop();
@@ -331,7 +334,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
                     companyName: companyController.text.isNotEmpty ? companyController.text : null,
                   );
             },
-            child: const Text('Connect'),
+            child: Text(l10n.connect),
           ),
         ],
       ),

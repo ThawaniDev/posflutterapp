@@ -3,12 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/auto_update/providers/auto_update_providers.dart';
 import 'package:wameedpos/features/auto_update/providers/auto_update_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ChangelogWidget extends ConsumerWidget {
   const ChangelogWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(changelogProvider);
     final theme = Theme.of(context);
 
@@ -33,7 +35,7 @@ class ChangelogWidget extends ConsumerWidget {
                       title: Text('v${r['version_number'] ?? r['version'] ?? '?'}', style: theme.textTheme.titleSmall),
                       subtitle: Text(r['release_notes']?.toString() ?? 'No notes', maxLines: 2, overflow: TextOverflow.ellipsis),
                       trailing: r['is_force_update'] == true
-                          ? Chip(label: const Text('Required'), backgroundColor: theme.colorScheme.errorContainer)
+                          ? Chip(label: Text(l10n.staffRequired), backgroundColor: theme.colorScheme.errorContainer)
                           : null,
                     ),
                   );

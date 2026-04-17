@@ -11,6 +11,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminTeamListPage extends ConsumerStatefulWidget {
   const AdminTeamListPage({super.key});
@@ -20,6 +21,8 @@ class AdminTeamListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminTeamListPageState extends ConsumerState<AdminTeamListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _storeId;
   bool? _activeFilter;
@@ -96,8 +99,8 @@ class _AdminTeamListPageState extends ConsumerState<AdminTeamListPage> {
                 Expanded(
                   child: PosSearchableDropdown<bool>(
                     items: [
-                      PosDropdownItem(value: true, label: 'Active'),
-                      PosDropdownItem(value: false, label: 'Inactive'),
+                      PosDropdownItem(value: true, label: l10n.active),
+                      PosDropdownItem(value: false, label: l10n.inactive),
                     ],
                     selectedValue: _activeFilter,
                     onChanged: (val) {
@@ -123,7 +126,7 @@ class _AdminTeamListPageState extends ConsumerState<AdminTeamListPage> {
                   children: [
                     Text(msg, style: theme.textTheme.bodyLarge),
                     AppSpacing.gapH16,
-                    PosButton(label: 'Retry', onPressed: _loadTeam),
+                    PosButton(label: l10n.retry, onPressed: _loadTeam),
                   ],
                 ),
               ),

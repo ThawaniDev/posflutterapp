@@ -15,6 +15,8 @@ class GamificationAnomaliesPage extends ConsumerStatefulWidget {
 }
 
 class _GamificationAnomaliesPageState extends ConsumerState<GamificationAnomaliesPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _severityFilter;
 
   @override
@@ -75,7 +77,7 @@ class _GamificationAnomaliesPageState extends ConsumerState<GamificationAnomalie
             Text(l10n.gamificationAnomalies),
           ],
         ),
-        actions: [IconButton(icon: const Icon(Icons.refresh), tooltip: l10n.commonRefresh, onPressed: _loadData)],
+        actions: [IconButton(icon: Icon(Icons.refresh), tooltip: l10n.commonRefresh, onPressed: _loadData)],
       ),
       body: Column(
         children: [
@@ -94,7 +96,7 @@ class _GamificationAnomaliesPageState extends ConsumerState<GamificationAnomalie
                   },
                 ),
                 FilterChip(
-                  label: const Text('Critical'),
+                  label: Text(l10n.supportPriorityCritical),
                   selected: _severityFilter == 'critical',
                   selectedColor: AppColors.error.withValues(alpha: 0.2),
                   onSelected: (_) {
@@ -103,7 +105,7 @@ class _GamificationAnomaliesPageState extends ConsumerState<GamificationAnomalie
                   },
                 ),
                 FilterChip(
-                  label: const Text('High'),
+                  label: Text(l10n.notifPriorityHigh),
                   selected: _severityFilter == 'high',
                   selectedColor: AppColors.rose.withValues(alpha: 0.2),
                   onSelected: (_) {
@@ -112,7 +114,7 @@ class _GamificationAnomaliesPageState extends ConsumerState<GamificationAnomalie
                   },
                 ),
                 FilterChip(
-                  label: const Text('Medium'),
+                  label: Text(l10n.supportPriorityMedium),
                   selected: _severityFilter == 'medium',
                   selectedColor: AppColors.warning.withValues(alpha: 0.2),
                   onSelected: (_) {
@@ -121,7 +123,7 @@ class _GamificationAnomaliesPageState extends ConsumerState<GamificationAnomalie
                   },
                 ),
                 FilterChip(
-                  label: const Text('Low'),
+                  label: Text(l10n.notifPriorityLow),
                   selected: _severityFilter == 'low',
                   selectedColor: AppColors.info.withValues(alpha: 0.2),
                   onSelected: (_) {

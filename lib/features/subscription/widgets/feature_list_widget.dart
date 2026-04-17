@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Widget that displays a list of plan features with check/cross indicators.
 class FeatureListWidget extends StatelessWidget {
@@ -12,6 +13,7 @@ class FeatureListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final features = plan.features ?? [];
     final limits = plan.limits ?? [];
 
@@ -23,7 +25,7 @@ class FeatureListWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (features.isNotEmpty) ...[
-          Text('Features', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
+          Text(l10n.subscriptionFeatures, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
           AppSpacing.verticalSm,
           ...features.map(
             (f) => _buildFeatureRow(context, _formatKey(f['feature_key']?.toString() ?? ''), f['is_enabled'] as bool? ?? false),
@@ -31,7 +33,7 @@ class FeatureListWidget extends StatelessWidget {
         ],
         if (showLimits && limits.isNotEmpty) ...[
           AppSpacing.verticalMd,
-          Text('Limits', style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
+          Text(l10n.settingsPosLimits, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
           AppSpacing.verticalSm,
           ...limits.map(
             (l) => _buildLimitRow(context, _formatKey(l['limit_key']?.toString() ?? ''), (l['limit_value'] as num?)?.toInt()),

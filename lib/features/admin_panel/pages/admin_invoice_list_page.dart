@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminInvoiceListPage extends ConsumerStatefulWidget {
   const AdminInvoiceListPage({super.key});
@@ -16,6 +17,8 @@ class AdminInvoiceListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminInvoiceListPageState extends ConsumerState<AdminInvoiceListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String? _statusFilter;
 
@@ -43,7 +46,7 @@ class _AdminInvoiceListPageState extends ConsumerState<AdminInvoiceListPage> {
     final state = ref.watch(invoiceListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Invoices')),
+      appBar: AppBar(title: Text(l10n.invoices)),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -53,7 +56,7 @@ class _AdminInvoiceListPageState extends ConsumerState<AdminInvoiceListPage> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  _FilterChip(label: 'All', selected: _statusFilter == null, onSelected: () => _onFilterChanged(null)),
+                  _FilterChip(label: l10n.all, selected: _statusFilter == null, onSelected: () => _onFilterChanged(null)),
                   for (final s in ['pending', 'paid', 'overdue', 'cancelled'])
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
@@ -77,7 +80,7 @@ class _AdminInvoiceListPageState extends ConsumerState<AdminInvoiceListPage> {
                     Text(message, style: const TextStyle(color: AppColors.error)),
                     AppSpacing.gapH16,
                     PosButton(
-                      label: 'Retry',
+                      label: l10n.retry,
                       variant: PosButtonVariant.outline,
                       onPressed: () =>
                           ref.read(invoiceListProvider.notifier).loadInvoices(status: _statusFilter, storeId: _storeId),
@@ -87,7 +90,7 @@ class _AdminInvoiceListPageState extends ConsumerState<AdminInvoiceListPage> {
               ),
               InvoiceListLoaded(:final invoices) =>
                 invoices.isEmpty
-                    ? const Center(child: Text('No invoices found'))
+                    ? Center(child: Text(l10n.noInvoicesFound))
                     : ListView.builder(
                         padding: AppSpacing.paddingAll16,
                         itemCount: invoices.length,

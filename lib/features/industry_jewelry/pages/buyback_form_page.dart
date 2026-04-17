@@ -8,6 +8,7 @@ import '../providers/jewelry_providers.dart';
 import 'package:wameedpos/features/staff/models/staff_user.dart';
 import 'package:wameedpos/features/staff/providers/staff_providers.dart';
 import 'package:wameedpos/features/staff/providers/staff_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class BuybackFormPage extends ConsumerStatefulWidget {
   const BuybackFormPage({super.key});
@@ -17,6 +18,8 @@ class BuybackFormPage extends ConsumerStatefulWidget {
 }
 
 class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
 
@@ -80,7 +83,7 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
     final staffState = ref.watch(staffListProvider);
     final staffList = staffState is StaffListLoaded ? staffState.staff : <StaffUser>[];
     return Scaffold(
-      appBar: AppBar(title: const Text('New Buyback')),
+      appBar: AppBar(title: Text(l10n.jewelryNewBuyback)),
       bottomNavigationBar: Padding(
         padding: AppSpacing.paddingAll16,
         child: PosButton(label: 'Record Buyback', onPressed: _saving ? null : _handleSave, isLoading: _saving, isFullWidth: true),
@@ -91,7 +94,7 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
             PosSearchableDropdown<MetalType>(
-              label: 'Metal Type',
+              label: l10n.jewelryMetalType,
               items: MetalType.values
                   .map((m) => PosDropdownItem(value: m, label: m.value[0].toUpperCase() + m.value.substring(1)))
                   .toList(),
@@ -103,14 +106,14 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
               clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _karatCtrl, label: 'Karat', hint: 'e.g. 24K, 22K, 18K'),
+            PosTextField(controller: _karatCtrl, label: l10n.jewelryKarat, hint: 'e.g. 24K, 22K, 18K'),
             SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
                   child: PosTextField(
                     controller: _weightCtrl,
-                    label: 'Weight (g)',
+                    label: l10n.jewelryWeight,
                     hint: '0.000',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (_) => setState(() {}),
@@ -138,7 +141,7 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<BuybackPaymentMethod>(
-              label: 'Payment Method',
+              label: l10n.paymentMethod,
               items: BuybackPaymentMethod.values.map((m) => PosDropdownItem(value: m, label: m.value)).toList(),
               selectedValue: _paymentMethod,
               onChanged: (v) {
@@ -149,14 +152,14 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
-              label: 'Staff Member',
+              label: l10n.staffMember,
               items: staffList.map((s) => PosDropdownItem(value: s.id, label: '${s.firstName} ${s.lastName}')).toList(),
               selectedValue: _selectedStaffUserId,
               onChanged: (v) => setState(() => _selectedStaffUserId = v),
               showSearch: true,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _notesCtrl, label: 'Notes (optional)', hint: 'Additional details...', maxLines: 3),
+            PosTextField(controller: _notesCtrl, label: l10n.notesOptional, hint: 'Additional details...', maxLines: 3),
           ],
         ),
       ),

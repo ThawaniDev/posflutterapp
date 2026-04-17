@@ -9,6 +9,7 @@ import 'package:wameedpos/features/reports/providers/report_state.dart';
 import 'package:wameedpos/features/reports/widgets/report_charts.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class FinancialReportPage extends ConsumerStatefulWidget {
   const FinancialReportPage({super.key});
@@ -18,6 +19,8 @@ class FinancialReportPage extends ConsumerStatefulWidget {
 }
 
 class _FinancialReportPageState extends ConsumerState<FinancialReportPage> with TickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late final TabController _tabController;
   ReportFilters _filters = const ReportFilters();
 
@@ -61,13 +64,13 @@ class _FinancialReportPageState extends ConsumerState<FinancialReportPage> with 
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: const Text('Financial Reports'),
+        title: Text(l10n.reportsFinancial),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Daily P&L'),
-            Tab(text: 'Expenses'),
-            Tab(text: 'Cash Variance'),
+          tabs: [
+            Tab(text: l10n.reportsDailyPl),
+            Tab(text: l10n.expenses),
+            Tab(text: l10n.cashVariance),
           ],
         ),
       ),
@@ -96,6 +99,7 @@ class _DailyPlTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(financialDailyPlProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -113,19 +117,19 @@ class _DailyPlTab extends ConsumerWidget {
             ReportKpiGrid(
               cards: [
                 ReportKpiCard(
-                  label: 'Total Revenue',
+                  label: l10n.totalRevenue,
                   value: formatCurrency((totals['total_revenue'] as num?) ?? 0),
                   icon: Icons.trending_up_rounded,
                   color: AppColors.success,
                 ),
                 ReportKpiCard(
-                  label: 'Total Expenses',
+                  label: l10n.totalExpenses,
                   value: formatCurrency((totals['total_expenses'] as num?) ?? 0),
                   icon: Icons.trending_down_rounded,
                   color: AppColors.error,
                 ),
                 ReportKpiCard(
-                  label: 'Net Profit',
+                  label: l10n.reportsNetProfit,
                   value: formatCurrency((totals['total_net_profit'] as num?) ?? 0),
                   icon: Icons.account_balance_rounded,
                   color: ((totals['total_net_profit'] as num?) ?? 0) >= 0 ? AppColors.success : AppColors.error,
@@ -136,7 +140,7 @@ class _DailyPlTab extends ConsumerWidget {
             // P&L Area Chart
             if (daily.length > 1) ...[
               const SizedBox(height: 20),
-              const ReportSectionHeader(title: 'P&L Trend', icon: Icons.area_chart_rounded),
+              ReportSectionHeader(title: l10n.reportsPnlTrend, icon: Icons.area_chart_rounded),
               ReportDataCard(
                 child: ReportAreaChart(
                   data: daily,
@@ -149,9 +153,9 @@ class _DailyPlTab extends ConsumerWidget {
             ],
 
             const SizedBox(height: 24),
-            const ReportSectionHeader(title: 'Daily Breakdown', icon: Icons.calendar_today_rounded),
+            ReportSectionHeader(title: l10n.reportsDailyBreakdown, icon: Icons.calendar_today_rounded),
             if (daily.isEmpty)
-              const PosEmptyState(title: 'No data for period', icon: Icons.bar_chart)
+              PosEmptyState(title: l10n.reportsNoDataForPeriod, icon: Icons.bar_chart)
             else
               ...daily.map((d) {
                 final revenue = (d['revenue'] != null ? double.tryParse(d['revenue'].toString()) : null) ?? 0;
@@ -170,12 +174,12 @@ class _DailyPlTab extends ConsumerWidget {
                           style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(height: 10),
-                        ReportStatRow(label: 'Revenue', value: formatCurrency(revenue), valueColor: AppColors.success),
-                        ReportStatRow(label: 'COGS', value: formatCurrency(cogs), valueColor: AppColors.warning),
-                        ReportStatRow(label: 'Expenses', value: formatCurrency(expenses), valueColor: AppColors.error),
+                        ReportStatRow(label: l10n.reportsRevenue, value: formatCurrency(revenue), valueColor: AppColors.success),
+                        ReportStatRow(label: l10n.reportsCogs, value: formatCurrency(cogs), valueColor: AppColors.warning),
+                        ReportStatRow(label: l10n.expenses, value: formatCurrency(expenses), valueColor: AppColors.error),
                         Divider(height: 16, color: isDark ? AppColors.borderDark : AppColors.borderLight),
                         ReportStatRow(
-                          label: 'Net Profit',
+                          label: l10n.reportsNetProfit,
                           value: formatCurrency(netProfit),
                           valueColor: netProfit >= 0 ? AppColors.success : AppColors.error,
                         ),
@@ -198,6 +202,7 @@ class _ExpensesTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(financialExpensesProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -213,7 +218,7 @@ class _ExpensesTab extends ConsumerWidget {
           padding: const EdgeInsets.all(20),
           children: [
             ReportKpiCard(
-              label: 'Total Expenses',
+              label: l10n.totalExpenses,
               value: formatCurrency(totalExpenses),
               icon: Icons.receipt_long_rounded,
               color: AppColors.error,
@@ -222,16 +227,16 @@ class _ExpensesTab extends ConsumerWidget {
             // Expense Category Pie
             if (categories.isNotEmpty) ...[
               const SizedBox(height: 20),
-              const ReportSectionHeader(title: 'Expense Distribution', icon: Icons.donut_large_rounded),
+              ReportSectionHeader(title: l10n.reportsExpenseDistribution, icon: Icons.donut_large_rounded),
               ReportDataCard(
                 child: ReportPieChart(data: categories, labelKey: 'category', valueKey: 'total_amount', donut: true),
               ),
             ],
 
             const SizedBox(height: 24),
-            const ReportSectionHeader(title: 'By Category', icon: Icons.category_rounded),
+            ReportSectionHeader(title: l10n.reportsByCategory, icon: Icons.category_rounded),
             if (categories.isEmpty)
-              const PosEmptyState(title: 'No expenses recorded', icon: Icons.receipt_long)
+              PosEmptyState(title: l10n.noExpensesRecorded, icon: Icons.receipt_long)
             else
               ReportDataCard(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -267,7 +272,7 @@ class _ExpensesTab extends ConsumerWidget {
                                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
                                     ),
                                     Text(
-                                      '$txCount transactions',
+                                      l10n.reportNTransactions(txCount.toString()),
                                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                         color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                                       ),
@@ -307,6 +312,7 @@ class _CashVarianceTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(cashVarianceProvider);
 
     return switch (state) {
@@ -323,25 +329,25 @@ class _CashVarianceTab extends ConsumerWidget {
             ReportKpiGrid(
               cards: [
                 ReportKpiCard(
-                  label: 'Sessions',
+                  label: l10n.sidebarSessions,
                   value: '${data['sessions_count'] ?? 0}',
                   icon: Icons.point_of_sale_rounded,
                   color: AppColors.info,
                 ),
                 ReportKpiCard(
-                  label: 'Total Variance',
+                  label: l10n.reportsTotalVariance,
                   value: formatCurrency((data['total_variance'] as num?) ?? 0),
                   icon: Icons.compare_arrows_rounded,
                   color: ((data['total_variance'] as num?) ?? 0) >= 0 ? AppColors.success : AppColors.error,
                 ),
                 ReportKpiCard(
-                  label: 'Over (+)',
+                  label: l10n.reportsOverPlus,
                   value: '${data['positive_variance_count'] ?? 0}',
                   icon: Icons.arrow_upward_rounded,
                   color: AppColors.success,
                 ),
                 ReportKpiCard(
-                  label: 'Short (-)',
+                  label: l10n.reportsShortMinus,
                   value: '${data['negative_variance_count'] ?? 0}',
                   icon: Icons.arrow_downward_rounded,
                   color: AppColors.error,
@@ -349,9 +355,9 @@ class _CashVarianceTab extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 24),
-            const ReportSectionHeader(title: 'Sessions', icon: Icons.list_rounded),
+            ReportSectionHeader(title: l10n.sidebarSessions, icon: Icons.list_rounded),
             if ((data['sessions'] as List?)?.isEmpty ?? true)
-              const PosEmptyState(title: 'No closed sessions', icon: Icons.point_of_sale)
+              PosEmptyState(title: l10n.reportsNoClosedSessions, icon: Icons.point_of_sale)
             else
               ...((data['sessions'] as List).cast<Map<String, dynamic>>()).map((s) {
                 final variance = (s['variance'] != null ? double.tryParse(s['variance'].toString()) : null) ?? 0;
@@ -389,7 +395,7 @@ class _CashVarianceTab extends ConsumerWidget {
                             const SizedBox(width: 12),
                             Expanded(
                               child: Text(
-                                'Opened: ${s['opened_at'] ?? ''}',
+                                l10n.reportOpenedAt(s['opened_at']?.toString() ?? ''),
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
                               ),
                             ),
@@ -400,8 +406,8 @@ class _CashVarianceTab extends ConsumerWidget {
                           ],
                         ),
                         const SizedBox(height: 10),
-                        ReportStatRow(label: 'Expected', value: formatCurrency(expected)),
-                        ReportStatRow(label: 'Actual', value: formatCurrency(actual)),
+                        ReportStatRow(label: l10n.reportsExpected, value: formatCurrency(expected)),
+                        ReportStatRow(label: l10n.reportsActual, value: formatCurrency(actual)),
                       ],
                     ),
                   ),

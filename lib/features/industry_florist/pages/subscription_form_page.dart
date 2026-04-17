@@ -8,6 +8,7 @@ import '../providers/florist_providers.dart';
 import 'package:wameedpos/features/customers/models/customer.dart';
 import 'package:wameedpos/features/customers/providers/customer_providers.dart';
 import 'package:wameedpos/features/customers/providers/customer_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class SubscriptionFormPage extends ConsumerStatefulWidget {
   final FlowerSubscription? subscription;
@@ -18,6 +19,8 @@ class SubscriptionFormPage extends ConsumerStatefulWidget {
 }
 
 class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
   bool get _isEditing => widget.subscription != null;
@@ -111,7 +114,7 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
             PosSearchableDropdown<String>(
-              label: 'Customer',
+              label: l10n.debitsCustomer,
               items: customers.map((c) => PosDropdownItem(value: c.id, label: c.name)).toList(),
               selectedValue: _selectedCustomerId,
               onChanged: (v) => setState(() => _selectedCustomerId = v),
@@ -125,7 +128,7 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<FlowerSubscriptionFrequency>(
-              label: 'Frequency',
+              label: l10n.floristFrequency,
               items: FlowerSubscriptionFrequency.values.map((f) => PosDropdownItem(value: f, label: f.value)).toList(),
               selectedValue: _frequency,
               onChanged: (v) {
@@ -136,7 +139,7 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
-              label: 'Delivery Day',
+              label: l10n.floristDeliveryDay,
               items: [
                 'monday',
                 'tuesday',

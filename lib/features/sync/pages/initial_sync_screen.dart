@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/sync/providers/sync_providers.dart';
 import 'package:wameedpos/features/sync/services/connectivity_service.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class InitialSyncScreen extends ConsumerStatefulWidget {
   final VoidCallback onComplete;
@@ -15,6 +16,8 @@ class InitialSyncScreen extends ConsumerStatefulWidget {
 }
 
 class _InitialSyncScreenState extends ConsumerState<InitialSyncScreen> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   _SyncPhase _phase = _SyncPhase.connecting;
   String _statusMessage = 'Connecting to server...';
   double _progress = 0;
@@ -159,7 +162,7 @@ class _InitialSyncScreenState extends ConsumerState<InitialSyncScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        OutlinedButton(onPressed: widget.onComplete, child: const Text('Skip (Offline)')),
+                        OutlinedButton(onPressed: widget.onComplete, child: Text(l10n.skipOffline)),
                         AppSpacing.gapW12,
                         FilledButton.icon(
                           onPressed: () {
@@ -170,7 +173,7 @@ class _InitialSyncScreenState extends ConsumerState<InitialSyncScreen> {
                             _startInitialSync();
                           },
                           icon: const Icon(Icons.refresh, size: 18),
-                          label: const Text('Retry'),
+                          label: Text(l10n.retry),
                         ),
                       ],
                     ),

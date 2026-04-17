@@ -17,6 +17,8 @@ class AdminFailedPaymentsPage extends ConsumerStatefulWidget {
 }
 
 class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -39,7 +41,7 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Failed Payments'),
+        title: Text(l10n.failedPayments),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         actions: [

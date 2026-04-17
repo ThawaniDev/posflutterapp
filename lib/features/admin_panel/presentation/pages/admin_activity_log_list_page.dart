@@ -7,6 +7,7 @@ import '../../providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminActivityLogListPage extends ConsumerStatefulWidget {
   const AdminActivityLogListPage({super.key});
@@ -16,6 +17,8 @@ class AdminActivityLogListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _actionFilter;
   String? _entityTypeFilter;
@@ -80,7 +83,7 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
                   child: TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: 'Search logs...',
+                      hintText: l10n.searchLogs,
                       prefixIcon: const Icon(Icons.search),
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
                       contentPadding: const EdgeInsets.symmetric(horizontal: 12),
@@ -92,10 +95,10 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
                 Expanded(
                   child: PosSearchableDropdown<String>(
                     items: [
-                      PosDropdownItem(value: 'login', label: 'Login'),
-                      PosDropdownItem(value: 'create', label: 'Create'),
-                      PosDropdownItem(value: 'update', label: 'Update'),
-                      PosDropdownItem(value: 'delete', label: 'Delete'),
+                      PosDropdownItem(value: 'login', label: l10n.login),
+                      PosDropdownItem(value: 'create', label: l10n.create),
+                      PosDropdownItem(value: 'update', label: l10n.hwUpdate),
+                      PosDropdownItem(value: 'delete', label: l10n.delete),
                     ],
                     selectedValue: _actionFilter,
                     onChanged: (v) {

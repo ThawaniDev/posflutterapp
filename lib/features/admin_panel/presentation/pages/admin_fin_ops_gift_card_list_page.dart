@@ -8,6 +8,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminFinOpsGiftCardListPage extends ConsumerStatefulWidget {
   const AdminFinOpsGiftCardListPage({super.key});
@@ -17,6 +18,8 @@ class AdminFinOpsGiftCardListPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String? _statusFilter;
 
@@ -47,7 +50,7 @@ class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
     final state = ref.watch(finOpsGiftCardsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Gift Cards'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.giftCards), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -67,17 +70,17 @@ class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
             padding: const EdgeInsets.all(AppSpacing.sm),
             child: PosSearchableDropdown<String>(
               items: [
-                PosDropdownItem(value: 'active', label: 'Active'),
-                PosDropdownItem(value: 'redeemed', label: 'Redeemed'),
-                PosDropdownItem(value: 'expired', label: 'Expired'),
-                PosDropdownItem(value: 'deactivated', label: 'Deactivated'),
+                PosDropdownItem(value: 'active', label: l10n.active),
+                PosDropdownItem(value: 'redeemed', label: l10n.redeemed),
+                PosDropdownItem(value: 'expired', label: l10n.expired),
+                PosDropdownItem(value: 'deactivated', label: l10n.deactivated),
               ],
               selectedValue: _statusFilter,
               onChanged: (v) {
                 setState(() => _statusFilter = v);
                 _applyFilter();
               },
-              label: 'Status',
+              label: l10n.status,
               hint: 'All Statuses',
               showSearch: false,
               clearable: true,

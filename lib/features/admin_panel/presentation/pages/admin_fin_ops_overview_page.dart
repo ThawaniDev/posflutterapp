@@ -14,6 +14,7 @@ import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_accounting_config_list_page.dart';
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_thawani_settlement_list_page.dart';
 import 'package:wameedpos/features/admin_panel/presentation/pages/admin_fin_ops_daily_sales_page.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminFinOpsOverviewPage extends ConsumerStatefulWidget {
   const AdminFinOpsOverviewPage({super.key});
@@ -23,6 +24,8 @@ class AdminFinOpsOverviewPage extends ConsumerStatefulWidget {
 }
 
 class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -45,7 +48,7 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Financial Operations'),
+        title: Text(l10n.adminFinOps),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
       ),
@@ -64,7 +67,7 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
                     const SizedBox(height: AppSpacing.md),
                     ElevatedButton(
                       onPressed: () => ref.read(finOpsOverviewProvider.notifier).load(storeId: _storeId),
-                      child: const Text('Retry'),
+                      child: Text(l10n.retry),
                     ),
                   ],
                 ),

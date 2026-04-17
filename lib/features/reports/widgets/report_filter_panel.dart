@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/reports/models/report_filters.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Comprehensive filter panel with date presets, branch selector,
 /// and advanced filter options. Responsive: collapsible on mobile.
@@ -49,6 +50,8 @@ class ReportFilterPanel extends ConsumerStatefulWidget {
 }
 
 class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   bool _expanded = false;
   final _minCtrl = TextEditingController();
   final _maxCtrl = TextEditingController();
@@ -173,7 +176,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
           return Padding(
             padding: const EdgeInsets.only(right: 6),
             child: ChoiceChip(
-              label: Text(preset.label, style: TextStyle(fontSize: 12)),
+              label: Text(preset.localizedLabel(l10n), style: TextStyle(fontSize: 12)),
               selected: isActive,
               onSelected: (_) => _selectPreset(preset),
               selectedColor: AppColors.primary.withValues(alpha: 0.15),
@@ -234,7 +237,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
       items: branches.map((id) => PosDropdownItem<String?>(value: id, label: id.substring(0, 8))).toList(),
       selectedValue: widget.filters.branchId,
       onChanged: (val) => _update(widget.filters.copyWith(branchId: () => val)),
-      hint: 'All Branches',
+      hint: l10n.reportAllBranches,
       prefixIcon: Icons.store_rounded,
       showSearch: true,
       clearable: true,
@@ -267,7 +270,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
             ),
             const SizedBox(width: 6),
             Text(
-              'Filters',
+              l10n.reportFilters,
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
@@ -301,7 +304,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
 
   Widget _buildCompareToggle(bool isDark) {
     return FilterChip(
-      label: const Text('Compare', style: TextStyle(fontSize: 12)),
+      label: Text(l10n.subscriptionCompare, style: TextStyle(fontSize: 12)),
       selected: widget.filters.compare,
       onSelected: (val) => _update(widget.filters.copyWith(compare: val)),
       selectedColor: AppColors.info.withValues(alpha: 0.15),
@@ -348,7 +351,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
             TextButton.icon(
               onPressed: _clearAdvancedFilters,
               icon: const Icon(Icons.clear_all_rounded, size: 16),
-              label: const Text('Clear Filters'),
+              label: Text(l10n.txClearFilters),
               style: TextButton.styleFrom(foregroundColor: AppColors.error),
             ),
           ],
@@ -368,7 +371,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
         _buildDropdownFilter(
           isDark: isDark,
           icon: Icons.person_rounded,
-          label: 'Staff',
+          label: l10n.staff,
           value: widget.filters.staffId,
           options: widget.staffOptions,
           onChanged: (val) => _update(widget.filters.copyWith(staffId: () => val)),
@@ -380,7 +383,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
         _buildDropdownFilter(
           isDark: isDark,
           icon: Icons.category_rounded,
-          label: 'Category',
+          label: l10n.category,
           value: widget.filters.categoryId,
           options: widget.categoryOptions,
           onChanged: (val) => _update(widget.filters.copyWith(categoryId: () => val)),
@@ -392,14 +395,14 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
         _buildDropdownFilter(
           isDark: isDark,
           icon: Icons.payment_rounded,
-          label: 'Payment',
+          label: l10n.posPayment,
           value: widget.filters.paymentMethod,
-          options: const [
-            DropdownOption(value: 'cash', label: 'Cash'),
-            DropdownOption(value: 'card', label: 'Card'),
-            DropdownOption(value: 'gift_card', label: 'Gift Card'),
-            DropdownOption(value: 'mobile', label: 'Mobile'),
-            DropdownOption(value: 'bank_transfer', label: 'Bank Transfer'),
+          options: [
+            DropdownOption(value: 'cash', label: l10n.filterCash),
+            DropdownOption(value: 'card', label: l10n.card),
+            DropdownOption(value: 'gift_card', label: l10n.filterGiftCard),
+            DropdownOption(value: 'mobile', label: l10n.filterMobile),
+            DropdownOption(value: 'bank_transfer', label: l10n.filterBankTransfer),
           ],
           onChanged: (val) => _update(widget.filters.copyWith(paymentMethod: () => val)),
         ),
@@ -410,12 +413,12 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
         _buildDropdownFilter(
           isDark: isDark,
           icon: Icons.flag_rounded,
-          label: 'Status',
+          label: l10n.status,
           value: widget.filters.orderStatus,
-          options: const [
-            DropdownOption(value: 'completed', label: 'Completed'),
-            DropdownOption(value: 'refunded', label: 'Refunded'),
-            DropdownOption(value: 'partially_refunded', label: 'Partial Refund'),
+          options: [
+            DropdownOption(value: 'completed', label: l10n.ordersCompleted),
+            DropdownOption(value: 'refunded', label: l10n.filterRefunded),
+            DropdownOption(value: 'partially_refunded', label: l10n.filterPartialRefund),
           ],
           onChanged: (val) => _update(widget.filters.copyWith(orderStatus: () => val)),
         ),
@@ -489,7 +492,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
             controller: _minCtrl,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              hintText: 'Min',
+              hintText: l10n.filterMin,
               isDense: true,
               contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(AppRadius.sm)),
@@ -511,7 +514,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
             controller: _maxCtrl,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              hintText: 'Max',
+              hintText: l10n.filterMax,
               isDense: true,
               contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(AppRadius.sm)),
@@ -537,12 +540,12 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
         Container(
           constraints: const BoxConstraints(maxWidth: 150),
           child: PosSearchableDropdown<String>(
-            items: const [
-              PosDropdownItem(value: 'revenue', label: 'Revenue'),
-              PosDropdownItem(value: 'quantity', label: 'Quantity'),
-              PosDropdownItem(value: 'profit', label: 'Profit'),
-              PosDropdownItem(value: 'orders', label: 'Orders'),
-              PosDropdownItem(value: 'name', label: 'Name'),
+            items: [
+              PosDropdownItem(value: 'revenue', label: l10n.reportsRevenue),
+              PosDropdownItem(value: 'quantity', label: l10n.labelsQuantity),
+              PosDropdownItem(value: 'profit', label: l10n.filterSortProfit),
+              PosDropdownItem(value: 'orders', label: l10n.orders),
+              PosDropdownItem(value: 'name', label: l10n.name),
             ],
             selectedValue: sortBy,
             onChanged: (val) => _update(widget.filters.copyWith(sortBy: () => val)),

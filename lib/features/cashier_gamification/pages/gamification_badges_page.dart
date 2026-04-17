@@ -15,6 +15,8 @@ class GamificationBadgesPage extends ConsumerStatefulWidget {
 }
 
 class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late TabController _tabController;
 
   @override
@@ -51,7 +53,7 @@ class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage>
             children: [
               TextField(
                 controller: slugC,
-                decoration: const InputDecoration(labelText: 'Slug'),
+                decoration: InputDecoration(labelText: l10n.slug),
               ),
               const SizedBox(height: 8),
               TextField(
@@ -67,11 +69,11 @@ class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage>
               DropdownButtonFormField<String>(
                 value: triggerType,
                 decoration: const InputDecoration(labelText: 'Trigger Type'),
-                items: const [
+                items: [
                   DropdownMenuItem(value: 'items_per_minute', child: Text('Items/min')),
                   DropdownMenuItem(value: 'total_transactions', child: Text('Total TXN')),
-                  DropdownMenuItem(value: 'total_revenue', child: Text('Revenue')),
-                  DropdownMenuItem(value: 'avg_basket_size', child: Text('Avg Basket')),
+                  DropdownMenuItem(value: 'total_revenue', child: Text(l10n.reportsRevenue)),
+                  DropdownMenuItem(value: 'avg_basket_size', child: Text(l10n.txStatsAvgBasket)),
                   DropdownMenuItem(value: 'upsell_rate', child: Text('Upsell Rate')),
                   DropdownMenuItem(value: 'zero_void_rate', child: Text('Zero Void Rate')),
                   DropdownMenuItem(value: 'consistency_king', child: Text('Consistency')),
@@ -88,12 +90,12 @@ class _GamificationBadgesPageState extends ConsumerState<GamificationBadgesPage>
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
                 value: period,
-                decoration: const InputDecoration(labelText: 'Period'),
-                items: const [
-                  DropdownMenuItem(value: 'daily', child: Text('Daily')),
-                  DropdownMenuItem(value: 'shift', child: Text('Shift')),
-                  DropdownMenuItem(value: 'weekly', child: Text('Weekly')),
-                  DropdownMenuItem(value: 'monthly', child: Text('Monthly')),
+                decoration: InputDecoration(labelText: l10n.period),
+                items: [
+                  DropdownMenuItem(value: 'daily', child: Text(l10n.gamificationDaily)),
+                  DropdownMenuItem(value: 'shift', child: Text(l10n.gamificationShift)),
+                  DropdownMenuItem(value: 'weekly', child: Text(l10n.notificationsDigestWeekly)),
+                  DropdownMenuItem(value: 'monthly', child: Text(l10n.subscriptionMonthly)),
                 ],
                 onChanged: (v) => period = v ?? period,
               ),

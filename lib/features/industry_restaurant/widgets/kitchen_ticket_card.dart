@@ -5,6 +5,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/pos_status_badge.dart';
 import '../models/kitchen_ticket.dart';
 import '../enums/kitchen_ticket_status.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class KitchenTicketCard extends StatelessWidget {
   final KitchenTicket ticket;
@@ -15,6 +16,7 @@ class KitchenTicketCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -43,7 +45,7 @@ class KitchenTicketCard extends StatelessWidget {
                   Expanded(
                     child: Text('#${ticket.ticketNumber}', style: AppTypography.titleSmall.copyWith(fontWeight: FontWeight.w600)),
                   ),
-                  _buildStatusBadge(),
+                  _buildStatusBadge(context),
                 ],
               ),
               AppSpacing.gapH8,
@@ -72,15 +74,16 @@ class KitchenTicketCard extends StatelessWidget {
     );
   }
 
-  PosStatusBadge _buildStatusBadge() {
+  PosStatusBadge _buildStatusBadge(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final status = ticket.status ?? KitchenTicketStatus.pending;
     return switch (status) {
-      KitchenTicketStatus.pending => PosStatusBadge(label: 'Pending', variant: PosStatusBadgeVariant.neutral),
-      KitchenTicketStatus.inProgress => PosStatusBadge(label: 'In Progress', variant: PosStatusBadgeVariant.warning),
-      KitchenTicketStatus.preparing => PosStatusBadge(label: 'Preparing', variant: PosStatusBadgeVariant.warning),
-      KitchenTicketStatus.ready => PosStatusBadge(label: 'Ready', variant: PosStatusBadgeVariant.success),
+      KitchenTicketStatus.pending => PosStatusBadge(label: l10n.pending, variant: PosStatusBadgeVariant.neutral),
+      KitchenTicketStatus.inProgress => PosStatusBadge(label: l10n.statusInProgress, variant: PosStatusBadgeVariant.warning),
+      KitchenTicketStatus.preparing => PosStatusBadge(label: l10n.ordersPreparing, variant: PosStatusBadgeVariant.warning),
+      KitchenTicketStatus.ready => PosStatusBadge(label: l10n.ordersReady, variant: PosStatusBadgeVariant.success),
       KitchenTicketStatus.served => PosStatusBadge(label: 'Served', variant: PosStatusBadgeVariant.info),
-      KitchenTicketStatus.cancelled => PosStatusBadge(label: 'Cancelled', variant: PosStatusBadgeVariant.error),
+      KitchenTicketStatus.cancelled => PosStatusBadge(label: l10n.ordersCancelled, variant: PosStatusBadgeVariant.error),
     };
   }
 

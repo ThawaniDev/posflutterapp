@@ -9,6 +9,7 @@ import 'package:wameedpos/features/provider_payments/enums/provider_payment_stat
 import 'package:wameedpos/features/provider_payments/models/provider_payment.dart';
 import 'package:wameedpos/features/provider_payments/providers/provider_payment_providers.dart';
 import 'package:wameedpos/features/provider_payments/providers/provider_payment_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ProviderPaymentDetailPage extends ConsumerStatefulWidget {
   final String paymentId;
@@ -20,6 +21,8 @@ class ProviderPaymentDetailPage extends ConsumerStatefulWidget {
 }
 
 class _ProviderPaymentDetailPageState extends ConsumerState<ProviderPaymentDetailPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -41,7 +44,7 @@ class _ProviderPaymentDetailPageState extends ConsumerState<ProviderPaymentDetai
     });
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Payment Details'), centerTitle: true),
+      appBar: AppBar(title: Text(l10n.providerPaymentDetail), centerTitle: true),
       body: _buildBody(detailState),
     );
   }
@@ -73,6 +76,7 @@ class _PaymentDetailContent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final dateFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
 
@@ -110,7 +114,7 @@ class _PaymentDetailContent extends ConsumerWidget {
 
           // Payment details
           _SectionCard(
-            title: 'Payment Details',
+            title: l10n.providerPaymentDetail,
             children: [
               _DetailRow('Purpose', payment.purpose?.label ?? '-'),
               _DetailRow('Cart ID', payment.cartId ?? '-', copyable: true),
@@ -123,7 +127,7 @@ class _PaymentDetailContent extends ConsumerWidget {
 
           // Amount breakdown
           _SectionCard(
-            title: 'Amount Breakdown',
+            title: l10n.providerPaymentAmountBreakdown,
             children: [
               _DetailRow('Amount', '${payment.amount.toStringAsFixed(2)} ${payment.currency ?? "SAR"}'),
               _DetailRow('Tax', '${payment.taxAmount.toStringAsFixed(2)} ${payment.currency ?? "SAR"}'),
@@ -135,7 +139,7 @@ class _PaymentDetailContent extends ConsumerWidget {
           // Gateway response
           if (payment.responseStatus != null) ...[
             _SectionCard(
-              title: 'Gateway Response',
+              title: l10n.providerPaymentGatewayResponse,
               children: [
                 _DetailRow('Response Status', payment.responseStatus ?? '-'),
                 _DetailRow('Response Code', payment.responseCode ?? '-'),
@@ -149,7 +153,7 @@ class _PaymentDetailContent extends ConsumerWidget {
 
           // Tracking
           _SectionCard(
-            title: 'Tracking',
+            title: l10n.providerPaymentTracking,
             children: [
               _DetailRow(
                 'Email Sent',
@@ -178,7 +182,7 @@ class _PaymentDetailContent extends ConsumerWidget {
           // Refund info
           if (payment.refundAmount != null) ...[
             _SectionCard(
-              title: 'Refund Information',
+              title: l10n.providerPaymentRefundInfo,
               children: [
                 _DetailRow('Refund Amount', '${payment.refundAmount!.toStringAsFixed(2)} ${payment.currency ?? "SAR"}'),
                 if (payment.refundTranRef != null) _DetailRow('Refund Txn Ref', payment.refundTranRef!, copyable: true),
@@ -192,7 +196,7 @@ class _PaymentDetailContent extends ConsumerWidget {
           // Email logs
           if (payment.emailLogs != null && payment.emailLogs!.isNotEmpty) ...[
             _SectionCard(
-              title: 'Email Logs',
+              title: l10n.providerPaymentEmailLogs,
               children: payment.emailLogs!
                   .map((log) => _DetailRow(log.emailType ?? 'Email', '${log.status ?? "-"} — ${log.recipientEmail ?? ""}'))
                   .toList(),
@@ -203,7 +207,7 @@ class _PaymentDetailContent extends ConsumerWidget {
           // Actions
           if (payment.isSuccessful) ...[
             PosButton(
-              label: 'Resend Confirmation Email',
+              label: l10n.providerPaymentResendEmail,
               icon: Icons.email_outlined,
               variant: PosButtonVariant.outline,
               onPressed: () {

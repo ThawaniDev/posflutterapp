@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/models/cashier_shift_report.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ShiftReportCard extends StatelessWidget {
   final CashierShiftReport report;
@@ -11,6 +12,7 @@ class ShiftReportCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final isMobile = context.isPhone;
 
@@ -55,20 +57,20 @@ class ShiftReportCard extends StatelessWidget {
                 runSpacing: 8,
                 children: [
                   _StatItem(icon: Icons.receipt_rounded, label: 'TXN', value: report.totalTransactions.toString()),
-                  _StatItem(icon: Icons.attach_money_rounded, label: 'Revenue', value: report.totalRevenue.toStringAsFixed(0)),
+                  _StatItem(icon: Icons.attach_money_rounded, label: l10n.reportsRevenue, value: report.totalRevenue.toStringAsFixed(0)),
                   _StatItem(icon: Icons.speed_rounded, label: 'IPM', value: report.itemsPerMinute.toStringAsFixed(1)),
-                  _StatItem(icon: Icons.block_rounded, label: 'Voids', value: report.voidCount.toString()),
+                  _StatItem(icon: Icons.block_rounded, label: l10n.posVoids, value: report.voidCount.toString()),
                   if (report.anomalyCount > 0)
                     _StatItem(
                       icon: Icons.warning_rounded,
-                      label: 'Anomalies',
+                      label: l10n.gamificationAnomalies,
                       value: report.anomalyCount.toString(),
                       color: AppColors.error,
                     ),
                   if (report.badgesEarned.isNotEmpty)
                     _StatItem(
                       icon: Icons.emoji_events_rounded,
-                      label: 'Badges',
+                      label: l10n.gamificationBadges,
                       value: report.badgesEarned.length.toString(),
                       color: AppColors.primary,
                     ),
@@ -80,7 +82,7 @@ class ShiftReportCard extends StatelessWidget {
                   children: [
                     Icon(Icons.send_rounded, size: 12, color: AppColors.success),
                     const SizedBox(width: 4),
-                    Text('Sent', style: TextStyle(fontSize: 11, color: AppColors.success)),
+                    Text(l10n.notifLogSent, style: TextStyle(fontSize: 11, color: AppColors.success)),
                   ],
                 ),
               ],

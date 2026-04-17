@@ -4,6 +4,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/pos_badge.dart';
 import '../models/zatca_invoice.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class InvoiceListWidget extends StatelessWidget {
   final List<ZatcaInvoice> invoices;
@@ -13,6 +14,7 @@ class InvoiceListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
@@ -25,7 +27,7 @@ class InvoiceListWidget extends StatelessWidget {
             children: [
               Icon(Icons.receipt_long_outlined, size: 48, color: theme.hintColor),
               AppSpacing.gapH12,
-              Text('No invoices found', style: theme.textTheme.bodyLarge?.copyWith(color: theme.hintColor)),
+              Text(l10n.noInvoicesFound, style: theme.textTheme.bodyLarge?.copyWith(color: theme.hintColor)),
             ],
           ),
         ),

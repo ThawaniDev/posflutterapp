@@ -4,12 +4,14 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/backup/providers/backup_providers.dart';
 import 'package:wameedpos/features/backup/providers/backup_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class BackupListWidget extends ConsumerWidget {
   const BackupListWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(backupListProvider);
 
     return switch (state) {
@@ -25,21 +27,22 @@ class BackupListWidget extends ConsumerWidget {
           ],
         ),
       ),
-      BackupListLoaded(:final data) => _buildList(data),
+      BackupListLoaded(:final data) => _buildList(context, data),
     };
   }
 
-  Widget _buildList(Map<String, dynamic> data) {
+  Widget _buildList(BuildContext context, Map<String, dynamic> data) {
+    final l10n = AppLocalizations.of(context)!;
     final backups = data['data']?['backups'] as List? ?? [];
 
     if (backups.isEmpty) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.cloud_off, size: 48, color: AppColors.textSecondary),
             SizedBox(height: 8),
-            Text('No backups yet'),
+            Text(l10n.noBackupsYet),
           ],
         ),
       );

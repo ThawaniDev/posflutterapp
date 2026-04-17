@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminAdminUserDetailPage extends ConsumerStatefulWidget {
   final String userId;
@@ -14,6 +15,8 @@ class AdminAdminUserDetailPage extends ConsumerStatefulWidget {
 }
 
 class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -95,7 +98,7 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Roles', style: Theme.of(context).textTheme.titleMedium),
+                  Text(l10n.roles, style: Theme.of(context).textTheme.titleMedium),
                   AppSpacing.gapH8,
                   if (roles.isEmpty)
                     Text('No roles assigned', style: TextStyle(color: AppColors.textSecondary))
@@ -122,7 +125,7 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Actions', style: Theme.of(context).textTheme.titleMedium),
+                  Text(l10n.actions, style: Theme.of(context).textTheme.titleMedium),
                   AppSpacing.gapH8,
                   if (has2fa)
                     ListTile(

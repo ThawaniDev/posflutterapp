@@ -32,6 +32,8 @@ class ProductFormPage extends ConsumerStatefulWidget {
 }
 
 class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late TabController _tabController;
 
   final _formKey = GlobalKey<FormState>();
@@ -278,14 +280,14 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,
-          tabs: const [
+          tabs: [
             Tab(icon: Icon(Icons.info_outline, size: 18), text: 'Basic Info'),
             Tab(icon: Icon(Icons.attach_money, size: 18), text: 'Pricing'),
             Tab(icon: Icon(Icons.style_outlined, size: 18), text: 'Variants'),
             Tab(icon: Icon(Icons.tune, size: 18), text: 'Modifiers'),
             Tab(icon: Icon(Icons.qr_code, size: 18), text: 'Barcodes'),
-            Tab(icon: Icon(Icons.local_shipping_outlined, size: 18), text: 'Suppliers'),
-            Tab(icon: Icon(Icons.image_outlined, size: 18), text: 'Media'),
+            Tab(icon: Icon(Icons.local_shipping_outlined, size: 18), text: l10n.supplierTitle),
+            Tab(icon: Icon(Icons.image_outlined, size: 18), text: l10n.branchesMedia),
           ],
         ),
       ),
@@ -338,7 +340,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
           textDirection: TextDirection.rtl,
         ),
         const SizedBox(height: AppSpacing.md),
-        PosTextField(controller: _descriptionController, label: 'Description', hint: 'Enter product description', maxLines: 3),
+        PosTextField(controller: _descriptionController, label: l10n.description, hint: 'Enter product description', maxLines: 3),
         const SizedBox(height: AppSpacing.lg),
 
         _sectionHeader('Classification'),
@@ -347,7 +349,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
           selectedValue: _selectedCategoryId,
           items: categories.map((c) => PosDropdownItem(value: c.id, label: c.name)).toList(),
           onChanged: (value) => setState(() => _selectedCategoryId = value),
-          label: 'Category',
+          label: l10n.category,
           hint: 'Select category',
           clearable: true,
         ),
@@ -404,8 +406,8 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
         _sectionHeader('Properties'),
         // Active toggle
         SwitchListTile(
-          title: const Text('Active'),
-          subtitle: const Text('Product is visible in POS'),
+          title: Text(l10n.active),
+          subtitle: Text(l10n.catalogProductVisibleInPos),
           value: _isActive,
           onChanged: (value) => setState(() => _isActive = value),
           activeColor: AppColors.primary,
@@ -414,7 +416,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
 
         // Weighable toggle
         SwitchListTile(
-          title: const Text('Weighable'),
+          title: Text(l10n.catalogWeighable),
           subtitle: const Text('Sold by weight (use scale at POS)'),
           value: _isWeighable,
           onChanged: (value) => setState(() => _isWeighable = value),
@@ -434,7 +436,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
 
         // Age restricted
         SwitchListTile(
-          title: const Text('Age Restricted'),
+          title: Text(l10n.catalogAgeRestricted),
           subtitle: const Text('Requires age verification at POS'),
           value: _ageRestricted,
           onChanged: (value) => setState(() => _ageRestricted = value),
@@ -480,7 +482,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
         const SizedBox(height: AppSpacing.md),
         PosTextField(
           controller: _taxRateController,
-          label: 'Tax Rate (%)',
+          label: l10n.settingsTaxRate,
           hint: 'e.g. 15',
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
           inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
@@ -604,7 +606,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
           children: [
             _sectionHeader('Product Variants'),
             PosButton(
-              label: 'Add Variant',
+              label: l10n.catalogAddVariant,
               icon: Icons.add,
               size: PosButtonSize.sm,
               variant: PosButtonVariant.outline,
@@ -664,7 +666,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
     await showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Add Variant'),
+        title: Text(l10n.catalogAddVariant),
         content: SizedBox(
           width: 400,
           child: Column(
@@ -685,14 +687,14 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
           FilledButton(
             onPressed: () {
               if (valueController.text.trim().isEmpty) return;
               Navigator.pop(ctx);
               // API sync would happen through provider in production
             },
-            child: const Text('Add'),
+            child: Text(l10n.add),
           ),
         ],
       ),
@@ -769,8 +771,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
                               color: AppColors.warning.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(4),
                             ),
-                            child: Text(
-                              'Required',
+                            child: Text(l10n.staffRequired,
                               style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.warning),
                             ),
                           ),
@@ -821,7 +822,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          title: const Text('Add Modifier Group'),
+          title: Text(l10n.catalogAddModifierGroup),
           content: SizedBox(
             width: 400,
             child: Column(
@@ -830,7 +831,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
                 PosTextField(controller: nameController, label: 'Group Name *', hint: 'e.g. Size, Extras, Toppings'),
                 const SizedBox(height: AppSpacing.md),
                 SwitchListTile(
-                  title: const Text('Required'),
+                  title: Text(l10n.staffRequired),
                   value: isRequired,
                   onChanged: (v) => setDialogState(() => isRequired = v),
                   activeColor: AppColors.primary,
@@ -863,13 +864,13 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
             FilledButton(
               onPressed: () {
                 if (nameController.text.trim().isEmpty) return;
                 Navigator.pop(ctx);
               },
-              child: const Text('Add'),
+              child: Text(l10n.add),
             ),
           ],
         ),
@@ -900,7 +901,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
             Row(
               children: [
                 PosButton(
-                  label: 'Generate',
+                  label: l10n.generate,
                   icon: Icons.auto_awesome,
                   size: PosButtonSize.sm,
                   variant: PosButtonVariant.soft,
@@ -933,7 +934,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
                   color: AppColors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(4),
                 ),
-                child: Text('Primary', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.primary)),
+                child: Text(l10n.staffPrimary, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.primary)),
               ),
             ),
           ),
@@ -954,7 +955,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
                           color: AppColors.primary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: Text('Primary', style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.primary)),
+                        child: Text(l10n.staffPrimary, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.primary)),
                       )
                     : null,
               ),
@@ -995,13 +996,13 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
           FilledButton(
             onPressed: () {
               if (barcodeController.text.trim().isEmpty) return;
               Navigator.pop(ctx);
             },
-            child: const Text('Add'),
+            child: Text(l10n.add),
           ),
         ],
       ),
@@ -1129,7 +1130,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> with SingleTi
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
             FilledButton(
               onPressed: () {
                 if (selectedSupplierId == null) return;

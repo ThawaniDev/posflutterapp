@@ -7,6 +7,7 @@ import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminMarketplaceSettlementListPage extends ConsumerStatefulWidget {
   const AdminMarketplaceSettlementListPage({super.key});
@@ -16,6 +17,8 @@ class AdminMarketplaceSettlementListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminMarketplaceSettlementListPageState extends ConsumerState<AdminMarketplaceSettlementListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -45,7 +48,7 @@ class _AdminMarketplaceSettlementListPageState extends ConsumerState<AdminMarket
     final summaryState = ref.watch(marketplaceSettlementSummaryProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Settlements'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.thawaniSettlements), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),

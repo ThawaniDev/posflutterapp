@@ -8,6 +8,7 @@ import 'package:wameedpos/features/reports/providers/report_state.dart';
 import 'package:wameedpos/features/reports/widgets/report_charts.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ProductPerformancePage extends ConsumerStatefulWidget {
   const ProductPerformancePage({super.key});
@@ -17,6 +18,8 @@ class ProductPerformancePage extends ConsumerStatefulWidget {
 }
 
 class _ProductPerformancePageState extends ConsumerState<ProductPerformancePage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   ReportFilters _filters = const ReportFilters();
 
   @override
@@ -39,7 +42,7 @@ class _ProductPerformancePageState extends ConsumerState<ProductPerformancePage>
     final state = ref.watch(productPerformanceProvider);
 
     return ReportPageScaffold(
-      title: 'Product Performance',
+      title: l10n.sidebarProductPerformance,
       filterPanel: ReportFilterPanel(
         filters: _filters,
         onFiltersChanged: _onFiltersChanged,
@@ -52,7 +55,7 @@ class _ProductPerformancePageState extends ConsumerState<ProductPerformancePage>
         ProductPerformanceError(:final message) => PosErrorState(message: message, onRetry: _loadData),
         ProductPerformanceLoaded(:final products) =>
           products.isEmpty
-              ? const PosEmptyState(title: 'No product data for selected period', icon: Icons.inventory_2)
+              ? PosEmptyState(title: l10n.reportsNoProductData, icon: Icons.inventory_2)
               : _ProductList(products: products),
       },
     );
@@ -66,6 +69,7 @@ class _ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final totalRevenue = products.fold<double>(0, (sum, p) => sum + (double.tryParse(p['total_revenue'].toString()) ?? 0.0));
 
@@ -76,25 +80,25 @@ class _ProductList extends StatelessWidget {
         ReportKpiGrid(
           cards: [
             ReportKpiCard(
-              label: 'Products',
+              label: l10n.products,
               value: '${products.length}',
               icon: Icons.inventory_2_rounded,
               color: AppColors.primary,
             ),
             ReportKpiCard(
-              label: 'Total Revenue',
+              label: l10n.totalRevenue,
               value: formatCurrency(totalRevenue),
               icon: Icons.attach_money_rounded,
               color: AppColors.success,
             ),
             ReportKpiCard(
-              label: 'Total Qty Sold',
+              label: l10n.reportsTotalQtySold,
               value: formatCompact(products.fold<num>(0, (s, p) => s + (p['total_quantity'] as num))),
               icon: Icons.shopping_cart_rounded,
               color: AppColors.info,
             ),
             ReportKpiCard(
-              label: 'Total Profit',
+              label: l10n.reportsTotalProfit,
               value: formatCurrency(products.fold<double>(0, (s, p) => s + (double.tryParse(p['profit'].toString()) ?? 0.0))),
               icon: Icons.trending_up_rounded,
               color: AppColors.warning,
@@ -105,7 +109,7 @@ class _ProductList extends StatelessWidget {
         // Bar Chart — Top 10 products by revenue
         if (products.isNotEmpty) ...[
           const SizedBox(height: 20),
-          const ReportSectionHeader(title: 'Top Products by Revenue', icon: Icons.bar_chart_rounded),
+          ReportSectionHeader(title: l10n.reportsTopProductsByRevenue, icon: Icons.bar_chart_rounded),
           ReportDataCard(
             child: ReportBarChart(
               data: products.take(10).toList(),
@@ -119,7 +123,7 @@ class _ProductList extends StatelessWidget {
         ],
 
         const SizedBox(height: 24),
-        const ReportSectionHeader(title: 'Products Ranked by Revenue', icon: Icons.leaderboard_rounded),
+        ReportSectionHeader(title: l10n.reportsProductsRankedByRevenue, icon: Icons.leaderboard_rounded),
 
         ReportDataCard(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -140,15 +144,15 @@ class _ProductList extends StatelessWidget {
                     title: p['product_name'] as String? ?? '',
                     subtitle: p['sku'] as String?,
                     trailingValue: formatCurrency(revenue),
-                    trailingSubtitle: '$qty sold',
+                    trailingSubtitle: l10n.reportNSold(qty.toString()),
                     trailingColor: AppColors.success,
                     badges: [
                       ReportBadge(
-                        label: 'Profit ${formatCurrency(profit)}',
+                        label: l10n.reportProfitAmount(formatCurrency(profit)),
                         color: profit >= 0 ? AppColors.success : AppColors.error,
                       ),
-                      ReportBadge(label: 'Cost ${formatCurrency(cost)}', color: AppColors.warning),
-                      if (returns > 0) ReportBadge(label: '$returns returns', color: AppColors.error),
+                      ReportBadge(label: l10n.reportCostAmount(formatCurrency(cost)), color: AppColors.warning),
+                      if (returns > 0) ReportBadge(label: l10n.reportNReturns(returns.toString()), color: AppColors.error),
                     ],
                   ),
                 ],

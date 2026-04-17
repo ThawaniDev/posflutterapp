@@ -5,6 +5,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/pos_status_badge.dart';
 import '../models/table_reservation.dart';
 import '../enums/table_reservation_status.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ReservationCard extends StatelessWidget {
   final TableReservation reservation;
@@ -14,6 +15,7 @@ class ReservationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -49,7 +51,7 @@ class ReservationCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  _buildStatusBadge(),
+                  _buildStatusBadge(context),
                 ],
               ),
               AppSpacing.gapH8,
@@ -93,13 +95,14 @@ class ReservationCard extends StatelessWidget {
     );
   }
 
-  PosStatusBadge _buildStatusBadge() {
+  PosStatusBadge _buildStatusBadge(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final status = reservation.status ?? TableReservationStatus.confirmed;
     return switch (status) {
-      TableReservationStatus.confirmed => PosStatusBadge(label: 'Confirmed', variant: PosStatusBadgeVariant.info),
+      TableReservationStatus.confirmed => PosStatusBadge(label: l10n.ordersConfirmed, variant: PosStatusBadgeVariant.info),
       TableReservationStatus.seated => PosStatusBadge(label: 'Seated', variant: PosStatusBadgeVariant.success),
-      TableReservationStatus.completed => PosStatusBadge(label: 'Completed', variant: PosStatusBadgeVariant.neutral),
-      TableReservationStatus.cancelled => PosStatusBadge(label: 'Cancelled', variant: PosStatusBadgeVariant.error),
+      TableReservationStatus.completed => PosStatusBadge(label: l10n.ordersCompleted, variant: PosStatusBadgeVariant.neutral),
+      TableReservationStatus.cancelled => PosStatusBadge(label: l10n.ordersCancelled, variant: PosStatusBadgeVariant.error),
       TableReservationStatus.noShow => PosStatusBadge(label: 'No Show', variant: PosStatusBadgeVariant.warning),
     };
   }

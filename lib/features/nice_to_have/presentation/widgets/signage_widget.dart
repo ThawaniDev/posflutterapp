@@ -4,12 +4,14 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import '../nice_to_have_providers.dart';
 import '../nice_to_have_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class SignageWidget extends ConsumerWidget {
   const SignageWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(signageProvider);
     return switch (state) {
       SignageInitial() || SignageLoading() => const Center(child: CircularProgressIndicator()),
@@ -18,7 +20,7 @@ class SignageWidget extends ConsumerWidget {
       ),
       SignageLoaded(:final playlists) =>
         playlists.isEmpty
-            ? const Center(child: Text('No signage playlists'))
+            ? Center(child: Text(l10n.noSignagePlaylists))
             : ListView.builder(
                 padding: AppSpacing.paddingAll16,
                 itemCount: playlists.length,

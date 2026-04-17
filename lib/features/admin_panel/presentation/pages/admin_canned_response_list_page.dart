@@ -7,6 +7,7 @@ import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminCannedResponseListPage extends ConsumerStatefulWidget {
   const AdminCannedResponseListPage({super.key});
@@ -16,6 +17,8 @@ class AdminCannedResponseListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedResponseListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _categoryFilter;
   String? _storeId;
@@ -53,7 +56,7 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
     final state = ref.watch(cannedResponseListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Canned Responses'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.cannedResponses), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -85,18 +88,18 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
                 Expanded(
                   child: PosSearchableDropdown<String>(
                     items: [
-                      PosDropdownItem(value: 'billing', label: 'Billing'),
-                      PosDropdownItem(value: 'technical', label: 'Technical'),
-                      PosDropdownItem(value: 'zatca', label: 'ZATCA'),
-                      PosDropdownItem(value: 'feature_request', label: 'Feature'),
-                      PosDropdownItem(value: 'general', label: 'General'),
+                      PosDropdownItem(value: 'billing', label: l10n.supportKbBilling),
+                      PosDropdownItem(value: 'technical', label: l10n.supportCategoryTechnical),
+                      PosDropdownItem(value: 'zatca', label: l10n.sidebarZatca),
+                      PosDropdownItem(value: 'feature_request', label: l10n.feature),
+                      PosDropdownItem(value: 'general', label: l10n.settingsGeneral),
                     ],
                     selectedValue: _categoryFilter,
                     onChanged: (v) {
                       setState(() => _categoryFilter = v);
                       _applyFilters();
                     },
-                    label: 'Category',
+                    label: l10n.category,
                     hint: 'All',
                     showSearch: false,
                     clearable: true,

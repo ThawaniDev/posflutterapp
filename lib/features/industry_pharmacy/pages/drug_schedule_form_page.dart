@@ -8,6 +8,7 @@ import '../providers/pharmacy_providers.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class DrugScheduleFormPage extends ConsumerStatefulWidget {
   final DrugSchedule? schedule;
@@ -18,6 +19,8 @@ class DrugScheduleFormPage extends ConsumerStatefulWidget {
 }
 
 class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
   bool get _isEditing => widget.schedule != null;
@@ -101,7 +104,7 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
             PosSearchableDropdown<String>(
-              label: 'Product',
+              label: l10n.wameedAIProduct,
               items: products.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
               selectedValue: _selectedProductId,
               onChanged: _isEditing ? null : (v) => setState(() => _selectedProductId = v),
@@ -109,7 +112,7 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<DrugScheduleType>(
-              label: 'Schedule Type',
+              label: l10n.notifScheduleType,
               items: DrugScheduleType.values.map((t) {
                 final label = switch (t) {
                   DrugScheduleType.otc => 'OTC (Over-the-Counter)',
@@ -133,12 +136,12 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
               clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _activeIngredientCtrl, label: 'Active Ingredient', hint: 'e.g. Paracetamol'),
+            PosTextField(controller: _activeIngredientCtrl, label: l10n.pharmacyActiveIngredient, hint: 'e.g. Paracetamol'),
             SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
-                  child: PosTextField(controller: _dosageFormCtrl, label: 'Dosage Form', hint: 'e.g. Tablet, Syrup'),
+                  child: PosTextField(controller: _dosageFormCtrl, label: l10n.pharmacyDosageForm, hint: 'e.g. Tablet, Syrup'),
                 ),
                 AppSpacing.gapW12,
                 Expanded(
@@ -152,7 +155,7 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
             PosToggle(
               value: _requiresPrescription,
               onChanged: (v) => setState(() => _requiresPrescription = v),
-              label: 'Requires Prescription',
+              label: l10n.pharmacyRequiresPrescription,
               subtitle: 'Must present valid prescription to purchase',
             ),
           ],

@@ -8,6 +8,7 @@ import '../../providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminSecurityAlertListPage extends ConsumerStatefulWidget {
   const AdminSecurityAlertListPage({super.key});
@@ -17,6 +18,8 @@ class AdminSecurityAlertListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _severityFilter;
   String? _statusFilter;
@@ -73,7 +76,7 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
     final state = ref.watch(securityAlertListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Security Alerts')),
+      appBar: AppBar(title: Text(l10n.securityAlerts)),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -105,10 +108,10 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
                 );
                 final severityDropdown = PosSearchableDropdown<String>(
                   items: [
-                    PosDropdownItem(value: 'critical', label: 'Critical'),
-                    PosDropdownItem(value: 'high', label: 'High'),
-                    PosDropdownItem(value: 'medium', label: 'Medium'),
-                    PosDropdownItem(value: 'low', label: 'Low'),
+                    PosDropdownItem(value: 'critical', label: l10n.supportPriorityCritical),
+                    PosDropdownItem(value: 'high', label: l10n.notifPriorityHigh),
+                    PosDropdownItem(value: 'medium', label: l10n.supportPriorityMedium),
+                    PosDropdownItem(value: 'low', label: l10n.notifPriorityLow),
                   ],
                   selectedValue: _severityFilter,
                   onChanged: (v) {
@@ -121,9 +124,9 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
                 );
                 final statusDropdown = PosSearchableDropdown<String>(
                   items: [
-                    PosDropdownItem(value: 'new', label: 'New'),
+                    PosDropdownItem(value: 'new', label: l10n.ordersNew),
                     PosDropdownItem(value: 'investigating', label: 'Investigating'),
-                    PosDropdownItem(value: 'resolved', label: 'Resolved'),
+                    PosDropdownItem(value: 'resolved', label: l10n.resolved),
                   ],
                   selectedValue: _statusFilter,
                   onChanged: (v) {

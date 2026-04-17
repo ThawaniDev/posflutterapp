@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminAnnouncementListPage extends ConsumerStatefulWidget {
   const AdminAnnouncementListPage({super.key});
@@ -15,6 +16,8 @@ class AdminAnnouncementListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _selectedType;
   String? _storeId;
@@ -85,8 +88,8 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
                     items: [
                       PosDropdownItem(value: 'info', label: 'Info'),
                       PosDropdownItem(value: 'warning', label: 'Warning'),
-                      PosDropdownItem(value: 'maintenance', label: 'Maintenance'),
-                      PosDropdownItem(value: 'update', label: 'Update'),
+                      PosDropdownItem(value: 'maintenance', label: l10n.maintenance),
+                      PosDropdownItem(value: 'update', label: l10n.hwUpdate),
                     ],
                     selectedValue: _selectedType,
                     onChanged: (v) {
@@ -109,7 +112,7 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
               ),
               AnnouncementListLoaded(:final announcements, :final total, :final currentPage, :final lastPage) =>
                 announcements.isEmpty
-                    ? const Center(child: Text('No announcements found'))
+                    ? Center(child: Text(l10n.noAnnouncementsFound))
                     : Column(
                         children: [
                           Expanded(

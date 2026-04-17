@@ -6,6 +6,7 @@ import 'package:wameedpos/core/utils/formatters.dart';
 import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Shows a detailed product popup when a barcode is scanned.
 /// If [product] is non-null, shows full product details.
@@ -50,6 +51,7 @@ class _BarcodeProductContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return ClipRRect(
@@ -62,6 +64,7 @@ class _BarcodeProductContent extends StatelessWidget {
   }
 
   Widget _buildProductFound(BuildContext context, Product product, bool isDark) {
+    final l10n = AppLocalizations.of(context)!;
     final hasOffer =
         product.offerPrice != null &&
         product.offerPrice! > 0 &&
@@ -167,7 +170,7 @@ class _BarcodeProductContent extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Sell Price', style: AppTypography.labelMedium),
+                  Text(l10n.sellPrice, style: AppTypography.labelMedium),
                   Text(
                     Formatters.currency(product.sellPrice),
                     style: AppTypography.headlineSmall.copyWith(
@@ -186,7 +189,7 @@ class _BarcodeProductContent extends StatelessWidget {
                       children: [
                         const Icon(Icons.local_offer_rounded, size: 16, color: AppColors.success),
                         const SizedBox(width: 4),
-                        Text('Offer Price', style: AppTypography.labelMedium.copyWith(color: AppColors.success)),
+                        Text(l10n.offerPrice, style: AppTypography.labelMedium.copyWith(color: AppColors.success)),
                       ],
                     ),
                     Text(
@@ -201,7 +204,7 @@ class _BarcodeProductContent extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Cost Price', style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
+                    Text(l10n.costPrice, style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
                     Text(Formatters.currency(product.costPrice!), style: AppTypography.bodySmall),
                   ],
                 ),
@@ -210,7 +213,7 @@ class _BarcodeProductContent extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Margin', style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
+                      Text(l10n.wameedAIBillingMargin, style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
                       Text(
                         '${(((product.sellPrice - product.costPrice!) / product.sellPrice) * 100).toStringAsFixed(1)}%',
                         style: AppTypography.labelSmall.copyWith(color: AppColors.success),
@@ -237,7 +240,7 @@ class _BarcodeProductContent extends StatelessWidget {
 
         if (product.description != null && product.description!.isNotEmpty) ...[
           AppSpacing.gapH16,
-          Text('Description', style: AppTypography.labelMedium),
+          Text(l10n.description, style: AppTypography.labelMedium),
           AppSpacing.gapH4,
           Text(product.description!, style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondaryLight)),
         ],
@@ -270,6 +273,7 @@ class _BarcodeProductContent extends StatelessWidget {
   }
 
   Widget _buildProductNotFound(BuildContext context, bool isDark) {
+    final l10n = AppLocalizations.of(context)!;
     return ListView(
       controller: scrollController,
       padding: const EdgeInsets.all(24),
@@ -298,7 +302,7 @@ class _BarcodeProductContent extends StatelessWidget {
         ),
         AppSpacing.gapH16,
 
-        Text('Product Not Found', style: AppTypography.headlineSmall, textAlign: TextAlign.center),
+        Text(l10n.productNotFound, style: AppTypography.headlineSmall, textAlign: TextAlign.center),
         AppSpacing.gapH8,
         Text(
           'No product matches barcode:',
@@ -340,7 +344,7 @@ class _BarcodeProductContent extends StatelessWidget {
         ),
         AppSpacing.gapH8,
         PosButton(
-          label: 'Dismiss',
+          label: l10n.wameedAIDismiss,
           variant: PosButtonVariant.outline,
           isFullWidth: true,
           onPressed: () => Navigator.pop(context),

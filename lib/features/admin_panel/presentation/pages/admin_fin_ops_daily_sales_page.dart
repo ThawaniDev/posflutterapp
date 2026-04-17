@@ -6,6 +6,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminFinOpsDailySalesPage extends ConsumerStatefulWidget {
   const AdminFinOpsDailySalesPage({super.key});
@@ -15,6 +16,8 @@ class AdminFinOpsDailySalesPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminFinOpsDailySalesPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   late TabController _tabController;
 
@@ -50,7 +53,7 @@ class _State extends ConsumerState<AdminFinOpsDailySalesPage> with SingleTickerP
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sales Reports'),
+        title: Text(l10n.adminFinOpsSalesReports),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         bottom: TabBar(
@@ -58,9 +61,9 @@ class _State extends ConsumerState<AdminFinOpsDailySalesPage> with SingleTickerP
           labelColor: Colors.white,
           unselectedLabelColor: Colors.white70,
           indicatorColor: Colors.white,
-          tabs: const [
-            Tab(text: 'Daily Summary'),
-            Tab(text: 'By Product'),
+          tabs: [
+            Tab(text: l10n.dailySummary),
+            Tab(text: l10n.adminFinOpsByProduct),
           ],
         ),
       ),
@@ -79,6 +82,7 @@ class _State extends ConsumerState<AdminFinOpsDailySalesPage> with SingleTickerP
 class _DailySummaryTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(finOpsDailySalesSummaryProvider);
     return switch (state) {
       FinOpsListLoading() => const Center(child: CircularProgressIndicator()),
@@ -86,7 +90,7 @@ class _DailySummaryTab extends ConsumerWidget {
       FinOpsListError(message: final msg) => Center(
         child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
       ),
-      _ => const Center(child: Text('Loading...')),
+      _ => Center(child: Text(l10n.loading)),
     };
   }
 
@@ -148,6 +152,7 @@ class _DailySummaryTab extends ConsumerWidget {
 class _ProductSalesTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(finOpsProductSalesSummaryProvider);
     return switch (state) {
       FinOpsListLoading() => const Center(child: CircularProgressIndicator()),
@@ -155,7 +160,7 @@ class _ProductSalesTab extends ConsumerWidget {
       FinOpsListError(message: final msg) => Center(
         child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
       ),
-      _ => const Center(child: Text('Loading...')),
+      _ => Center(child: Text(l10n.loading)),
     };
   }
 

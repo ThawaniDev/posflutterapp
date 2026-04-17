@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/settings/models/translation_version.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class VersionHistoryList extends StatelessWidget {
   final List<TranslationVersion> versions;
@@ -9,9 +10,10 @@ class VersionHistoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     if (versions.isEmpty) {
-      return const Center(child: Text('No published versions yet'));
+      return Center(child: Text(l10n.noPublishedVersionsYet));
     }
     return ListView.separated(
       shrinkWrap: true,

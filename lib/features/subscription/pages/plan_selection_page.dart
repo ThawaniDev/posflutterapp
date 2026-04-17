@@ -9,6 +9,7 @@ import 'package:wameedpos/features/subscription/providers/subscription_providers
 import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
 import 'package:wameedpos/features/subscription/widgets/plan_card.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Page that displays available subscription plans for the user to choose.
 class PlanSelectionPage extends ConsumerStatefulWidget {
@@ -19,6 +20,8 @@ class PlanSelectionPage extends ConsumerStatefulWidget {
 }
 
 class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   bool _isAnnual = false;
 
   @override
@@ -46,13 +49,13 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Choose Your Plan'),
+        title: Text(l10n.subscriptionChooseYourPlan),
         centerTitle: true,
         actions: [
           TextButton.icon(
             onPressed: () => context.go(Routes.planComparison),
             icon: const Icon(Icons.compare_arrows, size: 18),
-            label: const Text('Compare'),
+            label: Text(l10n.subscriptionCompare),
           ),
         ],
       ),
@@ -78,7 +81,7 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
               style: TextStyle(color: AppColors.error),
             ),
             AppSpacing.verticalMd,
-            ElevatedButton(onPressed: () => ref.read(plansProvider.notifier).loadPlans(), child: const Text('Retry')),
+            ElevatedButton(onPressed: () => ref.read(plansProvider.notifier).loadPlans(), child: Text(l10n.retry)),
           ],
         ),
       );
@@ -100,12 +103,11 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('Monthly'),
+              Text(l10n.subscriptionMonthly),
               AppSpacing.horizontalSm,
               Switch(value: _isAnnual, activeColor: AppColors.primary, onChanged: (v) => setState(() => _isAnnual = v)),
               AppSpacing.horizontalSm,
-              Text(
-                'Annual',
+              Text(l10n.subscriptionAnnual,
                 style: TextStyle(
                   fontWeight: _isAnnual ? FontWeight.bold : FontWeight.normal,
                   color: _isAnnual ? AppColors.primary : null,
@@ -119,8 +121,7 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
                     color: AppColors.success.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Text(
-                    'Save ~17%',
+                  child: Text(l10n.subscriptionSavePercent,
                     style: TextStyle(fontSize: 12, color: AppColors.success, fontWeight: FontWeight.bold),
                   ),
                 ),

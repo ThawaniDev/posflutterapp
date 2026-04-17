@@ -9,6 +9,7 @@ import 'package:wameedpos/features/industry_jewelry/widgets/buyback_card.dart';
 import 'package:wameedpos/features/industry_jewelry/pages/metal_rate_form_page.dart';
 import 'package:wameedpos/features/industry_jewelry/pages/product_detail_form_page.dart';
 import 'package:wameedpos/features/industry_jewelry/pages/buyback_form_page.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class JewelryDashboardPage extends ConsumerStatefulWidget {
   const JewelryDashboardPage({super.key});
@@ -18,6 +19,8 @@ class JewelryDashboardPage extends ConsumerStatefulWidget {
 }
 
 class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late final TabController _tabController;
 
   @override
@@ -51,12 +54,12 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> wit
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Jewelry'),
+        title: Text(l10n.jewelryTitle),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Metal Rates'),
-            Tab(text: 'Product Details'),
+          tabs: [
+            Tab(text: l10n.jewelryMetalRates),
+            Tab(text: l10n.jewelryProductDetails),
             Tab(text: 'Buybacks'),
           ],
         ),

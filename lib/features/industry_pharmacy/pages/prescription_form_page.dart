@@ -4,6 +4,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 import '../models/prescription.dart';
 import '../providers/pharmacy_providers.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class PrescriptionFormPage extends ConsumerStatefulWidget {
   final Prescription? prescription;
@@ -14,6 +15,8 @@ class PrescriptionFormPage extends ConsumerStatefulWidget {
 }
 
 class _PrescriptionFormPageState extends ConsumerState<PrescriptionFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
   bool get _isEditing => widget.prescription != null;
@@ -100,7 +103,7 @@ class _PrescriptionFormPageState extends ConsumerState<PrescriptionFormPage> {
           children: [
             PosTextField(controller: _prescriptionNumberCtrl, label: 'Prescription Number', hint: 'e.g. RX-001234'),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _patientNameCtrl, label: 'Patient Name', hint: 'Full name'),
+            PosTextField(controller: _patientNameCtrl, label: l10n.pharmacyPatientName, hint: 'Full name'),
             SizedBox(height: AppSpacing.md),
             PosTextField(controller: _patientIdCtrl, label: 'Patient ID (optional)', hint: 'National ID or system ID'),
             SizedBox(height: AppSpacing.lg),
@@ -109,7 +112,7 @@ class _PrescriptionFormPageState extends ConsumerState<PrescriptionFormPage> {
             Row(
               children: [
                 Expanded(
-                  child: PosTextField(controller: _doctorNameCtrl, label: 'Doctor Name', hint: 'Dr. ...'),
+                  child: PosTextField(controller: _doctorNameCtrl, label: l10n.pharmacyDoctorName, hint: 'Dr. ...'),
                 ),
                 AppSpacing.gapW12,
                 Expanded(
@@ -129,7 +132,7 @@ class _PrescriptionFormPageState extends ConsumerState<PrescriptionFormPage> {
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _notesCtrl, label: 'Notes (optional)', hint: 'Additional notes...', maxLines: 3),
+            PosTextField(controller: _notesCtrl, label: l10n.notesOptional, hint: 'Additional notes...', maxLines: 3),
           ],
         ),
       ),

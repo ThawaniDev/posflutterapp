@@ -7,6 +7,7 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminAnalyticsStoresPage extends ConsumerStatefulWidget {
   const AdminAnalyticsStoresPage({super.key});
@@ -16,6 +17,8 @@ class AdminAnalyticsStoresPage extends ConsumerStatefulWidget {
 }
 
 class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -39,7 +42,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Store Analytics'),
+        title: Text(l10n.analyticsStores),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         actions: [
@@ -84,8 +87,8 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                         mobileCols: 2,
                         cards: [
                           PosKpiCard(label: 'Total Stores', value: '$total', iconColor: AppColors.info),
-                          PosKpiCard(label: 'Active', value: '$active', iconColor: AppColors.success),
-                          PosKpiCard(label: 'Inactive', value: '${total - active}', iconColor: AppColors.textSecondary),
+                          PosKpiCard(label: l10n.active, value: '$active', iconColor: AppColors.success),
+                          PosKpiCard(label: l10n.inactive, value: '${total - active}', iconColor: AppColors.textSecondary),
                         ],
                       ),
                       const SizedBox(height: AppSpacing.lg),
@@ -149,7 +152,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                     const SizedBox(height: AppSpacing.sm),
                     ElevatedButton(
                       onPressed: () => ref.read(analyticsStoresProvider.notifier).load(storeId: _storeId),
-                      child: const Text('Retry'),
+                      child: Text(l10n.retry),
                     ),
                   ],
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class SyncLogList extends StatelessWidget {
   final List<Map<String, dynamic>> logs;
@@ -9,13 +10,14 @@ class SyncLogList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     if (logs.isEmpty) {
       return Center(
         child: Padding(
           padding: AppSpacing.paddingAll20,
-          child: Text('No sync history yet', style: theme.textTheme.bodyMedium),
+          child: Text(l10n.noSyncHistoryYet, style: theme.textTheme.bodyMedium),
         ),
       );
     }
@@ -26,7 +28,7 @@ class SyncLogList extends StatelessWidget {
         children: [
           Padding(
             padding: AppSpacing.paddingAll16,
-            child: Text('Recent Sync Activity', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+            child: Text(l10n.recentSyncActivity, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
           ),
           const Divider(height: 1),
           ListView.separated(

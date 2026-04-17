@@ -4174,5 +4174,474 @@
   "providerPaymentPurposeOther": "أخرى",
   "pinLoginTitle": "أدخل رمز PIN",
   "pinLoginNoStore": "لم يتم العثور على جلسة متجر. يرجى تسجيل الدخول بالبريد الإلكتروني.",
-  "pinLoginEmailInstead": "تسجيل الدخول بالبريد الإلكتروني بدلاً من ذلك"
+  "pinLoginEmailInstead": "تسجيل الدخول بالبريد الإلكتروني بدلاً من ذلك",
+  "categoryMappings": "تعيينات الفئات",
+  "syncManagement": "إدارة المزامنة",
+  "syncLogs": "سجلات المزامنة",
+  "newExport": "تصدير جديد",
+  "autoExportSettings": "إعدادات التصدير التلقائي",
+  "dayOfWeek": "يوم الأسبوع",
+  "dayOfMonth": "يوم الشهر",
+  "exportTime": "وقت التصدير",
+  "retryOnFailure": "إعادة المحاولة عند الفشل",
+  "automaticallyRetryFailedExports": "إعادة محاولة التصدير الفاشل تلقائياً",
+  "mapPosAccountsToProviderAccounts": "ربط حسابات نقاط البيع بحسابات المزود",
+  "viewAndManageExports": "عرض وإدارة التصادير",
+  "scheduleAutomaticExports": "جدولة التصادير التلقائية",
+  "connect": "اتصال",
+  "supportedLanguages": "اللغات المدعومة",
+  "noPublishedVersionsYet": "لا توجد إصدارات منشورة بعد",
+  "translationVersions": "إصدارات الترجمة",
+  "noCashSessionsFound": "لم يتم العثور على جلسات نقدية",
+  "openingCheckout": "جاري فتح الدفع...",
+  "sellPrice": "سعر البيع",
+  "offerPrice": "سعر العرض",
+  "costPrice": "سعر التكلفة",
+  "productNotFound": "لم يتم العثور على المنتج",
+  "networkDiscovery": "اكتشاف الشبكة",
+  "searchPromotions": "البحث عن العروض...",
+  "analytics": "التحليلات",
+  "generateCoupons": "إنشاء قسائم",
+  "applyCoupon": "تطبيق القسيمة",
+  "couponCode": "رمز القسيمة",
+  "enterCouponCode": "أدخل رمز القسيمة",
+  "promotionName": "اسم العرض *",
+  "buyQuantity": "كمية الشراء",
+  "getQuantity": "كمية الهدية",
+  "getDiscount": "نسبة الخصم %",
+  "bundlePrice": "سعر الحزمة",
+  "minOrderTotal": "الحد الأدنى لإجمالي الطلب",
+  "maxUses": "الحد الأقصى للاستخدام",
+  "maxPerCustomer": "الحد الأقصى لكل عميل",
+  "requiresCouponCode": "يتطلب رمز قسيمة",
+  "stackable": "قابل للتجميع",
+  "count": "العدد *",
+  "prefixOptional": "البادئة (اختياري)",
+  "maxUsesPerCouponOptional": "الحد الأقصى للاستخدام لكل قسيمة (اختياري)",
+  "expandAll": "توسيع الكل",
+  "collapseAll": "طي الكل",
+  "addSubcategory": "إضافة فئة فرعية",
+  "noSignagePlaylists": "لا توجد قوائم عرض",
+  "noAppointments": "لا توجد مواعيد",
+  "enterACustomerIdToViewWishlist": "أدخل معرف العميل لعرض قائمة الرغبات",
+  "wishlistIsEmpty": "قائمة الرغبات فارغة",
+  "noGiftRegistries": "لا توجد سجلات هدايا",
+  "noSyncHistoryYet": "لا يوجد سجل مزامنة بعد",
+  "recentSyncActivity": "نشاط المزامنة الأخير",
+  "noBackupsYet": "لا توجد نسخ احتياطية بعد",
+  "editReservation": "تعديل الحجز",
+  "reservationDate": "تاريخ الحجز",
+  "time": "الوقت",
+  "durationMinutes": "المدة (دقائق)",
+  "tableOptional": "الطاولة (اختياري)",
+  "editTable": "تعديل الطاولة",
+  "displayNameOptional": "الاسم المعروض (اختياري)",
+  "zoneOptional": "المنطقة (اختياري)",
+  "positionX": "الموقع X",
+  "positionY": "الموقع Y",
+  "openTab": "فتح حساب",
+  "recipeName": "اسم الوصفة",
+  "expectedYield": "الإنتاج المتوقع",
+  "prepTimeMin": "وقت التحضير (دقيقة)",
+  "bakeTimeMin": "وقت الخبز (دقيقة)",
+  "bakeTempC": "درجة حرارة الخبز (°م)",
+  "instructions": "التعليمات",
+  "scheduleDate": "تاريخ الجدول",
+  "plannedBatches": "الدفعات المخطط لها",
+  "plannedYield": "الإنتاج المخطط",
+  "actualBatches": "الدفعات الفعلية",
+  "actualYield": "الإنتاج الفعلي",
+  "arrangementName": "اسم التنسيق",
+  "occasionOptional": "المناسبة (اختياري)",
+  "noDataForSelectedPeriod": "لا توجد بيانات للفترة المحددة",
+  "noSalesDataYetToday": "لا توجد بيانات مبيعات اليوم بعد",
+  "sku": ":SKU",
+  "deleteRole": "حذف الدور",
+  "planDetails": "تفاصيل الخطة",
+  "usage": "الاستخدام",
+  "manageAddons": "إدارة الإضافات",
+  "viewInvoices": "عرض الفواتير",
+  "renews": "يُجدد",
+  "productsUsed": "المنتجات المستخدمة",
+  "needHelp": "تحتاج مساعدة؟",
+  "contactSupport": "اتصل بالدعم",
+  "achievements": "الإنجازات",
+  "noBadgesEarnedYet": "لم يتم الحصول على شارات بعد",
+  "badgeCollection": "مجموعة الشارات",
+  "noSubscriptionsFound": "لم يتم العثور على اشتراكات",
+  "noGatewaysConfigured": "لم يتم تكوين بوابات",
+  "noAnnouncementsFound": "لم يتم العثور على إعلانات",
+  "noSettlements": "لا توجد تسويات",
+  "uiError": "خطأ",
+  "back": "رجوع",
+  "plan": "الخطة",
+  "id": "المعرف",
+  "role": "الدور",
+  "item": "عنصر",
+  "card": "بطاقة",
+  "unpaid": "غير مدفوع",
+  "due": "مستحق",
+  "approved": "مُعتمد",
+  "rejected": "مرفوض",
+  "published": "منشور",
+  "archived": "مؤرشف",
+  "filter": "تصفية",
+  "sort": "ترتيب",
+  "selectAll": "تحديد الكل",
+  "deselectAll": "إلغاء تحديد الكل",
+  "copy": "نسخ",
+  "upload": "رفع",
+  "share": "مشاركة",
+  "branchMgr": "مدير الفرع",
+  "health": "الحالة",
+  "configuration": "الإعدادات",
+  "customRange": "نطاق مخصص",
+  "somethingWentWrong": "حدث خطأ ما",
+  "view": "عرض",
+  "stop": "إيقاف",
+  "pause": "إيقاف مؤقت",
+  "resume": "استئناف",
+  "refund": "استرداد",
+  "reportsTodaysOverview": "نظرة عامة اليوم",
+  "reportsVsYesterday": "مقارنة بالأمس",
+  "reportsTopProductsToday": "أفضل المنتجات اليوم",
+  "reportsFeatureGuide": "دليل الميزات",
+  "reportsRevenueTrend": "اتجاه الإيرادات",
+  "reportsBreakdown": "التفاصيل",
+  "reportsCostOfGoods": "تكلفة البضائع",
+  "reportsTaxCollected": "الضريبة المحصلة",
+  "reportsCashRevenue": "إيرادات نقدية",
+  "reportsCardRevenue": "إيرادات البطاقات",
+  "reportsOtherRevenue": "إيرادات أخرى",
+  "reportsDailyBreakdown": "التفاصيل اليومية",
+  "reportsPnlTrend": "اتجاه الربح والخسارة",
+  "reportsCogs": "تكلفة المبيعات",
+  "reportsNoDataForPeriod": "لا توجد بيانات للفترة",
+  "reportsExpenseDistribution": "توزيع المصروفات",
+  "reportsByCategory": "حسب الفئة",
+  "reportsNoExpensesRecorded": "لا توجد مصروفات مسجلة",
+  "reportsTotalVariance": "إجمالي الفرق",
+  "reportsOverPlus": "زيادة (+)",
+  "reportsShortMinus": "نقص (-)",
+  "reportsNoClosedSessions": "لا توجد جلسات مغلقة",
+  "reportsExpected": "المتوقع",
+  "reportsActual": "الفعلي",
+  "reportsTotalProfit": "إجمالي الربح",
+  "reportsTopProductsByRevenue": "أفضل المنتجات حسب الإيرادات",
+  "reportsProductsRankedByRevenue": "المنتجات مرتبة حسب الإيرادات",
+  "reportsNoProductData": "لا توجد بيانات منتجات للفترة المحددة",
+  "reportsTotalQtySold": "إجمالي الكمية المباعة",
+  "reportsPaymentDistribution": "توزيع المدفوعات",
+  "reportsBreakdownByMethod": "التفاصيل حسب الطريقة",
+  "reportsNoPaymentData": "لا توجد بيانات دفع للفترة المحددة",
+  "reportsMethodsUsed": "الطرق المستخدمة",
+  "reportsAvgPerTx": "المتوسط لكل معاملة",
+  "reportsHourlyPattern": "النمط بالساعة",
+  "reportsRevenueByHour": "الإيرادات حسب الساعة",
+  "reportsNoHourlyData": "لا توجد بيانات ساعية للفترة المحددة",
+  "reportsPeakHour": "ساعة الذروة",
+  "reportsRevenueByStaff": "الإيرادات حسب الموظف",
+  "reportsStaffRankedByRevenue": "الموظفون مرتبون حسب الإيرادات",
+  "reportsNoStaffData": "لا توجد بيانات أداء الموظفين",
+  "reportsAvgPerStaff": "المتوسط لكل موظف",
+  "reportsNoCustomerData": "لا توجد بيانات عملاء",
+  "reportsSpendByCustomer": "الإنفاق حسب العميل",
+  "reportsRankedBySpend": "مرتبون حسب الإنفاق",
+  "reportsTotalSpend": "إجمالي الإنفاق",
+  "reportsRepeatRate": "معدل التكرار",
+  "reportsRepeatCustomers": "عملاء متكررون",
+  "reportsNew30d": "جديد (30 يوم)",
+  "reportsActive30d": "نشط (30 يوم)",
+  "reportsLoyaltyPoints": "نقاط الولاء",
+  "reportsAverages": "المتوسطات",
+  "reportsAvgVisits": "متوسط الزيارات",
+  "reportsAvgSpend": "متوسط الإنفاق",
+  "reportsAvgLoyaltyPoints": "متوسط نقاط الولاء",
+  "reportsNoCategoryData": "لا توجد بيانات فئات للفترة المحددة",
+  "reportsRevenueShare": "حصة الإيرادات",
+  "reportsRevenueByCategory": "الإيرادات حسب الفئة",
+  "reportsCategories": "الفئات",
+  "reportsTotalStockValue": "إجمالي قيمة المخزون",
+  "reportsTotalItems": "إجمالي العناصر",
+  "reportsProductCount": "عدد المنتجات",
+  "reportsStockValueDistribution": "توزيع قيمة المخزون",
+  "reportsNoStockData": "لا توجد بيانات مخزون",
+  "reportsProductTurnover": "دوران المنتجات",
+  "reportsNoTurnoverData": "لا توجد بيانات دوران",
+  "reportsShrinkageByReason": "الانكماش حسب السبب",
+  "reportsNoShrinkageData": "لا توجد بيانات انكماش",
+  "reportsShrinkageByProduct": "الانكماش حسب المنتج",
+  "reportsAllStockLevelsOk": "جميع مستويات المخزون جيدة",
+  "reportsLowStockItems": "عناصر منخفضة المخزون",
+  "filterCash": "نقدي",
+  "filterCard": "بطاقة",
+  "filterGiftCard": "بطاقة هدايا",
+  "filterMobile": "جوال",
+  "filterBankTransfer": "تحويل بنكي",
+  "filterCompleted": "مكتمل",
+  "filterRefunded": "مسترد",
+  "filterPartialRefund": "استرداد جزئي",
+  "filterMin": "الحد الأدنى",
+  "filterMax": "الحد الأقصى",
+  "reportsRevenue": "الإيرادات",
+  "filterSortQuantity": "الكمية",
+  "filterSortProfit": "الربح",
+  "filterSortOrders": "الطلبات",
+  "filterSortName": "الاسم",
+  "companionAppPreferences": "تفضيلات التطبيق",
+  "companionTheme": "المظهر",
+  "companionLanguage": "اللغة",
+  "companionEnglish": "الإنجليزية",
+  "companionCompactMode": "الوضع المدمج",
+  "companionNotifications": "الإشعارات",
+  "companionBiometricLock": "القفل البيومتري",
+  "companionDefaultPage": "الصفحة الافتراضية",
+  "companionCurrencyDisplay": "عرض العملة",
+  "companionPending": "قيد الانتظار",
+  "catalogProductVisibleInPos": "المنتج مرئي في نقطة البيع",
+  "catalogWeighable": "قابل للوزن",
+  "catalogAgeRestricted": "مقيد بالعمر",
+  "catalogAddVariant": "إضافة متغير",
+  "catalogAddModifierGroup": "إضافة مجموعة تعديل",
+  "catalogVisibleInPosCatalog": "مرئي في نقطة البيع والكتالوج",
+  "catalogNoCategoriesYet": "لا توجد فئات بعد",
+  "staffClockIn": "تسجيل الحضور",
+  "staffClockOut": "تسجيل الانصراف",
+  "statusScheduled": "مجدول",
+  "statusPlanned": "مخطط",
+  "statusInProgress": "قيد التنفيذ",
+  "statusCancelled": "ملغي",
+  "paymentsCountRequired": "العدد *",
+  "paymentsPrefixOptional": "البادئة (اختياري)",
+  "paymentsMaxUsesPerCoupon": "الحد الأقصى لاستخدام كل قسيمة (اختياري)",
+  "accountingDayOfMonth": "يوم من الشهر",
+  "accountingNotificationEmail": "البريد الإلكتروني للإشعارات (اختياري)",
+  "jewelrySetMetalRate": "تعيين سعر المعدن",
+  "hardware58mm": "58 مم",
+  "hardware80mm": "80 مم",
+  "hardwareKg": "كجم",
+  "hardwareG": "جم",
+  "hardwareLb": "رطل",
+  "hardwareNearPay": "NearPay",
+  "hardwareNexo": "Nexo",
+  "promotionsDeletePromotion": "حذف العرض",
+  "promotionsCouponCode": "رمز القسيمة",
+  "promotionsEnterCouponCode": "أدخل رمز القسيمة",
+  "reportsTotalRevenue": "إجمالي الإيرادات",
+  "reportsTransactions": "المعاملات",
+  "reportsNetRevenue": "صافي الإيرادات",
+  "reportsAvgBasket": "متوسط السلة",
+  "reportsNetProfit": "صافي الربح",
+  "reportsTotalExpenses": "إجمالي المصروفات",
+  "reportsTotalOrders": "إجمالي الطلبات",
+  "reportsTopCustomers2": "أفضل العملاء",
+  "reportsTotalCustomers": "إجمالي العملاء",
+  "reportsSessions": "الجلسات",
+  "reportsStaffMembers": "أعضاء الفريق",
+  "reportsFilterStaff": "الموظف",
+  "reportsFilterCategory": "الفئة",
+  "reportsFilterPayment": "الدفع",
+  "reportsFilterStatus": "الحالة",
+  "reportsProducts": "المنتجات",
+  "presetToday": "اليوم",
+  "presetYesterday": "أمس",
+  "presetLast7Days": "آخر 7 أيام",
+  "presetLast30Days": "آخر 30 يوماً",
+  "presetThisMonth": "هذا الشهر",
+  "presetLastMonth": "الشهر الماضي",
+  "presetThisQuarter": "هذا الربع",
+  "presetCustom": "مخصص",
+  "reportNavSales": "المبيعات",
+  "reportNavProducts": "المنتجات",
+  "reportNavCategories": "الفئات",
+  "reportNavStaff": "الموظفين",
+  "reportNavHourly": "بالساعة",
+  "reportNavPayments": "المدفوعات",
+  "reportNavInventory": "المخزون",
+  "reportNavFinancial": "المالية",
+  "reportNavCustomers": "العملاء",
+  "reportAllTime": "كل الأوقات",
+  "reportFilters": "التصفية",
+  "reportAllBranches": "جميع الفروع",
+  "reportQtyPrefix": "الكمية: {value}",
+  "@reportQtyPrefix": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "reportRevenue": "الإيرادات",
+  "reportNOrders": "{count} طلبات",
+  "@reportNOrders": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNetPrefix": "صافي: {value}",
+  "@reportNetPrefix": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNSold": "{count} مباع",
+  "@reportNSold": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportProfitAmount": "ربح {value}",
+  "@reportProfitAmount": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "reportCostAmount": "تكلفة {value}",
+  "@reportCostAmount": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNReturns": "{count} مرتجعات",
+  "@reportNReturns": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNProducts": "{count} منتجات",
+  "@reportNProducts": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportAvgAmount": "متوسط {value}",
+  "@reportAvgAmount": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNVisitsAvg": "{visits} زيارات · متوسط {avg}",
+  "@reportNVisitsAvg": {
+    "placeholders": {
+      "visits": {
+        "type": "String"
+      },
+      "avg": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNPts": "{count} نقطة",
+  "@reportNPts": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportQtyTimesAvg": "الكمية: {qty} × {cost}",
+  "@reportQtyTimesAvg": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "cost": {
+        "type": "String"
+      }
+    }
+  },
+  "reportCogsStock": "تكلفة البضاعة: {cogs} · المخزون: {stock}",
+  "@reportCogsStock": {
+    "placeholders": {
+      "cogs": {
+        "type": "String"
+      },
+      "stock": {
+        "type": "String"
+      }
+    }
+  },
+  "reportHealthy": "صحي",
+  "reportSlow": "بطيء",
+  "reportNUnits": "{count} وحدات",
+  "@reportNUnits": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNUnitsLost": "{count} وحدات مفقودة",
+  "@reportNUnitsLost": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportStockReorder": "المخزون: {current} · إعادة طلب عند: {reorder}",
+  "@reportStockReorder": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "reorder": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNeedN": "بحاجة {count}",
+  "@reportNeedN": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNTransactions": "{count} معاملات",
+  "@reportNTransactions": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportOpenedAt": "افتُتح: {time}",
+  "@reportOpenedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reportTodayVsYesterday": "اليوم: {today}  •  أمس: {yesterday}",
+  "@reportTodayVsYesterday": {
+    "placeholders": {
+      "today": {
+        "type": "String"
+      },
+      "yesterday": {
+        "type": "String"
+      }
+    }
+  },
+  "reportLegendRevenue": "الإيرادات",
+  "reportLegendCost": "التكلفة",
+  "reportLegendNetProfit": "صافي الربح"
 }

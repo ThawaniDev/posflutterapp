@@ -8,6 +8,7 @@ import 'package:wameedpos/features/reports/providers/report_state.dart';
 import 'package:wameedpos/features/reports/widgets/report_charts.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class StaffPerformancePage extends ConsumerStatefulWidget {
   const StaffPerformancePage({super.key});
@@ -17,6 +18,8 @@ class StaffPerformancePage extends ConsumerStatefulWidget {
 }
 
 class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   ReportFilters _filters = const ReportFilters();
 
   @override
@@ -39,7 +42,7 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
     final state = ref.watch(staffPerformanceProvider);
 
     return ReportPageScaffold(
-      title: 'Staff Performance',
+      title: l10n.sidebarStaffPerformance,
       filterPanel: ReportFilterPanel(
         filters: _filters,
         onFiltersChanged: _onFiltersChanged,
@@ -54,7 +57,7 @@ class _StaffPerformancePageState extends ConsumerState<StaffPerformancePage> {
         StaffPerformanceInitial() || StaffPerformanceLoading() => PosLoadingSkeleton.list(),
         StaffPerformanceError(:final message) => PosErrorState(message: message, onRetry: _loadData),
         StaffPerformanceLoaded(:final staff) =>
-          staff.isEmpty ? const PosEmptyState(title: 'No staff performance data', icon: Icons.people) : _StaffList(staff: staff),
+          staff.isEmpty ? PosEmptyState(title: l10n.reportsNoStaffData, icon: Icons.people) : _StaffList(staff: staff),
       },
     );
   }
@@ -67,6 +70,7 @@ class _StaffList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final totalRevenue = staff.fold<double>(0, (sum, s) => sum + (double.tryParse(s['total_revenue'].toString()) ?? 0.0));
     final totalOrders = staff.fold<int>(0, (sum, s) => sum + (s['total_orders'] as num).toInt());
@@ -77,21 +81,21 @@ class _StaffList extends StatelessWidget {
         // Top KPIs
         ReportKpiGrid(
           cards: [
-            ReportKpiCard(label: 'Staff Members', value: '${staff.length}', icon: Icons.people_rounded, color: AppColors.primary),
+            ReportKpiCard(label: l10n.staffMembers, value: '${staff.length}', icon: Icons.people_rounded, color: AppColors.primary),
             ReportKpiCard(
-              label: 'Total Revenue',
+              label: l10n.totalRevenue,
               value: formatCurrency(totalRevenue),
               icon: Icons.attach_money_rounded,
               color: AppColors.success,
             ),
             ReportKpiCard(
-              label: 'Total Orders',
+              label: l10n.staffTotalOrders,
               value: formatCompact(totalOrders),
               icon: Icons.receipt_long_rounded,
               color: AppColors.info,
             ),
             ReportKpiCard(
-              label: 'Avg per Staff',
+              label: l10n.reportsAvgPerStaff,
               value: staff.isNotEmpty ? formatCurrency(totalRevenue / staff.length) : '\u00810',
               icon: Icons.person_rounded,
               color: AppColors.warning,
@@ -102,7 +106,7 @@ class _StaffList extends StatelessWidget {
         // Bar Chart — Staff revenue comparison
         if (staff.isNotEmpty) ...[
           const SizedBox(height: 20),
-          const ReportSectionHeader(title: 'Revenue by Staff', icon: Icons.bar_chart_rounded),
+          ReportSectionHeader(title: l10n.reportsRevenueByStaff, icon: Icons.bar_chart_rounded),
           ReportDataCard(
             child: ReportBarChart(
               data: staff.take(10).toList(),
@@ -117,7 +121,7 @@ class _StaffList extends StatelessWidget {
         ],
 
         const SizedBox(height: 24),
-        const ReportSectionHeader(title: 'Staff Ranked by Revenue', icon: Icons.leaderboard_rounded),
+        ReportSectionHeader(title: l10n.reportsStaffRankedByRevenue, icon: Icons.leaderboard_rounded),
 
         ReportDataCard(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -193,8 +197,8 @@ class _StaffList extends StatelessWidget {
                               Wrap(
                                 spacing: 6,
                                 children: [
-                                  ReportBadge(label: '$orders orders', color: AppColors.info),
-                                  ReportBadge(label: 'Avg ${formatCurrency(avgOrder)}', color: AppColors.primary),
+                                  ReportBadge(label: l10n.reportNOrders(orders.toString()), color: AppColors.info),
+                                  ReportBadge(label: l10n.reportAvgAmount(formatCurrency(avgOrder)), color: AppColors.primary),
                                   if (discounts > 0)
                                     ReportBadge(label: '-${formatCurrency(discounts)}', color: AppColors.warning),
                                 ],

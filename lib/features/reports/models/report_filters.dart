@@ -1,3 +1,4 @@
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// Unified filter model for all report pages.
@@ -130,6 +131,19 @@ enum DatePreset {
 
   final String label;
   const DatePreset(this.label);
+
+  String localizedLabel(AppLocalizations l10n) {
+    return switch (this) {
+      DatePreset.today => l10n.presetToday,
+      DatePreset.yesterday => l10n.presetYesterday,
+      DatePreset.last7Days => l10n.presetLast7Days,
+      DatePreset.last30Days => l10n.presetLast30Days,
+      DatePreset.thisMonth => l10n.presetThisMonth,
+      DatePreset.lastMonth => l10n.presetLastMonth,
+      DatePreset.thisQuarter => l10n.presetThisQuarter,
+      DatePreset.custom => l10n.presetCustom,
+    };
+  }
 
   DateTimeRange? toDateRange() {
     final now = DateTime.now();

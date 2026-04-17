@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminCmsPageListPage extends ConsumerStatefulWidget {
   const AdminCmsPageListPage({super.key});
@@ -15,6 +16,8 @@ class AdminCmsPageListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _selectedType;
   String? _storeId;
@@ -55,7 +58,7 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('CMS Pages'),
+        title: Text(l10n.cmsPages),
         actions: [IconButton(icon: const Icon(Icons.add), onPressed: () {})],
       ),
       body: Column(
@@ -82,7 +85,7 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
                     items: [
                       PosDropdownItem(value: 'legal', label: 'Legal'),
                       PosDropdownItem(value: 'marketing', label: 'Marketing'),
-                      PosDropdownItem(value: 'general', label: 'General'),
+                      PosDropdownItem(value: 'general', label: l10n.settingsGeneral),
                     ],
                     selectedValue: _selectedType,
                     onChanged: (v) {

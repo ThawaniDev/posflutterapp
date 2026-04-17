@@ -10,6 +10,7 @@ import 'package:wameedpos/features/provider_payments/enums/provider_payment_stat
 import 'package:wameedpos/features/provider_payments/models/provider_payment.dart';
 import 'package:wameedpos/features/provider_payments/providers/provider_payment_providers.dart';
 import 'package:wameedpos/features/provider_payments/providers/provider_payment_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ProviderPaymentsPage extends ConsumerStatefulWidget {
   const ProviderPaymentsPage({super.key});
@@ -19,6 +20,8 @@ class ProviderPaymentsPage extends ConsumerStatefulWidget {
 }
 
 class _ProviderPaymentsPageState extends ConsumerState<ProviderPaymentsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _statusFilter;
 
   @override
@@ -34,7 +37,7 @@ class _ProviderPaymentsPageState extends ConsumerState<ProviderPaymentsPage> {
     final paymentsState = ref.watch(providerPaymentsListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Payments'), centerTitle: true),
+      appBar: AppBar(title: Text(l10n.sidebarPayments), centerTitle: true),
       body: Column(
         children: [
           // Status filter chips
@@ -91,7 +94,7 @@ class _ProviderPaymentsPageState extends ConsumerState<ProviderPaymentsPage> {
       final payments = state.payments;
 
       if (payments.isEmpty) {
-        return const PosEmptyState(title: 'No payments found', icon: Icons.payment_outlined);
+        return PosEmptyState(title: l10n.providerPaymentNoPayments, icon: Icons.payment_outlined);
       }
 
       return RefreshIndicator(

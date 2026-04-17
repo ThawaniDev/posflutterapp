@@ -16,6 +16,8 @@ class GiftCardsPage extends ConsumerStatefulWidget {
 }
 
 class _GiftCardsPageState extends ConsumerState<GiftCardsPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late TabController _tabController;
 
   @override
@@ -36,7 +38,7 @@ class _GiftCardsPageState extends ConsumerState<GiftCardsPage> with SingleTicker
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gift Cards'),
+        title: Text(l10n.giftCards),
         actions: [
           IconButton(
             icon: const Icon(Icons.info_outline),
@@ -46,10 +48,10 @@ class _GiftCardsPageState extends ConsumerState<GiftCardsPage> with SingleTicker
         ],
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Issue', icon: Icon(Icons.card_giftcard)),
-            Tab(text: 'Check Balance', icon: Icon(Icons.search)),
-            Tab(text: 'Redeem', icon: Icon(Icons.redeem)),
+          tabs: [
+            Tab(text: l10n.issue, icon: Icon(Icons.card_giftcard)),
+            Tab(text: l10n.checkBalance, icon: Icon(Icons.search)),
+            Tab(text: l10n.redeem, icon: Icon(Icons.redeem)),
           ],
         ),
       ),
@@ -76,6 +78,8 @@ class _IssueTab extends ConsumerStatefulWidget {
 }
 
 class _IssueTabState extends ConsumerState<_IssueTab> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _amountController = TextEditingController();
   final _recipientController = TextEditingController();
   final _presetAmounts = [50.0, 100.0, 200.0, 500.0];
@@ -98,11 +102,11 @@ class _IssueTabState extends ConsumerState<_IssueTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Issue New Gift Card', style: theme.textTheme.titleMedium),
+          Text(l10n.issueNewGiftCard, style: theme.textTheme.titleMedium),
           AppSpacing.gapH16,
 
           // Preset amounts
-          Text('Quick Amount', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+          Text(l10n.quickAmount, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
           AppSpacing.gapH8,
           Wrap(
             spacing: 8,
@@ -134,8 +138,8 @@ class _IssueTabState extends ConsumerState<_IssueTab> {
 
           TextField(
             controller: _recipientController,
-            decoration: const InputDecoration(
-              labelText: 'Recipient Name (optional)',
+            decoration: InputDecoration(
+              labelText: l10n.recipientNameOptional,
               border: OutlineInputBorder(),
               prefixIcon: Icon(Icons.person_outline),
             ),
@@ -158,7 +162,7 @@ class _IssueTabState extends ConsumerState<_IssueTab> {
               icon: state is GiftCardLoading
                   ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
                   : const Icon(Icons.card_giftcard),
-              label: const Text('Issue Gift Card'),
+              label: Text(l10n.issueGiftCard),
             ),
           ),
           AppSpacing.gapH24,
@@ -199,6 +203,8 @@ class _CheckBalanceTab extends ConsumerStatefulWidget {
 }
 
 class _CheckBalanceTabState extends ConsumerState<_CheckBalanceTab> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _codeController = TextEditingController();
 
   @override
@@ -217,18 +223,18 @@ class _CheckBalanceTabState extends ConsumerState<_CheckBalanceTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Check Gift Card Balance', style: theme.textTheme.titleMedium),
+          Text(l10n.checkGiftCardBalance, style: theme.textTheme.titleMedium),
           AppSpacing.gapH16,
           Row(
             children: [
               Expanded(
                 child: TextField(
                   controller: _codeController,
-                  decoration: const InputDecoration(
-                    labelText: 'Gift Card Code',
+                  decoration: InputDecoration(
+                    labelText: l10n.giftCardCode,
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.qr_code),
-                    hintText: 'Enter or scan code',
+                    hintText: l10n.enterOrScanCode,
                   ),
                 ),
               ),
@@ -242,7 +248,7 @@ class _CheckBalanceTabState extends ConsumerState<_CheckBalanceTab> {
                       },
                 child: state is GiftCardLoading
                     ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                    : const Text('Check'),
+                    : Text(l10n.check),
               ),
             ],
           ),
@@ -261,7 +267,7 @@ class _CheckBalanceTabState extends ConsumerState<_CheckBalanceTab> {
                       style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
                     ),
                     AppSpacing.gapH4,
-                    Text('Available Balance', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+                    Text(l10n.availableBalance, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
                     if (state.lastBalance!['status'] != null) ...[
                       AppSpacing.gapH12,
                       _statusBadge(GiftCardStatus.tryFromValue(state.lastBalance!['status'] as String?)),
@@ -312,6 +318,8 @@ class _RedeemTab extends ConsumerStatefulWidget {
 }
 
 class _RedeemTabState extends ConsumerState<_RedeemTab> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _codeController = TextEditingController();
   final _amountController = TextEditingController();
 
@@ -332,12 +340,12 @@ class _RedeemTabState extends ConsumerState<_RedeemTab> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Redeem Gift Card', style: theme.textTheme.titleMedium),
+          Text(l10n.redeemGiftCard, style: theme.textTheme.titleMedium),
           AppSpacing.gapH16,
           TextField(
             controller: _codeController,
-            decoration: const InputDecoration(
-              labelText: 'Gift Card Code',
+            decoration: InputDecoration(
+              labelText: l10n.giftCardCode,
               border: OutlineInputBorder(),
               prefixIcon: Icon(Icons.qr_code),
             ),
@@ -366,7 +374,7 @@ class _RedeemTabState extends ConsumerState<_RedeemTab> {
               icon: state is GiftCardLoading
                   ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
                   : const Icon(Icons.redeem),
-              label: const Text('Redeem'),
+              label: Text(l10n.redeem),
             ),
           ),
           AppSpacing.gapH24,
@@ -404,6 +412,7 @@ class _GiftCardResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       shape: RoundedRectangleBorder(borderRadius: AppRadius.borderLg),
       child: Padding(
@@ -413,7 +422,7 @@ class _GiftCardResultCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Gift Card Issued', style: theme.textTheme.titleSmall),
+                Text(l10n.giftCardIssued, style: theme.textTheme.titleSmall),
                 _statusBadge(card.status),
               ],
             ),
@@ -428,7 +437,7 @@ class _GiftCardResultCard extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Text('Code', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+                  Text(l10n.code, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
                   AppSpacing.gapH4,
                   SelectableText(
                     card.code,

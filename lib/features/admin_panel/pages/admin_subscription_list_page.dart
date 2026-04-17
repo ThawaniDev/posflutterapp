@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminSubscriptionListPage extends ConsumerStatefulWidget {
   const AdminSubscriptionListPage({super.key});
@@ -16,6 +17,8 @@ class AdminSubscriptionListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminSubscriptionListPageState extends ConsumerState<AdminSubscriptionListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String? _statusFilter;
 
@@ -43,7 +46,7 @@ class _AdminSubscriptionListPageState extends ConsumerState<AdminSubscriptionLis
     final state = ref.watch(subscriptionListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Subscriptions')),
+      appBar: AppBar(title: Text(l10n.subscriptions)),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -54,7 +57,7 @@ class _AdminSubscriptionListPageState extends ConsumerState<AdminSubscriptionLis
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  _FilterChip(label: 'All', selected: _statusFilter == null, onSelected: () => _onFilterChanged(null)),
+                  _FilterChip(label: l10n.all, selected: _statusFilter == null, onSelected: () => _onFilterChanged(null)),
                   for (final s in ['active', 'trial', 'grace', 'cancelled'])
                     Padding(
                       padding: const EdgeInsets.only(left: 8),
@@ -78,7 +81,7 @@ class _AdminSubscriptionListPageState extends ConsumerState<AdminSubscriptionLis
                     Text(message, style: const TextStyle(color: AppColors.error)),
                     AppSpacing.gapH16,
                     PosButton(
-                      label: 'Retry',
+                      label: l10n.retry,
                       variant: PosButtonVariant.outline,
                       onPressed: () =>
                           ref.read(subscriptionListProvider.notifier).loadSubscriptions(status: _statusFilter, storeId: _storeId),
@@ -88,7 +91,7 @@ class _AdminSubscriptionListPageState extends ConsumerState<AdminSubscriptionLis
               ),
               SubscriptionListLoaded(:final subscriptions) =>
                 subscriptions.isEmpty
-                    ? const Center(child: Text('No subscriptions found'))
+                    ? Center(child: Text(l10n.noSubscriptionsFound))
                     : ListView.builder(
                         padding: AppSpacing.paddingAll16,
                         itemCount: subscriptions.length,

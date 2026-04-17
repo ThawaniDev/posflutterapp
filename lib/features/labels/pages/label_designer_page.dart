@@ -44,6 +44,8 @@ class LabelDesignerPage extends ConsumerStatefulWidget {
 }
 
 class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _nameController = TextEditingController();
   final _widthController = TextEditingController(text: '50');
   final _heightController = TextEditingController(text: '30');
@@ -493,7 +495,7 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
                 AppSpacing.gapW8,
                 Expanded(
                   child: PosButton(
-                    label: 'Properties',
+                    label: l10n.layoutProperties,
                     icon: Icons.tune_rounded,
                     variant: _selectedElement != null ? PosButtonVariant.soft : PosButtonVariant.outline,
                     size: PosButtonSize.sm,
@@ -742,6 +744,7 @@ class _ElementPropertiesPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final typeInfo = LabelDesignerPage._availableElements.firstWhere(
       (e) => e.key == element.type,
       orElse: () => const _ElementType('custom_text', Icons.text_snippet_rounded, 'Unknown'),

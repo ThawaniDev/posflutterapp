@@ -4,6 +4,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 import '../models/custom_cake_order.dart';
 import '../providers/bakery_providers.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class CakeOrderFormPage extends ConsumerStatefulWidget {
   final CustomCakeOrder? order;
@@ -14,6 +15,8 @@ class CakeOrderFormPage extends ConsumerStatefulWidget {
 }
 
 class _CakeOrderFormPageState extends ConsumerState<CakeOrderFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
   bool get _isEditing => widget.order != null;
@@ -107,12 +110,12 @@ class _CakeOrderFormPageState extends ConsumerState<CakeOrderFormPage> {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            PosTextField(controller: _descriptionCtrl, label: 'Description', hint: 'Cake description', maxLines: 3),
+            PosTextField(controller: _descriptionCtrl, label: l10n.description, hint: 'Cake description', maxLines: 3),
             SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
-                  child: PosTextField(controller: _sizeCtrl, label: 'Size', hint: 'e.g. 8 inch'),
+                  child: PosTextField(controller: _sizeCtrl, label: l10n.labelSize, hint: 'e.g. 8 inch'),
                 ),
                 AppSpacing.gapW12,
                 Expanded(

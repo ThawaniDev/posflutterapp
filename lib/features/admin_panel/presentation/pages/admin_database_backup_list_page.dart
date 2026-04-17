@@ -7,6 +7,7 @@ import '../../../../core/providers/branch_context_provider.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import '../../widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminDatabaseBackupListPage extends ConsumerStatefulWidget {
   const AdminDatabaseBackupListPage({super.key});
@@ -16,6 +17,8 @@ class AdminDatabaseBackupListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminDatabaseBackupListPageState extends ConsumerState<AdminDatabaseBackupListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -44,7 +47,7 @@ class _AdminDatabaseBackupListPageState extends ConsumerState<AdminDatabaseBacku
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Database Backups'),
+        title: Text(l10n.databaseBackups),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         actions: [IconButton(icon: const Icon(Icons.add), onPressed: () => _showCreateDialog(context))],
@@ -63,7 +66,7 @@ class _AdminDatabaseBackupListPageState extends ConsumerState<AdminDatabaseBacku
                     const SizedBox(height: AppSpacing.md),
                     Text(msg, textAlign: TextAlign.center),
                     const SizedBox(height: AppSpacing.md),
-                    ElevatedButton(onPressed: () => _loadData(), child: const Text('Retry')),
+                    ElevatedButton(onPressed: () => _loadData(), child: Text(l10n.retry)),
                   ],
                 ),
               ),
@@ -120,7 +123,7 @@ class _AdminDatabaseBackupListPageState extends ConsumerState<AdminDatabaseBacku
   void _showCreateDialog(BuildContext context) async {
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Create Backup',
+      title: l10n.backupCreate,
       message: 'Start a new manual database backup?',
       confirmLabel: 'Create',
       cancelLabel: 'Cancel',

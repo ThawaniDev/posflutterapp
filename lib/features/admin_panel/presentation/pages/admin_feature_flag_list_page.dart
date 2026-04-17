@@ -6,6 +6,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminFeatureFlagListPage extends ConsumerStatefulWidget {
   const AdminFeatureFlagListPage({super.key});
@@ -15,6 +16,8 @@ class AdminFeatureFlagListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminFeatureFlagListPageState extends ConsumerState<AdminFeatureFlagListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -44,7 +47,7 @@ class _AdminFeatureFlagListPageState extends ConsumerState<AdminFeatureFlagListP
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Feature Flags'),
+        title: Text(l10n.adminFeatureFlags),
         actions: [IconButton(icon: const Icon(Icons.add), onPressed: () {})],
       ),
       body: Column(
@@ -109,7 +112,7 @@ class _AdminFeatureFlagListPageState extends ConsumerState<AdminFeatureFlagListP
                     const SizedBox(height: 8),
                     Text(message),
                     const SizedBox(height: 16),
-                    ElevatedButton(onPressed: () => _loadFlags(), child: const Text('Retry')),
+                    ElevatedButton(onPressed: () => _loadFlags(), child: Text(l10n.retry)),
                   ],
                 ),
               ),

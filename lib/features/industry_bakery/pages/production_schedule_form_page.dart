@@ -4,6 +4,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 import '../models/production_schedule.dart';
 import '../providers/bakery_providers.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ProductionScheduleFormPage extends ConsumerStatefulWidget {
   final ProductionSchedule? schedule;
@@ -14,6 +15,8 @@ class ProductionScheduleFormPage extends ConsumerStatefulWidget {
 }
 
 class _ProductionScheduleFormPageState extends ConsumerState<ProductionScheduleFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
   bool get _isEditing => widget.schedule != null;
@@ -110,7 +113,7 @@ class _ProductionScheduleFormPageState extends ConsumerState<ProductionScheduleF
               child: AbsorbPointer(
                 child: PosTextField(
                   controller: TextEditingController(text: '${_scheduleDate.day}/${_scheduleDate.month}/${_scheduleDate.year}'),
-                  label: 'Schedule Date',
+                  label: l10n.scheduleDate,
                   suffixIcon: Icons.calendar_today,
                   readOnly: true,
                 ),
@@ -122,7 +125,7 @@ class _ProductionScheduleFormPageState extends ConsumerState<ProductionScheduleF
                 Expanded(
                   child: PosTextField(
                     controller: _plannedBatchesCtrl,
-                    label: 'Planned Batches',
+                    label: l10n.plannedBatches,
                     hint: '0',
                     keyboardType: TextInputType.number,
                   ),
@@ -131,7 +134,7 @@ class _ProductionScheduleFormPageState extends ConsumerState<ProductionScheduleF
                 Expanded(
                   child: PosTextField(
                     controller: _plannedYieldCtrl,
-                    label: 'Planned Yield',
+                    label: l10n.plannedYield,
                     hint: '0',
                     keyboardType: TextInputType.number,
                   ),
@@ -145,7 +148,7 @@ class _ProductionScheduleFormPageState extends ConsumerState<ProductionScheduleF
                   Expanded(
                     child: PosTextField(
                       controller: _actualBatchesCtrl,
-                      label: 'Actual Batches',
+                      label: l10n.actualBatches,
                       hint: '0',
                       keyboardType: TextInputType.number,
                     ),
@@ -154,7 +157,7 @@ class _ProductionScheduleFormPageState extends ConsumerState<ProductionScheduleF
                   Expanded(
                     child: PosTextField(
                       controller: _actualYieldCtrl,
-                      label: 'Actual Yield',
+                      label: l10n.actualYield,
                       hint: '0',
                       keyboardType: TextInputType.number,
                     ),
@@ -163,7 +166,7 @@ class _ProductionScheduleFormPageState extends ConsumerState<ProductionScheduleF
               ),
             ],
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _notesCtrl, label: 'Notes', hint: 'Additional notes...', maxLines: 3),
+            PosTextField(controller: _notesCtrl, label: l10n.posNotes, hint: 'Additional notes...', maxLines: 3),
           ],
         ),
       ),

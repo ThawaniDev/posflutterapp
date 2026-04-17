@@ -16,6 +16,8 @@ class AdminWameedAIUsageLogsPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminWameedAIUsageLogsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _from;
   String? _to;
   String? _feature;
@@ -244,7 +246,7 @@ class _State extends ConsumerState<AdminWameedAIUsageLogsPage> {
                   DataColumn(label: Text(l10n.cost), numeric: true),
                   DataColumn(label: Text(l10n.latency), numeric: true),
                   DataColumn(label: Text(l10n.cached)),
-                  DataColumn(label: Text('Date')),
+                  DataColumn(label: Text(l10n.txColDate)),
                 ],
                 rows: items.map((log) {
                   final status = log['status']?.toString() ?? '';

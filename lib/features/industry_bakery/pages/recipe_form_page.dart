@@ -7,6 +7,7 @@ import '../providers/bakery_providers.dart';
 import 'package:wameedpos/features/catalog/models/product.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_providers.dart';
 import 'package:wameedpos/features/catalog/providers/catalog_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class RecipeFormPage extends ConsumerStatefulWidget {
   final BakeryRecipe? recipe;
@@ -17,6 +18,8 @@ class RecipeFormPage extends ConsumerStatefulWidget {
 }
 
 class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _isEditing = false;
   bool _saving = false;
@@ -100,10 +103,10 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            PosTextField(controller: _nameCtrl, label: 'Recipe Name', hint: 'Enter recipe name'),
+            PosTextField(controller: _nameCtrl, label: l10n.recipeName, hint: 'Enter recipe name'),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
-              label: 'Product',
+              label: l10n.wameedAIProduct,
               items: products.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
               selectedValue: _selectedProductId,
               onChanged: (v) => setState(() => _selectedProductId = v),
@@ -112,7 +115,7 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _expectedYieldCtrl,
-              label: 'Expected Yield',
+              label: l10n.expectedYield,
               hint: 'Number of units',
               keyboardType: TextInputType.number,
             ),
@@ -122,7 +125,7 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _prepTimeCtrl,
-                    label: 'Prep Time (min)',
+                    label: l10n.prepTimeMin,
                     hint: '0',
                     keyboardType: TextInputType.number,
                   ),
@@ -131,7 +134,7 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _bakeTimeCtrl,
-                    label: 'Bake Time (min)',
+                    label: l10n.bakeTimeMin,
                     hint: '0',
                     keyboardType: TextInputType.number,
                   ),
@@ -141,14 +144,14 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _bakeTempCtrl,
-              label: 'Bake Temp (°C)',
+              label: l10n.bakeTempC,
               hint: 'Temperature',
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _instructionsCtrl,
-              label: 'Instructions',
+              label: l10n.instructions,
               hint: 'Detailed baking instructions...',
               maxLines: 5,
             ),

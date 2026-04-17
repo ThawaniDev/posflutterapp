@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminBillingInvoiceDetailPage extends ConsumerStatefulWidget {
   final String invoiceId;
@@ -14,6 +15,8 @@ class AdminBillingInvoiceDetailPage extends ConsumerStatefulWidget {
 }
 
 class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvoiceDetailPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -35,7 +38,7 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
     final state = ref.watch(billingInvoiceDetailProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Invoice Detail'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.invoiceDetail), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: switch (state) {
         BillingInvoiceDetailLoading() => const Center(child: CircularProgressIndicator()),
         BillingInvoiceDetailLoaded(invoice: final inv) => SingleChildScrollView(
@@ -83,7 +86,7 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
               const SizedBox(height: AppSpacing.md),
 
               // Line Items
-              Text('Line Items', style: Theme.of(context).textTheme.titleMedium),
+              Text(l10n.wameedAILineItems, style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: AppSpacing.sm),
               if (inv['line_items'] != null)
                 ...List<Map<String, dynamic>>.from(inv['line_items'] as List).map(
@@ -118,7 +121,7 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
                       // Show refund dialog
                     },
                     icon: const Icon(Icons.undo),
-                    label: const Text('Process Refund'),
+                    label: Text(l10n.adminFinOpsProcessRefund),
                     style: ElevatedButton.styleFrom(backgroundColor: AppColors.warning, foregroundColor: Colors.white),
                   ),
                 ),
@@ -142,14 +145,14 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
                     // Download PDF
                   },
                   icon: const Icon(Icons.picture_as_pdf),
-                  label: const Text('Download PDF'),
+                  label: Text(l10n.subscriptionDownloadPdf),
                 ),
               ),
             ],
           ),
         ),
         BillingInvoiceDetailError(message: final msg) => Center(child: Text('Error: $msg')),
-        _ => const Center(child: Text('Loading...')),
+        _ => Center(child: Text(l10n.loading)),
       },
     );
   }

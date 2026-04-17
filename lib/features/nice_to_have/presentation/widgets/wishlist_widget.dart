@@ -4,22 +4,24 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import '../nice_to_have_providers.dart';
 import '../nice_to_have_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class WishlistWidget extends ConsumerWidget {
   const WishlistWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(wishlistProvider);
     return switch (state) {
-      WishlistInitial() => const Center(child: Text('Enter a customer ID to view wishlist')),
+      WishlistInitial() => Center(child: Text(l10n.enterACustomerIdToViewWishlist)),
       WishlistLoading() => const Center(child: CircularProgressIndicator()),
       WishlistError(:final message) => Center(
         child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
       ),
       WishlistLoaded(:final items) =>
         items.isEmpty
-            ? const Center(child: Text('Wishlist is empty'))
+            ? Center(child: Text(l10n.wishlistIsEmpty))
             : ListView.builder(
                 padding: AppSpacing.paddingAll16,
                 itemCount: items.length,

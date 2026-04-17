@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminABTestListPage extends ConsumerStatefulWidget {
   const AdminABTestListPage({super.key});
@@ -14,6 +15,8 @@ class AdminABTestListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminABTestListPageState extends ConsumerState<AdminABTestListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -49,7 +52,7 @@ class _AdminABTestListPageState extends ConsumerState<AdminABTestListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('A/B Tests'),
+        title: Text(l10n.adminABTests),
         actions: [IconButton(icon: const Icon(Icons.add), onPressed: () {})],
       ),
       body: Column(
@@ -102,7 +105,7 @@ class _AdminABTestListPageState extends ConsumerState<AdminABTestListPage> {
                     const SizedBox(height: 8),
                     Text(message),
                     const SizedBox(height: 16),
-                    ElevatedButton(onPressed: () => _loadTests(), child: const Text('Retry')),
+                    ElevatedButton(onPressed: () => _loadTests(), child: Text(l10n.retry)),
                   ],
                 ),
               ),

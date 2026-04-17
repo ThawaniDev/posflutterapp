@@ -16,6 +16,7 @@ class PosLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -29,7 +30,7 @@ class PosLoading extends StatelessWidget {
             AppSpacing.gapH12,
             Text(
               message!,
-              style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight),
+              style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
               textAlign: TextAlign.center,
             ),
           ],
@@ -86,25 +87,38 @@ class PosEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Center(
       child: Padding(
         padding: AppSpacing.paddingAll24,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (icon != null) ...[Icon(icon, size: iconSize, color: AppColors.primary20), AppSpacing.gapH16],
-            Text(title, style: AppTypography.headlineSmall, textAlign: TextAlign.center),
+            if (icon != null) ...[
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(color: AppColors.primary10, shape: BoxShape.circle),
+                child: Icon(icon, size: 40, color: AppColors.primary),
+              ),
+              AppSpacing.gapH24,
+            ],
+            Text(
+              title,
+              style: AppTypography.headlineSmall.copyWith(color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight),
+              textAlign: TextAlign.center,
+            ),
             if (subtitle != null) ...[
               AppSpacing.gapH8,
               Text(
                 subtitle!,
-                style: AppTypography.bodyMedium.copyWith(color: AppColors.textMutedLight),
+                style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                 textAlign: TextAlign.center,
               ),
             ],
             if (actionLabel != null && onAction != null) ...[
               AppSpacing.gapH24,
-              ElevatedButton(onPressed: onAction, child: Text(actionLabel!)),
+              FilledButton.icon(onPressed: onAction, icon: const Icon(Icons.add), label: Text(actionLabel!)),
             ],
           ],
         ),
@@ -129,6 +143,7 @@ class PosAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     Widget avatar = CircleAvatar(
       radius: radius,
       backgroundColor: AppColors.primary10,
@@ -155,7 +170,7 @@ class PosAvatar extends StatelessWidget {
             decoration: BoxDecoration(
               color: isOnline ? AppColors.success : AppColors.stockOut,
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.white, width: 2),
+              border: Border.all(color: isDark ? AppColors.cardDark : Colors.white, width: 2),
             ),
           ),
         ),
@@ -180,8 +195,11 @@ class PosDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final dividerColor = isDark ? AppColors.dividerDark : AppColors.dividerLight;
+
     if (label == null) {
-      return Divider(height: height, thickness: thickness, indent: indent, endIndent: endIndent);
+      return Divider(height: height, thickness: thickness, indent: indent, endIndent: endIndent, color: dividerColor);
     }
 
     return SizedBox(
@@ -189,14 +207,17 @@ class PosDivider extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Divider(thickness: thickness, indent: indent),
+            child: Divider(thickness: thickness, indent: indent, color: dividerColor),
           ),
           Padding(
             padding: AppSpacing.paddingH12,
-            child: Text(label!, style: AppTypography.overline.copyWith(color: AppColors.textMutedLight)),
+            child: Text(
+              label!,
+              style: AppTypography.overline.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+            ),
           ),
           Expanded(
-            child: Divider(thickness: thickness, endIndent: endIndent),
+            child: Divider(thickness: thickness, endIndent: endIndent, color: dividerColor),
           ),
         ],
       ),
@@ -230,6 +251,7 @@ class PosProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final barHeight = height ?? AppSizes.progressBarHeight;
 
     return Column(
@@ -242,9 +264,18 @@ class PosProgressBar extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (label != null) Text(label!, style: AppTypography.labelSmall),
+                if (label != null)
+                  Text(
+                    label!,
+                    style: AppTypography.labelSmall.copyWith(
+                      color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                    ),
+                  ),
                 if (showPercentage)
-                  Text('${(value * 100).toInt()}%', style: AppTypography.labelSmall.copyWith(color: AppColors.textMutedLight)),
+                  Text(
+                    '${(value * 100).toInt()}%',
+                    style: AppTypography.labelSmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  ),
               ],
             ),
           ),
@@ -254,7 +285,7 @@ class PosProgressBar extends StatelessWidget {
             value: value.clamp(0.0, 1.0),
             minHeight: barHeight,
             color: color ?? AppColors.primary,
-            backgroundColor: trackColor ?? AppColors.borderSubtleLight,
+            backgroundColor: trackColor ?? (isDark ? AppColors.borderDark : AppColors.borderSubtleLight),
           ),
         ),
       ],
@@ -277,6 +308,7 @@ class PosSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: padding ?? AppSpacing.paddingAll16,
       child: Column(
@@ -286,7 +318,12 @@ class PosSection extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(title!, style: AppTypography.headlineSmall),
+                Text(
+                  title!,
+                  style: AppTypography.headlineSmall.copyWith(
+                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                  ),
+                ),
                 if (titleAction != null) titleAction!,
               ],
             ),
@@ -413,7 +450,11 @@ class PosStepIndicator extends StatelessWidget {
                       : Text(
                           '${i + 1}',
                           style: AppTypography.labelSmall.copyWith(
-                            color: isCurrent ? AppColors.primary : AppColors.textMutedLight,
+                            color: isCurrent
+                                ? AppColors.primary
+                                : (Theme.of(context).brightness == Brightness.dark
+                                      ? AppColors.textMutedDark
+                                      : AppColors.textMutedLight),
                             fontWeight: FontWeight.w700,
                           ),
                         ),

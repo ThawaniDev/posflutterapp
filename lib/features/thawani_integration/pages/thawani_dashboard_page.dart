@@ -17,6 +17,8 @@ class ThawaniDashboardPage extends ConsumerStatefulWidget {
 }
 
 class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late final TabController _tabController;
 
   @override
@@ -200,28 +202,27 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> wit
             ],
             AppSpacing.gapH24,
             // Quick Actions
-            Text(
-              'Quick Actions',
+            Text(l10n.deliveryQuickActions,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Theme.of(context).textTheme.bodyLarge?.color),
             ),
             AppSpacing.gapH12,
             _actionTile(
               icon: Icons.sync,
-              title: 'Sync Management',
+              title: l10n.syncManagement,
               subtitle: 'Push/pull products & categories',
               color: AppColors.info,
               onTap: () => context.push(Routes.thawaniSync),
             ),
             _actionTile(
               icon: Icons.category,
-              title: 'Category Mappings',
+              title: l10n.categoryMappings,
               subtitle: '$totalCategoriesMapped categories mapped',
               color: AppColors.purple,
               onTap: () => context.push(Routes.thawaniCategoryMappings),
             ),
             _actionTile(
               icon: Icons.history,
-              title: 'Sync Logs',
+              title: l10n.syncLogs,
               subtitle: '$syncLogsToday operations today',
               color: AppColors.success,
               onTap: () => context.push(Routes.thawaniSyncLogs),

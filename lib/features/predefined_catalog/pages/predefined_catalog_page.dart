@@ -18,6 +18,8 @@ class PredefinedCatalogPage extends ConsumerStatefulWidget {
 }
 
 class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _selectedBusinessTypeId;
 
   @override
@@ -99,7 +101,7 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Predefined Catalog'),
+        title: Text(l10n.sidebarPredefinedCatalog),
         actions: [
           if (_selectedBusinessTypeId != null)
             PosButton(
@@ -112,7 +114,7 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
           const SizedBox(width: AppSpacing.sm),
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(predefinedCategoriesProvider.notifier).load(),
           ),
         ],

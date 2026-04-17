@@ -4426,5 +4426,474 @@
   "providerPaymentPurposeOther": "Other",
   "pinLoginTitle": "Enter PIN",
   "pinLoginNoStore": "No store session found. Please sign in with email.",
-  "pinLoginEmailInstead": "Sign in with email instead"
+  "pinLoginEmailInstead": "Sign in with email instead",
+  "categoryMappings": "Category Mappings",
+  "syncManagement": "Sync Management",
+  "syncLogs": "Sync Logs",
+  "newExport": "New Export",
+  "autoExportSettings": "Auto Export Settings",
+  "dayOfWeek": "Day of Week",
+  "dayOfMonth": "Day of Month",
+  "exportTime": "Export Time",
+  "retryOnFailure": "Retry on Failure",
+  "automaticallyRetryFailedExports": "Automatically retry failed exports",
+  "mapPosAccountsToProviderAccounts": "Map POS accounts to provider accounts",
+  "viewAndManageExports": "View and manage exports",
+  "scheduleAutomaticExports": "Schedule automatic exports",
+  "connect": "Connect",
+  "supportedLanguages": "Supported Languages",
+  "noPublishedVersionsYet": "No published versions yet",
+  "translationVersions": "Translation Versions",
+  "noCashSessionsFound": "No cash sessions found",
+  "openingCheckout": "Opening checkout...",
+  "sellPrice": "Sell Price",
+  "offerPrice": "Offer Price",
+  "costPrice": "Cost Price",
+  "productNotFound": "Product Not Found",
+  "networkDiscovery": "Network Discovery",
+  "searchPromotions": "Search promotions...",
+  "analytics": "Analytics",
+  "generateCoupons": "Generate Coupons",
+  "applyCoupon": "Apply Coupon",
+  "couponCode": "Coupon Code",
+  "enterCouponCode": "Enter coupon code",
+  "promotionName": "Promotion Name *",
+  "buyQuantity": "Buy Quantity",
+  "getQuantity": "Get Quantity",
+  "getDiscount": "Get Discount %",
+  "bundlePrice": "Bundle Price",
+  "minOrderTotal": "Min Order Total",
+  "maxUses": "Max Uses",
+  "maxPerCustomer": "Max Per Customer",
+  "requiresCouponCode": "Requires Coupon Code",
+  "stackable": "Stackable",
+  "count": "Count *",
+  "prefixOptional": "Prefix (optional)",
+  "maxUsesPerCouponOptional": "Max Uses Per Coupon (optional)",
+  "expandAll": "Expand all",
+  "collapseAll": "Collapse all",
+  "addSubcategory": "Add subcategory",
+  "noSignagePlaylists": "No signage playlists",
+  "noAppointments": "No appointments",
+  "enterACustomerIdToViewWishlist": "Enter a customer ID to view wishlist",
+  "wishlistIsEmpty": "Wishlist is empty",
+  "noGiftRegistries": "No gift registries",
+  "noSyncHistoryYet": "No sync history yet",
+  "recentSyncActivity": "Recent Sync Activity",
+  "noBackupsYet": "No backups yet",
+  "editReservation": "Edit Reservation",
+  "reservationDate": "Reservation Date",
+  "time": "Time",
+  "durationMinutes": "Duration (minutes)",
+  "tableOptional": "Table (optional)",
+  "editTable": "Edit Table",
+  "displayNameOptional": "Display Name (optional)",
+  "zoneOptional": "Zone (optional)",
+  "positionX": "Position X",
+  "positionY": "Position Y",
+  "openTab": "Open Tab",
+  "recipeName": "Recipe Name",
+  "expectedYield": "Expected Yield",
+  "prepTimeMin": "Prep Time (min)",
+  "bakeTimeMin": "Bake Time (min)",
+  "bakeTempC": "Bake Temp (°C)",
+  "instructions": "Instructions",
+  "scheduleDate": "Schedule Date",
+  "plannedBatches": "Planned Batches",
+  "plannedYield": "Planned Yield",
+  "actualBatches": "Actual Batches",
+  "actualYield": "Actual Yield",
+  "arrangementName": "Arrangement Name",
+  "occasionOptional": "Occasion (optional)",
+  "noDataForSelectedPeriod": "No data for selected period",
+  "noSalesDataYetToday": "No sales data yet today",
+  "sku": "SKU:",
+  "deleteRole": "Delete role",
+  "planDetails": "Plan Details",
+  "usage": "Usage",
+  "manageAddons": "Manage Add-ons",
+  "viewInvoices": "View Invoices",
+  "renews": "Renews",
+  "productsUsed": "Products Used",
+  "needHelp": "Need Help?",
+  "contactSupport": "Contact Support",
+  "achievements": "Achievements",
+  "noBadgesEarnedYet": "No badges earned yet",
+  "badgeCollection": "Badge Collection",
+  "noSubscriptionsFound": "No subscriptions found",
+  "noGatewaysConfigured": "No gateways configured",
+  "noAnnouncementsFound": "No announcements found",
+  "noSettlements": "No settlements",
+  "uiError": "Error",
+  "back": "Back",
+  "plan": "Plan",
+  "id": "ID",
+  "role": "Role",
+  "item": "Item",
+  "card": "Card",
+  "unpaid": "Unpaid",
+  "due": "Due",
+  "approved": "Approved",
+  "rejected": "Rejected",
+  "published": "Published",
+  "archived": "Archived",
+  "filter": "Filter",
+  "sort": "Sort",
+  "selectAll": "Select All",
+  "deselectAll": "Deselect All",
+  "copy": "Copy",
+  "upload": "Upload",
+  "share": "Share",
+  "branchMgr": "Branch Mgr",
+  "health": "Health",
+  "configuration": "Configuration",
+  "customRange": "Custom Range",
+  "somethingWentWrong": "Something went wrong",
+  "view": "View",
+  "stop": "Stop",
+  "pause": "Pause",
+  "resume": "Resume",
+  "refund": "Refund",
+  "reportsTodaysOverview": "Today's Overview",
+  "reportsVsYesterday": "vs Yesterday",
+  "reportsTopProductsToday": "Top Products Today",
+  "reportsFeatureGuide": "Feature Guide",
+  "reportsRevenueTrend": "Revenue Trend",
+  "reportsBreakdown": "Breakdown",
+  "reportsCostOfGoods": "Cost of Goods",
+  "reportsTaxCollected": "Tax Collected",
+  "reportsCashRevenue": "Cash Revenue",
+  "reportsCardRevenue": "Card Revenue",
+  "reportsOtherRevenue": "Other Revenue",
+  "reportsDailyBreakdown": "Daily Breakdown",
+  "reportsPnlTrend": "P&L Trend",
+  "reportsCogs": "COGS",
+  "reportsNoDataForPeriod": "No data for period",
+  "reportsExpenseDistribution": "Expense Distribution",
+  "reportsByCategory": "By Category",
+  "reportsNoExpensesRecorded": "No expenses recorded",
+  "reportsTotalVariance": "Total Variance",
+  "reportsOverPlus": "Over (+)",
+  "reportsShortMinus": "Short (-)",
+  "reportsNoClosedSessions": "No closed sessions",
+  "reportsExpected": "Expected",
+  "reportsActual": "Actual",
+  "reportsTotalProfit": "Total Profit",
+  "reportsTopProductsByRevenue": "Top Products by Revenue",
+  "reportsProductsRankedByRevenue": "Products Ranked by Revenue",
+  "reportsNoProductData": "No product data for selected period",
+  "reportsTotalQtySold": "Total Qty Sold",
+  "reportsPaymentDistribution": "Payment Distribution",
+  "reportsBreakdownByMethod": "Breakdown by Method",
+  "reportsNoPaymentData": "No payment data for selected period",
+  "reportsMethodsUsed": "Methods Used",
+  "reportsAvgPerTx": "Avg per Tx",
+  "reportsHourlyPattern": "Hourly Pattern",
+  "reportsRevenueByHour": "Revenue by Hour",
+  "reportsNoHourlyData": "No hourly data for selected period",
+  "reportsPeakHour": "Peak Hour",
+  "reportsRevenueByStaff": "Revenue by Staff",
+  "reportsStaffRankedByRevenue": "Staff Ranked by Revenue",
+  "reportsNoStaffData": "No staff performance data",
+  "reportsAvgPerStaff": "Avg per Staff",
+  "reportsNoCustomerData": "No customer data",
+  "reportsSpendByCustomer": "Spend by Customer",
+  "reportsRankedBySpend": "Ranked by Spend",
+  "reportsTotalSpend": "Total Spend",
+  "reportsRepeatRate": "Repeat Rate",
+  "reportsRepeatCustomers": "Repeat Customers",
+  "reportsNew30d": "New (30d)",
+  "reportsActive30d": "Active (30d)",
+  "reportsLoyaltyPoints": "Loyalty Points",
+  "reportsAverages": "Averages",
+  "reportsAvgVisits": "Avg Visits",
+  "reportsAvgSpend": "Avg Spend",
+  "reportsAvgLoyaltyPoints": "Avg Loyalty Points",
+  "reportsNoCategoryData": "No category data for selected period",
+  "reportsRevenueShare": "Revenue Share",
+  "reportsRevenueByCategory": "Revenue by Category",
+  "reportsCategories": "Categories",
+  "reportsTotalStockValue": "Total Stock Value",
+  "reportsTotalItems": "Total Items",
+  "reportsProductCount": "Product Count",
+  "reportsStockValueDistribution": "Stock Value Distribution",
+  "reportsNoStockData": "No stock data",
+  "reportsProductTurnover": "Product Turnover",
+  "reportsNoTurnoverData": "No turnover data",
+  "reportsShrinkageByReason": "Shrinkage by Reason",
+  "reportsNoShrinkageData": "No shrinkage data",
+  "reportsShrinkageByProduct": "Shrinkage by Product",
+  "reportsAllStockLevelsOk": "All stock levels OK",
+  "reportsLowStockItems": "Low Stock Items",
+  "filterCash": "Cash",
+  "filterCard": "Card",
+  "filterGiftCard": "Gift Card",
+  "filterMobile": "Mobile",
+  "filterBankTransfer": "Bank Transfer",
+  "filterCompleted": "Completed",
+  "filterRefunded": "Refunded",
+  "filterPartialRefund": "Partial Refund",
+  "filterMin": "Min",
+  "filterMax": "Max",
+  "reportsRevenue": "Revenue",
+  "filterSortQuantity": "Quantity",
+  "filterSortProfit": "Profit",
+  "filterSortOrders": "Orders",
+  "filterSortName": "Name",
+  "companionAppPreferences": "App Preferences",
+  "companionTheme": "Theme",
+  "companionLanguage": "Language",
+  "companionEnglish": "English",
+  "companionCompactMode": "Compact Mode",
+  "companionNotifications": "Notifications",
+  "companionBiometricLock": "Biometric Lock",
+  "companionDefaultPage": "Default Page",
+  "companionCurrencyDisplay": "Currency Display",
+  "companionPending": "Pending",
+  "catalogProductVisibleInPos": "Product is visible in POS",
+  "catalogWeighable": "Weighable",
+  "catalogAgeRestricted": "Age Restricted",
+  "catalogAddVariant": "Add Variant",
+  "catalogAddModifierGroup": "Add Modifier Group",
+  "catalogVisibleInPosCatalog": "Visible in POS and catalog",
+  "catalogNoCategoriesYet": "No categories yet",
+  "staffClockIn": "Clock In",
+  "staffClockOut": "Clock Out",
+  "statusScheduled": "Scheduled",
+  "statusPlanned": "Planned",
+  "statusInProgress": "In Progress",
+  "statusCancelled": "Cancelled",
+  "paymentsCountRequired": "Count *",
+  "paymentsPrefixOptional": "Prefix (optional)",
+  "paymentsMaxUsesPerCoupon": "Max Uses Per Coupon (optional)",
+  "accountingDayOfMonth": "Day of Month",
+  "accountingNotificationEmail": "Notification Email (optional)",
+  "jewelrySetMetalRate": "Set Metal Rate",
+  "hardware58mm": "58mm",
+  "hardware80mm": "80mm",
+  "hardwareKg": "kg",
+  "hardwareG": "g",
+  "hardwareLb": "lb",
+  "hardwareNearPay": "NearPay",
+  "hardwareNexo": "Nexo",
+  "promotionsDeletePromotion": "Delete Promotion",
+  "promotionsCouponCode": "Coupon Code",
+  "promotionsEnterCouponCode": "Enter coupon code",
+  "reportsTotalRevenue": "Total Revenue",
+  "reportsTransactions": "Transactions",
+  "reportsNetRevenue": "Net Revenue",
+  "reportsAvgBasket": "Avg Basket",
+  "reportsNetProfit": "Net Profit",
+  "reportsTotalExpenses": "Total Expenses",
+  "reportsTotalOrders": "Total Orders",
+  "reportsTopCustomers2": "Top Customers",
+  "reportsTotalCustomers": "Total Customers",
+  "reportsSessions": "Sessions",
+  "reportsStaffMembers": "Staff Members",
+  "reportsFilterStaff": "Staff",
+  "reportsFilterCategory": "Category",
+  "reportsFilterPayment": "Payment",
+  "reportsFilterStatus": "Status",
+  "reportsProducts": "Products",
+  "presetToday": "Today",
+  "presetYesterday": "Yesterday",
+  "presetLast7Days": "Last 7 Days",
+  "presetLast30Days": "Last 30 Days",
+  "presetThisMonth": "This Month",
+  "presetLastMonth": "Last Month",
+  "presetThisQuarter": "This Quarter",
+  "presetCustom": "Custom",
+  "reportNavSales": "Sales",
+  "reportNavProducts": "Products",
+  "reportNavCategories": "Categories",
+  "reportNavStaff": "Staff",
+  "reportNavHourly": "Hourly",
+  "reportNavPayments": "Payments",
+  "reportNavInventory": "Inventory",
+  "reportNavFinancial": "Financial",
+  "reportNavCustomers": "Customers",
+  "reportAllTime": "All Time",
+  "reportFilters": "Filters",
+  "reportAllBranches": "All Branches",
+  "reportQtyPrefix": "Qty: {value}",
+  "@reportQtyPrefix": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "reportRevenue": "Revenue",
+  "reportNOrders": "{count} orders",
+  "@reportNOrders": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNetPrefix": "Net: {value}",
+  "@reportNetPrefix": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNSold": "{count} sold",
+  "@reportNSold": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportProfitAmount": "Profit {value}",
+  "@reportProfitAmount": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "reportCostAmount": "Cost {value}",
+  "@reportCostAmount": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNReturns": "{count} returns",
+  "@reportNReturns": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNProducts": "{count} products",
+  "@reportNProducts": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportAvgAmount": "Avg {value}",
+  "@reportAvgAmount": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNVisitsAvg": "{visits} visits · Avg {avg}",
+  "@reportNVisitsAvg": {
+    "placeholders": {
+      "visits": {
+        "type": "String"
+      },
+      "avg": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNPts": "{count} pts",
+  "@reportNPts": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportQtyTimesAvg": "Qty: {qty} × {cost}",
+  "@reportQtyTimesAvg": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "cost": {
+        "type": "String"
+      }
+    }
+  },
+  "reportCogsStock": "COGS: {cogs} · Stock: {stock}",
+  "@reportCogsStock": {
+    "placeholders": {
+      "cogs": {
+        "type": "String"
+      },
+      "stock": {
+        "type": "String"
+      }
+    }
+  },
+  "reportHealthy": "Healthy",
+  "reportSlow": "Slow",
+  "reportNUnits": "{count} units",
+  "@reportNUnits": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNUnitsLost": "{count} units lost",
+  "@reportNUnitsLost": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportStockReorder": "Stock: {current} · Reorder at: {reorder}",
+  "@reportStockReorder": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "reorder": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNeedN": "Need {count}",
+  "@reportNeedN": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportNTransactions": "{count} transactions",
+  "@reportNTransactions": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "reportOpenedAt": "Opened: {time}",
+  "@reportOpenedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reportTodayVsYesterday": "Today: {today}  •  Yesterday: {yesterday}",
+  "@reportTodayVsYesterday": {
+    "placeholders": {
+      "today": {
+        "type": "String"
+      },
+      "yesterday": {
+        "type": "String"
+      }
+    }
+  },
+  "reportLegendRevenue": "Revenue",
+  "reportLegendCost": "Cost",
+  "reportLegendNetProfit": "Net Profit"
 }

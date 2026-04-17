@@ -8,6 +8,7 @@ import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_providers.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
 import 'package:wameedpos/features/subscription/widgets/plan_comparison_table.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Page that displays a side-by-side comparison of all available plans.
 class PlanComparisonPage extends ConsumerStatefulWidget {
@@ -18,6 +19,8 @@ class PlanComparisonPage extends ConsumerStatefulWidget {
 }
 
 class _PlanComparisonPageState extends ConsumerState<PlanComparisonPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   bool _isAnnual = false;
 
   @override
@@ -45,7 +48,7 @@ class _PlanComparisonPageState extends ConsumerState<PlanComparisonPage> {
     });
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Compare Plans'), centerTitle: true),
+      appBar: AppBar(title: Text(l10n.subscriptionComparePlans), centerTitle: true),
       body: _buildBody(plansState, subState),
     );
   }
@@ -70,12 +73,11 @@ class _PlanComparisonPageState extends ConsumerState<PlanComparisonPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Monthly'),
+                Text(l10n.subscriptionMonthly),
                 AppSpacing.horizontalSm,
                 Switch(value: _isAnnual, activeColor: AppColors.primary, onChanged: (v) => setState(() => _isAnnual = v)),
                 AppSpacing.horizontalSm,
-                Text(
-                  'Annual',
+                Text(l10n.subscriptionAnnual,
                   style: TextStyle(
                     fontWeight: _isAnnual ? FontWeight.bold : FontWeight.normal,
                     color: _isAnnual ? AppColors.primary : null,
@@ -89,8 +91,7 @@ class _PlanComparisonPageState extends ConsumerState<PlanComparisonPage> {
                       color: AppColors.success.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Text(
-                      'Save ~17%',
+                    child: Text(l10n.subscriptionSavePercent,
                       style: TextStyle(fontSize: 12, color: AppColors.success, fontWeight: FontWeight.bold),
                     ),
                   ),

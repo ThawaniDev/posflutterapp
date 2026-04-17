@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// A lightweight WebView page for marketplace PayTabs checkout.
 /// Receives a [redirectUrl] (PayTabs payment page) and calls [onComplete]
@@ -16,6 +17,8 @@ class MarketplacePaymentWebViewPage extends StatefulWidget {
 }
 
 class _MarketplacePaymentWebViewPageState extends State<MarketplacePaymentWebViewPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late final WebViewController _controller;
   bool _loading = true;
 
@@ -49,7 +52,7 @@ class _MarketplacePaymentWebViewPageState extends State<MarketplacePaymentWebVie
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Complete Payment'),
+        title: Text(l10n.posCompletePayment),
         centerTitle: true,
         leading: IconButton(icon: const Icon(Icons.close), onPressed: () => _showCancelDialog(context)),
       ),
@@ -66,7 +69,7 @@ class _MarketplacePaymentWebViewPageState extends State<MarketplacePaymentWebVie
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Cancel Payment?'),
+        title: Text(l10n.providerPaymentCancelTitle),
         content: const Text('Are you sure you want to cancel? Your purchase will be pending until payment is completed.'),
         actions: [
           TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Continue')),
@@ -77,7 +80,7 @@ class _MarketplacePaymentWebViewPageState extends State<MarketplacePaymentWebVie
               widget.onComplete();
             },
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
         ],
       ),

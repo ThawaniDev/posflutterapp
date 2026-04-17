@@ -39,6 +39,8 @@ class InstallmentPaymentDialog extends ConsumerStatefulWidget {
 }
 
 class _InstallmentPaymentDialogState extends ConsumerState<InstallmentPaymentDialog> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   CheckoutProviderOption? _selectedProvider;
   String? _error;
 
@@ -320,12 +322,12 @@ class _InstallmentPaymentDialogState extends ConsumerState<InstallmentPaymentDia
       }
     });
 
-    return const Center(
+    return Center(
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [CircularProgressIndicator(), SizedBox(height: 16), Text('Opening checkout...')],
+          children: [CircularProgressIndicator(), SizedBox(height: 16), Text(l10n.openingCheckout)],
         ),
       ),
     );

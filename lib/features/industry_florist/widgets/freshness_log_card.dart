@@ -5,6 +5,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/pos_status_badge.dart';
 import '../models/flower_freshness_log.dart';
 import '../enums/flower_freshness_status.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class FreshnessLogCard extends StatelessWidget {
   final FlowerFreshnessLog log;
@@ -14,6 +15,7 @@ class FreshnessLogCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final daysLeft = _daysUntilExpiry;
 
@@ -30,7 +32,7 @@ class FreshnessLogCard extends StatelessWidget {
           padding: AppSpacing.paddingCard,
           child: Row(
             children: [
-              _expiryIndicator(daysLeft),
+              _expiryIndicator(context, daysLeft),
               AppSpacing.gapW12,
               Expanded(
                 child: Column(
@@ -54,7 +56,8 @@ class FreshnessLogCard extends StatelessWidget {
     return expiryDate.difference(DateTime.now()).inDays;
   }
 
-  Widget _expiryIndicator(int daysLeft) {
+  Widget _expiryIndicator(BuildContext context, int daysLeft) {
+    final l10n = AppLocalizations.of(context)!;
     final color = daysLeft <= 0
         ? AppColors.error
         : daysLeft <= 2
@@ -69,7 +72,7 @@ class FreshnessLogCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text('${daysLeft.clamp(0, 99)}', style: AppTypography.titleMedium.copyWith(color: color)),
-          Text('days', style: TextStyle(fontSize: 9, color: color)),
+          Text(l10n.securityDays, style: TextStyle(fontSize: 9, color: color)),
         ],
       ),
     );

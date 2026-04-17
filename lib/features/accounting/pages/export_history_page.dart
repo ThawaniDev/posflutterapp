@@ -15,6 +15,8 @@ class ExportHistoryPage extends ConsumerStatefulWidget {
 }
 
 class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _statusFilter;
 
   @override
@@ -31,8 +33,8 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Export History'),
-        actions: [IconButton(icon: const Icon(Icons.add), tooltip: 'New Export', onPressed: () => _showNewExportDialog())],
+        title: Text(l10n.accountingExportHistory),
+        actions: [IconButton(icon: Icon(Icons.add), tooltip: l10n.newExport, onPressed: () => _showNewExportDialog())],
       ),
       body: Column(
         children: [
@@ -53,7 +55,7 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
       child: Row(
         children: [
           FilterChip(
-            label: const Text('All'),
+            label: Text(l10n.all),
             selected: _statusFilter == null,
             onSelected: (_) {
               setState(() => _statusFilter = null);
@@ -175,7 +177,7 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
       trailing: status == 'failed'
           ? IconButton(
               icon: const Icon(Icons.replay, color: AppColors.warning),
-              tooltip: 'Retry Export',
+              tooltip: l10n.adminFinOpsRetryExport,
               onPressed: () => ref.read(accountingExportsProvider.notifier).retryExport(id),
             )
           : null,
@@ -210,7 +212,7 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          title: const Text('New Export'),
+          title: Text(l10n.newExport),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -285,7 +287,7 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
+            TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.cancel)),
             ElevatedButton(
               onPressed: () {
                 if (startController.text.isEmpty || endController.text.isEmpty) {
@@ -301,7 +303,7 @@ class _ExportHistoryPageState extends ConsumerState<ExportHistoryPage> {
                       exportTypes: selectedTypes.isNotEmpty ? selectedTypes.toList() : null,
                     );
               },
-              child: const Text('Export'),
+              child: Text(l10n.accountingExport),
             ),
           ],
         ),

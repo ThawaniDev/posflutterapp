@@ -6,6 +6,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminInfraBackupsPage extends ConsumerStatefulWidget {
   const AdminInfraBackupsPage({super.key});
@@ -15,6 +16,8 @@ class AdminInfraBackupsPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminInfraBackupsPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   late final TabController _tabController;
 
@@ -50,7 +53,7 @@ class _State extends ConsumerState<AdminInfraBackupsPage> with SingleTickerProvi
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Backups'),
+        title: Text(l10n.adminInfraBackups),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         bottom: TabBar(
@@ -58,9 +61,9 @@ class _State extends ConsumerState<AdminInfraBackupsPage> with SingleTickerProvi
           indicatorColor: Colors.white,
           labelColor: Colors.white,
           unselectedLabelColor: Colors.white70,
-          tabs: const [
+          tabs: [
             Tab(text: 'Database'),
-            Tab(text: 'Provider'),
+            Tab(text: l10n.hwProvider),
           ],
         ),
       ),
@@ -79,6 +82,7 @@ class _State extends ConsumerState<AdminInfraBackupsPage> with SingleTickerProvi
 class _DatabaseBackupsTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(infraDatabaseBackupsProvider);
 
     return switch (state) {
@@ -87,7 +91,7 @@ class _DatabaseBackupsTab extends ConsumerWidget {
       InfraListError(message: final msg) => Center(
         child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
       ),
-      _ => const Center(child: Text('Loading...')),
+      _ => Center(child: Text(l10n.loading)),
     };
   }
 
@@ -130,6 +134,7 @@ class _DatabaseBackupsTab extends ConsumerWidget {
 class _ProviderBackupsTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(infraProviderBackupsProvider);
 
     return switch (state) {
@@ -138,7 +143,7 @@ class _ProviderBackupsTab extends ConsumerWidget {
       InfraListError(message: final msg) => Center(
         child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
       ),
-      _ => const Center(child: Text('Loading...')),
+      _ => Center(child: Text(l10n.loading)),
     };
   }
 

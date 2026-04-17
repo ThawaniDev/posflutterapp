@@ -21,6 +21,8 @@ class AdminStoreListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _storeId;
   bool? _activeFilter;
@@ -103,7 +105,7 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
                     ),
                     AppSpacing.gapW12,
                     PosButton(
-                      label: 'Search',
+                      label: l10n.search,
                       onPressed: () {
                         _currentPage = 1;
                         _loadStores();
@@ -116,7 +118,7 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
                 Row(
                   children: [
                     _buildFilterChip(
-                      label: 'All',
+                      label: l10n.all,
                       selected: _activeFilter == null,
                       onTap: () => setState(() {
                         _activeFilter = null;
@@ -126,7 +128,7 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
                     ),
                     AppSpacing.gapW8,
                     _buildFilterChip(
-                      label: 'Active',
+                      label: l10n.active,
                       selected: _activeFilter == true,
                       onTap: () => setState(() {
                         _activeFilter = true;
@@ -136,7 +138,7 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
                     ),
                     AppSpacing.gapW8,
                     _buildFilterChip(
-                      label: 'Suspended',
+                      label: l10n.suspended,
                       selected: _activeFilter == false,
                       onTap: () => setState(() {
                         _activeFilter = false;
@@ -202,7 +204,7 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
             AppSpacing.gapH12,
             Text(state.message, style: theme.textTheme.bodyMedium),
             AppSpacing.gapH16,
-            PosButton(label: 'Retry', variant: PosButtonVariant.outline, onPressed: _loadStores),
+            PosButton(label: l10n.retry, variant: PosButtonVariant.outline, onPressed: _loadStores),
           ],
         ),
       );
@@ -215,9 +217,9 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
             children: [
               Icon(Icons.store_outlined, size: 64, color: AppColors.textMutedLight),
               AppSpacing.gapH12,
-              Text('No stores found', style: theme.textTheme.titleMedium),
+              Text(l10n.noStoresFound, style: theme.textTheme.titleMedium),
               AppSpacing.gapH4,
-              Text('Try adjusting your filters', style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight)),
+              Text(l10n.adjustFilters, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight)),
             ],
           ),
         );
@@ -359,13 +361,13 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
             children: [
               PosTextField(controller: orgNameCtrl, label: 'Organization Name', hint: 'Enter organization name'),
               AppSpacing.gapH12,
-              PosTextField(controller: storeNameCtrl, label: 'Store Name', hint: 'Enter store name'),
+              PosTextField(controller: storeNameCtrl, label: l10n.sidebarStoreName, hint: 'Enter store name'),
             ],
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
+            TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.cancel)),
             PosButton(
-              label: 'Create',
+              label: l10n.create,
               onPressed: () {
                 ref
                     .read(adminActionProvider.notifier)

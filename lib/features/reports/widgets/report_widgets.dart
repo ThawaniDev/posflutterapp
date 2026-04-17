@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 
@@ -41,6 +42,7 @@ class ReportDateBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
@@ -415,6 +417,7 @@ class ReportComparisonRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final diff = yesterdayVal > 0 ? ((todayVal - yesterdayVal) / yesterdayVal * 100) : 0.0;
     final isPositive = diff >= 0;
@@ -430,7 +433,7 @@ class ReportComparisonRow extends StatelessWidget {
               children: [
                 Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),
                 Text(
-                  'Today: ${formatCurrency(todayVal)}  •  Yesterday: ${formatCurrency(yesterdayVal)}',
+                  l10n.reportTodayVsYesterday(formatCurrency(todayVal), formatCurrency(yesterdayVal)),
                   style: Theme.of(
                     context,
                   ).textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),

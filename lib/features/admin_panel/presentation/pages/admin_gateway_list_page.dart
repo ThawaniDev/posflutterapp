@@ -17,6 +17,8 @@ class AdminGatewayListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String _envFilter = 'all';
 
@@ -66,7 +68,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
               GatewayListLoading() => const Center(child: CircularProgressIndicator()),
               GatewayListLoaded(gateways: final items) =>
                 items.isEmpty
-                    ? const Center(child: Text('No gateways configured'))
+                    ? Center(child: Text(l10n.noGatewaysConfigured))
                     : ListView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                         itemCount: items.length,
@@ -156,17 +158,17 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
               children: [
                 TextButton.icon(
                   icon: const Icon(Icons.wifi_tethering, size: 16),
-                  label: const Text('Test'),
+                  label: Text(l10n.testConnection),
                   onPressed: () => _testConnection(gw['id']),
                 ),
                 TextButton.icon(
                   icon: const Icon(Icons.edit, size: 16),
-                  label: const Text('Edit'),
+                  label: Text(l10n.edit),
                   onPressed: () => _showEditDialog(gw),
                 ),
                 TextButton.icon(
                   icon: const Icon(Icons.delete, size: 16, color: AppColors.error),
-                  label: const Text('Delete', style: TextStyle(color: AppColors.error)),
+                  label: Text(l10n.delete, style: TextStyle(color: AppColors.error)),
                   onPressed: () => _confirmDelete(gw['id']),
                 ),
               ],
@@ -216,12 +218,12 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
               StatefulBuilder(
                 builder: (context, setInnerState) => PosSearchableDropdown<String>(
                   items: [
-                    PosDropdownItem(value: 'sandbox', label: 'Sandbox'),
-                    PosDropdownItem(value: 'production', label: 'Production'),
+                    PosDropdownItem(value: 'sandbox', label: l10n.sandbox),
+                    PosDropdownItem(value: 'production', label: l10n.production),
                   ],
                   selectedValue: env,
                   onChanged: (v) => setInnerState(() => env = v ?? env),
-                  label: 'Environment',
+                  label: l10n.hwEnvironment,
                   hint: 'Select environment',
                   showSearch: false,
                   clearable: false,
@@ -231,7 +233,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
             onPressed: () async {
@@ -245,7 +247,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
               if (ctx.mounted) Navigator.pop(ctx);
               ref.read(gatewayListProvider.notifier).loadGateways(storeId: _storeId);
             },
-            child: const Text('Create'),
+            child: Text(l10n.create),
           ),
         ],
       ),
@@ -277,7 +279,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
             onPressed: () async {
@@ -288,7 +290,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
               if (ctx.mounted) Navigator.pop(ctx);
               ref.read(gatewayListProvider.notifier).loadGateways(storeId: _storeId);
             },
-            child: const Text('Update'),
+            child: Text(l10n.hwUpdate),
           ),
         ],
       ),

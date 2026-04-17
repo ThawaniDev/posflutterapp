@@ -7,6 +7,7 @@ import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminDeploymentReleaseListPage extends ConsumerStatefulWidget {
   const AdminDeploymentReleaseListPage({super.key});
@@ -16,6 +17,8 @@ class AdminDeploymentReleaseListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeploymentReleaseListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _platformFilter;
   final _searchController = TextEditingController();
   String? _storeId;
@@ -90,10 +93,10 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
                 Expanded(
                   child: PosSearchableDropdown<String>(
                     items: [
-                      PosDropdownItem(value: 'ios', label: 'iOS'),
-                      PosDropdownItem(value: 'android', label: 'Android'),
-                      PosDropdownItem(value: 'windows', label: 'Windows'),
-                      PosDropdownItem(value: 'macos', label: 'macOS'),
+                      PosDropdownItem(value: 'ios', label: l10n.posPlatformIOS),
+                      PosDropdownItem(value: 'android', label: l10n.posPlatformAndroid),
+                      PosDropdownItem(value: 'windows', label: l10n.posPlatformWindows),
+                      PosDropdownItem(value: 'macos', label: l10n.posPlatformMacOS),
                     ],
                     selectedValue: _platformFilter,
                     onChanged: (v) {

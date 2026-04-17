@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/thawani_integration/providers/thawani_providers.dart';
 import 'package:wameedpos/features/thawani_integration/providers/thawani_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ThawaniSyncPage extends ConsumerStatefulWidget {
   const ThawaniSyncPage({super.key});
@@ -14,6 +15,8 @@ class ThawaniSyncPage extends ConsumerStatefulWidget {
 }
 
 class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -41,7 +44,7 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sync Management'),
+        title: Text(l10n.syncManagement),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -54,12 +57,12 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
         children: [
           // Connection Test
           _sectionCard(
-            title: 'Connection',
+            title: l10n.hwConnection,
             icon: Icons.link,
             color: AppColors.info,
             children: [
               _syncButton(
-                label: 'Test Connection',
+                label: l10n.deliveryTestConnection,
                 icon: Icons.wifi_tethering,
                 color: AppColors.info,
                 isLoading: isLoading && (syncState as ThawaniSyncLoading?)?.operation == 'test-connection',

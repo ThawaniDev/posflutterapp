@@ -7,6 +7,7 @@ import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminPlatformEventListPage extends ConsumerStatefulWidget {
   const AdminPlatformEventListPage({super.key});
@@ -16,6 +17,8 @@ class AdminPlatformEventListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _levelFilter;
   String? _eventTypeFilter;
@@ -73,7 +76,7 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
     final state = ref.watch(platformEventListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Platform Events')),
+      appBar: AppBar(title: Text(l10n.platformEvents)),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -96,8 +99,8 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
                     PosDropdownItem(value: 'debug', label: 'Debug'),
                     PosDropdownItem(value: 'info', label: 'Info'),
                     PosDropdownItem(value: 'warning', label: 'Warning'),
-                    PosDropdownItem(value: 'error', label: 'Error'),
-                    PosDropdownItem(value: 'critical', label: 'Critical'),
+                    PosDropdownItem(value: 'error', label: l10n.uiError),
+                    PosDropdownItem(value: 'critical', label: l10n.supportPriorityCritical),
                   ],
                   selectedValue: _levelFilter,
                   onChanged: (v) {
@@ -110,11 +113,11 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
                 );
                 final typeDropdown = PosSearchableDropdown<String>(
                   items: [
-                    PosDropdownItem(value: 'deployment', label: 'Deployment'),
+                    PosDropdownItem(value: 'deployment', label: l10n.adminDeployment),
                     PosDropdownItem(value: 'config_change', label: 'Config Change'),
                     PosDropdownItem(value: 'cron_job', label: 'Cron Job'),
-                    PosDropdownItem(value: 'maintenance', label: 'Maintenance'),
-                    PosDropdownItem(value: 'error', label: 'Error'),
+                    PosDropdownItem(value: 'maintenance', label: l10n.maintenance),
+                    PosDropdownItem(value: 'error', label: l10n.uiError),
                   ],
                   selectedValue: _eventTypeFilter,
                   onChanged: (v) {

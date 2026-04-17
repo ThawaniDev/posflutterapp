@@ -3,6 +3,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/settings/enums/locale_direction.dart';
 import 'package:wameedpos/features/settings/models/supported_locale.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class LocaleSelector extends StatelessWidget {
   final List<SupportedLocale> locales;
@@ -13,6 +14,7 @@ class LocaleSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return Card(
       child: Padding(
@@ -20,7 +22,7 @@ class LocaleSelector extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Supported Languages', style: theme.textTheme.titleMedium),
+            Text(l10n.supportedLanguages, style: theme.textTheme.titleMedium),
             AppSpacing.gapH12,
             ...locales.map((locale) {
               final isSelected = locale.localeCode == selectedCode;
@@ -36,7 +38,7 @@ class LocaleSelector extends StatelessWidget {
                   children: [
                     if (locale.isDefault == true)
                       Chip(
-                        label: const Text('Default'),
+                        label: Text(l10n.defaults),
                         backgroundColor: theme.colorScheme.primaryContainer,
                         labelStyle: TextStyle(color: theme.colorScheme.onPrimaryContainer, fontSize: 12),
                       ),

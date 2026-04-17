@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminNotificationTemplateListPage extends ConsumerStatefulWidget {
   const AdminNotificationTemplateListPage({super.key});
@@ -15,6 +16,8 @@ class AdminNotificationTemplateListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotificationTemplateListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _selectedChannel;
   String? _storeId;
@@ -64,7 +67,7 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Notification Templates'),
+        title: Text(l10n.adminNotificationTemplates),
         actions: [IconButton(icon: const Icon(Icons.add), onPressed: () {})],
       ),
       body: Column(
@@ -77,8 +80,8 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
                 Expanded(
                   child: TextField(
                     controller: _searchController,
-                    decoration: const InputDecoration(
-                      hintText: 'Search templates...',
+                    decoration: InputDecoration(
+                      hintText: l10n.marketplaceSearch,
                       prefixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(),
                     ),
@@ -89,10 +92,10 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
                 Expanded(
                   child: PosSearchableDropdown<String>(
                     items: [
-                      PosDropdownItem(value: 'push', label: 'Push'),
-                      PosDropdownItem(value: 'email', label: 'Email'),
-                      PosDropdownItem(value: 'sms', label: 'SMS'),
-                      PosDropdownItem(value: 'in_app', label: 'In-App'),
+                      PosDropdownItem(value: 'push', label: l10n.notificationsPush),
+                      PosDropdownItem(value: 'email', label: l10n.email),
+                      PosDropdownItem(value: 'sms', label: l10n.notifPrefSms),
+                      PosDropdownItem(value: 'in_app', label: l10n.notificationsInApp),
                       PosDropdownItem(value: 'whatsapp', label: 'WhatsApp'),
                     ],
                     selectedValue: _selectedChannel,
@@ -117,7 +120,7 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
               ),
               NotificationTemplateListLoaded(:final templates) =>
                 templates.isEmpty
-                    ? const Center(child: Text('No templates found'))
+                    ? Center(child: Text(l10n.marketplaceNoListings))
                     : ListView.builder(
                         itemCount: templates.length,
                         padding: const EdgeInsets.symmetric(horizontal: 16),

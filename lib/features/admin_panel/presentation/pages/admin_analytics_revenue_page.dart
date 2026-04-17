@@ -7,6 +7,7 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminAnalyticsRevenuePage extends ConsumerStatefulWidget {
   const AdminAnalyticsRevenuePage({super.key});
@@ -16,6 +17,8 @@ class AdminAnalyticsRevenuePage extends ConsumerStatefulWidget {
 }
 
 class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenuePage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -38,7 +41,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Revenue Analytics'),
+        title: Text(l10n.analyticsRevenue),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         actions: [
@@ -75,7 +78,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                         cards: [
                           PosKpiCard(label: 'MRR', value: '\u0081${mrr.toStringAsFixed(2)}', iconColor: AppColors.success),
                           PosKpiCard(label: 'ARR', value: '\u0081${arr.toStringAsFixed(2)}', iconColor: AppColors.info),
-                          PosKpiCard(label: 'Failed Payments', value: '$failed', iconColor: AppColors.error),
+                          PosKpiCard(label: l10n.failedPayments, value: '$failed', iconColor: AppColors.error),
                           PosKpiCard(label: 'Upcoming Renewals', value: '$renewals', iconColor: AppColors.warning),
                         ],
                       ),
@@ -110,7 +113,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                       const SizedBox(height: AppSpacing.lg),
 
                       // Revenue Trend
-                      const Text('Revenue Trend', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text(l10n.reportsRevenueTrend, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (trend.isEmpty)
                         const Card(
@@ -157,7 +160,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                     const SizedBox(height: AppSpacing.sm),
                     ElevatedButton(
                       onPressed: () => ref.read(analyticsRevenueProvider.notifier).load(storeId: _storeId),
-                      child: const Text('Retry'),
+                      child: Text(l10n.retry),
                     ),
                   ],
                 ),

@@ -7,6 +7,7 @@ import 'package:wameedpos/features/industry_pharmacy/widgets/prescription_card.d
 import 'package:wameedpos/features/industry_pharmacy/widgets/drug_schedule_card.dart';
 import 'package:wameedpos/features/industry_pharmacy/pages/prescription_form_page.dart';
 import 'package:wameedpos/features/industry_pharmacy/pages/drug_schedule_form_page.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class PharmacyDashboardPage extends ConsumerStatefulWidget {
   const PharmacyDashboardPage({super.key});
@@ -16,6 +17,8 @@ class PharmacyDashboardPage extends ConsumerStatefulWidget {
 }
 
 class _PharmacyDashboardPageState extends ConsumerState<PharmacyDashboardPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late final TabController _tabController;
 
   @override
@@ -48,12 +51,12 @@ class _PharmacyDashboardPageState extends ConsumerState<PharmacyDashboardPage> w
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pharmacy'),
+        title: Text(l10n.pharmacyTitle),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Prescriptions'),
-            Tab(text: 'Drug Schedules'),
+          tabs: [
+            Tab(text: l10n.pharmacyPrescriptions),
+            Tab(text: l10n.pharmacyDrugSchedules),
           ],
         ),
       ),

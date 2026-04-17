@@ -20,6 +20,8 @@ class InvoiceDetailPage extends ConsumerStatefulWidget {
 }
 
 class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   bool _isDownloadingPdf = false;
 
   @override
@@ -36,7 +38,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Invoice Details'),
+        title: Text(l10n.subscriptionInvoiceDetails),
         centerTitle: true,
         actions: [
           if (state is InvoiceDetailLoaded)
@@ -44,7 +46,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
               icon: _isDownloadingPdf
                   ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
                   : const Icon(Icons.picture_as_pdf),
-              tooltip: 'Download PDF',
+              tooltip: l10n.subscriptionDownloadPdf,
               onPressed: _isDownloadingPdf ? null : () => _downloadPdf(),
             ),
         ],
@@ -108,7 +110,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
 
         // Line Items
         if (invoice.lineItems != null && invoice.lineItems!.isNotEmpty) ...[
-          Text('Line Items', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
+          Text(l10n.wameedAILineItems, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold)),
           AppSpacing.verticalSm,
           Card(
             child: Padding(
@@ -158,31 +160,27 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                         children: [
                           Expanded(
                             flex: 4,
-                            child: Text(
-                              'Description',
+                            child: Text(l10n.description,
                               style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
                             ),
                           ),
                           Expanded(
                             flex: 1,
-                            child: Text(
-                              'Qty',
+                            child: Text(l10n.wameedAIQty,
                               textAlign: TextAlign.center,
                               style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
                             ),
                           ),
                           Expanded(
                             flex: 2,
-                            child: Text(
-                              'Unit Price',
+                            child: Text(l10n.subscriptionUnitPrice,
                               textAlign: TextAlign.end,
                               style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
                             ),
                           ),
                           Expanded(
                             flex: 2,
-                            child: Text(
-                              'Total',
+                            child: Text(l10n.posTotal,
                               textAlign: TextAlign.end,
                               style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
                             ),

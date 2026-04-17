@@ -4,12 +4,14 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/backup/providers/backup_providers.dart';
 import 'package:wameedpos/features/backup/providers/backup_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class BackupStorageWidget extends ConsumerWidget {
   const BackupStorageWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(backupStorageProvider);
 
     return switch (state) {
@@ -25,11 +27,12 @@ class BackupStorageWidget extends ConsumerWidget {
           ],
         ),
       ),
-      BackupStorageLoaded(:final data) => _buildStorage(data),
+      BackupStorageLoaded(:final data) => _buildStorage(context, data),
     };
   }
 
-  Widget _buildStorage(Map<String, dynamic> data) {
+  Widget _buildStorage(BuildContext context, Map<String, dynamic> data) {
+    final l10n = AppLocalizations.of(context)!;
     final d = data['data'] as Map<String, dynamic>? ?? data;
     final totalBytes = (d['total_backup_bytes'] as num?)?.toInt() ?? 0;
     final quotaBytes = (d['quota_bytes'] as num?)?.toInt() ?? 1;
@@ -47,7 +50,7 @@ class BackupStorageWidget extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Storage Usage', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  Text(l10n.backupStorage, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   AppSpacing.gapH16,
                   LinearProgressIndicator(
                     value: usagePercent / 100,

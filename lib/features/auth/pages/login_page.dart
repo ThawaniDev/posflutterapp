@@ -20,6 +20,8 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -195,7 +197,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                   _passwordController.text = 'password123';
                                 },
                           icon: const Icon(Icons.store_rounded, size: 16),
-                          label: const Text('Branch Mgr'),
+                          label: Text(l10n.branchMgr),
                           style: TextButton.styleFrom(
                             foregroundColor: AppColors.primary,
                             textStyle: const TextStyle(fontSize: 12),

@@ -109,6 +109,23 @@ class AppSpacing {
   static const EdgeInsets paddingAllXl = EdgeInsets.all(xl);
 
   static const EdgeInsets paddingCard = EdgeInsets.all(cardPadding);
+
+  // ─── Table Density ───────────────────────────────────────
+  static const double tableRowHeightCompact = 40.0;
+  static const double tableRowHeightDefault = 52.0;
+  static const double tableRowHeightComfortable = 64.0;
+  static const double tableHeaderHeight = 44.0;
+  static const double tableCellPaddingH = 16.0;
+  static const double tableCellPaddingV = 12.0;
+
+  // ─── Responsive Page Padding EdgeInsets ──────────────────
+  static const EdgeInsets pageContentPaddingMobile = EdgeInsets.symmetric(horizontal: 16, vertical: 16);
+  static const EdgeInsets pageContentPaddingTablet = EdgeInsets.symmetric(horizontal: 24, vertical: 20);
+  static const EdgeInsets pageContentPaddingDesktop = EdgeInsets.symmetric(horizontal: 32, vertical: 24);
+
+  // ─── Toolbar Padding ─────────────────────────────────────
+  static const EdgeInsets toolbarPadding = EdgeInsets.symmetric(horizontal: xxxl, vertical: base);
+  static const EdgeInsets toolbarPaddingMobile = EdgeInsets.symmetric(horizontal: base, vertical: md);
 }
 
 /// Border Radius Tokens

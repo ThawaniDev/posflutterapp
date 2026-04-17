@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminInfraFailedJobsPage extends ConsumerStatefulWidget {
   const AdminInfraFailedJobsPage({super.key});
@@ -16,6 +17,8 @@ class AdminInfraFailedJobsPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminInfraFailedJobsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String? _queueFilter;
 
@@ -45,7 +48,7 @@ class _State extends ConsumerState<AdminInfraFailedJobsPage> {
     final state = ref.watch(infraFailedJobsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Failed Jobs'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.adminInfraFailedJobs), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -65,7 +68,7 @@ class _State extends ConsumerState<AdminInfraFailedJobsPage> {
                 setState(() => _queueFilter = v);
                 _applyFilter();
               },
-              label: 'Queue',
+              label: l10n.queue,
               hint: 'All Queues',
               showSearch: false,
               clearable: true,
@@ -78,7 +81,7 @@ class _State extends ConsumerState<AdminInfraFailedJobsPage> {
               InfraListError(message: final msg) => Center(
                 child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
               ),
-              _ => const Center(child: Text('Loading...')),
+              _ => Center(child: Text(l10n.loading)),
             },
           ),
         ],

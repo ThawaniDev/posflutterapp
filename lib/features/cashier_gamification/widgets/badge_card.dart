@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/models/cashier_badge.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class BadgeCard extends StatelessWidget {
   final CashierBadge badge;
@@ -13,6 +14,7 @@ class BadgeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final isMobile = context.isPhone;
     final locale = Localizations.localeOf(context).languageCode;
@@ -75,16 +77,16 @@ class BadgeCard extends StatelessWidget {
                         color: Colors.grey.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      child: Text('Inactive', style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
+                      child: Text(l10n.inactive, style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
                     ),
                   if (showActions) ...[
                     if (onEdit != null)
-                      IconButton(icon: const Icon(Icons.edit_rounded, size: 18), onPressed: onEdit, tooltip: 'Edit'),
+                      IconButton(icon: Icon(Icons.edit_rounded, size: 18), onPressed: onEdit, tooltip: l10n.edit),
                     if (onDelete != null)
                       IconButton(
                         icon: Icon(Icons.delete_rounded, size: 18, color: theme.colorScheme.error),
                         onPressed: onDelete,
-                        tooltip: 'Delete',
+                        tooltip: l10n.delete,
                       ),
                   ],
                 ],

@@ -3,12 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/companion/providers/companion_state.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class PreferencesWidget extends ConsumerWidget {
   const PreferencesWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(preferencesProvider);
     final theme = Theme.of(context);
 
@@ -49,44 +51,45 @@ class PreferencesWidget extends ConsumerWidget {
     String defaultPage,
     String currencyDisplay,
   ) {
+    final l10n = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       padding: AppSpacing.paddingAll16,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('App Preferences', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+          Text(l10n.companionAppPreferences, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
           AppSpacing.gapH16,
           Card(
             child: Column(
               children: [
-                _buildTile(icon: Icons.palette, title: 'Theme', subtitle: themeMode.toUpperCase()),
+                _buildTile(icon: Icons.palette, title: l10n.appBarTheme, subtitle: themeMode.toUpperCase()),
                 const Divider(height: 1),
-                _buildTile(icon: Icons.language, title: 'Language', subtitle: language == 'ar' ? 'العربية' : 'English'),
+                _buildTile(icon: Icons.language, title: l10n.staffLanguage, subtitle: language == 'ar' ? 'العربية' : 'English'),
                 const Divider(height: 1),
                 _buildSwitchTile(
                   icon: Icons.view_compact,
-                  title: 'Compact Mode',
+                  title: l10n.companionCompactMode,
                   value: compactMode,
                   onChanged: (v) => ref.read(preferencesProvider.notifier).update({'compact_mode': v}),
                 ),
                 const Divider(height: 1),
                 _buildSwitchTile(
                   icon: Icons.notifications,
-                  title: 'Notifications',
+                  title: l10n.notifications,
                   value: notificationsEnabled,
                   onChanged: (v) => ref.read(preferencesProvider.notifier).update({'notifications_enabled': v}),
                 ),
                 const Divider(height: 1),
                 _buildSwitchTile(
                   icon: Icons.fingerprint,
-                  title: 'Biometric Lock',
+                  title: l10n.companionBiometricLock,
                   value: biometricLock,
                   onChanged: (v) => ref.read(preferencesProvider.notifier).update({'biometric_lock': v}),
                 ),
                 const Divider(height: 1),
-                _buildTile(icon: Icons.home, title: 'Default Page', subtitle: defaultPage),
+                _buildTile(icon: Icons.home, title: l10n.companionDefaultPage, subtitle: defaultPage),
                 const Divider(height: 1),
-                _buildTile(icon: Icons.attach_money, title: 'Currency Display', subtitle: currencyDisplay),
+                _buildTile(icon: Icons.attach_money, title: l10n.companionCurrencyDisplay, subtitle: currencyDisplay),
               ],
             ),
           ),

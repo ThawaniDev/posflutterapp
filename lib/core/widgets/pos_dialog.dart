@@ -56,6 +56,7 @@ class _PosConfirmDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Dialog(
       insetPadding: const EdgeInsets.all(24),
       child: ConstrainedBox(
@@ -77,12 +78,20 @@ class _PosConfirmDialog extends StatelessWidget {
                 ),
                 AppSpacing.gapH16,
               ],
-              Text(title, style: AppTypography.headlineSmall, textAlign: TextAlign.center),
+              Text(
+                title,
+                style: AppTypography.headlineSmall.copyWith(
+                  color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                ),
+                textAlign: TextAlign.center,
+              ),
               if (message != null) ...[
                 AppSpacing.gapH8,
                 Text(
                   message!,
-                  style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondaryLight),
+                  style: AppTypography.bodyMedium.copyWith(
+                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -144,6 +153,7 @@ class PosBottomSheetHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 4, 8, 12),
       child: Row(
@@ -152,8 +162,17 @@ class PosBottomSheetHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: AppTypography.headlineSmall),
-                if (subtitle != null) Text(subtitle!, style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
+                Text(
+                  title,
+                  style: AppTypography.headlineSmall.copyWith(
+                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                  ),
+                ),
+                if (subtitle != null)
+                  Text(
+                    subtitle!,
+                    style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                  ),
               ],
             ),
           ),

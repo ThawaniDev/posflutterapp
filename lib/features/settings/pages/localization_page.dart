@@ -16,6 +16,8 @@ class LocalizationPage extends ConsumerStatefulWidget {
 }
 
 class _LocalizationPageState extends ConsumerState<LocalizationPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late final TabController _tabController;
   String _selectedLocale = 'en';
 
@@ -122,14 +124,14 @@ class _LocalizationPageState extends ConsumerState<LocalizationPage> with Single
           children: [
             Row(
               children: [
-                Text('Translation Versions', style: theme.textTheme.titleMedium),
+                Text(l10n.translationVersions, style: theme.textTheme.titleMedium),
                 const Spacer(),
                 FilledButton.icon(
                   onPressed: () async {
                     await ref.read(versionListProvider.notifier).load();
                   },
                   icon: const Icon(Icons.refresh, size: 18),
-                  label: const Text('Refresh'),
+                  label: Text(l10n.commonRefresh),
                 ),
               ],
             ),

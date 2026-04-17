@@ -5,6 +5,7 @@ import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminHealthDashboardPage extends ConsumerStatefulWidget {
   const AdminHealthDashboardPage({super.key});
@@ -14,6 +15,8 @@ class AdminHealthDashboardPage extends ConsumerStatefulWidget {
 }
 
 class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -66,7 +69,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('System Health'),
+        title: Text(l10n.analyticsSystemHealth),
         actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData)],
       ),
       body: Column(

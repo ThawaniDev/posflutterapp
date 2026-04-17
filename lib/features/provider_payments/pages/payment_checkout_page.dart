@@ -7,6 +7,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/provider_payments/providers/provider_payment_providers.dart';
 import 'package:wameedpos/features/provider_payments/providers/provider_payment_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Initiates a payment and shows a WebView to complete PayTabs checkout.
 class PaymentCheckoutPage extends ConsumerStatefulWidget {
@@ -34,6 +35,8 @@ class PaymentCheckoutPage extends ConsumerStatefulWidget {
 }
 
 class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   WebViewController? _webController;
   bool _paymentInitiated = false;
   String? _redirectUrl;
@@ -101,7 +104,7 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Complete Payment'),
+        title: Text(l10n.posCompletePayment),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.close),
@@ -116,10 +119,10 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
 
   Widget _buildBody(ProviderPaymentActionState state) {
     if (state is ProviderPaymentActionLoading) {
-      return const Center(
+      return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [CircularProgressIndicator(), SizedBox(height: 16), Text('Initiating payment...')],
+          children: [CircularProgressIndicator(), SizedBox(height: 16), Text(l10n.providerPaymentInitiating)],
         ),
       );
     }
@@ -150,17 +153,17 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Cancel Payment?'),
-        content: const Text('Are you sure you want to cancel this payment? You can retry later.'),
+        title: Text(l10n.providerPaymentCancelTitle),
+        content: Text(l10n.providerPaymentCancelBody),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Continue Payment')),
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.providerPaymentContinue)),
           TextButton(
             onPressed: () {
               Navigator.of(ctx).pop();
               context.go(Routes.providerPayments);
             },
             style: TextButton.styleFrom(foregroundColor: AppColors.error),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
         ],
       ),

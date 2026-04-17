@@ -6,6 +6,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminAnalyticsFeaturesPage extends ConsumerStatefulWidget {
   const AdminAnalyticsFeaturesPage({super.key});
@@ -15,6 +16,8 @@ class AdminAnalyticsFeaturesPage extends ConsumerStatefulWidget {
 }
 
 class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeaturesPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -124,7 +127,7 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
                     const SizedBox(height: AppSpacing.sm),
                     ElevatedButton(
                       onPressed: () => ref.read(analyticsFeaturesProvider.notifier).load(storeId: _storeId),
-                      child: const Text('Retry'),
+                      child: Text(l10n.retry),
                     ),
                   ],
                 ),

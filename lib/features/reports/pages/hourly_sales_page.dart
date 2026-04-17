@@ -9,6 +9,7 @@ import 'package:wameedpos/features/reports/providers/report_state.dart';
 import 'package:wameedpos/features/reports/widgets/report_charts.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class HourlySalesPage extends ConsumerStatefulWidget {
   const HourlySalesPage({super.key});
@@ -18,6 +19,8 @@ class HourlySalesPage extends ConsumerStatefulWidget {
 }
 
 class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   ReportFilters _filters = const ReportFilters();
 
   @override
@@ -47,7 +50,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return ReportPageScaffold(
-      title: 'Hourly Sales',
+      title: l10n.sidebarHourlySales,
       filterPanel: ReportFilterPanel(
         filters: _filters,
         onFiltersChanged: _onFiltersChanged,
@@ -61,8 +64,8 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
         HourlySalesError(:final message) => PosErrorState(message: message, onRetry: _loadData),
         HourlySalesLoaded(:final hours) =>
           hours.isEmpty
-              ? const Center(
-                  child: PosEmptyState(title: 'No hourly data for selected period', icon: Icons.schedule),
+              ? Center(
+                  child: PosEmptyState(title: l10n.reportsNoHourlyData, icon: Icons.schedule),
                 )
               : ListView(
                   padding: const EdgeInsets.all(20),
@@ -86,7 +89,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                                           children: [
                                             Expanded(
                                               child: ReportKpiCard(
-                                                label: 'Peak Hour',
+                                                label: l10n.reportsPeakHour,
                                                 value: _formatHour(peak['hour'] as int),
                                                 icon: Icons.whatshot_rounded,
                                                 color: AppColors.warning,
@@ -96,7 +99,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                                             const SizedBox(width: 12),
                                             Expanded(
                                               child: ReportKpiCard(
-                                                label: 'Total Revenue',
+                                                label: l10n.totalRevenue,
                                                 value: formatCurrency(totalRevenue),
                                                 icon: Icons.trending_up_rounded,
                                                 color: AppColors.success,
@@ -106,7 +109,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                                         ),
                                         const SizedBox(height: 12),
                                         ReportKpiCard(
-                                          label: 'Total Orders',
+                                          label: l10n.staffTotalOrders,
                                           value: '$totalOrders',
                                           icon: Icons.receipt_long_rounded,
                                           color: AppColors.info,
@@ -117,7 +120,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                                       children: [
                                         Expanded(
                                           child: ReportKpiCard(
-                                            label: 'Peak Hour',
+                                            label: l10n.reportsPeakHour,
                                             value: _formatHour(peak['hour'] as int),
                                             icon: Icons.whatshot_rounded,
                                             color: AppColors.warning,
@@ -127,7 +130,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                                         const SizedBox(width: 12),
                                         Expanded(
                                           child: ReportKpiCard(
-                                            label: 'Total Revenue',
+                                            label: l10n.totalRevenue,
                                             value: formatCurrency(totalRevenue),
                                             icon: Icons.trending_up_rounded,
                                             color: AppColors.success,
@@ -136,7 +139,7 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                                         const SizedBox(width: 12),
                                         Expanded(
                                           child: ReportKpiCard(
-                                            label: 'Total Orders',
+                                            label: l10n.staffTotalOrders,
                                             value: '$totalOrders',
                                             icon: Icons.receipt_long_rounded,
                                             color: AppColors.info,
@@ -152,13 +155,13 @@ class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
                     ],
 
                     // Hourly Chart
-                    const ReportSectionHeader(title: 'Hourly Pattern', icon: Icons.schedule_rounded),
+                    ReportSectionHeader(title: l10n.reportsHourlyPattern, icon: Icons.schedule_rounded),
                     ReportDataCard(
                       child: ReportHourlyChart(data: hours, valueKey: 'total_revenue'),
                     ),
                     const SizedBox(height: 24),
 
-                    const ReportSectionHeader(title: 'Revenue by Hour', icon: Icons.bar_chart_rounded),
+                    ReportSectionHeader(title: l10n.reportsRevenueByHour, icon: Icons.bar_chart_rounded),
                     ReportDataCard(
                       padding: const EdgeInsets.all(16),
                       child: Column(
@@ -204,6 +207,7 @@ class _HourRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Row(
       children: [
         SizedBox(
@@ -226,7 +230,7 @@ class _HourRow extends StatelessWidget {
             children: [
               Text(formatCurrency(revenue), style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
               Text(
-                '$orders orders',
+                l10n.reportNOrders(orders.toString()),
                 style: Theme.of(
                   context,
                 ).textTheme.bodySmall?.copyWith(fontSize: 10, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),

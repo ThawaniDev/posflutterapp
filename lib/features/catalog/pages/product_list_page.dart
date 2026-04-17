@@ -24,6 +24,8 @@ class ProductListPage extends ConsumerStatefulWidget {
 }
 
 class _ProductListPageState extends ConsumerState<ProductListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   bool _isGridView = false;
   bool _showFilters = false;
@@ -104,7 +106,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Products'),
+        title: Text(l10n.products),
         actions: [
           IconButton(
             icon: const Icon(Icons.info_outline),
@@ -124,7 +126,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
             ),
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(productsProvider.notifier).load(),
           ),
         ],
@@ -262,7 +264,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
             const SizedBox(height: 12),
             Text(error, textAlign: TextAlign.center),
             const SizedBox(height: 16),
-            FilledButton(onPressed: () => ref.read(productsProvider.notifier).load(), child: const Text('Retry')),
+            FilledButton(onPressed: () => ref.read(productsProvider.notifier).load(), child: Text(l10n.retry)),
           ],
         ),
       );
@@ -275,7 +277,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
           children: [
             Icon(Icons.inventory_2_outlined, size: 56, color: Theme.of(context).hintColor),
             const SizedBox(height: 12),
-            const Text('No products found'),
+            Text(l10n.posNoProducts),
           ],
         ),
       );
@@ -446,7 +448,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                   ),
                   const SizedBox(width: AppSpacing.sm),
                   PosButton(
-                    label: 'Activate',
+                    label: l10n.activate,
                     size: PosButtonSize.sm,
                     variant: PosButtonVariant.soft,
                     icon: Icons.check_circle_outline,
@@ -454,7 +456,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                   ),
                   const SizedBox(width: AppSpacing.xs),
                   PosButton(
-                    label: 'Deactivate',
+                    label: l10n.posDeactivate,
                     size: PosButtonSize.sm,
                     variant: PosButtonVariant.outline,
                     icon: Icons.block,
@@ -462,7 +464,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                   ),
                   const SizedBox(width: AppSpacing.xs),
                   PosButton(
-                    label: 'Delete',
+                    label: l10n.delete,
                     size: PosButtonSize.sm,
                     variant: PosButtonVariant.danger,
                     icon: Icons.delete_outline,
@@ -537,7 +539,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
             Text(error, style: Theme.of(context).textTheme.bodyLarge, textAlign: TextAlign.center),
             const SizedBox(height: AppSpacing.lg),
             PosButton(
-              label: 'Retry',
+              label: l10n.retry,
               onPressed: () => ref.read(productsProvider.notifier).load(),
               variant: PosButtonVariant.outline,
             ),
@@ -553,7 +555,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
           children: [
             Icon(Icons.inventory_2_outlined, size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
             const SizedBox(height: AppSpacing.md),
-            Text('No products found', style: Theme.of(context).textTheme.titleMedium),
+            Text(l10n.posNoProducts, style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: AppSpacing.xs),
             Text(
               loaded.searchQuery != null ? 'Try a different search term.' : 'Start by adding your first product.',
@@ -588,13 +590,13 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
     }
 
     return PosDataTable<Product>(
-      columns: const [
-        PosTableColumn(title: 'Name'),
+      columns: [
+        PosTableColumn(title: l10n.name),
         PosTableColumn(title: 'SKU'),
-        PosTableColumn(title: 'Category'),
-        PosTableColumn(title: 'Cost', numeric: true),
-        PosTableColumn(title: 'Price', numeric: true),
-        PosTableColumn(title: 'Status'),
+        PosTableColumn(title: l10n.category),
+        PosTableColumn(title: l10n.cost, numeric: true),
+        PosTableColumn(title: l10n.wameedAIPrice, numeric: true),
+        PosTableColumn(title: l10n.status),
       ],
       items: products,
       selectable: true,
@@ -604,13 +606,13 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
       onSelectAll: (_) => ref.read(productsProvider.notifier).selectAll(),
       actions: [
         PosTableRowAction<Product>(
-          label: 'Edit',
+          label: l10n.edit,
           icon: Icons.edit_outlined,
           onTap: (p) => context.push('${Routes.products}/${p.id}'),
         ),
-        PosTableRowAction<Product>(label: 'Duplicate', icon: Icons.copy_outlined, onTap: (p) => _handleDuplicate(p)),
+        PosTableRowAction<Product>(label: l10n.labelDuplicate, icon: Icons.copy_outlined, onTap: (p) => _handleDuplicate(p)),
         PosTableRowAction<Product>(
-          label: 'Delete',
+          label: l10n.delete,
           icon: Icons.delete_outline,
           isDestructive: true,
           onTap: (p) => _handleDelete(p),
@@ -752,6 +754,7 @@ class _CategorySidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (categories.isEmpty) return const SizedBox.shrink();
 
     final roots = categories.where((c) => c.parentId == null).toList()
@@ -764,7 +767,7 @@ class _CategorySidebar extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(AppSpacing.md),
-            child: Text('Categories', style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w700)),
+            child: Text(l10n.categories, style: Theme.of(context).textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w700)),
           ),
           // All categories option
           _SidebarItem(

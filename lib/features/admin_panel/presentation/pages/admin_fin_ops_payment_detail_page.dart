@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminFinOpsPaymentDetailPage extends ConsumerStatefulWidget {
   final String id;
@@ -14,6 +15,8 @@ class AdminFinOpsPaymentDetailPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminFinOpsPaymentDetailPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -25,14 +28,14 @@ class _State extends ConsumerState<AdminFinOpsPaymentDetailPage> {
     final state = ref.watch(finOpsPaymentDetailProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Payment Details'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.providerPaymentDetail), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: switch (state) {
         FinOpsDetailLoading() => const Center(child: CircularProgressIndicator()),
         FinOpsDetailLoaded(data: final resp) => _buildDetail(resp),
         FinOpsDetailError(message: final msg) => Center(
           child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
         ),
-        _ => const Center(child: Text('Loading...')),
+        _ => Center(child: Text(l10n.loading)),
       },
     );
   }

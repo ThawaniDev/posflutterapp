@@ -16,6 +16,8 @@ class CashierHistoryPage extends ConsumerStatefulWidget {
 }
 
 class _CashierHistoryPageState extends ConsumerState<CashierHistoryPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -96,7 +98,7 @@ class _CashierHistoryPageState extends ConsumerState<CashierHistoryPage> {
                               _Stat(label: l10n.gamificationTransactions, value: snap.totalTransactions.toString()),
                               _Stat(label: l10n.gamificationRevenue, value: snap.totalRevenue.toStringAsFixed(0)),
                               _Stat(label: l10n.gamificationItemsPerMinute, value: snap.itemsPerMinute.toStringAsFixed(1)),
-                              _Stat(label: 'Voids', value: snap.voidCount.toString()),
+                              _Stat(label: l10n.posVoids, value: snap.voidCount.toString()),
                               _Stat(label: 'Basket', value: snap.avgBasketSize.toStringAsFixed(1)),
                               _Stat(label: 'Upsell', value: '${(snap.upsellRate * 100).toStringAsFixed(0)}%'),
                             ],

@@ -20,6 +20,8 @@ class CategoryListPage extends ConsumerStatefulWidget {
 }
 
 class _CategoryListPageState extends ConsumerState<CategoryListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _selectedCategoryId;
 
   @override
@@ -74,7 +76,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
                   const SizedBox(height: AppSpacing.md),
                   PosTextField(
                     controller: descController,
-                    label: 'Description',
+                    label: l10n.description,
                     hint: 'Brief description of this category',
                     maxLines: 2,
                   ),
@@ -113,8 +115,8 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
 
                   // Active toggle
                   SwitchListTile(
-                    title: const Text('Active'),
-                    subtitle: const Text('Visible in POS and catalog'),
+                    title: Text(l10n.active),
+                    subtitle: Text(l10n.catalogVisibleInPosCatalog),
                     value: isActive,
                     onChanged: (v) => setDialogState(() => isActive = v),
                     activeColor: AppColors.primary,
@@ -125,7 +127,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
             ),
           ),
           actions: [
-            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+            TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
             FilledButton(
               onPressed: () {
                 if (nameController.text.trim().isEmpty) return;
@@ -231,7 +233,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Categories'),
+        title: Text(l10n.categories),
         actions: [
           IconButton(
             icon: const Icon(Icons.info_outline),
@@ -241,18 +243,18 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
           if (categoriesState is CategoriesLoaded) ...[
             IconButton(
               icon: const Icon(Icons.unfold_more),
-              tooltip: 'Expand all',
+              tooltip: l10n.expandAll,
               onPressed: () => ref.read(categoriesProvider.notifier).expandAll(),
             ),
             IconButton(
               icon: const Icon(Icons.unfold_less),
-              tooltip: 'Collapse all',
+              tooltip: l10n.collapseAll,
               onPressed: () => ref.read(categoriesProvider.notifier).collapseAll(),
             ),
           ],
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(categoriesProvider.notifier).load(),
           ),
         ],
@@ -277,7 +279,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
             Text(state.message, style: Theme.of(context).textTheme.bodyLarge, textAlign: TextAlign.center),
             const SizedBox(height: AppSpacing.lg),
             PosButton(
-              label: 'Retry',
+              label: l10n.retry,
               onPressed: () => ref.read(categoriesProvider.notifier).load(),
               variant: PosButtonVariant.outline,
             ),
@@ -294,7 +296,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
             children: [
               Icon(Icons.category_outlined, size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
               const SizedBox(height: AppSpacing.md),
-              Text('No categories yet', style: Theme.of(context).textTheme.titleMedium),
+              Text(l10n.catalogNoCategoriesYet, style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: AppSpacing.xs),
               Text(
                 'Create categories to organise your products.',

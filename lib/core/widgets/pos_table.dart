@@ -401,6 +401,7 @@ class PosDataTable<T> extends StatelessWidget {
   }
 
   Widget _buildDataTable(BuildContext context, double availableWidth) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final visibleCols = _visibleColumns;
 
     return DataTable(
@@ -410,11 +411,17 @@ class PosDataTable<T> extends StatelessWidget {
       sortAscending: sortAscending,
       showCheckboxColumn: selectable,
       onSelectAll: selectable && onSelectAll != null ? (selected) => onSelectAll!(selected ?? false) : null,
-      headingRowHeight: 48,
-      dataRowMinHeight: 48,
-      dataRowMaxHeight: 64,
-      horizontalMargin: 16,
-      columnSpacing: 24,
+      headingRowHeight: AppSpacing.tableHeaderHeight,
+      dataRowMinHeight: AppSpacing.tableRowHeightCompact,
+      dataRowMaxHeight: AppSpacing.tableRowHeightComfortable,
+      horizontalMargin: AppSpacing.tableCellPaddingH,
+      columnSpacing: AppSpacing.tableCellPaddingH * 1.5,
+      headingRowColor: WidgetStateProperty.all(isDark ? AppColors.surfaceDark : AppColors.surfaceLight),
+      headingTextStyle: AppTypography.tableHeader.copyWith(
+        color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight,
+      ),
+      dataTextStyle: AppTypography.tableCell.copyWith(color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight),
+      dividerThickness: 1,
     );
   }
 
@@ -456,7 +463,11 @@ class PosDataTable<T> extends StatelessWidget {
   // ── Data rows ─────────────────────────────────────────────
 
   List<DataRow> _buildRows(BuildContext context, List<PosTableColumn> cols) {
-    return items.map((item) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return items.asMap().entries.map((entry) {
+      final index = entry.key;
+      final item = entry.value;
       final id = itemId?.call(item) ?? '';
       final isSelected = selectable && selectedItems.contains(id);
 
@@ -474,6 +485,17 @@ class PosDataTable<T> extends StatelessWidget {
 
       return DataRow(
         selected: isSelected,
+        color: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return AppColors.primary10;
+          if (states.contains(WidgetState.hovered)) {
+            return isDark ? AppColors.tableRowHoverDark : AppColors.tableRowHoverLight;
+          }
+          // Zebra striping on odd rows
+          if (index.isOdd) {
+            return isDark ? AppColors.tableRowAltDark : AppColors.tableRowAltLight;
+          }
+          return null;
+        }),
         onSelectChanged: selectable && onSelectItem != null
             ? (selected) => onSelectItem!(item, selected ?? false)
             : onRowTap != null
@@ -577,7 +599,15 @@ class PosTablePagination extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('Showing $start–$end of $totalItems', style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
+          Builder(
+            builder: (ctx) {
+              final isDark = Theme.of(ctx).brightness == Brightness.dark;
+              return Text(
+                'Showing $start–$end of $totalItems',
+                style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              );
+            },
+          ),
           Row(
             children: [
               IconButton(
@@ -613,13 +643,20 @@ class _ColumnHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final color = isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(column.title.toUpperCase()),
+        Text(column.title.toUpperCase(), style: AppTypography.tableHeader.copyWith(color: color)),
         if (column.sortable && isSorted) ...[
           const SizedBox(width: 4),
-          Icon(ascending ? Icons.arrow_upward_rounded : Icons.arrow_downward_rounded, size: 14),
+          Icon(
+            ascending ? Icons.arrow_upward_rounded : Icons.arrow_downward_rounded,
+            size: 14,
+            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+          ),
         ],
       ],
     );
@@ -686,12 +723,16 @@ class _LoadingState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const CircularProgressIndicator(),
         const SizedBox(height: AppSpacing.md),
-        Text('Loading...', style: AppTypography.bodyMedium.copyWith(color: AppColors.textMutedLight)),
+        Text(
+          'Loading...',
+          style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+        ),
       ],
     );
   }

@@ -9,6 +9,7 @@ import 'package:wameedpos/features/reports/providers/report_state.dart';
 import 'package:wameedpos/features/reports/widgets/report_charts.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class InventoryReportPage extends ConsumerStatefulWidget {
   const InventoryReportPage({super.key});
@@ -18,6 +19,8 @@ class InventoryReportPage extends ConsumerStatefulWidget {
 }
 
 class _InventoryReportPageState extends ConsumerState<InventoryReportPage> with TickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late final TabController _tabController;
   ReportFilters _filters = const ReportFilters();
 
@@ -66,15 +69,15 @@ class _InventoryReportPageState extends ConsumerState<InventoryReportPage> with 
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: const Text('Inventory Reports'),
+        title: Text(l10n.reportsInventory),
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,
-          tabs: const [
-            Tab(text: 'Valuation'),
-            Tab(text: 'Turnover'),
-            Tab(text: 'Shrinkage'),
-            Tab(text: 'Low Stock'),
+          tabs: [
+            Tab(text: l10n.reportsValuation),
+            Tab(text: l10n.reportsTurnover),
+            Tab(text: l10n.reportsShrinkage),
+            Tab(text: l10n.reportsLowStock),
           ],
         ),
       ),
@@ -105,6 +108,7 @@ class _ValuationTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(inventoryValuationProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -122,19 +126,19 @@ class _ValuationTab extends ConsumerWidget {
             ReportKpiGrid(
               cards: [
                 ReportKpiCard(
-                  label: 'Total Stock Value',
+                  label: l10n.reportsTotalStockValue,
                   value: formatCurrency((data['total_stock_value'] as num?) ?? 0),
                   icon: Icons.account_balance_wallet_rounded,
                   color: AppColors.success,
                 ),
                 ReportKpiCard(
-                  label: 'Total Items',
+                  label: l10n.reportsTotalItems,
                   value: formatCompact((data['total_items'] as num?) ?? 0),
                   icon: Icons.inventory_2_rounded,
                   color: AppColors.info,
                 ),
                 ReportKpiCard(
-                  label: 'Product Count',
+                  label: l10n.reportsProductCount,
                   value: '${data['product_count'] ?? 0}',
                   icon: Icons.category_rounded,
                   color: AppColors.warning,
@@ -144,7 +148,7 @@ class _ValuationTab extends ConsumerWidget {
             const SizedBox(height: 24),
             // Bar chart — Top products by stock value
             if ((data['products'] as List?)?.isNotEmpty ?? false) ...[
-              const ReportSectionHeader(title: 'Stock Value Distribution', icon: Icons.bar_chart_rounded),
+              ReportSectionHeader(title: l10n.reportsStockValueDistribution, icon: Icons.bar_chart_rounded),
               ReportDataCard(
                 child: ReportBarChart(
                   data: (data['products'] as List).cast<Map<String, dynamic>>().take(10).toList(),
@@ -156,9 +160,9 @@ class _ValuationTab extends ConsumerWidget {
               ),
               const SizedBox(height: 24),
             ],
-            const ReportSectionHeader(title: 'Products', icon: Icons.list_rounded),
+            ReportSectionHeader(title: l10n.products, icon: Icons.list_rounded),
             if ((data['products'] as List?)?.isEmpty ?? true)
-              const PosEmptyState(title: 'No stock data', icon: Icons.inventory_2)
+              PosEmptyState(title: l10n.reportsNoStockData, icon: Icons.inventory_2)
             else
               ReportDataCard(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -174,7 +178,7 @@ class _ValuationTab extends ConsumerWidget {
                         ReportRankedItem(
                           rank: i + 1,
                           title: p['product_name'] as String? ?? '',
-                          subtitle: 'Qty: $qty × ${formatCurrency(avgCost)}',
+                          subtitle: l10n.reportQtyTimesAvg(qty.toString(), formatCurrency(avgCost)),
                           trailingValue: formatCurrency(stockVal),
                           trailingColor: AppColors.success,
                         ),
@@ -197,6 +201,7 @@ class _TurnoverTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(inventoryTurnoverProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -210,12 +215,12 @@ class _TurnoverTab extends ConsumerWidget {
         onRefresh: () => ref.read(inventoryTurnoverProvider.notifier).load(),
         child: products.isEmpty
             ? ListView(
-                children: const [PosEmptyState(title: 'No turnover data', icon: Icons.sync)],
+                children: [PosEmptyState(title: l10n.reportsNoTurnoverData, icon: Icons.sync)],
               )
             : ListView(
                 padding: const EdgeInsets.all(20),
                 children: [
-                  const ReportSectionHeader(title: 'Product Turnover', icon: Icons.sync_rounded),
+                  ReportSectionHeader(title: l10n.reportsProductTurnover, icon: Icons.sync_rounded),
                   ReportDataCard(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: Column(
@@ -236,10 +241,10 @@ class _TurnoverTab extends ConsumerWidget {
                             ReportRankedItem(
                               rank: i + 1,
                               title: p['product_name'] as String? ?? '',
-                              subtitle: 'COGS: ${formatCurrency(cogs)} · Stock: $stock',
+                              subtitle: l10n.reportCogsStock(formatCurrency(cogs), stock.toString()),
                               trailingValue: '${ratio.toStringAsFixed(2)}x',
                               trailingColor: ratioColor,
-                              badges: [ReportBadge(label: ratio > 1 ? 'Healthy' : 'Slow', color: ratioColor)],
+                              badges: [ReportBadge(label: ratio > 1 ? l10n.reportHealthy : l10n.reportSlow, color: ratioColor)],
                             ),
                           ],
                         );
@@ -260,6 +265,7 @@ class _ShrinkageTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(inventoryShrinkageProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -275,9 +281,9 @@ class _ShrinkageTab extends ConsumerWidget {
           padding: const EdgeInsets.all(20),
           children: [
             // By Reason
-            const ReportSectionHeader(title: 'Shrinkage by Reason', icon: Icons.warning_amber_rounded),
+            ReportSectionHeader(title: l10n.reportsShrinkageByReason, icon: Icons.warning_amber_rounded),
             if ((data['by_reason'] as List?)?.isEmpty ?? true)
-              const PosEmptyState(title: 'No shrinkage data', icon: Icons.warning_amber)
+              PosEmptyState(title: l10n.reportsNoShrinkageData, icon: Icons.warning_amber)
             else
               ReportDataCard(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -311,7 +317,7 @@ class _ShrinkageTab extends ConsumerWidget {
                                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
                                     ),
                                     Text(
-                                      '$qty units',
+                                      l10n.reportNUnits(qty.toString()),
                                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                         color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                                       ),
@@ -337,7 +343,7 @@ class _ShrinkageTab extends ConsumerWidget {
             const SizedBox(height: 24),
 
             // By Product
-            const ReportSectionHeader(title: 'Shrinkage by Product', icon: Icons.inventory_rounded),
+            ReportSectionHeader(title: l10n.reportsShrinkageByProduct, icon: Icons.inventory_rounded),
             if ((data['by_product'] as List?)?.isNotEmpty ?? false)
               ReportDataCard(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -352,7 +358,7 @@ class _ShrinkageTab extends ConsumerWidget {
                         ReportRankedItem(
                           rank: i + 1,
                           title: p['product_name'] as String? ?? '',
-                          subtitle: '$qty units lost',
+                          subtitle: l10n.reportNUnitsLost(qty.toString()),
                           trailingValue: '-${formatCurrency(cost)}',
                           trailingColor: AppColors.error,
                         ),
@@ -375,6 +381,7 @@ class _LowStockTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(inventoryLowStockProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -388,12 +395,12 @@ class _LowStockTab extends ConsumerWidget {
         onRefresh: () => ref.read(inventoryLowStockProvider.notifier).load(),
         child: products.isEmpty
             ? ListView(
-                children: const [PosEmptyState(title: 'All stock levels OK', icon: Icons.check_circle)],
+                children: [PosEmptyState(title: l10n.reportsAllStockLevelsOk, icon: Icons.check_circle)],
               )
             : ListView(
                 padding: const EdgeInsets.all(20),
                 children: [
-                  const ReportSectionHeader(title: 'Low Stock Items', icon: Icons.warning_rounded),
+                  ReportSectionHeader(title: l10n.companionLowStock, icon: Icons.warning_rounded),
                   ...products.map((p) {
                     final current = (p['current_stock'] as num?)?.toInt() ?? 0;
                     final reorder = (p['reorder_point'] as num?)?.toInt() ?? 0;
@@ -434,7 +441,7 @@ class _LowStockTab extends ConsumerWidget {
                                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
                                   ),
                                   Text(
-                                    'Stock: $current · Reorder at: $reorder',
+                                    l10n.reportStockReorder(current.toString(), reorder.toString()),
                                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                       color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                                     ),
@@ -442,7 +449,7 @@ class _LowStockTab extends ConsumerWidget {
                                 ],
                               ),
                             ),
-                            ReportBadge(label: 'Need $deficit', color: alertColor),
+                            ReportBadge(label: l10n.reportNeedN(deficit.toString()), color: alertColor),
                           ],
                         ),
                       ),

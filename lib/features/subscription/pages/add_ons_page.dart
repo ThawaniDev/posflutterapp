@@ -18,6 +18,8 @@ class AddOnsPage extends ConsumerStatefulWidget {
 }
 
 class _AddOnsPageState extends ConsumerState<AddOnsPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late TabController _tabController;
 
   @override
@@ -41,13 +43,13 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> with SingleTickerProvid
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add-Ons'),
+        title: Text(l10n.subscriptionAddOns),
         centerTitle: true,
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Available'),
-            Tab(text: 'My Add-Ons'),
+          tabs: [
+            Tab(text: l10n.subscriptionAvailable),
+            Tab(text: l10n.subscriptionMyAddOns),
           ],
         ),
       ),
@@ -74,7 +76,7 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> with SingleTickerProvid
   Widget _buildAvailableTab(AddOnsLoaded state) {
     final available = state.availableAddOns;
     if (available.isEmpty) {
-      return const PosEmptyState(title: 'No add-ons available', icon: Icons.extension_off);
+      return PosEmptyState(title: l10n.subscriptionNoAddOnsAvailable, icon: Icons.extension_off);
     }
 
     final activeIds = state.storeAddOns.map((a) => a['plan_add_on_id']?.toString() ?? '').toSet();
@@ -107,7 +109,7 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> with SingleTickerProvid
   Widget _buildMyAddOnsTab(AddOnsLoaded state) {
     final myAddOns = state.storeAddOns;
     if (myAddOns.isEmpty) {
-      return const PosEmptyState(title: 'No active add-ons', icon: Icons.extension);
+      return PosEmptyState(title: l10n.subscriptionNoActiveAddOns, icon: Icons.extension);
     }
 
     return RefreshIndicator(

@@ -8,6 +8,7 @@ import 'package:wameedpos/features/reports/providers/report_state.dart';
 import 'package:wameedpos/features/reports/widgets/report_charts.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class CategoryBreakdownPage extends ConsumerStatefulWidget {
   const CategoryBreakdownPage({super.key});
@@ -17,6 +18,8 @@ class CategoryBreakdownPage extends ConsumerStatefulWidget {
 }
 
 class _CategoryBreakdownPageState extends ConsumerState<CategoryBreakdownPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   ReportFilters _filters = const ReportFilters();
 
   @override
@@ -39,14 +42,14 @@ class _CategoryBreakdownPageState extends ConsumerState<CategoryBreakdownPage> {
     final state = ref.watch(categoryBreakdownProvider);
 
     return ReportPageScaffold(
-      title: 'Category Breakdown',
+      title: l10n.sidebarCategoryBreakdown,
       filterPanel: ReportFilterPanel(filters: _filters, onFiltersChanged: _onFiltersChanged, onRefresh: _loadData),
       body: switch (state) {
         CategoryBreakdownInitial() || CategoryBreakdownLoading() => PosLoadingSkeleton.list(),
         CategoryBreakdownError(:final message) => PosErrorState(message: message, onRetry: _loadData),
         CategoryBreakdownLoaded(:final categories) =>
           categories.isEmpty
-              ? const PosEmptyState(title: 'No category data for selected period', icon: Icons.category)
+              ? PosEmptyState(title: l10n.reportsNoCategoryData, icon: Icons.category)
               : _CategoryList(categories: categories),
       },
     );
@@ -60,6 +63,7 @@ class _CategoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final totalRevenue = categories.fold<double>(0, (sum, c) => sum + (double.tryParse(c['total_revenue'].toString()) ?? 0.0));
     final maxRevenue = categories.isEmpty
@@ -73,13 +77,13 @@ class _CategoryList extends StatelessWidget {
         ReportKpiGrid(
           cards: [
             ReportKpiCard(
-              label: 'Categories',
+              label: l10n.categories,
               value: '${categories.length}',
               icon: Icons.category_rounded,
               color: AppColors.primary,
             ),
             ReportKpiCard(
-              label: 'Total Revenue',
+              label: l10n.totalRevenue,
               value: formatCurrency(totalRevenue),
               icon: Icons.attach_money_rounded,
               color: AppColors.success,
@@ -90,7 +94,7 @@ class _CategoryList extends StatelessWidget {
         // Pie Chart — Category revenue share
         if (categories.isNotEmpty) ...[
           const SizedBox(height: 20),
-          const ReportSectionHeader(title: 'Revenue Share', icon: Icons.donut_large_rounded),
+          ReportSectionHeader(title: l10n.reportsRevenueShare, icon: Icons.donut_large_rounded),
           ReportDataCard(
             child: ReportPieChart(
               data: categories.take(8).toList(),
@@ -102,7 +106,7 @@ class _CategoryList extends StatelessWidget {
         ],
 
         const SizedBox(height: 24),
-        const ReportSectionHeader(title: 'Revenue by Category', icon: Icons.pie_chart_rounded),
+        ReportSectionHeader(title: l10n.reportsRevenueByCategory, icon: Icons.pie_chart_rounded),
 
         ReportDataCard(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -180,10 +184,10 @@ class _CategoryList extends StatelessWidget {
                         Wrap(
                           spacing: 6,
                           children: [
-                            ReportBadge(label: '${c['product_count']} products', color: AppColors.info),
-                            ReportBadge(label: '$qty sold', color: AppColors.primary),
+                            ReportBadge(label: l10n.reportNProducts(c['product_count'].toString()), color: AppColors.info),
+                            ReportBadge(label: l10n.reportNSold(qty.toString()), color: AppColors.primary),
                             ReportBadge(
-                              label: 'Profit ${formatCurrency(profit)}',
+                              label: l10n.reportProfitAmount(formatCurrency(profit)),
                               color: profit >= 0 ? AppColors.success : AppColors.error,
                             ),
                           ],

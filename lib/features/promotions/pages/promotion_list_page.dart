@@ -17,6 +17,8 @@ class PromotionListPage extends ConsumerStatefulWidget {
 }
 
 class _PromotionListPageState extends ConsumerState<PromotionListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _typeFilter;
   bool? _activeFilter;
@@ -50,7 +52,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Promotions & Coupons'),
+        title: Text(l10n.featureInfoPromotionsTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.info_outline),
@@ -69,7 +71,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search promotions...',
+                hintText: l10n.searchPromotions,
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: _searchController.text.isNotEmpty
                     ? IconButton(
@@ -129,7 +131,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
                     const SizedBox(height: 12),
                     Text(message, style: TextStyle(color: theme.colorScheme.error)),
                     const SizedBox(height: 16),
-                    FilledButton.icon(onPressed: _applyFilters, icon: const Icon(Icons.refresh), label: const Text('Retry')),
+                    FilledButton.icon(onPressed: _applyFilters, icon: Icon(Icons.refresh), label: Text(l10n.retry)),
                   ],
                 ),
               ),
@@ -172,7 +174,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
             Text('Filter Promotions', style: Theme.of(ctx).textTheme.titleMedium),
             const SizedBox(height: 16),
             PosSearchableDropdown<String>(
-              label: 'Type',
+              label: l10n.txColType,
               items: PromotionType.values.map((t) => PosDropdownItem(value: t.value, label: t.label)).toList(),
               selectedValue: _typeFilter,
               onChanged: (v) => setState(() => _typeFilter = v),
@@ -181,10 +183,10 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
             ),
             const SizedBox(height: 12),
             PosSearchableDropdown<bool>(
-              label: 'Status',
-              items: const [
-                PosDropdownItem(value: true, label: 'Active'),
-                PosDropdownItem(value: false, label: 'Inactive'),
+              label: l10n.status,
+              items: [
+                PosDropdownItem(value: true, label: l10n.active),
+                PosDropdownItem(value: false, label: l10n.inactive),
               ],
               selectedValue: _activeFilter,
               onChanged: (v) => setState(() => _activeFilter = v),
@@ -199,7 +201,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
                   Navigator.pop(ctx);
                   _applyFilters();
                 },
-                child: const Text('Apply'),
+                child: Text(l10n.apply),
               ),
             ),
           ],
@@ -221,6 +223,7 @@ class _PromotionCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final isActive = promotion.isActive ?? false;
     final isCoupon = promotion.isCoupon ?? false;
@@ -273,10 +276,10 @@ class _PromotionCard extends ConsumerWidget {
                     iconSize: 20,
                     onSelected: (action) => _handleAction(context, ref, action),
                     itemBuilder: (_) => [
-                      const PopupMenuItem(value: 'edit', child: Text('Edit')),
-                      const PopupMenuItem(value: 'analytics', child: Text('Analytics')),
-                      if (isCoupon) const PopupMenuItem(value: 'generate', child: Text('Generate Coupons')),
-                      const PopupMenuItem(value: 'delete', child: Text('Delete')),
+                      PopupMenuItem(value: 'edit', child: Text(l10n.edit)),
+                      PopupMenuItem(value: 'analytics', child: Text(l10n.analytics)),
+                      if (isCoupon) PopupMenuItem(value: 'generate', child: Text(l10n.generateCoupons)),
+                      PopupMenuItem(value: 'delete', child: Text(l10n.delete)),
                     ],
                   ),
                 ],
@@ -314,6 +317,7 @@ class _PromotionCard extends ConsumerWidget {
   }
 
   void _showGenerateCouponsDialog(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final countController = TextEditingController(text: '10');
     final prefixController = TextEditingController();
     final maxUsesController = TextEditingController();
@@ -321,30 +325,30 @@ class _PromotionCard extends ConsumerWidget {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Generate Coupons'),
+        title: Text(l10n.generateCoupons),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: countController,
-              decoration: const InputDecoration(labelText: 'Count *', border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.count, border: OutlineInputBorder()),
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 12),
             TextField(
               controller: prefixController,
-              decoration: const InputDecoration(labelText: 'Prefix (optional)', border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.prefixOptional, border: OutlineInputBorder()),
             ),
             const SizedBox(height: 12),
             TextField(
               controller: maxUsesController,
-              decoration: const InputDecoration(labelText: 'Max Uses Per Coupon (optional)', border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.maxUsesPerCouponOptional, border: OutlineInputBorder()),
               keyboardType: TextInputType.number,
             ),
           ],
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
           FilledButton(
             onPressed: () {
               final count = int.tryParse(countController.text) ?? 10;
@@ -354,7 +358,7 @@ class _PromotionCard extends ConsumerWidget {
               Navigator.pop(ctx);
               showPosInfoSnackbar(context, AppLocalizations.of(context)!.generatingCoupons(count.toString()));
             },
-            child: const Text('Generate'),
+            child: Text(l10n.generate),
           ),
         ],
       ),
@@ -362,9 +366,10 @@ class _PromotionCard extends ConsumerWidget {
   }
 
   void _confirmDelete(BuildContext context, WidgetRef ref) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Delete Promotion',
+      title: l10n.promotionsDeletePromotion,
       message: 'Delete "${promotion.name}"? This action cannot be undone.',
       confirmLabel: 'Delete',
       cancelLabel: 'Cancel',
@@ -387,6 +392,8 @@ class PromotionFormPage extends ConsumerStatefulWidget {
 }
 
 class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -472,13 +479,13 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
           children: [
             TextFormField(
               controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Promotion Name *', border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.promotionName, border: OutlineInputBorder()),
               validator: (v) => (v == null || v.isEmpty) ? 'Name is required' : null,
             ),
             const SizedBox(height: 14),
             TextFormField(
               controller: _descriptionController,
-              decoration: const InputDecoration(labelText: 'Description', border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.description, border: OutlineInputBorder()),
               maxLines: 2,
             ),
             const SizedBox(height: 14),
@@ -507,33 +514,33 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
             if (_selectedType == PromotionType.bogo) ...[
               TextFormField(
                 controller: _buyQtyController,
-                decoration: const InputDecoration(labelText: 'Buy Quantity', border: OutlineInputBorder()),
+                decoration: InputDecoration(labelText: l10n.buyQuantity, border: OutlineInputBorder()),
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 14),
               TextFormField(
                 controller: _getQtyController,
-                decoration: const InputDecoration(labelText: 'Get Quantity', border: OutlineInputBorder()),
+                decoration: InputDecoration(labelText: l10n.getQuantity, border: OutlineInputBorder()),
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 14),
               TextFormField(
                 controller: _getDiscountController,
-                decoration: const InputDecoration(labelText: 'Get Discount %', border: OutlineInputBorder()),
+                decoration: InputDecoration(labelText: l10n.getDiscount, border: OutlineInputBorder()),
                 keyboardType: TextInputType.number,
               ),
             ],
             if (_selectedType == PromotionType.bundle)
               TextFormField(
                 controller: _bundlePriceController,
-                decoration: const InputDecoration(labelText: 'Bundle Price', border: OutlineInputBorder()),
+                decoration: InputDecoration(labelText: l10n.bundlePrice, border: OutlineInputBorder()),
                 keyboardType: TextInputType.number,
               ),
 
             const SizedBox(height: 14),
             TextFormField(
               controller: _minOrderTotalController,
-              decoration: const InputDecoration(labelText: 'Min Order Total', border: OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.minOrderTotal, border: OutlineInputBorder()),
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 14),
@@ -542,7 +549,7 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
                 Expanded(
                   child: TextFormField(
                     controller: _maxUsesController,
-                    decoration: const InputDecoration(labelText: 'Max Uses', border: OutlineInputBorder()),
+                    decoration: InputDecoration(labelText: l10n.maxUses, border: OutlineInputBorder()),
                     keyboardType: TextInputType.number,
                   ),
                 ),
@@ -550,7 +557,7 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
                 Expanded(
                   child: TextFormField(
                     controller: _maxUsesPerCustomerController,
-                    decoration: const InputDecoration(labelText: 'Max Per Customer', border: OutlineInputBorder()),
+                    decoration: InputDecoration(labelText: l10n.maxPerCustomer, border: OutlineInputBorder()),
                     keyboardType: TextInputType.number,
                   ),
                 ),
@@ -558,14 +565,14 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
             ),
 
             const SizedBox(height: 14),
-            SwitchListTile(title: const Text('Active'), value: _isActive, onChanged: (v) => setState(() => _isActive = v)),
+            SwitchListTile(title: Text(l10n.active), value: _isActive, onChanged: (v) => setState(() => _isActive = v)),
             SwitchListTile(
-              title: const Text('Requires Coupon Code'),
+              title: Text(l10n.requiresCouponCode),
               value: _isCoupon,
               onChanged: (v) => setState(() => _isCoupon = v),
             ),
             SwitchListTile(
-              title: const Text('Stackable'),
+              title: Text(l10n.stackable),
               value: _isStackable,
               onChanged: (v) => setState(() => _isStackable = v),
             ),

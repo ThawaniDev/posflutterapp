@@ -18,6 +18,8 @@ class CustomerReportPage extends ConsumerStatefulWidget {
 }
 
 class _CustomerReportPageState extends ConsumerState<CustomerReportPage> with TickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late final TabController _tabController;
   ReportFilters _filters = const ReportFilters();
 
@@ -94,6 +96,7 @@ class _TopCustomersTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(topCustomersProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -107,7 +110,7 @@ class _TopCustomersTab extends ConsumerWidget {
         onRefresh: () => ref.read(topCustomersProvider.notifier).load(),
         child: customers.isEmpty
             ? ListView(
-                children: const [PosEmptyState(title: 'No customer data', icon: Icons.people)],
+                children: [PosEmptyState(title: l10n.reportsNoCustomerData, icon: Icons.people)],
               )
             : ListView(
                 padding: const EdgeInsets.all(20),
@@ -115,13 +118,13 @@ class _TopCustomersTab extends ConsumerWidget {
                   ReportKpiGrid(
                     cards: [
                       ReportKpiCard(
-                        label: 'Top Customers',
+                        label: l10n.reportsTopCustomers,
                         value: '${customers.length}',
                         icon: Icons.people_rounded,
                         color: AppColors.primary,
                       ),
                       ReportKpiCard(
-                        label: 'Total Spend',
+                        label: l10n.reportsTotalSpend,
                         value: formatCurrency(
                           customers.fold<double>(0, (s, c) => s + (c['total_spend'] as num? ?? 0).toDouble()),
                         ),
@@ -134,7 +137,7 @@ class _TopCustomersTab extends ConsumerWidget {
                   // Bar Chart — Top customers by spend
                   if (customers.isNotEmpty) ...[
                     const SizedBox(height: 20),
-                    const ReportSectionHeader(title: 'Spend by Customer', icon: Icons.bar_chart_rounded),
+                    ReportSectionHeader(title: l10n.reportsSpendByCustomer, icon: Icons.bar_chart_rounded),
                     ReportDataCard(
                       child: ReportBarChart(
                         data: customers.take(10).toList(),
@@ -147,7 +150,7 @@ class _TopCustomersTab extends ConsumerWidget {
                   ],
 
                   const SizedBox(height: 24),
-                  const ReportSectionHeader(title: 'Ranked by Spend', icon: Icons.leaderboard_rounded),
+                  ReportSectionHeader(title: l10n.reportsRankedBySpend, icon: Icons.leaderboard_rounded),
                   ReportDataCard(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: Column(
@@ -165,9 +168,9 @@ class _TopCustomersTab extends ConsumerWidget {
                             ReportRankedItem(
                               rank: i + 1,
                               title: c['name'] as String? ?? '',
-                              subtitle: '$visits visits · Avg ${formatCurrency(avgSpend)}',
+                              subtitle: l10n.reportNVisitsAvg(visits.toString(), formatCurrency(avgSpend)),
                               trailingValue: formatCurrency(totalSpend),
-                              trailingSubtitle: '$loyalty pts',
+                              trailingSubtitle: l10n.reportNPts(loyalty.toString()),
                               trailingColor: AppColors.success,
                             ),
                           ],
@@ -189,6 +192,7 @@ class _RetentionTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(customerRetentionProvider);
 
     return switch (state) {
@@ -205,25 +209,25 @@ class _RetentionTab extends ConsumerWidget {
             ReportKpiGrid(
               cards: [
                 ReportKpiCard(
-                  label: 'Total Customers',
+                  label: l10n.reportsTotalCustomers,
                   value: '${data['total_customers'] ?? 0}',
                   icon: Icons.people_rounded,
                   color: AppColors.info,
                 ),
                 ReportKpiCard(
-                  label: 'Repeat Rate',
+                  label: l10n.reportsRepeatRate,
                   value: formatPercent((data['repeat_rate'] as num?) ?? 0),
                   icon: Icons.repeat_rounded,
                   color: AppColors.success,
                 ),
                 ReportKpiCard(
-                  label: 'Repeat Customers',
+                  label: l10n.reportsRepeatCustomers,
                   value: '${data['repeat_customers'] ?? 0}',
                   icon: Icons.loyalty_rounded,
                   color: AppColors.purple,
                 ),
                 ReportKpiCard(
-                  label: 'New (30d)',
+                  label: l10n.reportsNew30d,
                   value: '${data['new_customers_30d'] ?? 0}',
                   icon: Icons.person_add_rounded,
                   color: AppColors.warning,
@@ -234,13 +238,13 @@ class _RetentionTab extends ConsumerWidget {
             ReportKpiGrid(
               cards: [
                 ReportKpiCard(
-                  label: 'Active (30d)',
+                  label: l10n.reportsActive30d,
                   value: '${data['active_customers_30d'] ?? 0}',
                   icon: Icons.trending_up_rounded,
                   color: AppColors.success,
                 ),
                 ReportKpiCard(
-                  label: 'Loyalty Points',
+                  label: l10n.reportsLoyaltyPoints,
                   value: formatCompact((data['total_loyalty_points'] as num?) ?? 0),
                   icon: Icons.stars_rounded,
                   color: AppColors.warning,
@@ -248,14 +252,14 @@ class _RetentionTab extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 24),
-            const ReportSectionHeader(title: 'Averages', icon: Icons.analytics_rounded),
+            ReportSectionHeader(title: l10n.reportsAverages, icon: Icons.analytics_rounded),
             ReportDataCard(
               child: Column(
                 children: [
-                  ReportStatRow(label: 'Avg Visits', value: (data['avg_visits'] as num?)?.toStringAsFixed(1) ?? '0'),
-                  ReportStatRow(label: 'Avg Spend', value: formatCurrency((data['avg_spend'] as num?) ?? 0)),
+                  ReportStatRow(label: l10n.reportsAvgVisits, value: (data['avg_visits'] as num?)?.toStringAsFixed(1) ?? '0'),
+                  ReportStatRow(label: l10n.reportsAvgSpend, value: formatCurrency((data['avg_spend'] as num?) ?? 0)),
                   ReportStatRow(
-                    label: 'Avg Loyalty Points',
+                    label: l10n.reportsAvgLoyaltyPoints,
                     value: '${(data['avg_loyalty_points'] as num?)?.toStringAsFixed(0) ?? '0'} pts',
                   ),
                 ],

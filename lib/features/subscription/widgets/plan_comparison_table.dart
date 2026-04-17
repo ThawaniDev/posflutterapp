@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/features/subscription/models/subscription_plan.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Side-by-side plan comparison table widget.
 class PlanComparisonTable extends StatelessWidget {
@@ -13,6 +14,7 @@ class PlanComparisonTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (plans.isEmpty) return const SizedBox.shrink();
 
     // Gather all unique feature keys across all plans
@@ -42,8 +44,8 @@ class PlanComparisonTable extends StatelessWidget {
           columnSpacing: 24,
           horizontalMargin: 16,
           columns: [
-            const DataColumn(
-              label: Text('Feature', style: TextStyle(fontWeight: FontWeight.bold)),
+            DataColumn(
+              label: Text(l10n.feature, style: TextStyle(fontWeight: FontWeight.bold)),
             ),
             ...plans.map((plan) {
               final isCurrent = plan.id == currentPlanId;
@@ -60,7 +62,7 @@ class PlanComparisonTable extends StatelessWidget {
                         margin: const EdgeInsets.only(top: 4),
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(10)),
-                        child: const Text('Current', style: TextStyle(color: Colors.white, fontSize: 10)),
+                        child: Text(l10n.subscriptionCurrent, style: TextStyle(color: Colors.white, fontSize: 10)),
                       ),
                   ],
                 ),
@@ -126,15 +128,14 @@ class PlanComparisonTable extends StatelessWidget {
                 plans.map((plan) {
                   final isCurrent = plan.id == currentPlanId;
                   if (isCurrent) {
-                    return const Text(
-                      'Current Plan',
+                    return Text(l10n.subscriptionCurrentPlan,
                       style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600),
                     );
                   }
                   return ElevatedButton(
                     onPressed: () => onSelectPlan!(plan),
                     style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)),
-                    child: const Text('Select'),
+                    child: Text(l10n.subscriptionSelect),
                   );
                 }).toList(),
               ),

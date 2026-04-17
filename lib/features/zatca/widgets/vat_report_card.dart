@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../providers/zatca_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class VatReportCard extends StatelessWidget {
   final ZatcaVatReportLoaded data;
@@ -11,6 +12,7 @@ class VatReportCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
@@ -28,7 +30,7 @@ class VatReportCard extends StatelessWidget {
             children: [
               const Icon(Icons.account_balance_outlined, color: AppColors.primary, size: 24),
               AppSpacing.gapH8,
-              Text('VAT Report', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+              Text(l10n.zatcaVatReport, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
             ],
           ),
           AppSpacing.gapH20,
@@ -45,7 +47,7 @@ class VatReportCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Total Revenue', style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+                    Text(l10n.totalRevenue, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
                     AppSpacing.gapH2,
                     Text(
                       '\u0081 ${data.totalAmount.toStringAsFixed(2)}',

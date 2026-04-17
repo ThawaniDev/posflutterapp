@@ -11738,4 +11738,999 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get providerPaymentPurposeOther => 'Other';
+
+  @override
+  String get pinLoginTitle => 'Enter PIN';
+
+  @override
+  String get pinLoginNoStore =>
+      'No store session found. Please sign in with email.';
+
+  @override
+  String get pinLoginEmailInstead => 'Sign in with email instead';
+
+  @override
+  String get categoryMappings => 'Category Mappings';
+
+  @override
+  String get syncManagement => 'Sync Management';
+
+  @override
+  String get syncLogs => 'Sync Logs';
+
+  @override
+  String get newExport => 'New Export';
+
+  @override
+  String get autoExportSettings => 'Auto Export Settings';
+
+  @override
+  String get dayOfWeek => 'Day of Week';
+
+  @override
+  String get dayOfMonth => 'Day of Month';
+
+  @override
+  String get exportTime => 'Export Time';
+
+  @override
+  String get retryOnFailure => 'Retry on Failure';
+
+  @override
+  String get automaticallyRetryFailedExports =>
+      'Automatically retry failed exports';
+
+  @override
+  String get mapPosAccountsToProviderAccounts =>
+      'Map POS accounts to provider accounts';
+
+  @override
+  String get viewAndManageExports => 'View and manage exports';
+
+  @override
+  String get scheduleAutomaticExports => 'Schedule automatic exports';
+
+  @override
+  String get connect => 'Connect';
+
+  @override
+  String get supportedLanguages => 'Supported Languages';
+
+  @override
+  String get noPublishedVersionsYet => 'No published versions yet';
+
+  @override
+  String get translationVersions => 'Translation Versions';
+
+  @override
+  String get noCashSessionsFound => 'No cash sessions found';
+
+  @override
+  String get openingCheckout => 'Opening checkout...';
+
+  @override
+  String get sellPrice => 'Sell Price';
+
+  @override
+  String get offerPrice => 'Offer Price';
+
+  @override
+  String get costPrice => 'Cost Price';
+
+  @override
+  String get productNotFound => 'Product Not Found';
+
+  @override
+  String get networkDiscovery => 'Network Discovery';
+
+  @override
+  String get searchPromotions => 'Search promotions...';
+
+  @override
+  String get analytics => 'Analytics';
+
+  @override
+  String get generateCoupons => 'Generate Coupons';
+
+  @override
+  String get applyCoupon => 'Apply Coupon';
+
+  @override
+  String get couponCode => 'Coupon Code';
+
+  @override
+  String get enterCouponCode => 'Enter coupon code';
+
+  @override
+  String get promotionName => 'Promotion Name *';
+
+  @override
+  String get buyQuantity => 'Buy Quantity';
+
+  @override
+  String get getQuantity => 'Get Quantity';
+
+  @override
+  String get getDiscount => 'Get Discount %';
+
+  @override
+  String get bundlePrice => 'Bundle Price';
+
+  @override
+  String get minOrderTotal => 'Min Order Total';
+
+  @override
+  String get maxUses => 'Max Uses';
+
+  @override
+  String get maxPerCustomer => 'Max Per Customer';
+
+  @override
+  String get requiresCouponCode => 'Requires Coupon Code';
+
+  @override
+  String get stackable => 'Stackable';
+
+  @override
+  String get count => 'Count *';
+
+  @override
+  String get prefixOptional => 'Prefix (optional)';
+
+  @override
+  String get maxUsesPerCouponOptional => 'Max Uses Per Coupon (optional)';
+
+  @override
+  String get expandAll => 'Expand all';
+
+  @override
+  String get collapseAll => 'Collapse all';
+
+  @override
+  String get addSubcategory => 'Add subcategory';
+
+  @override
+  String get noSignagePlaylists => 'No signage playlists';
+
+  @override
+  String get noAppointments => 'No appointments';
+
+  @override
+  String get enterACustomerIdToViewWishlist =>
+      'Enter a customer ID to view wishlist';
+
+  @override
+  String get wishlistIsEmpty => 'Wishlist is empty';
+
+  @override
+  String get noGiftRegistries => 'No gift registries';
+
+  @override
+  String get noSyncHistoryYet => 'No sync history yet';
+
+  @override
+  String get recentSyncActivity => 'Recent Sync Activity';
+
+  @override
+  String get noBackupsYet => 'No backups yet';
+
+  @override
+  String get editReservation => 'Edit Reservation';
+
+  @override
+  String get reservationDate => 'Reservation Date';
+
+  @override
+  String get time => 'Time';
+
+  @override
+  String get durationMinutes => 'Duration (minutes)';
+
+  @override
+  String get tableOptional => 'Table (optional)';
+
+  @override
+  String get editTable => 'Edit Table';
+
+  @override
+  String get displayNameOptional => 'Display Name (optional)';
+
+  @override
+  String get zoneOptional => 'Zone (optional)';
+
+  @override
+  String get positionX => 'Position X';
+
+  @override
+  String get positionY => 'Position Y';
+
+  @override
+  String get openTab => 'Open Tab';
+
+  @override
+  String get recipeName => 'Recipe Name';
+
+  @override
+  String get expectedYield => 'Expected Yield';
+
+  @override
+  String get prepTimeMin => 'Prep Time (min)';
+
+  @override
+  String get bakeTimeMin => 'Bake Time (min)';
+
+  @override
+  String get bakeTempC => 'Bake Temp (°C)';
+
+  @override
+  String get instructions => 'Instructions';
+
+  @override
+  String get scheduleDate => 'Schedule Date';
+
+  @override
+  String get plannedBatches => 'Planned Batches';
+
+  @override
+  String get plannedYield => 'Planned Yield';
+
+  @override
+  String get actualBatches => 'Actual Batches';
+
+  @override
+  String get actualYield => 'Actual Yield';
+
+  @override
+  String get arrangementName => 'Arrangement Name';
+
+  @override
+  String get occasionOptional => 'Occasion (optional)';
+
+  @override
+  String get noDataForSelectedPeriod => 'No data for selected period';
+
+  @override
+  String get noSalesDataYetToday => 'No sales data yet today';
+
+  @override
+  String get sku => 'SKU:';
+
+  @override
+  String get deleteRole => 'Delete role';
+
+  @override
+  String get planDetails => 'Plan Details';
+
+  @override
+  String get usage => 'Usage';
+
+  @override
+  String get manageAddons => 'Manage Add-ons';
+
+  @override
+  String get viewInvoices => 'View Invoices';
+
+  @override
+  String get renews => 'Renews';
+
+  @override
+  String get productsUsed => 'Products Used';
+
+  @override
+  String get needHelp => 'Need Help?';
+
+  @override
+  String get contactSupport => 'Contact Support';
+
+  @override
+  String get achievements => 'Achievements';
+
+  @override
+  String get noBadgesEarnedYet => 'No badges earned yet';
+
+  @override
+  String get badgeCollection => 'Badge Collection';
+
+  @override
+  String get noSubscriptionsFound => 'No subscriptions found';
+
+  @override
+  String get noGatewaysConfigured => 'No gateways configured';
+
+  @override
+  String get noAnnouncementsFound => 'No announcements found';
+
+  @override
+  String get noSettlements => 'No settlements';
+
+  @override
+  String get uiError => 'Error';
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get plan => 'Plan';
+
+  @override
+  String get id => 'ID';
+
+  @override
+  String get role => 'Role';
+
+  @override
+  String get item => 'Item';
+
+  @override
+  String get card => 'Card';
+
+  @override
+  String get unpaid => 'Unpaid';
+
+  @override
+  String get due => 'Due';
+
+  @override
+  String get approved => 'Approved';
+
+  @override
+  String get rejected => 'Rejected';
+
+  @override
+  String get published => 'Published';
+
+  @override
+  String get archived => 'Archived';
+
+  @override
+  String get filter => 'Filter';
+
+  @override
+  String get sort => 'Sort';
+
+  @override
+  String get selectAll => 'Select All';
+
+  @override
+  String get deselectAll => 'Deselect All';
+
+  @override
+  String get copy => 'Copy';
+
+  @override
+  String get upload => 'Upload';
+
+  @override
+  String get share => 'Share';
+
+  @override
+  String get branchMgr => 'Branch Mgr';
+
+  @override
+  String get health => 'Health';
+
+  @override
+  String get configuration => 'Configuration';
+
+  @override
+  String get customRange => 'Custom Range';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong';
+
+  @override
+  String get view => 'View';
+
+  @override
+  String get stop => 'Stop';
+
+  @override
+  String get pause => 'Pause';
+
+  @override
+  String get resume => 'Resume';
+
+  @override
+  String get refund => 'Refund';
+
+  @override
+  String get reportsTodaysOverview => 'Today\'s Overview';
+
+  @override
+  String get reportsVsYesterday => 'vs Yesterday';
+
+  @override
+  String get reportsTopProductsToday => 'Top Products Today';
+
+  @override
+  String get reportsFeatureGuide => 'Feature Guide';
+
+  @override
+  String get reportsRevenueTrend => 'Revenue Trend';
+
+  @override
+  String get reportsBreakdown => 'Breakdown';
+
+  @override
+  String get reportsCostOfGoods => 'Cost of Goods';
+
+  @override
+  String get reportsTaxCollected => 'Tax Collected';
+
+  @override
+  String get reportsCashRevenue => 'Cash Revenue';
+
+  @override
+  String get reportsCardRevenue => 'Card Revenue';
+
+  @override
+  String get reportsOtherRevenue => 'Other Revenue';
+
+  @override
+  String get reportsDailyBreakdown => 'Daily Breakdown';
+
+  @override
+  String get reportsPnlTrend => 'P&L Trend';
+
+  @override
+  String get reportsCogs => 'COGS';
+
+  @override
+  String get reportsNoDataForPeriod => 'No data for period';
+
+  @override
+  String get reportsExpenseDistribution => 'Expense Distribution';
+
+  @override
+  String get reportsByCategory => 'By Category';
+
+  @override
+  String get reportsNoExpensesRecorded => 'No expenses recorded';
+
+  @override
+  String get reportsTotalVariance => 'Total Variance';
+
+  @override
+  String get reportsOverPlus => 'Over (+)';
+
+  @override
+  String get reportsShortMinus => 'Short (-)';
+
+  @override
+  String get reportsNoClosedSessions => 'No closed sessions';
+
+  @override
+  String get reportsExpected => 'Expected';
+
+  @override
+  String get reportsActual => 'Actual';
+
+  @override
+  String get reportsTotalProfit => 'Total Profit';
+
+  @override
+  String get reportsTopProductsByRevenue => 'Top Products by Revenue';
+
+  @override
+  String get reportsProductsRankedByRevenue => 'Products Ranked by Revenue';
+
+  @override
+  String get reportsNoProductData => 'No product data for selected period';
+
+  @override
+  String get reportsTotalQtySold => 'Total Qty Sold';
+
+  @override
+  String get reportsPaymentDistribution => 'Payment Distribution';
+
+  @override
+  String get reportsBreakdownByMethod => 'Breakdown by Method';
+
+  @override
+  String get reportsNoPaymentData => 'No payment data for selected period';
+
+  @override
+  String get reportsMethodsUsed => 'Methods Used';
+
+  @override
+  String get reportsAvgPerTx => 'Avg per Tx';
+
+  @override
+  String get reportsHourlyPattern => 'Hourly Pattern';
+
+  @override
+  String get reportsRevenueByHour => 'Revenue by Hour';
+
+  @override
+  String get reportsNoHourlyData => 'No hourly data for selected period';
+
+  @override
+  String get reportsPeakHour => 'Peak Hour';
+
+  @override
+  String get reportsRevenueByStaff => 'Revenue by Staff';
+
+  @override
+  String get reportsStaffRankedByRevenue => 'Staff Ranked by Revenue';
+
+  @override
+  String get reportsNoStaffData => 'No staff performance data';
+
+  @override
+  String get reportsAvgPerStaff => 'Avg per Staff';
+
+  @override
+  String get reportsNoCustomerData => 'No customer data';
+
+  @override
+  String get reportsSpendByCustomer => 'Spend by Customer';
+
+  @override
+  String get reportsRankedBySpend => 'Ranked by Spend';
+
+  @override
+  String get reportsTotalSpend => 'Total Spend';
+
+  @override
+  String get reportsRepeatRate => 'Repeat Rate';
+
+  @override
+  String get reportsRepeatCustomers => 'Repeat Customers';
+
+  @override
+  String get reportsNew30d => 'New (30d)';
+
+  @override
+  String get reportsActive30d => 'Active (30d)';
+
+  @override
+  String get reportsLoyaltyPoints => 'Loyalty Points';
+
+  @override
+  String get reportsAverages => 'Averages';
+
+  @override
+  String get reportsAvgVisits => 'Avg Visits';
+
+  @override
+  String get reportsAvgSpend => 'Avg Spend';
+
+  @override
+  String get reportsAvgLoyaltyPoints => 'Avg Loyalty Points';
+
+  @override
+  String get reportsNoCategoryData => 'No category data for selected period';
+
+  @override
+  String get reportsRevenueShare => 'Revenue Share';
+
+  @override
+  String get reportsRevenueByCategory => 'Revenue by Category';
+
+  @override
+  String get reportsCategories => 'Categories';
+
+  @override
+  String get reportsTotalStockValue => 'Total Stock Value';
+
+  @override
+  String get reportsTotalItems => 'Total Items';
+
+  @override
+  String get reportsProductCount => 'Product Count';
+
+  @override
+  String get reportsStockValueDistribution => 'Stock Value Distribution';
+
+  @override
+  String get reportsNoStockData => 'No stock data';
+
+  @override
+  String get reportsProductTurnover => 'Product Turnover';
+
+  @override
+  String get reportsNoTurnoverData => 'No turnover data';
+
+  @override
+  String get reportsShrinkageByReason => 'Shrinkage by Reason';
+
+  @override
+  String get reportsNoShrinkageData => 'No shrinkage data';
+
+  @override
+  String get reportsShrinkageByProduct => 'Shrinkage by Product';
+
+  @override
+  String get reportsAllStockLevelsOk => 'All stock levels OK';
+
+  @override
+  String get reportsLowStockItems => 'Low Stock Items';
+
+  @override
+  String get filterCash => 'Cash';
+
+  @override
+  String get filterCard => 'Card';
+
+  @override
+  String get filterGiftCard => 'Gift Card';
+
+  @override
+  String get filterMobile => 'Mobile';
+
+  @override
+  String get filterBankTransfer => 'Bank Transfer';
+
+  @override
+  String get filterCompleted => 'Completed';
+
+  @override
+  String get filterRefunded => 'Refunded';
+
+  @override
+  String get filterPartialRefund => 'Partial Refund';
+
+  @override
+  String get filterMin => 'Min';
+
+  @override
+  String get filterMax => 'Max';
+
+  @override
+  String get reportsRevenue => 'Revenue';
+
+  @override
+  String get filterSortQuantity => 'Quantity';
+
+  @override
+  String get filterSortProfit => 'Profit';
+
+  @override
+  String get filterSortOrders => 'Orders';
+
+  @override
+  String get filterSortName => 'Name';
+
+  @override
+  String get companionAppPreferences => 'App Preferences';
+
+  @override
+  String get companionTheme => 'Theme';
+
+  @override
+  String get companionLanguage => 'Language';
+
+  @override
+  String get companionEnglish => 'English';
+
+  @override
+  String get companionCompactMode => 'Compact Mode';
+
+  @override
+  String get companionNotifications => 'Notifications';
+
+  @override
+  String get companionBiometricLock => 'Biometric Lock';
+
+  @override
+  String get companionDefaultPage => 'Default Page';
+
+  @override
+  String get companionCurrencyDisplay => 'Currency Display';
+
+  @override
+  String get companionPending => 'Pending';
+
+  @override
+  String get catalogProductVisibleInPos => 'Product is visible in POS';
+
+  @override
+  String get catalogWeighable => 'Weighable';
+
+  @override
+  String get catalogAgeRestricted => 'Age Restricted';
+
+  @override
+  String get catalogAddVariant => 'Add Variant';
+
+  @override
+  String get catalogAddModifierGroup => 'Add Modifier Group';
+
+  @override
+  String get catalogVisibleInPosCatalog => 'Visible in POS and catalog';
+
+  @override
+  String get catalogNoCategoriesYet => 'No categories yet';
+
+  @override
+  String get staffClockIn => 'Clock In';
+
+  @override
+  String get staffClockOut => 'Clock Out';
+
+  @override
+  String get statusScheduled => 'Scheduled';
+
+  @override
+  String get statusPlanned => 'Planned';
+
+  @override
+  String get statusInProgress => 'In Progress';
+
+  @override
+  String get statusCancelled => 'Cancelled';
+
+  @override
+  String get paymentsCountRequired => 'Count *';
+
+  @override
+  String get paymentsPrefixOptional => 'Prefix (optional)';
+
+  @override
+  String get paymentsMaxUsesPerCoupon => 'Max Uses Per Coupon (optional)';
+
+  @override
+  String get accountingDayOfMonth => 'Day of Month';
+
+  @override
+  String get accountingNotificationEmail => 'Notification Email (optional)';
+
+  @override
+  String get jewelrySetMetalRate => 'Set Metal Rate';
+
+  @override
+  String get hardware58mm => '58mm';
+
+  @override
+  String get hardware80mm => '80mm';
+
+  @override
+  String get hardwareKg => 'kg';
+
+  @override
+  String get hardwareG => 'g';
+
+  @override
+  String get hardwareLb => 'lb';
+
+  @override
+  String get hardwareNearPay => 'NearPay';
+
+  @override
+  String get hardwareNexo => 'Nexo';
+
+  @override
+  String get promotionsDeletePromotion => 'Delete Promotion';
+
+  @override
+  String get promotionsCouponCode => 'Coupon Code';
+
+  @override
+  String get promotionsEnterCouponCode => 'Enter coupon code';
+
+  @override
+  String get reportsTotalRevenue => 'Total Revenue';
+
+  @override
+  String get reportsTransactions => 'Transactions';
+
+  @override
+  String get reportsNetRevenue => 'Net Revenue';
+
+  @override
+  String get reportsAvgBasket => 'Avg Basket';
+
+  @override
+  String get reportsNetProfit => 'Net Profit';
+
+  @override
+  String get reportsTotalExpenses => 'Total Expenses';
+
+  @override
+  String get reportsTotalOrders => 'Total Orders';
+
+  @override
+  String get reportsTopCustomers2 => 'Top Customers';
+
+  @override
+  String get reportsTotalCustomers => 'Total Customers';
+
+  @override
+  String get reportsSessions => 'Sessions';
+
+  @override
+  String get reportsStaffMembers => 'Staff Members';
+
+  @override
+  String get reportsFilterStaff => 'Staff';
+
+  @override
+  String get reportsFilterCategory => 'Category';
+
+  @override
+  String get reportsFilterPayment => 'Payment';
+
+  @override
+  String get reportsFilterStatus => 'Status';
+
+  @override
+  String get reportsProducts => 'Products';
+
+  @override
+  String get presetToday => 'Today';
+
+  @override
+  String get presetYesterday => 'Yesterday';
+
+  @override
+  String get presetLast7Days => 'Last 7 Days';
+
+  @override
+  String get presetLast30Days => 'Last 30 Days';
+
+  @override
+  String get presetThisMonth => 'This Month';
+
+  @override
+  String get presetLastMonth => 'Last Month';
+
+  @override
+  String get presetThisQuarter => 'This Quarter';
+
+  @override
+  String get presetCustom => 'Custom';
+
+  @override
+  String get reportNavSales => 'Sales';
+
+  @override
+  String get reportNavProducts => 'Products';
+
+  @override
+  String get reportNavCategories => 'Categories';
+
+  @override
+  String get reportNavStaff => 'Staff';
+
+  @override
+  String get reportNavHourly => 'Hourly';
+
+  @override
+  String get reportNavPayments => 'Payments';
+
+  @override
+  String get reportNavInventory => 'Inventory';
+
+  @override
+  String get reportNavFinancial => 'Financial';
+
+  @override
+  String get reportNavCustomers => 'Customers';
+
+  @override
+  String get reportAllTime => 'All Time';
+
+  @override
+  String get reportFilters => 'Filters';
+
+  @override
+  String get reportAllBranches => 'All Branches';
+
+  @override
+  String reportQtyPrefix(String value) {
+    return 'Qty: $value';
+  }
+
+  @override
+  String get reportRevenue => 'Revenue';
+
+  @override
+  String reportNOrders(String count) {
+    return '$count orders';
+  }
+
+  @override
+  String reportNetPrefix(String value) {
+    return 'Net: $value';
+  }
+
+  @override
+  String reportNSold(String count) {
+    return '$count sold';
+  }
+
+  @override
+  String reportProfitAmount(String value) {
+    return 'Profit $value';
+  }
+
+  @override
+  String reportCostAmount(String value) {
+    return 'Cost $value';
+  }
+
+  @override
+  String reportNReturns(String count) {
+    return '$count returns';
+  }
+
+  @override
+  String reportNProducts(String count) {
+    return '$count products';
+  }
+
+  @override
+  String reportAvgAmount(String value) {
+    return 'Avg $value';
+  }
+
+  @override
+  String reportNVisitsAvg(String visits, String avg) {
+    return '$visits visits · Avg $avg';
+  }
+
+  @override
+  String reportNPts(String count) {
+    return '$count pts';
+  }
+
+  @override
+  String reportQtyTimesAvg(String qty, String cost) {
+    return 'Qty: $qty × $cost';
+  }
+
+  @override
+  String reportCogsStock(String cogs, String stock) {
+    return 'COGS: $cogs · Stock: $stock';
+  }
+
+  @override
+  String get reportHealthy => 'Healthy';
+
+  @override
+  String get reportSlow => 'Slow';
+
+  @override
+  String reportNUnits(String count) {
+    return '$count units';
+  }
+
+  @override
+  String reportNUnitsLost(String count) {
+    return '$count units lost';
+  }
+
+  @override
+  String reportStockReorder(String current, String reorder) {
+    return 'Stock: $current · Reorder at: $reorder';
+  }
+
+  @override
+  String reportNeedN(String count) {
+    return 'Need $count';
+  }
+
+  @override
+  String reportNTransactions(String count) {
+    return '$count transactions';
+  }
+
+  @override
+  String reportOpenedAt(String time) {
+    return 'Opened: $time';
+  }
+
+  @override
+  String reportTodayVsYesterday(String today, String yesterday) {
+    return 'Today: $today  •  Yesterday: $yesterday';
+  }
+
+  @override
+  String get reportLegendRevenue => 'Revenue';
+
+  @override
+  String get reportLegendCost => 'Cost';
+
+  @override
+  String get reportLegendNetProfit => 'Net Profit';
 }

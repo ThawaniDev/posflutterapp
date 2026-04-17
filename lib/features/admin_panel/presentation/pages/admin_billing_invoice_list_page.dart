@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminBillingInvoiceListPage extends ConsumerStatefulWidget {
   const AdminBillingInvoiceListPage({super.key});
@@ -16,6 +17,8 @@ class AdminBillingInvoiceListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoiceListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _storeId;
   String? _selectedStatus;
@@ -64,7 +67,7 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Invoices'),
+        title: Text(l10n.invoices),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         actions: [
@@ -138,7 +141,7 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
               BillingInvoiceListLoading() => const Center(child: CircularProgressIndicator()),
               BillingInvoiceListLoaded(invoices: final invoices) =>
                 invoices.isEmpty
-                    ? const Center(child: Text('No invoices found'))
+                    ? Center(child: Text(l10n.noInvoicesFound))
                     : ListView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
                         itemCount: invoices.length,

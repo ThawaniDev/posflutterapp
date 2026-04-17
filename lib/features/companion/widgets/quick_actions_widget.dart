@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/companion/providers/companion_state.dart';
 import 'package:wameedpos/features/companion/providers/companion_providers.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class QuickActionsWidget extends ConsumerWidget {
   const QuickActionsWidget({super.key});
@@ -21,6 +22,7 @@ class QuickActionsWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(quickActionsProvider);
     final theme = Theme.of(context);
 
@@ -41,7 +43,7 @@ class QuickActionsWidget extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Quick Actions', style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+            Text(l10n.deliveryQuickActions, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
             AppSpacing.gapH16,
             GridView.builder(
               shrinkWrap: true,

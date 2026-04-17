@@ -18,6 +18,8 @@ class AttendancePage extends ConsumerStatefulWidget {
 }
 
 class _AttendancePageState extends ConsumerState<AttendancePage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   DateTimeRange? _dateRange;
   String? _selectedStaffId;
   final _dateFormat = DateFormat('yyyy-MM-dd');
@@ -63,7 +65,7 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
         title: Text(l10n.staffAttendance),
         actions: [
-          IconButton(icon: const Icon(Icons.date_range), onPressed: _pickDateRange, tooltip: l10n.staffFilterByDate),
+          IconButton(icon: Icon(Icons.date_range), onPressed: _pickDateRange, tooltip: l10n.staffFilterByDate),
           IconButton(icon: const Icon(Icons.refresh), onPressed: _loadAttendance),
         ],
       ),
@@ -97,7 +99,7 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
                   ],
                   if (_selectedStaffId != null)
                     Chip(
-                      label: Text(l10n.staffFilteredByStaff, style: const TextStyle(fontSize: 12)),
+                      label: Text(l10n.staffFilteredByStaff, style: TextStyle(fontSize: 12)),
                       onDeleted: () {
                         setState(() => _selectedStaffId = null);
                         _loadAttendance();
@@ -116,7 +118,7 @@ class _AttendancePageState extends ConsumerState<AttendancePage> {
               AttendanceError(message: final msg) => PosErrorState(message: msg, onRetry: _loadAttendance),
               AttendanceLoaded(records: final records) =>
                 records.isEmpty
-                    ? const PosEmptyState(title: 'No attendance records', icon: Icons.access_time)
+                    ? PosEmptyState(title: l10n.staffNoAttendance, icon: Icons.access_time)
                     : RefreshIndicator(
                         onRefresh: () async => _loadAttendance(),
                         child: ListView.builder(
@@ -203,6 +205,7 @@ class _AttendanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isOpen = record.clockOutAt == null;
 
     return Card(
@@ -235,8 +238,7 @@ class _AttendanceCard extends StatelessWidget {
                       color: AppColors.warning.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Text(
-                      'Active',
+                    child: Text(l10n.active,
                       style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.warning),
                     ),
                   ),
@@ -328,6 +330,8 @@ class _ClockDialog extends ConsumerStatefulWidget {
 }
 
 class _ClockDialogState extends ConsumerState<_ClockDialog> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   StaffUser? _selectedStaff;
   bool _isClockIn = true;
   final _notesController = TextEditingController();
@@ -370,9 +374,9 @@ class _ClockDialogState extends ConsumerState<_ClockDialog> {
             ),
             AppSpacing.gapH16,
             SegmentedButton<bool>(
-              segments: const [
-                ButtonSegment(value: true, label: Text('Clock In'), icon: Icon(Icons.login)),
-                ButtonSegment(value: false, label: Text('Clock Out'), icon: Icon(Icons.logout)),
+              segments: [
+                ButtonSegment(value: true, label: Text(l10n.staffClockIn), icon: Icon(Icons.login)),
+                ButtonSegment(value: false, label: Text(l10n.staffClockOut), icon: Icon(Icons.logout)),
               ],
               selected: {_isClockIn},
               onSelectionChanged: (v) => setState(() => _isClockIn = v.first),
@@ -380,7 +384,7 @@ class _ClockDialogState extends ConsumerState<_ClockDialog> {
             AppSpacing.gapH16,
             TextField(
               controller: _notesController,
-              decoration: InputDecoration(labelText: l10n.staffNotesOptional, border: const OutlineInputBorder()),
+              decoration: InputDecoration(labelText: l10n.staffNotesOptional, border: OutlineInputBorder()),
               maxLines: 2,
             ),
           ],

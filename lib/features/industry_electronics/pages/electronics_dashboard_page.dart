@@ -9,6 +9,7 @@ import 'package:wameedpos/features/industry_electronics/widgets/trade_in_card.da
 import 'package:wameedpos/features/industry_electronics/pages/imei_record_form_page.dart';
 import 'package:wameedpos/features/industry_electronics/pages/repair_job_form_page.dart';
 import 'package:wameedpos/features/industry_electronics/pages/trade_in_form_page.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ElectronicsDashboardPage extends ConsumerStatefulWidget {
   const ElectronicsDashboardPage({super.key});
@@ -18,6 +19,8 @@ class ElectronicsDashboardPage extends ConsumerStatefulWidget {
 }
 
 class _ElectronicsDashboardPageState extends ConsumerState<ElectronicsDashboardPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late final TabController _tabController;
 
   @override
@@ -51,13 +54,13 @@ class _ElectronicsDashboardPageState extends ConsumerState<ElectronicsDashboardP
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Electronics'),
+        title: Text(l10n.electronicsTitle),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'IMEI Records'),
-            Tab(text: 'Repair Jobs'),
-            Tab(text: 'Trade-Ins'),
+          tabs: [
+            Tab(text: l10n.electronicsImeiRecords),
+            Tab(text: l10n.electronicsRepairJobs),
+            Tab(text: l10n.electronicsTradeIns),
           ],
         ),
       ),

@@ -8,6 +8,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminFinOpsRefundListPage extends ConsumerStatefulWidget {
   const AdminFinOpsRefundListPage({super.key});
@@ -17,6 +18,8 @@ class AdminFinOpsRefundListPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminFinOpsRefundListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String? _statusFilter;
 
@@ -47,7 +50,7 @@ class _State extends ConsumerState<AdminFinOpsRefundListPage> {
     final state = ref.watch(finOpsRefundsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Refunds'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.posRefunds), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -67,16 +70,16 @@ class _State extends ConsumerState<AdminFinOpsRefundListPage> {
             padding: const EdgeInsets.all(AppSpacing.sm),
             child: PosSearchableDropdown<String>(
               items: [
-                PosDropdownItem(value: 'pending', label: 'Pending'),
-                PosDropdownItem(value: 'completed', label: 'Completed'),
-                PosDropdownItem(value: 'failed', label: 'Failed'),
+                PosDropdownItem(value: 'pending', label: l10n.pending),
+                PosDropdownItem(value: 'completed', label: l10n.ordersCompleted),
+                PosDropdownItem(value: 'failed', label: l10n.deliveryFailed),
               ],
               selectedValue: _statusFilter,
               onChanged: (v) {
                 setState(() => _statusFilter = v);
                 _applyFilter();
               },
-              label: 'Status',
+              label: l10n.status,
               hint: 'All Statuses',
               showSearch: false,
               clearable: true,

@@ -19,6 +19,8 @@ class LabelHistoryPage extends ConsumerStatefulWidget {
 }
 
 class _LabelHistoryPageState extends ConsumerState<LabelHistoryPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   List<LabelPrintHistory> _history = [];
   bool _isLoading = true;
   String? _error;
@@ -61,12 +63,12 @@ class _LabelHistoryPageState extends ConsumerState<LabelHistoryPage> {
       body: Padding(
         padding: const EdgeInsets.all(AppSpacing.base),
         child: PosDataTable<LabelPrintHistory>(
-          columns: const [
-            PosTableColumn(title: 'Date'),
-            PosTableColumn(title: 'Template'),
-            PosTableColumn(title: 'Products', numeric: true),
-            PosTableColumn(title: 'Labels', numeric: true),
-            PosTableColumn(title: 'Printer'),
+          columns: [
+            PosTableColumn(title: l10n.txColDate),
+            PosTableColumn(title: l10n.labelTemplate),
+            PosTableColumn(title: l10n.products, numeric: true),
+            PosTableColumn(title: l10n.labelsTitle, numeric: true),
+            PosTableColumn(title: l10n.hardwarePrinter),
             PosTableColumn(title: 'Printed By'),
           ],
           items: _history,

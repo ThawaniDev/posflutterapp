@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/onboarding/providers/store_onboarding_providers.dart';
 import 'package:wameedpos/features/onboarding/providers/store_onboarding_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Post-wizard checklist shown on the dashboard after the onboarding wizard
 /// is completed. Displays 5 actionable tasks the merchant should accomplish
@@ -16,6 +17,7 @@ class OnboardingChecklistWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(onboardingProvider);
 
     if (state is! OnboardingLoaded) return const SizedBox.shrink();
@@ -84,7 +86,7 @@ class OnboardingChecklistWidget extends ConsumerWidget {
                   onPressed: () {
                     ref.read(onboardingProvider.notifier).dismissChecklist(storeId: storeId);
                   },
-                  tooltip: 'Dismiss',
+                  tooltip: l10n.wameedAIDismiss,
                 ),
               ],
             ),

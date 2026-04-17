@@ -14,6 +14,8 @@ class ReceiptSettingsPage extends SettingsSubPage {
 }
 
 class _ReceiptSettingsPageState extends SettingsSubPageState<ReceiptSettingsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _headerCtrl = TextEditingController();
   final _footerCtrl = TextEditingController();
   bool _showLogo = true;
@@ -127,9 +129,9 @@ class _ReceiptSettingsPageState extends SettingsSubPageState<ReceiptSettingsPage
             SettingsDropdownRow<String>(
               label: l10n.settingsReceiptPaperSize,
               value: _paperSize,
-              items: const [
-                PosDropdownItem(value: '58mm', label: '58mm'),
-                PosDropdownItem(value: '80mm', label: '80mm'),
+              items: [
+                PosDropdownItem(value: '58mm', label: l10n.hardware58mm),
+                PosDropdownItem(value: '80mm', label: l10n.hardware80mm),
               ],
               onChanged: (v) {
                 if (v != null) setState(() => _paperSize = v);
@@ -165,7 +167,7 @@ class _ReceiptSettingsPageState extends SettingsSubPageState<ReceiptSettingsPage
         const SizedBox(height: 8),
         SizedBox(
           width: double.infinity,
-          child: FilledButton.icon(onPressed: _save, icon: const Icon(Icons.save, size: 18), label: Text(l10n.save)),
+          child: FilledButton.icon(onPressed: _save, icon: Icon(Icons.save, size: 18), label: Text(l10n.save)),
         ),
       ],
     );

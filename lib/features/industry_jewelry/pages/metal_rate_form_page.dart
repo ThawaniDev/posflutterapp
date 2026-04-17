@@ -5,6 +5,7 @@ import '../../../core/widgets/widgets.dart';
 import '../enums/metal_type.dart';
 import '../models/daily_metal_rate.dart';
 import '../providers/jewelry_providers.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class MetalRateFormPage extends ConsumerStatefulWidget {
   final DailyMetalRate? rate;
@@ -15,6 +16,8 @@ class MetalRateFormPage extends ConsumerStatefulWidget {
 }
 
 class _MetalRateFormPageState extends ConsumerState<MetalRateFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
 
@@ -74,7 +77,7 @@ class _MetalRateFormPageState extends ConsumerState<MetalRateFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Set Metal Rate')),
+      appBar: AppBar(title: Text(l10n.jewelrySetMetalRate)),
       bottomNavigationBar: Padding(
         padding: AppSpacing.paddingAll16,
         child: PosButton(label: 'Save Rate', onPressed: _saving ? null : _handleSave, isLoading: _saving, isFullWidth: true),
@@ -85,7 +88,7 @@ class _MetalRateFormPageState extends ConsumerState<MetalRateFormPage> {
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
             PosSearchableDropdown<MetalType>(
-              label: 'Metal Type',
+              label: l10n.jewelryMetalType,
               items: MetalType.values
                   .map((m) => PosDropdownItem(value: m, label: m.value[0].toUpperCase() + m.value.substring(1)))
                   .toList(),

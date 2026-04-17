@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminFinOpsThawaniSettlementListPage extends ConsumerStatefulWidget {
   const AdminFinOpsThawaniSettlementListPage({super.key});
@@ -16,6 +17,8 @@ class AdminFinOpsThawaniSettlementListPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminFinOpsThawaniSettlementListPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   late TabController _tabController;
 
@@ -53,7 +56,7 @@ class _State extends ConsumerState<AdminFinOpsThawaniSettlementListPage> with Si
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Thawani Integration'),
+        title: Text(l10n.thawaniIntegration),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         bottom: TabBar(
@@ -61,9 +64,9 @@ class _State extends ConsumerState<AdminFinOpsThawaniSettlementListPage> with Si
           labelColor: Colors.white,
           unselectedLabelColor: Colors.white70,
           indicatorColor: Colors.white,
-          tabs: const [
-            Tab(text: 'Settlements'),
-            Tab(text: 'Orders'),
+          tabs: [
+            Tab(text: l10n.thawaniSettlements),
+            Tab(text: l10n.orders),
             Tab(text: 'Configs'),
           ],
         ),
@@ -96,21 +99,23 @@ class _State extends ConsumerState<AdminFinOpsThawaniSettlementListPage> with Si
 class _SettlementsTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(finOpsThawaniSettlementsProvider);
     return switch (state) {
       FinOpsListLoading() => const Center(child: CircularProgressIndicator()),
-      FinOpsListLoaded(data: final resp) => _buildList(resp),
+      FinOpsListLoaded(data: final resp) => _buildList(context, resp),
       FinOpsListError(message: final msg) => Center(
         child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
       ),
-      _ => const Center(child: Text('Loading...')),
+      _ => Center(child: Text(l10n.loading)),
     };
   }
 
-  Widget _buildList(Map<String, dynamic> resp) {
+  Widget _buildList(BuildContext context, Map<String, dynamic> resp) {
+    final l10n = AppLocalizations.of(context)!;
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No settlements'));
+    if (items.isEmpty) return Center(child: Text(l10n.noSettlements));
     return RefreshIndicator(
       onRefresh: () async {},
       child: ListView.separated(
@@ -162,6 +167,7 @@ class _SettlementsTab extends ConsumerWidget {
 class _OrdersTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(finOpsThawaniOrdersProvider);
     return switch (state) {
       FinOpsListLoading() => const Center(child: CircularProgressIndicator()),
@@ -169,7 +175,7 @@ class _OrdersTab extends ConsumerWidget {
       FinOpsListError(message: final msg) => Center(
         child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
       ),
-      _ => const Center(child: Text('Loading...')),
+      _ => Center(child: Text(l10n.loading)),
     };
   }
 
@@ -210,6 +216,7 @@ class _OrdersTab extends ConsumerWidget {
 class _StoreConfigsTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(finOpsThawaniStoreConfigsProvider);
     return switch (state) {
       FinOpsListLoading() => const Center(child: CircularProgressIndicator()),
@@ -217,7 +224,7 @@ class _StoreConfigsTab extends ConsumerWidget {
       FinOpsListError(message: final msg) => Center(
         child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
       ),
-      _ => const Center(child: Text('Loading...')),
+      _ => Center(child: Text(l10n.loading)),
     };
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/sync/models/sync_conflict.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ConflictCard extends StatelessWidget {
   final SyncConflict conflict;
@@ -11,6 +12,7 @@ class ConflictCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final isResolved = conflict.resolvedAt != null;
 
@@ -50,11 +52,11 @@ class ConflictCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  child: _DataColumn(title: 'Local Data', data: conflict.localData, color: AppColors.info),
+                  child: _DataColumn(title: l10n.localData, data: conflict.localData, color: AppColors.info),
                 ),
                 AppSpacing.gapW12,
                 Expanded(
-                  child: _DataColumn(title: 'Cloud Data', data: conflict.cloudData, color: AppColors.purple),
+                  child: _DataColumn(title: l10n.cloudData, data: conflict.cloudData, color: AppColors.purple),
                 ),
               ],
             ),
@@ -63,9 +65,9 @@ class ConflictCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  OutlinedButton(onPressed: () => onResolve!('local_wins'), child: const Text('Use Local')),
+                  OutlinedButton(onPressed: () => onResolve!('local_wins'), child: Text(l10n.useLocal)),
                   AppSpacing.gapW8,
-                  FilledButton(onPressed: () => onResolve!('cloud_wins'), child: const Text('Use Cloud')),
+                  FilledButton(onPressed: () => onResolve!('cloud_wins'), child: Text(l10n.useCloud)),
                 ],
               ),
             ],

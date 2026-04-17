@@ -19,6 +19,8 @@ class RoleDetailPage extends ConsumerStatefulWidget {
 }
 
 class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   late TextEditingController _displayNameController;
@@ -169,7 +171,7 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
           // ─── Role Info Section ──────────────────────────────
-          _SectionHeader(title: 'Role Information'),
+          _SectionHeader(title: l10n.staffRoleInfo),
           const SizedBox(height: AppSpacing.sm),
 
           if (isPredefined)

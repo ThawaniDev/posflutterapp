@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminProviderUserDetailPage extends ConsumerStatefulWidget {
   final String userId;
@@ -14,6 +15,8 @@ class AdminProviderUserDetailPage extends ConsumerStatefulWidget {
 }
 
 class _AdminProviderUserDetailPageState extends ConsumerState<AdminProviderUserDetailPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -25,7 +28,7 @@ class _AdminProviderUserDetailPageState extends ConsumerState<AdminProviderUserD
     final state = ref.watch(providerUserDetailProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('User Detail')),
+      appBar: AppBar(title: Text(l10n.userDetail)),
       body: switch (state) {
         ProviderUserDetailLoading() => const Center(child: CircularProgressIndicator()),
         ProviderUserDetailError(:final message) => Center(
@@ -97,11 +100,11 @@ class _AdminProviderUserDetailPageState extends ConsumerState<AdminProviderUserD
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Actions', style: Theme.of(context).textTheme.titleMedium),
+                  Text(l10n.actions, style: Theme.of(context).textTheme.titleMedium),
                   AppSpacing.gapH8,
                   ListTile(
                     leading: const Icon(Icons.lock_reset, color: AppColors.primary),
-                    title: const Text('Reset Password'),
+                    title: Text(l10n.resetPassword),
                     subtitle: const Text('Generate temporary password'),
                     onTap: () => _resetPassword(),
                   ),

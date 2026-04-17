@@ -9,6 +9,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class RegistrationQueuePage extends ConsumerStatefulWidget {
   const RegistrationQueuePage({super.key});
@@ -18,6 +19,8 @@ class RegistrationQueuePage extends ConsumerStatefulWidget {
 }
 
 class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _storeId;
   String? _statusFilter;
@@ -102,7 +105,7 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
                     ),
                     AppSpacing.gapW12,
                     PosButton(
-                      label: 'Search',
+                      label: l10n.search,
                       onPressed: () {
                         _currentPage = 1;
                         _load();
@@ -184,7 +187,7 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
             AppSpacing.gapH12,
             Text(state.message, style: theme.textTheme.bodyMedium),
             AppSpacing.gapH16,
-            PosButton(label: 'Retry', variant: PosButtonVariant.outline, onPressed: _load),
+            PosButton(label: l10n.retry, variant: PosButtonVariant.outline, onPressed: _load),
           ],
         ),
       );
@@ -268,14 +271,14 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   PosButton(
-                    label: 'Reject',
+                    label: l10n.deliveryReject,
                     variant: PosButtonVariant.outline,
                     size: PosButtonSize.sm,
                     onPressed: () => _showRejectDialog(reg['id']?.toString() ?? ''),
                   ),
                   AppSpacing.gapW8,
                   PosButton(
-                    label: 'Approve',
+                    label: l10n.inventoryApprove,
                     size: PosButtonSize.sm,
                     icon: Icons.check,
                     onPressed: () => ref.read(adminActionProvider.notifier).approveRegistration(reg['id']?.toString() ?? ''),
@@ -362,14 +365,14 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
         title: const Text('Reject Registration'),
         content: PosTextField(
           controller: reasonCtrl,
-          label: 'Rejection Reason',
+          label: l10n.deliveryRejectionReason,
           hint: 'Explain why this registration is rejected',
           maxLines: 3,
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.of(ctx).pop(), child: Text(l10n.cancel)),
           PosButton(
-            label: 'Reject',
+            label: l10n.deliveryReject,
             variant: PosButtonVariant.danger,
             onPressed: () {
               ref.read(adminActionProvider.notifier).rejectRegistration(registrationId, reason: reasonCtrl.text);

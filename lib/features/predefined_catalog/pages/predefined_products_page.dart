@@ -20,6 +20,8 @@ class PredefinedProductsPage extends ConsumerStatefulWidget {
 }
 
 class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
 
   @override
@@ -78,7 +80,7 @@ class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage>
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: l10n.commonRefresh,
             onPressed: () => ref.read(predefinedProductsProvider.notifier).load(businessTypeId: widget.businessTypeId),
           ),
         ],

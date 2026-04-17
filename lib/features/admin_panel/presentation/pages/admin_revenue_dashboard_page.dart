@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminRevenueDashboardPage extends ConsumerStatefulWidget {
   const AdminRevenueDashboardPage({super.key});
@@ -16,6 +17,8 @@ class AdminRevenueDashboardPage extends ConsumerStatefulWidget {
 }
 
 class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboardPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -38,7 +41,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Revenue Dashboard'),
+        title: Text(l10n.revenueDashboard),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         actions: [
@@ -152,7 +155,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                 ),
               ),
               RevenueDashboardError(message: final msg) => Center(child: Text('Error: $msg')),
-              _ => const Center(child: Text('Loading...')),
+              _ => Center(child: Text(l10n.loading)),
             },
           ),
         ],

@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminArticleListPage extends ConsumerStatefulWidget {
   const AdminArticleListPage({super.key});
@@ -15,6 +16,8 @@ class AdminArticleListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminArticleListPageState extends ConsumerState<AdminArticleListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _selectedCategory;
   String? _storeId;
@@ -68,8 +71,8 @@ class _AdminArticleListPageState extends ConsumerState<AdminArticleListPage> {
                 Expanded(
                   child: TextField(
                     controller: _searchController,
-                    decoration: const InputDecoration(
-                      hintText: 'Search articles...',
+                    decoration: InputDecoration(
+                      hintText: l10n.supportSearchArticles,
                       prefixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(),
                     ),
@@ -80,12 +83,12 @@ class _AdminArticleListPageState extends ConsumerState<AdminArticleListPage> {
                 Expanded(
                   child: PosSearchableDropdown<String>(
                     items: [
-                      PosDropdownItem(value: 'getting_started', label: 'Getting Started'),
-                      PosDropdownItem(value: 'pos_usage', label: 'POS Usage'),
-                      PosDropdownItem(value: 'inventory', label: 'Inventory'),
-                      PosDropdownItem(value: 'delivery', label: 'Delivery'),
-                      PosDropdownItem(value: 'billing', label: 'Billing'),
-                      PosDropdownItem(value: 'troubleshooting', label: 'Troubleshooting'),
+                      PosDropdownItem(value: 'getting_started', label: l10n.supportKbGettingStarted),
+                      PosDropdownItem(value: 'pos_usage', label: l10n.supportKbPosUsage),
+                      PosDropdownItem(value: 'inventory', label: l10n.inventory),
+                      PosDropdownItem(value: 'delivery', label: l10n.sidebarDelivery),
+                      PosDropdownItem(value: 'billing', label: l10n.supportKbBilling),
+                      PosDropdownItem(value: 'troubleshooting', label: l10n.supportKbTroubleshooting),
                     ],
                     selectedValue: _selectedCategory,
                     onChanged: (v) {
@@ -108,7 +111,7 @@ class _AdminArticleListPageState extends ConsumerState<AdminArticleListPage> {
               ),
               ArticleListLoaded(:final articles, :final total, :final currentPage, :final lastPage) =>
                 articles.isEmpty
-                    ? const Center(child: Text('No articles found'))
+                    ? Center(child: Text(l10n.supportNoArticles))
                     : Column(
                         children: [
                           Expanded(

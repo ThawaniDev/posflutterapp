@@ -8,6 +8,7 @@ import 'package:wameedpos/features/reports/providers/report_state.dart';
 import 'package:wameedpos/features/reports/widgets/report_charts.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class PaymentMethodsPage extends ConsumerStatefulWidget {
   const PaymentMethodsPage({super.key});
@@ -17,6 +18,8 @@ class PaymentMethodsPage extends ConsumerStatefulWidget {
 }
 
 class _PaymentMethodsPageState extends ConsumerState<PaymentMethodsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   ReportFilters _filters = const ReportFilters();
 
   @override
@@ -39,7 +42,7 @@ class _PaymentMethodsPageState extends ConsumerState<PaymentMethodsPage> {
     final state = ref.watch(paymentMethodsProvider);
 
     return ReportPageScaffold(
-      title: 'Payment Methods',
+      title: l10n.paymentMethods,
       filterPanel: ReportFilterPanel(
         filters: _filters,
         onFiltersChanged: _onFiltersChanged,
@@ -53,7 +56,7 @@ class _PaymentMethodsPageState extends ConsumerState<PaymentMethodsPage> {
         PaymentMethodsError(:final message) => PosErrorState(message: message, onRetry: _loadData),
         PaymentMethodsLoaded(:final methods) =>
           methods.isEmpty
-              ? const PosEmptyState(title: 'No payment data for selected period', icon: Icons.payment)
+              ? PosEmptyState(title: l10n.reportsNoPaymentData, icon: Icons.payment)
               : _PaymentList(methods: methods),
       },
     );
@@ -89,6 +92,7 @@ class _PaymentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final totalAmount = methods.fold<double>(0, (sum, m) => sum + (double.tryParse(m['total_amount'].toString()) ?? 0.0));
     final totalTx = methods.fold<int>(0, (sum, m) => sum + (m['transaction_count'] as num).toInt());
@@ -103,25 +107,25 @@ class _PaymentList extends StatelessWidget {
         ReportKpiGrid(
           cards: [
             ReportKpiCard(
-              label: 'Total Revenue',
+              label: l10n.totalRevenue,
               value: formatCurrency(totalAmount),
               icon: Icons.account_balance_wallet_rounded,
               color: AppColors.success,
             ),
             ReportKpiCard(
-              label: 'Transactions',
+              label: l10n.transactions,
               value: formatCompact(totalTx),
               icon: Icons.receipt_long_rounded,
               color: AppColors.info,
             ),
             ReportKpiCard(
-              label: 'Methods Used',
+              label: l10n.reportsMethodsUsed,
               value: '${methods.length}',
               icon: Icons.payment_rounded,
               color: AppColors.primary,
             ),
             ReportKpiCard(
-              label: 'Avg per Tx',
+              label: l10n.reportsAvgPerTx,
               value: totalTx > 0 ? formatCurrency(totalAmount / totalTx) : '\u00810',
               icon: Icons.calculate_rounded,
               color: AppColors.warning,
@@ -132,14 +136,14 @@ class _PaymentList extends StatelessWidget {
         // Pie Chart — Payment method distribution
         if (methods.isNotEmpty) ...[
           const SizedBox(height: 20),
-          const ReportSectionHeader(title: 'Payment Distribution', icon: Icons.donut_large_rounded),
+          ReportSectionHeader(title: l10n.reportsPaymentDistribution, icon: Icons.donut_large_rounded),
           ReportDataCard(
             child: ReportPieChart(data: methods, labelKey: 'method', valueKey: 'total_amount', donut: true),
           ),
         ],
 
         const SizedBox(height: 24),
-        const ReportSectionHeader(title: 'Breakdown by Method', icon: Icons.pie_chart_outline_rounded),
+        ReportSectionHeader(title: l10n.reportsBreakdownByMethod, icon: Icons.pie_chart_outline_rounded),
 
         ...methods.map((m) {
           final method = m['method'] as String;
@@ -172,7 +176,7 @@ class _PaymentList extends StatelessWidget {
                               style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
                             ),
                             Text(
-                              '$txCount transactions · Avg ${formatCurrency(avg)}',
+                              '${l10n.reportNTransactions(txCount.toString())} · ${l10n.reportAvgAmount(formatCurrency(avg))}',
                               style: Theme.of(
                                 context,
                               ).textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),

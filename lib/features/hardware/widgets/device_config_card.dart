@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/hardware/enums/connection_type.dart';
 import 'package:wameedpos/features/hardware/enums/hardware_device_type.dart';
 import 'package:wameedpos/features/hardware/models/hardware_configuration.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class DeviceConfigCard extends StatelessWidget {
   const DeviceConfigCard({super.key, required this.config, this.onTest, this.onRemove});
@@ -32,6 +33,7 @@ class DeviceConfigCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return Card(
       shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
@@ -70,7 +72,7 @@ class DeviceConfigCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.1), borderRadius: AppRadius.borderSm),
-                    child: Text('Active', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.successDark)),
+                    child: Text(l10n.active, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.successDark)),
                   )
                 else
                   Container(
@@ -79,7 +81,7 @@ class DeviceConfigCard extends StatelessWidget {
                       color: AppColors.textSecondary.withValues(alpha: 0.1),
                       borderRadius: AppRadius.borderSm,
                     ),
-                    child: Text('Inactive', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.textSecondary)),
+                    child: Text(l10n.inactive, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.textSecondary)),
                   ),
               ],
             ),
@@ -91,13 +93,13 @@ class DeviceConfigCard extends StatelessWidget {
                   TextButton.icon(
                     onPressed: onTest,
                     icon: const Icon(Icons.play_circle_outline, size: 18),
-                    label: const Text('Test'),
+                    label: Text(l10n.testConnection),
                   ),
                 if (onRemove != null)
                   TextButton.icon(
                     onPressed: onRemove,
                     icon: Icon(Icons.delete_outline, size: 18, color: theme.colorScheme.error),
-                    label: Text('Remove', style: TextStyle(color: theme.colorScheme.error)),
+                    label: Text(l10n.remove, style: TextStyle(color: theme.colorScheme.error)),
                   ),
               ],
             ),

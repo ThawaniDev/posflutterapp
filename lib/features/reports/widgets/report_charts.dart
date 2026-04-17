@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 // ═══════════════════════════════════════════════════════════════
 // Report Chart Widgets — using fl_chart for comprehensive charts
@@ -434,6 +435,7 @@ class ReportAreaChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (data.isEmpty) return _EmptyChart(height: height);
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -457,9 +459,9 @@ class ReportAreaChart extends StatelessWidget {
 
     return _ChartContainer(
       height: height,
-      legend: const _Legend(
-        labels: ['Revenue', 'Cost', 'Net Profit'],
-        colors: [AppColors.primary, AppColors.error, AppColors.success],
+      legend: _Legend(
+        labels: [l10n.reportLegendRevenue, l10n.reportLegendCost, l10n.reportLegendNetProfit],
+        colors: const [AppColors.primary, AppColors.error, AppColors.success],
       ),
       child: LineChart(
         LineChartData(
@@ -610,6 +612,7 @@ class _EmptyChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       height: height,
@@ -625,8 +628,7 @@ class _EmptyChart extends StatelessWidget {
           children: [
             Icon(Icons.bar_chart_rounded, size: 40, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
             const SizedBox(height: 8),
-            Text(
-              'No data available',
+            Text(l10n.noData,
               style: TextStyle(fontSize: 13, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
             ),
           ],

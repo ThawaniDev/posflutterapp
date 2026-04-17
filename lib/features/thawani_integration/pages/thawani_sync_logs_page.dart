@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/thawani_integration/providers/thawani_providers.dart';
 import 'package:wameedpos/features/thawani_integration/providers/thawani_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ThawaniSyncLogsPage extends ConsumerStatefulWidget {
   const ThawaniSyncLogsPage({super.key});
@@ -14,6 +15,8 @@ class ThawaniSyncLogsPage extends ConsumerStatefulWidget {
 }
 
 class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _entityTypeFilter;
   String? _statusFilter;
 
@@ -35,7 +38,7 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sync Logs'),
+        title: Text(l10n.syncLogs),
         actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: _applyFilters)],
       ),
       body: Column(
@@ -53,11 +56,11 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
                       isDense: true,
                       contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     ),
-                    items: const [
-                      DropdownMenuItem(value: null, child: Text('All')),
-                      DropdownMenuItem(value: 'product', child: Text('Product')),
-                      DropdownMenuItem(value: 'category', child: Text('Category')),
-                      DropdownMenuItem(value: 'connection', child: Text('Connection')),
+                    items: [
+                      DropdownMenuItem(value: null, child: Text(l10n.all)),
+                      DropdownMenuItem(value: 'product', child: Text(l10n.wameedAIProduct)),
+                      DropdownMenuItem(value: 'category', child: Text(l10n.category)),
+                      DropdownMenuItem(value: 'connection', child: Text(l10n.hwConnection)),
                     ],
                     onChanged: (v) {
                       setState(() => _entityTypeFilter = v);
@@ -69,16 +72,16 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
                 Expanded(
                   child: DropdownButtonFormField<String?>(
                     value: _statusFilter,
-                    decoration: const InputDecoration(
-                      labelText: 'Status',
+                    decoration: InputDecoration(
+                      labelText: l10n.status,
                       isDense: true,
                       contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     ),
-                    items: const [
-                      DropdownMenuItem(value: null, child: Text('All')),
-                      DropdownMenuItem(value: 'success', child: Text('Success')),
-                      DropdownMenuItem(value: 'failed', child: Text('Failed')),
-                      DropdownMenuItem(value: 'pending', child: Text('Pending')),
+                    items: [
+                      DropdownMenuItem(value: null, child: Text(l10n.all)),
+                      DropdownMenuItem(value: 'success', child: Text(l10n.success)),
+                      DropdownMenuItem(value: 'failed', child: Text(l10n.deliveryFailed)),
+                      DropdownMenuItem(value: 'pending', child: Text(l10n.pending)),
                     ],
                     onChanged: (v) {
                       setState(() => _statusFilter = v);

@@ -4,6 +4,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 import '../models/restaurant_table.dart';
 import '../providers/restaurant_providers.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class TableFormPage extends ConsumerStatefulWidget {
   final RestaurantTable? table;
@@ -14,6 +15,8 @@ class TableFormPage extends ConsumerStatefulWidget {
 }
 
 class _TableFormPageState extends ConsumerState<TableFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
   bool get _isEditing => widget.table != null;
@@ -96,27 +99,27 @@ class _TableFormPageState extends ConsumerState<TableFormPage> {
             Row(
               children: [
                 Expanded(
-                  child: PosTextField(controller: _tableNumberCtrl, label: 'Table Number', hint: 'e.g. T1, A-01'),
+                  child: PosTextField(controller: _tableNumberCtrl, label: l10n.restaurantTableNumber, hint: 'e.g. T1, A-01'),
                 ),
                 AppSpacing.gapW12,
                 Expanded(
-                  child: PosTextField(controller: _seatsCtrl, label: 'Seats', hint: '4', keyboardType: TextInputType.number),
+                  child: PosTextField(controller: _seatsCtrl, label: l10n.restaurantSeats, hint: '4', keyboardType: TextInputType.number),
                 ),
               ],
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _displayNameCtrl, label: 'Display Name (optional)', hint: 'e.g. Window Table, Patio 1'),
+            PosTextField(controller: _displayNameCtrl, label: l10n.displayNameOptional, hint: 'e.g. Window Table, Patio 1'),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _zoneCtrl, label: 'Zone (optional)', hint: 'e.g. Indoor, Outdoor, VIP'),
+            PosTextField(controller: _zoneCtrl, label: l10n.zoneOptional, hint: 'e.g. Indoor, Outdoor, VIP'),
             SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
-                  child: PosTextField(controller: _posXCtrl, label: 'Position X', hint: '0', keyboardType: TextInputType.number),
+                  child: PosTextField(controller: _posXCtrl, label: l10n.positionX, hint: '0', keyboardType: TextInputType.number),
                 ),
                 AppSpacing.gapW12,
                 Expanded(
-                  child: PosTextField(controller: _posYCtrl, label: 'Position Y', hint: '0', keyboardType: TextInputType.number),
+                  child: PosTextField(controller: _posYCtrl, label: l10n.positionY, hint: '0', keyboardType: TextInputType.number),
                 ),
               ],
             ),
@@ -124,7 +127,7 @@ class _TableFormPageState extends ConsumerState<TableFormPage> {
             PosToggle(
               value: _isActive,
               onChanged: (v) => setState(() => _isActive = v),
-              label: 'Active',
+              label: l10n.active,
               subtitle: 'Table is available for seating',
             ),
           ],

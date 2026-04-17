@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminHardwareSaleListPage extends ConsumerStatefulWidget {
   const AdminHardwareSaleListPage({super.key});
@@ -16,6 +17,8 @@ class AdminHardwareSaleListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchCtrl = TextEditingController();
   String? _storeId;
   String _typeFilter = 'all';
@@ -55,7 +58,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
     final state = ref.watch(hardwareSaleListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Hardware Sales'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.hardwareSales), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
         onPressed: _showCreateDialog,
@@ -184,12 +187,12 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
               children: [
                 TextButton.icon(
                   icon: const Icon(Icons.edit, size: 16),
-                  label: const Text('Edit'),
+                  label: Text(l10n.edit),
                   onPressed: () => _showEditDialog(sale),
                 ),
                 TextButton.icon(
                   icon: const Icon(Icons.delete, size: 16, color: AppColors.error),
-                  label: const Text('Delete', style: TextStyle(color: AppColors.error)),
+                  label: Text(l10n.delete, style: TextStyle(color: AppColors.error)),
                   onPressed: () => _confirmDelete(sale['id']),
                 ),
               ],
@@ -218,10 +221,10 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
               StatefulBuilder(
                 builder: (context, setInnerState) => PosSearchableDropdown<String>(
                   items: [
-                    PosDropdownItem(value: 'terminal', label: 'Terminal'),
-                    PosDropdownItem(value: 'printer', label: 'Printer'),
+                    PosDropdownItem(value: 'terminal', label: l10n.terminal),
+                    PosDropdownItem(value: 'printer', label: l10n.hardwarePrinter),
                     PosDropdownItem(value: 'scanner', label: 'Scanner'),
-                    PosDropdownItem(value: 'other', label: 'Other'),
+                    PosDropdownItem(value: 'other', label: l10n.acquirerOther),
                   ],
                   selectedValue: itemType,
                   onChanged: (v) => setInnerState(() => itemType = v ?? itemType),
@@ -233,11 +236,11 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
               ),
               TextField(
                 controller: descCtrl,
-                decoration: const InputDecoration(labelText: 'Description'),
+                decoration: InputDecoration(labelText: l10n.description),
               ),
               TextField(
                 controller: serialCtrl,
-                decoration: const InputDecoration(labelText: 'Serial Number'),
+                decoration: InputDecoration(labelText: l10n.serialNumber),
               ),
               TextField(
                 controller: amountCtrl,
@@ -246,13 +249,13 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
               ),
               TextField(
                 controller: notesCtrl,
-                decoration: const InputDecoration(labelText: 'Notes'),
+                decoration: InputDecoration(labelText: l10n.posNotes),
               ),
             ],
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
             onPressed: () async {
@@ -267,7 +270,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
               if (ctx.mounted) Navigator.pop(ctx);
               ref.read(hardwareSaleListProvider.notifier).loadSales();
             },
-            child: const Text('Create'),
+            child: Text(l10n.create),
           ),
         ],
       ),
@@ -289,7 +292,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
             children: [
               TextField(
                 controller: descCtrl,
-                decoration: const InputDecoration(labelText: 'Description'),
+                decoration: InputDecoration(labelText: l10n.description),
               ),
               TextField(
                 controller: amountCtrl,
@@ -298,13 +301,13 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
               ),
               TextField(
                 controller: notesCtrl,
-                decoration: const InputDecoration(labelText: 'Notes'),
+                decoration: InputDecoration(labelText: l10n.posNotes),
               ),
             ],
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
             onPressed: () async {
@@ -316,7 +319,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
               if (ctx.mounted) Navigator.pop(ctx);
               ref.read(hardwareSaleListProvider.notifier).loadSales();
             },
-            child: const Text('Update'),
+            child: Text(l10n.hwUpdate),
           ),
         ],
       ),

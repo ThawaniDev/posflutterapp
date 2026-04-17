@@ -4,12 +4,14 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import '../nice_to_have_providers.dart';
 import '../nice_to_have_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AppointmentsWidget extends ConsumerWidget {
   const AppointmentsWidget({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(appointmentProvider);
     return switch (state) {
       AppointmentInitial() || AppointmentLoading() => const Center(child: CircularProgressIndicator()),
@@ -18,7 +20,7 @@ class AppointmentsWidget extends ConsumerWidget {
       ),
       AppointmentLoaded(:final appointments) =>
         appointments.isEmpty
-            ? const Center(child: Text('No appointments'))
+            ? Center(child: Text(l10n.noAppointments))
             : ListView.builder(
                 padding: AppSpacing.paddingAll16,
                 itemCount: appointments.length,

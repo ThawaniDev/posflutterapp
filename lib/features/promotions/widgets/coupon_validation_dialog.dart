@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/features/promotions/providers/promotion_providers.dart';
 import 'package:wameedpos/features/promotions/providers/promotion_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// Dialog that validates a coupon code during POS checkout.
 ///
@@ -26,6 +27,8 @@ class _CouponValidationDialog extends ConsumerStatefulWidget {
 }
 
 class _CouponValidationDialogState extends ConsumerState<_CouponValidationDialog> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _codeController = TextEditingController();
 
   @override
@@ -48,7 +51,7 @@ class _CouponValidationDialogState extends ConsumerState<_CouponValidationDialog
     final theme = Theme.of(context);
 
     return AlertDialog(
-      title: const Text('Apply Coupon'),
+      title: Text(l10n.applyCoupon),
       content: SizedBox(
         width: 340,
         child: Column(
@@ -59,8 +62,8 @@ class _CouponValidationDialogState extends ConsumerState<_CouponValidationDialog
               autofocus: true,
               textCapitalization: TextCapitalization.characters,
               decoration: InputDecoration(
-                labelText: 'Coupon Code',
-                hintText: 'Enter coupon code',
+                labelText: l10n.couponCode,
+                hintText: l10n.enterCouponCode,
                 border: const OutlineInputBorder(),
                 suffixIcon: IconButton(icon: const Icon(Icons.check), onPressed: _validate),
               ),
@@ -127,14 +130,14 @@ class _CouponValidationDialogState extends ConsumerState<_CouponValidationDialog
             ref.read(couponValidationProvider.notifier).reset();
             Navigator.pop(context);
           },
-          child: const Text('Cancel'),
+          child: Text(l10n.cancel),
         ),
         if (state is CouponValidationValid)
           FilledButton(
             onPressed: () {
               Navigator.pop(context, state);
             },
-            child: const Text('Apply'),
+            child: Text(l10n.apply),
           ),
       ],
     );

@@ -15,6 +15,8 @@ class AccountMappingPage extends ConsumerStatefulWidget {
 }
 
 class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final Map<String, TextEditingController> _accountIdControllers = {};
   final Map<String, TextEditingController> _accountNameControllers = {};
   bool _hasUnsavedChanges = false;
@@ -44,13 +46,13 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Account Mappings'),
+        title: Text(l10n.accountingMappings),
         actions: [
           if (_hasUnsavedChanges)
             TextButton.icon(
               onPressed: mappingState is AccountMappingLoading ? null : _saveMappings,
               icon: const Icon(Icons.save, color: Colors.white),
-              label: const Text('Save', style: TextStyle(color: Colors.white)),
+              label: Text(l10n.save, style: TextStyle(color: Colors.white)),
             ),
         ],
       ),
@@ -198,7 +200,7 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
                 child: TextButton.icon(
                   onPressed: () => _deleteMapping(existingMapping['id'] as String),
                   icon: const Icon(Icons.delete_outline, size: 18, color: AppColors.error),
-                  label: const Text('Remove', style: TextStyle(color: AppColors.error, fontSize: 12)),
+                  label: Text(l10n.remove, style: TextStyle(color: AppColors.error, fontSize: 12)),
                 ),
               ),
             ],

@@ -20,6 +20,8 @@ class WorkingHoursPage extends ConsumerStatefulWidget {
 }
 
 class _WorkingHoursPageState extends ConsumerState<WorkingHoursPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   bool _isSaving = false;
 
   // Local editable copy: 7 days (0=Sunday to 6=Saturday)
@@ -136,14 +138,14 @@ class _WorkingHoursPageState extends ConsumerState<WorkingHoursPage> {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('Working Hours'),
+        title: Text(l10n.branchesWorkingHours),
         backgroundColor: AppColors.surfaceLight,
         foregroundColor: AppColors.textPrimaryLight,
         elevation: 0,
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: AppSpacing.md),
-            child: PosButton(label: 'Save', size: PosButtonSize.sm, isLoading: _isSaving, onPressed: _isSaving ? null : _save),
+            child: PosButton(label: l10n.save, size: PosButtonSize.sm, isLoading: _isSaving, onPressed: _isSaving ? null : _save),
           ),
         ],
       ),

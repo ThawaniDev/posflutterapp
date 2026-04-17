@@ -9,6 +9,7 @@ import 'package:wameedpos/features/industry_bakery/widgets/production_schedule_c
 import 'package:wameedpos/features/industry_bakery/pages/recipe_form_page.dart';
 import 'package:wameedpos/features/industry_bakery/pages/cake_order_form_page.dart';
 import 'package:wameedpos/features/industry_bakery/pages/production_schedule_form_page.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class BakeryDashboardPage extends ConsumerStatefulWidget {
   const BakeryDashboardPage({super.key});
@@ -18,6 +19,8 @@ class BakeryDashboardPage extends ConsumerStatefulWidget {
 }
 
 class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> with SingleTickerProviderStateMixin {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   late final TabController _tabController;
 
   @override
@@ -51,17 +54,17 @@ class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> with 
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bakery'),
+        title: Text(l10n.bakeryTitle),
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(text: 'Recipes'),
-            Tab(text: 'Production'),
+          tabs: [
+            Tab(text: l10n.bakeryRecipes),
+            Tab(text: l10n.production),
             Tab(text: 'Cake Orders'),
           ],
         ),
       ),
-      floatingActionButton: PosButton(onPressed: _onFabPressed, label: 'Add'),
+      floatingActionButton: PosButton(onPressed: _onFabPressed, label: l10n.add),
       body: switch (state) {
         BakeryInitial() || BakeryLoading() => PosLoadingSkeleton.list(),
         BakeryError(:final message) => PosErrorState(message: message, onRetry: () => ref.read(bakeryProvider.notifier).load()),

@@ -8,6 +8,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminFinOpsExpenseListPage extends ConsumerStatefulWidget {
   const AdminFinOpsExpenseListPage({super.key});
@@ -17,6 +18,8 @@ class AdminFinOpsExpenseListPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminFinOpsExpenseListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String? _categoryFilter;
 
@@ -47,7 +50,7 @@ class _State extends ConsumerState<AdminFinOpsExpenseListPage> {
     final state = ref.watch(finOpsExpensesProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Expenses'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.expenses), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -71,16 +74,16 @@ class _State extends ConsumerState<AdminFinOpsExpenseListPage> {
                 PosDropdownItem(value: 'supplies', label: 'Supplies'),
                 PosDropdownItem(value: 'food', label: 'Food'),
                 PosDropdownItem(value: 'transport', label: 'Transport'),
-                PosDropdownItem(value: 'maintenance', label: 'Maintenance'),
+                PosDropdownItem(value: 'maintenance', label: l10n.maintenance),
                 PosDropdownItem(value: 'utility', label: 'Utility'),
-                PosDropdownItem(value: 'other', label: 'Other'),
+                PosDropdownItem(value: 'other', label: l10n.acquirerOther),
               ],
               selectedValue: _categoryFilter,
               onChanged: (v) {
                 setState(() => _categoryFilter = v);
                 _applyFilter();
               },
-              label: 'Category',
+              label: l10n.category,
               hint: 'All Categories',
               showSearch: false,
               clearable: true,

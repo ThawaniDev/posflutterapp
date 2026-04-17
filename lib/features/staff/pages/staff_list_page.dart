@@ -24,6 +24,8 @@ class StaffListPage extends ConsumerStatefulWidget {
 }
 
 class _StaffListPageState extends ConsumerState<StaffListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _statusFilter;
   String? _employmentTypeFilter;
@@ -117,7 +119,7 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
               padding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 16),
               children: [
                 _buildFilterChip(
-                  label: 'All Status',
+                  label: l10n.allStatus,
                   selected: _statusFilter == null,
                   onSelected: () {
                     setState(() => _statusFilter = null);
@@ -139,7 +141,7 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
                 const VerticalDivider(),
                 AppSpacing.gapW8,
                 _buildFilterChip(
-                  label: 'All Types',
+                  label: l10n.txAllTypes,
                   selected: _employmentTypeFilter == null,
                   onSelected: () {
                     setState(() => _employmentTypeFilter = null);
@@ -256,6 +258,7 @@ class _StaffCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -324,16 +327,16 @@ class _StaffCard extends StatelessWidget {
                       onDelete();
                   }
                 },
-                itemBuilder: (_) => const [
+                itemBuilder: (_) => [
                   PopupMenuItem(
                     value: 'edit',
-                    child: ListTile(leading: Icon(Icons.edit), title: Text('Edit'), dense: true),
+                    child: ListTile(leading: Icon(Icons.edit), title: Text(l10n.edit), dense: true),
                   ),
                   PopupMenuItem(
                     value: 'delete',
                     child: ListTile(
                       leading: Icon(Icons.delete, color: AppColors.error),
-                      title: Text('Delete', style: TextStyle(color: AppColors.error)),
+                      title: Text(l10n.delete, style: TextStyle(color: AppColors.error)),
                       dense: true,
                     ),
                   ),

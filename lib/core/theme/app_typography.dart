@@ -129,6 +129,58 @@ class AppTypography {
   /// 30px Black — grand total
   static const TextStyle priceLarge = TextStyle(fontFamily: fontFamily, fontSize: 30, fontWeight: FontWeight.w900, height: 1.1);
 
+  // ─── Table Specific ──────────────────────────────────────
+  /// Table header text — uppercase, muted, small
+  static const TextStyle tableHeader = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 11,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.5,
+    height: 1.4,
+  );
+
+  /// Table cell text — regular body
+  static const TextStyle tableCell = TextStyle(fontFamily: fontFamily, fontSize: 13, fontWeight: FontWeight.w400, height: 1.5);
+
+  /// Table cell text — semi-bold for primary column
+  static const TextStyle tableCellBold = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 13,
+    fontWeight: FontWeight.w600,
+    height: 1.5,
+  );
+
+  // ─── Sidebar Specific ────────────────────────────────────
+  /// Sidebar group header
+  static const TextStyle sidebarGroup = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 10,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 0.8,
+    height: 1.4,
+  );
+
+  /// Sidebar item label
+  static const TextStyle sidebarLabel = TextStyle(fontFamily: fontFamily, fontSize: 13, fontWeight: FontWeight.w500, height: 1.4);
+
+  /// Sidebar item label — active
+  static const TextStyle sidebarLabelActive = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 13,
+    fontWeight: FontWeight.w600,
+    height: 1.4,
+  );
+
+  // ─── Breadcrumb ──────────────────────────────────────────
+  static const TextStyle breadcrumb = TextStyle(fontFamily: fontFamily, fontSize: 12, fontWeight: FontWeight.w400, height: 1.4);
+
+  static const TextStyle breadcrumbActive = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    height: 1.4,
+  );
+
   // ─── Helper: build TextTheme for MaterialApp ─────────────
   static TextTheme textTheme({bool isDark = false}) {
     final color = isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight;

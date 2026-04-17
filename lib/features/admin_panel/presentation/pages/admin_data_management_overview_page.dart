@@ -6,6 +6,7 @@ import '../../../../core/providers/branch_context_provider.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import '../../widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminDataManagementOverviewPage extends ConsumerStatefulWidget {
   const AdminDataManagementOverviewPage({super.key});
@@ -15,6 +16,8 @@ class AdminDataManagementOverviewPage extends ConsumerStatefulWidget {
 }
 
 class _AdminDataManagementOverviewPageState extends ConsumerState<AdminDataManagementOverviewPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -36,7 +39,7 @@ class _AdminDataManagementOverviewPageState extends ConsumerState<AdminDataManag
     final state = ref.watch(dataManagementOverviewProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Data Management'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.dataManagement), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -53,7 +56,7 @@ class _AdminDataManagementOverviewPageState extends ConsumerState<AdminDataManag
                     const SizedBox(height: AppSpacing.md),
                     ElevatedButton(
                       onPressed: () => ref.read(dataManagementOverviewProvider.notifier).load(storeId: _storeId),
-                      child: const Text('Retry'),
+                      child: Text(l10n.retry),
                     ),
                   ],
                 ),
@@ -75,7 +78,7 @@ class _AdminDataManagementOverviewPageState extends ConsumerState<AdminDataManag
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
           _StatCard(
-            title: 'Database Backups',
+            title: l10n.databaseBackups,
             icon: Icons.backup,
             stats: overview['database_backups'] as Map<String, dynamic>? ?? {},
           ),

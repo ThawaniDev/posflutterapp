@@ -11,6 +11,7 @@ import 'package:wameedpos/features/reports/providers/report_state.dart';
 import 'package:wameedpos/features/reports/widgets/report_charts.dart';
 import 'package:wameedpos/features/reports/widgets/report_filter_panel.dart';
 import 'package:wameedpos/features/reports/widgets/report_widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class DashboardPage extends ConsumerStatefulWidget {
   const DashboardPage({super.key});
@@ -20,6 +21,8 @@ class DashboardPage extends ConsumerStatefulWidget {
 }
 
 class _DashboardPageState extends ConsumerState<DashboardPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   ReportFilters _filters = const ReportFilters();
 
   @override
@@ -48,11 +51,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
       backgroundColor: isDark ? AppColors.backgroundDark : AppColors.backgroundLight,
       appBar: AppBar(
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
-        title: const Text('Reports & Analytics'),
+        title: Text(l10n.featureInfoReportsTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.info_outline),
-            tooltip: 'Feature Guide',
+            tooltip: l10n.featureInfoTooltip,
             onPressed: () => showReportsDashboardInfo(context),
           ),
           IconButton.filled(
@@ -81,29 +84,29 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                     _ReportNavGrid(isDark: isDark),
                     const SizedBox(height: 28),
 
-                    const ReportSectionHeader(title: "Today's Overview", icon: Icons.today_rounded),
+                    ReportSectionHeader(title: l10n.reportsTodaysOverview, icon: Icons.today_rounded),
                     ReportKpiGrid(
                       cards: [
                         ReportKpiCard(
-                          label: 'Revenue',
+                          label: l10n.reportsRevenue,
                           value: formatCurrency(today['total_revenue'] as num? ?? 0),
                           icon: Icons.trending_up_rounded,
                           color: AppColors.success,
                         ),
                         ReportKpiCard(
-                          label: 'Transactions',
+                          label: l10n.transactions,
                           value: '${today['total_transactions'] ?? 0}',
                           icon: Icons.receipt_long_rounded,
                           color: AppColors.info,
                         ),
                         ReportKpiCard(
-                          label: 'Net Revenue',
+                          label: l10n.netRevenue,
                           value: formatCurrency(today['net_revenue'] as num? ?? 0),
                           icon: Icons.account_balance_wallet_rounded,
                           color: AppColors.primary,
                         ),
                         ReportKpiCard(
-                          label: 'Avg Basket',
+                          label: l10n.txStatsAvgBasket,
                           value: formatCurrency(today['avg_basket_size'] as num? ?? 0),
                           icon: Icons.shopping_basket_rounded,
                           color: AppColors.warning,
@@ -115,7 +118,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                       children: [
                         Expanded(
                           child: ReportKpiCard(
-                            label: 'Customers',
+                            label: l10n.customers,
                             value: '${today['unique_customers'] ?? 0}',
                             icon: Icons.people_rounded,
                             color: AppColors.purple,
@@ -124,7 +127,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                         const SizedBox(width: 12),
                         Expanded(
                           child: ReportKpiCard(
-                            label: 'Refunds',
+                            label: l10n.posRefunds,
                             value: formatCurrency(today['total_refunds'] as num? ?? 0),
                             icon: Icons.undo_rounded,
                             color: AppColors.error,
@@ -135,18 +138,18 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
 
                     const SizedBox(height: 28),
 
-                    const ReportSectionHeader(title: 'vs Yesterday', icon: Icons.compare_arrows_rounded),
+                    ReportSectionHeader(title: l10n.reportsVsYesterday, icon: Icons.compare_arrows_rounded),
                     ReportDataCard(
                       child: Column(
                         children: [
                           ReportComparisonRow(
-                            label: 'Revenue',
+                            label: l10n.reportsRevenue,
                             todayVal: (today['total_revenue'] as num? ?? 0).toDouble(),
                             yesterdayVal: (yesterday['total_revenue'] as num? ?? 0).toDouble(),
                           ),
                           Divider(color: isDark ? AppColors.borderDark : AppColors.borderLight),
                           ReportComparisonRow(
-                            label: 'Transactions',
+                            label: l10n.transactions,
                             todayVal: (today['total_transactions'] as num? ?? 0).toDouble(),
                             yesterdayVal: (yesterday['total_transactions'] as num? ?? 0).toDouble(),
                           ),
@@ -156,12 +159,12 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
 
                     const SizedBox(height: 28),
 
-                    const ReportSectionHeader(title: 'Top Products Today', icon: Icons.star_rounded),
+                    ReportSectionHeader(title: l10n.reportsTopProductsToday, icon: Icons.star_rounded),
                     if (topProducts.isEmpty)
-                      const ReportDataCard(
+                      ReportDataCard(
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 24),
-                          child: Center(child: Text('No sales data yet today')),
+                          child: Center(child: Text(l10n.noSalesDataYetToday)),
                         ),
                       )
                     else ...[
@@ -185,7 +188,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                               ReportRankedItem(
                                 rank: i + 1,
                                 title: topProducts[i]['product_name'] as String? ?? '',
-                                subtitle: 'Qty: ${(topProducts[i]['quantity_sold'] as num? ?? 0).toStringAsFixed(0)}',
+                                subtitle: l10n.reportQtyPrefix((topProducts[i]['quantity_sold'] as num? ?? 0).toStringAsFixed(0)),
                                 trailingValue: formatCurrency(topProducts[i]['revenue'] as num? ?? 0),
                                 trailingColor: AppColors.success,
                               ),
@@ -212,16 +215,17 @@ class _ReportNavGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final items = [
-      _NavItem('Sales', Icons.receipt_long_rounded, AppColors.success, Routes.reportsSalesSummary),
-      _NavItem('Products', Icons.inventory_2_rounded, AppColors.info, Routes.reportsProductPerformance),
-      _NavItem('Categories', Icons.category_rounded, AppColors.warning, Routes.reportsCategoryBreakdown),
-      _NavItem('Staff', Icons.badge_rounded, AppColors.purple, Routes.reportsStaffPerformance),
-      _NavItem('Hourly', Icons.schedule_rounded, AppColors.primary, Routes.reportsHourlySales),
-      _NavItem('Payments', Icons.payment_rounded, AppColors.successDark, Routes.reportsPaymentMethods),
-      _NavItem('Inventory', Icons.warehouse_rounded, const Color(0xFF6366F1), Routes.reportsInventory),
-      _NavItem('Financial', Icons.account_balance_rounded, AppColors.error, Routes.reportsFinancial),
-      _NavItem('Customers', Icons.group_rounded, const Color(0xFFEC4899), Routes.reportsCustomers),
+      _NavItem(l10n.reportNavSales, Icons.receipt_long_rounded, AppColors.success, Routes.reportsSalesSummary),
+      _NavItem(l10n.reportNavProducts, Icons.inventory_2_rounded, AppColors.info, Routes.reportsProductPerformance),
+      _NavItem(l10n.reportNavCategories, Icons.category_rounded, AppColors.warning, Routes.reportsCategoryBreakdown),
+      _NavItem(l10n.reportNavStaff, Icons.badge_rounded, AppColors.purple, Routes.reportsStaffPerformance),
+      _NavItem(l10n.reportNavHourly, Icons.schedule_rounded, AppColors.primary, Routes.reportsHourlySales),
+      _NavItem(l10n.reportNavPayments, Icons.payment_rounded, AppColors.successDark, Routes.reportsPaymentMethods),
+      _NavItem(l10n.reportNavInventory, Icons.warehouse_rounded, const Color(0xFF6366F1), Routes.reportsInventory),
+      _NavItem(l10n.reportNavFinancial, Icons.account_balance_rounded, AppColors.error, Routes.reportsFinancial),
+      _NavItem(l10n.reportNavCustomers, Icons.group_rounded, const Color(0xFFEC4899), Routes.reportsCustomers),
     ];
 
     return GridView.count(

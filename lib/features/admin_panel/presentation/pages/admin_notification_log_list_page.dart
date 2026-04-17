@@ -8,6 +8,7 @@ import '../../providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_stats_kpi_section.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminNotificationLogListPage extends ConsumerStatefulWidget {
   const AdminNotificationLogListPage({super.key});
@@ -17,6 +18,8 @@ class AdminNotificationLogListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminNotificationLogListPageState extends ConsumerState<AdminNotificationLogListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _channelFilter;
   String? _statusFilter;
@@ -66,7 +69,7 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
     final state = ref.watch(notificationLogListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Notification Logs')),
+      appBar: AppBar(title: Text(l10n.notificationLogs)),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -98,11 +101,11 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
                 );
                 final channelDropdown = PosSearchableDropdown<String>(
                   items: [
-                    PosDropdownItem(value: 'push', label: 'Push'),
-                    PosDropdownItem(value: 'email', label: 'Email'),
-                    PosDropdownItem(value: 'sms', label: 'SMS'),
+                    PosDropdownItem(value: 'push', label: l10n.notificationsPush),
+                    PosDropdownItem(value: 'email', label: l10n.email),
+                    PosDropdownItem(value: 'sms', label: l10n.notifPrefSms),
                     PosDropdownItem(value: 'whatsapp', label: 'WhatsApp'),
-                    PosDropdownItem(value: 'in_app', label: 'In-App'),
+                    PosDropdownItem(value: 'in_app', label: l10n.notificationsInApp),
                   ],
                   selectedValue: _channelFilter,
                   onChanged: (v) {
@@ -115,10 +118,10 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
                 );
                 final statusDropdown = PosSearchableDropdown<String>(
                   items: [
-                    PosDropdownItem(value: 'pending', label: 'Pending'),
-                    PosDropdownItem(value: 'sent', label: 'Sent'),
-                    PosDropdownItem(value: 'delivered', label: 'Delivered'),
-                    PosDropdownItem(value: 'failed', label: 'Failed'),
+                    PosDropdownItem(value: 'pending', label: l10n.pending),
+                    PosDropdownItem(value: 'sent', label: l10n.notifLogSent),
+                    PosDropdownItem(value: 'delivered', label: l10n.ordersDelivered),
+                    PosDropdownItem(value: 'failed', label: l10n.deliveryFailed),
                   ],
                   selectedValue: _statusFilter,
                   onChanged: (v) {

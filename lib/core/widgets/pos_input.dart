@@ -243,14 +243,22 @@ class PosToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Row(
       children: [
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(label, style: AppTypography.titleSmall),
-              if (subtitle != null) Text(subtitle!, style: AppTypography.caption.copyWith(color: AppColors.textMutedLight)),
+              Text(
+                label,
+                style: AppTypography.titleSmall.copyWith(color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight),
+              ),
+              if (subtitle != null)
+                Text(
+                  subtitle!,
+                  style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                ),
             ],
           ),
         ),
@@ -275,6 +283,7 @@ class PosCheckboxTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return InkWell(
       onTap: () => onChanged(!value),
       borderRadius: AppRadius.borderMd,
@@ -288,8 +297,17 @@ class PosCheckboxTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(label, style: AppTypography.bodyMedium),
-                  if (subtitle != null) Text(subtitle!, style: AppTypography.caption.copyWith(color: AppColors.textMutedLight)),
+                  Text(
+                    label,
+                    style: AppTypography.bodyMedium.copyWith(
+                      color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                    ),
+                  ),
+                  if (subtitle != null)
+                    Text(
+                      subtitle!,
+                      style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    ),
                 ],
               ),
             ),
@@ -316,9 +334,10 @@ class PosNumericCounter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: AppColors.borderLight),
+        border: Border.all(color: isDark ? AppColors.borderDark : AppColors.borderLight),
         borderRadius: AppRadius.borderMd,
       ),
       child: Row(
@@ -328,7 +347,10 @@ class PosNumericCounter extends StatelessWidget {
           Container(
             constraints: const BoxConstraints(minWidth: 40),
             alignment: Alignment.center,
-            child: Text('$value', style: AppTypography.titleMedium),
+            child: Text(
+              '$value',
+              style: AppTypography.titleMedium.copyWith(color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight),
+            ),
           ),
           _CounterButton(icon: Icons.add_rounded, onTap: value < max ? () => onChanged?.call(value + step) : null),
         ],
@@ -345,12 +367,17 @@ class _CounterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadius.borderSm,
       child: Padding(
         padding: const EdgeInsets.all(8),
-        child: Icon(icon, size: 18, color: onTap != null ? AppColors.primary : AppColors.textDisabledLight),
+        child: Icon(
+          icon,
+          size: 18,
+          color: onTap != null ? AppColors.primary : (isDark ? AppColors.textDisabledDark : AppColors.textDisabledLight),
+        ),
       ),
     );
   }

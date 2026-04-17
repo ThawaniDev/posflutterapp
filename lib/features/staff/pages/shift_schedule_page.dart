@@ -20,6 +20,8 @@ class ShiftSchedulePage extends ConsumerStatefulWidget {
 }
 
 class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   DateTimeRange? _dateRange;
   String? _statusFilter;
   final _dateFormat = DateFormat('yyyy-MM-dd');
@@ -52,7 +54,7 @@ class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
         backgroundColor: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
         title: Text(l10n.staffShiftSchedule),
         actions: [
-          IconButton(icon: const Icon(Icons.date_range), onPressed: _pickDateRange, tooltip: l10n.staffFilterByDate),
+          IconButton(icon: Icon(Icons.date_range), onPressed: _pickDateRange, tooltip: l10n.staffFilterByDate),
           IconButton(icon: const Icon(Icons.refresh), onPressed: _loadShifts),
         ],
       ),
@@ -71,7 +73,7 @@ class _ShiftSchedulePageState extends ConsumerState<ShiftSchedulePage> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               children: [
                 FilterChip(
-                  label: const Text('All', style: TextStyle(fontSize: 12)),
+                  label: Text(l10n.all, style: TextStyle(fontSize: 12)),
                   selected: _statusFilter == null,
                   onSelected: (_) {
                     setState(() => _statusFilter = null);
@@ -336,6 +338,8 @@ class _CreateShiftDialog extends ConsumerStatefulWidget {
 }
 
 class _CreateShiftDialogState extends ConsumerState<_CreateShiftDialog> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   StaffUser? _selectedStaff;
   ShiftTemplate? _selectedTemplate;
   DateTime _selectedDate = DateTime.now();
@@ -383,7 +387,7 @@ class _CreateShiftDialogState extends ConsumerState<_CreateShiftDialog> {
             AppSpacing.gapH16,
             ListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Date'),
+              title: Text(l10n.txColDate),
               subtitle: Text(_dateFormat.format(_selectedDate)),
               trailing: const Icon(Icons.calendar_today),
               onTap: () async {

@@ -3,6 +3,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminABTestResultsPage extends ConsumerStatefulWidget {
   final String testId;
@@ -13,6 +14,8 @@ class AdminABTestResultsPage extends ConsumerStatefulWidget {
 }
 
 class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -24,7 +27,7 @@ class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage>
     final state = ref.watch(abTestResultsProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('A/B Test Results')),
+      appBar: AppBar(title: Text(l10n.abTestResults)),
       body: switch (state) {
         ABTestResultsInitial() || ABTestResultsLoading() => const Center(child: CircularProgressIndicator()),
         ABTestResultsLoaded(:final test, :final results, :final winner, :final confidence) => SingleChildScrollView(

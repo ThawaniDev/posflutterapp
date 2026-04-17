@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// A colored badge indicating subscription status.
 class SubscriptionBadge extends StatelessWidget {
@@ -9,7 +10,8 @@ class SubscriptionBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final config = _getConfig(status);
+    final l10n = AppLocalizations.of(context)!;
+    final config = _getConfig(context, status);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -21,10 +23,11 @@ class SubscriptionBadge extends StatelessWidget {
     );
   }
 
-  _BadgeConfig _getConfig(String status) {
+  _BadgeConfig _getConfig(BuildContext context, String status) {
+    final l10n = AppLocalizations.of(context)!;
     return switch (status.toLowerCase()) {
       'active' => _BadgeConfig(
-        label: 'Active',
+        label: l10n.active,
         backgroundColor: AppColors.success.withValues(alpha: 0.15),
         textColor: AppColors.successDark,
       ),
@@ -39,12 +42,12 @@ class SubscriptionBadge extends StatelessWidget {
         textColor: AppColors.warning,
       ),
       'cancelled' => _BadgeConfig(
-        label: 'Cancelled',
+        label: l10n.ordersCancelled,
         backgroundColor: AppColors.error.withValues(alpha: 0.15),
         textColor: AppColors.errorDark,
       ),
       'expired' => _BadgeConfig(
-        label: 'Expired',
+        label: l10n.expired,
         backgroundColor: AppColors.textSecondary.withValues(alpha: 0.15),
         textColor: AppColors.textSecondary,
       ),

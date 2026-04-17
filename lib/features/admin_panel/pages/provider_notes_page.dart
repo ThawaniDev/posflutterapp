@@ -8,6 +8,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ProviderNotesPage extends ConsumerStatefulWidget {
   final String organizationId;
@@ -19,6 +20,8 @@ class ProviderNotesPage extends ConsumerStatefulWidget {
 }
 
 class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _noteController = TextEditingController();
   String? _storeId;
 
@@ -47,7 +50,7 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Provider Notes')),
+      appBar: AppBar(title: Text(l10n.providerNotes)),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -70,7 +73,7 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
                   ),
                 ),
                 AppSpacing.gapW12,
-                PosButton(label: 'Add', icon: Icons.send, onPressed: _addNote, size: PosButtonSize.md),
+                PosButton(label: l10n.add, icon: Icons.send, onPressed: _addNote, size: PosButtonSize.md),
               ],
             ),
           ),
@@ -103,7 +106,7 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
             Text(state.message, style: theme.textTheme.bodyMedium),
             AppSpacing.gapH16,
             PosButton(
-              label: 'Retry',
+              label: l10n.retry,
               variant: PosButtonVariant.outline,
               onPressed: () => ref.read(providerNotesProvider.notifier).load(widget.organizationId),
             ),

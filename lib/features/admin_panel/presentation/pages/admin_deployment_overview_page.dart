@@ -6,6 +6,7 @@ import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminDeploymentOverviewPage extends ConsumerStatefulWidget {
   const AdminDeploymentOverviewPage({super.key});
@@ -15,6 +16,8 @@ class AdminDeploymentOverviewPage extends ConsumerStatefulWidget {
 }
 
 class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOverviewPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -41,7 +44,7 @@ class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOve
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Deployment Overview'),
+        title: Text(l10n.deploymentOverview),
         backgroundColor: AppColors.primary,
         foregroundColor: Colors.white,
         actions: [IconButton(icon: const Icon(Icons.refresh), onPressed: _loadData)],

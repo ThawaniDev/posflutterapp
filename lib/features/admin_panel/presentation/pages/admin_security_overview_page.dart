@@ -6,6 +6,7 @@ import '../../../../core/providers/branch_context_provider.dart';
 import '../../providers/admin_providers.dart';
 import '../../providers/admin_state.dart';
 import '../../widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminSecurityOverviewPage extends ConsumerStatefulWidget {
   const AdminSecurityOverviewPage({super.key});
@@ -15,6 +16,8 @@ class AdminSecurityOverviewPage extends ConsumerStatefulWidget {
 }
 
 class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOverviewPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -36,7 +39,7 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
     final state = ref.watch(securityOverviewProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Security Center'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.adminSecurity), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -53,7 +56,7 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
                     const SizedBox(height: AppSpacing.md),
                     ElevatedButton(
                       onPressed: () => ref.read(securityOverviewProvider.notifier).load(storeId: _storeId),
-                      child: const Text('Retry'),
+                      child: Text(l10n.retry),
                     ),
                   ],
                 ),
@@ -75,21 +78,21 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
           _SectionCard(
-            title: 'Security Alerts',
+            title: l10n.securityAlerts,
             icon: Icons.warning_amber_rounded,
             color: AppColors.error,
             stats: overview['security_alerts'] as Map<String, dynamic>? ?? {},
           ),
           const SizedBox(height: AppSpacing.md),
           _SectionCard(
-            title: 'Active Sessions',
+            title: l10n.companionSessions,
             icon: Icons.devices,
             color: AppColors.info,
             stats: overview['sessions'] as Map<String, dynamic>? ?? {},
           ),
           const SizedBox(height: AppSpacing.md),
           _SectionCard(
-            title: 'Devices',
+            title: l10n.securityDevices,
             icon: Icons.phone_android,
             color: AppColors.success,
             stats: overview['devices'] as Map<String, dynamic>? ?? {},

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../providers/zatca_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ComplianceStatusCard extends StatelessWidget {
   final ZatcaComplianceSummaryLoaded data;
@@ -11,6 +12,7 @@ class ComplianceStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
@@ -38,7 +40,7 @@ class ComplianceStatusCard extends StatelessWidget {
                           : AppColors.error,
                   size: 28),
               AppSpacing.gapH8,
-              Text('ZATCA Compliance',
+              Text(l10n.zatcaTitle,
                   style: theme.textTheme.titleMedium
                       ?.copyWith(fontWeight: FontWeight.w600)),
             ],
@@ -49,7 +51,7 @@ class ComplianceStatusCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _StatTile(
-                  label: 'Success Rate',
+                  label: l10n.adminWameedAISuccessRate,
                   value: '${data.successRate.toStringAsFixed(1)}%',
                   color: data.successRate >= 90
                       ? AppColors.success
@@ -70,21 +72,21 @@ class ComplianceStatusCard extends StatelessWidget {
             children: [
               Expanded(
                 child: _StatTile(
-                  label: 'Accepted',
+                  label: l10n.deliveryAccepted,
                   value: '${data.accepted}',
                   color: AppColors.success,
                 ),
               ),
               Expanded(
                 child: _StatTile(
-                  label: 'Rejected',
+                  label: l10n.rejected,
                   value: '${data.rejected}',
                   color: AppColors.error,
                 ),
               ),
               Expanded(
                 child: _StatTile(
-                  label: 'Pending',
+                  label: l10n.pending,
                   value: '${data.pending}',
                   color: AppColors.warning,
                 ),

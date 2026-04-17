@@ -5,6 +5,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/pos_button.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminTeamUserDetailPage extends ConsumerStatefulWidget {
   final String userId;
@@ -15,6 +16,8 @@ class AdminTeamUserDetailPage extends ConsumerStatefulWidget {
 }
 
 class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
     super.initState();
@@ -36,7 +39,7 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
             children: [
               Text(msg),
               AppSpacing.gapH16,
-              PosButton(label: 'Retry', onPressed: () => ref.read(adminTeamUserDetailProvider.notifier).load(widget.userId)),
+              PosButton(label: l10n.retry, onPressed: () => ref.read(adminTeamUserDetailProvider.notifier).load(widget.userId)),
             ],
           ),
         ),
@@ -118,7 +121,7 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Details', style: theme.textTheme.titleMedium),
+                  Text(l10n.wameedAISuggestionBody, style: theme.textTheme.titleMedium),
                   AppSpacing.gapH8,
                   _detailRow('Phone', user['phone'] as String? ?? 'N/A'),
                   _detailRow('Last Login', user['last_login_at'] as String? ?? 'Never'),

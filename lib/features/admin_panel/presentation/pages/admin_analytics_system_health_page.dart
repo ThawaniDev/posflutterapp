@@ -7,6 +7,7 @@ import 'package:wameedpos/core/widgets/pos_card.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminAnalyticsSystemHealthPage extends ConsumerStatefulWidget {
   const AdminAnalyticsSystemHealthPage({super.key});
@@ -16,6 +17,8 @@ class AdminAnalyticsSystemHealthPage extends ConsumerStatefulWidget {
 }
 
 class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsSystemHealthPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
   @override
@@ -37,7 +40,7 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
     final state = ref.watch(analyticsSystemHealthProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('System Health'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.analyticsSystemHealth), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       body: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
@@ -78,7 +81,7 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
                       const SizedBox(height: AppSpacing.lg),
 
                       // Sync status breakdown
-                      const Text('Sync Status', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text(l10n.syncStatus, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (syncStatus.isEmpty)
                         const Card(
@@ -110,7 +113,7 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
                     const SizedBox(height: AppSpacing.sm),
                     ElevatedButton(
                       onPressed: () => ref.read(analyticsSystemHealthProvider.notifier).load(storeId: _storeId),
-                      child: const Text('Retry'),
+                      child: Text(l10n.retry),
                     ),
                   ],
                 ),

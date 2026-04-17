@@ -4,6 +4,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/widgets/widgets.dart';
 import '../models/flower_arrangement.dart';
 import '../providers/florist_providers.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ArrangementFormPage extends ConsumerStatefulWidget {
   final FlowerArrangement? arrangement;
@@ -14,6 +15,8 @@ class ArrangementFormPage extends ConsumerStatefulWidget {
 }
 
 class _ArrangementFormPageState extends ConsumerState<ArrangementFormPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _formKey = GlobalKey<FormState>();
   bool _saving = false;
   bool get _isEditing => widget.arrangement != null;
@@ -82,9 +85,9 @@ class _ArrangementFormPageState extends ConsumerState<ArrangementFormPage> {
         child: ListView(
           padding: const EdgeInsets.all(AppSpacing.lg),
           children: [
-            PosTextField(controller: _nameCtrl, label: 'Arrangement Name', hint: 'e.g. Classic Rose Bouquet'),
+            PosTextField(controller: _nameCtrl, label: l10n.arrangementName, hint: 'e.g. Classic Rose Bouquet'),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _occasionCtrl, label: 'Occasion (optional)', hint: 'e.g. Wedding, Birthday, Anniversary'),
+            PosTextField(controller: _occasionCtrl, label: l10n.occasionOptional, hint: 'e.g. Wedding, Birthday, Anniversary'),
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _totalPriceCtrl,

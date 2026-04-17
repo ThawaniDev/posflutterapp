@@ -7,6 +7,7 @@ import 'package:wameedpos/features/admin_panel/providers/admin_providers.dart';
 import 'package:wameedpos/features/admin_panel/providers/admin_state.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/features/admin_panel/widgets/admin_branch_bar.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AdminImplementationFeeListPage extends ConsumerStatefulWidget {
   const AdminImplementationFeeListPage({super.key});
@@ -16,6 +17,8 @@ class AdminImplementationFeeListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementationFeeListPage> {
+
+  AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String _typeFilter = 'all';
   String _statusFilter = 'all';
@@ -49,7 +52,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
     final state = ref.watch(implementationFeeListProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Implementation Fees'), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
+      appBar: AppBar(title: Text(l10n.implementationFees), backgroundColor: AppColors.primary, foregroundColor: Colors.white),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
         onPressed: _showCreateDialog,
@@ -190,12 +193,12 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
                 const Spacer(),
                 TextButton.icon(
                   icon: const Icon(Icons.edit, size: 16),
-                  label: const Text('Edit'),
+                  label: Text(l10n.edit),
                   onPressed: () => _showEditDialog(fee),
                 ),
                 TextButton.icon(
                   icon: const Icon(Icons.delete, size: 16, color: AppColors.error),
-                  label: const Text('Delete', style: TextStyle(color: AppColors.error)),
+                  label: Text(l10n.delete, style: TextStyle(color: AppColors.error)),
                   onPressed: () => _confirmDelete(fee['id']),
                 ),
               ],
@@ -246,13 +249,13 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
               ),
               TextField(
                 controller: notesCtrl,
-                decoration: const InputDecoration(labelText: 'Notes'),
+                decoration: InputDecoration(labelText: l10n.posNotes),
               ),
             ],
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
             onPressed: () async {
@@ -266,7 +269,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
               if (ctx.mounted) Navigator.pop(ctx);
               ref.read(implementationFeeListProvider.notifier).loadFees();
             },
-            child: const Text('Create'),
+            child: Text(l10n.create),
           ),
         ],
       ),
@@ -292,13 +295,13 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
               ),
               TextField(
                 controller: notesCtrl,
-                decoration: const InputDecoration(labelText: 'Notes'),
+                decoration: InputDecoration(labelText: l10n.posNotes),
               ),
             ],
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(l10n.cancel)),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary),
             onPressed: () async {
@@ -309,7 +312,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
               if (ctx.mounted) Navigator.pop(ctx);
               ref.read(implementationFeeListProvider.notifier).loadFees();
             },
-            child: const Text('Update'),
+            child: Text(l10n.hwUpdate),
           ),
         ],
       ),
