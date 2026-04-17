@@ -20,7 +20,6 @@ class HourlySalesPage extends ConsumerStatefulWidget {
 }
 
 class _HourlySalesPageState extends ConsumerState<HourlySalesPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   ReportFilters _filters = const ReportFilters();
 

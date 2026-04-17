@@ -18,7 +18,6 @@ class AdminPlatformEventListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _levelFilter;
@@ -77,9 +76,9 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
     final state = ref.watch(platformEventListProvider);
 
     return PosListPage(
-  title: l10n.platformEvents,
-  showSearch: false,
-    child: Column(
+      title: l10n.platformEvents,
+      showSearch: false,
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Padding(
@@ -130,10 +129,7 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
                   showSearch: false,
                   clearable: true,
                 );
-                return ResponsiveSearchFilterBar(
-                  searchField: searchField,
-                  filters: [levelDropdown, typeDropdown],
-                );
+                return ResponsiveSearchFilterBar(searchField: searchField, filters: [levelDropdown, typeDropdown]);
               },
             ),
           ),
@@ -148,7 +144,7 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
           ),
         ],
       ),
-);
+    );
   }
 
   Widget _buildList(Map<String, dynamic> data) {
@@ -181,10 +177,7 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: _levelColor(level).withValues(alpha: 0.1),
-                    borderRadius: AppRadius.borderXs,
-                  ),
+                  decoration: BoxDecoration(color: _levelColor(level).withValues(alpha: 0.1), borderRadius: AppRadius.borderXs),
                   child: Text(
                     level?.toUpperCase() ?? '',
                     style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: _levelColor(level)),

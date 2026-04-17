@@ -39,7 +39,10 @@ class LeaderboardCard extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   _rankEmoji,
-                  style: TextStyle(fontSize: isTop3 ? context.responsiveIconSize : context.responsiveIconSizeSm, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: isTop3 ? context.responsiveIconSize : context.responsiveIconSizeSm,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               AppSpacing.gapW12,

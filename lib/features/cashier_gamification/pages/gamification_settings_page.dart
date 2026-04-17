@@ -38,15 +38,17 @@ class _GamificationSettingsPageState extends ConsumerState<GamificationSettingsP
     final isMobile = context.isPhone;
 
     return PosListPage(
-  title: l10n.gamificationSettings,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.refresh, onPressed: () => ref.read(gamificationSettingsProvider.notifier).load(), tooltip: l10n.commonRefresh,
-  ),
-],
-  child: _buildContent(state, l10n, isMobile),
-);
+      title: l10n.gamificationSettings,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.refresh,
+          onPressed: () => ref.read(gamificationSettingsProvider.notifier).load(),
+          tooltip: l10n.commonRefresh,
+        ),
+      ],
+      child: _buildContent(state, l10n, isMobile),
+    );
   }
 
   Widget _buildContent(GamificationSettingsState state, AppLocalizations l10n, bool isMobile) {
@@ -60,10 +62,7 @@ class _GamificationSettingsPageState extends ConsumerState<GamificationSettingsP
             AppSpacing.gapH8,
             Text(message, textAlign: TextAlign.center),
             AppSpacing.gapH12,
-            PosButton(
-              onPressed: () => ref.read(gamificationSettingsProvider.notifier).load(),
-              label: l10n.commonRetry,
-            ),
+            PosButton(onPressed: () => ref.read(gamificationSettingsProvider.notifier).load(), label: l10n.commonRetry),
           ],
         ),
       ),

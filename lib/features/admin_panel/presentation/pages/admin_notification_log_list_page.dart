@@ -20,7 +20,6 @@ class AdminNotificationLogListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminNotificationLogListPageState extends ConsumerState<AdminNotificationLogListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _channelFilter;
@@ -71,9 +70,9 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
     final state = ref.watch(notificationLogListProvider);
 
     return PosListPage(
-  title: l10n.notificationLogs,
-  showSearch: false,
-    child: Column(
+      title: l10n.notificationLogs,
+      showSearch: false,
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -135,10 +134,7 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
                   showSearch: false,
                   clearable: true,
                 );
-                return ResponsiveSearchFilterBar(
-                  searchField: searchField,
-                  filters: [channelDropdown, statusDropdown],
-                );
+                return ResponsiveSearchFilterBar(searchField: searchField, filters: [channelDropdown, statusDropdown]);
               },
             ),
           ),
@@ -153,7 +149,7 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
           ),
         ],
       ),
-);
+    );
   }
 
   Widget _buildList(Map<String, dynamic> data) {

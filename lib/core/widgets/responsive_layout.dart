@@ -50,12 +50,10 @@ extension ResponsiveContext on BuildContext {
   );
 
   /// Responsive card internal padding (12px mobile, 16px desktop).
-  EdgeInsets get responsiveCardPadding =>
-      isMobile ? AppSpacing.paddingAll12 : AppSpacing.paddingAll16;
+  EdgeInsets get responsiveCardPadding => isMobile ? AppSpacing.paddingAll12 : AppSpacing.paddingAll16;
 
   /// Responsive card internal padding as double (12 mobile, 16 desktop).
-  double get responsiveCardPaddingValue =>
-      isMobile ? AppSpacing.cardPaddingCompact : AppSpacing.base;
+  double get responsiveCardPaddingValue => isMobile ? AppSpacing.cardPaddingCompact : AppSpacing.base;
 
   /// Responsive icon size (20px mobile, 24px desktop).
   double get responsiveIconSize => isMobile ? AppSizes.iconMd : AppSizes.iconLg;
@@ -263,12 +261,7 @@ class ResponsiveTwoColumn extends StatelessWidget {
 /// On **mobile**: search on top, filters in an even row below.
 /// On **desktop**: all in one row with search expanded.
 class ResponsiveSearchFilterBar extends StatelessWidget {
-  const ResponsiveSearchFilterBar({
-    super.key,
-    required this.searchField,
-    required this.filters,
-    this.spacing = AppSpacing.sm,
-  });
+  const ResponsiveSearchFilterBar({super.key, required this.searchField, required this.filters, this.spacing = AppSpacing.sm});
 
   final Widget searchField;
   final List<Widget> filters;
@@ -283,10 +276,7 @@ class ResponsiveSearchFilterBar extends StatelessWidget {
           SizedBox(height: spacing),
           Row(
             children: [
-              for (int i = 0; i < filters.length; i++) ...[
-                if (i > 0) SizedBox(width: spacing),
-                Expanded(child: filters[i]),
-              ],
+              for (int i = 0; i < filters.length; i++) ...[if (i > 0) SizedBox(width: spacing), Expanded(child: filters[i])],
             ],
           ),
         ],
@@ -296,10 +286,7 @@ class ResponsiveSearchFilterBar extends StatelessWidget {
       children: [
         Expanded(child: searchField),
         SizedBox(width: spacing * 1.5),
-        for (int i = 0; i < filters.length; i++) ...[
-          if (i > 0) SizedBox(width: spacing),
-          filters[i],
-        ],
+        for (int i = 0; i < filters.length; i++) ...[if (i > 0) SizedBox(width: spacing), filters[i]],
       ],
     );
   }

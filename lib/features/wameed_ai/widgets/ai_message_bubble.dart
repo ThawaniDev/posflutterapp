@@ -36,7 +36,11 @@ class AIMessageBubble extends StatelessWidget {
             CircleAvatar(
               radius: isMobile ? 14 : 16,
               backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-              child: Icon(Icons.auto_awesome, size: isMobile ? AppSizes.iconSm - 1 : AppSizes.iconSm + 2, color: AppColors.primary),
+              child: Icon(
+                Icons.auto_awesome,
+                size: isMobile ? AppSizes.iconSm - 1 : AppSizes.iconSm + 2,
+                color: AppColors.primary,
+              ),
             ),
             AppSpacing.gapW8,
           ],
@@ -44,7 +48,10 @@ class AIMessageBubble extends StatelessWidget {
             child: GestureDetector(
               onLongPress: () => _copyToClipboard(context),
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: isMobile ? AppSpacing.md : AppSpacing.base, vertical: isMobile ? 10 : AppSpacing.md),
+                padding: EdgeInsets.symmetric(
+                  horizontal: isMobile ? AppSpacing.md : AppSpacing.base,
+                  vertical: isMobile ? 10 : AppSpacing.md,
+                ),
                 decoration: BoxDecoration(
                   color: isUser ? AppColors.primary : theme.cardColor,
                   borderRadius: BorderRadius.only(

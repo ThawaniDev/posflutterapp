@@ -75,10 +75,7 @@ class BadgeCard extends StatelessWidget {
                   if (!badge.isActive)
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withValues(alpha: 0.12),
-                        borderRadius: AppRadius.borderSm,
-                      ),
+                      decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.12), borderRadius: AppRadius.borderSm),
                       child: Text(l10n.inactive, style: TextStyle(fontSize: 11, color: Colors.grey.shade600)),
                     ),
                   if (showActions) ...[

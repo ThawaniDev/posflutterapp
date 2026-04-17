@@ -325,10 +325,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
               children: [
                 Container(
                   padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.1),
-                    borderRadius: AppRadius.borderXl,
-                  ),
+                  decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.borderXl),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -447,7 +444,10 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                       decoration: InputDecoration(
                         hintText: isMobile ? l10n.wameedAIChatHint : l10n.wameedAIChatHintDesktop,
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: isMobile ? AppSpacing.md : AppSpacing.base, vertical: 10),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: isMobile ? AppSpacing.md : AppSpacing.base,
+                          vertical: 10,
+                        ),
                         hintStyle: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
                       ),
                       onSubmitted: isMobile ? (_) => _sendMessage() : null,

@@ -19,7 +19,6 @@ class AdminSecurityAlertListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _severityFilter;
@@ -77,9 +76,9 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
     final state = ref.watch(securityAlertListProvider);
 
     return PosListPage(
-  title: l10n.securityAlerts,
-  showSearch: false,
-    child: Column(
+      title: l10n.securityAlerts,
+      showSearch: false,
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -139,10 +138,7 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
                   showSearch: false,
                   clearable: true,
                 );
-                return ResponsiveSearchFilterBar(
-                  searchField: searchField,
-                  filters: [severityDropdown, statusDropdown],
-                );
+                return ResponsiveSearchFilterBar(searchField: searchField, filters: [severityDropdown, statusDropdown]);
               },
             ),
           ),
@@ -157,7 +153,7 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
           ),
         ],
       ),
-);
+    );
   }
 
   Widget _buildList(Map<String, dynamic> data) {

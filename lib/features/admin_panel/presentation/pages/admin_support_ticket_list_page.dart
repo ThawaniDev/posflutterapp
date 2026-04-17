@@ -21,7 +21,6 @@ class AdminSupportTicketListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchController = TextEditingController();
   String? _statusFilter;
@@ -89,9 +88,9 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
     final state = ref.watch(ticketListProvider);
 
     return PosListPage(
-  title: l10n.adminSupportTickets,
-  showSearch: false,
-    child: Column(
+      title: l10n.adminSupportTickets,
+      showSearch: false,
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -182,9 +181,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
                       showSearch: false,
                       clearable: true,
                     );
-                    return ResponsiveRowWrap(
-                      children: [statusDropdown, priorityDropdown, categoryDropdown],
-                    );
+                    return ResponsiveRowWrap(children: [statusDropdown, priorityDropdown, categoryDropdown]);
                   },
                 ),
               ],
@@ -203,7 +200,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
           ),
         ],
       ),
-);
+    );
   }
 
   Widget _buildList(Map<String, dynamic> data) {
@@ -226,10 +223,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
             subtitle: Text('${t['ticket_number'] ?? ''} • ${t['category'] ?? ''}'),
             trailing: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: _statusColor(status).withValues(alpha: 0.15),
-                borderRadius: AppRadius.borderLg,
-              ),
+              decoration: BoxDecoration(color: _statusColor(status).withValues(alpha: 0.15), borderRadius: AppRadius.borderLg),
               child: Text(
                 status.replaceAll('_', ' ').toUpperCase(),
                 style: TextStyle(color: _statusColor(status), fontSize: 11, fontWeight: FontWeight.w600),
