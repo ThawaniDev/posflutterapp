@@ -2,23 +2,33 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/wameed_ai/models/ai_chat.dart';
+import 'package:wameedpos/features/wameed_ai/models/ai_feature_params.dart';
 import 'package:wameedpos/features/wameed_ai/providers/ai_chat_providers.dart';
 import 'package:wameedpos/features/wameed_ai/providers/ai_chat_state.dart';
-import 'package:wameedpos/features/wameed_ai/models/ai_feature_params.dart';
 import 'package:wameedpos/features/wameed_ai/widgets/ai_feature_input_panel.dart';
-import 'package:wameedpos/features/wameed_ai/widgets/ai_feature_overlay.dart';
-import 'package:wameedpos/features/wameed_ai/widgets/ai_model_selector.dart';
 import 'package:wameedpos/features/wameed_ai/widgets/ai_message_bubble.dart';
-import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/features/wameed_ai/widgets/ai_model_selector.dart';
 
+/// ChatGPT-inspired chat page for Wameed AI.
+///
+/// Layout:
+///   - Mobile: minimal top bar (menu, Upgrade pill, profile, new chat),
+///     centered welcome area, suggestion chips above input, pill-shaped
+///     input with "+" attachment menu (camera/photos/files + features
+///     bottom sheet).
+///   - Desktop: persistent left sidebar with new-chat, search, chat
+///     history grouped by date; main pane with breadcrumb, Upgrade pill,
+///     and full-width pill input.
 class AIChatPage extends ConsumerStatefulWidget {
   final String? chatId;
 
@@ -32,9 +42,12 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   final _controller = TextEditingController();
   final _scrollController = ScrollController();
   final _focusNode = FocusNode();
+  final _searchController = TextEditingController();
+
   String? _imageBase64;
   String? _imageName;
   bool _showScrollToBottom = false;
+  String _sidebarSearch = '';
 
   // Feature input panel state
   String? _pendingFeatureSlug;
@@ -48,6 +61,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     Future.microtask(() {
       ref.read(aiModelsProvider.notifier).load();
       ref.read(aiFeatureCardsProvider.notifier).load();
+      ref.read(aiChatListProvider.notifier).load();
       if (widget.chatId != null && widget.chatId != 'new') {
         ref.read(aiActiveChatProvider.notifier).loadChat(widget.chatId!);
       }
@@ -60,13 +74,16 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     _scrollController.removeListener(_onScrollChanged);
     _scrollController.dispose();
     _focusNode.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
+  // ─── Scroll helpers ────────────────────────────────────────────
+
   void _onScrollChanged() {
     if (!_scrollController.hasClients) return;
-    final distanceFromBottom = _scrollController.position.maxScrollExtent - _scrollController.offset;
-    final shouldShow = distanceFromBottom > 200;
+    final distance = _scrollController.position.maxScrollExtent - _scrollController.offset;
+    final shouldShow = distance > 200;
     if (shouldShow != _showScrollToBottom) {
       setState(() => _showScrollToBottom = shouldShow);
     }
@@ -84,8 +101,10 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     });
   }
 
-  Future<void> _sendMessage() async {
-    final text = _controller.text.trim();
+  // ─── Actions ───────────────────────────────────────────────────
+
+  Future<void> _sendMessage({String? overrideText}) async {
+    final text = (overrideText ?? _controller.text).trim();
     if (text.isEmpty) return;
 
     final chatState = ref.read(aiActiveChatProvider);
@@ -100,7 +119,6 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       await ref.read(aiActiveChatProvider.notifier).sendMessage(message: text, imageBase64: img);
       _scrollToBottom();
     } else {
-      // Create a new chat first, then send message
       final chat = await ref.read(aiChatListProvider.notifier).createChat();
       if (chat != null) {
         ref.read(aiActiveChatProvider.notifier).setChat(chat);
@@ -116,9 +134,9 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     }
   }
 
-  Future<void> _pickImage() async {
+  Future<void> _pickImage({ImageSource source = ImageSource.gallery}) async {
     final picker = ImagePicker();
-    final image = await picker.pickImage(source: ImageSource.gallery, maxWidth: 1024);
+    final image = await picker.pickImage(source: source, maxWidth: 1024);
     if (image != null) {
       final bytes = await File(image.path).readAsBytes();
       setState(() {
@@ -128,184 +146,413 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     }
   }
 
+  Future<void> _startNewChat() async {
+    ref.read(aiActiveChatProvider.notifier).reset();
+    _controller.clear();
+    setState(() {
+      _imageBase64 = null;
+      _imageName = null;
+      _pendingFeatureSlug = null;
+      _pendingFeatureName = null;
+      _pendingFeatureConfig = null;
+    });
+  }
+
+  void _openChat(String chatId) {
+    Navigator.of(context).maybePop(); // close drawer if open
+    ref.read(aiActiveChatProvider.notifier).loadChat(chatId);
+  }
+
+  // ─── Build ─────────────────────────────────────────────────────
+
   @override
   Widget build(BuildContext context) {
-    final chatState = ref.watch(aiActiveChatProvider);
-    final modelsState = ref.watch(aiModelsProvider);
     final theme = Theme.of(context);
-    final isNewChat = chatState is! AIChatLoaded || (chatState).chat.messages.isEmpty;
+    final isMobile = context.isPhone;
 
-    // Show error message as snackbar when present
+    // Snackbar errors
     ref.listen<AIChatState>(aiActiveChatProvider, (prev, next) {
       if (next is AIChatLoaded && next.errorMessage != null) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(next.errorMessage!), backgroundColor: AppColors.error));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(next.errorMessage!), backgroundColor: AppColors.error),
+        );
       }
     });
 
-    // Auto-scroll when messages change
-    if (chatState is AIChatLoaded) {
+    if (isMobile) {
+      return _buildMobile(theme);
+    }
+    return _buildDesktop(theme);
+  }
+
+  // ─── Mobile layout ─────────────────────────────────────────────
+
+  Widget _buildMobile(ThemeData theme) {
+    final chatState = ref.watch(aiActiveChatProvider);
+    final isNewChat = chatState is! AIChatLoaded || chatState.chat.messages.isEmpty;
+
+    if (chatState is AIChatLoaded && chatState.chat.messages.isNotEmpty) {
       _scrollToBottom();
     }
 
-    final l10n = AppLocalizations.of(context)!;
-
-    return PosListPage(
-      title: chatState is AIChatLoaded ? chatState.chat.title : l10n.wameedAI,
-      showSearch: false,
-      actions: [
-        if (chatState is AIChatLoaded)
-          PosButton.icon(
-            icon: Icons.edit_outlined,
-            tooltip: l10n.commonEdit,
-            onPressed: () => _showRenameDialog(chatState.chat.title),
-          ),
-        if (modelsState is AIModelsLoaded)
-          AIModelSelector(
-            models: modelsState.models,
-            selectedModel: chatState is AIChatLoaded ? chatState.chat.llmModel : null,
-            onSelected: (model) {
-              if (chatState is AIChatLoaded) {
-                ref.read(aiActiveChatProvider.notifier).changeModel(model.id);
-              }
-            },
-          ),
-      ],
-      child: Column(
-        children: [
-          // ─── Messages Area ───
-          Expanded(
-            child: Stack(
-              children: [
-                isNewChat ? _buildWelcomeView(theme) : _buildMessageList(chatState, theme),
-                // Scroll-to-bottom FAB
-                if (_showScrollToBottom && !isNewChat)
-                  Positioned(
-                    right: 16,
-                    bottom: 8,
-                    child: FloatingActionButton.small(
-                      onPressed: _scrollToBottom,
-                      backgroundColor: theme.cardColor,
-                      elevation: 4,
-                      child: Icon(Icons.keyboard_arrow_down, color: AppColors.primary),
+    return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
+      drawer: Drawer(
+        backgroundColor: theme.scaffoldBackgroundColor,
+        child: SafeArea(child: _buildSidebar(theme, isMobile: true)),
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            _buildMobileTopBar(theme),
+            Expanded(
+              child: Stack(
+                children: [
+                  isNewChat ? _buildEmptyCenter(theme) : _buildMessageList(chatState, theme),
+                  if (_showScrollToBottom && !isNewChat)
+                    Positioned(
+                      right: 16,
+                      bottom: 8,
+                      child: FloatingActionButton.small(
+                        onPressed: _scrollToBottom,
+                        backgroundColor: theme.cardColor,
+                        elevation: 4,
+                        child: const Icon(Icons.keyboard_arrow_down, color: AppColors.primary),
+                      ),
                     ),
-                  ),
-              ],
+                ],
+              ),
+            ),
+            if (_pendingFeatureConfig != null)
+              AIFeatureInputPanel(
+                featureSlug: _pendingFeatureSlug!,
+                featureName: _pendingFeatureName!,
+                config: _pendingFeatureConfig!,
+                onSubmit: _submitFeature,
+                onDismiss: _clearPendingFeature,
+              )
+            else ...[
+              if (isNewChat) _buildSuggestionChips(theme),
+              if (_imageBase64 != null) _buildImagePreview(theme),
+              _buildPillInput(theme, isMobile: true),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMobileTopBar(ThemeData theme) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      child: Row(
+        children: [
+          Builder(
+            builder: (ctx) => IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () => Scaffold.of(ctx).openDrawer(),
+              tooltip: 'Menu',
             ),
           ),
-
-          // ─── Feature Input Panel ───
-          if (_pendingFeatureConfig != null)
-            AIFeatureInputPanel(
-              featureSlug: _pendingFeatureSlug!,
-              featureName: _pendingFeatureName!,
-              config: _pendingFeatureConfig!,
-              onSubmit: (params, prompt, imageBase64) => _submitFeature(params, prompt, imageBase64),
-              onDismiss: _clearPendingFeature,
-            ),
-
-          // ─── Image Preview ───
-          if (_imageBase64 != null && _pendingFeatureConfig == null) _buildImagePreview(theme),
-
-          // ─── Input Area ───
-          if (_pendingFeatureConfig == null) _buildInputBar(chatState, theme),
+          _UpgradePill(),
+          const Spacer(),
+          IconButton(
+            icon: const Icon(Icons.person_add_alt_outlined),
+            onPressed: () {},
+            tooltip: 'Share',
+          ),
+          IconButton(
+            icon: const Icon(Icons.add_comment_outlined),
+            onPressed: _startNewChat,
+            tooltip: AppLocalizations.of(context)!.wameedAINewChat,
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildWelcomeView(ThemeData theme) {
-    final l10n = AppLocalizations.of(context)!;
-    return Center(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(20),
+  // ─── Desktop layout ────────────────────────────────────────────
+
+  Widget _buildDesktop(ThemeData theme) {
+    final chatState = ref.watch(aiActiveChatProvider);
+    final isNewChat = chatState is! AIChatLoaded || chatState.chat.messages.isEmpty;
+
+    if (chatState is AIChatLoaded && chatState.chat.messages.isNotEmpty) {
+      _scrollToBottom();
+    }
+
+    return Scaffold(
+      backgroundColor: theme.scaffoldBackgroundColor,
+      body: Row(
+        children: [
+          SizedBox(
+            width: 280,
+            child: Container(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [AppColors.primary.withValues(alpha: 0.1), AppColors.primary.withValues(alpha: 0.05)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                shape: BoxShape.circle,
+                color: _sidebarColor(theme),
+                border: Border(right: BorderSide(color: theme.dividerColor)),
               ),
-              child: const Icon(Icons.auto_awesome, size: 48, color: AppColors.primary),
+              child: SafeArea(child: _buildSidebar(theme, isMobile: false)),
             ),
-            AppSpacing.gapH24,
-            Text(
-              l10n.wameedAI,
-              style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
+          ),
+          Expanded(
+            child: Column(
+              children: [
+                _buildDesktopTopBar(theme, chatState),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      isNewChat ? _buildEmptyCenter(theme) : _buildMessageList(chatState, theme),
+                      if (_showScrollToBottom && !isNewChat)
+                        Positioned(
+                          right: 24,
+                          bottom: 16,
+                          child: FloatingActionButton.small(
+                            onPressed: _scrollToBottom,
+                            backgroundColor: theme.cardColor,
+                            elevation: 4,
+                            child: const Icon(Icons.keyboard_arrow_down, color: AppColors.primary),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                if (_pendingFeatureConfig != null)
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 820),
+                    child: AIFeatureInputPanel(
+                      featureSlug: _pendingFeatureSlug!,
+                      featureName: _pendingFeatureName!,
+                      config: _pendingFeatureConfig!,
+                      onSubmit: _submitFeature,
+                      onDismiss: _clearPendingFeature,
+                    ),
+                  )
+                else ...[
+                  if (isNewChat) _buildSuggestionChips(theme),
+                  if (_imageBase64 != null) _buildImagePreview(theme),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 820),
+                      child: _buildPillInput(theme, isMobile: false),
+                    ),
+                  ),
+                ],
+              ],
             ),
-            AppSpacing.gapH8,
-            Text(l10n.wameedAITagline, style: theme.textTheme.bodyLarge?.copyWith(color: theme.hintColor)),
-            AppSpacing.gapH32,
-            _buildFeatureCardsGrid(theme),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildFeatureCardsGrid(ThemeData theme) {
-    final cardsState = ref.watch(aiFeatureCardsProvider);
+  Widget _buildDesktopTopBar(ThemeData theme, AIChatState chatState) {
+    final l10n = AppLocalizations.of(context)!;
+    final title = chatState is AIChatLoaded ? chatState.chat.title : l10n.wameedAI;
+    final modelsState = ref.watch(aiModelsProvider);
 
-    if (cardsState is! AIFeatureCardsLoaded) {
-      return const SizedBox.shrink();
-    }
-
-    // Flatten all features into a single list for the initial view cards
-    final allFeatures = <AIFeatureCard>[];
-    for (final category in cardsState.categories) {
-      final features = category['features'] as List<dynamic>? ?? [];
-      for (final f in features) {
-        allFeatures.add(AIFeatureCard.fromJson(f as Map<String, dynamic>));
-      }
-    }
-
-    // Show first 8 features as quick-start cards
-    final displayFeatures = allFeatures.take(8).toList();
-
-    return Wrap(
-      spacing: 10,
-      runSpacing: 10,
-      alignment: WrapAlignment.center,
-      children: displayFeatures.map((feature) {
-        return _buildQuickStartCard(feature, theme);
-      }).toList(),
+    return Container(
+      height: 56,
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: theme.dividerColor)),
+      ),
+      child: Row(
+        children: [
+          // Breadcrumb-style title
+          InkWell(
+            onTap: chatState is AIChatLoaded ? () => _showRenameDialog(chatState.chat.title) : null,
+            borderRadius: AppRadius.borderMd,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: Row(
+                children: [
+                  Text(l10n.wameedAI, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600)),
+                  if (chatState is AIChatLoaded) ...[
+                    const SizedBox(width: 6),
+                    Icon(Icons.chevron_right, size: 18, color: theme.hintColor),
+                    const SizedBox(width: 6),
+                    ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 320),
+                      child: Text(
+                        title,
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+          const Spacer(),
+          _UpgradePill(),
+          const SizedBox(width: 12),
+          if (modelsState is AIModelsLoaded)
+            AIModelSelector(
+              models: modelsState.models,
+              selectedModel: chatState is AIChatLoaded ? chatState.chat.llmModel : null,
+              onSelected: (model) {
+                if (chatState is AIChatLoaded) {
+                  ref.read(aiActiveChatProvider.notifier).changeModel(model.id);
+                }
+              },
+            ),
+          const SizedBox(width: 4),
+          IconButton(
+            icon: const Icon(Icons.ios_share_outlined),
+            tooltip: 'Share',
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.more_horiz),
+            tooltip: 'More',
+            onPressed: () {},
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _buildQuickStartCard(AIFeatureCard feature, ThemeData theme) {
-    final isMobile = context.isPhone;
-    return InkWell(
-      onTap: () => _onFeatureSelected(feature.slug, feature.displayName),
-      borderRadius: AppRadius.borderLg,
-      child: Container(
-        width: isMobile ? (MediaQuery.sizeOf(context).width - 68) / 2 : 180,
-        padding: EdgeInsets.symmetric(horizontal: isMobile ? 10 : 14, vertical: isMobile ? 10 : 12),
-        decoration: BoxDecoration(
-          color: theme.cardColor,
-          borderRadius: AppRadius.borderLg,
-          // border: Border.all(color: theme.dividerColor),
+  // ─── Sidebar (mobile drawer + desktop pane) ────────────────────
+
+  Widget _buildSidebar(ThemeData theme, {required bool isMobile}) {
+    final l10n = AppLocalizations.of(context)!;
+    final chatListState = ref.watch(aiChatListProvider);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // Top row: collapse + new chat
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+          child: Row(
+            children: [
+              if (isMobile)
+                IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () => Navigator.of(context).maybePop(),
+                )
+              else
+                IconButton(
+                  icon: const Icon(Icons.view_sidebar_outlined),
+                  tooltip: 'Collapse',
+                  onPressed: () {},
+                ),
+              const Spacer(),
+              IconButton(
+                icon: const Icon(Icons.edit_square),
+                tooltip: l10n.wameedAINewChat,
+                onPressed: _startNewChat,
+              ),
+            ],
+          ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Icon(_categoryIcon(feature.category), size: 20, color: AppColors.primary),
-            // AppSpacing.gapH8,
-            Text(
-              feature.displayName + '\n',
-              style: theme.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
-              maxLines: 2,
+        // Search
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          child: TextField(
+            controller: _searchController,
+            onChanged: (v) => setState(() => _sidebarSearch = v.trim().toLowerCase()),
+            decoration: InputDecoration(
+              hintText: 'Search',
+              prefixIcon: Icon(Icons.search, size: 18, color: theme.hintColor),
+              isDense: true,
+              filled: true,
+              fillColor: theme.cardColor,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none,
+              ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        // "Wameed AI" pinned entry
+        _SidebarTile(
+          icon: Icons.auto_awesome,
+          label: l10n.wameedAI,
+          selected: true,
+          onTap: _startNewChat,
+        ),
+        _SidebarTile(
+          icon: Icons.apps_outlined,
+          label: l10n.wameedAIFeatures,
+          trailing: Icon(Icons.chevron_right, size: 18, color: theme.hintColor),
+          onTap: _showFeaturesSheet,
+        ),
+        Divider(color: theme.dividerColor, height: 24),
+        // Chat history
+        Expanded(child: _buildChatHistoryList(chatListState, theme)),
+      ],
+    );
+  }
+
+  Widget _buildChatHistoryList(AIChatListState state, ThemeData theme) {
+    final l10n = AppLocalizations.of(context)!;
+    if (state is AIChatListLoading || state is AIChatListInitial) {
+      return const Center(child: CircularProgressIndicator(strokeWidth: 2));
+    }
+    if (state is AIChatListError) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Text(state.message, style: TextStyle(color: theme.hintColor), textAlign: TextAlign.center),
+        ),
+      );
+    }
+    if (state is! AIChatListLoaded) return const SizedBox.shrink();
+
+    final chats = state.chats.where((c) {
+      if (_sidebarSearch.isEmpty) return true;
+      return c.title.toLowerCase().contains(_sidebarSearch);
+    }).toList();
+
+    if (chats.isEmpty) {
+      return Center(
+        child: Text(l10n.wameedAINoChats, style: TextStyle(color: theme.hintColor)),
+      );
+    }
+
+    final activeId = (ref.watch(aiActiveChatProvider) is AIChatLoaded)
+        ? (ref.watch(aiActiveChatProvider) as AIChatLoaded).chat.id
+        : null;
+
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      itemCount: chats.length,
+      itemBuilder: (ctx, i) {
+        final chat = chats[i];
+        return InkWell(
+          onTap: () => _openChat(chat.id),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            decoration: BoxDecoration(
+              color: chat.id == activeId
+                  ? AppColors.primary.withValues(alpha: 0.08)
+                  : Colors.transparent,
+            ),
+            child: Text(
+              chat.title,
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                fontWeight: chat.id == activeId ? FontWeight.w600 : FontWeight.w400,
+              ),
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
+  }
+
+  // ─── Empty / message views ─────────────────────────────────────
+
+  Widget _buildEmptyCenter(ThemeData theme) {
+    // Mirror ChatGPT — clean centered area; logo is implied via top bar.
+    return const SizedBox.shrink();
   }
 
   Widget _buildMessageList(AIChatLoaded chatState, ThemeData theme) {
@@ -318,20 +565,29 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       itemCount: messages.length + (chatState.isSending ? 1 : 0),
       itemBuilder: (context, index) {
         if (index == messages.length && chatState.isSending) {
-          // Typing indicator
           return Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: Row(
               children: [
                 Container(
                   padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.borderXl),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withValues(alpha: 0.1),
+                    borderRadius: AppRadius.borderXl,
+                  ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary)),
+                      const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
+                      ),
                       AppSpacing.gapW8,
-                      Text(l10n.wameedAIThinking, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.primary)),
+                      Text(
+                        l10n.wameedAIThinking,
+                        style: theme.textTheme.bodySmall?.copyWith(color: AppColors.primary),
+                      ),
                     ],
                   ),
                 ),
@@ -339,23 +595,103 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
             ),
           );
         }
-
         return AIMessageBubble(message: messages[index]);
       },
     );
   }
 
+  // ─── Suggestion chips above input ──────────────────────────────
+
+  Widget _buildSuggestionChips(ThemeData theme) {
+    final suggestions = _quickSuggestions(context);
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
+      child: SizedBox(
+        height: 80,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          itemCount: suggestions.length,
+          separatorBuilder: (_, __) => const SizedBox(width: 10),
+          itemBuilder: (ctx, i) {
+            final s = suggestions[i];
+            return InkWell(
+              onTap: () => _sendMessage(overrideText: s.fullPrompt),
+              borderRadius: BorderRadius.circular(14),
+              child: Container(
+                width: 220,
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                decoration: BoxDecoration(
+                  color: theme.cardColor,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      s.title,
+                      style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      s.subtitle,
+                      style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  List<_Suggestion> _quickSuggestions(BuildContext ctx) {
+    return const [
+      _Suggestion(
+        title: "Today's sales summary",
+        subtitle: 'Show revenue, top items, and trends',
+        fullPrompt: "Show today's sales summary with top products and trends",
+      ),
+      _Suggestion(
+        title: 'Suggest reorder',
+        subtitle: 'For low-stock and fast-moving items',
+        fullPrompt: 'Suggest a reorder list for items that are running low or selling fast',
+      ),
+      _Suggestion(
+        title: 'Find slow movers',
+        subtitle: 'Items that are not selling well',
+        fullPrompt: 'List the slowest-moving products in my inventory this month',
+      ),
+      _Suggestion(
+        title: 'Customer segments',
+        subtitle: 'Group customers by behavior',
+        fullPrompt: 'Analyze my customers and group them into useful segments',
+      ),
+    ];
+  }
+
+  // ─── Image preview (above input) ───────────────────────────────
+
   Widget _buildImagePreview(ThemeData theme) {
     final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      color: theme.scaffoldBackgroundColor,
       child: Row(
         children: [
           Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              color: AppColors.primary.withValues(alpha: 0.1),
+              borderRadius: AppRadius.borderMd,
+            ),
             child: const Icon(Icons.image, color: AppColors.primary),
           ),
           AppSpacing.gapW8,
@@ -378,134 +714,243 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     );
   }
 
-  Widget _buildInputBar(AIChatState chatState, ThemeData theme) {
-    final l10n = AppLocalizations.of(context)!;
-    final isSending = chatState is AIChatLoaded && chatState.isSending;
+  // ─── Pill input ────────────────────────────────────────────────
 
-    final isMobile = context.isPhone;
+  Widget _buildPillInput(ThemeData theme, {required bool isMobile}) {
+    final l10n = AppLocalizations.of(context)!;
+    final chatState = ref.watch(aiActiveChatProvider);
+    final isSending = chatState is AIChatLoaded && chatState.isSending;
     final bottomPad = MediaQuery.of(context).padding.bottom;
     final keyboardVisible = MediaQuery.of(context).viewInsets.bottom > 0;
+    final hasText = _controller.text.trim().isNotEmpty;
 
-    return Container(
-      padding: EdgeInsets.only(
-        left: isMobile ? AppSpacing.sm : AppSpacing.md,
-        right: AppSpacing.sm,
-        top: AppSpacing.sm,
-        bottom: keyboardVisible ? AppSpacing.sm : bottomPad + (isMobile ? AppSpacing.sm : AppSpacing.lg),
-      ),
-      decoration: BoxDecoration(
-        color: theme.scaffoldBackgroundColor,
-        border: Border(top: BorderSide(color: theme.dividerColor)),
+    return Padding(
+      padding: EdgeInsets.fromLTRB(
+        12,
+        4,
+        12,
+        keyboardVisible ? 8 : (isMobile ? bottomPad + 8 : 16),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          // Feature overlay button
-          IconButton(
-            icon: Icon(Icons.add_circle_outline, size: isMobile ? 24 : 26),
-            color: AppColors.primary,
-            onPressed: () => _showFeatureOverlay(),
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
+          // "+" button
+          _CircleIconButton(
+            icon: Icons.add,
+            onPressed: _showAttachmentSheet,
+            backgroundColor: theme.cardColor,
+            iconColor: theme.iconTheme.color,
           ),
-          // Image button
-          if (!isMobile)
-            IconButton(icon: const Icon(Icons.image_outlined, size: 24), color: theme.hintColor, onPressed: _pickImage),
-          SizedBox(width: isMobile ? AppSpacing.xs : 10),
-          // Input field
+          const SizedBox(width: 8),
+          // Pill text field
           Expanded(
             child: Container(
-              constraints: BoxConstraints(maxHeight: isMobile ? 100 : 120),
+              constraints: const BoxConstraints(maxHeight: 120, minHeight: 48),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
                 color: theme.cardColor,
-                borderRadius: BorderRadius.circular(isMobile ? 20 : 8),
-                border: Border.all(color: theme.dividerColor),
+                borderRadius: BorderRadius.circular(28),
               ),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  if (isMobile)
-                    Padding(
-                      padding: const EdgeInsets.only(left: 4, bottom: 4),
-                      child: IconButton(
-                        icon: const Icon(Icons.image_outlined, size: 20),
-                        color: theme.hintColor,
-                        onPressed: _pickImage,
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-                      ),
-                    ),
                   Expanded(
                     child: TextField(
                       controller: _controller,
                       focusNode: _focusNode,
                       maxLines: null,
                       textInputAction: isMobile ? TextInputAction.send : TextInputAction.newline,
+                      onChanged: (_) => setState(() {}),
+                      onSubmitted: isMobile ? (_) => _sendMessage() : null,
                       decoration: InputDecoration(
                         hintText: isMobile ? l10n.wameedAIChatHint : l10n.wameedAIChatHintDesktop,
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: isMobile ? AppSpacing.md : AppSpacing.base,
-                          vertical: 10,
-                        ),
+                        isCollapsed: true,
+                        contentPadding: const EdgeInsets.symmetric(vertical: 14),
                         hintStyle: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
                       ),
-                      onSubmitted: isMobile ? (_) => _sendMessage() : null,
                     ),
                   ),
+                  if (!hasText)
+                    IconButton(
+                      icon: Icon(Icons.mic_none_outlined, color: theme.hintColor),
+                      onPressed: () {},
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+                    ),
                 ],
               ),
             ),
           ),
-          AppSpacing.gapW8,
-          // Send button
-          Padding(
-            padding: const EdgeInsets.only(bottom: 2),
-            child: Container(
-              decoration: BoxDecoration(
-                color: isSending ? Theme.of(context).disabledColor : AppColors.primary,
-                shape: BoxShape.circle,
-              ),
-              child: IconButton(
-                icon: Icon(isSending ? Icons.hourglass_top : Icons.arrow_upward, color: Colors.white, size: isMobile ? 20 : 22),
-                onPressed: isSending ? null : _sendMessage,
-                padding: EdgeInsets.zero,
-                constraints: BoxConstraints(minWidth: isMobile ? 36 : 44, minHeight: isMobile ? 36 : 44),
-              ),
-            ),
+          const SizedBox(width: 8),
+          // Send / voice button
+          _CircleIconButton(
+            icon: hasText ? Icons.arrow_upward : Icons.graphic_eq,
+            onPressed: isSending ? null : _sendMessage,
+            backgroundColor: hasText ? AppColors.primary : Colors.white,
+            iconColor: hasText ? Colors.white : Colors.black,
+            size: 44,
           ),
         ],
       ),
     );
   }
 
-  void _showFeatureOverlay() {
+  // ─── "+" attachment bottom sheet ───────────────────────────────
+
+  void _showAttachmentSheet() {
     showModalBottomSheet(
       context: context,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       isScrollControlled: true,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
-      builder: (ctx) => AIFeatureOverlay(
-        onFeatureSelected: (slug, name) {
-          Navigator.of(ctx).pop();
-          _onFeatureSelected(slug, name);
-        },
-      ),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      builder: (ctx) {
+        final theme = Theme.of(ctx);
+        final l10n = AppLocalizations.of(ctx)!;
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Drag handle
+                Center(
+                  child: Container(
+                    width: 36,
+                    height: 4,
+                    margin: const EdgeInsets.only(bottom: 12),
+                    decoration: BoxDecoration(
+                      color: theme.hintColor.withValues(alpha: 0.3),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                // Camera / Photos / Files
+                Row(
+                  children: [
+                    Expanded(
+                      child: _AttachmentTile(
+                        icon: Icons.photo_camera_outlined,
+                        label: 'Camera',
+                        onTap: () {
+                          Navigator.pop(ctx);
+                          _pickImage(source: ImageSource.camera);
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _AttachmentTile(
+                        icon: Icons.image_outlined,
+                        label: 'Photos',
+                        onTap: () {
+                          Navigator.pop(ctx);
+                          _pickImage(source: ImageSource.gallery);
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: _AttachmentTile(
+                        icon: Icons.attach_file_outlined,
+                        label: 'Files',
+                        onTap: () {
+                          Navigator.pop(ctx);
+                          _pickImage(source: ImageSource.gallery);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Divider(color: theme.dividerColor, height: 1),
+                const SizedBox(height: 8),
+                // Wameed AI feature rows
+                _ActionRow(
+                  icon: Icons.auto_awesome,
+                  title: l10n.wameedAIFeatures,
+                  subtitle: 'Browse all AI capabilities',
+                  onTap: () {
+                    Navigator.pop(ctx);
+                    _showFeaturesSheet();
+                  },
+                ),
+                _ActionRow(
+                  icon: Icons.summarize_outlined,
+                  title: "Today's summary",
+                  subtitle: 'Revenue, top items, and trends',
+                  onTap: () {
+                    Navigator.pop(ctx);
+                    context.push(Routes.wameedAIDailySummary);
+                  },
+                ),
+                _ActionRow(
+                  icon: Icons.shopping_cart_outlined,
+                  title: 'Smart reorder',
+                  subtitle: 'AI-suggested purchase list',
+                  onTap: () {
+                    Navigator.pop(ctx);
+                    context.push(Routes.wameedAISmartReorder);
+                  },
+                ),
+                _ActionRow(
+                  icon: Icons.groups_outlined,
+                  title: 'Customer segments',
+                  subtitle: 'Group customers by behavior',
+                  onTap: () {
+                    Navigator.pop(ctx);
+                    context.push(Routes.wameedAICustomerSegments);
+                  },
+                ),
+                _ActionRow(
+                  icon: Icons.receipt_long_outlined,
+                  title: l10n.wameedAIInvoiceOCR,
+                  subtitle: 'Scan supplier invoices into your system',
+                  trailing: Icon(Icons.chevron_right, color: theme.hintColor),
+                  onTap: () {
+                    Navigator.pop(ctx);
+                    context.push(Routes.wameedAIInvoiceOCR);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
-  /// Central handler for feature selection — shows input panel if feature has params,
-  /// otherwise invokes immediately.
+  // ─── Features bottom sheet (full feature catalog) ──────────────
+
+  void _showFeaturesSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+      builder: (ctx) {
+        return _FeaturesBottomSheet(
+          onFeatureSelected: (slug, name) {
+            Navigator.pop(ctx);
+            _onFeatureSelected(slug, name);
+          },
+        );
+      },
+    );
+  }
+
+  // ─── Feature flow ──────────────────────────────────────────────
+
   void _onFeatureSelected(String slug, String name) {
     final config = FeatureInputConfig.featureInputConfigs[slug];
     if (config != null && config.fields.isNotEmpty) {
-      // Show the input panel
       setState(() {
         _pendingFeatureSlug = slug;
         _pendingFeatureName = name;
         _pendingFeatureConfig = config;
       });
     } else {
-      // No inputs needed — invoke immediately
       _invokeFeatureDirectly(slug, name);
     }
   }
@@ -516,10 +961,14 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       final chat = await ref.read(aiChatListProvider.notifier).createChat(title: name);
       if (chat != null) {
         ref.read(aiActiveChatProvider.notifier).setChat(chat);
-        await ref.read(aiActiveChatProvider.notifier).sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
+        await ref
+            .read(aiActiveChatProvider.notifier)
+            .sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
       }
     } else {
-      await ref.read(aiActiveChatProvider.notifier).sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
+      await ref
+          .read(aiActiveChatProvider.notifier)
+          .sendMessage(message: 'Run $name analysis for my store', featureSlug: slug);
     }
     _scrollToBottom();
   }
@@ -553,6 +1002,8 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       _pendingFeatureConfig = null;
     });
   }
+
+  // ─── Rename dialog (preserved from previous design) ────────────
 
   void _showRenameDialog(String currentTitle) {
     final l10n = AppLocalizations.of(context)!;
@@ -592,5 +1043,333 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
         ],
       ),
     ).then((_) => renameController.dispose());
+  }
+
+  // ─── Sidebar background tint ───────────────────────────────────
+
+  Color _sidebarColor(ThemeData theme) {
+    return theme.brightness == Brightness.dark
+        ? theme.scaffoldBackgroundColor
+        : theme.cardColor.withValues(alpha: 0.5);
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// ─── Helper widgets ──────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────
+
+class _UpgradePill extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        // TODO: link to subscription / upgrade flow
+      },
+      borderRadius: BorderRadius.circular(20),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: AppColors.primary.withValues(alpha: 0.18),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: const Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.auto_awesome, size: 14, color: AppColors.primary),
+            SizedBox(width: 4),
+            Text(
+              'Upgrade',
+              style: TextStyle(
+                color: AppColors.primary,
+                fontWeight: FontWeight.w600,
+                fontSize: 13,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CircleIconButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback? onPressed;
+  final Color backgroundColor;
+  final Color? iconColor;
+  final double size;
+
+  const _CircleIconButton({
+    required this.icon,
+    required this.onPressed,
+    required this.backgroundColor,
+    this.iconColor,
+    this.size = 44,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: backgroundColor,
+      shape: const CircleBorder(),
+      child: InkWell(
+        customBorder: const CircleBorder(),
+        onTap: onPressed,
+        child: SizedBox(
+          width: size,
+          height: size,
+          child: Icon(icon, color: iconColor, size: 22),
+        ),
+      ),
+    );
+  }
+}
+
+class _SidebarTile extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Widget? trailing;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _SidebarTile({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+    this.trailing,
+    this.selected = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.primary.withValues(alpha: 0.10) : Colors.transparent,
+        ),
+        child: Row(
+          children: [
+            Icon(icon, size: 18, color: selected ? AppColors.primary : theme.iconTheme.color),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                label,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
+                ),
+              ),
+            ),
+            if (trailing != null) trailing!,
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AttachmentTile extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  const _AttachmentTile({required this.icon, required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(14),
+      child: Container(
+        height: 96,
+        decoration: BoxDecoration(
+          color: theme.cardColor,
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 28, color: theme.iconTheme.color),
+            const SizedBox(height: 8),
+            Text(label, style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ActionRow extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final Widget? trailing;
+  final VoidCallback onTap;
+
+  const _ActionRow({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+    this.trailing,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 14),
+        child: Row(
+          children: [
+            SizedBox(width: 36, child: Icon(icon, size: 24, color: theme.iconTheme.color)),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600)),
+                  const SizedBox(height: 2),
+                  Text(subtitle, style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor)),
+                ],
+              ),
+            ),
+            if (trailing != null) trailing!,
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Suggestion {
+  final String title;
+  final String subtitle;
+  final String fullPrompt;
+  const _Suggestion({required this.title, required this.subtitle, required this.fullPrompt});
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Features bottom sheet — full catalog from API
+// ─────────────────────────────────────────────────────────────────
+
+class _FeaturesBottomSheet extends ConsumerWidget {
+  final void Function(String slug, String displayName) onFeatureSelected;
+
+  const _FeaturesBottomSheet({required this.onFeatureSelected});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cardsState = ref.watch(aiFeatureCardsProvider);
+    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+
+    return DraggableScrollableSheet(
+      initialChildSize: 0.7,
+      minChildSize: 0.4,
+      maxChildSize: 0.95,
+      expand: false,
+      builder: (ctx, scrollController) => Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Container(
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: theme.hintColor.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              children: [
+                const Icon(Icons.auto_awesome, color: AppColors.primary, size: 22),
+                const SizedBox(width: 8),
+                Text(
+                  l10n.wameedAIFeatures,
+                  style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Divider(color: theme.dividerColor, height: 1),
+          Expanded(
+            child: switch (cardsState) {
+              AIFeatureCardsInitial() || AIFeatureCardsLoading() => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              AIFeatureCardsError(:final message) => Center(child: Text(message)),
+              AIFeatureCardsLoaded(:final categories) => ListView.builder(
+                  controller: scrollController,
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                  itemCount: categories.length,
+                  itemBuilder: (ctx, i) {
+                    final category = categories[i];
+                    final categoryName = category['name'] as String? ?? '';
+                    final features = (category['features'] as List<dynamic>? ?? [])
+                        .map((f) => AIFeatureCard.fromJson(f as Map<String, dynamic>))
+                        .toList();
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 12, 16, 6),
+                          child: Text(
+                            categoryName,
+                            style: theme.textTheme.labelLarge?.copyWith(
+                              color: theme.hintColor,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        ...features.map(
+                          (f) => InkWell(
+                            onTap: () => onFeatureSelected(f.slug, f.displayName),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.auto_awesome, size: 20, color: AppColors.primary),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          f.displayName,
+                                          style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+                                        ),
+                                        if (f.description != null) ...[
+                                          const SizedBox(height: 2),
+                                          Text(
+                                            f.description!,
+                                            style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
+                                          ),
+                                        ],
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -84,6 +84,12 @@ class AIChatNotifier extends StateNotifier<AIChatState> {
     state = AIChatLoaded(chat: chat);
   }
 
+  /// Reset to the initial empty state — used when starting a fresh chat
+  /// from the sidebar / new-chat button before any message is sent.
+  void reset() {
+    state = const AIChatInitial();
+  }
+
   Future<void> sendMessage({
     required String message,
     String? featureSlug,
