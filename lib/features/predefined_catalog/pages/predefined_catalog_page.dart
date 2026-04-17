@@ -6,6 +6,8 @@ import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/onboarding/providers/store_onboarding_providers.dart';
+import 'package:wameedpos/features/onboarding/providers/store_onboarding_state.dart';
 import 'package:wameedpos/features/predefined_catalog/models/predefined_category.dart';
 import 'package:wameedpos/features/predefined_catalog/providers/predefined_catalog_providers.dart';
 import 'package:wameedpos/features/predefined_catalog/providers/predefined_catalog_state.dart';
@@ -26,6 +28,7 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
     super.initState();
     Future.microtask(() {
       ref.read(predefinedCategoriesProvider.notifier).load();
+      ref.read(businessTypesProvider.notifier).load();
     });
   }
 
@@ -45,12 +48,12 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
 
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Clone All Products',
+      title: l10n.pcCloneAllProducts,
       message:
           'This will clone all predefined categories and products for the '
           'selected business type to your store. Continue?',
-      confirmLabel: 'Clone All',
-      cancelLabel: 'Cancel',
+      confirmLabel: l10n.pcCloneAll,
+      cancelLabel: l10n.commonCancel,
     );
 
     if (confirmed == true && mounted) {
@@ -72,9 +75,9 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
   Future<void> _handleCloneCategory(PredefinedCategory category) async {
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Clone Category',
-      message: 'Clone "${category.name}" and all its products to your store?',
-      confirmLabel: 'Clone',
+      title: l10n.pcCloneCategory,
+      message: l10n.pcCloneCategoryConfirm(category.name),
+      confirmLabel: l10n.pcClone,
       cancelLabel: 'Cancel',
     );
 
@@ -94,6 +97,7 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final categoriesState = ref.watch(predefinedCategoriesProvider);
     final cloneState = ref.watch(cloneProvider);
     final isCloning = cloneState is CloneInProgress;
@@ -104,7 +108,7 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
       actions: [
         if (_selectedBusinessTypeId != null)
           PosButton(
-            label: 'Clone All',
+            label: l10n.pcCloneAll,
             icon: Icons.copy_all,
             onPressed: isCloning ? null : _handleCloneAll,
             variant: PosButtonVariant.soft,
@@ -136,36 +140,50 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
         children: [
           Icon(Icons.business, size: 20, color: AppColors.textMutedLight),
           const SizedBox(width: AppSpacing.sm),
-          const Text('Business Type:'),
+          Text(l10n.pcBusinessTypeColon),
           const SizedBox(width: AppSpacing.sm),
-          ..._businessTypeChips(),
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(children: _businessTypeChips()),
+            ),
+          ),
         ],
       ),
     );
   }
 
   List<Widget> _businessTypeChips() {
-    const businessTypes = [
-      {'id': 'grocery', 'label': 'Grocery', 'icon': Icons.local_grocery_store},
-      {'id': 'pharmacy', 'label': 'Pharmacy', 'icon': Icons.local_pharmacy},
-      {'id': 'electronics', 'label': 'Electronics', 'icon': Icons.devices},
-      {'id': 'bakery', 'label': 'Bakery', 'icon': Icons.bakery_dining},
-      {'id': 'restaurant', 'label': 'Restaurant', 'icon': Icons.restaurant},
-      {'id': 'florist', 'label': 'Florist', 'icon': Icons.local_florist},
-      {'id': 'jewelry', 'label': 'Jewelry', 'icon': Icons.diamond},
-      {'id': 'fashion', 'label': 'Fashion', 'icon': Icons.checkroom},
-    ];
+    final btState = ref.watch(businessTypesProvider);
 
-    return businessTypes.map((bt) {
-      final isSelected = _selectedBusinessTypeId == bt['id'];
+    if (btState is BusinessTypesLoading || btState is BusinessTypesInitial) {
+      return [
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+          child: SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
+        ),
+      ];
+    }
+
+    if (btState is BusinessTypesError) {
+      return [Text(btState.message, style: const TextStyle(color: AppColors.error))];
+    }
+
+    if (btState is! BusinessTypesLoaded) {
+      return const [];
+    }
+
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+
+    return btState.templates.map((bt) {
+      final isSelected = _selectedBusinessTypeId == bt.id;
       return Padding(
         padding: const EdgeInsets.only(right: AppSpacing.xs),
         child: FilterChip(
           selected: isSelected,
-          label: Text(bt['label'] as String),
-          avatar: Icon(bt['icon'] as IconData, size: 16),
+          label: Text(isArabic ? bt.nameAr : bt.nameEn),
           onSelected: (selected) {
-            _onBusinessTypeChanged(selected ? bt['id'] as String : null);
+            _onBusinessTypeChanged(selected ? bt.id : null);
           },
         ),
       );
@@ -185,7 +203,7 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
       if (state.categories.isEmpty) {
         return PosEmptyState(
           icon: Icons.category_outlined,
-          title: 'No predefined categories found',
+          title: l10n.pcNoPredefinedCategories,
           subtitle: _selectedBusinessTypeId != null
               ? 'No categories available for this business type.'
               : 'Select a business type to browse predefined categories.',
@@ -230,7 +248,7 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
                         ? () => ref.read(predefinedCategoriesProvider.notifier).previousPage()
                         : null,
                   ),
-                  Text('Page ${state.currentPage} of ${state.lastPage}'),
+                  Text(l10n.pcPageOfLast(state.currentPage.toString(), state.lastPage.toString())),
                   IconButton(
                     icon: const Icon(Icons.chevron_right),
                     onPressed: state.hasMore ? () => ref.read(predefinedCategoriesProvider.notifier).nextPage() : null,
@@ -257,6 +275,7 @@ class _CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
     return PosCard(
@@ -308,7 +327,7 @@ class _CategoryCard extends StatelessWidget {
                           ),
                         IconButton(
                           icon: const Icon(Icons.content_copy, size: 18),
-                          tooltip: 'Clone to my store',
+                          tooltip: l10n.pcCloneToMyStore,
                           onPressed: onClone,
                           visualDensity: VisualDensity.compact,
                         ),
