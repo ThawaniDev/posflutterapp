@@ -256,7 +256,7 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
             icon: actionLoading
                 ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                 : const Icon(Icons.link),
-            label: Text('Connect ${_providerDisplayName(_selectedProvider)}'),
+            label: Text(l10n.acctConnectProvider(_providerDisplayName(_selectedProvider))),
             style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 14)),
           ),
         ],
@@ -338,12 +338,12 @@ class _AccountingSettingsPageState extends ConsumerState<AccountingSettingsPage>
   void _showDisconnectDialog() async {
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Disconnect Provider',
+      title: l10n.acctDisconnectProvider,
       message:
           'Are you sure you want to disconnect your accounting provider? '
           'Existing mappings and export history will be preserved.',
-      confirmLabel: 'Disconnect',
-      cancelLabel: 'Cancel',
+      confirmLabel: l10n.acctDisconnect,
+      cancelLabel: l10n.commonCancel,
       isDanger: true,
     );
     if (confirmed == true) {

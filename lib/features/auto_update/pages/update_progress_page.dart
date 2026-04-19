@@ -229,11 +229,7 @@ class _StepIcon extends StatelessWidget {
       return const Icon(Icons.check_circle, color: AppColors.success, size: 24);
     }
     if (isCurrent) {
-      return SizedBox(
-        width: 24,
-        height: 24,
-        child: CircularProgressIndicator(strokeWidth: 2, color: Theme.of(context).colorScheme.primary),
-      );
+      return const PosLoading(size: 24);
     }
     return Icon(Icons.circle_outlined, color: Theme.of(context).colorScheme.outlineVariant, size: 24);
   }

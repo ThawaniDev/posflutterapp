@@ -55,7 +55,7 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
   showSearch: false,
   actions: [
   PosButton.icon(
-    icon: Icons.download, onPressed: () => ref.read(analyticsExportProvider.notifier).exportSubscriptions(), tooltip: 'Export Subscriptions',
+    icon: Icons.download, onPressed: () => ref.read(analyticsExportProvider.notifier).exportSubscriptions(), tooltip: l10n.adminExportSubscriptions,
   ),
 ],
   child: Column(
@@ -82,12 +82,12 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
                         mobileCols: 2,
                         cards: [
                           PosKpiCard(
-                            label: 'Conversion Rate',
+                            label: l10n.adminConversionRate,
                             value: '${conversion.toStringAsFixed(1)}%',
                             iconColor: AppColors.success,
                           ),
-                          PosKpiCard(label: 'Churn (Period)', value: '$churn', iconColor: AppColors.error),
-                          PosKpiCard(label: 'Avg Sub Age', value: '${avgAge.toStringAsFixed(0)} days', iconColor: AppColors.info),
+                          PosKpiCard(label: l10n.adminChurnPeriod, value: '$churn', iconColor: AppColors.error),
+                          PosKpiCard(label: l10n.adminAvgSubAge, value: '${avgAge.toStringAsFixed(0)} days', iconColor: AppColors.info),
                         ],
                       ),
                       const SizedBox(height: AppSpacing.lg),
@@ -115,8 +115,7 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
                       const Text('Lifecycle Trend', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (trend.isEmpty)
-                        const PosCard(
-                          child: Padding(padding: EdgeInsets.all(AppSpacing.md), child: Text('No trend data')),
+                        PosCard(child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.adminNoTrendData)),
                         )
                       else
                         ...trend.map(
@@ -137,7 +136,7 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Error: $msg'),
+                    Text(l10n.genericError(msg)),
                     const SizedBox(height: AppSpacing.sm),
                     PosButton(
                       onPressed: () => ref.read(analyticsSubscriptionsProvider.notifier).load(storeId: _storeId),
@@ -146,7 +145,7 @@ class _AdminAnalyticsSubscriptionsPageState extends ConsumerState<AdminAnalytics
                   ],
                 ),
               ),
-              _ => const Center(child: Text('Loading subscription analytics...')),
+              _ => Center(child: Text(l10n.adminLoadingSubAnalytics)),
             },
           ),
         ],

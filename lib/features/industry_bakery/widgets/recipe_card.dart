@@ -5,6 +5,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/pos_status_badge.dart';
 import '../models/bakery_recipe.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class RecipeCard extends StatelessWidget {
   final BakeryRecipe recipe;
@@ -16,6 +17,7 @@ class RecipeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PosCard(
@@ -61,15 +63,15 @@ class RecipeCard extends StatelessWidget {
                 Row(
                   children: [
                     if (recipe.prepTimeMinutes != null) ...[
-                      const Icon(Icons.timer_outlined, size: 16, color: AppColors.textSecondary),
+                      Icon(Icons.timer_outlined, size: 16, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                       AppSpacing.gapW4,
-                      Text('Prep: ${recipe.prepTimeMinutes}min', style: AppTypography.bodySmall),
+                      Text(l10n.bakeryPrepTimeMin(recipe.prepTimeMinutes.toString()), style: AppTypography.bodySmall),
                       AppSpacing.gapW16,
                     ],
                     if (recipe.bakeTimeMinutes != null) ...[
                       const Icon(Icons.local_fire_department, size: 16, color: AppColors.warning),
                       AppSpacing.gapW4,
-                      Text('Bake: ${recipe.bakeTimeMinutes}min', style: AppTypography.bodySmall),
+                      Text(l10n.bakeryBakeTimeMin(recipe.bakeTimeMinutes.toString()), style: AppTypography.bodySmall),
                       AppSpacing.gapW16,
                     ],
                     if (recipe.bakeTemperatureC != null) ...[
@@ -83,7 +85,7 @@ class RecipeCard extends StatelessWidget {
               ...[
                 AppSpacing.gapH8,
                 PosStatusBadge(
-                  label: 'Yield: ${recipe.expectedYield} units',
+                  label: l10n.bakeryYieldUnits(recipe.expectedYield.toString()),
                   variant: PosStatusBadgeVariant.info,
                   icon: Icons.inventory_2_outlined,
                 ),

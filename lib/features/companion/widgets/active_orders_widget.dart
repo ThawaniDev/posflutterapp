@@ -27,17 +27,22 @@ class _ActiveOrdersWidgetState extends ConsumerState<ActiveOrdersWidget> {
   Widget build(BuildContext context) {
     final state = ref.watch(activeOrdersProvider);
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
 
     return switch (state) {
-      ActiveOrdersInitial() || ActiveOrdersLoading() => const Center(child: CircularProgressIndicator()),
+      ActiveOrdersInitial() || ActiveOrdersLoading() => const PosLoading(),
       ActiveOrdersError(:final message) => Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(message, style: TextStyle(color: theme.colorScheme.error)),
             AppSpacing.gapH8,
-            PosButton(onPressed: () => ref.read(activeOrdersProvider.notifier).load(), variant: PosButtonVariant.ghost, label: l10n.companionRetry),
+            PosButton(
+              onPressed: () => ref.read(activeOrdersProvider.notifier).load(),
+              variant: PosButtonVariant.ghost,
+              label: l10n.companionRetry,
+            ),
           ],
         ),
       ),
@@ -70,7 +75,7 @@ class _ActiveOrdersWidgetState extends ConsumerState<ActiveOrdersWidget> {
                     );
                   }
                   final order = orders[index - 1];
-                  return _OrderCard(order: order);
+                  return _OrderCard(order: order, isDark: isDark);
                 },
               ),
     };
@@ -78,9 +83,10 @@ class _ActiveOrdersWidgetState extends ConsumerState<ActiveOrdersWidget> {
 }
 
 class _OrderCard extends StatelessWidget {
-  const _OrderCard({required this.order});
+  const _OrderCard({required this.order, required this.isDark});
 
   final Map<String, dynamic> order;
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +97,7 @@ class _OrderCard extends StatelessWidget {
       'pending' => AppColors.warning,
       'processing' => AppColors.info,
       'ready' => AppColors.success,
-      _ => AppColors.textSecondary,
+      _ => isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
     };
 
     return PosCard(
@@ -133,7 +139,10 @@ class _OrderCard extends StatelessWidget {
             ),
             if (order['created_at'] != null) ...[
               AppSpacing.gapH4,
-              Text(order['created_at'] as String, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
+              Text(
+                order['created_at'] as String,
+                style: theme.textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              ),
             ],
           ],
         ),

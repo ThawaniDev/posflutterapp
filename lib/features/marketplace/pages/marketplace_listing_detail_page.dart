@@ -78,7 +78,7 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
       ],
       child: switch (state) {
         MarketplaceDetailInitial() || MarketplaceDetailLoading() => PosLoadingSkeleton.list(),
-        MarketplaceDetailPurchasing() || MarketplaceDetailPaymentRequired() => const Center(child: CircularProgressIndicator()),
+        MarketplaceDetailPurchasing() || MarketplaceDetailPaymentRequired() => const PosLoading(),
         MarketplaceDetailError(:final message) => PosErrorState(
           message: message,
           onRetry: () => ref.read(marketplaceDetailProvider(widget.listingId).notifier).load(),
@@ -371,11 +371,7 @@ class _MarketplaceListingDetailPageState extends ConsumerState<MarketplaceListin
                 }),
               ),
               AppSpacing.gapH8,
-              TextField(
-                controller: _reviewController,
-                maxLines: 3,
-                decoration: InputDecoration(hintText: l10n.marketplaceReviewHint, border: const OutlineInputBorder()),
-              ),
+              PosTextField(controller: _reviewController, hint: l10n.marketplaceReviewHint, maxLines: 3),
               AppSpacing.gapH8,
               Align(
                 alignment: AlignmentDirectional.centerEnd,

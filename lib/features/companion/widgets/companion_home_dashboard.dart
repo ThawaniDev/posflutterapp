@@ -31,14 +31,18 @@ class _CompanionHomeDashboardState extends ConsumerState<CompanionHomeDashboard>
     final l10n = AppLocalizations.of(context)!;
 
     return switch (state) {
-      CompanionDashboardInitial() || CompanionDashboardLoading() => const Center(child: CircularProgressIndicator()),
+      CompanionDashboardInitial() || CompanionDashboardLoading() => const PosLoading(),
       CompanionDashboardError(:final message) => Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(message, style: TextStyle(color: theme.colorScheme.error)),
             AppSpacing.gapH8,
-            PosButton(onPressed: () => ref.read(companionDashboardProvider.notifier).load(), variant: PosButtonVariant.ghost, label: l10n.companionRetry),
+            PosButton(
+              onPressed: () => ref.read(companionDashboardProvider.notifier).load(),
+              variant: PosButtonVariant.ghost,
+              label: l10n.companionRetry,
+            ),
           ],
         ),
       ),
@@ -150,6 +154,7 @@ class _ComparisonCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final isUp = (changePercent ?? 0) >= 0;
 
     return PosCard(
@@ -199,7 +204,12 @@ class _ComparisonCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(todayLabel, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
+                      Text(
+                        todayLabel,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                        ),
+                      ),
                       AppSpacing.gapH4,
                       Text(todayValue, style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
                     ],
@@ -208,11 +218,16 @@ class _ComparisonCard extends StatelessWidget {
                 Container(width: 1, height: 40, color: theme.dividerColor),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 16),
+                    padding: const EdgeInsetsDirectional.only(start: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(yesterdayLabel, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
+                        Text(
+                          yesterdayLabel,
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                          ),
+                        ),
                         AppSpacing.gapH4,
                         Text(yesterdayValue, style: theme.textTheme.titleMedium),
                       ],

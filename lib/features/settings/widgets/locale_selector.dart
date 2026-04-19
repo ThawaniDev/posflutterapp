@@ -46,7 +46,7 @@ class LocaleSelector extends StatelessWidget {
                     AppSpacing.gapW8,
                     Icon(
                       locale.isActive == true ? Icons.check_circle : Icons.cancel,
-                      color: locale.isActive == true ? AppColors.success : AppColors.textSecondary,
+                      color: locale.isActive == true ? AppColors.success : AppColors.mutedFor(context),
                       size: 20,
                     ),
                   ],

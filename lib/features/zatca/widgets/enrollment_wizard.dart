@@ -15,7 +15,6 @@ class EnrollmentWizard extends StatefulWidget {
 }
 
 class _EnrollmentWizardState extends State<EnrollmentWizard> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _otpController = TextEditingController();
   String _environment = 'simulation';
@@ -29,6 +28,7 @@ class _EnrollmentWizardState extends State<EnrollmentWizard> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
@@ -61,7 +61,7 @@ class _EnrollmentWizardState extends State<EnrollmentWizard> {
           AppSpacing.gapH4,
           SegmentedButton<String>(
             segments: [
-              ButtonSegment(value: 'simulation', label: Text('Simulation'), icon: Icon(Icons.science_outlined)),
+              ButtonSegment(value: 'simulation', label: Text(l10n.zatcaSimulation), icon: Icon(Icons.science_outlined)),
               ButtonSegment(value: 'production', label: Text(l10n.production), icon: Icon(Icons.cloud_done_outlined)),
             ],
             selected: {_environment},
@@ -69,23 +69,22 @@ class _EnrollmentWizardState extends State<EnrollmentWizard> {
           ),
           AppSpacing.gapH20,
           // OTP input
-          Text('ZATCA OTP', style: theme.textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w500)),
-          AppSpacing.gapH4,
-          TextField(
+          PosTextField(
             controller: _otpController,
             keyboardType: TextInputType.number,
             maxLength: 6,
-            decoration: const InputDecoration(hintText: 'Enter 6-digit OTP', counterText: '', border: OutlineInputBorder()),
+            label: 'ZATCA OTP',
+            hint: 'Enter 6-digit OTP',
           ),
           AppSpacing.gapH20,
           SizedBox(
             width: double.infinity,
-            child: FilledButton.icon(
+            child: PosButton(
               onPressed: _isLoading ? null : _handleEnroll,
-              icon: _isLoading
-                  ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                  : const Icon(Icons.verified_outlined),
-              label: Text(_isLoading ? 'Enrolling...' : 'Enroll Now'),
+              isLoading: _isLoading,
+              icon: Icons.verified_outlined,
+              label: _isLoading ? 'Enrolling...' : 'Enroll Now',
+              isFullWidth: true,
             ),
           ),
         ],

@@ -76,7 +76,7 @@ class _PlanDetailBody extends StatelessWidget {
                 Text(plan['name'] ?? '', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                 if (plan['name_ar'] != null) ...[
                   AppSpacing.gapH4,
-                  Text(plan['name_ar'], style: TextStyle(fontSize: 16, color: AppColors.textSecondary)),
+                  Text(plan['name_ar'], style: TextStyle(fontSize: 16, color: AppColors.mutedFor(context))),
                 ],
                 AppSpacing.gapH8,
                 Row(

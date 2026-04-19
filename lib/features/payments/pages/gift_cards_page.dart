@@ -124,27 +124,21 @@ class _IssueTabState extends ConsumerState<_IssueTab> {
           ),
           AppSpacing.gapH16,
 
-          TextField(
+          PosTextField(
             controller: _amountController,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            decoration: const InputDecoration(labelText: 'Amount (\u0081)', border: OutlineInputBorder(), prefixText: '\u0081 '),
+            label: 'Amount ()',
             onChanged: (_) => setState(() => _selectedPreset = null),
           ),
           AppSpacing.gapH16,
 
-          TextField(
-            controller: _recipientController,
-            decoration: InputDecoration(
-              labelText: l10n.recipientNameOptional,
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.person_outline),
-            ),
-          ),
+          PosTextField(controller: _recipientController, label: l10n.recipientNameOptional, prefixIcon: Icons.person_outline),
           AppSpacing.gapH24,
 
           SizedBox(
             width: double.infinity,
-            child: FilledButton.icon(
+            child: PosButton(
+              isLoading: state is GiftCardLoading,
               onPressed: state is GiftCardLoading
                   ? null
                   : () {
@@ -155,10 +149,9 @@ class _IssueTabState extends ConsumerState<_IssueTab> {
                         'recipient_name': _recipientController.text.isEmpty ? null : _recipientController.text,
                       });
                     },
-              icon: state is GiftCardLoading
-                  ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                  : const Icon(Icons.card_giftcard),
-              label: Text(l10n.issueGiftCard),
+              icon: Icons.card_giftcard,
+              label: l10n.issueGiftCard,
+              isFullWidth: true,
             ),
           ),
           AppSpacing.gapH24,
@@ -223,14 +216,11 @@ class _CheckBalanceTabState extends ConsumerState<_CheckBalanceTab> {
           Row(
             children: [
               Expanded(
-                child: TextField(
+                child: PosTextField(
                   controller: _codeController,
-                  decoration: InputDecoration(
-                    labelText: l10n.giftCardCode,
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.qr_code),
-                    hintText: l10n.enterOrScanCode,
-                  ),
+                  label: l10n.giftCardCode,
+                  hint: l10n.enterOrScanCode,
+                  prefixIcon: Icons.qr_code,
                 ),
               ),
               AppSpacing.gapW12,
@@ -336,28 +326,18 @@ class _RedeemTabState extends ConsumerState<_RedeemTab> {
         children: [
           Text(l10n.redeemGiftCard, style: theme.textTheme.titleMedium),
           AppSpacing.gapH16,
-          TextField(
-            controller: _codeController,
-            decoration: InputDecoration(
-              labelText: l10n.giftCardCode,
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.qr_code),
-            ),
-          ),
+          PosTextField(controller: _codeController, label: l10n.giftCardCode, prefixIcon: Icons.qr_code),
           AppSpacing.gapH16,
-          TextField(
+          PosTextField(
             controller: _amountController,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            decoration: const InputDecoration(
-              labelText: 'Redemption Amount (\u0081)',
-              border: OutlineInputBorder(),
-              prefixText: '\u0081 ',
-            ),
+            label: 'Redemption Amount',
           ),
           AppSpacing.gapH24,
           SizedBox(
             width: double.infinity,
-            child: FilledButton.icon(
+            child: PosButton(
+              isLoading: state is GiftCardLoading,
               onPressed: state is GiftCardLoading
                   ? null
                   : () {
@@ -365,10 +345,9 @@ class _RedeemTabState extends ConsumerState<_RedeemTab> {
                       if (_codeController.text.isEmpty || amount == null || amount <= 0) return;
                       ref.read(giftCardProvider.notifier).redeemGiftCard(_codeController.text, amount);
                     },
-              icon: state is GiftCardLoading
-                  ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                  : const Icon(Icons.redeem),
-              label: Text(l10n.redeem),
+              icon: Icons.redeem,
+              label: l10n.redeem,
+              isFullWidth: true,
             ),
           ),
           AppSpacing.gapH24,

@@ -58,10 +58,11 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(activityLogListProvider);
 
     return PosListPage(
-  title: 'Activity Logs',
+  title: l10n.adminActivityLogs,
   showSearch: false,
     child: Column(
         children: [
@@ -108,7 +109,7 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
                       setState(() => _actionFilter = v);
                       _applyFilters();
                     },
-                    hint: 'Action',
+                    hint: l10n.commonAction,
                     showSearch: false,
                     clearable: true,
                   ),
@@ -133,7 +134,7 @@ class _AdminActivityLogListPageState extends ConsumerState<AdminActivityLogListP
   Widget _buildList(Map<String, dynamic> data) {
     final items = (data['data']?['data'] as List?) ?? [];
     if (items.isEmpty) {
-      return const Center(child: Text('No activity logs found'));
+      return Center(child: Text(l10n.adminNoActivityLogs));
     }
     return ListView.builder(
       itemCount: items.length,

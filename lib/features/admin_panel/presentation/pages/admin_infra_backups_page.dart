@@ -54,7 +54,7 @@ class _State extends ConsumerState<AdminInfraBackupsPage> {
             selectedIndex: _currentTab,
             onChanged: (i) => setState(() => _currentTab = i),
             tabs: [
-              PosTabItem(label: 'Database'),
+              PosTabItem(label: l10n.adminDatabase),
               PosTabItem(label: l10n.hwProvider),
             ],
           ),
@@ -75,18 +75,19 @@ class _DatabaseBackupsTab extends ConsumerWidget {
 
     return switch (state) {
       InfraListLoading() => const Center(child: CircularProgressIndicator()),
-      InfraListLoaded(data: final resp) => _buildList(resp),
+      InfraListLoaded(data: final resp) => _buildList(context, resp),
       InfraListError(message: final msg) => Center(
-        child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
+        child: Text(l10n.genericError(msg), style: const TextStyle(color: AppColors.error)),
       ),
       _ => Center(child: Text(l10n.loading)),
     };
   }
 
-  Widget _buildList(Map<String, dynamic> resp) {
+  Widget _buildList(BuildContext context, Map<String, dynamic> resp) {
+    final l10n = AppLocalizations.of(context)!;
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No database backups'));
+    if (items.isEmpty) return Center(child: Text(l10n.adminNoDatabaseBackups));
 
     return ListView.separated(
       padding: const EdgeInsets.all(AppSpacing.sm),
@@ -127,18 +128,19 @@ class _ProviderBackupsTab extends ConsumerWidget {
 
     return switch (state) {
       InfraListLoading() => const Center(child: CircularProgressIndicator()),
-      InfraListLoaded(data: final resp) => _buildList(resp),
+      InfraListLoaded(data: final resp) => _buildList(context, resp),
       InfraListError(message: final msg) => Center(
-        child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
+        child: Text(l10n.genericError(msg), style: const TextStyle(color: AppColors.error)),
       ),
       _ => Center(child: Text(l10n.loading)),
     };
   }
 
-  Widget _buildList(Map<String, dynamic> resp) {
+  Widget _buildList(BuildContext context, Map<String, dynamic> resp) {
+    final l10n = AppLocalizations.of(context)!;
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No provider backups'));
+    if (items.isEmpty) return Center(child: Text(l10n.adminNoProviderBackups));
 
     return ListView.separated(
       padding: const EdgeInsets.all(AppSpacing.sm),

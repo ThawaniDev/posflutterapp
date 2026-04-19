@@ -47,7 +47,12 @@ class CategoryTreeTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: EdgeInsets.only(left: AppSpacing.md + indent, right: AppSpacing.sm, top: AppSpacing.xs, bottom: AppSpacing.xs),
+          padding: EdgeInsetsDirectional.only(
+            start: AppSpacing.md + indent,
+            end: AppSpacing.sm,
+            top: AppSpacing.xs,
+            bottom: AppSpacing.xs,
+          ),
           child: Row(
             children: [
               // Expand / collapse toggle or spacer
@@ -130,7 +135,7 @@ class CategoryTreeTile extends StatelessWidget {
               // Sort order
               if (category.sortOrder != null)
                 Padding(
-                  padding: const EdgeInsets.only(right: AppSpacing.xs),
+                  padding: const EdgeInsetsDirectional.only(end: AppSpacing.xs),
                   child: Tooltip(
                     message: 'Sort order',
                     child: Text(

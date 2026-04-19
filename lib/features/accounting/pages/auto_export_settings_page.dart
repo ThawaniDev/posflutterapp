@@ -172,6 +172,7 @@ class _AutoExportSettingsPageState extends ConsumerState<AutoExportSettingsPage>
                   Text(l10n.dayOfMonth),
                   AppSpacing.gapH8,
                   PosSearchableDropdown<int>(
+                    hint: l10n.selectDay,
                     label: l10n.dayOfMonth,
                     items: List.generate(28, (i) => PosDropdownItem(value: i + 1, label: '${i + 1}')),
                     selectedValue: _dayOfMonth.clamp(1, 28),

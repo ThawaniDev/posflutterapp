@@ -48,7 +48,8 @@ class _DeviceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    final statusColor = device.isActive ? AppColors.success : AppColors.textSecondary;
+    final mutedColor = AppColors.mutedFor(context);
+    final statusColor = device.isActive ? AppColors.success : mutedColor;
 
     return PosCard(
       margin: const EdgeInsets.only(bottom: 8),
@@ -62,13 +63,9 @@ class _DeviceTile extends StatelessWidget {
                 Icon(device.isActive ? Icons.devices : Icons.devices_other, color: statusColor),
                 AppSpacing.gapW8,
                 Expanded(child: Text(device.deviceName, style: theme.textTheme.titleSmall)),
-                Container(
-                  padding: AppSpacing.paddingH8,
-                  decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.1), borderRadius: AppRadius.borderSm),
-                  child: Text(
-                    device.isActive ? l10n.securityActive : l10n.securityInactive,
-                    style: theme.textTheme.labelSmall?.copyWith(color: statusColor),
-                  ),
+                PosStatusBadge(
+                  label: device.isActive ? l10n.securityActive : l10n.securityInactive,
+                  variant: device.isActive ? PosStatusBadgeVariant.success : PosStatusBadgeVariant.neutral,
                 ),
               ],
             ),
@@ -100,7 +97,7 @@ class _DeviceTile extends StatelessWidget {
                   AppSpacing.gapW8,
                   PosButton(
                     onPressed: isActionLoading ? null : (onRemoteWipe != null ? () => onRemoteWipe!(device.id) : null),
-                    variant: PosButtonVariant.ghost,
+                    variant: PosButtonVariant.danger,
                     label: l10n.securityRemoteWipe,
                   ),
                 ],

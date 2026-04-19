@@ -34,14 +34,15 @@ class _AIBillingInvoiceDetailPageState extends ConsumerState<AIBillingInvoiceDet
     final state = ref.watch(aiBillingInvoiceDetailProvider);
 
     return PosListPage(
-  title: l10n.wameedAIBillingInvoiceDetail,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.refresh, onPressed: () => ref.read(aiBillingInvoiceDetailProvider.notifier).load(widget.invoiceId),
-  ),
-],
-  child: switch (state) {
+      title: l10n.wameedAIBillingInvoiceDetail,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.refresh,
+          onPressed: () => ref.read(aiBillingInvoiceDetailProvider.notifier).load(widget.invoiceId),
+        ),
+      ],
+      child: switch (state) {
         AIBillingInvoiceDetailInitial() || AIBillingInvoiceDetailLoading() => const PosLoading(),
         AIBillingInvoiceDetailError(:final message) => PosErrorState(
           message: message,
@@ -49,7 +50,7 @@ class _AIBillingInvoiceDetailPageState extends ConsumerState<AIBillingInvoiceDet
         ),
         AIBillingInvoiceDetailLoaded(:final invoice) => _InvoiceDetailContent(invoice: invoice),
       },
-);
+    );
   }
 }
 

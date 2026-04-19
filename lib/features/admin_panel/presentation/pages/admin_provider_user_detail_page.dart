@@ -26,6 +26,7 @@ class _AdminProviderUserDetailPageState extends ConsumerState<AdminProviderUserD
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(providerUserDetailProvider);
 
     return PosListPage(
@@ -107,14 +108,14 @@ class _AdminProviderUserDetailPageState extends ConsumerState<AdminProviderUserD
                   ListTile(
                     leading: const Icon(Icons.lock_reset, color: AppColors.primary),
                     title: Text(l10n.resetPassword),
-                    subtitle: const Text('Generate temporary password'),
+                    subtitle: Text(l10n.adminGenerateTempPassword),
                     onTap: () => _resetPassword(),
                   ),
                   const Divider(),
                   ListTile(
                     leading: const Icon(Icons.password, color: AppColors.warning),
-                    title: const Text('Force Password Change'),
-                    subtitle: const Text('Require user to change password on next login'),
+                    title: Text(l10n.adminForcePasswordChange),
+                    subtitle: Text(l10n.adminForcePasswordChangeDesc),
                     onTap: () => _forcePasswordChange(),
                   ),
                   const Divider(),

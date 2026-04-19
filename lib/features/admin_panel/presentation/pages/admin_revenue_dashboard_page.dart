@@ -38,6 +38,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(revenueDashboardProvider);
 
     return PosListPage(
@@ -151,7 +152,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                   ],
                 ),
               ),
-              RevenueDashboardError(message: final msg) => Center(child: Text('Error: $msg')),
+              RevenueDashboardError(message: final msg) => Center(child: Text(l10n.genericError(msg))),
               _ => Center(child: Text(l10n.loading)),
             },
           ),

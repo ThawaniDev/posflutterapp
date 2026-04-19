@@ -110,10 +110,11 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
                         ],
                       ),
                       AppSpacing.gapH8,
-                      FilledButton.icon(
+                      PosButton(
                         onPressed: () => _confirmReconciliation(context),
-                        icon: const Icon(Icons.check_circle_outline, size: 18),
-                        label: Text(l10n.finReconConfirmRecon),
+                        icon: Icons.check_circle_outline,
+                        label: l10n.finReconConfirmRecon,
+                        isFullWidth: true,
                       ),
                     ],
                   )
@@ -134,10 +135,10 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
                         label: l10n.finReconExportPdf,
                       ),
                       AppSpacing.gapW8,
-                      FilledButton.icon(
+                      PosButton(
                         onPressed: () => _confirmReconciliation(context),
-                        icon: const Icon(Icons.check_circle_outline, size: 18),
-                        label: Text(l10n.finReconConfirmRecon),
+                        icon: Icons.check_circle_outline,
+                        label: l10n.finReconConfirmRecon,
                       ),
                     ],
                   ),
@@ -341,17 +342,10 @@ class _FinancialReconciliationPageState extends ConsumerState<FinancialReconcili
               itemCount: _denominationCounts.length,
               itemBuilder: (context, index) {
                 final dc = _denominationCounts[index];
-                return TextField(
+                return PosTextField(
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    labelText: dc.denomination.label,
-                    labelStyle: const TextStyle(fontSize: 10),
-                    border: const OutlineInputBorder(),
-                    isDense: true,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-                  ),
-                  style: const TextStyle(fontSize: 14),
+                  label: dc.denomination.label,
                   onChanged: (v) => setState(() => dc.count = int.tryParse(v) ?? 0),
                 );
               },

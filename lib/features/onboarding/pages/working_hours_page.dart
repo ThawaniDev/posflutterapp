@@ -128,6 +128,7 @@ class _WorkingHoursPageState extends ConsumerState<WorkingHoursPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final hoursState = ref.watch(workingHoursProvider(widget.storeId));
 
     if (hoursState is WorkingHoursLoaded) {
@@ -142,7 +143,7 @@ class _WorkingHoursPageState extends ConsumerState<WorkingHoursPage> {
       isLoading: isLoading,
       bottomBar: PosButton(label: l10n.save, isLoading: _isSaving, onPressed: _isSaving ? null : _save, isFullWidth: true),
       child: hasError
-          ? Center(child: Text('Error: ${hoursState.message}'))
+          ? Center(child: Text(l10n.genericError(hoursState.message)))
           : Column(
               children: List.generate(
                 7,

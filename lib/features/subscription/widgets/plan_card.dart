@@ -17,7 +17,7 @@ class PlanCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final price = isAnnual ? (plan.annualPrice ?? plan.monthlyPrice) : plan.monthlyPrice;
-    final period = isAnnual ? '/year' : '/month';
+    final period = isAnnual ? l10n.subPerYear : l10n.subPerMonth;
     final isHighlighted = plan.isHighlighted;
 
     return PosCard(
@@ -69,7 +69,7 @@ class PlanCard extends StatelessWidget {
             if (plan.trialDays != null && plan.trialDays! > 0) ...[
               AppSpacing.verticalXs,
               Text(
-                '${plan.trialDays}-day free trial',
+                l10n.subFreeTrialDays(plan.trialDays!),
                 style: TextStyle(color: AppColors.successDark, fontSize: 13, fontWeight: FontWeight.w500),
               ),
             ],

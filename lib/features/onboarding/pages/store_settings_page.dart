@@ -152,6 +152,7 @@ class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final settingsState = ref.watch(storeSettingsProvider(widget.storeId));
 
     // Populate form fields when loaded
@@ -169,7 +170,7 @@ class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
     final hasError = settingsState is StoreSettingsError;
 
     return PosFormPage(
-      title: 'Store Settings',
+      title: l10n.onboardingStoreSettings,
       isLoading: isLoading,
       bottomBar: PosButton(label: l10n.save, isLoading: _isSaving, onPressed: _isSaving ? null : _save, isFullWidth: true),
       child: hasError
@@ -177,7 +178,7 @@ class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Error: ${settingsState.message}'),
+                  Text(l10n.genericError(settingsState.message)),
                   const SizedBox(height: AppSpacing.md),
                   PosButton(label: l10n.retry, onPressed: () => ref.read(storeSettingsProvider(widget.storeId).notifier).load()),
                 ],
@@ -192,15 +193,15 @@ class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSection('Tax Configuration', Icons.receipt_long, [
-          _buildTextField('Tax Label', _taxLabelCtrl, hint: 'VAT'),
+          _buildTextField('Tax Label', _taxLabelCtrl, hint: l10n.onboardingVatHint),
           _buildTextField('Tax Rate (%)', _taxRateCtrl, hint: '15', keyboard: TextInputType.number),
-          _buildTextField('Tax Number', _taxNumberCtrl, hint: 'Optional'),
+          _buildTextField('Tax Number', _taxNumberCtrl, hint: l10n.onboardingOptionalHint),
           _buildSwitch('Prices Include Tax', _pricesIncludeTax, (v) => setState(() => _pricesIncludeTax = v)),
         ]),
         const SizedBox(height: AppSpacing.xl),
         _buildSection('Receipt', Icons.receipt, [
-          _buildTextField('Receipt Header', _receiptHeaderCtrl, hint: 'Custom header text', maxLines: 2),
-          _buildTextField('Receipt Footer', _receiptFooterCtrl, hint: 'Thank you for shopping!', maxLines: 2),
+          _buildTextField('Receipt Header', _receiptHeaderCtrl, hint: l10n.onboardingCustomHeaderHint, maxLines: 2),
+          _buildTextField('Receipt Footer', _receiptFooterCtrl, hint: l10n.onboardingThankYouHint, maxLines: 2),
           _buildSwitch('Show Logo', _receiptShowLogo, (v) => setState(() => _receiptShowLogo = v)),
           _buildSwitch('Show Tax Breakdown', _receiptShowTaxBreakdown, (v) => setState(() => _receiptShowTaxBreakdown = v)),
         ]),
@@ -276,7 +277,7 @@ class _StoreSettingsPageState extends ConsumerState<StoreSettingsPage> {
             style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600, color: AppColors.textMutedLight),
           ),
           const SizedBox(height: AppSpacing.xs),
-          TextFormField(
+          PosTextField(
             controller: controller,
             keyboardType: keyboard,
             maxLines: maxLines,

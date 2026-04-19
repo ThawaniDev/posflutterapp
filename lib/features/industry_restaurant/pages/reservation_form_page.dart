@@ -121,12 +121,12 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PosTextField(controller: _customerNameCtrl, label: l10n.deliveryCustomerName, hint: 'Full name'),
+            PosTextField(controller: _customerNameCtrl, label: l10n.deliveryCustomerName, hint: l10n.pharmacyFullNameHint),
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _customerPhoneCtrl,
               label: l10n.authPhoneOptional,
-              hint: '+968 XXXX XXXX',
+              hint: l10n.restaurantPhoneHint,
               keyboardType: TextInputType.phone,
             ),
             SizedBox(height: AppSpacing.md),
@@ -152,7 +152,7 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
                 child: PosTextField(
                   controller: _reservationTimeCtrl,
                   label: l10n.time,
-                  hint: 'HH:MM',
+                  hint: l10n.restaurantTimeHint,
                   suffixIcon: Icons.access_time,
                   readOnly: true,
                 ),
@@ -162,6 +162,7 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
             PosTextField(controller: _durationCtrl, label: l10n.durationMinutes, hint: '60', keyboardType: TextInputType.number),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
+              hint: l10n.selectTable,
               label: l10n.tableOptional,
               items: tables.map((t) => PosDropdownItem(value: t.id, label: t.displayName ?? 'Table ${t.tableNumber}')).toList(),
               selectedValue: _selectedTableId,
@@ -169,7 +170,7 @@ class _ReservationFormPageState extends ConsumerState<ReservationFormPage> {
               showSearch: true,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _notesCtrl, label: l10n.notesOptional, hint: 'Special requests, allergies...', maxLines: 3),
+            PosTextField(controller: _notesCtrl, label: l10n.notesOptional, hint: l10n.restaurantSpecialRequestsHint, maxLines: 3),
           ],
         ),
       ),

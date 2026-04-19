@@ -45,6 +45,7 @@ class _State extends ConsumerState<AdminInfraFailedJobsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(infraFailedJobsProvider);
 
     return PosListPage(
@@ -70,7 +71,7 @@ class _State extends ConsumerState<AdminInfraFailedJobsPage> {
                 _applyFilter();
               },
               label: l10n.queue,
-              hint: 'All Queues',
+              hint: l10n.commonAllQueues,
               showSearch: false,
               clearable: true,
             ),
@@ -93,7 +94,7 @@ class _State extends ConsumerState<AdminInfraFailedJobsPage> {
   Widget _buildList(Map<String, dynamic> resp) {
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No failed jobs'));
+    if (items.isEmpty) return Center(child: Text(l10n.adminNoFailedJobs));
 
     return RefreshIndicator(
       onRefresh: () async => _applyFilter(),

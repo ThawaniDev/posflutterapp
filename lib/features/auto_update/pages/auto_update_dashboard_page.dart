@@ -73,14 +73,14 @@ class _AutoUpdateDashboardPageState extends ConsumerState<AutoUpdateDashboardPag
                 const UpdateStatusWidget(),
                 const ChangelogWidget(),
                 switch (historyState) {
-                  HistoryInitial() => const Center(child: Text('Loading history...')),
-                  HistoryLoading() => const Center(child: CircularProgressIndicator()),
+                  HistoryInitial() => Center(child: Text(l10n.auLoadingHistory)),
+                  HistoryLoading() => const PosLoading(),
                   HistoryError(:final message) => Center(
                     child: Text(message, style: TextStyle(color: theme.colorScheme.error)),
                   ),
                   HistoryLoaded(:final entries) =>
                     entries.isEmpty
-                        ? const Center(child: Text('No update history'))
+                        ? Center(child: Text(l10n.auNoUpdateHistory))
                         : ListView.builder(
                             padding: AppSpacing.paddingAll16,
                             itemCount: entries.length,

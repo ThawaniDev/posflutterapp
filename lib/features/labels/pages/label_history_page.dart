@@ -72,7 +72,7 @@ class _LabelHistoryPageState extends ConsumerState<LabelHistoryPage> {
           PosTableColumn(title: l10n.products, numeric: true),
           PosTableColumn(title: l10n.labelsTitle, numeric: true),
           PosTableColumn(title: l10n.hardwarePrinter),
-          PosTableColumn(title: 'Printed By'),
+          PosTableColumn(title: l10n.labelsPrintedBy),
         ],
         items: _history,
         isLoading: _isLoading,

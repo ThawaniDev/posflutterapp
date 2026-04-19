@@ -23,8 +23,10 @@ class DeliveryPlatformCard extends StatelessWidget {
     final dailyCount = config['daily_order_count'] as int? ?? 0;
     final status = config['status'] as String? ?? 'inactive';
     final lastOrderAt = config['last_order_received_at'] as String?;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
 
-    final platformColor = platform?.color ?? AppColors.textSecondary;
+    final platformColor = platform?.color ?? mutedColor;
     final platformIcon = platform?.icon ?? Icons.delivery_dining;
     final platformName = platform?.label ?? platformSlug;
 
@@ -61,18 +63,11 @@ class DeliveryPlatformCard extends StatelessWidget {
                             AppSpacing.gapW4,
                             Text(
                               isEnabled ? status : l10n.deliveryDisabled,
-                              style: TextStyle(fontSize: 12, color: isEnabled ? AppColors.success : AppColors.textSecondary),
+                              style: TextStyle(fontSize: 12, color: isEnabled ? AppColors.success : mutedColor),
                             ),
                             if (autoAccept && isEnabled) ...[
                               AppSpacing.gapW8,
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                decoration: BoxDecoration(
-                                  color: AppColors.info.withValues(alpha: 0.1),
-                                  borderRadius: BorderRadius.circular(AppRadius.full),
-                                ),
-                                child: Text(l10n.deliveryAutoAccept, style: TextStyle(fontSize: 10, color: AppColors.info)),
-                              ),
+                              PosStatusBadge(label: l10n.deliveryAutoAccept, variant: PosStatusBadgeVariant.info),
                             ],
                           ],
                         ),
@@ -93,15 +88,12 @@ class DeliveryPlatformCard extends StatelessWidget {
                     if (lastOrderAt != null)
                       _InfoChip(label: l10n.deliveryLastOrder, value: _formatTimeAgo(context, lastOrderAt)),
                     if (onTestConnection != null)
-                      TextButton.icon(
+                      PosButton(
                         onPressed: onTestConnection,
-                        icon: const Icon(Icons.wifi_tethering, size: 16),
-                        label: Text(l10n.deliveryTestConnection, style: const TextStyle(fontSize: 12)),
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          minimumSize: Size.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
+                        icon: Icons.wifi_tethering,
+                        label: l10n.deliveryTestConnection,
+                        size: PosButtonSize.sm,
+                        variant: PosButtonVariant.ghost,
                       ),
                   ],
                 ),
@@ -133,10 +125,12 @@ class _StatusDot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
     return Container(
       width: 8,
       height: 8,
-      decoration: BoxDecoration(color: isActive ? AppColors.success : AppColors.textSecondary, shape: BoxShape.circle),
+      decoration: BoxDecoration(color: isActive ? AppColors.success : mutedColor, shape: BoxShape.circle),
     );
   }
 }
@@ -148,10 +142,12 @@ class _InfoChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
+        Text(label, style: TextStyle(fontSize: 10, color: mutedColor)),
         Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
       ],
     );

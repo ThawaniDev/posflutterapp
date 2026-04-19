@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class CertifiedHardwareList extends StatelessWidget {
   const CertifiedHardwareList({super.key, required this.models});
@@ -9,7 +10,9 @@ class CertifiedHardwareList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     if (models.isEmpty) {
       return Center(
@@ -35,11 +38,11 @@ class CertifiedHardwareList extends StatelessWidget {
         return ListTile(
           leading: Icon(
             isCertified ? Icons.verified : Icons.device_unknown,
-            color: isCertified ? AppColors.success : AppColors.textSecondary,
+            color: isCertified ? AppColors.success : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
           ),
           title: Text('$brand $model'),
           subtitle: Text(deviceType, style: theme.textTheme.bodySmall),
-          trailing: isCertified ? const Chip(label: Text('Certified'), backgroundColor: Color(0xFFE8F5E9)) : null,
+          trailing: isCertified ? Chip(label: Text(l10n.hardwareCertified), backgroundColor: const Color(0xFFE8F5E9)) : null,
         );
       },
     );

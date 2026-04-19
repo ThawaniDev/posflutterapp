@@ -65,7 +65,7 @@ class _LocalizationPageState extends ConsumerState<LocalizationPage> {
   Widget _buildLocalesTab(ThemeData theme) {
     final localeState = ref.watch(localeListProvider);
     return switch (localeState) {
-      LocaleListLoading() => const Center(child: CircularProgressIndicator()),
+      LocaleListLoading() => const PosLoading(),
       LocaleListError(:final message) => Center(child: Text(message)),
       LocaleListLoaded(:final locales) => SingleChildScrollView(
         padding: AppSpacing.paddingAll16,
@@ -85,7 +85,7 @@ class _LocalizationPageState extends ConsumerState<LocalizationPage> {
   Widget _buildTranslationsTab(ThemeData theme) {
     final translationState = ref.watch(translationListProvider);
     return switch (translationState) {
-      TranslationListLoading() => const Center(child: CircularProgressIndicator()),
+      TranslationListLoading() => const PosLoading(),
       TranslationListError(:final message) => Center(child: Text(message)),
       TranslationListLoaded(:final translations, :final total) => Column(
         children: [
@@ -117,7 +117,7 @@ class _LocalizationPageState extends ConsumerState<LocalizationPage> {
   Widget _buildVersionsTab(ThemeData theme) {
     final versionState = ref.watch(versionListProvider);
     return switch (versionState) {
-      VersionListLoading() => const Center(child: CircularProgressIndicator()),
+      VersionListLoading() => const PosLoading(),
       VersionListError(:final message) => Center(child: Text(message)),
       VersionListLoaded(:final versions) => SingleChildScrollView(
         padding: AppSpacing.paddingAll16,
@@ -128,12 +128,13 @@ class _LocalizationPageState extends ConsumerState<LocalizationPage> {
               children: [
                 Text(l10n.translationVersions, style: theme.textTheme.titleMedium),
                 const Spacer(),
-                FilledButton.icon(
+                PosButton(
                   onPressed: () async {
                     await ref.read(versionListProvider.notifier).load();
                   },
-                  icon: const Icon(Icons.refresh, size: 18),
-                  label: Text(l10n.commonRefresh),
+                  icon: Icons.refresh,
+                  label: l10n.commonRefresh,
+                  variant: PosButtonVariant.outline,
                 ),
               ],
             ),

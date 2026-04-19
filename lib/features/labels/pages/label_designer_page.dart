@@ -44,7 +44,6 @@ class LabelDesignerPage extends ConsumerStatefulWidget {
 }
 
 class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _nameController = TextEditingController();
   final _widthController = TextEditingController(text: '50');
@@ -115,7 +114,7 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
       if (detailState is LabelDetailLoading) {
         return Scaffold(
           appBar: PosAppBar(title: l10n.labelDesigner),
-          body: const Center(child: CircularProgressIndicator()),
+          body: const PosLoading(),
         );
       }
       if (detailState is LabelDetailError) {
@@ -372,45 +371,24 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
           child: Column(
             children: [
-              TextField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  labelText: l10n.labelTemplateName,
-                  border: const OutlineInputBorder(),
-                  isDense: true,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                ),
-                style: const TextStyle(fontSize: 13),
-              ),
+              PosTextField(controller: _nameController, label: l10n.labelTemplateName),
               const SizedBox(height: 6),
               Row(
                 children: [
                   Expanded(
-                    child: TextField(
+                    child: PosTextField(
                       controller: _widthController,
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: '${l10n.labelWidth} (mm)',
-                        border: const OutlineInputBorder(),
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                      ),
-                      style: const TextStyle(fontSize: 13),
+                      label: '${l10n.labelWidth} (mm)',
                       onChanged: (_) => setState(() {}),
                     ),
                   ),
                   const Padding(padding: EdgeInsets.symmetric(horizontal: 4), child: Text('×')),
                   Expanded(
-                    child: TextField(
+                    child: PosTextField(
                       controller: _heightController,
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: '${l10n.labelHeight} (mm)',
-                        border: const OutlineInputBorder(),
-                        isDense: true,
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                      ),
-                      style: const TextStyle(fontSize: 13),
+                      label: '${l10n.labelHeight} (mm)',
                       onChanged: (_) => setState(() {}),
                     ),
                   ),
@@ -485,7 +463,7 @@ class _LabelDesignerPageState extends ConsumerState<LabelDesignerPage> {
               children: [
                 Expanded(
                   child: PosButton(
-                    label: 'Add Element',
+                    label: l10n.labelsAddElement,
                     icon: Icons.add_rounded,
                     variant: PosButtonVariant.outline,
                     size: PosButtonSize.sm,
@@ -717,17 +695,20 @@ class _CanvasElement extends StatelessWidget {
       child: Center(
         child: element.type == 'separator'
             ? Divider(color: Colors.grey.shade600, thickness: 1, indent: 4, endIndent: 4)
-            : Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(typeInfo.icon, size: 14, color: Colors.grey.shade700),
-                  const SizedBox(height: 1),
-                  Text(
-                    typeInfo.label,
-                    style: TextStyle(fontSize: 7, color: Colors.grey.shade700),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+            : FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(typeInfo.icon, size: 14, color: Colors.grey.shade700),
+                    const SizedBox(height: 1),
+                    Text(
+                      typeInfo.label,
+                      style: TextStyle(fontSize: 7, color: Colors.grey.shade700),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
       ),
     );
@@ -843,13 +824,14 @@ class _ElementPropertiesPanel extends StatelessWidget {
           Text(l10n.labelBarcodeFormat, style: Theme.of(context).textTheme.labelMedium),
           const SizedBox(height: AppSpacing.xs),
           PosSearchableDropdown<String>(
+            hint: l10n.selectFormat,
             label: l10n.labelBarcodeFormat,
-            items: const [
-              PosDropdownItem(value: 'code128', label: 'Code 128'),
-              PosDropdownItem(value: 'ean13', label: 'EAN-13'),
-              PosDropdownItem(value: 'upc_a', label: 'UPC-A'),
-              PosDropdownItem(value: 'code39', label: 'Code 39'),
-              PosDropdownItem(value: 'itf', label: 'ITF'),
+            items: [
+              PosDropdownItem(value: 'code128', label: l10n.labelsBarcodeCode128),
+              PosDropdownItem(value: 'ean13', label: l10n.labelsBarcodeEan13),
+              PosDropdownItem(value: 'upc_a', label: l10n.labelsBarcodeUpca),
+              PosDropdownItem(value: 'code39', label: l10n.labelsBarcodeCode39),
+              PosDropdownItem(value: 'itf', label: l10n.labelsBarcodeItf),
             ],
             selectedValue: element.config['format'] as String? ?? 'code128',
             onChanged: (v) => onUpdate(element.copyWith(config: {...element.config, 'format': v})),
@@ -883,7 +865,7 @@ class _ElementPropertiesPanel extends StatelessWidget {
           ),
         ],
 
-        const Spacer(),
+        const SizedBox(height: AppSpacing.lg),
         SizedBox(
           width: double.infinity,
           child: PosButton(

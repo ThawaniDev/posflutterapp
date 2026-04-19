@@ -243,7 +243,7 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
                 AppSpacing.gapW8,
                 ..._categories.map(
                   (cat) => Padding(
-                    padding: const EdgeInsets.only(right: AppSpacing.sm),
+                    padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
                     child: PosButton.pill(
                       label: _localizedCategory(l10n, cat),
                       icon: _categoryIcon(cat),
@@ -275,7 +275,7 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
                 AppSpacing.gapW4,
                 ..._priorities.map(
                   (p) => Padding(
-                    padding: const EdgeInsets.only(right: AppSpacing.xs),
+                    padding: const EdgeInsetsDirectional.only(end: AppSpacing.xs),
                     child: PosButton.pill(
                       label: _localizedPriority(l10n, p),
                       icon: _priorityIcon(p),
@@ -345,8 +345,8 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
         key: Key(id),
         direction: _isSelectionMode ? DismissDirection.none : DismissDirection.endToStart,
         background: Container(
-          alignment: Alignment.centerRight,
-          padding: const EdgeInsets.only(right: AppSpacing.base),
+          alignment: AlignmentDirectional.centerEnd,
+          padding: const EdgeInsetsDirectional.only(end: AppSpacing.base),
           decoration: BoxDecoration(color: AppColors.error, borderRadius: AppRadius.borderLg),
           child: const Icon(Icons.delete_rounded, color: Colors.white),
         ),
@@ -368,14 +368,14 @@ class _NotificationsListPageState extends ConsumerState<NotificationsListPage> {
             children: [
               if (_isSelectionMode)
                 Padding(
-                  padding: const EdgeInsets.only(right: AppSpacing.md),
+                  padding: const EdgeInsetsDirectional.only(end: AppSpacing.md),
                   child: Checkbox(value: isSelected, onChanged: (_) => _toggleSelection(id)),
                 )
               else
                 Container(
                   width: 40,
                   height: 40,
-                  margin: const EdgeInsets.only(right: AppSpacing.md),
+                  margin: const EdgeInsetsDirectional.only(end: AppSpacing.md),
                   decoration: BoxDecoration(
                     color: isRead
                         ? (isDark ? AppColors.borderSubtleDark : AppColors.borderSubtleLight)

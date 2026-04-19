@@ -60,7 +60,7 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
     final state = ref.watch(deploymentReleaseListProvider);
 
     return PosListPage(
-  title: 'Deployment Releases',
+  title: l10n.adminDeploymentReleases,
   showSearch: false,
   actions: [
   PosButton.icon(
@@ -69,7 +69,7 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
   PosButton.icon(
     icon: Icons.add,
     onPressed: () {},
-    tooltip: 'Add',
+    tooltip: l10n.adminAdd,
   ),
 ],
   child: Column(
@@ -106,7 +106,7 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
                       setState(() => _platformFilter = v);
                       _load();
                     },
-                    hint: 'Platform',
+                    hint: l10n.adminPlatform,
                     showSearch: false,
                     clearable: true,
                   ),
@@ -122,7 +122,7 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
                 child: Text(m, style: const TextStyle(color: AppColors.error)),
               ),
               DeploymentReleaseListLoaded(data: final d) => _buildList(d),
-              _ => const Center(child: Text('Load releases')),
+              _ => Center(child: Text(l10n.adminLoadReleases)),
             },
           ),
         ],
@@ -133,7 +133,7 @@ class _AdminDeploymentReleaseListPageState extends ConsumerState<AdminDeployment
   Widget _buildList(Map<String, dynamic> data) {
     final items = (data['data']?['data'] as List?) ?? [];
     if (items.isEmpty) {
-      return const Center(child: Text('No releases found'));
+      return Center(child: Text(l10n.adminNoReleasesFound));
     }
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),

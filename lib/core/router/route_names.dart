@@ -361,6 +361,11 @@ class Routes {
   static const String debitsCreate = '/debits/create';
   static const String debitsDetail = '/debits/detail'; // + /:id
 
+  // ─── Receivables ─────────────────────────────────────
+  static const String receivables = '/receivables';
+  static const String receivablesCreate = '/receivables/create';
+  static const String receivablesDetail = '/receivables/detail'; // + /:id
+
   // ─── Wameed AI ──────────────────────────────────────────
   static const String wameedAI = '/wameed-ai';
   static const String wameedAISuggestions = '/wameed-ai/suggestions';

@@ -63,7 +63,7 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
 
   Widget _buildStatusSection(SyncStatusState state) {
     return switch (state) {
-      SyncStatusInitial() || SyncStatusLoading() => const Center(child: CircularProgressIndicator()),
+      SyncStatusInitial() || SyncStatusLoading() => const PosLoading(),
       SyncStatusLoaded() => SyncStatusBar(
         serverOnline: state.serverOnline,
         pendingConflicts: state.pendingConflicts,
@@ -108,26 +108,28 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
               spacing: 8,
               runSpacing: 8,
               children: [
-                FilledButton.icon(
+                PosButton(
                   onPressed: state is SyncOperationRunning
                       ? null
                       : () => ref.read(syncOperationProvider.notifier).push(terminalId: 'local', changes: []),
-                  icon: const Icon(Icons.cloud_upload),
-                  label: Text(AppLocalizations.of(context)!.syncPush),
+                  icon: Icons.cloud_upload,
+                  label: AppLocalizations.of(context)!.syncPush,
                 ),
-                OutlinedButton.icon(
+                PosButton(
                   onPressed: state is SyncOperationRunning
                       ? null
                       : () => ref.read(syncOperationProvider.notifier).pull(terminalId: 'local'),
-                  icon: const Icon(Icons.cloud_download),
-                  label: Text(AppLocalizations.of(context)!.syncPull),
+                  variant: PosButtonVariant.outline,
+                  icon: Icons.cloud_download,
+                  label: AppLocalizations.of(context)!.syncPull,
                 ),
-                OutlinedButton.icon(
+                PosButton(
                   onPressed: state is SyncOperationRunning
                       ? null
                       : () => ref.read(syncOperationProvider.notifier).fullSync(terminalId: 'local'),
-                  icon: const Icon(Icons.sync),
-                  label: Text(AppLocalizations.of(context)!.syncFullSync),
+                  variant: PosButtonVariant.outline,
+                  icon: Icons.sync,
+                  label: AppLocalizations.of(context)!.syncFullSync,
                 ),
               ],
             ),
@@ -139,7 +141,7 @@ class _SyncDashboardPageState extends ConsumerState<SyncDashboardPage> {
 
   Widget _buildConflictSection(SyncConflictListState state) {
     return switch (state) {
-      SyncConflictListInitial() || SyncConflictListLoading() => const Center(child: CircularProgressIndicator()),
+      SyncConflictListInitial() || SyncConflictListLoading() => const PosLoading(),
       SyncConflictListLoaded(:final conflicts, :final total) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -200,11 +202,7 @@ class _ErrorCard extends StatelessWidget {
           children: [
             Text(message, style: const TextStyle(color: AppColors.error)),
             AppSpacing.gapH8,
-            PosButton(
-              onPressed: onRetry,
-              variant: PosButtonVariant.ghost,
-              label: AppLocalizations.of(context)!.commonRetry,
-            ),
+            PosButton(onPressed: onRetry, variant: PosButtonVariant.ghost, label: AppLocalizations.of(context)!.commonRetry),
           ],
         ),
       ),

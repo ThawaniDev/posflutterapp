@@ -46,7 +46,7 @@ class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage>
                     children: [
                       Text((test['name'] as String?) ?? 'Test', style: Theme.of(context).textTheme.headlineSmall),
                       const SizedBox(height: 8),
-                      Text('Confidence: ${(confidence * 100).toStringAsFixed(1)}%'),
+                      Text(l10n.adminConfidenceWithPct((confidence * 100).toStringAsFixed(1))),
                       if (winner != null) ...[
                         const SizedBox(height: 4),
                         Text('Winner: $winner', style: const TextStyle(fontWeight: FontWeight.bold)),
@@ -59,7 +59,7 @@ class _AdminABTestResultsPageState extends ConsumerState<AdminABTestResultsPage>
               Text('Variant Results', style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 8),
               if (results.isEmpty)
-                const Text('No results yet')
+                Text(l10n.adminNoResultsYet)
               else
                 ...results.map(
                   (r) => PosCard(

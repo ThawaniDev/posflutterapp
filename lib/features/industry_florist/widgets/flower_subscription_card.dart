@@ -16,6 +16,7 @@ class FlowerSubscriptionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isActive = subscription.isActive ?? true;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PosCard(
       elevation: 0,
@@ -55,22 +56,25 @@ class FlowerSubscriptionCard extends StatelessWidget {
               AppSpacing.gapH8,
               Text(
                 subscription.deliveryAddress,
-                style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary),
+                style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               AppSpacing.gapH4,
               Row(
                 children: [
-                  Icon(Icons.calendar_today, size: 12, color: AppColors.textSecondary),
+                  Icon(Icons.calendar_today, size: 12, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                   const SizedBox(width: 3),
                   Text(
                     'Next: ${_formatDate(subscription.nextDeliveryDate)}',
-                    style: AppTypography.caption.copyWith(color: AppColors.textSecondary),
+                    style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                   ),
                   if (subscription.deliveryDay != null) ...[
                     AppSpacing.gapW8,
-                    Text(subscription.deliveryDay!, style: AppTypography.caption.copyWith(color: AppColors.textSecondary)),
+                    Text(
+                      subscription.deliveryDay!,
+                      style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                    ),
                   ],
                   const Spacer(),
                   Text(

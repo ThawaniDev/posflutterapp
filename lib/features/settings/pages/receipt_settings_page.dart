@@ -14,7 +14,6 @@ class ReceiptSettingsPage extends SettingsSubPage {
 }
 
 class _ReceiptSettingsPageState extends SettingsSubPageState<ReceiptSettingsPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _headerCtrl = TextEditingController();
   final _footerCtrl = TextEditingController();
@@ -62,16 +61,18 @@ class _ReceiptSettingsPageState extends SettingsSubPageState<ReceiptSettingsPage
           title: l10n.settingsReceiptContent,
           icon: Icons.text_snippet,
           children: [
-            TextField(
+            PosTextField(
               controller: _headerCtrl,
-              decoration: InputDecoration(labelText: l10n.settingsReceiptHeader, hintText: l10n.settingsReceiptHeaderHint),
+              label: l10n.settingsReceiptHeader,
+              hint: l10n.settingsReceiptHeaderHint,
               maxLines: 3,
               minLines: 2,
             ),
             const SizedBox(height: 12),
-            TextField(
+            PosTextField(
               controller: _footerCtrl,
-              decoration: InputDecoration(labelText: l10n.settingsReceiptFooter, hintText: l10n.settingsReceiptFooterHint),
+              label: l10n.settingsReceiptFooter,
+              hint: l10n.settingsReceiptFooterHint,
               maxLines: 3,
               minLines: 2,
             ),
@@ -167,7 +168,7 @@ class _ReceiptSettingsPageState extends SettingsSubPageState<ReceiptSettingsPage
         const SizedBox(height: 8),
         SizedBox(
           width: double.infinity,
-          child: FilledButton.icon(onPressed: _save, icon: Icon(Icons.save, size: 18), label: Text(l10n.save)),
+          child: PosButton(onPressed: _save, icon: Icons.save, label: l10n.save),
         ),
       ],
     );

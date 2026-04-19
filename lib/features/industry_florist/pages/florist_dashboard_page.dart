@@ -60,7 +60,7 @@ class _FloristDashboardPageState extends ConsumerState<FloristDashboardPage> {
             onChanged: (i) => setState(() => _currentTab = i),
             tabs: [
               PosTabItem(label: l10n.floristArrangements),
-              PosTabItem(label: 'Freshness'),
+              PosTabItem(label: l10n.floristFreshness),
               PosTabItem(label: l10n.subscriptions),
             ],
           ),
@@ -70,7 +70,7 @@ class _FloristDashboardPageState extends ConsumerState<FloristDashboardPage> {
                     index: _currentTab,
                     children: [
                       state.arrangements.isEmpty
-                          ? const PosEmptyState(title: 'No arrangements', icon: Icons.local_florist)
+                          ? PosEmptyState(title: l10n.floristNoArrangements, icon: Icons.local_florist)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.arrangements.length,
@@ -90,7 +90,7 @@ class _FloristDashboardPageState extends ConsumerState<FloristDashboardPage> {
                               },
                             ),
                       state.freshnessLogs.isEmpty
-                          ? const PosEmptyState(title: 'No freshness logs', icon: Icons.eco)
+                          ? PosEmptyState(title: l10n.floristNoFreshnessLogs, icon: Icons.eco)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.freshnessLogs.length,
@@ -103,7 +103,7 @@ class _FloristDashboardPageState extends ConsumerState<FloristDashboardPage> {
                               },
                             ),
                       state.subscriptions.isEmpty
-                          ? const PosEmptyState(title: 'No subscriptions', icon: Icons.repeat)
+                          ? PosEmptyState(title: l10n.floristNoSubscriptions, icon: Icons.repeat)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.subscriptions.length,

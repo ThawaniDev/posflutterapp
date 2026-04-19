@@ -16,8 +16,8 @@ class BackupStorageWidget extends ConsumerWidget {
     final state = ref.watch(backupStorageProvider);
 
     return switch (state) {
-      BackupStorageInitial() => const Center(child: Text('Storage info not loaded')),
-      BackupStorageLoading() => const Center(child: CircularProgressIndicator()),
+      BackupStorageInitial() => Center(child: Text(l10n.backupStorageNotLoaded)),
+      BackupStorageLoading() => const PosLoading(),
       BackupStorageError(:final message) => Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -65,9 +65,9 @@ class BackupStorageWidget extends ConsumerWidget {
                     style: const TextStyle(fontSize: 14),
                   ),
                   AppSpacing.gapH16,
-                  _row(Icons.backup, 'Backup Count', '$backupCount'),
-                  _row(Icons.storage, 'Store Backups', _formatBytes(totalBytes)),
-                  _row(Icons.dns, 'Database Backups', _formatBytes(dbBytes)),
+                  _row(context, Icons.backup, 'Backup Count', '$backupCount'),
+                  _row(context, Icons.storage, 'Store Backups', _formatBytes(totalBytes)),
+                  _row(context, Icons.dns, 'Database Backups', _formatBytes(dbBytes)),
                 ],
               ),
             ),
@@ -77,12 +77,13 @@ class BackupStorageWidget extends ConsumerWidget {
     );
   }
 
-  Widget _row(IconData icon, String label, String value) {
+  Widget _row(BuildContext context, IconData icon, String label, String value) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: AppColors.textSecondary),
+          Icon(icon, size: 20, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
           const SizedBox(width: 12),
           Expanded(child: Text(label)),
           Text(value, style: const TextStyle(fontWeight: FontWeight.w600)),

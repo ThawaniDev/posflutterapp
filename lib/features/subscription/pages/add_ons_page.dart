@@ -5,6 +5,7 @@ import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/subscription/data/remote/subscription_api_service.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_providers.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
 import 'package:wameedpos/features/subscription/widgets/add_on_card.dart';
@@ -51,7 +52,9 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> {
                     PosTabItem(label: l10n.subscriptionMyAddOns),
                   ],
                 ),
-                IndexedStack(index: _currentTab, children: [_buildAvailableTab(state), _buildMyAddOnsTab(state)]),
+                Expanded(
+                  child: IndexedStack(index: _currentTab, children: [_buildAvailableTab(state), _buildMyAddOnsTab(state)]),
+                ),
               ],
             )
           : const SizedBox.shrink(),
@@ -134,20 +137,19 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> {
   }
 
   void _confirmAddAddOn(Map<String, dynamic> addOn) async {
-    final name = addOn['name']?.toString() ?? 'this add-on';
+    final name = addOn['name']?.toString() ?? l10n.subThisAddOn;
     final price = (addOn['price'] != null ? double.tryParse(addOn['price'].toString()) : null) ?? 0;
+    final cycle = addOn['billing_cycle']?.toString() ?? l10n.subBillingCycleMonthly;
 
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Add $name?',
-      message:
-          'This will add $name to your subscription.\n\n'
-          'Cost: ${price.toStringAsFixed(2)} \u0081/${addOn['billing_cycle'] ?? 'month'}',
-      confirmLabel: 'Add',
-      cancelLabel: 'Cancel',
+      title: l10n.subAddNamedAddon(name),
+      message: l10n.subAddOnConfirmMessage(name, price.toStringAsFixed(2), 'SAR', cycle),
+      confirmLabel: l10n.subActionAdd,
+      cancelLabel: l10n.commonCancel,
     );
     if (confirmed == true && mounted) {
-      context.pushNamed(
+      context.push(
         Routes.providerPaymentCheckout,
         extra: {
           'purpose': 'plan_addon',
@@ -161,18 +163,34 @@ class _AddOnsPageState extends ConsumerState<AddOnsPage> {
   }
 
   void _confirmRemoveAddOn(Map<String, dynamic> addOn) async {
-    final name = addOn['name']?.toString() ?? addOn['plan_add_on']?['name']?.toString() ?? 'this add-on';
+    final name = addOn['name']?.toString() ?? addOn['plan_add_on']?['name']?.toString() ?? l10n.subThisAddOn;
+    final addOnId = addOn['plan_add_on_id']?.toString() ?? addOn['id']?.toString();
+
+    if (addOnId == null) {
+      showPosErrorSnackbar(context, l10n.subUnableToIdentifyAddOn);
+      return;
+    }
 
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Remove $name?',
-      message: 'Are you sure you want to remove $name from your subscription?',
-      confirmLabel: 'Remove',
-      cancelLabel: 'Keep',
+      title: l10n.subRemoveNamedAddon(name),
+      message: l10n.subRemoveConfirm(name),
+      confirmLabel: l10n.subActionRemove,
+      cancelLabel: l10n.subActionKeep,
       isDanger: true,
     );
     if (confirmed == true) {
-      showPosInfoSnackbar(context, AppLocalizations.of(context)!.removeAddOnComingSoon);
+      try {
+        await ref.read(subscriptionApiServiceProvider).removeAddOn(addOnId);
+        if (mounted) {
+          showPosSuccessSnackbar(context, l10n.subAddOnRemovedSuccess(name));
+          ref.read(addOnsProvider.notifier).loadAddOns();
+        }
+      } catch (e) {
+        if (mounted) {
+          showPosErrorSnackbar(context, l10n.subAddOnRemoveFailed(e.toString()));
+        }
+      }
     }
   }
 }

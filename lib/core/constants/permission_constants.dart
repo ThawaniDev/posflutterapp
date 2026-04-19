@@ -49,6 +49,7 @@ abstract final class Permissions {
   static const customersManageLoyalty = 'customers.manage_loyalty';
   static const customersManageCredit = 'customers.manage_credit';
   static const customersManageDebits = 'customers.manage_debits';
+  static const customersManageReceivables = 'customers.manage_receivables';
 
   // ── Payments ─────────────────────────────────────────
   static const paymentsProcess = 'payments.process';
@@ -280,7 +281,7 @@ abstract final class Permissions {
     inventoryWriteOff, inventorySupplierReturns,
     // customers
     customersView, customersManage, customersManageLoyalty,
-    customersManageCredit, customersManageDebits,
+    customersManageCredit, customersManageDebits, customersManageReceivables,
     // payments
     paymentsProcess, paymentsRefund,
     // installments

@@ -16,8 +16,8 @@ class BackupListWidget extends ConsumerWidget {
     final state = ref.watch(backupListProvider);
 
     return switch (state) {
-      BackupListInitial() => const Center(child: Text('No backups loaded')),
-      BackupListLoading() => const Center(child: CircularProgressIndicator()),
+      BackupListInitial() => Center(child: Text(l10n.backupNoLoaded)),
+      BackupListLoading() => const PosLoading(),
       BackupListError(:final message) => Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -34,6 +34,7 @@ class BackupListWidget extends ConsumerWidget {
 
   Widget _buildList(BuildContext context, Map<String, dynamic> data) {
     final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final backups = data['data']?['backups'] as List? ?? [];
 
     if (backups.isEmpty) {
@@ -41,7 +42,7 @@ class BackupListWidget extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.cloud_off, size: 48, color: AppColors.textSecondary),
+            Icon(Icons.cloud_off, size: 48, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
             SizedBox(height: 8),
             Text(l10n.noBackupsYet),
           ],

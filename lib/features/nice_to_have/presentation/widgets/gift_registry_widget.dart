@@ -17,7 +17,7 @@ class GiftRegistryWidget extends ConsumerWidget {
     return switch (state) {
       GiftRegistryInitial() || GiftRegistryLoading() => const Center(child: CircularProgressIndicator()),
       GiftRegistryError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
+        child: Text(l10n.genericError(message), style: const TextStyle(color: AppColors.error)),
       ),
       GiftRegistryLoaded(:final registries) =>
         registries.isEmpty

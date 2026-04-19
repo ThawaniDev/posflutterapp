@@ -138,6 +138,11 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
       emptyConfig: PosTableEmptyConfig(icon: Icons.swap_horiz_outlined, title: l10n.inventoryNoTransfers),
       actions: [
         PosTableRowAction<StockTransfer>(
+          label: l10n.view,
+          icon: Icons.visibility_outlined,
+          onTap: (t) => _showTransferDetailsDialog(t),
+        ),
+        PosTableRowAction<StockTransfer>(
           label: l10n.inventoryApprove,
           icon: Icons.check_circle_outline,
           color: AppColors.success,
@@ -307,5 +312,50 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
 
     notesController.dispose();
     quantityController.dispose();
+  }
+
+  Future<void> _showTransferDetailsDialog(StockTransfer t) async {
+    final l10n = AppLocalizations.of(context)!;
+    String fmtDate(DateTime? d) => d == null ? '-' : '${d.day}/${d.month}/${d.year}';
+
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(t.referenceNumber ?? l10n.inventoryStockTransfers),
+        content: SizedBox(
+          width: 420,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _detailRow(l10n.commonStatus, t.status?.value ?? '-'),
+              _detailRow(l10n.inventoryFromStore, t.fromStoreName ?? t.fromStoreId),
+              _detailRow(l10n.inventoryToStore, t.toStoreName ?? t.toStoreId),
+              _detailRow(l10n.commonDate, fmtDate(t.createdAt)),
+              if (t.approvedAt != null) _detailRow(l10n.inventoryApprove, fmtDate(t.approvedAt)),
+              if (t.receivedAt != null) _detailRow(l10n.inventoryReceiveAction, fmtDate(t.receivedAt)),
+              if (t.notes != null && t.notes!.isNotEmpty) _detailRow(l10n.commonNotesOptional, t.notes!),
+            ],
+          ),
+        ),
+        actions: [PosButton(label: l10n.commonClose, variant: PosButtonVariant.ghost, onPressed: () => Navigator.pop(ctx))],
+      ),
+    );
+  }
+
+  Widget _detailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 120,
+            child: Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
+          ),
+          Expanded(child: Text(value)),
+        ],
+      ),
+    );
   }
 }

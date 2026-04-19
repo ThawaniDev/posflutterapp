@@ -8,7 +8,8 @@ class EventLogList extends StatelessWidget {
 
   final List<HardwareEventLog> logs;
 
-  Color _eventColor(String event) {
+  Color _eventColor(BuildContext context, String event) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     if (event.contains('error') || event.contains('failed') || event.contains('disconnected')) {
       return AppColors.error;
     }
@@ -18,7 +19,7 @@ class EventLogList extends StatelessWidget {
     if (event.contains('removed')) {
       return AppColors.warning;
     }
-    return AppColors.textSecondary;
+    return isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
   }
 
   IconData _eventIcon(String event) {
@@ -49,7 +50,7 @@ class EventLogList extends StatelessWidget {
       itemCount: logs.length,
       itemBuilder: (context, index) {
         final log = logs[index];
-        final color = _eventColor(log.event);
+        final color = _eventColor(context, log.event);
         return ListTile(
           leading: Icon(_eventIcon(log.event), color: color, size: 22),
           title: Text(log.event.replaceAll('_', ' '), style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),

@@ -38,14 +38,15 @@ class _DeliveryStatusPushLogsPageState extends ConsumerState<DeliveryStatusPushL
     final state = ref.watch(deliveryStatusPushLogsProvider);
 
     return PosListPage(
-  title: l10n.deliveryStatusPushLogs,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.refresh, onPressed: () => ref.read(deliveryStatusPushLogsProvider.notifier).load(platform: _selectedPlatform),
-  ),
-],
-  child: Column(
+      title: l10n.deliveryStatusPushLogs,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.refresh,
+          onPressed: () => ref.read(deliveryStatusPushLogsProvider.notifier).load(platform: _selectedPlatform),
+        ),
+      ],
+      child: Column(
         children: [
           // Platform filter
           Container(
@@ -107,7 +108,7 @@ class _DeliveryStatusPushLogsPageState extends ConsumerState<DeliveryStatusPushL
           ),
         ],
       ),
-);
+    );
   }
 }
 
@@ -127,7 +128,9 @@ class _StatusPushLogCard extends StatelessWidget {
     final pushedAt = log['pushed_at'] as String?;
 
     final enumPlatform = DeliveryConfigPlatform.tryFromValue(platform);
-    final platformColor = enumPlatform?.color ?? AppColors.textSecondary;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final platformColor = enumPlatform?.color ?? mutedColor;
     final platformLabel = enumPlatform?.label ?? platform;
 
     return PosCard(
@@ -154,22 +157,11 @@ class _StatusPushLogCard extends StatelessWidget {
             ),
             AppSpacing.gapW8,
             if (httpStatusCode != null)
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                decoration: BoxDecoration(
-                  color: (httpStatusCode >= 200 && httpStatusCode < 300 ? AppColors.success : AppColors.error).withValues(
-                    alpha: 0.1,
-                  ),
-                  borderRadius: AppRadius.borderSm,
-                ),
-                child: Text(
-                  '$httpStatusCode',
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    color: httpStatusCode >= 200 && httpStatusCode < 300 ? AppColors.success : AppColors.error,
-                  ),
-                ),
+              PosStatusBadge(
+                label: '$httpStatusCode',
+                variant: (httpStatusCode >= 200 && httpStatusCode < 300)
+                    ? PosStatusBadgeVariant.success
+                    : PosStatusBadgeVariant.error,
               ),
           ],
         ),
@@ -177,10 +169,10 @@ class _StatusPushLogCard extends StatelessWidget {
           children: [
             Text(platformLabel, style: TextStyle(color: platformColor, fontSize: 12)),
             const Text(' · ', style: TextStyle(fontSize: 12)),
-            Text('${l10n.deliveryAttempt} #$attemptNumber', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+            Text('${l10n.deliveryAttempt} #$attemptNumber', style: TextStyle(fontSize: 12, color: mutedColor)),
             if (pushedAt != null) ...[
               const Spacer(),
-              Text(_formatDateTime(pushedAt), style: TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+              Text(_formatDateTime(pushedAt), style: TextStyle(fontSize: 11, color: mutedColor)),
             ],
           ],
         ),
@@ -220,6 +212,8 @@ class _DetailRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
       child: Row(
@@ -227,7 +221,7 @@ class _DetailRow extends StatelessWidget {
         children: [
           Expanded(
             flex: 2,
-            child: Text(label, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+            child: Text(label, style: TextStyle(fontSize: 12, color: mutedColor)),
           ),
           Expanded(
             flex: 3,
@@ -248,6 +242,8 @@ class _JsonSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final jsonStr = data is Map || data is List ? _prettyJson(data) : '$data';
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -256,7 +252,7 @@ class _JsonSection extends StatelessWidget {
           children: [
             Text(
               label,
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: mutedColor),
             ),
             const Spacer(),
             IconButton(
@@ -308,6 +304,8 @@ class _PaginationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -317,7 +315,7 @@ class _PaginationBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('${l10n.deliveryTotal}: $total', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+          Text('${l10n.deliveryTotal}: $total', style: TextStyle(fontSize: 12, color: mutedColor)),
           Row(
             children: [
               IconButton(

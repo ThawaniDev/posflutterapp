@@ -97,6 +97,7 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
         SizedBox(
           width: 180,
           child: PosSearchableDropdown<String?>(
+            hint: l10n.allStatuses,
             items: [
               PosDropdownItem<String?>(value: null, label: l10n.inventoryAll),
               PosDropdownItem<String?>(value: 'draft', label: l10n.inventoryDraft),

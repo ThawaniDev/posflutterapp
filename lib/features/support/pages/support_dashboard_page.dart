@@ -56,31 +56,35 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PosListPage(
-  title: l10n.support,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.menu_book_rounded, onPressed: () => context.push('/support/kb'), tooltip: l10n.supportKnowledgeBase,
-  ),
-  PosButton.icon(
-    icon: Icons.refresh_rounded, onPressed: () {
-              ref.read(supportStatsProvider.notifier).load();
-              ref
-                  .read(ticketListProvider.notifier)
-                  .load(
-                    status: _statusFilter,
-                    search: _searchController.text.trim().isNotEmpty ? _searchController.text.trim() : null,
-                  );
-            }, tooltip: l10n.supportRefresh,
-  ),
-  PosButton(
-    label: l10n.supportNewTicket,
-    icon: Icons.add,
-    size: PosButtonSize.sm,
-    onPressed: () => context.push('/support/create'),
-  ),
-],
-  child: Column(
+      title: l10n.support,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.menu_book_rounded,
+          onPressed: () => context.push('/support/kb'),
+          tooltip: l10n.supportKnowledgeBase,
+        ),
+        PosButton.icon(
+          icon: Icons.refresh_rounded,
+          onPressed: () {
+            ref.read(supportStatsProvider.notifier).load();
+            ref
+                .read(ticketListProvider.notifier)
+                .load(
+                  status: _statusFilter,
+                  search: _searchController.text.trim().isNotEmpty ? _searchController.text.trim() : null,
+                );
+          },
+          tooltip: l10n.supportRefresh,
+        ),
+        PosButton(
+          label: l10n.supportNewTicket,
+          icon: Icons.add,
+          size: PosButtonSize.sm,
+          onPressed: () => context.push('/support/create'),
+        ),
+      ],
+      child: Column(
         children: [
           // Stats KPI cards
           _buildStatsSection(statsState, l10n, isDark),
@@ -103,7 +107,7 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
           if (listState is TicketListLoaded) _buildPaginationBar(listState, isDark),
         ],
       ),
-);
+    );
   }
 
   Widget _buildStatsSection(SupportStatsState state, AppLocalizations l10n, bool isDark) {
@@ -240,7 +244,7 @@ class _SupportDashboardPageState extends ConsumerState<SupportDashboardPage> {
           AppSpacing.gapW8,
           ...filters.entries.map(
             (e) => Padding(
-              padding: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsetsDirectional.only(end: 8),
               child: PosButton.pill(label: e.value, isSelected: _statusFilter == e.key, onPressed: () => _applyFilter(e.key)),
             ),
           ),

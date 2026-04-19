@@ -47,6 +47,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(promotionsProvider);
     final theme = Theme.of(context);
 
@@ -82,7 +83,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
           ),
       ],
       child: switch (state) {
-        PromotionsInitial() || PromotionsLoading() => const Center(child: CircularProgressIndicator()),
+        PromotionsInitial() || PromotionsLoading() => const PosLoading(),
         PromotionsError(:final message) => Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -91,7 +92,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
               const SizedBox(height: 12),
               Text(message, style: TextStyle(color: theme.colorScheme.error)),
               const SizedBox(height: 16),
-              FilledButton.icon(onPressed: _applyFilters, icon: Icon(Icons.refresh), label: Text(l10n.retry)),
+              PosButton(onPressed: _applyFilters, icon: Icons.refresh, label: l10n.retry),
             ],
           ),
         ),
@@ -133,6 +134,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
             Text('Filter Promotions', style: Theme.of(ctx).textTheme.titleMedium),
             const SizedBox(height: 16),
             PosSearchableDropdown<String>(
+              hint: l10n.allTypes,
               label: l10n.txColType,
               items: PromotionType.values.map((t) => PosDropdownItem(value: t.value, label: t.label)).toList(),
               selectedValue: _typeFilter,
@@ -142,6 +144,7 @@ class _PromotionListPageState extends ConsumerState<PromotionListPage> {
             ),
             const SizedBox(height: 12),
             PosSearchableDropdown<bool>(
+              hint: l10n.allStatuses,
               label: l10n.status,
               items: [
                 PosDropdownItem(value: true, label: l10n.active),
@@ -289,18 +292,18 @@ class _PromotionCard extends ConsumerWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(
+            PosTextField(
               controller: countController,
               decoration: InputDecoration(labelText: l10n.count, border: OutlineInputBorder()),
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 12),
-            TextField(
+            PosTextField(
               controller: prefixController,
               decoration: InputDecoration(labelText: l10n.prefixOptional, border: OutlineInputBorder()),
             ),
             const SizedBox(height: 12),
-            TextField(
+            PosTextField(
               controller: maxUsesController,
               decoration: InputDecoration(labelText: l10n.maxUsesPerCouponOptional, border: OutlineInputBorder()),
               keyboardType: TextInputType.number,
@@ -331,9 +334,9 @@ class _PromotionCard extends ConsumerWidget {
     final confirmed = await showPosConfirmDialog(
       context,
       title: l10n.promotionsDeletePromotion,
-      message: 'Delete "${promotion.name}"? This action cannot be undone.',
-      confirmLabel: 'Delete',
-      cancelLabel: 'Cancel',
+      message: l10n.promoDeleteConfirm(promotion.name),
+      confirmLabel: l10n.commonDelete,
+      cancelLabel: l10n.commonCancel,
       isDanger: true,
     );
     if (confirmed == true) {
@@ -417,10 +420,11 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (_isEditing) {
       final detailState = ref.watch(promotionDetailProvider(widget.promotionId));
       if (detailState is PromotionDetailLoading) {
-        return PosFormPage(title: 'Edit Promotion', isLoading: true, child: const SizedBox.shrink());
+        return PosFormPage(title: l10n.promoEdit, isLoading: true, child: const SizedBox.shrink());
       }
       if (detailState is PromotionDetailLoaded && _nameController.text.isEmpty) {
         _populateFromPromotion(detailState.promotion);
@@ -435,20 +439,21 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextFormField(
+            PosTextField(
               controller: _nameController,
               decoration: InputDecoration(labelText: l10n.promotionName, border: OutlineInputBorder()),
               validator: (v) => (v == null || v.isEmpty) ? 'Name is required' : null,
             ),
             const SizedBox(height: 14),
-            TextFormField(
+            PosTextField(
               controller: _descriptionController,
               decoration: InputDecoration(labelText: l10n.description, border: OutlineInputBorder()),
               maxLines: 2,
             ),
             const SizedBox(height: 14),
             PosSearchableDropdown<PromotionType>(
-              label: 'Type *',
+              hint: l10n.selectType,
+              label: l10n.promoTypeRequired,
               items: PromotionType.values.map((t) => PosDropdownItem(value: t, label: t.label)).toList(),
               selectedValue: _selectedType,
               onChanged: (v) => setState(() => _selectedType = v!),
@@ -461,7 +466,7 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
             if (_selectedType == PromotionType.percentage ||
                 _selectedType == PromotionType.fixedAmount ||
                 _selectedType == PromotionType.happyHour)
-              TextFormField(
+              PosTextField(
                 controller: _discountValueController,
                 decoration: InputDecoration(
                   labelText: _selectedType == PromotionType.percentage ? 'Discount %' : 'Discount Amount',
@@ -470,33 +475,33 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
                 keyboardType: TextInputType.number,
               ),
             if (_selectedType == PromotionType.bogo) ...[
-              TextFormField(
+              PosTextField(
                 controller: _buyQtyController,
                 decoration: InputDecoration(labelText: l10n.buyQuantity, border: OutlineInputBorder()),
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 14),
-              TextFormField(
+              PosTextField(
                 controller: _getQtyController,
                 decoration: InputDecoration(labelText: l10n.getQuantity, border: OutlineInputBorder()),
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 14),
-              TextFormField(
+              PosTextField(
                 controller: _getDiscountController,
                 decoration: InputDecoration(labelText: l10n.getDiscount, border: OutlineInputBorder()),
                 keyboardType: TextInputType.number,
               ),
             ],
             if (_selectedType == PromotionType.bundle)
-              TextFormField(
+              PosTextField(
                 controller: _bundlePriceController,
                 decoration: InputDecoration(labelText: l10n.bundlePrice, border: OutlineInputBorder()),
                 keyboardType: TextInputType.number,
               ),
 
             const SizedBox(height: 14),
-            TextFormField(
+            PosTextField(
               controller: _minOrderTotalController,
               decoration: InputDecoration(labelText: l10n.minOrderTotal, border: OutlineInputBorder()),
               keyboardType: TextInputType.number,
@@ -505,7 +510,7 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
             Row(
               children: [
                 Expanded(
-                  child: TextFormField(
+                  child: PosTextField(
                     controller: _maxUsesController,
                     decoration: InputDecoration(labelText: l10n.maxUses, border: OutlineInputBorder()),
                     keyboardType: TextInputType.number,
@@ -513,7 +518,7 @@ class _PromotionFormPageState extends ConsumerState<PromotionFormPage> {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: TextFormField(
+                  child: PosTextField(
                     controller: _maxUsesPerCustomerController,
                     decoration: InputDecoration(labelText: l10n.maxPerCustomer, border: OutlineInputBorder()),
                     keyboardType: TextInputType.number,

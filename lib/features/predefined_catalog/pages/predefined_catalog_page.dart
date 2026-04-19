@@ -111,7 +111,7 @@ class _PredefinedCatalogPageState extends ConsumerState<PredefinedCatalogPage> {
 
   Widget _buildBody(PredefinedCategoriesState state) {
     if (state is PredefinedCategoriesLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return const PosLoading();
     }
 
     if (state is PredefinedCategoriesError) {
@@ -238,15 +238,22 @@ class _CategoryCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         if (category.productsCount != null)
-                          Text(
-                            '${category.productsCount} products',
-                            style: theme.textTheme.labelSmall?.copyWith(color: AppColors.textMutedLight),
+                          Flexible(
+                            child: Text(
+                              '${category.productsCount} products',
+                              style: theme.textTheme.labelSmall?.copyWith(color: AppColors.textMutedLight),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         IconButton(
-                          icon: const Icon(Icons.content_copy, size: 18),
+                          icon: const Icon(Icons.content_copy, size: 16),
                           tooltip: l10n.pcCloneToMyStore,
                           onPressed: onClone,
                           visualDensity: VisualDensity.compact,
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(minWidth: 24, minHeight: 24),
+                          style: IconButton.styleFrom(tapTargetSize: MaterialTapTargetSize.shrinkWrap),
                         ),
                       ],
                     ),

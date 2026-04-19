@@ -44,6 +44,7 @@ class _AdminSecurityAlertsPageState extends ConsumerState<AdminSecurityAlertsPag
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(secCenterAlertListProvider);
 
     return PosListPage(
@@ -79,7 +80,7 @@ class _AdminSecurityAlertsPageState extends ConsumerState<AdminSecurityAlertsPag
   Widget _buildList(Map<String, dynamic> data) {
     final items = (data['data'] as List<dynamic>?) ?? [];
     if (items.isEmpty) {
-      return const Center(child: Text('No security alerts'));
+      return Center(child: Text(l10n.adminNoSecurityAlertsShort));
     }
     return RefreshIndicator(
       onRefresh: () async => _loadData(),

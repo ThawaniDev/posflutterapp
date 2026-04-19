@@ -101,6 +101,7 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosSearchableDropdown<String>(
+              hint: l10n.selectProduct,
               label: l10n.wameedAIProduct,
               items: products.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
               selectedValue: _selectedProductId,
@@ -109,6 +110,7 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<DrugScheduleType>(
+              hint: l10n.selectScheduleType,
               label: l10n.notifScheduleType,
               items: DrugScheduleType.values.map((t) {
                 final label = switch (t) {
@@ -133,27 +135,27 @@ class _DrugScheduleFormPageState extends ConsumerState<DrugScheduleFormPage> {
               clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _activeIngredientCtrl, label: l10n.pharmacyActiveIngredient, hint: 'e.g. Paracetamol'),
+            PosTextField(controller: _activeIngredientCtrl, label: l10n.pharmacyActiveIngredient, hint: l10n.pharmacyDrugNameHint),
             SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
-                  child: PosTextField(controller: _dosageFormCtrl, label: l10n.pharmacyDosageForm, hint: 'e.g. Tablet, Syrup'),
+                  child: PosTextField(controller: _dosageFormCtrl, label: l10n.pharmacyDosageForm, hint: l10n.pharmacyFormHint),
                 ),
                 AppSpacing.gapW12,
                 Expanded(
-                  child: PosTextField(controller: _strengthCtrl, label: 'Strength', hint: 'e.g. 500mg'),
+                  child: PosTextField(controller: _strengthCtrl, label: l10n.pharmacyStrength, hint: 'e.g. 500mg'),
                 ),
               ],
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _manufacturerCtrl, label: 'Manufacturer', hint: 'Drug manufacturer'),
+            PosTextField(controller: _manufacturerCtrl, label: l10n.pharmacyManufacturer, hint: l10n.pharmacyManufacturerHint),
             SizedBox(height: AppSpacing.md),
             PosToggle(
               value: _requiresPrescription,
               onChanged: (v) => setState(() => _requiresPrescription = v),
               label: l10n.pharmacyRequiresPrescription,
-              subtitle: 'Must present valid prescription to purchase',
+              subtitle: l10n.pharmacyPrescriptionRequired,
             ),
           ],
         ),

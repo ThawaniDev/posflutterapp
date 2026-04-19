@@ -9,6 +9,8 @@ import 'package:wameedpos/core/services/push_notification_service.dart';
 import 'package:wameedpos/core/theme/app_theme.dart';
 import 'package:wameedpos/features/auth/providers/auth_providers.dart';
 import 'package:wameedpos/features/auth/providers/auth_state.dart';
+import 'package:wameedpos/features/subscription/services/feature_gate_service.dart';
+import 'package:wameedpos/features/subscription/services/subscription_sync_service.dart';
 
 /// Global key so we can show dialogs (e.g. force-update) from services.
 final rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -22,10 +24,12 @@ class WameedPosApp extends ConsumerWidget {
     final themeMode = ref.watch(themeModeProvider);
     final locale = ref.watch(localeProvider);
 
-    // Initialize FCM + check for updates when the user becomes authenticated
+    // Initialize FCM + subscription sync when the user becomes authenticated
     ref.listen<AuthState>(authProvider, (previous, next) {
       if (next is AuthAuthenticated) {
         ref.read(pushNotificationServiceProvider).initialize();
+        ref.read(featureGateServiceProvider).initialize();
+        ref.read(subscriptionSyncServiceProvider).startSync();
         _checkForUpdate(ref);
       }
     });
@@ -35,6 +39,8 @@ class WameedPosApp extends ConsumerWidget {
     if (authState is AuthAuthenticated) {
       Future.microtask(() {
         ref.read(pushNotificationServiceProvider).initialize();
+        ref.read(featureGateServiceProvider).initialize();
+        ref.read(subscriptionSyncServiceProvider).startSync();
         _checkForUpdate(ref);
       });
     }

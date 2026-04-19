@@ -96,7 +96,7 @@ class _TableFormPageState extends ConsumerState<TableFormPage> {
             Row(
               children: [
                 Expanded(
-                  child: PosTextField(controller: _tableNumberCtrl, label: l10n.restaurantTableNumber, hint: 'e.g. T1, A-01'),
+                  child: PosTextField(controller: _tableNumberCtrl, label: l10n.restaurantTableNumber, hint: l10n.restaurantTableNumberHint),
                 ),
                 AppSpacing.gapW12,
                 Expanded(
@@ -105,9 +105,9 @@ class _TableFormPageState extends ConsumerState<TableFormPage> {
               ],
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _displayNameCtrl, label: l10n.displayNameOptional, hint: 'e.g. Window Table, Patio 1'),
+            PosTextField(controller: _displayNameCtrl, label: l10n.displayNameOptional, hint: l10n.restaurantTableLocationHint),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _zoneCtrl, label: l10n.zoneOptional, hint: 'e.g. Indoor, Outdoor, VIP'),
+            PosTextField(controller: _zoneCtrl, label: l10n.zoneOptional, hint: l10n.restaurantTableSectionHint),
             SizedBox(height: AppSpacing.md),
             Row(
               children: [
@@ -125,7 +125,7 @@ class _TableFormPageState extends ConsumerState<TableFormPage> {
               value: _isActive,
               onChanged: (v) => setState(() => _isActive = v),
               label: l10n.active,
-              subtitle: 'Table is available for seating',
+              subtitle: l10n.restaurantTableAvailable,
             ),
           ],
         ),

@@ -65,14 +65,14 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
                         mobileCols: 2,
                         cards: [
                           PosKpiCard(
-                            label: 'Monitored',
+                            label: l10n.adminMonitored,
                             value: '$monitored',
                             iconColor: AppColors.info,
                             icon: Icons.monitor_heart,
                           ),
-                          PosKpiCard(label: 'With Errors', value: '$withErrors', iconColor: AppColors.error, icon: Icons.error),
+                          PosKpiCard(label: l10n.adminWithErrors, value: '$withErrors', iconColor: AppColors.error, icon: Icons.error),
                           PosKpiCard(
-                            label: 'Total Errors Today',
+                            label: l10n.adminTotalErrorsToday,
                             value: '$errors',
                             iconColor: AppColors.warning,
                             icon: Icons.warning,
@@ -85,8 +85,7 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
                       Text(l10n.syncStatus, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (syncStatus.isEmpty)
-                        const PosCard(
-                          child: Padding(padding: EdgeInsets.all(AppSpacing.md), child: Text('No sync data')),
+                        PosCard(child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.adminNoSyncData)),
                         )
                       else
                         ...syncStatus.entries.map((e) {
@@ -110,7 +109,7 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Error: $msg'),
+                    Text(l10n.genericError(msg)),
                     const SizedBox(height: AppSpacing.sm),
                     PosButton(
                       onPressed: () => ref.read(analyticsSystemHealthProvider.notifier).load(storeId: _storeId),
@@ -119,7 +118,7 @@ class _AdminAnalyticsSystemHealthPageState extends ConsumerState<AdminAnalyticsS
                   ],
                 ),
               ),
-              _ => const Center(child: Text('Loading system health...')),
+              _ => Center(child: Text(l10n.adminLoadingSystemHealth)),
             },
           ),
         ],

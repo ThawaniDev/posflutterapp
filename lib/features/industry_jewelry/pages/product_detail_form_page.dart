@@ -119,6 +119,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosSearchableDropdown<String>(
+              hint: l10n.selectProduct,
               label: l10n.wameedAIProduct,
               items: products.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
               selectedValue: _selectedProductId,
@@ -127,6 +128,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<MetalType>(
+              hint: l10n.selectMetalType,
               label: l10n.jewelryMetalType,
               items: MetalType.values
                   .map((m) => PosDropdownItem(value: m, label: m.value[0].toUpperCase() + m.value.substring(1)))
@@ -139,14 +141,14 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
               clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _karatCtrl, label: l10n.jewelryKarat, hint: 'e.g. 24K, 22K, 18K'),
+            PosTextField(controller: _karatCtrl, label: l10n.jewelryKarat, hint: l10n.jewelryKaratHint),
             SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
                   child: PosTextField(
                     controller: _grossWeightCtrl,
-                    label: 'Gross Weight (g)',
+                    label: l10n.jewelryGrossWeightG,
                     hint: 'e.g. 15.50',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
@@ -155,7 +157,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _netWeightCtrl,
-                    label: 'Net Weight (g)',
+                    label: l10n.jewelryNetWeightG,
                     hint: 'e.g. 14.20',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
@@ -164,7 +166,8 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<MakingChargesType>(
-              label: 'Making Charges Type',
+              hint: l10n.selectChargesType,
+              label: l10n.jewelryMakingChargesType,
               items: MakingChargesType.values
                   .map((t) => PosDropdownItem(value: t, label: t.value[0].toUpperCase() + t.value.substring(1)))
                   .toList(),
@@ -176,21 +179,21 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _makingChargesValueCtrl,
-              label: 'Making Charges Value',
+              label: l10n.jewelryMakingChargesValue,
               hint: 'e.g. 150.00',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
             SizedBox(height: AppSpacing.lg),
-            Text('Stone Details', style: Theme.of(context).textTheme.titleMedium),
+            Text(l10n.jewelryStoneDetails, style: Theme.of(context).textTheme.titleMedium),
             SizedBox(height: AppSpacing.sm),
-            PosTextField(controller: _stoneTypeCtrl, label: 'Stone Type (optional)', hint: 'e.g. Diamond, Ruby, Emerald'),
+            PosTextField(controller: _stoneTypeCtrl, label: l10n.jewelryStoneTypeOptional, hint: l10n.jewelryStoneTypeHint),
             SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
                   child: PosTextField(
                     controller: _stoneWeightCtrl,
-                    label: 'Weight (carat)',
+                    label: l10n.jewelryWeightCarat,
                     hint: 'e.g. 1.50',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
@@ -199,7 +202,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _stoneCountCtrl,
-                    label: 'Count',
+                    label: l10n.jewelryCount,
                     hint: 'e.g. 4',
                     keyboardType: TextInputType.number,
                   ),
@@ -207,7 +210,7 @@ class _ProductDetailFormPageState extends ConsumerState<ProductDetailFormPage> {
               ],
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _certificateNumberCtrl, label: 'Certificate Number (optional)', hint: 'GIA, IGI, etc.'),
+            PosTextField(controller: _certificateNumberCtrl, label: l10n.jewelryCertificateOptional, hint: l10n.jewelryCertificateHint),
           ],
         ),
       ),

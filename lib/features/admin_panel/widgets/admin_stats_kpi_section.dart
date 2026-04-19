@@ -37,7 +37,7 @@ class AdminStatsKpiSection extends ConsumerWidget {
     return switch (state) {
       AdminStatsLoading() => const Padding(
         padding: EdgeInsets.all(AppSpacing.md),
-        child: Center(child: SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2))),
+        child: Center(child: PosLoading(size: 24)),
       ),
       AdminStatsLoaded(data: final resp) => _buildGrid(context, resp),
       AdminStatsError() || AdminStatsInitial() => const SizedBox.shrink(),
@@ -95,7 +95,7 @@ class AdminStatsKpiSection extends ConsumerWidget {
             ),
             const SizedBox(height: 2),
             Padding(
-              padding: const EdgeInsets.only(left: 9),
+              padding: const EdgeInsetsDirectional.only(start: 9),
               child: Text(
                 d.value,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: d.color),
@@ -103,7 +103,7 @@ class AdminStatsKpiSection extends ConsumerWidget {
             ),
             if (d.subtitle != null)
               Padding(
-                padding: const EdgeInsets.only(left: 9),
+                padding: const EdgeInsetsDirectional.only(start: 9),
                 child: Text(
                   d.subtitle!,
                   style: const TextStyle(fontSize: 10, color: AppColors.textMutedLight),

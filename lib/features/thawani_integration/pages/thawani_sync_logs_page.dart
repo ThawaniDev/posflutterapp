@@ -15,7 +15,6 @@ class ThawaniSyncLogsPage extends ConsumerStatefulWidget {
 }
 
 class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _entityTypeFilter;
   String? _statusFilter;
@@ -37,14 +36,10 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
     final state = ref.watch(thawaniSyncLogsProvider);
 
     return PosListPage(
-  title: l10n.syncLogs,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.refresh, onPressed: _applyFilters,
-  ),
-],
-  child: Column(
+      title: l10n.syncLogs,
+      showSearch: false,
+      actions: [PosButton.icon(icon: Icons.refresh, onPressed: _applyFilters)],
+      child: Column(
         children: [
           // Filters
           Padding(
@@ -52,13 +47,9 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: DropdownButtonFormField<String?>(
+                  child: PosDropdown<String?>(
                     value: _entityTypeFilter,
-                    decoration: const InputDecoration(
-                      labelText: 'Entity Type',
-                      isDense: true,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    ),
+                    label: l10n.genericEntityType,
                     items: [
                       DropdownMenuItem(value: null, child: Text(l10n.all)),
                       DropdownMenuItem(value: 'product', child: Text(l10n.wameedAIProduct)),
@@ -73,13 +64,9 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
                 ),
                 AppSpacing.gapW12,
                 Expanded(
-                  child: DropdownButtonFormField<String?>(
+                  child: PosDropdown<String?>(
                     value: _statusFilter,
-                    decoration: InputDecoration(
-                      labelText: l10n.status,
-                      isDense: true,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    ),
+                    label: l10n.status,
                     items: [
                       DropdownMenuItem(value: null, child: Text(l10n.all)),
                       DropdownMenuItem(value: 'success', child: Text(l10n.success)),
@@ -102,8 +89,8 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
             child: switch (state) {
               ThawaniSyncLogsInitial() || ThawaniSyncLogsLoading() => Center(child: PosLoadingSkeleton.list()),
               ThawaniSyncLogsError(:final message) => PosErrorState(message: message, onRetry: _applyFilters),
-              ThawaniSyncLogsLoaded(:final logs) when logs.isEmpty => const PosEmptyState(
-                title: 'No sync logs found',
+              ThawaniSyncLogsLoaded(:final logs) when logs.isEmpty => PosEmptyState(
+                title: l10n.thawaniNoSyncLogs,
                 icon: Icons.history,
               ),
               ThawaniSyncLogsLoaded(:final logs, :final pagination) => Column(
@@ -112,8 +99,17 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                       child: Text(
-                        'Page ${pagination['current_page']} of ${pagination['last_page']} (${pagination['total']} total)',
-                        style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                        l10n.genericPaginationInfo(
+                          pagination['current_page'] as int? ?? 1,
+                          pagination['last_page'] as int? ?? 1,
+                          pagination['total'] as int? ?? 0,
+                        ),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.textMutedDark
+                              : AppColors.textMutedLight,
+                        ),
                       ),
                     ),
                   Expanded(
@@ -129,16 +125,16 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
           ),
         ],
       ),
-);
+    );
   }
 
   Widget _buildLogItem(Map<String, dynamic> log) {
     final status = log['status'] as String? ?? '';
-    final statusColor = switch (status) {
-      'success' => AppColors.success,
-      'failed' => AppColors.error,
-      'pending' => AppColors.warning,
-      _ => AppColors.textSecondary,
+    final (statusColor, badgeVariant) = switch (status) {
+      'success' => (AppColors.success, PosStatusBadgeVariant.success),
+      'failed' => (AppColors.error, PosStatusBadgeVariant.error),
+      'pending' => (AppColors.warning, PosStatusBadgeVariant.warning),
+      _ => (Colors.grey, PosStatusBadgeVariant.neutral),
     };
     final entityType = log['entity_type'] as String? ?? '';
     final entityIcon = switch (entityType) {
@@ -150,6 +146,8 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
     final direction = log['direction'] as String? ?? '';
     final directionIcon = direction == 'outgoing' ? Icons.arrow_upward : Icons.arrow_downward;
     final createdAt = log['created_at']?.toString() ?? '';
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
 
     return PosCard(
       elevation: 0,
@@ -169,23 +167,16 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
               style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: statusColor),
             ),
             AppSpacing.gapW8,
-            Icon(directionIcon, size: 14, color: AppColors.textSecondary),
+            Icon(directionIcon, size: 14, color: mutedColor),
             AppSpacing.gapW4,
-            Text(direction, style: TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+            Text(direction, style: TextStyle(fontSize: 11, color: mutedColor)),
           ],
         ),
         subtitle: Text(
           createdAt.length >= 19 ? createdAt.substring(0, 19).replaceFirst('T', ' ') : createdAt,
-          style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
+          style: TextStyle(fontSize: 11, color: mutedColor),
         ),
-        trailing: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-          decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
-          child: Text(
-            status.toUpperCase(),
-            style: TextStyle(fontSize: 9, fontWeight: FontWeight.bold, color: statusColor),
-          ),
-        ),
+        trailing: PosStatusBadge(label: status.toUpperCase(), variant: badgeVariant),
         children: [
           if (log['error_message'] != null)
             Padding(
@@ -204,7 +195,7 @@ class _ThawaniSyncLogsPageState extends ConsumerState<ThawaniSyncLogsPage> {
           if (log['http_status_code'] != null)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
-              child: Text('HTTP ${log['http_status_code']}', style: TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+              child: Text('HTTP ${log['http_status_code']}', style: TextStyle(fontSize: 11, color: mutedColor)),
             ),
           const SizedBox(height: 8),
         ],

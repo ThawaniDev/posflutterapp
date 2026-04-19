@@ -37,14 +37,10 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
     final state = ref.watch(deliveryLogsProvider);
 
     return PosListPage(
-  title: l10n.notifDeliveryLogsTitle,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.refresh_rounded, onPressed: _reload,
-  ),
-],
-  child: Column(
+      title: l10n.notifDeliveryLogsTitle,
+      showSearch: false,
+      actions: [PosButton.icon(icon: Icons.refresh_rounded, onPressed: _reload)],
+      child: Column(
         children: [
           _buildFilters(isDark),
           const PosDivider(),
@@ -68,7 +64,7 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
           ),
         ],
       ),
-);
+    );
   }
 
   Widget _buildFilters(bool isDark) {
@@ -100,7 +96,7 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
                 AppSpacing.gapW4,
                 ...['in_app', 'push', 'email', 'sms'].map(
                   (ch) => Padding(
-                    padding: const EdgeInsets.only(right: AppSpacing.xs),
+                    padding: const EdgeInsetsDirectional.only(end: AppSpacing.xs),
                     child: PosButton.pill(
                       label: _localizedChannel(l10n, ch),
                       icon: _channelIcon(ch),
@@ -138,7 +134,7 @@ class _NotificationDeliveryLogsPageState extends ConsumerState<NotificationDeliv
                 AppSpacing.gapW4,
                 ...['sent', 'delivered', 'failed', 'pending'].map(
                   (st) => Padding(
-                    padding: const EdgeInsets.only(right: AppSpacing.xs),
+                    padding: const EdgeInsetsDirectional.only(end: AppSpacing.xs),
                     child: PosButton.pill(
                       label: _localizedStatus(l10n, st),
                       onPressed: () {

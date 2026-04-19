@@ -15,7 +15,6 @@ class ThawaniSyncPage extends ConsumerStatefulWidget {
 }
 
 class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
@@ -43,14 +42,15 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
     });
 
     return PosListPage(
-  title: l10n.syncManagement,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.refresh, onPressed: isLoading ? null : () => ref.read(thawaniQueueStatsProvider.notifier).load(),
-  ),
-],
-  child: ListView(
+      title: l10n.syncManagement,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.refresh,
+          onPressed: isLoading ? null : () => ref.read(thawaniQueueStatsProvider.notifier).load(),
+        ),
+      ],
+      child: ListView(
         padding: AppSpacing.paddingAll16,
         children: [
           // Connection Test
@@ -72,7 +72,7 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
 
           // Category Sync
           _sectionCard(
-            title: 'Category Sync',
+            title: l10n.thawaniCategorySync,
             icon: Icons.category,
             color: AppColors.purple,
             children: [
@@ -80,7 +80,7 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
                 children: [
                   Expanded(
                     child: _syncButton(
-                      label: 'Push to Thawani',
+                      label: l10n.thawaniPushToThawani,
                       icon: Icons.cloud_upload,
                       color: AppColors.purple,
                       isLoading: isLoading && (syncState as ThawaniSyncLoading?)?.operation == 'push-categories',
@@ -90,7 +90,7 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
                   AppSpacing.gapW12,
                   Expanded(
                     child: _syncButton(
-                      label: 'Pull from Thawani',
+                      label: l10n.thawaniPullFromThawani,
                       icon: Icons.cloud_download,
                       color: AppColors.info,
                       isLoading: isLoading && (syncState as ThawaniSyncLoading?)?.operation == 'pull-categories',
@@ -105,7 +105,7 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
 
           // Product Sync
           _sectionCard(
-            title: 'Product Sync',
+            title: l10n.thawaniProductSync,
             icon: Icons.inventory,
             color: AppColors.success,
             children: [
@@ -113,7 +113,7 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
                 children: [
                   Expanded(
                     child: _syncButton(
-                      label: 'Push to Thawani',
+                      label: l10n.thawaniPushToThawani,
                       icon: Icons.cloud_upload,
                       color: AppColors.success,
                       isLoading: isLoading && (syncState as ThawaniSyncLoading?)?.operation == 'push-products',
@@ -123,7 +123,7 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
                   AppSpacing.gapW12,
                   Expanded(
                     child: _syncButton(
-                      label: 'Pull from Thawani',
+                      label: l10n.thawaniPullFromThawani,
                       icon: Icons.cloud_download,
                       color: AppColors.info,
                       isLoading: isLoading && (syncState as ThawaniSyncLoading?)?.operation == 'pull-products',
@@ -138,14 +138,14 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
 
           // Queue Status & Processing
           _sectionCard(
-            title: 'Sync Queue',
+            title: l10n.thawaniSyncQueue,
             icon: Icons.queue,
             color: AppColors.warning,
             children: [
               _buildQueueStats(queueState),
               AppSpacing.gapH12,
               _syncButton(
-                label: 'Process Queue Now',
+                label: l10n.thawaniProcessQueueNow,
                 icon: Icons.play_arrow,
                 color: AppColors.warning,
                 isLoading: isLoading && (syncState as ThawaniSyncLoading?)?.operation == 'process-queue',
@@ -155,34 +155,14 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
           ),
         ],
       ),
-);
+    );
   }
 
   Widget _sectionCard({required String title, required IconData icon, required Color color, required List<Widget> children}) {
-    return PosCard(
-      elevation: 0,
-      borderRadius: AppRadius.borderMd,
-      border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
-      child: Padding(
-        padding: AppSpacing.paddingAll16,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(icon, color: color, size: 20),
-                AppSpacing.gapW8,
-                Text(
-                  title,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: color),
-                ),
-              ],
-            ),
-            AppSpacing.gapH12,
-            ...children,
-          ],
-        ),
-      ),
+    return PosFormCard(
+      title: title,
+      action: Icon(icon, color: color, size: 20),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: children),
     );
   }
 
@@ -193,47 +173,41 @@ class _ThawaniSyncPageState extends ConsumerState<ThawaniSyncPage> {
     required bool isLoading,
     VoidCallback? onPressed,
   }) {
-    return SizedBox(
-      width: double.infinity,
-      child: OutlinedButton.icon(
-        onPressed: onPressed,
-        icon: isLoading
-            ? SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: color))
-            : Icon(icon, color: color, size: 18),
-        label: Text(label, style: TextStyle(color: color, fontSize: 13)),
-        style: OutlinedButton.styleFrom(
-          side: BorderSide(color: color.withValues(alpha: 0.4)),
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-        ),
-      ),
+    return PosButton(
+      label: label,
+      icon: icon,
+      isLoading: isLoading,
+      isFullWidth: true,
+      variant: PosButtonVariant.outline,
+      onPressed: onPressed,
     );
   }
 
   Widget _buildQueueStats(ThawaniQueueStatsState state) {
     return switch (state) {
-      ThawaniQueueStatsInitial() ||
-      ThawaniQueueStatsLoading() => const SizedBox(height: 40, child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
+      ThawaniQueueStatsInitial() || ThawaniQueueStatsLoading() => const SizedBox(height: 40, child: PosLoading()),
       ThawaniQueueStatsError(:final message) => Text(message, style: TextStyle(color: AppColors.error, fontSize: 12)),
       ThawaniQueueStatsLoaded(:final pending, :final processing, :final completed, :final failed) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _queueStat('Pending', pending, AppColors.warning),
-          _queueStat('Processing', processing, AppColors.info),
-          _queueStat('Done', completed, AppColors.success),
-          _queueStat('Failed', failed, AppColors.error),
+          _queueStat(l10n.pending, pending, AppColors.warning),
+          _queueStat(l10n.genericProcessing, processing, AppColors.info),
+          _queueStat(l10n.done, completed, AppColors.success),
+          _queueStat(l10n.deliveryFailed, failed, AppColors.error),
         ],
       ),
     };
   }
 
   Widget _queueStat(String label, int count, Color color) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       children: [
         Text(
           '$count',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: color),
         ),
-        Text(label, style: TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+        Text(label, style: TextStyle(fontSize: 11, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight)),
       ],
     );
   }

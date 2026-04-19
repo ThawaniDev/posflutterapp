@@ -55,7 +55,7 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
     final state = ref.watch(announcementListProvider);
 
     return PosListPage(
-  title: 'Platform Announcements',
+  title: l10n.adminPlatformAnnouncements,
   showSearch: false,
   actions: [
   PosButton.icon(
@@ -90,8 +90,8 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
                 Expanded(
                   child: PosSearchableDropdown<String>(
                     items: [
-                      PosDropdownItem(value: 'info', label: 'Info'),
-                      PosDropdownItem(value: 'warning', label: 'Warning'),
+                      PosDropdownItem(value: 'info', label: l10n.adminLogLevelInfo),
+                      PosDropdownItem(value: 'warning', label: l10n.adminLogLevelWarning),
                       PosDropdownItem(value: 'maintenance', label: l10n.maintenance),
                       PosDropdownItem(value: 'update', label: l10n.hwUpdate),
                     ],
@@ -100,7 +100,7 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
                       setState(() => _selectedType = v);
                       ref.read(announcementListProvider.notifier).load(type: v, storeId: _storeId);
                     },
-                    hint: 'Type',
+                    hint: l10n.adminType,
                     showSearch: false,
                     clearable: true,
                   ),
@@ -153,7 +153,7 @@ class _AdminAnnouncementListPageState extends ConsumerState<AdminAnnouncementLis
                           ),
                           Padding(
                             padding: const EdgeInsets.all(12),
-                            child: Text('Page $currentPage of $lastPage ($total total)'),
+                            child: Text(l10n.adminPageOfLastTotal(currentPage.toString(), lastPage.toString(), total.toString())),
                           ),
                         ],
                       ),

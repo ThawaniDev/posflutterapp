@@ -73,6 +73,7 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(securityAlertListProvider);
 
     return PosListPage(
@@ -119,14 +120,14 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
                     setState(() => _severityFilter = v);
                     _applyFilters();
                   },
-                  hint: 'Severity',
+                  hint: l10n.commonSeverity,
                   showSearch: false,
                   clearable: true,
                 );
                 final statusDropdown = PosSearchableDropdown<String>(
                   items: [
                     PosDropdownItem(value: 'new', label: l10n.ordersNew),
-                    PosDropdownItem(value: 'investigating', label: 'Investigating'),
+                    PosDropdownItem(value: 'investigating', label: l10n.adminInvestigating),
                     PosDropdownItem(value: 'resolved', label: l10n.resolved),
                   ],
                   selectedValue: _statusFilter,
@@ -134,7 +135,7 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
                     setState(() => _statusFilter = v);
                     _applyFilters();
                   },
-                  hint: 'Status',
+                  hint: l10n.commonStatus,
                   showSearch: false,
                   clearable: true,
                 );
@@ -159,7 +160,7 @@ class _AdminSecurityAlertListPageState extends ConsumerState<AdminSecurityAlertL
   Widget _buildList(Map<String, dynamic> data) {
     final items = (data['data']?['data'] as List?) ?? [];
     if (items.isEmpty) {
-      return const Center(child: Text('No security alerts found'));
+      return Center(child: Text(l10n.adminNoSecurityAlerts));
     }
     return ListView.builder(
       itemCount: items.length,

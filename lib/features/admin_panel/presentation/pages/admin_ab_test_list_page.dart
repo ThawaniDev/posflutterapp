@@ -50,6 +50,7 @@ class _AdminABTestListPageState extends ConsumerState<AdminABTestListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(abTestListProvider);
 
     return PosListPage(
@@ -74,13 +75,13 @@ class _AdminABTestListPageState extends ConsumerState<AdminABTestListPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text('$total tests', style: Theme.of(context).textTheme.titleMedium),
-                        Text('Page $currentPage of $lastPage'),
+                        Text(l10n.adminPageOf(currentPage.toString(), lastPage.toString())),
                       ],
                     ),
                   ),
                   Expanded(
                     child: tests.isEmpty
-                        ? const Center(child: Text('No A/B tests found'))
+                        ? Center(child: Text(l10n.adminNoAbTests))
                         : ListView.builder(
                             itemCount: tests.length,
                             itemBuilder: (context, index) {

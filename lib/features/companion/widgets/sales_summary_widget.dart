@@ -64,9 +64,7 @@ class _SalesSummaryWidgetState extends ConsumerState<SalesSummaryWidget> {
         AppSpacing.gapH12,
         // Content
         switch (state) {
-          SalesSummaryInitial() || SalesSummaryLoading() => const Center(
-            child: Padding(padding: EdgeInsets.all(32), child: CircularProgressIndicator()),
-          ),
+          SalesSummaryInitial() || SalesSummaryLoading() => const Padding(padding: EdgeInsets.all(32), child: PosLoading()),
           SalesSummaryError(:final message) => PosCard(
             child: Padding(
               padding: AppSpacing.paddingAll16,

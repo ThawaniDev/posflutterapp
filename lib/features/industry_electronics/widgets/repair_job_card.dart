@@ -6,6 +6,7 @@ import '../../../core/widgets/pos_status_badge.dart';
 import '../models/repair_job.dart';
 import '../enums/repair_job_status.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class RepairJobCard extends StatelessWidget {
   final RepairJob job;
@@ -15,6 +16,7 @@ class RepairJobCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PosCard(
@@ -51,7 +53,7 @@ class RepairJobCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        if (job.imei != null) Text('IMEI: ${job.imei}', style: AppTypography.caption),
+                        if (job.imei != null) Text(l10n.electronicsImeiWithValue(job.imei!), style: AppTypography.caption),
                       ],
                     ),
                   ),
@@ -65,7 +67,7 @@ class RepairJobCard extends StatelessWidget {
                 Row(
                   children: [
                     if (job.estimatedCost != null)
-                      Text('Est: ${job.estimatedCost!.toStringAsFixed(2)} \u0081', style: AppTypography.bodySmall),
+                      Text(l10n.electronicsEstCostWithValue(job.estimatedCost!.toStringAsFixed(2)), style: AppTypography.bodySmall),
                     if (job.finalCost != null) ...[
                       AppSpacing.gapW16,
                       Text(

@@ -78,13 +78,14 @@ class _MetalRateFormPageState extends ConsumerState<MetalRateFormPage> {
   Widget build(BuildContext context) {
     return PosFormPage(
       title: l10n.jewelrySetMetalRate,
-      bottomBar: PosButton(label: 'Save Rate', onPressed: _saving ? null : _handleSave, isLoading: _saving, isFullWidth: true),
+      bottomBar: PosButton(label: l10n.jewelrySaveRate, onPressed: _saving ? null : _handleSave, isLoading: _saving, isFullWidth: true),
       child: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosSearchableDropdown<MetalType>(
+              hint: l10n.selectMetalType,
               label: l10n.jewelryMetalType,
               items: MetalType.values
                   .map((m) => PosDropdownItem(value: m, label: m.value[0].toUpperCase() + m.value.substring(1)))
@@ -97,14 +98,14 @@ class _MetalRateFormPageState extends ConsumerState<MetalRateFormPage> {
               clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _karatCtrl, label: 'Karat (optional)', hint: 'e.g. 24K, 22K, 18K'),
+            PosTextField(controller: _karatCtrl, label: l10n.jewelryKaratOptional, hint: l10n.jewelryKaratHint),
             SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
                   child: PosTextField(
                     controller: _ratePerGramCtrl,
-                    label: 'Sell Rate/g (\u0081)',
+                    label: l10n.jewelrySellRatePerGram,
                     hint: '0.000',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
@@ -113,7 +114,7 @@ class _MetalRateFormPageState extends ConsumerState<MetalRateFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _buybackRateCtrl,
-                    label: 'Buyback Rate/g',
+                    label: l10n.jewelryBuybackRatePerGram,
                     hint: '0.000',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
@@ -126,7 +127,7 @@ class _MetalRateFormPageState extends ConsumerState<MetalRateFormPage> {
               child: AbsorbPointer(
                 child: PosTextField(
                   controller: TextEditingController(text: '${_effectiveDate.day}/${_effectiveDate.month}/${_effectiveDate.year}'),
-                  label: 'Effective Date',
+                  label: l10n.jewelryEffectiveDate,
                   suffixIcon: Icons.calendar_today,
                   readOnly: true,
                 ),

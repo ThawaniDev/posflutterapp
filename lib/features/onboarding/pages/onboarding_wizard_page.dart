@@ -22,7 +22,6 @@ class OnboardingWizardPage extends ConsumerStatefulWidget {
 }
 
 class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   static const _steps = OnboardingStep.values;
 
@@ -196,7 +195,11 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
                 'Step ${_currentIndex + 1} of ${_steps.length}',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
               ),
-              PosButton(onPressed: _isSubmitting ? null : _skipWizard, variant: PosButtonVariant.ghost, label: 'Skip Setup'),
+              PosButton(
+                onPressed: _isSubmitting ? null : _skipWizard,
+                variant: PosButtonVariant.ghost,
+                label: l10n.onboardingSkipSetup,
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.sm),
@@ -328,7 +331,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
       children: [
         _buildFieldLabel('Store Name (English)'),
         const SizedBox(height: AppSpacing.sm),
-        TextFormField(
+        PosTextField(
           controller: _nameController,
           decoration: _inputDecoration('e.g., My Store'),
           textInputAction: TextInputAction.next,
@@ -336,7 +339,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         const SizedBox(height: AppSpacing.lg),
         _buildFieldLabel('Store Name (Arabic)'),
         const SizedBox(height: AppSpacing.sm),
-        TextFormField(
+        PosTextField(
           controller: _nameArController,
           decoration: _inputDecoration('مثال: متجري'),
           textDirection: TextDirection.rtl,
@@ -345,7 +348,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         const SizedBox(height: AppSpacing.lg),
         _buildFieldLabel('City'),
         const SizedBox(height: AppSpacing.sm),
-        TextFormField(
+        PosTextField(
           controller: _cityController,
           decoration: _inputDecoration('e.g., Muscat'),
           textInputAction: TextInputAction.next,
@@ -353,7 +356,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         const SizedBox(height: AppSpacing.lg),
         _buildFieldLabel('Phone'),
         const SizedBox(height: AppSpacing.sm),
-        TextFormField(
+        PosTextField(
           controller: _phoneController,
           decoration: _inputDecoration('+968 xxxx xxxx'),
           keyboardType: TextInputType.phone,
@@ -362,7 +365,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         const SizedBox(height: AppSpacing.lg),
         _buildFieldLabel('Email'),
         const SizedBox(height: AppSpacing.sm),
-        TextFormField(
+        PosTextField(
           controller: _emailController,
           decoration: _inputDecoration('store@example.com'),
           keyboardType: TextInputType.emailAddress,
@@ -376,10 +379,10 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
 
   Widget _buildBusinessTypeStep(BusinessTypesState btState) {
     if (btState is BusinessTypesLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return const PosLoading();
     }
     if (btState is BusinessTypesError) {
-      return Center(child: Text('Error: ${btState.message}'));
+      return Center(child: Text(l10n.genericError(btState.message)));
     }
     if (btState is! BusinessTypesLoaded) {
       return const SizedBox.shrink();
@@ -458,11 +461,11 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
       children: [
         _buildFieldLabel('Tax Label'),
         const SizedBox(height: AppSpacing.sm),
-        TextFormField(controller: _taxLabelController, decoration: _inputDecoration('e.g., VAT, GST')),
+        PosTextField(controller: _taxLabelController, decoration: _inputDecoration('e.g., VAT, GST')),
         const SizedBox(height: AppSpacing.lg),
         _buildFieldLabel('Tax Rate (%)'),
         const SizedBox(height: AppSpacing.sm),
-        TextFormField(
+        PosTextField(
           controller: _taxRateController,
           decoration: _inputDecoration('15'),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -470,7 +473,7 @@ class _OnboardingWizardPageState extends ConsumerState<OnboardingWizardPage> {
         const SizedBox(height: AppSpacing.lg),
         SwitchListTile(
           title: Text(l10n.settingsPricesIncludeTax),
-          subtitle: const Text('When enabled, product prices are displayed with tax included.'),
+          subtitle: Text(l10n.onboardingTaxIncludedNote),
           value: _pricesIncludeTax,
           activeColor: AppColors.primary,
           contentPadding: EdgeInsets.zero,

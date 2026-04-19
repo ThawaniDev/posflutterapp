@@ -72,11 +72,11 @@ class _State extends ConsumerState<AdminFinOpsExpenseListPage> {
             padding: const EdgeInsets.all(AppSpacing.sm),
             child: PosSearchableDropdown<String>(
               items: [
-                PosDropdownItem(value: 'supplies', label: 'Supplies'),
-                PosDropdownItem(value: 'food', label: 'Food'),
-                PosDropdownItem(value: 'transport', label: 'Transport'),
+                PosDropdownItem(value: 'supplies', label: l10n.adminExpenseSupplies),
+                PosDropdownItem(value: 'food', label: l10n.adminExpenseFood),
+                PosDropdownItem(value: 'transport', label: l10n.adminExpenseTransport),
                 PosDropdownItem(value: 'maintenance', label: l10n.maintenance),
-                PosDropdownItem(value: 'utility', label: 'Utility'),
+                PosDropdownItem(value: 'utility', label: l10n.adminExpenseUtility),
                 PosDropdownItem(value: 'other', label: l10n.acquirerOther),
               ],
               selectedValue: _categoryFilter,
@@ -85,7 +85,7 @@ class _State extends ConsumerState<AdminFinOpsExpenseListPage> {
                 _applyFilter();
               },
               label: l10n.category,
-              hint: 'All Categories',
+              hint: l10n.adminAllCategories,
               showSearch: false,
               clearable: true,
             ),
@@ -97,7 +97,7 @@ class _State extends ConsumerState<AdminFinOpsExpenseListPage> {
               FinOpsListError(message: final msg) => Center(
                 child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
               ),
-              _ => const Center(child: Text('Loading expenses...')),
+              _ => Center(child: Text(l10n.adminLoadingExpenses)),
             },
           ),
         ],
@@ -108,7 +108,7 @@ class _State extends ConsumerState<AdminFinOpsExpenseListPage> {
   Widget _buildList(Map<String, dynamic> resp) {
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No expenses found'));
+    if (items.isEmpty) return Center(child: Text(l10n.adminNoExpensesFound));
 
     return RefreshIndicator(
       onRefresh: () async => _applyFilter(),

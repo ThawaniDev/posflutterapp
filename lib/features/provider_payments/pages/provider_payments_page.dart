@@ -152,12 +152,12 @@ class _PaymentListTile extends StatelessWidget {
                 const Spacer(),
                 if (payment.confirmationEmailSent)
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: const EdgeInsetsDirectional.only(start: 8),
                     child: Icon(Icons.email_outlined, size: 16, color: AppColors.success),
                   ),
                 if (payment.invoiceGenerated)
                   Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: const EdgeInsetsDirectional.only(start: 8),
                     child: Icon(Icons.receipt_long_outlined, size: 16, color: AppColors.success),
                   ),
               ],

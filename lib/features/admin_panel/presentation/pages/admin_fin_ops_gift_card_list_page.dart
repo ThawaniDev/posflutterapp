@@ -47,6 +47,7 @@ class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(finOpsGiftCardsProvider);
 
     return PosListPage(
@@ -82,7 +83,7 @@ class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
                 _applyFilter();
               },
               label: l10n.status,
-              hint: 'All Statuses',
+              hint: l10n.allStatuses,
               showSearch: false,
               clearable: true,
             ),
@@ -94,7 +95,7 @@ class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
               FinOpsListError(message: final msg) => Center(
                 child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
               ),
-              _ => const Center(child: Text('Loading gift cards...')),
+              _ => Center(child: Text(l10n.adminLoadingGiftCards)),
             },
           ),
         ],
@@ -105,7 +106,7 @@ class _State extends ConsumerState<AdminFinOpsGiftCardListPage> {
   Widget _buildList(Map<String, dynamic> resp) {
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No gift cards found'));
+    if (items.isEmpty) return Center(child: Text(l10n.adminNoGiftCards));
 
     return RefreshIndicator(
       onRefresh: () async => _applyFilter(),

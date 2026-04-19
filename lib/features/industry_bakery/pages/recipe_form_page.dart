@@ -100,9 +100,10 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PosTextField(controller: _nameCtrl, label: l10n.recipeName, hint: 'Enter recipe name'),
+            PosTextField(controller: _nameCtrl, label: l10n.recipeName, hint: l10n.bakeryRecipeNameHint),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
+              hint: l10n.selectProduct,
               label: l10n.wameedAIProduct,
               items: products.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
               selectedValue: _selectedProductId,
@@ -113,7 +114,7 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
             PosTextField(
               controller: _expectedYieldCtrl,
               label: l10n.expectedYield,
-              hint: 'Number of units',
+              hint: l10n.bakeryNumberOfUnits,
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: AppSpacing.md),
@@ -142,14 +143,14 @@ class _RecipeFormPageState extends ConsumerState<RecipeFormPage> {
             PosTextField(
               controller: _bakeTempCtrl,
               label: l10n.bakeTempC,
-              hint: 'Temperature',
+              hint: l10n.bakeryTemperature,
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _instructionsCtrl,
               label: l10n.instructions,
-              hint: 'Detailed baking instructions...',
+              hint: l10n.bakeryInstructionsHint,
               maxLines: 5,
             ),
           ],

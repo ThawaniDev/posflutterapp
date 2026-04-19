@@ -66,7 +66,7 @@ class _PharmacyDashboardPageState extends ConsumerState<PharmacyDashboardPage> {
                     index: _currentTab,
                     children: [
                       state.prescriptions.isEmpty
-                          ? const PosEmptyState(title: 'No prescriptions', icon: Icons.medical_services)
+                          ? PosEmptyState(title: l10n.pharmacyNoPrescriptions, icon: Icons.medical_services)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.prescriptions.length,
@@ -86,7 +86,7 @@ class _PharmacyDashboardPageState extends ConsumerState<PharmacyDashboardPage> {
                               },
                             ),
                       state.drugSchedules.isEmpty
-                          ? const PosEmptyState(title: 'No drug schedules', icon: Icons.medication)
+                          ? PosEmptyState(title: l10n.pharmacyNoDrugSchedules, icon: Icons.medication)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.drugSchedules.length,

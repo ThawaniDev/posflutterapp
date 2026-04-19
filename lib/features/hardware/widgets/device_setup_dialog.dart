@@ -28,7 +28,6 @@ class DeviceSetupDialog extends StatefulWidget {
 }
 
 class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   late HardwareDeviceType _selectedType;
   late ConnectionType _selectedConnection;
@@ -175,6 +174,7 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
                       Text(l10n.hwDeviceType, style: theme.textTheme.labelLarge),
                       AppSpacing.gapH8,
                       PosSearchableDropdown<HardwareDeviceType>(
+                        hint: l10n.selectDeviceType,
                         items: HardwareDeviceType.values.map((t) {
                           return PosDropdownItem(value: t, label: _deviceLabel(t));
                         }).toList(),
@@ -191,14 +191,7 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
                     // Device Name
                     Text(l10n.hwDeviceName, style: theme.textTheme.labelLarge),
                     AppSpacing.gapH8,
-                    TextField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        hintText: l10n.hwDeviceNameHint,
-                        border: OutlineInputBorder(),
-                        isDense: true,
-                      ),
-                    ),
+                    PosTextField(controller: _nameController, hint: l10n.hwDeviceNameHint),
                     AppSpacing.gapH16,
 
                     // Connection Type
@@ -232,7 +225,7 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
                 children: [
                   PosButton(onPressed: () => Navigator.of(context).pop(), variant: PosButtonVariant.ghost, label: l10n.cancel),
                   AppSpacing.gapW8,
-                  FilledButton.icon(
+                  PosButton(
                     onPressed: () {
                       Navigator.of(context).pop({
                         'device_type': _selectedType.value,
@@ -241,8 +234,8 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
                         'config_json': _buildConfigJson(),
                       });
                     },
-                    icon: const Icon(Icons.save, size: 18),
-                    label: Text(widget.isEditing ? 'Update' : 'Add Device'),
+                    icon: Icons.save,
+                    label: widget.isEditing ? 'Update' : 'Add Device',
                   ),
                 ],
               ),
@@ -261,19 +254,11 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
       fields.addAll([
         Text(l10n.hwIpAddress, style: theme.textTheme.labelLarge),
         AppSpacing.gapH8,
-        TextField(
-          controller: _ipController,
-          decoration: InputDecoration(hintText: l10n.hwIpAddressHint, border: OutlineInputBorder(), isDense: true),
-          keyboardType: TextInputType.number,
-        ),
+        PosTextField(controller: _ipController, hint: l10n.hwIpAddressHint, keyboardType: TextInputType.number),
         AppSpacing.gapH12,
         Text(l10n.hwPort, style: theme.textTheme.labelLarge),
         AppSpacing.gapH8,
-        TextField(
-          controller: _portController,
-          decoration: InputDecoration(hintText: l10n.hwPortHint, border: OutlineInputBorder(), isDense: true),
-          keyboardType: TextInputType.number,
-        ),
+        PosTextField(controller: _portController, hint: l10n.hwPortHint, keyboardType: TextInputType.number),
         AppSpacing.gapH16,
       ]);
     }
@@ -283,14 +268,12 @@ class _DeviceSetupDialogState extends State<DeviceSetupDialog> {
       fields.addAll([
         Text(l10n.hwComPort, style: theme.textTheme.labelLarge),
         AppSpacing.gapH8,
-        TextField(
-          controller: _comPortController,
-          decoration: InputDecoration(hintText: l10n.hwComPortHint, border: OutlineInputBorder(), isDense: true),
-        ),
+        PosTextField(controller: _comPortController, hint: l10n.hwComPortHint),
         AppSpacing.gapH12,
         Text(l10n.hwBaudRate, style: theme.textTheme.labelLarge),
         AppSpacing.gapH8,
         PosSearchableDropdown<int>(
+          hint: l10n.selectBaudRate,
           items: [2400, 4800, 9600, 19200, 38400, 57600, 115200].map((b) {
             return PosDropdownItem(value: b, label: '$b');
           }).toList(),

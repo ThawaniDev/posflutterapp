@@ -69,7 +69,10 @@ class AddOnCard extends StatelessWidget {
                         context,
                       ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
                     ),
-                    Text('/${billingCycle == 'yearly' ? 'yr' : 'mo'}', style: Theme.of(context).textTheme.bodySmall),
+                    Text(
+                      '/${billingCycle == 'yearly' ? l10n.subPerYearShort : l10n.subPerMonthShort}',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   ],
                 ),
                 if (onToggle != null)
@@ -81,7 +84,7 @@ class AddOnCard extends StatelessWidget {
             if (isActive && expiresAt != null) ...[
               AppSpacing.verticalSm,
               Text(
-                'Renews: ${_formatDate(expiresAt!)}',
+                l10n.subRenewsOn(_formatDate(expiresAt!)),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondaryLight),
               ),
             ],

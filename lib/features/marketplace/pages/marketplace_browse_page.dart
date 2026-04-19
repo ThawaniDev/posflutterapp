@@ -52,19 +52,19 @@ class _MarketplaceBrowsePageState extends ConsumerState<MarketplaceBrowsePage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PosListPage(
-  title: l10n.marketplaceTitle,
-  showSearch: false,
-  actions: [
-  PosButton(
-            label: l10n.marketplaceMyPurchases,
-            icon: Icons.shopping_bag_outlined,
-            size: PosButtonSize.sm,
-            variant: PosButtonVariant.outline,
-            onPressed: () => context.push(Routes.myPurchases),
-          ),
-  AppSpacing.gapW16,
-],
-  child: Column(
+      title: l10n.marketplaceTitle,
+      showSearch: false,
+      actions: [
+        PosButton(
+          label: l10n.marketplaceMyPurchases,
+          icon: Icons.shopping_bag_outlined,
+          size: PosButtonSize.sm,
+          variant: PosButtonVariant.outline,
+          onPressed: () => context.push(Routes.myPurchases),
+        ),
+        AppSpacing.gapW16,
+      ],
+      child: Column(
         children: [
           // Search & filter bar
           _buildFilterBar(state, l10n, isDark),
@@ -92,7 +92,7 @@ class _MarketplaceBrowsePageState extends ConsumerState<MarketplaceBrowsePage> {
           ),
         ],
       ),
-);
+    );
   }
 
   Widget _buildFilterBar(MarketplaceListingsState state, AppLocalizations l10n, bool isDark) {
@@ -168,7 +168,7 @@ class _MarketplaceBrowsePageState extends ConsumerState<MarketplaceBrowsePage> {
                   // Category filters
                   ...categories.map(
                     (cat) => Padding(
-                      padding: const EdgeInsets.only(right: 8),
+                      padding: const EdgeInsetsDirectional.only(end: 8),
                       child: PosButton.pill(
                         label: cat.name,
                         isSelected: _selectedCategoryId == cat.id,

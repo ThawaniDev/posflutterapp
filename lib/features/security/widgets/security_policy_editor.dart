@@ -131,7 +131,7 @@ class SecurityPolicyEditor extends StatelessWidget {
                   AppSpacing.gapH8,
                   Text(
                     l10n.securityAllowedIpRanges,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary),
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
                   ),
                   AppSpacing.gapH4,
                   Wrap(

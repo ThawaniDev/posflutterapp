@@ -69,7 +69,6 @@ class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage>
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final productsState = ref.watch(predefinedProductsProvider);
     final cloneState = ref.watch(cloneProvider);
     final isCloning = cloneState is CloneInProgress;
@@ -95,7 +94,7 @@ class _PredefinedProductsPageState extends ConsumerState<PredefinedProductsPage>
 
   Widget _buildBody(PredefinedProductsState state) {
     if (state is PredefinedProductsLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return const PosLoading();
     }
 
     if (state is PredefinedProductsError) {
@@ -221,12 +220,13 @@ class _ProductCard extends StatelessWidget {
                       textDirection: TextDirection.rtl,
                     ),
                   const SizedBox(height: 4),
-                  Row(
+                  Wrap(
+                    spacing: AppSpacing.sm,
+                    runSpacing: 4,
+                    crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
-                      if (product.sku != null) ...[
+                      if (product.sku != null)
                         Text('SKU: ${product.sku}', style: theme.textTheme.labelSmall?.copyWith(color: AppColors.textMutedLight)),
-                        const SizedBox(width: AppSpacing.md),
-                      ],
                       if (product.unit != null)
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),

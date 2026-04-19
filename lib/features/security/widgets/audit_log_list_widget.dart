@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/security/models/security_audit_log.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class AuditLogListWidget extends StatelessWidget {
   final List<SecurityAuditLog> logs;
@@ -10,8 +11,9 @@ class AuditLogListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (logs.isEmpty) {
-      return const Center(child: Text('No audit logs found.'));
+      return Center(child: Text(l10n.securityNoAuditLogs));
     }
 
     return ListView.separated(
@@ -32,6 +34,7 @@ class _AuditLogTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final severityColor = switch (log.severity?.value) {
       'critical' => AppColors.error,

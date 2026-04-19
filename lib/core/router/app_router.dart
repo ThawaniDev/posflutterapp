@@ -66,6 +66,9 @@ import 'package:wameedpos/features/transactions/pages/transaction_detail_page.da
 import 'package:wameedpos/features/debits/pages/debit_list_page.dart';
 import 'package:wameedpos/features/debits/pages/debit_detail_page.dart';
 import 'package:wameedpos/features/debits/pages/debit_form_page.dart';
+import 'package:wameedpos/features/receivables/pages/receivable_list_page.dart';
+import 'package:wameedpos/features/receivables/pages/receivable_detail_page.dart';
+import 'package:wameedpos/features/receivables/pages/receivable_form_page.dart';
 import 'package:wameedpos/features/payments/pages/cash_sessions_page.dart';
 import 'package:wameedpos/features/payments/pages/cash_management_page.dart';
 import 'package:wameedpos/features/payments/pages/expenses_page.dart';
@@ -1473,6 +1476,30 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               final id = state.pathParameters['id']!;
               return DebitFormPage(debitId: id);
+            },
+          ),
+
+          // ─── Receivables ───
+          GoRoute(path: Routes.receivables, name: 'receivables', builder: (context, state) => const ReceivableListPage()),
+          GoRoute(
+            path: Routes.receivablesCreate,
+            name: 'receivablesCreate',
+            builder: (context, state) => const ReceivableFormPage(),
+          ),
+          GoRoute(
+            path: '${Routes.receivablesDetail}/:id',
+            name: 'receivablesDetail',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return ReceivableDetailPage(receivableId: id);
+            },
+          ),
+          GoRoute(
+            path: '${Routes.receivables}/:id/edit',
+            name: 'receivablesEdit',
+            builder: (context, state) {
+              final id = state.pathParameters['id']!;
+              return ReceivableFormPage(receivableId: id);
             },
           ),
           // ─── Wameed AI ───

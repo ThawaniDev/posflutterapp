@@ -45,6 +45,7 @@ class _NotificationSchedulesPageState extends ConsumerState<NotificationSchedule
             PosTextField(controller: messageCtrl, label: l10n.notifScheduleMessage, maxLines: 3),
             AppSpacing.gapH12,
             PosSearchableDropdown<String>(
+              hint: l10n.selectCategory,
               items: [
                 'order',
                 'inventory',
@@ -61,6 +62,7 @@ class _NotificationSchedulesPageState extends ConsumerState<NotificationSchedule
             ),
             AppSpacing.gapH12,
             PosSearchableDropdown<String>(
+              hint: l10n.selectPriority,
               items: [
                 'low',
                 'normal',
@@ -75,6 +77,7 @@ class _NotificationSchedulesPageState extends ConsumerState<NotificationSchedule
             ),
             AppSpacing.gapH12,
             PosSearchableDropdown<String>(
+              hint: l10n.selectChannel,
               items: [
                 'in_app',
                 'push',
@@ -88,6 +91,7 @@ class _NotificationSchedulesPageState extends ConsumerState<NotificationSchedule
             ),
             AppSpacing.gapH12,
             PosSearchableDropdown<String>(
+              hint: l10n.selectType,
               items: ['once', 'recurring'].map((t) => PosDropdownItem(value: t, label: _localizedScheduleType(l10n, t))).toList(),
               selectedValue: scheduleType,
               onChanged: (v) => setDialogState(() => scheduleType = v ?? scheduleType),
@@ -176,19 +180,13 @@ class _NotificationSchedulesPageState extends ConsumerState<NotificationSchedule
     });
 
     return PosListPage(
-  title: l10n.notifSchedulesTitle,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.refresh_rounded, onPressed: () => ref.read(schedulesProvider.notifier).load(),
-  ),
-  PosButton.icon(
-    icon: Icons.add_rounded,
-    onPressed: _showCreateDialog,
-    tooltip: 'Add',
-  ),
-],
-  child: switch (state) {
+      title: l10n.notifSchedulesTitle,
+      showSearch: false,
+      actions: [
+        PosButton.icon(icon: Icons.refresh_rounded, onPressed: () => ref.read(schedulesProvider.notifier).load()),
+        PosButton.icon(icon: Icons.add_rounded, onPressed: _showCreateDialog, tooltip: 'Add'),
+      ],
+      child: switch (state) {
         SchedulesInitial() || SchedulesLoading() => const Center(child: PosLoading()),
         SchedulesError(:final message) => PosErrorState(
           message: message,
@@ -213,7 +211,7 @@ class _NotificationSchedulesPageState extends ConsumerState<NotificationSchedule
                   ),
                 ),
       },
-);
+    );
   }
 
   Widget _buildScheduleCard(NotificationSchedule schedule, bool isDark) {
@@ -283,10 +281,11 @@ class _NotificationSchedulesPageState extends ConsumerState<NotificationSchedule
             AppSpacing.gapH8,
             Align(
               alignment: AlignmentDirectional.centerEnd,
-              child: TextButton.icon(
-                icon: const Icon(Icons.cancel_outlined, size: 16),
-                label: Text(l10n.notifScheduleCancelBtn),
-                style: TextButton.styleFrom(foregroundColor: AppColors.error),
+              child: PosButton(
+                icon: Icons.cancel_outlined,
+                label: l10n.notifScheduleCancelBtn,
+                variant: PosButtonVariant.danger,
+                size: PosButtonSize.sm,
                 onPressed: () async {
                   final confirmed = await showPosConfirmDialog(
                     context,

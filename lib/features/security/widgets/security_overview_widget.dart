@@ -13,6 +13,7 @@ class SecurityOverviewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final mutedColor = AppColors.mutedFor(context);
     final activeDevices = data['active_devices'] ?? 0;
     final activeSessions = data['active_sessions'] ?? 0;
     final unresolvedIncidents = data['unresolved_incidents'] ?? 0;
@@ -59,7 +60,7 @@ class SecurityOverviewWidget extends StatelessWidget {
                 label: l10n.securityTotalAuditLogs,
                 value: '$totalAuditLogs',
                 icon: Icons.description,
-                iconColor: AppColors.textSecondary,
+                iconColor: mutedColor,
               ),
               PosKpiCard(
                 label: l10n.securityLockedOutUsers,
@@ -81,12 +82,9 @@ class SecurityOverviewWidget extends StatelessWidget {
               return ListTile(
                 dense: true,
                 contentPadding: EdgeInsets.zero,
-                leading: Icon(_activityIcon(activity['type'] as String?), size: 20, color: AppColors.textSecondary),
+                leading: Icon(_activityIcon(activity['type'] as String?), size: 20, color: mutedColor),
                 title: Text(activity['description'] as String? ?? '', style: const TextStyle(fontSize: 13)),
-                trailing: Text(
-                  _formatTime(activity['created_at'] as String?),
-                  style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
-                ),
+                trailing: Text(_formatTime(activity['created_at'] as String?), style: TextStyle(fontSize: 11, color: mutedColor)),
               );
             }),
           ],

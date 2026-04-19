@@ -21,7 +21,7 @@ class AccessibilityPrefsWidget extends ConsumerWidget {
 
     return switch (state) {
       PrefsInitial() => Center(child: Text(l10n.accessibilityPreferences)),
-      PrefsLoading() => const Center(child: CircularProgressIndicator()),
+      PrefsLoading() => const PosLoading(),
       PrefsError(:final message) => Center(
         child: Text(message, style: TextStyle(color: theme.colorScheme.error)),
       ),
@@ -72,9 +72,9 @@ class AccessibilityPrefsWidget extends ConsumerWidget {
                     child: PosSearchableDropdown<String>(
                       items: [
                         PosDropdownItem(value: 'none', label: l10n.notificationsDigestNone),
-                        PosDropdownItem(value: 'protanopia', label: 'Protanopia'),
-                        PosDropdownItem(value: 'deuteranopia', label: 'Deuteranopia'),
-                        PosDropdownItem(value: 'tritanopia', label: 'Tritanopia'),
+                        PosDropdownItem(value: 'protanopia', label: l10n.accessProtanopia),
+                        PosDropdownItem(value: 'deuteranopia', label: l10n.accessDeuteranopia),
+                        PosDropdownItem(value: 'tritanopia', label: l10n.accessTritanopia),
                       ],
                       selectedValue: s.colorBlindMode,
                       onChanged: (val) {
@@ -164,9 +164,10 @@ class AccessibilityPrefsWidget extends ConsumerWidget {
           // ─── Reset Button ─────────────
           SizedBox(
             width: double.infinity,
-            child: OutlinedButton.icon(
-              icon: const Icon(Icons.restore),
-              label: Text(l10n.accessibilityReset),
+            child: PosButton(
+              icon: Icons.restore,
+              label: l10n.accessibilityReset,
+              variant: PosButtonVariant.outline,
               onPressed: () {
                 ref.read(accessibilityPrefsProvider.notifier).reset();
               },

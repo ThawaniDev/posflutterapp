@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/features/staff/providers/roles_providers.dart';
 
@@ -41,10 +42,10 @@ class PermissionGuardPage extends ConsumerWidget {
             children: [
               Icon(Icons.lock_outline, size: 64, color: Theme.of(context).colorScheme.error),
               const SizedBox(height: 16),
-              Text('Access Denied', style: Theme.of(context).textTheme.headlineSmall),
+              Text(AppLocalizations.of(context)!.accessDenied, style: Theme.of(context).textTheme.headlineSmall),
               const SizedBox(height: 8),
               Text(
-                'You do not have permission to view this page.\nContact your administrator to request access.',
+                AppLocalizations.of(context)!.accessDeniedMessage,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
@@ -52,7 +53,7 @@ class PermissionGuardPage extends ConsumerWidget {
               FilledButton.icon(
                 onPressed: () => Navigator.of(context).maybePop(),
                 icon: const Icon(Icons.arrow_back),
-                label: const Text('Go Back'),
+                label: Text(AppLocalizations.of(context)!.goBack),
               ),
             ],
           ),

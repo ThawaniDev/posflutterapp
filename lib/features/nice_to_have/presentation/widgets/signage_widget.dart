@@ -17,7 +17,7 @@ class SignageWidget extends ConsumerWidget {
     return switch (state) {
       SignageInitial() || SignageLoading() => const Center(child: CircularProgressIndicator()),
       SignageError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
+        child: Text(l10n.genericError(message), style: const TextStyle(color: AppColors.error)),
       ),
       SignageLoaded(:final playlists) =>
         playlists.isEmpty

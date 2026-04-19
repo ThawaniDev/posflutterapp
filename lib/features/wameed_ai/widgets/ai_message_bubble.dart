@@ -30,9 +30,9 @@ class AIMessageBubble extends StatelessWidget {
       padding: EdgeInsets.only(bottom: isMobile ? AppSpacing.sm : AppSpacing.md),
       child: Row(
         mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          if (!isUser) ...[
+          if (!isUser && !isMobile) ...[
             CircleAvatar(
               radius: isMobile ? 14 : 16,
               backgroundColor: AppColors.primary.withValues(alpha: 0.1),
@@ -84,11 +84,14 @@ class AIMessageBubble extends StatelessWidget {
                       const SizedBox(height: 6),
                     ],
                     // Message content
-                    SelectableText(
-                      message.content,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: isUser ? Colors.white : theme.textTheme.bodyMedium?.color,
-                        height: 1.5,
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: SelectableText(
+                        message.content,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: isUser ? Colors.white : theme.textTheme.bodyMedium?.color,
+                          height: 1.35,
+                        ),
                       ),
                     ),
                     // Metadata row
@@ -99,16 +102,16 @@ class AIMessageBubble extends StatelessWidget {
                         runSpacing: 4,
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
-                          if (message.modelUsed != null)
-                            Text(
-                              message.modelUsed!,
-                              style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor, fontSize: 10),
-                            ),
-                          if (message.latencyMs > 0)
-                            Text(
-                              '${(message.latencyMs / 1000).toStringAsFixed(1)}s',
-                              style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor, fontSize: 10),
-                            ),
+                          // if (message.modelUsed != null)
+                          //   Text(
+                          //     message.modelUsed!,
+                          //     style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor, fontSize: 10),
+                          //   ),
+                          // if (message.latencyMs > 0)
+                          //   Text(
+                          //     '${(message.latencyMs / 1000).toStringAsFixed(1)}s',
+                          //     style: theme.textTheme.labelSmall?.copyWith(color: theme.hintColor, fontSize: 10),
+                          //   ),
                           InkWell(
                             onTap: () => _copyToClipboard(context),
                             borderRadius: AppRadius.borderMd,

@@ -38,6 +38,7 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(securityOverviewProvider);
 
     return PosListPage(
@@ -102,14 +103,14 @@ class _AdminSecurityOverviewPageState extends ConsumerState<AdminSecurityOvervie
           ),
           const SizedBox(height: AppSpacing.md),
           _SectionCard(
-            title: 'Login Attempts',
+            title: l10n.adminLoginAttempts,
             icon: Icons.login,
             color: AppColors.warning,
             stats: overview['login_attempts'] as Map<String, dynamic>? ?? {},
           ),
           const SizedBox(height: AppSpacing.md),
           _SectionCard(
-            title: 'IP Management',
+            title: l10n.adminIpManagement,
             icon: Icons.shield,
             color: AppColors.purple,
             stats: overview['ip_management'] as Map<String, dynamic>? ?? {},
@@ -130,6 +131,7 @@ class _SectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return PosCard(
       elevation: 2,
       child: Padding(

@@ -39,7 +39,6 @@ class InstallmentPaymentDialog extends ConsumerStatefulWidget {
 }
 
 class _InstallmentPaymentDialogState extends ConsumerState<InstallmentPaymentDialog> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   CheckoutProviderOption? _selectedProvider;
   String? _error;
@@ -116,9 +115,8 @@ class _InstallmentPaymentDialogState extends ConsumerState<InstallmentPaymentDia
 
   Widget _buildContent(InstallmentCheckoutState state, AppLocalizations l10n, bool isDark) {
     return switch (state) {
-      InstallmentCheckoutInitial() || InstallmentCheckoutLoading() => const Center(
-        child: Padding(padding: EdgeInsets.symmetric(vertical: 32), child: CircularProgressIndicator()),
-      ),
+      InstallmentCheckoutInitial() ||
+      InstallmentCheckoutLoading() => const Padding(padding: EdgeInsets.symmetric(vertical: 32), child: PosLoading()),
       InstallmentCheckoutProvidersLoaded(:final providers) => _buildProviderSelection(providers, l10n, isDark),
       InstallmentCheckoutCreated(:final payment) => _buildCheckoutCreated(payment, l10n),
       InstallmentCheckoutCompleted(:final payment) => _buildCompleted(payment, l10n),
@@ -322,14 +320,9 @@ class _InstallmentPaymentDialogState extends ConsumerState<InstallmentPaymentDia
       }
     });
 
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [CircularProgressIndicator(), SizedBox(height: 16), Text(l10n.openingCheckout)],
-        ),
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 32),
+      child: PosLoading(message: l10n.openingCheckout),
     );
   }
 

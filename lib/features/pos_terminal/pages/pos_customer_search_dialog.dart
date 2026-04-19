@@ -110,7 +110,7 @@ class _PosCustomerSearchDialogState extends ConsumerState<PosCustomerSearchDialo
     }
 
     if (state is PosCustomersLoading) {
-      return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+      return const PosLoading();
     }
 
     if (state is PosCustomersError) {

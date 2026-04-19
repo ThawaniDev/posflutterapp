@@ -15,7 +15,6 @@ class ThawaniCategoryMappingsPage extends ConsumerStatefulWidget {
 }
 
 class _ThawaniCategoryMappingsPageState extends ConsumerState<ThawaniCategoryMappingsPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
@@ -42,27 +41,29 @@ class _ThawaniCategoryMappingsPageState extends ConsumerState<ThawaniCategoryMap
     });
 
     return PosListPage(
-  title: l10n.categoryMappings,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.cloud_upload, onPressed: isLoading ? null : () => ref.read(thawaniSyncProvider.notifier).pushCategories(), tooltip: 'Push to Thawani',
-  ),
-  PosButton.icon(
-    icon: Icons.cloud_download, onPressed: isLoading ? null : () => ref.read(thawaniSyncProvider.notifier).pullCategories(), tooltip: 'Pull from Thawani',
-  ),
-  PosButton.icon(
-    icon: Icons.refresh, onPressed: () => ref.read(thawaniCategoryMappingsProvider.notifier).load(),
-  ),
-],
-  child: switch (state) {
+      title: l10n.categoryMappings,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.cloud_upload,
+          onPressed: isLoading ? null : () => ref.read(thawaniSyncProvider.notifier).pushCategories(),
+          tooltip: l10n.thawaniPushToThawani,
+        ),
+        PosButton.icon(
+          icon: Icons.cloud_download,
+          onPressed: isLoading ? null : () => ref.read(thawaniSyncProvider.notifier).pullCategories(),
+          tooltip: l10n.thawaniPullFromThawani,
+        ),
+        PosButton.icon(icon: Icons.refresh, onPressed: () => ref.read(thawaniCategoryMappingsProvider.notifier).load()),
+      ],
+      child: switch (state) {
         ThawaniCategoryMappingsInitial() || ThawaniCategoryMappingsLoading() => Center(child: PosLoadingSkeleton.list()),
         ThawaniCategoryMappingsError(:final message) => PosErrorState(
           message: message,
           onRetry: () => ref.read(thawaniCategoryMappingsProvider.notifier).load(),
         ),
-        ThawaniCategoryMappingsLoaded(:final mappings) when mappings.isEmpty => const PosEmptyState(
-          title: 'No category mappings yet',
+        ThawaniCategoryMappingsLoaded(:final mappings) when mappings.isEmpty => PosEmptyState(
+          title: l10n.thawaniNoCategoryMappings,
           icon: Icons.category,
         ),
         ThawaniCategoryMappingsLoaded(:final mappings) => ListView.builder(
@@ -72,12 +73,16 @@ class _ThawaniCategoryMappingsPageState extends ConsumerState<ThawaniCategoryMap
             final mapping = mappings[index] as Map<String, dynamic>;
             final category = mapping['category'] as Map<String, dynamic>?;
             final syncStatus = mapping['sync_status'] as String? ?? 'unknown';
-            final statusColor = switch (syncStatus) {
-              'synced' => AppColors.success,
-              'failed' => AppColors.error,
-              'pending' => AppColors.warning,
-              _ => AppColors.textSecondary,
+            final (statusColor, badgeVariant) = switch (syncStatus) {
+              'synced' => (AppColors.success, PosStatusBadgeVariant.success),
+              'failed' => (AppColors.error, PosStatusBadgeVariant.error),
+              'pending' => (AppColors.warning, PosStatusBadgeVariant.warning),
+              _ => (Colors.grey, PosStatusBadgeVariant.neutral),
             };
+            final isDark = Theme.of(context).brightness == Brightness.dark;
+            final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+            final categoryName =
+                category?['name'] ?? category?['name_ar'] ?? l10n.thawaniCategoryNum('${mapping['category_id'] ?? '?'}');
 
             return PosCard(
               elevation: 0,
@@ -89,16 +94,13 @@ class _ThawaniCategoryMappingsPageState extends ConsumerState<ThawaniCategoryMap
                   backgroundColor: statusColor.withValues(alpha: 0.1),
                   child: Icon(Icons.category, color: statusColor, size: 20),
                 ),
-                title: Text(
-                  category?['name'] ?? category?['name_ar'] ?? 'Category #${mapping['category_id'] ?? '?'}',
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
+                title: Text(categoryName, style: const TextStyle(fontWeight: FontWeight.w600)),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Thawani: ${mapping['thawani_category_id'] ?? 'Unmapped'}',
-                      style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                      l10n.thawaniThawaniLine((mapping['thawani_category_id'] ?? l10n.thawaniUnmapped).toString()),
+                      style: TextStyle(fontSize: 12, color: mutedColor),
                     ),
                     if (mapping['sync_error'] != null)
                       Text(
@@ -109,19 +111,12 @@ class _ThawaniCategoryMappingsPageState extends ConsumerState<ThawaniCategoryMap
                       ),
                   ],
                 ),
-                trailing: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
-                  child: Text(
-                    syncStatus.toUpperCase(),
-                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, color: statusColor),
-                  ),
-                ),
+                trailing: PosStatusBadge(label: syncStatus.toUpperCase(), variant: badgeVariant),
               ),
             );
           },
         ),
       },
-);
+    );
   }
 }

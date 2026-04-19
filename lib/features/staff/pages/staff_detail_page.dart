@@ -190,9 +190,9 @@ class _StatusBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final (color, label) = switch (status) {
       StaffStatus.active => (AppColors.success, 'Active'),
-      StaffStatus.inactive => (AppColors.textSecondary, 'Inactive'),
+      StaffStatus.inactive => (AppColors.textMutedLight, 'Inactive'),
       StaffStatus.onLeave => (AppColors.warning, 'On Leave'),
-      null => (AppColors.textSecondary, 'Unknown'),
+      null => (AppColors.textMutedLight, 'Unknown'),
     };
 
     return Container(
@@ -440,7 +440,9 @@ class _AttendanceTabState extends ConsumerState<_AttendanceTab> {
                     margin: const EdgeInsets.only(bottom: 8),
                     borderRadius: AppRadius.borderMd,
 
-                    border: Border.fromBorderSide(BorderSide(color: widget.isDark ? AppColors.borderDark : AppColors.borderLight)),
+                    border: Border.fromBorderSide(
+                      BorderSide(color: widget.isDark ? AppColors.borderDark : AppColors.borderLight),
+                    ),
                     color: widget.isDark ? AppColors.cardDark : AppColors.cardLight,
                     child: Padding(
                       padding: AppSpacing.paddingAll16,
@@ -638,12 +640,7 @@ class _LinkedUserSectionState extends ConsumerState<_LinkedUserSection> {
 
     // Show loading dialog while fetching linkable users
     if (!mounted) return;
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      useRootNavigator: false,
-      builder: (_) => const Center(child: CircularProgressIndicator()),
-    );
+    showDialog(context: context, barrierDismissible: false, useRootNavigator: false, builder: (_) => const PosLoading());
 
     List<Map<String, dynamic>> users;
     try {
@@ -734,16 +731,12 @@ class _LinkedUserSectionState extends ConsumerState<_LinkedUserSection> {
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 12),
             child: SizedBox(
               width: double.infinity,
-              child: OutlinedButton.icon(
+              child: PosButton(
                 onPressed: _isLinking ? null : _unlinkUser,
-                icon: _isLinking
-                    ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
-                    : const Icon(Icons.link_off, size: 18),
-                label: Text(widget.l10n.staffUnlink),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: AppColors.error,
-                  side: const BorderSide(color: AppColors.error),
-                ),
+                isLoading: _isLinking,
+                icon: Icons.link_off,
+                variant: PosButtonVariant.danger,
+                label: widget.l10n.staffUnlink,
               ),
             ),
           ),
@@ -760,16 +753,11 @@ class _LinkedUserSectionState extends ConsumerState<_LinkedUserSection> {
                   textAlign: TextAlign.center,
                 ),
                 AppSpacing.gapH12,
-                FilledButton.icon(
+                PosButton(
                   onPressed: _isLinking ? null : _showLinkDialog,
-                  icon: _isLinking
-                      ? const SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                        )
-                      : const Icon(Icons.link, size: 18),
-                  label: Text(widget.l10n.staffLinkUser),
+                  isLoading: _isLinking,
+                  icon: Icons.link,
+                  label: widget.l10n.staffLinkUser,
                 ),
               ],
             ),
@@ -817,14 +805,7 @@ class _LinkableUsersDialogState extends State<_LinkableUsersDialog> {
         height: 400,
         child: Column(
           children: [
-            TextField(
-              decoration: InputDecoration(
-                hintText: widget.l10n.search,
-                prefixIcon: const Icon(Icons.search, size: 20),
-                isDense: true,
-              ),
-              onChanged: (v) => setState(() => _search = v),
-            ),
+            PosTextField(hint: widget.l10n.search, prefixIcon: Icons.search, onChanged: (v) => setState(() => _search = v)),
             AppSpacing.gapH12,
             Expanded(
               child: _filtered.isEmpty
@@ -851,7 +832,9 @@ class _LinkableUsersDialogState extends State<_LinkableUsersDialog> {
           ],
         ),
       ),
-      actions: [PosButton(onPressed: () => Navigator.of(context).pop(), variant: PosButtonVariant.ghost, label: widget.l10n.cancel)],
+      actions: [
+        PosButton(onPressed: () => Navigator.of(context).pop(), variant: PosButtonVariant.ghost, label: widget.l10n.cancel),
+      ],
     );
   }
 }

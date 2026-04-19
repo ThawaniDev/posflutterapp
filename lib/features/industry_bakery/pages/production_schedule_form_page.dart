@@ -103,7 +103,7 @@ class _ProductionScheduleFormPageState extends ConsumerState<ProductionScheduleF
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PosTextField(controller: _recipeIdCtrl, label: 'Recipe ID', hint: 'Select recipe'),
+            PosTextField(controller: _recipeIdCtrl, label: l10n.bakeryRecipeId, hint: l10n.bakerySelectRecipe),
             SizedBox(height: AppSpacing.md),
             GestureDetector(
               onTap: _pickDate,
@@ -163,7 +163,7 @@ class _ProductionScheduleFormPageState extends ConsumerState<ProductionScheduleF
               ),
             ],
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _notesCtrl, label: l10n.posNotes, hint: 'Additional notes...', maxLines: 3),
+            PosTextField(controller: _notesCtrl, label: l10n.posNotes, hint: l10n.bakeryAdditionalNotes, maxLines: 3),
           ],
         ),
       ),

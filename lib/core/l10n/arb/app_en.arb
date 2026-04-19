@@ -3170,9 +3170,118 @@
   "debitsAllocatedAt": "Allocated At",
   "debitsCreatedAt": "Created At",
   "debitsOrderNumber": "Order #",
+
+  "sidebarReceivables": "Receivables",
+  "receivablesTitle": "Receivables",
+  "receivablesCreate": "Create Receivable",
+  "receivablesEdit": "Edit Receivable",
+  "receivablesDetail": "Receivable Details",
+  "receivablesNoReceivables": "No receivables",
+  "receivablesNoReceivablesSubtitle": "Receivables will appear here once created.",
+  "receivablesSearchHint": "Search by reference, customer, description...",
+  "receivablesFilterByStatus": "Filter by status",
+  "receivablesFilterByType": "Filter by type",
+  "receivablesAll": "All",
+  "receivablesReferenceNumber": "Reference #",
+  "receivablesCustomer": "Customer",
+  "receivablesType": "Type",
+  "receivablesSource": "Source",
+  "receivablesAmount": "Amount",
+  "receivablesRemainingBalance": "Remaining Balance",
+  "receivablesDueDate": "Due Date",
+  "receivablesDescription": "Description",
+  "receivablesDescriptionAr": "Description (Arabic)",
+  "receivablesSelectCustomer": "Select Customer",
+  "receivablesSelectType": "Select Type",
+  "receivablesSelectSource": "Select Source",
+  "receivablesStatusPending": "Pending",
+  "receivablesStatusPartiallyPaid": "Partially Paid",
+  "receivablesStatusFullyPaid": "Fully Paid",
+  "receivablesStatusReversed": "Reversed",
+  "receivablesStatusOverdue": "Overdue",
+  "receivablesTypeCreditSale": "Credit Sale",
+  "receivablesTypeLoan": "Loan",
+  "receivablesTypeInventoryAdjustment": "Inventory Adjustment",
+  "receivablesTypeManual": "Manual",
+  "receivablesSourcePosTerminal": "POS Terminal",
+  "receivablesSourceInvoice": "Invoice",
+  "receivablesSourceReturn": "Return",
+  "receivablesSourceManual": "Manual",
+  "receivablesSourceInventorySystem": "Inventory System",
+  "receivablesRecordPayment": "Record Payment",
+  "receivablesPaymentAmount": "Payment Amount",
+  "receivablesPaymentMethod": "Payment Method",
+  "receivablesAddNote": "Add Note",
+  "receivablesNoteHint": "Enter a note...",
+  "receivablesViewLogs": "View Logs",
+  "receivablesLogs": "Activity Log",
+  "receivablesNoLogs": "No activity yet",
+  "receivablesPayments": "Payments",
+  "receivablesNoPayments": "No payments yet",
+  "receivablesReverse": "Reverse",
+  "receivablesReverseReceivable": "Reverse Receivable",
+  "receivablesReverseReason": "Reason for reversal",
+  "receivablesReverseConfirm": "Are you sure you want to reverse this receivable?",
+  "receivablesDeleteConfirm": "Are you sure you want to delete this receivable?",
+  "receivablesCreatedSuccess": "Receivable created successfully",
+  "receivablesUpdatedSuccess": "Receivable updated successfully",
+  "receivablesDeletedSuccess": "Receivable deleted successfully",
+  "receivablesPaymentSuccess": "Payment recorded successfully",
+  "receivablesNoteAddedSuccess": "Note added successfully",
+  "receivablesReversedSuccess": "Receivable reversed successfully",
+  "receivablesSummaryTitle": "Receivables Summary",
+  "receivablesSummaryTotal": "Total Receivables",
+  "receivablesSummaryPending": "Pending",
+  "receivablesSummaryPartially": "Partially Paid",
+  "receivablesSummaryFully": "Fully Paid",
+  "receivablesSummaryReversed": "Reversed",
+  "receivablesSummaryOverdue": "Overdue",
+  "receivablesSummaryPaid": "Total Paid",
+  "receivablesSummaryOutstanding": "Outstanding",
+  "receivablesCreatedBy": "Created By",
+  "receivablesSettledBy": "Settled By",
+  "receivablesSettledAt": "Settled At",
+  "receivablesCreatedAt": "Created At",
+  "receivablesOrderNumber": "Order #",
+
   "searchDropdownHint": "Search...",
   "noResultsFound": "No results found",
   "selectOption": "Select...",
+  "selectProduct": "Select product",
+  "selectCustomer": "Select customer",
+  "selectCategory": "Select category",
+  "selectType": "Select type",
+  "selectStatus": "Select status",
+  "selectBranch": "Select branch",
+  "selectStaffMember": "Select staff member",
+  "selectTemplate": "Select template",
+  "selectPaymentMethod": "Select payment method",
+  "selectReason": "Select reason",
+  "selectGrade": "Select grade",
+  "selectFormat": "Select format",
+  "selectPriority": "Select priority",
+  "selectChannel": "Select channel",
+  "selectDay": "Select day",
+  "selectFrequency": "Select frequency",
+  "selectCountry": "Select country",
+  "selectDeviceType": "Select device type",
+  "selectBaudRate": "Select baud rate",
+  "selectOrder": "Select order",
+  "selectTable": "Select table",
+  "selectPlatform": "Select platform",
+  "selectRegister": "Select register",
+  "selectRole": "Select role",
+  "selectStore": "Select store",
+  "selectCycle": "Select cycle",
+  "selectMetalType": "Select metal type",
+  "selectChargesType": "Select charges type",
+  "selectTechnician": "Select technician",
+  "selectScheduleType": "Select schedule type",
+  "selectEmploymentType": "Select employment type",
+  "selectSalaryType": "Select salary type",
+  "selectBusinessType": "Select business type",
+  "selectMethod": "Select method",
+  "allTypes": "All types",
   "createNew": "Create new",
   "genericError": "Error: {message}",
   "@genericError": {
@@ -3647,6 +3756,27 @@
   "wameedAINewChat": "New Chat",
   "wameedAIAssistant": "Wameed AI Assistant",
   "wameedAIWelcomeSubtitle": "Ask anything about your business — sales, inventory, customers, and more.",
+  "wameedAIMenu": "Menu",
+  "wameedAIPhotos": "Photos",
+  "wameedAIFiles": "Files",
+  "wameedAIBrowseCapabilities": "Browse all AI capabilities",
+  "wameedAITodaySummary": "Today's summary",
+  "wameedAITodaySummarySubtitle": "Revenue, top items, and trends",
+  "wameedAISmartReorderSubtitle": "AI-suggested purchase list",
+  "wameedAICustomerSegmentsSubtitle": "Group customers by behavior",
+  "wameedAIInvoiceOCRSubtitle": "Scan supplier invoices into your system",
+  "wameedAISuggTodaySalesTitle": "Today's sales summary",
+  "wameedAISuggTodaySalesSubtitle": "Show revenue, top items, and trends",
+  "wameedAISuggTodaySalesPrompt": "Show today's sales summary with top products and trends",
+  "wameedAISuggReorderTitle": "Suggest reorder",
+  "wameedAISuggReorderSubtitle": "For low-stock and fast-moving items",
+  "wameedAISuggReorderPrompt": "Suggest a reorder list for items that are running low or selling fast",
+  "wameedAISuggSlowMoversTitle": "Find slow movers",
+  "wameedAISuggSlowMoversSubtitle": "Items that are not selling well",
+  "wameedAISuggSlowMoversPrompt": "List the slowest-moving products in my inventory this month",
+  "wameedAISuggSegmentsTitle": "Customer segments",
+  "wameedAISuggSegmentsSubtitle": "Group customers by behavior",
+  "wameedAISuggSegmentsPrompt": "Analyze my customers and group them into useful segments",
   "wameedAIRecentChats": "Recent Chats",
   "wameedAINoChats": "No conversations yet",
   "wameedAINoChatsSubtitle": "Tap \"New Chat\" to start a conversation with Wameed AI",
@@ -4895,5 +5025,1464 @@
   },
   "reportLegendRevenue": "Revenue",
   "reportLegendCost": "Cost",
-  "reportLegendNetProfit": "Net Profit"
+  "reportLegendNetProfit": "Net Profit",
+  "navHome": "Home",
+  "navPos": "POS",
+  "navOrders": "Orders",
+  "navCatalog": "Catalog",
+  "navMore": "More",
+  "tableActionsHeader": "ACTIONS",
+  "tableActionsTooltip": "Actions",
+  "tableRowsLabel": "Rows: ",
+  "tablePreviousPage": "Previous page",
+  "tableNextPage": "Next page",
+  "tableShowingRange": "Showing {start}-{end} of {total}",
+  "@tableShowingRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "accessDenied": "Access Denied",
+  "accessDeniedMessage": "You do not have permission to view this page.\nContact your administrator to request access.",
+  "catalogTabBasicInfo": "Basic Info",
+  "catalogTabPricing": "Pricing",
+  "catalogTabVariants": "Variants",
+  "catalogTabModifiers": "Modifiers",
+  "catalogTabBarcodes": "Barcodes",
+  "catalogProductNameRequired": "Product Name *",
+  "catalogProductNameHint": "Enter product name",
+  "catalogProductNameArabic": "Product Name (Arabic)",
+  "catalogProductDescHint": "Enter product description",
+  "catalogSelectCategory": "Select category",
+  "catalogUnitType": "Unit Type",
+  "catalogSelectUnit": "Select unit",
+  "catalogSku": "SKU",
+  "catalogSkuHint": "Stock Keeping Unit",
+  "catalogPrimaryBarcode": "Primary Barcode",
+  "catalogBarcodeHint": "Enter or scan barcode",
+  "catalogMinOrderQty": "Min Order Qty",
+  "catalogMaxOrderQty": "Max Order Qty",
+  "catalogUnlimited": "Unlimited",
+  "catalogSoldByWeight": "Sold by weight (use scale at POS)",
+  "catalogTareWeight": "Tare Weight (kg)",
+  "catalogAgeRestriction": "Requires age verification at POS",
+  "catalogSellPriceRequired": "Sell Price () *",
+  "catalogCostPrice": "Cost Price ()",
+  "catalogOfferPrice": "Offer Price ()",
+  "catalogOfferPriceHint": "Leave empty for no offer",
+  "catalogOfferStart": "Offer Start",
+  "catalogOfferEnd": "Offer End",
+  "catalogDatePlaceholder": "YYYY-MM-DD",
+  "catalogVariantValueRequired": "Variant Value *",
+  "catalogVariantValueHint": "e.g. Large, Red, 500ml",
+  "catalogVariantSkuHint": "Optional variant SKU",
+  "catalogPriceAdjustment": "Price Adjustment",
+  "catalogAddGroup": "Add Group",
+  "catalogGroupNameRequired": "Group Name *",
+  "catalogGroupNameHint": "e.g. Size, Extras, Toppings",
+  "catalogMinSelect": "Min Select",
+  "catalogMaxSelect": "Max Select",
+  "catalogAddBarcode": "Add Barcode",
+  "catalogBarcodeRequired": "Barcode *",
+  "catalogLinkSupplier": "Link Supplier",
+  "catalogSupplierRequired": "Supplier *",
+  "catalogSelectSupplier": "Select supplier",
+  "catalogSupplierSku": "Supplier SKU",
+  "catalogSupplierCostHint": "Cost from this supplier",
+  "catalogLeadTimeDays": "Lead Time (days)",
+  "catalogLink": "Link",
+  "catalogStoreWithId": "Store: {id}",
+  "@catalogStoreWithId": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "catalogImageUrl": "Image URL",
+  "catalogImageLoadFailed": "Could not load image",
+  "catalogImagePasteHint": "Paste an image URL above",
+  "catalogDeleteProductTitle": "Delete Product",
+  "catalogAddProduct": "Add Product",
+  "catalogSearchProductsShort": "Search products...",
+  "catalogSearchProductsFull": "Search products by name, SKU or barcode...",
+  "catalogClearSelection": "Clear selection",
+  "catalogAllCategories": "All categories",
+  "catalogAllProducts": "All Products",
+  "catalogCategoryNameRequired": "Category Name *",
+  "catalogCategoryNameHint": "Enter category name",
+  "catalogArabicName": "Arabic Name",
+  "catalogArabicDescription": "Arabic Description",
+  "catalogCategoryDescHint": "Brief description of this category",
+  "catalogParentCategory": "Parent Category",
+  "catalogNoneRootLevel": "None (root level)",
+  "catalogSortOrder": "Sort Order",
+  "catalogDeleteCategoryTitle": "Delete Category",
+  "catalogNewCategory": "New Category",
+  "catalogEditCategory": "Edit Category",
+  "catalogCreateFirstCategory": "Create First Category",
+  "bakeryCakeOrders": "Cake Orders",
+  "bakeryNoRecipes": "No recipes yet",
+  "bakeryNoSchedules": "No production schedules",
+  "bakeryNoCakeOrders": "No cake orders",
+  "bakeryCakeDescription": "Cake description",
+  "bakeryFlavor": "Flavor",
+  "bakeryFlavorHint": "e.g. Chocolate",
+  "bakeryDecorationNotes": "Decoration Notes",
+  "bakeryDecorationHint": "Special decoration requests...",
+  "bakeryDeliveryDate": "Delivery Date",
+  "bakeryDeliveryTime": "Delivery Time",
+  "bakeryPriceSar": "Price ()",
+  "bakeryDepositPaid": "Deposit Paid",
+  "bakeryRecipeId": "Recipe ID",
+  "bakerySelectRecipe": "Select recipe",
+  "bakeryAdditionalNotes": "Additional notes...",
+  "bakeryRecipeNameHint": "Enter recipe name",
+  "bakeryNumberOfUnits": "Number of units",
+  "bakeryTemperature": "Temperature",
+  "bakeryInstructionsHint": "Detailed baking instructions...",
+  "bakeryDeliveryDateWithValue": "Delivery: {date}",
+  "@bakeryDeliveryDateWithValue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bakeryPrepTimeMin": "Prep: {minutes}min",
+  "@bakeryPrepTimeMin": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "bakeryBakeTimeMin": "Bake: {minutes}min",
+  "@bakeryBakeTimeMin": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "bakeryYieldUnits": "Yield: {units} units",
+  "@bakeryYieldUnits": {
+    "placeholders": {
+      "units": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsNoImei": "No IMEI records",
+  "electronicsNoRepair": "No repair jobs",
+  "electronicsNoTradeIn": "No trade-in records",
+  "electronicsImei": "IMEI",
+  "electronicsImeiHint": "15-digit IMEI number",
+  "electronicsImei2Optional": "IMEI 2 (optional)",
+  "electronicsDualSimImei": "Dual SIM IMEI",
+  "electronicsSerialOptional": "Serial Number (optional)",
+  "electronicsSerialHint": "Device serial number",
+  "electronicsGradeValue": "Grade {value}",
+  "@electronicsGradeValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsPurchasePrice": "Purchase Price ()",
+  "electronicsMfgWarrantyEnd": "Manufacturer Warranty End",
+  "electronicsStoreWarrantyEnd": "Store Warranty End",
+  "electronicsDeviceDescription": "Device Description",
+  "electronicsDeviceHintRepair": "e.g. iPhone 15 Pro Max 256GB",
+  "electronicsImeiOptional": "IMEI (optional)",
+  "electronicsIssueDescription": "Issue Description",
+  "electronicsIssueHint": "Describe the issue...",
+  "electronicsAssignedTech": "Assigned Technician",
+  "electronicsStaffFullName": "{first} {last}",
+  "@electronicsStaffFullName": {
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsEstCost": "Est. Cost ()",
+  "electronicsFinalCost": "Final Cost ()",
+  "electronicsDiagnosisNotes": "Diagnosis Notes",
+  "electronicsDiagnosisHint": "Diagnosis findings...",
+  "electronicsRepairNotes": "Repair Notes",
+  "electronicsRepairHint": "Repair details...",
+  "electronicsRecordTradeIn": "Record Trade-In",
+  "electronicsDeviceHintTradeIn": "e.g. Samsung Galaxy S24 Ultra",
+  "electronicsGradeLetter": "Grade {grade}",
+  "@electronicsGradeLetter": {
+    "placeholders": {
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsAssessedValue": "Assessed Value ()",
+  "electronicsSnWithValue": "S/N: {serial}",
+  "@electronicsSnWithValue": {
+    "placeholders": {
+      "serial": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsGradeWithValue": "Grade: {grade}",
+  "@electronicsGradeWithValue": {
+    "placeholders": {
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsImeiWithValue": "IMEI: {imei}",
+  "@electronicsImeiWithValue": {
+    "placeholders": {
+      "imei": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsEstCostWithValue": "Est: {amount} ",
+  "@electronicsEstCostWithValue": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "floristBouquetHint": "e.g. Classic Rose Bouquet",
+  "floristOccasionHint": "e.g. Wedding, Birthday, Anniversary",
+  "floristTotalPrice": "Total Price ()",
+  "floristIsTemplate": "Is Template",
+  "floristTemplateSubtitle": "Reusable arrangement template for subscriptions",
+  "floristFreshness": "Freshness",
+  "floristNoArrangements": "No arrangements",
+  "floristNoFreshnessLogs": "No freshness logs",
+  "floristNoSubscriptions": "No subscriptions",
+  "floristNewFreshnessLog": "New Freshness Log",
+  "floristLogFreshness": "Log Freshness",
+  "floristReceivedDate": "Received Date",
+  "floristVaseLifeDays": "Vase Life (days)",
+  "floristArrangementOptional": "Arrangement Template (optional)",
+  "floristSelectTemplate": "Select template arrangement",
+  "floristDeliveryAddress": "Delivery Address",
+  "floristDeliveryAddressHint": "Full delivery address",
+  "floristPricePerDelivery": "Price Per Delivery ()",
+  "floristNextDeliveryDate": "Next Delivery Date",
+  "floristFlowerTypesCount": "{count} flower types",
+  "@floristFlowerTypesCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "floristProductWithId": "Product: {id}",
+  "@floristProductWithId": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "floristQtyReceivedOn": "Qty: {qty} · Received: {date}",
+  "@floristQtyReceivedOn": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "jewelryRecordBuyback": "Record Buyback",
+  "jewelryKaratHint": "e.g. 24K, 22K, 18K",
+  "jewelryDetailsHint": "Additional details...",
+  "jewelryBuybacks": "Buybacks",
+  "jewelryNoMetalRates": "No metal rates set",
+  "jewelryNoProductDetails": "No product details",
+  "jewelryNoBuybacks": "No buyback transactions",
+  "jewelrySaveRate": "Save Rate",
+  "jewelryKaratOptional": "Karat (optional)",
+  "jewelrySellRatePerGram": "Sell Rate/g ()",
+  "jewelryBuybackRatePerGram": "Buyback Rate/g",
+  "jewelryEffectiveDate": "Effective Date",
+  "jewelryGrossWeightG": "Gross Weight (g)",
+  "jewelryNetWeightG": "Net Weight (g)",
+  "jewelryMakingChargesType": "Making Charges Type",
+  "jewelryMakingChargesValue": "Making Charges Value",
+  "jewelryStoneDetails": "Stone Details",
+  "jewelryStoneTypeOptional": "Stone Type (optional)",
+  "jewelryStoneTypeHint": "e.g. Diamond, Ruby, Emerald",
+  "jewelryWeightCarat": "Weight (carat)",
+  "jewelryCount": "Count",
+  "jewelryCertificateOptional": "Certificate Number (optional)",
+  "jewelryCertificateHint": "GIA, IGI, etc.",
+  "jewelryEffectiveWithValue": "Effective: {date}",
+  "@jewelryEffectiveWithValue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "pharmacyDrugNameHint": "e.g. Paracetamol",
+  "pharmacyFormHint": "e.g. Tablet, Syrup",
+  "pharmacyStrength": "Strength",
+  "pharmacyManufacturer": "Manufacturer",
+  "pharmacyManufacturerHint": "Drug manufacturer",
+  "pharmacyPrescriptionRequired": "Must present valid prescription to purchase",
+  "pharmacyNoPrescriptions": "No prescriptions",
+  "pharmacyNoDrugSchedules": "No drug schedules",
+  "pharmacyPrescriptionNumber": "Prescription Number",
+  "pharmacyPrescriptionNumberHint": "e.g. RX-001234",
+  "pharmacyFullNameHint": "Full name",
+  "pharmacyPatientIdOptional": "Patient ID (optional)",
+  "pharmacyPatientIdHint": "National ID or system ID",
+  "pharmacyDoctorInfo": "Doctor Information",
+  "pharmacyDoctorHint": "Dr. ...",
+  "pharmacyLicenseNo": "License No.",
+  "pharmacyLicenseHint": "Medical license",
+  "pharmacyInsurance": "Insurance",
+  "pharmacyInsuranceProvider": "Insurance Provider (optional)",
+  "pharmacyInsuranceHint": "e.g. DHAMAN",
+  "pharmacyClaimAmount": "Claim Amount ()",
+  "pharmacyOtc": "OTC",
+  "pharmacyRxOnly": "Rx Only",
+  "pharmacyControlled": "Controlled",
+  "pharmacyInsured": "Insured",
+  "restaurantTabOwnerHint": "Tab owner name",
+  "restaurantPhoneHint": "+968 XXXX XXXX",
+  "restaurantTimeHint": "HH:MM",
+  "restaurantSpecialRequestsHint": "Special requests, allergies...",
+  "restaurantKitchen": "Kitchen",
+  "restaurantNoTables": "No tables configured",
+  "restaurantNoTickets": "No kitchen tickets",
+  "restaurantNoReservations": "No reservations",
+  "restaurantNoOpenTabs": "No open tabs",
+  "restaurantTableNumberHint": "e.g. T1, A-01",
+  "restaurantTableLocationHint": "e.g. Window Table, Patio 1",
+  "restaurantTableSectionHint": "e.g. Indoor, Outdoor, VIP",
+  "restaurantTableAvailable": "Table is available for seating",
+  "restaurantTicketNumberSign": "#{number}",
+  "@restaurantTicketNumberSign": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantStation": "Station: {station}",
+  "@restaurantStation": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantCourse": "Course {number}",
+  "@restaurantCourse": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantServed": "Served",
+  "restaurantCloseTab": "Close Tab",
+  "restaurantDurationMin": "{minutes} min",
+  "@restaurantDurationMin": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantSeated": "Seated",
+  "restaurantNoShow": "No Show",
+  "adminAdd": "Add",
+  "adminNoImplementationFees": "No implementation fees found",
+  "adminStoreWithName": "Store: {name}",
+  "@adminStoreWithName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adminNotesWithValue": "Notes: {notes}",
+  "@adminNotesWithValue": {
+    "placeholders": {
+      "notes": {
+        "type": "String"
+      }
+    }
+  },
+  "adminAddImplementationFee": "Add Implementation Fee",
+  "adminEditImplementationFee": "Edit Implementation Fee",
+  "adminFeeTypeSetup": "Setup",
+  "adminFeeTypeTraining": "Training",
+  "adminFeeTypeCustomDev": "Custom Dev",
+  "adminFeeType": "Fee Type",
+  "adminSelectFeeType": "Select fee type",
+  "adminDeleteFee": "Delete Fee",
+  "adminDeleteFeeConfirm": "Are you sure you want to delete this implementation fee?",
+  "adminStoreDetails": "Store Details",
+  "adminMetrics": "Metrics",
+  "adminLoadMetrics": "Load Metrics",
+  "adminAddOverride": "Add Override",
+  "adminNoLimitOverrides": "No limit overrides set",
+  "adminValueWithValue": "Value: {value}",
+  "@adminValueWithValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "adminReasonWithValue": "Reason: {reason}",
+  "@adminReasonWithValue": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "adminExpiresWithValue": "Expires: {expiresAt}",
+  "@adminExpiresWithValue": {
+    "placeholders": {
+      "expiresAt": {
+        "type": "String"
+      }
+    }
+  },
+  "adminSuspendStore": "Suspend Store",
+  "adminSuspensionReasonHint": "Enter suspension reason",
+  "adminAddLimitOverride": "Add Limit Override",
+  "adminLimitKey": "Limit Key",
+  "adminOverrideValue": "Override Value",
+  "adminOverrideValueHint": "Enter value",
+  "adminOverrideReasonHint": "Why is this override needed?",
+  "adminSetOverride": "Set Override",
+  "adminNoHardwareSales": "No hardware sales found",
+  "adminSnWithValue": "S/N: {serial}",
+  "@adminSnWithValue": {
+    "placeholders": {
+      "serial": {
+        "type": "String"
+      }
+    }
+  },
+  "adminSoldWithValue": "Sold: {date}",
+  "@adminSoldWithValue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "adminRecordHardwareSale": "Record Hardware Sale",
+  "adminItemTypeScanner": "Scanner",
+  "adminItemType": "Item Type",
+  "adminSelectItemType": "Select item type",
+  "adminEditHardwareSale": "Edit Hardware Sale",
+  "adminDeleteSale": "Delete Sale",
+  "adminDeleteSaleConfirm": "Are you sure you want to delete this hardware sale?",
+  "adminSelectFiltersPayments": "Select filters to load payments",
+  "adminPaymentCash": "CASH",
+  "adminPaymentCardMada": "CARD MADA",
+  "adminPaymentCardVisa": "CARD VISA",
+  "adminPaymentCardMaster": "CARD MASTERCARD",
+  "adminPaymentStoreCredit": "STORE CREDIT",
+  "adminPaymentGiftCard": "GIFT CARD",
+  "adminPaymentMobile": "MOBILE PAYMENT",
+  "adminMethod": "Method",
+  "adminAllMethods": "All Methods",
+  "adminSarAmount": ". {amount}",
+  "@adminSarAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "adminPaymentGateways": "Payment Gateways",
+  "adminWebhookWithValue": "Webhook: {url}",
+  "@adminWebhookWithValue": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "adminAddGateway": "Add Gateway",
+  "adminSelectEnvironment": "Select environment",
+  "adminEditGateway": "Edit Gateway",
+  "adminDeleteGateway": "Delete Gateway",
+  "adminDeleteGatewayConfirm": "Are you sure you want to delete this gateway?",
+  "adminActionRoleCreated": "Role Created",
+  "adminActionRoleUpdated": "Role Updated",
+  "adminActionRoleDeleted": "Role Deleted",
+  "adminActionUserCreated": "User Created",
+  "adminActionUserUpdated": "User Updated",
+  "adminActionUserDeactivated": "User Deactivated",
+  "adminActionUserActivated": "User Activated",
+  "adminAllActions": "All Actions",
+  "adminAllEntities": "All Entities",
+  "adminNoActivityLogs": "No activity logs found",
+  "adminPageOfLast": "Page {page} of {lastPage}",
+  "@adminPageOfLast": {
+    "placeholders": {
+      "page": {
+        "type": "String"
+      },
+      "lastPage": {
+        "type": "String"
+      }
+    }
+  },
+  "adminExpenseSupplies": "Supplies",
+  "adminExpenseFood": "Food",
+  "adminExpenseTransport": "Transport",
+  "adminExpenseUtility": "Utility",
+  "adminAllCategories": "All Categories",
+  "adminLoadingExpenses": "Loading expenses...",
+  "adminNoExpensesFound": "No expenses found",
+  "adminExportSubscriptions": "Export Subscriptions",
+  "adminConversionRate": "Conversion Rate",
+  "adminChurnPeriod": "Churn (Period)",
+  "adminAvgSubAge": "Avg Sub Age",
+  "adminStatusBreakdown": "Status Breakdown",
+  "adminLifecycleTrend": "Lifecycle Trend",
+  "adminNoTrendData": "No trend data",
+  "adminLoadingSubAnalytics": "Loading subscription analytics...",
+  "adminExportStores": "Export Stores",
+  "adminExportReadyRecords": "Export ready: {count} records",
+  "@adminExportReadyRecords": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "adminExportAgain": "Export Again",
+  "adminTotalStores": "Total Stores",
+  "adminHealthSummary": "Health Summary",
+  "adminNoHealthDataToday": "No health data today",
+  "adminTopStores": "Top Stores",
+  "adminLoadingStoreAnalytics": "Loading store analytics...",
+  "adminExportRevenue": "Export Revenue",
+  "adminMRR": "MRR",
+  "adminARR": "ARR",
+  "adminUpcomingRenewals": "Upcoming Renewals",
+  "adminRevenueByPlan": "Revenue by Plan",
+  "adminNoPlanDataAvailable": "No plan data available",
+  "adminLoadingRevenueData": "Loading revenue data...",
+  "adminLogLevelDebug": "Debug",
+  "adminLogLevelInfo": "Info",
+  "adminLogLevelWarning": "Warning",
+  "adminLevel": "Level",
+  "adminEventTypeConfig": "Config Change",
+  "adminEventTypeCron": "Cron Job",
+  "adminType": "Type",
+  "adminNoPlatformEvents": "No platform events found",
+  "adminConfidenceWithPct": "Confidence: {pct}%",
+  "@adminConfidenceWithPct": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "adminWinnerWithValue": "Winner: {winner}",
+  "@adminWinnerWithValue": {
+    "placeholders": {
+      "winner": {
+        "type": "String"
+      }
+    }
+  },
+  "adminVariantResults": "Variant Results",
+  "adminNoResultsYet": "No results yet",
+  "adminControl": "Control",
+  "adminImpressions": "Impressions",
+  "adminConversions": "Conversions",
+  "adminRate": "Rate",
+  "adminStoreManagement": "Store Management",
+  "adminCreateStore": "Create Store",
+  "adminPageOfLastState": "Page {current} of {last}",
+  "@adminPageOfLastState": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "adminOrganizationName": "Organization Name",
+  "adminOrgNameHint": "Enter organization name",
+  "adminStoreNameHint": "Enter store name",
+  "adminProviderOpenAI": "OpenAI",
+  "adminProviderAnthropic": "Anthropic",
+  "adminProviderGoogle": "Google",
+  "adminHintGpt4o": "GPT-4o",
+  "adminDeleteModelQuote": "Delete model \"{name}\"?",
+  "@adminDeleteModelQuote": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adminStoreHealth": "Store Health",
+  "adminHealthScore": "Health Score",
+  "adminServices": "Services",
+  "adminNoStoreHealthData": "No store health data available",
+  "adminConfigs": "Configs",
+  "adminMappings": "Mappings",
+  "adminExports": "Exports",
+  "adminNoAccountingConfigs": "No accounting configs",
+  "adminNoExports": "No exports",
+  "adminNoAutoExportConfigs": "No auto-export configs",
+  "adminSystemRole": "System Role",
+  "adminPermissionsWithCount": "Permissions ({count})",
+  "@adminPermissionsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "adminDeleteRole": "Delete Role",
+  "adminDeleteRoleConfirm": "Are you sure you want to delete this role? This cannot be undone.",
+  "adminStatusWarning": "WARNING",
+  "adminStatusCritical": "CRITICAL",
+  "adminStatusUnknown": "UNKNOWN",
+  "adminAllStatuses": "All Statuses",
+  "adminNoHealthChecks": "No health checks",
+  "adminPlatformAnnouncements": "Platform Announcements",
+  "adminPageOfLastTotal": "Page {current} of {last} ({total} total)",
+  "@adminPageOfLastTotal": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "adminFeatureAdoption": "Feature Adoption",
+  "adminNoFeatureDataAvailable": "No feature data available",
+  "adminTrend": "Trend",
+  "adminLoadingFeatureData": "Loading feature data...",
+  "adminPageOfLastSlash": "{current} / {last}",
+  "@adminPageOfLastSlash": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "adminChannelWhatsApp": "WhatsApp",
+  "adminChannel": "Channel",
+  "adminStatus": "Status",
+  "adminNoNotificationLogs": "No notification logs found",
+  "adminDatabase": "Database",
+  "adminNoDatabaseBackups": "No database backups",
+  "adminNoProviderBackups": "No provider backups",
+  "adminNoThawaniOrders": "No Thawani orders",
+  "adminNoStoreConfigs": "No store configs",
+  "adminLoadingRefunds": "Loading refunds...",
+  "adminNoRefundsFound": "No refunds found",
+  "adminDeploymentReleases": "Deployment Releases",
+  "adminPlatform": "Platform",
+  "adminLoadReleases": "Load releases",
+  "adminNoReleasesFound": "No releases found",
+  "adminNoBackupsFound": "No backups found",
+  "adminStartNewBackup": "Start a new manual database backup?",
+  "adminPageTypeLegal": "Legal",
+  "adminPageTypeMarketing": "Marketing",
+  "adminNoPagesFound": "No pages found",
+  "adminMonitored": "Monitored",
+  "adminWithErrors": "With Errors",
+  "adminTotalErrorsToday": "Total Errors Today",
+  "adminNoSyncData": "No sync data",
+  "adminLoadingSystemHealth": "Loading system health...",
+  "adminAdminDetail": "Admin Detail",
+  "adminAccountInfo": "Account Info",
+  "adminNoRolesAssigned": "No roles assigned",
+  "adminReset2FA": "Reset 2FA",
+  "adminClear2FAHint": "Clear 2FA; admin must re-enroll",
+  "adminRegistrationQueue": "Registration Queue",
+  "adminContactEmailLine": "{contact} • {email}",
+  "@adminContactEmailLine": {
+    "placeholders": {
+      "contact": {
+        "type": "String"
+      },
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "adminRejectRegistration": "Reject Registration",
+  "adminRejectReasonHint": "Explain why this registration is rejected",
+  "subSubscribedSuccessfully": "Subscribed successfully!",
+  "subPlanChangedSuccessfully": "Plan changed successfully!",
+  "subCancelled": "Subscription cancelled.",
+  "subResumed": "Subscription resumed!",
+  "subAddNamedAddon": "Add {name}?",
+  "@subAddNamedAddon": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subRemoveNamedAddon": "Remove {name}?",
+  "@subRemoveNamedAddon": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subRemoveConfirm": "Are you sure you want to remove {name} from your subscription?",
+  "@subRemoveConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subActionAdd": "Add",
+  "subActionRemove": "Remove",
+  "subActionKeep": "Keep",
+  "subSubscribeToPlan": "Subscribe to {name}?",
+  "@subSubscribeToPlan": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subActionSubscribe": "Subscribe",
+  "subProceedToPayment": "Proceed to Payment",
+  "subPageOfLast": "Page {current} of {last}",
+  "@subPageOfLast": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "subFeatureLocked": "Feature Locked",
+  "subFeatureLockedBody": "This feature requires a higher plan. Upgrade to unlock {name} and more.",
+  "@subFeatureLockedBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subCurrentColon": "Current: ",
+  "subRequiredColon": "Required: ",
+  "subAvailablePlans": "Available Plans",
+  "subNotNow": "Not Now",
+  "subNoFeaturesListed": "No features listed for this plan.",
+  "subBadgeTrial": "Trial",
+  "subBadgeGracePeriod": "Grace Period",
+  "subBadgePastDue": "Past Due",
+  "subDueDate": "Due: {date}",
+  "@subDueDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subPerMonth": "/month",
+  "subPerYear": "/year",
+  "subPerYearShort": "/yr",
+  "subPerMonthShort": "/mo",
+  "subFreeTrialDays": "{days}-day free trial",
+  "@subFreeTrialDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "subGracePeriodActive": "Grace Period Active",
+  "subSubscriptionExpired": "Subscription Expired",
+  "subExpiredRenewMessage": "Your subscription has expired. Renew now to restore access.",
+  "subGraceDaysRemaining": "{days} day(s) remaining in grace period. Renew to avoid losing access.",
+  "@subGraceDaysRemaining": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "subGraceEndsToday": "Grace period ends today. Renew immediately.",
+  "subInvoice": "Invoice",
+  "subCreated": "Created",
+  "subDueDateLabel": "Due Date",
+  "subPaidOn": "Paid On",
+  "subSubtotal": "Subtotal",
+  "subVat15": "VAT (15%)",
+  "subTotal": "Total",
+  "subDownloadPdfInvoice": "Download PDF Invoice",
+  "subDownloading": "Downloading...",
+  "subQty": "Qty",
+  "subUnit": "Unit",
+  "subDueColon": "Due: {date}",
+  "@subDueColon": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subPaidColon": "Paid: {date}",
+  "@subPaidColon": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subFilterAll": "All",
+  "subFilterPaid": "Paid",
+  "subFilterPending": "Pending",
+  "subFilterOverdue": "Overdue",
+  "subFilterCancelled": "Cancelled",
+  "subRenewsOn": "Renews: {date}",
+  "@subRenewsOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subUsageUnlimited": "{current} / ∞",
+  "@subUsageUnlimited": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      }
+    }
+  },
+  "subUsageCounted": "{current} / {max}",
+  "@subUsageCounted": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "subLimitProducts": "Products",
+  "subLimitStaffMembers": "Staff Members",
+  "subLimitCashierTerminals": "Cashier Terminals",
+  "subLimitBranches": "Branches",
+  "subLimitTransactionsPerMonth": "Monthly Transactions",
+  "subLimitStorageMb": "Storage (MB)",
+  "subLimitPdfReportsPerMonth": "PDF Reports / Month",
+  "staffRoleOrType": "Role / Type",
+  "staffContact": "Contact",
+  "staffEditRole": "Edit role",
+  "staffFailedLoadPermissions": "Failed to load permissions: {message}",
+  "@staffFailedLoadPermissions": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "staffNoPermission": "No permission",
+  "staffRequiresPinOverride": "Requires PIN override",
+  "staffNoActionPermission": "You do not have permission for this action",
+  "staffAttInLabel": "In: {time}",
+  "@staffAttInLabel": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "staffAttOutLabel": "Out: {time}",
+  "@staffAttOutLabel": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "staffAttBreakLabel": "Break: {min}m",
+  "@staffAttBreakLabel": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "staffAttOTLabel": "OT: {min}m",
+  "@staffAttOTLabel": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "staffMemberRequired": "{label} *",
+  "@staffMemberRequired": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "staffFullNameLabel": "{first} {last}",
+  "@staffFullNameLabel": {
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "staffShiftLabel": "{name} ({start} - {end})",
+  "@staffShiftLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "staffClockedIn": "Clocked in",
+  "staffClockedOut": "Clocked out",
+  "staffDateRangeLabel": "{start} – {end}",
+  "@staffDateRangeLabel": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "staffCommissionTitle": "{name} - {label}",
+  "@staffCommissionTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "staffDeleteStaffConfirm": "{prompt} {first} {last}?",
+  "@staffDeleteStaffConfirm": {
+    "placeholders": {
+      "prompt": {
+        "type": "String"
+      },
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "staffDeleteRoleConfirm": "{prompt} \"{name}\"?",
+  "@staffDeleteRoleConfirm": {
+    "placeholders": {
+      "prompt": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pcZatcaQr": "ZATCA QR",
+  "pcBold": "Bold",
+  "pcGridLayout": "Grid Layout",
+  "pcGridDims": "{rows} rows × {cols} cols",
+  "@pcGridDims": {
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      },
+      "cols": {
+        "type": "String"
+      }
+    }
+  },
+  "pcButtonsWithCount": "Buttons ({count})",
+  "@pcButtonsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "pcNoQuickButtons": "No quick access buttons configured",
+  "pcReceiptLogo": "Logo",
+  "pcHeaderLine1": "Header Line 1",
+  "pcHeaderLine2": "Header Line 2",
+  "pcFooter": "Footer",
+  "pcShowVatNumber": "Show VAT Number",
+  "pcShowLoyaltyPoints": "Show Loyalty Points",
+  "pcCloneCategorySuccess": "Category cloned successfully",
+  "pcCloneProductSuccess": "Product cloned successfully",
+  "pcCloneAllSuccess": "All predefined products cloned successfully",
+  "pcCloneAllProducts": "Clone All Products",
+  "pcCloneAll": "Clone All",
+  "pcCloneCategory": "Clone Category",
+  "pcCloneCategoryConfirm": "Clone \"{name}\" and all its products to your store?",
+  "@pcCloneCategoryConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pcClone": "Clone",
+  "pcBusinessTypeColon": "Business Type:",
+  "pcNoPredefinedCategories": "No predefined categories found",
+  "pcCloneToMyStore": "Clone to my store",
+  "pcCloneProduct": "Clone Product",
+  "pcNoPredefinedProducts": "No predefined products found",
+  "pcSkuLine": "SKU: {sku}",
+  "@pcSkuLine": {
+    "placeholders": {
+      "sku": {
+        "type": "String"
+      }
+    }
+  },
+  "pcPageOfLast": "Page {current} of {last}",
+  "@pcPageOfLast": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "acctExportTypesOptional": "Export Types (optional)",
+  "acctDeleteMapping": "Delete Mapping",
+  "acctDeleteMappingConfirm": "Are you sure you want to remove this mapping?",
+  "acctEnableAutoExport": "Enable Auto Export",
+  "acctExportTypes": "Export Types",
+  "acctScheduleInfo": "Schedule Info",
+  "acctNoRunsScheduled": "No runs scheduled yet",
+  "acctSelectProvider": "Select Provider",
+  "acctConnectProvider": "Connect {name}",
+  "@acctConnectProvider": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "acctDisconnectProvider": "Disconnect Provider",
+  "acctDisconnect": "Disconnect",
+  "acctDateRangeArrow": "{start} → {end}",
+  "@acctDateRangeArrow": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "acctEntriesWithCount": "{count} entries",
+  "@acctEntriesWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniPushToThawani": "Push to Thawani",
+  "thawaniPullFromThawani": "Pull from Thawani",
+  "thawaniNoCategoryMappings": "No category mappings yet",
+  "thawaniViewLogs": "View Logs",
+  "thawaniPushPullCatsProds": "Push/pull products & categories",
+  "thawaniCategoriesMapped": "{count} categories mapped",
+  "@thawaniCategoriesMapped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniOpsToday": "{count} operations today",
+  "@thawaniOpsToday": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniCategorySync": "Category Sync",
+  "thawaniProductSync": "Product Sync",
+  "thawaniSyncQueue": "Sync Queue",
+  "thawaniProcessQueueNow": "Process Queue Now",
+  "thawaniNoSyncLogs": "No sync logs found",
+  "thawaniNotSet": "Not set",
+  "thawaniLabel": "Thawani",
+  "thawaniUnmapped": "Unmapped",
+  "thawaniPendingSync": "Pending Sync",
+  "thawaniSyncsToday": "Syncs Today",
+  "thawaniFailedSyncsTodayCount": "{count} failed syncs today",
+  "@thawaniFailedSyncsTodayCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "thawaniThawaniLine": "Thawani: {id}",
+  "@thawaniThawaniLine": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniCategoryNum": "Category #{id}",
+  "@thawaniCategoryNum": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "genericProcessing": "Processing",
+  "genericEntityType": "Entity Type",
+  "genericPaginationInfo": "Page {current} of {total} ({count} total)",
+  "@genericPaginationInfo": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" },
+      "count": { "type": "int" }
+    }
+  },
+  "labelsPrintedBy": "Printed By",
+  "labelsAddElement": "Add Element",
+  "labelsProductName": "Product Name",
+  "labelsBarcodeCode128": "Code 128",
+  "labelsBarcodeEan13": "EAN-13",
+  "labelsBarcodeUpca": "UPC-A",
+  "labelsBarcodeCode39": "Code 39",
+  "labelsBarcodeItf": "ITF",
+  "labelsSkuLine": "SKU: {sku}",
+  "@labelsSkuLine": {
+    "placeholders": {
+      "sku": {
+        "type": "String"
+      }
+    }
+  },
+  "labelsItemsWithCount": "{count} {items}",
+  "@labelsItemsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "items": {
+        "type": "String"
+      }
+    }
+  },
+  "labelsTotalProductsLine": "{label}: {count}",
+  "@labelsTotalProductsLine": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "cgBasket": "Basket",
+  "cgUpsell": "Upsell",
+  "cgItemsPerMin": "Items/min",
+  "cgTotalTxn": "Total TXN",
+  "cgUpsellRate": "Upsell Rate",
+  "cgZeroVoidRate": "Zero Void Rate",
+  "cgConsistency": "Consistency",
+  "cgEarlyBird": "Early Bird",
+  "cgRisk": "Risk",
+  "cgReview": "Review",
+  "cgReviewed": "Reviewed",
+  "cgTxnAbbr": "TXN",
+  "cgIpmAbbr": "IPM",
+  "onboardingStoreSettings": "Store Settings",
+  "onboardingVatHint": "VAT",
+  "onboardingOptionalHint": "Optional",
+  "onboardingCustomHeaderHint": "Custom header text",
+  "onboardingThankYouHint": "Thank you for shopping!",
+  "onboardingSkipSetup": "Skip Setup",
+  "onboardingTaxIncludedNote": "When enabled, product prices are displayed with tax included.",
+  "onboardingAllSet": "You're all set!",
+  "hardwareSkuLine": "SKU: {sku}",
+  "@hardwareSkuLine": {
+    "placeholders": {
+      "sku": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareViewEdit": "View / Edit",
+  "hardwareAddToCart": "Add to Cart",
+  "hardwareAddNewProduct": "Add New Product",
+  "hardwareNoEvents": "No events recorded",
+  "hardwareConfiguredCount": "{count} Configured",
+  "@hardwareConfiguredCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareConnectedCount": "{count} Connected",
+  "@hardwareConnectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareOfflineCount": "{count} Offline",
+  "@hardwareOfflineCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareScan": "Scan",
+  "hardwareNoCertified": "No certified hardware found",
+  "hardwareCertified": "Certified",
+  "auLoadingHistory": "Loading history...",
+  "auNoUpdateHistory": "No update history",
+  "auHealthCheckFailed": "Post-update health check failed",
+  "auTapToCheck": "Tap to check for updates",
+  "auLoadingChangelog": "Loading changelog...",
+  "auNoReleasesFound": "No releases found",
+  "zatcaTotalInvoices": "Total Invoices",
+  "zatcaSimulation": "Simulation",
+  "zatcaOtp": "ZATCA OTP",
+  "zatcaTotalVat": "Total VAT",
+  "zatcaStandardInvoices": "Standard Invoices",
+  "zatcaSimplifiedInvoices": "Simplified Invoices",
+  "promoNoFound": "No promotions found",
+  "promoFilter": "Filter Promotions",
+  "promoDeleteConfirm": "Delete \"{name}\"? This action cannot be undone.",
+  "@promoDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "promoEdit": "Edit Promotion",
+  "promoTypeRequired": "Type *",
+  "promoTypeLine": "Type: {type}",
+  "@promoTypeLine": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "branchesType": "Type",
+  "branchesBranchLabel": "Branch",
+  "branchesTimezoneHint": "Asia/Muscat",
+  "branchesCountryHint": "OM",
+  "branchesStaffColumn": "Staff",
+  "backupStorageNotLoaded": "Storage info not loaded",
+  "backupScheduleNotLoaded": "Schedule not loaded",
+  "backupAutoSettings": "Auto-Backup Settings",
+  "backupNoLoaded": "No backups loaded",
+  "securityNoAuditLogs": "No audit logs found.",
+  "marketplaceContinue": "Continue",
+  "settingsSpaceLabel": "Space",
+  "payments50Halalas": "50 Halalas",
+  "payments25Halalas": "25 Halalas",
+  "payments10Halalas": "10 Halalas",
+  "payments5Halalas": "5 Halalas",
+  "accessProtanopia": "Protanopia",
+  "accessDeuteranopia": "Deuteranopia",
+  "accessTritanopia": "Tritanopia",
+  "commonAll": "All",
+  "commonAllBranches": "All Branches",
+  "commonAllQueues": "All Queues",
+  "commonAllGroups": "All Groups",
+  "commonSeverity": "Severity",
+  "commonCategory": "Category",
+  "commonChannel": "Channel",
+  "commonAction": "Action",
+  "adminPageOf": "Page {current} of {last}",
+  "@adminPageOf": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "adminPageOfTotal": "Page {current} of {last} ({total} total)",
+  "@adminPageOfTotal": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "adminTeamMember": "Team Member",
+  "admin2FA": "2FA",
+  "adminTeam": "Admin Team",
+  "adminAddTeamMember": "Add Team Member",
+  "adminSubscriptionsOverview": "Subscriptions Overview",
+  "adminSubscriptionPlans": "Subscription Plans",
+  "adminAddNoteToStart": "Add a note above to get started",
+  "adminAddNote": "Add Note",
+  "adminTypeNoteHint": "Type your note here...",
+  "adminMarkAsPaid": "Mark as Paid",
+  "adminRetryPayment": "Retry Payment",
+  "adminInvestigating": "Investigating",
+  "adminNoSecurityAlerts": "No security alerts found",
+  "adminNoSecurityAlertsShort": "No security alerts",
+  "adminWhatsApp": "WhatsApp",
+  "adminNoFailedPayments": "No failed payments",
+  "adminLoadingGiftCards": "Loading gift cards...",
+  "adminNoGiftCards": "No gift cards found",
+  "adminLoadingFinancial": "Loading financial data...",
+  "adminNoMarketplaceStores": "No marketplace stores found",
+  "adminLoginAttempts": "Login Attempts",
+  "adminIpManagement": "IP Management",
+  "adminNoActivityLogged": "No activity logged",
+  "adminFailedJobs24h": "Failed Jobs (24h)",
+  "adminSections": "Sections",
+  "adminCmsPageDetail": "CMS Page Detail",
+  "adminContentEn": "Content (EN)",
+  "adminContentAr": "Content (AR)",
+  "adminKeyMetrics": "Key Metrics",
+  "adminLoadingAnalytics": "Loading analytics...",
+  "adminNoVariantsYet": "No variants added yet",
+  "adminViewResults": "View Results",
+  "adminNoSettlements": "No settlements found",
+  "adminNoTickets": "No tickets found",
+  "adminNoCannedResponses": "No canned responses found",
+  "adminPaymentInformation": "Payment Information",
+  "adminRevenueByStatus": "Revenue by Status",
+  "adminNoFeatureFlags": "No feature flags configured",
+  "adminNoFailedJobs": "No failed jobs",
+  "adminInviteAdmin": "Invite Admin",
+  "adminNoAdminUsers": "No admin users found",
+  "adminLoadingCashSessions": "Loading cash sessions...",
+  "adminSyncOperations": "Sync Operations",
+  "adminNoPermissionsFound": "No permissions found",
+  "adminNoAbTests": "No A/B tests found",
+  "adminActivityLogs": "Activity Logs",
+  "adminLoadOverview": "Load overview",
+  "adminNoPlatformData": "No platform data",
+  "adminNoActiveRelease": "No active release",
+  "adminPaymentRetryRules": "Payment Retry Rules",
+  "adminRetryConfiguration": "Retry Configuration",
+  "adminSaveRules": "Save Rules",
+  "adminCreateManualInvoice": "Create Manual Invoice",
+  "adminSearchInvoices": "Search for invoices",
+  "adminKnowledgeBaseArticles": "Knowledge Base Articles",
+  "adminGenerateTempPassword": "Generate temporary password",
+  "adminForcePasswordChange": "Force Password Change",
+  "adminForcePasswordChangeDesc": "Require user to change password on next login",
+  "adminNoRoleTemplates": "No role templates",
+  "adminNoDailySales": "No daily sales data",
+  "adminNoProductSales": "No product sales data",
+  "adminNoUsersFound": "No users found",
+  "adminSearchUsers": "Search for users",
+  "adminNoAbTestsLinked": "No A/B tests linked to this flag",
+  "staffPredefinedRoleNote": "This is a system-defined role. Its name cannot be changed, but you can customize its permissions.",
+  "staffCountSelected": "{count} selected",
+  "@staffCountSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "staffPermissionsActiveCount": "{active}/{total} active",
+  "@staffPermissionsActiveCount": {
+    "placeholders": {
+      "active": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  }
 }

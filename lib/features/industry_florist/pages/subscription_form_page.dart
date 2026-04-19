@@ -111,6 +111,7 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosSearchableDropdown<String>(
+              hint: l10n.selectCustomer,
               label: l10n.debitsCustomer,
               items: customers.map((c) => PosDropdownItem(value: c.id, label: c.name)).toList(),
               selectedValue: _selectedCustomerId,
@@ -120,11 +121,12 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _arrangementTemplateIdCtrl,
-              label: 'Arrangement Template (optional)',
-              hint: 'Select template arrangement',
+              label: l10n.floristArrangementOptional,
+              hint: l10n.floristSelectTemplate,
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<FlowerSubscriptionFrequency>(
+              hint: l10n.selectFrequency,
               label: l10n.floristFrequency,
               items: FlowerSubscriptionFrequency.values.map((f) => PosDropdownItem(value: f, label: f.value)).toList(),
               selectedValue: _frequency,
@@ -136,6 +138,7 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
+              hint: l10n.selectDay,
               label: l10n.floristDeliveryDay,
               items: [
                 'monday',
@@ -152,11 +155,11 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
               clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _deliveryAddressCtrl, label: 'Delivery Address', hint: 'Full delivery address', maxLines: 2),
+            PosTextField(controller: _deliveryAddressCtrl, label: l10n.floristDeliveryAddress, hint: l10n.floristDeliveryAddressHint, maxLines: 2),
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _pricePerDeliveryCtrl,
-              label: 'Price Per Delivery (\u0081)',
+              label: l10n.floristPricePerDelivery,
               hint: '0.000',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
@@ -168,7 +171,7 @@ class _SubscriptionFormPageState extends ConsumerState<SubscriptionFormPage> {
                   controller: TextEditingController(
                     text: '${_nextDeliveryDate.day}/${_nextDeliveryDate.month}/${_nextDeliveryDate.year}',
                   ),
-                  label: 'Next Delivery Date',
+                  label: l10n.floristNextDeliveryDate,
                   suffixIcon: Icons.calendar_today,
                   readOnly: true,
                 ),

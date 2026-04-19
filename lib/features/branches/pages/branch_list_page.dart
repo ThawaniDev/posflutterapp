@@ -68,6 +68,7 @@ class _BranchListPageState extends ConsumerState<BranchListPage> {
         SizedBox(
           width: 180,
           child: PosSearchableDropdown<bool?>(
+            hint: l10n.allStatuses,
             items: statusOptions,
             selectedValue: _selectedStatus,
             onChanged: (v) {
@@ -122,10 +123,10 @@ class _BranchListPageState extends ConsumerState<BranchListPage> {
               ),
               columns: [
                 PosTableColumn(title: l10n.branches),
-                PosTableColumn(title: 'Type'),
-                PosTableColumn(title: 'Location'),
+                PosTableColumn(title: l10n.branchesType),
+                PosTableColumn(title: l10n.branchesLocation),
                 PosTableColumn(title: l10n.allStatus),
-                PosTableColumn(title: 'Staff', numeric: true),
+                PosTableColumn(title: l10n.branchesStaffColumn, numeric: true),
               ],
               cellBuilder: (b, colIndex, col) {
                 switch (colIndex) {
@@ -290,7 +291,7 @@ class _BranchNameCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final accent = branch.isActive ? AppColors.success : AppColors.textSecondary;
+    final accent = branch.isActive ? AppColors.success : AppColors.mutedFor(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
@@ -339,12 +340,13 @@ class _BranchTypeCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     if (branch.isMainBranch) {
       return PosBadge(label: l10n.branchesMain, variant: PosBadgeVariant.info);
     }
     if (branch.isWarehouse) {
       return PosBadge(label: l10n.branchesWarehouse, variant: PosBadgeVariant.neutral);
     }
-    return PosBadge(label: 'Branch', variant: PosBadgeVariant.neutral);
+    return PosBadge(label: l10n.branchesBranchLabel, variant: PosBadgeVariant.neutral);
   }
 }

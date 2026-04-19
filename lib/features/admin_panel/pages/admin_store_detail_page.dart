@@ -49,7 +49,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
     final hasError = storeState is AdminStoreDetailError;
 
     return PosListPage(
-      title: 'Store Details',
+      title: l10n.adminStoreDetails,
       showSearch: false,
       isLoading: isLoading,
       hasError: hasError,
@@ -62,7 +62,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
             onChanged: (i) => setState(() => _currentTab = i),
             tabs: [
               PosTabItem(label: l10n.overview),
-              const PosTabItem(label: 'Metrics'),
+              PosTabItem(label: l10n.adminMetrics),
               PosTabItem(label: l10n.settingsPosLimits),
             ],
           ),
@@ -280,7 +280,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
               Icon(Icons.analytics_outlined, size: 48, color: AppColors.textMutedLight),
               AppSpacing.gapH12,
               PosButton(
-                label: 'Load Metrics',
+                label: l10n.adminLoadMetrics,
                 onPressed: () => ref.read(adminStoreDetailProvider.notifier).loadMetrics(widget.storeId),
               ),
             ],
@@ -378,7 +378,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
     final state = ref.watch(limitOverrideProvider);
 
     if (state is LimitOverrideListLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return const PosLoading();
     }
     if (state is LimitOverrideListError) {
       return Center(
@@ -408,7 +408,7 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
               children: [
                 Text(l10n.limitOverrides, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
                 PosButton(
-                  label: 'Add Override',
+                  label: l10n.adminAddOverride,
                   size: PosButtonSize.sm,
                   icon: Icons.add,
                   onPressed: () => _showLimitOverrideDialog(),
@@ -484,8 +484,8 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Suspend Store'),
-        content: PosTextField(controller: reasonCtrl, label: l10n.reason, hint: 'Enter suspension reason', maxLines: 3),
+        title: Text(l10n.adminSuspendStore),
+        content: PosTextField(controller: reasonCtrl, label: l10n.reason, hint: l10n.adminSuspensionReasonHint, maxLines: 3),
         actions: [
           PosButton(onPressed: () => Navigator.of(ctx).pop(), variant: PosButtonVariant.ghost, label: l10n.cancel),
           PosButton(
@@ -509,21 +509,26 @@ class _AdminStoreDetailPageState extends ConsumerState<AdminStoreDetailPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Add Limit Override'),
+        title: Text(l10n.adminAddLimitOverride),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            PosTextField(controller: keyCtrl, label: 'Limit Key', hint: 'e.g., max_products'),
+            PosTextField(controller: keyCtrl, label: l10n.adminLimitKey, hint: 'e.g., max_products'),
             AppSpacing.gapH12,
-            PosTextField(controller: valueCtrl, label: 'Override Value', hint: 'Enter value', keyboardType: TextInputType.number),
+            PosTextField(
+              controller: valueCtrl,
+              label: l10n.adminOverrideValue,
+              hint: l10n.adminOverrideValueHint,
+              keyboardType: TextInputType.number,
+            ),
             AppSpacing.gapH12,
-            PosTextField(controller: reasonCtrl, label: l10n.subscriptionCancelReasonLabel, hint: 'Why is this override needed?'),
+            PosTextField(controller: reasonCtrl, label: l10n.subscriptionCancelReasonLabel, hint: l10n.adminOverrideReasonHint),
           ],
         ),
         actions: [
           PosButton(onPressed: () => Navigator.of(ctx).pop(), variant: PosButtonVariant.ghost, label: l10n.cancel),
           PosButton(
-            label: 'Set Override',
+            label: l10n.adminSetOverride,
             onPressed: () {
               ref
                   .read(limitOverrideProvider.notifier)

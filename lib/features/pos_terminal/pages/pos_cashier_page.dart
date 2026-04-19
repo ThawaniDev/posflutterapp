@@ -926,7 +926,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                 const Spacer(),
                 if (cart.notes != null && cart.notes!.isNotEmpty)
                   Padding(
-                    padding: const EdgeInsets.only(right: AppSpacing.sm),
+                    padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
                     child: Icon(
                       Icons.note_alt_outlined,
                       size: 16,
@@ -1229,8 +1229,8 @@ class _CartItemTile extends ConsumerWidget {
       key: ValueKey('${item.product.id}_$index'),
       direction: DismissDirection.endToStart,
       background: Container(
-        alignment: Alignment.centerRight,
-        padding: const EdgeInsets.only(right: 16),
+        alignment: AlignmentDirectional.centerEnd,
+        padding: const EdgeInsetsDirectional.only(end: 16),
         color: AppColors.error,
         child: const Icon(Icons.delete_outline, color: Colors.white, size: 22),
       ),

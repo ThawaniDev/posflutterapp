@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_typography.dart';
@@ -379,8 +381,6 @@ class PosDataTable<T> extends StatelessWidget {
   Widget _buildTableContainer(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final effectiveMargin = headerPadding ?? const EdgeInsets.symmetric(horizontal: AppSpacing.xxxl);
-    final resolvedMargin = effectiveMargin.resolve(Directionality.of(context));
-    final availableWidth = MediaQuery.sizeOf(context).width - resolvedMargin.horizontal;
 
     return Container(
       margin: effectiveMargin,
@@ -390,12 +390,14 @@ class PosDataTable<T> extends StatelessWidget {
         border: showBorder ? Border.all(color: isDark ? AppColors.borderSubtleDark : AppColors.borderSubtleLight) : null,
       ),
       clipBehavior: Clip.antiAlias,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(minWidth: availableWidth > 0 ? availableWidth : 0),
-          child: _buildDataTable(context, availableWidth),
-        ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final availableWidth = constraints.maxWidth;
+          return _HorizontalTableScroll(
+            minWidth: availableWidth > 0 ? availableWidth : 0,
+            child: _buildDataTable(context, availableWidth),
+          );
+        },
       ),
     );
   }
@@ -454,7 +456,7 @@ class PosDataTable<T> extends StatelessWidget {
 
     // Actions column
     if (_hasActions) {
-      headerCols.add(const DataColumn(label: Text('ACTIONS')));
+      headerCols.add(DataColumn(label: Text(AppLocalizations.of(context)!.tableActionsHeader)));
     }
 
     return headerCols;
@@ -519,13 +521,16 @@ class PosDataTable<T> extends StatelessWidget {
       child: Row(
         children: [
           // "Showing X–Y of Z"
-          Text('Showing $start–$end of $totalItems', style: AppTypography.bodySmall.copyWith(color: mutedColor)),
+          Text(
+            AppLocalizations.of(context)!.tableShowingRange('$start', '$end', '$totalItems'),
+            style: AppTypography.bodySmall.copyWith(color: mutedColor),
+          ),
 
           const Spacer(),
 
           // Per-page selector
           if (onPerPageChanged != null) ...[
-            Text('Rows: ', style: AppTypography.bodySmall.copyWith(color: mutedColor)),
+            Text(AppLocalizations.of(context)!.tableRowsLabel, style: AppTypography.bodySmall.copyWith(color: mutedColor)),
             SizedBox(
               width: 100,
               child: PosSearchableDropdown<int>(
@@ -547,7 +552,7 @@ class PosDataTable<T> extends StatelessWidget {
             icon: const Icon(Icons.chevron_left_rounded, size: 20),
             iconSize: 20,
             splashRadius: 16,
-            tooltip: 'Previous page',
+            tooltip: AppLocalizations.of(context)!.tablePreviousPage,
           ),
           Text('$currentPage / $totalPages', style: AppTypography.labelMedium),
           IconButton(
@@ -555,7 +560,7 @@ class PosDataTable<T> extends StatelessWidget {
             icon: const Icon(Icons.chevron_right_rounded, size: 20),
             iconSize: 20,
             splashRadius: 16,
-            tooltip: 'Next page',
+            tooltip: AppLocalizations.of(context)!.tableNextPage,
           ),
         ],
       ),
@@ -697,7 +702,7 @@ class _RowActionsCell<T> extends StatelessWidget {
     // 3+ actions as popup menu
     return PopupMenuButton<int>(
       icon: const Icon(Icons.more_vert_rounded, size: 20),
-      tooltip: 'Actions',
+      tooltip: AppLocalizations.of(context)!.tableActionsTooltip,
       splashRadius: 16,
       itemBuilder: (_) => visible.asMap().entries.map((e) {
         final action = e.value;
@@ -715,6 +720,63 @@ class _RowActionsCell<T> extends StatelessWidget {
       onSelected: (index) => visible[index].onTap(item),
     );
   }
+}
+
+/// Horizontal scroll wrapper for the table body.
+///
+/// - Owns a [ScrollController] so the [Scrollbar] thumb stays visible and draggable.
+/// - Enables mouse-drag scrolling on desktop/web (trackpad + click-drag).
+class _HorizontalTableScroll extends StatefulWidget {
+  const _HorizontalTableScroll({required this.child, required this.minWidth});
+
+  final Widget child;
+  final double minWidth;
+
+  @override
+  State<_HorizontalTableScroll> createState() => _HorizontalTableScrollState();
+}
+
+class _HorizontalTableScrollState extends State<_HorizontalTableScroll> {
+  final ScrollController _controller = ScrollController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScrollConfiguration(
+      behavior: const _DragScrollBehavior(),
+      child: Scrollbar(
+        controller: _controller,
+        thumbVisibility: true,
+        trackVisibility: true,
+        child: SingleChildScrollView(
+          controller: _controller,
+          scrollDirection: Axis.horizontal,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minWidth: widget.minWidth),
+            child: widget.child,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Enables click-and-drag scrolling with a mouse (in addition to touch/trackpad).
+class _DragScrollBehavior extends MaterialScrollBehavior {
+  const _DragScrollBehavior();
+
+  @override
+  Set<PointerDeviceKind> get dragDevices => const {
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.trackpad,
+    PointerDeviceKind.stylus,
+  };
 }
 
 /// Full-width loading state with shimmer-like pulsing rows.
@@ -755,7 +817,11 @@ class _ErrorState extends StatelessWidget {
         Text(message, style: AppTypography.bodyMedium, textAlign: TextAlign.center),
         if (onRetry != null) ...[
           const SizedBox(height: AppSpacing.lg),
-          OutlinedButton.icon(onPressed: onRetry, icon: const Icon(Icons.refresh_rounded, size: 18), label: const Text('Retry')),
+          OutlinedButton.icon(
+            onPressed: onRetry,
+            icon: const Icon(Icons.refresh_rounded, size: 18),
+            label: Text(AppLocalizations.of(context)!.commonRetry),
+          ),
         ],
       ],
     );

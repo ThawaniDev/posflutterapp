@@ -486,7 +486,7 @@ class ReportBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(height / 2),
       ),
       child: FractionallySizedBox(
-        alignment: Alignment.centerLeft,
+        alignment: AlignmentDirectional.centerStart,
         widthFactor: pct,
         child: Container(
           decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(height / 2)),

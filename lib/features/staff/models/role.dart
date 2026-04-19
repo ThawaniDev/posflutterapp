@@ -9,6 +9,7 @@ class Role {
   final String guardName;
   final bool? isPredefined;
   final String? description;
+  final String? descriptionAr;
   final List<Permission>? permissions;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -22,10 +23,29 @@ class Role {
     this.guardName = 'staff',
     this.isPredefined,
     this.description,
+    this.descriptionAr,
     this.permissions,
     this.createdAt,
     this.updatedAt,
   });
+
+  /// Returns the localized display name based on the given locale.
+  /// Falls back to English [displayName] if Arabic is not available.
+  String localizedName(String locale) {
+    if (locale == 'ar' && displayNameAr != null && displayNameAr!.isNotEmpty) {
+      return displayNameAr!;
+    }
+    return displayName;
+  }
+
+  /// Returns the localized description based on the given locale.
+  /// Falls back to English [description] if Arabic is not available.
+  String? localizedDescription(String locale) {
+    if (locale == 'ar' && descriptionAr != null && descriptionAr!.isNotEmpty) {
+      return descriptionAr;
+    }
+    return description;
+  }
 
   factory Role.fromJson(Map<String, dynamic> json) {
     return Role(
@@ -37,6 +57,7 @@ class Role {
       guardName: json['guard_name'] as String? ?? 'staff',
       isPredefined: json['is_predefined'] as bool?,
       description: json['description'] as String?,
+      descriptionAr: json['description_ar'] as String?,
       permissions: json['permissions'] != null
           ? (json['permissions'] as List).map((p) => Permission.fromJson(p as Map<String, dynamic>)).toList()
           : null,
@@ -55,6 +76,7 @@ class Role {
       'guard_name': guardName,
       'is_predefined': isPredefined,
       'description': description,
+      'description_ar': descriptionAr,
       if (permissions != null) 'permissions': permissions!.map((p) => p.toJson()).toList(),
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
@@ -70,6 +92,7 @@ class Role {
     String? guardName,
     bool? isPredefined,
     String? description,
+    String? descriptionAr,
     List<Permission>? permissions,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -83,6 +106,7 @@ class Role {
       guardName: guardName ?? this.guardName,
       isPredefined: isPredefined ?? this.isPredefined,
       description: description ?? this.description,
+      descriptionAr: descriptionAr ?? this.descriptionAr,
       permissions: permissions ?? this.permissions,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,

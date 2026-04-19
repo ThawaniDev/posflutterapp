@@ -20,7 +20,6 @@ class InvoiceDetailPage extends ConsumerStatefulWidget {
 }
 
 class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   bool _isDownloadingPdf = false;
 
@@ -37,20 +36,20 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
     final state = ref.watch(invoiceDetailProvider(widget.invoiceId));
 
     return PosListPage(
-  title: l10n.subscriptionInvoiceDetails,
-  showSearch: false,
-  actions: [
-  if (state is InvoiceDetailLoaded)
-            IconButton(
-              icon: _isDownloadingPdf
-                  ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
-                  : const Icon(Icons.picture_as_pdf),
-              tooltip: l10n.subscriptionDownloadPdf,
-              onPressed: _isDownloadingPdf ? null : () => _downloadPdf(),
-            ),
-],
-  child: _buildBody(state),
-);
+      title: l10n.subscriptionInvoiceDetails,
+      showSearch: false,
+      actions: [
+        if (state is InvoiceDetailLoaded)
+          PosButton(
+            icon: Icons.picture_as_pdf,
+            label: l10n.subscriptionDownloadPdf,
+            size: PosButtonSize.sm,
+            isLoading: _isDownloadingPdf,
+            onPressed: _isDownloadingPdf ? null : () => _downloadPdf(),
+          ),
+      ],
+      child: _buildBody(state),
+    );
   }
 
   Widget _buildBody(InvoiceDetailState state) {
@@ -89,16 +88,16 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      invoice.invoiceNumber ?? 'Invoice',
+                      invoice.invoiceNumber ?? l10n.subInvoice,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     _buildStatusChip(statusName),
                   ],
                 ),
                 AppSpacing.verticalMd,
-                _buildInfoRow('Created', invoice.createdAt != null ? _formatDate(invoice.createdAt!) : '—'),
-                _buildInfoRow('Due Date', invoice.dueDate != null ? _formatDate(invoice.dueDate!) : '—'),
-                if (invoice.paidAt != null) _buildInfoRow('Paid On', _formatDate(invoice.paidAt!)),
+                _buildInfoRow(l10n.subCreated, invoice.createdAt != null ? _formatDate(invoice.createdAt!) : '—'),
+                _buildInfoRow(l10n.subDueDateLabel, invoice.dueDate != null ? _formatDate(invoice.dueDate!) : '—'),
+                if (invoice.paidAt != null) _buildInfoRow(l10n.subPaidOn, _formatDate(invoice.paidAt!)),
               ],
             ),
           ),
@@ -130,11 +129,11 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Qty: ${item.quantity ?? 1}',
+                                        '${l10n.subQty}: ${item.quantity ?? 1}',
                                         style: TextStyle(color: AppColors.textSecondaryLight, fontSize: 12),
                                       ),
                                       Text(
-                                        'Unit: ${item.unitPrice.toStringAsFixed(2)}',
+                                        '${l10n.subUnit}: ${item.unitPrice.toStringAsFixed(2)}',
                                         style: TextStyle(color: AppColors.textSecondaryLight, fontSize: 12),
                                       ),
                                       Text(
@@ -158,27 +157,31 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
                         children: [
                           Expanded(
                             flex: 4,
-                            child: Text(l10n.description,
+                            child: Text(
+                              l10n.description,
                               style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
                             ),
                           ),
                           Expanded(
                             flex: 1,
-                            child: Text(l10n.wameedAIQty,
+                            child: Text(
+                              l10n.wameedAIQty,
                               textAlign: TextAlign.center,
                               style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
                             ),
                           ),
                           Expanded(
                             flex: 2,
-                            child: Text(l10n.subscriptionUnitPrice,
+                            child: Text(
+                              l10n.subscriptionUnitPrice,
                               textAlign: TextAlign.end,
                               style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
                             ),
                           ),
                           Expanded(
                             flex: 2,
-                            child: Text(l10n.posTotal,
+                            child: Text(
+                              l10n.posTotal,
                               textAlign: TextAlign.end,
                               style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight, fontSize: 12),
                             ),
@@ -222,10 +225,10 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
             padding: AppSpacing.paddingAllMd,
             child: Column(
               children: [
-                _buildTotalRow('Subtotal', invoice.amount),
-                if (invoice.tax != null) ...[const Divider(), _buildTotalRow('VAT (15%)', invoice.tax!)],
+                _buildTotalRow(l10n.subSubtotal, invoice.amount),
+                if (invoice.tax != null) ...[const Divider(), _buildTotalRow(l10n.subVat15, invoice.tax!)],
                 const Divider(thickness: 2),
-                _buildTotalRow('Total', invoice.total, isBold: true, color: AppColors.primary),
+                _buildTotalRow(l10n.subTotal, invoice.total, isBold: true, color: AppColors.primary),
               ],
             ),
           ),
@@ -240,7 +243,7 @@ class _InvoiceDetailPageState extends ConsumerState<InvoiceDetailPage> {
             onPressed: _isDownloadingPdf ? null : () => _downloadPdf(),
             variant: PosButtonVariant.outline,
             icon: Icons.picture_as_pdf,
-            label: _isDownloadingPdf ? 'Downloading...' : 'Download PDF Invoice',
+            label: _isDownloadingPdf ? l10n.subDownloading : l10n.subDownloadPdfInvoice,
           ),
         ),
       ],

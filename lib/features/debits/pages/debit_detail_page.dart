@@ -124,7 +124,11 @@ class _DebitDetailPageState extends ConsumerState<DebitDetailPage> {
             icon: Icons.edit_outlined,
             variant: PosButtonVariant.outline,
             onPressed: () async {
-              await context.push('${Routes.debits}/${_debit!.id}/edit');
+              final result = await context.push<String>('${Routes.debits}/${_debit!.id}/edit');
+              if (!mounted) return;
+              if (result == 'updated') {
+                showPosSuccessSnackbar(context, l10n.debitsUpdatedSuccess);
+              }
               _loadDebit();
             },
           ),
@@ -170,7 +174,7 @@ class _DebitDetailPageState extends ConsumerState<DebitDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (debit.referenceNumber != null)
-                  Text(debit.referenceNumber!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                  Text(debit.referenceNumber!, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
                 AppSpacing.gapH4,
                 PosBadge(
                   label: _statusLabel(DebitStatus.fromValue(debit.status), l10n),
@@ -182,15 +186,24 @@ class _DebitDetailPageState extends ConsumerState<DebitDetailPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(l10n.debitsAmount, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+              Text(
+                l10n.debitsAmount,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Theme.of(context).brightness == Brightness.dark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                ),
+              ),
               Text(
                 debit.amount.toStringAsFixed(2),
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
               ),
               AppSpacing.gapH4,
               Text(
                 '${l10n.debitsRemainingBalance}: ${debit.remainingBalance.toStringAsFixed(2)}',
-                style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
+                style: TextStyle(
+                  fontSize: 13,
+                  color: Theme.of(context).brightness == Brightness.dark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                ),
               ),
             ],
           ),
@@ -238,12 +251,15 @@ class _DebitDetailPageState extends ConsumerState<DebitDetailPage> {
             flex: 2,
             child: Text(
               label,
-              style: const TextStyle(color: AppColors.textSecondary, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                color: Theme.of(context).brightness == Brightness.dark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
           Expanded(
             flex: 3,
-            child: Text(value, style: const TextStyle(fontWeight: FontWeight.w600)),
+            child: Text(value, style: TextStyle(fontWeight: FontWeight.w600)),
           ),
         ],
       ),
@@ -261,7 +277,7 @@ class _DebitDetailPageState extends ConsumerState<DebitDetailPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n.debitsCustomer, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          Text(l10n.debitsCustomer, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
           AppSpacing.gapH12,
           _infoRow(l10n.customers, customer.name),
           if (customer.phone != null) _infoRow(l10n.settings, customer.phone!),
@@ -282,13 +298,18 @@ class _DebitDetailPageState extends ConsumerState<DebitDetailPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n.debitsAllocations, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          Text(l10n.debitsAllocations, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
           AppSpacing.gapH12,
           if (debit.allocations.isEmpty)
             Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
-                child: Text(l10n.debitsNoAllocations, style: const TextStyle(color: AppColors.textSecondary)),
+                child: Text(
+                  l10n.debitsNoAllocations,
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                  ),
+                ),
               ),
             )
           else
@@ -317,14 +338,23 @@ class _DebitDetailPageState extends ConsumerState<DebitDetailPage> {
               children: [
                 Text(
                   '${l10n.debitsOrderNumber}: ${allocation.orderNumber ?? allocation.orderId}',
-                  style: const TextStyle(fontWeight: FontWeight.w600),
+                  style: TextStyle(fontWeight: FontWeight.w600),
                 ),
                 if (allocation.notes != null)
-                  Text(allocation.notes!, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                  Text(
+                    allocation.notes!,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).brightness == Brightness.dark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                    ),
+                  ),
                 if (allocation.allocatedByName != null)
                   Text(
                     '${l10n.debitsAllocatedBy}: ${allocation.allocatedByName!}',
-                    style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).brightness == Brightness.dark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                    ),
                   ),
               ],
             ),
@@ -334,12 +364,15 @@ class _DebitDetailPageState extends ConsumerState<DebitDetailPage> {
             children: [
               Text(
                 allocation.amount.toStringAsFixed(2),
-                style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.success),
+                style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.success),
               ),
               if (allocation.allocatedAt != null)
                 Text(
                   '${allocation.allocatedAt!.day}/${allocation.allocatedAt!.month}/${allocation.allocatedAt!.year}',
-                  style: const TextStyle(fontSize: 11, color: AppColors.textSecondary),
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Theme.of(context).brightness == Brightness.dark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                  ),
                 ),
             ],
           ),

@@ -67,7 +67,7 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
     final isEmpty = state is AdminStoreListLoaded && state.stores.isEmpty;
 
     return PosListPage(
-      title: 'Store Management',
+      title: l10n.adminStoreManagement,
       searchController: _searchController,
       onSearchChanged: (_) {},
       isLoading: isLoading,
@@ -79,10 +79,10 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
       emptySubtitle: l10n.adjustFilters,
       emptyIcon: Icons.store_outlined,
       actions: [
-        PosButton.icon(icon: Icons.add_business, tooltip: 'Create Store', onPressed: () => _showCreateStoreDialog(context)),
+        PosButton.icon(icon: Icons.add_business, tooltip: l10n.adminCreateStore, onPressed: () => _showCreateStoreDialog(context)),
         PosButton.icon(
           icon: Icons.file_download_outlined,
-          tooltip: 'Export Stores',
+          tooltip: l10n.adminExportStores,
           onPressed: () => _exportStores(),
           variant: PosButtonVariant.ghost,
         ),
@@ -288,13 +288,13 @@ class _AdminStoreListPageState extends ConsumerState<AdminStoreListPage> {
       context: context,
       builder: (ctx) {
         return AlertDialog(
-          title: const Text('Create Store'),
+          title: Text(l10n.adminCreateStore),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              PosTextField(controller: orgNameCtrl, label: 'Organization Name', hint: 'Enter organization name'),
+              PosTextField(controller: orgNameCtrl, label: l10n.adminOrganizationName, hint: l10n.adminOrgNameHint),
               AppSpacing.gapH12,
-              PosTextField(controller: storeNameCtrl, label: l10n.sidebarStoreName, hint: 'Enter store name'),
+              PosTextField(controller: storeNameCtrl, label: l10n.sidebarStoreName, hint: l10n.adminStoreNameHint),
             ],
           ),
           actions: [

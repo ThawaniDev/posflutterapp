@@ -64,7 +64,7 @@ class _RestaurantDashboardPageState extends ConsumerState<RestaurantDashboardPag
             onChanged: (i) => setState(() => _currentTab = i),
             tabs: [
               PosTabItem(label: l10n.restaurantTables),
-              PosTabItem(label: 'Kitchen'),
+              PosTabItem(label: l10n.restaurantKitchen),
               PosTabItem(label: l10n.restaurantReservations),
               PosTabItem(label: l10n.restaurantOpenTabs),
             ],
@@ -75,7 +75,7 @@ class _RestaurantDashboardPageState extends ConsumerState<RestaurantDashboardPag
                     index: _currentTab,
                     children: [
                       state.tables.isEmpty
-                          ? const PosEmptyState(title: 'No tables configured', icon: Icons.table_bar)
+                          ? PosEmptyState(title: l10n.restaurantNoTables, icon: Icons.table_bar)
                           : GridView.builder(
                               padding: const EdgeInsets.all(16),
                               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -97,7 +97,7 @@ class _RestaurantDashboardPageState extends ConsumerState<RestaurantDashboardPag
                               },
                             ),
                       state.kitchenTickets.isEmpty
-                          ? const PosEmptyState(title: 'No kitchen tickets', icon: Icons.restaurant)
+                          ? PosEmptyState(title: l10n.restaurantNoTickets, icon: Icons.restaurant)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.kitchenTickets.length,
@@ -115,7 +115,7 @@ class _RestaurantDashboardPageState extends ConsumerState<RestaurantDashboardPag
                               },
                             ),
                       state.reservations.isEmpty
-                          ? const PosEmptyState(title: 'No reservations', icon: Icons.event_seat)
+                          ? PosEmptyState(title: l10n.restaurantNoReservations, icon: Icons.event_seat)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.reservations.length,
@@ -135,7 +135,7 @@ class _RestaurantDashboardPageState extends ConsumerState<RestaurantDashboardPag
                               },
                             ),
                       state.openTabs.isEmpty
-                          ? const PosEmptyState(title: 'No open tabs', icon: Icons.receipt_long)
+                          ? PosEmptyState(title: l10n.restaurantNoOpenTabs, icon: Icons.receipt_long)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.openTabs.length,

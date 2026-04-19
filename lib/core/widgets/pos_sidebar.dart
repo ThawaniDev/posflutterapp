@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/constants/permission_constants.dart';
 import 'package:wameedpos/core/router/route_names.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/auth/providers/auth_providers.dart';
 import '../l10n/app_localizations.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
@@ -241,6 +243,12 @@ class PosSidebar extends StatefulWidget {
           icon: Icons.account_balance_wallet_rounded,
           route: '/debits',
           permission: Permissions.customersManageDebits,
+        ),
+        PosSidebarItem(
+          label: l10n.sidebarReceivables,
+          icon: Icons.receipt_long_rounded,
+          route: '/receivables',
+          permission: Permissions.customersManageReceivables,
         ),
         PosSidebarItem(
           label: l10n.sidebarPromotions,
@@ -608,18 +616,33 @@ class PosSidebar extends StatefulWidget {
 }
 
 class _PosSidebarState extends State<PosSidebar> {
-  late Map<int, bool> _expanded;
+  /// Tracks expanded state of items that have children.
+  /// Key = "groupIndex.itemIndex", Value = isExpanded
+  final Map<String, bool> _expandedItems = {};
 
-  @override
-  void initState() {
-    super.initState();
-    _expanded = {};
+  /// Tracks expanded state of group sections.
+  final Map<int, bool> _expandedGroups = {};
+
+  bool _isItemExpanded(int groupIndex, int itemIndex, PosSidebarItem item) {
+    final key = '$groupIndex.$itemIndex';
+    if (_expandedItems.containsKey(key)) return _expandedItems[key]!;
+    // Default: expanded if a child route matches the current route.
+    if (item.children != null && widget.currentRoute != null) {
+      return item.children!.any((c) => c.route == widget.currentRoute);
+    }
+    return false;
   }
 
-  /// Returns true if the group should be expanded (default: all open).
-  bool _isGroupExpanded(int index, PosSidebarGroup group) {
-    // Default: expanded if it contains active route, or if never toggled (all open by default)
-    return _expanded[index] ?? true;
+  bool _isGroupExpanded(int groupIndex, PosSidebarGroup group) {
+    if (_expandedGroups.containsKey(groupIndex)) return _expandedGroups[groupIndex]!;
+    // Default: only the first group is expanded, OR any group containing the active route.
+    if (widget.currentRoute != null) {
+      final hasActive = group.items.any(
+        (item) => item.route == widget.currentRoute || (item.children?.any((c) => c.route == widget.currentRoute) ?? false),
+      );
+      if (hasActive) return true;
+    }
+    return groupIndex == 0;
   }
 
   @override
@@ -646,8 +669,6 @@ class _PosSidebarState extends State<PosSidebar> {
           // ─ Collapse toggle ─
           if (widget.onToggleCollapse != null && !context.isPhone)
             _CollapseToggle(isCollapsed: widget.isCollapsed, onTap: widget.onToggleCollapse!),
-
-          const Divider(height: 1),
 
           // ─ Grouped Nav Items ─
           Expanded(child: widget.isCollapsed ? _buildCollapsedList(navGroups) : _buildGroupedList(navGroups)),
@@ -678,25 +699,33 @@ class _PosSidebarState extends State<PosSidebar> {
     );
   }
 
-  /// Expanded mode: accordion groups with items.
+  /// Expanded mode: collapsible section groups with items.
+  /// Items with children are individually expandable inline.
   Widget _buildGroupedList(List<PosSidebarGroup> groups) {
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       itemCount: groups.length,
       itemBuilder: (context, groupIndex) {
         final group = groups[groupIndex];
-        final isExpanded = _isGroupExpanded(groupIndex, group);
 
-        return _SidebarGroupTile(
+        return _SidebarGroupSection(
           group: group,
-          isExpanded: isExpanded,
-          onToggle: () {
+          groupIndex: groupIndex,
+          isGroupExpanded: _isGroupExpanded(groupIndex, group),
+          onToggleGroup: () {
             setState(() {
-              _expanded[groupIndex] = !isExpanded;
+              _expandedGroups[groupIndex] = !_isGroupExpanded(groupIndex, group);
             });
           },
           currentRoute: widget.currentRoute,
           onItemTap: widget.onItemTap,
+          isItemExpanded: (itemIndex, item) => _isItemExpanded(groupIndex, itemIndex, item),
+          onToggleItem: (itemIndex, item) {
+            setState(() {
+              final key = '$groupIndex.$itemIndex';
+              _expandedItems[key] = !_isItemExpanded(groupIndex, itemIndex, item);
+            });
+          },
         );
       },
     );
@@ -705,47 +734,62 @@ class _PosSidebarState extends State<PosSidebar> {
 
 // ─── Default Header (logo + store) ───────────────────────────
 
-class _DefaultHeader extends StatelessWidget {
+class _DefaultHeader extends ConsumerWidget {
   const _DefaultHeader({required this.isCollapsed});
 
   final bool isCollapsed;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final user = ref.watch(currentUserProvider);
+    final isArabic = Localizations.localeOf(context).languageCode.toLowerCase() == 'ar';
+    final orgName = isArabic
+        ? (user?.organization?.nameAr ?? user?.organization?.name)
+        : (user?.organization?.name ?? user?.organization?.nameAr);
+    final storeName = isArabic ? (user?.store?.nameAr ?? user?.store?.name) : (user?.store?.name ?? user?.store?.nameAr);
+    final displayName = orgName ?? storeName ?? AppLocalizations.of(context)?.appTitle ?? 'Wameed POS';
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
       child: Row(
         children: [
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(gradient: AppColors.primaryGradient, borderRadius: AppRadius.borderMd),
-            child: const Center(
-              child: Text(
-                'T',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: Colors.white),
-              ),
-            ),
-          ),
+          // Diamond logo mark
+          // Transform.rotate(
+          //   angle: 0.785398, // 45deg
+          //   child: Container(
+          //     width: 22,
+          //     height: 22,
+          //     decoration: BoxDecoration(gradient: AppColors.primaryGradient, borderRadius: BorderRadius.circular(4)),
+          //   ),
+          // ),
+          // assets/images/wameedlogo.png
+          // assets/images/wameedlogowhite.png
+          Image.asset(isDark ? 'assets/images/wameedlogowhite.png' : 'assets/images/wameedlogo.png', width: 28, height: 28),
+
+          // Organization name (only in expanded mode)
           if (!isCollapsed) ...[
             AppSpacing.gapW12,
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Wameed POS', style: AppTypography.titleLarge.copyWith(fontWeight: FontWeight.w700)),
-                  Builder(
-                    builder: (ctx) {
-                      final l10n = AppLocalizations.of(ctx);
-                      return Text(
-                        l10n?.sidebarStoreName ?? 'Store Name',
-                        style: AppTypography.caption.copyWith(
-                          color: Theme.of(context).brightness == Brightness.dark
-                              ? AppColors.textMutedDark
-                              : AppColors.textMutedLight,
-                        ),
-                      );
-                    },
+                  //app title
+                  Text(
+                    AppLocalizations.of(context)?.appTitle ?? 'Wameed POS',
+                    style: AppTypography.titleLarge.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                    ),
+                  ),
+                  Text(
+                    displayName,
+                    style: AppTypography.labelMedium.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
@@ -786,86 +830,101 @@ class _CollapseToggle extends StatelessWidget {
   }
 }
 
-// ─── Accordion Group Tile ────────────────────────────────────
+// ─── Group Section (collapsible label + items) ───────────────
 
-class _SidebarGroupTile extends StatelessWidget {
-  const _SidebarGroupTile({
+class _SidebarGroupSection extends StatelessWidget {
+  const _SidebarGroupSection({
     required this.group,
-    required this.isExpanded,
-    required this.onToggle,
+    required this.groupIndex,
+    required this.isGroupExpanded,
+    required this.onToggleGroup,
     required this.currentRoute,
     required this.onItemTap,
+    required this.isItemExpanded,
+    required this.onToggleItem,
   });
 
   final PosSidebarGroup group;
-  final bool isExpanded;
-  final VoidCallback onToggle;
+  final int groupIndex;
+  final bool isGroupExpanded;
+  final VoidCallback onToggleGroup;
   final String? currentRoute;
   final ValueChanged<String>? onItemTap;
+  final bool Function(int itemIndex, PosSidebarItem item) isItemExpanded;
+  final void Function(int itemIndex, PosSidebarItem item) onToggleItem;
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final mutedColor = isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        // ─ Group header (tap to expand/collapse) ─
-        InkWell(
-          onTap: onToggle,
-          borderRadius: AppRadius.borderMd,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            child: Row(
-              children: [
-                Icon(group.icon, size: 16, color: mutedColor),
-                AppSpacing.gapW8,
-                Expanded(
-                  child: Text(
-                    group.label,
-                    style: AppTypography.caption.copyWith(color: mutedColor, fontWeight: FontWeight.w700, letterSpacing: 0.5),
+        // ─ Collapsible section header (sentence case + chevron) ─
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: InkWell(
+            onTap: onToggleGroup,
+            borderRadius: AppRadius.borderMd,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(12, 10, 8, 10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      group.label,
+                      style: AppTypography.bodyMedium.copyWith(color: mutedColor, fontWeight: FontWeight.w600),
+                    ),
                   ),
-                ),
-                AnimatedRotation(
-                  turns: isExpanded ? 0.0 : -0.25,
-                  duration: const Duration(milliseconds: 200),
-                  child: Icon(Icons.expand_more_rounded, size: 16, color: mutedColor),
-                ),
-              ],
+                  AnimatedRotation(
+                    turns: isGroupExpanded ? 0.5 : 0.0,
+                    duration: const Duration(milliseconds: 200),
+                    child: Icon(Icons.expand_more_rounded, size: 18, color: mutedColor),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
 
-        // ─ Group items (animated) ─
+        // ─ Group items (animated expand/collapse) ─
         AnimatedCrossFade(
           firstChild: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              for (final item in group.items)
+              for (int i = 0; i < group.items.length; i++) ...[
                 _NavItemTile(
-                  item: item,
-                  isActive: currentRoute == item.route,
+                  item: group.items[i],
+                  isActive: currentRoute == group.items[i].route,
                   isCollapsed: false,
+                  isExpanded: isItemExpanded(i, group.items[i]),
                   onTap: () {
-                    if (item.route != null) {
-                      onItemTap?.call(item.route!);
+                    if (group.items[i].children != null && group.items[i].children!.isNotEmpty) {
+                      onToggleItem(i, group.items[i]);
+                    } else if (group.items[i].route != null) {
+                      onItemTap?.call(group.items[i].route!);
                     }
                   },
                 ),
+                if (group.items[i].children != null && isItemExpanded(i, group.items[i]))
+                  for (final child in group.items[i].children!)
+                    _SubNavItemTile(
+                      item: child,
+                      isActive: currentRoute == child.route,
+                      onTap: () {
+                        if (child.route != null) onItemTap?.call(child.route!);
+                      },
+                    ),
+              ],
             ],
           ),
-          secondChild: const SizedBox.shrink(),
-          crossFadeState: isExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+          secondChild: const SizedBox(width: double.infinity),
+          crossFadeState: isGroupExpanded ? CrossFadeState.showFirst : CrossFadeState.showSecond,
           duration: const Duration(milliseconds: 200),
           sizeCurve: Curves.easeInOut,
-        ),
-
-        // ─ Subtle divider between groups ─
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
-          child: Divider(height: 1, color: (isDark ? AppColors.borderDark : AppColors.borderLight).withAlpha(80)),
         ),
       ],
     );
@@ -875,16 +934,24 @@ class _SidebarGroupTile extends StatelessWidget {
 // ─── Single Nav Item Tile ────────────────────────────────────
 
 class _NavItemTile extends StatelessWidget {
-  const _NavItemTile({required this.item, required this.isActive, required this.isCollapsed, required this.onTap});
+  const _NavItemTile({
+    required this.item,
+    required this.isActive,
+    required this.isCollapsed,
+    required this.onTap,
+    this.isExpanded = false,
+  });
 
   final PosSidebarItem item;
   final bool isActive;
   final bool isCollapsed;
+  final bool isExpanded;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final hasChildren = item.children != null && item.children!.isNotEmpty;
 
     final activeBg = AppColors.primary10;
     final activeFg = AppColors.primary;
@@ -892,51 +959,111 @@ class _NavItemTile extends StatelessWidget {
 
     final fg = isActive ? activeFg : inactiveFg;
 
-    return Tooltip(
-      message: isCollapsed ? item.label : '',
-      waitDuration: const Duration(milliseconds: 500),
-      child: Material(
-        color: isActive ? activeBg : Colors.transparent,
+    Widget content = Material(
+      color: isActive ? activeBg : Colors.transparent,
+      borderRadius: AppRadius.borderMd,
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
         borderRadius: AppRadius.borderMd,
-        clipBehavior: Clip.antiAlias,
+        child: Container(
+          height: 40,
+          padding: EdgeInsets.symmetric(horizontal: isCollapsed ? 0 : 12),
+          child: Row(
+            mainAxisAlignment: isCollapsed ? MainAxisAlignment.center : MainAxisAlignment.start,
+            children: [
+              Icon(isActive ? (item.activeIcon ?? item.icon) : item.icon, size: 20, color: fg),
+              if (!isCollapsed) ...[
+                AppSpacing.gapW12,
+                Expanded(
+                  child: Text(
+                    item.label,
+                    style: AppTypography.bodyMedium.copyWith(color: fg, fontWeight: isActive ? FontWeight.w600 : FontWeight.w500),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                if (item.badge != null && item.badge! > 0)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(color: AppColors.badge, borderRadius: AppRadius.borderFull),
+                    child: Text(
+                      item.badge! > 99 ? '99+' : '${item.badge}',
+                      style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: Colors.white),
+                    ),
+                  ),
+                if (hasChildren)
+                  AnimatedRotation(
+                    turns: isExpanded ? 0.5 : 0.0,
+                    duration: const Duration(milliseconds: 200),
+                    child: Icon(Icons.expand_more_rounded, size: 18, color: fg),
+                  ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+
+    if (isCollapsed) {
+      content = Tooltip(message: item.label, waitDuration: const Duration(milliseconds: 500), child: content);
+    }
+
+    return Padding(padding: const EdgeInsets.symmetric(vertical: 1), child: content);
+  }
+}
+
+// ─── Sub Nav Item Tile (indented child with dash prefix) ─────
+
+class _SubNavItemTile extends StatelessWidget {
+  const _SubNavItemTile({required this.item, required this.isActive, required this.onTap});
+
+  final PosSidebarItem item;
+  final bool isActive;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final activeFg = AppColors.primary;
+    final inactiveFg = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
+    final fg = isActive ? activeFg : inactiveFg;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 1),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: AppRadius.borderMd,
         child: InkWell(
           onTap: onTap,
           borderRadius: AppRadius.borderMd,
           child: Container(
-            height: 40,
-            padding: EdgeInsets.symmetric(horizontal: isCollapsed ? 0 : 12),
-            decoration: isActive
-                ? BoxDecoration(
-                    border: Border(left: BorderSide(color: AppColors.primary, width: 3)),
-                  )
-                : null,
+            height: 34,
+            padding: const EdgeInsets.only(left: 36, right: 12),
             child: Row(
-              mainAxisAlignment: isCollapsed ? MainAxisAlignment.center : MainAxisAlignment.start,
               children: [
-                Icon(isActive ? (item.activeIcon ?? item.icon) : item.icon, size: 20, color: fg),
-                if (!isCollapsed) ...[
-                  AppSpacing.gapW12,
-                  Expanded(
+                Text(
+                  '-',
+                  style: AppTypography.bodyMedium.copyWith(color: fg, fontWeight: FontWeight.w400),
+                ),
+                AppSpacing.gapW8,
+                Expanded(
+                  child: Text(
+                    item.label,
+                    style: AppTypography.bodySmall.copyWith(color: fg, fontWeight: isActive ? FontWeight.w600 : FontWeight.w400),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                if (item.badge != null && item.badge! > 0)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                    decoration: BoxDecoration(color: AppColors.badge, borderRadius: AppRadius.borderFull),
                     child: Text(
-                      item.label,
-                      style: AppTypography.bodyMedium.copyWith(
-                        color: fg,
-                        fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                      item.badge! > 99 ? '99+' : '${item.badge}',
+                      style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: Colors.white),
                     ),
                   ),
-                  if (item.badge != null && item.badge! > 0)
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                      decoration: BoxDecoration(color: AppColors.badge, borderRadius: AppRadius.borderFull),
-                      child: Text(
-                        item.badge! > 99 ? '99+' : '${item.badge}',
-                        style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: Colors.white),
-                      ),
-                    ),
-                ],
               ],
             ),
           ),

@@ -66,7 +66,9 @@ class _DeliveryDashboardPageState extends ConsumerState<DeliveryDashboardPage> {
               PosTabItem(label: l10n.deliveryOrders),
             ],
           ),
-          IndexedStack(index: _currentTab, children: [_buildOverview(statsState), _buildPlatforms(), _buildOrders()]),
+          Expanded(
+            child: IndexedStack(index: _currentTab, children: [_buildOverview(statsState), _buildPlatforms(), _buildOrders()]),
+          ),
         ],
       ),
     );
@@ -344,16 +346,12 @@ class _DeliveryDashboardPageState extends ConsumerState<DeliveryDashboardPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l10n.deliveryRejectOrder),
-        content: TextField(
-          controller: controller,
-          decoration: InputDecoration(hintText: l10n.deliveryEnterRejectionReason, border: const OutlineInputBorder()),
-          maxLines: 3,
-        ),
+        content: PosTextField(controller: controller, hint: l10n.deliveryEnterRejectionReason, maxLines: 3),
         actions: [
           PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.deliveryCancel),
           PosButton(
             onPressed: () => Navigator.pop(ctx, controller.text),
-            variant: PosButtonVariant.soft,
+            variant: PosButtonVariant.danger,
             label: l10n.deliveryReject,
           ),
         ],
@@ -374,6 +372,8 @@ class _PlatformBreakdownTile extends StatelessWidget {
     final orders = data['orders'] as int? ?? 0;
     final revenue = (data['revenue'] != null ? double.tryParse(data['revenue'].toString()) : null) ?? 0.0;
     final isActive = data['is_active'] == true;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
@@ -388,16 +388,13 @@ class _PlatformBreakdownTile extends StatelessWidget {
           Container(
             width: 8,
             height: 8,
-            decoration: BoxDecoration(color: isActive ? AppColors.success : AppColors.textSecondary, shape: BoxShape.circle),
+            decoration: BoxDecoration(color: isActive ? AppColors.success : mutedColor, shape: BoxShape.circle),
           ),
           AppSpacing.gapW12,
           Expanded(
             child: Text(name, style: const TextStyle(fontWeight: FontWeight.w500)),
           ),
-          Text(
-            AppLocalizations.of(context)!.deliveryOrdersCount(orders),
-            style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
-          ),
+          Text(AppLocalizations.of(context)!.deliveryOrdersCount(orders), style: TextStyle(fontSize: 12, color: mutedColor)),
           AppSpacing.gapW16,
           Text('${revenue.toStringAsFixed(2)} \u0081', style: const TextStyle(fontWeight: FontWeight.w500)),
         ],
@@ -455,6 +452,8 @@ class _FilterChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final chipColor = color ?? AppColors.primary;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -469,7 +468,7 @@ class _FilterChip extends StatelessWidget {
           style: TextStyle(
             fontSize: 12,
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-            color: isSelected ? chipColor : AppColors.textSecondary,
+            color: isSelected ? chipColor : mutedColor,
           ),
         ),
       ),

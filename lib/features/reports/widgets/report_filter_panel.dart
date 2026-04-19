@@ -50,7 +50,6 @@ class ReportFilterPanel extends ConsumerStatefulWidget {
 }
 
 class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   bool _expanded = false;
   final _minCtrl = TextEditingController();
@@ -174,7 +173,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
         children: DatePreset.values.map((preset) {
           final isActive = preset == current;
           return Padding(
-            padding: const EdgeInsets.only(right: 6),
+            padding: const EdgeInsetsDirectional.only(end: 6),
             child: ChoiceChip(
               label: Text(preset.localizedLabel(l10n), style: TextStyle(fontSize: 12)),
               selected: isActive,
@@ -216,7 +215,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
   Future<void> _selectPreset(DatePreset preset) async {
     if (preset == DatePreset.custom) {
       final picked = await showPosDateRangePicker(
-      context,
+        context,
         firstDate: DateTime(2020),
         lastDate: DateTime.now(),
         initialDateRange: widget.filters.dateRange,
@@ -441,7 +440,7 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
         final isActive = g == current;
         final label = g[0].toUpperCase() + g.substring(1);
         return Padding(
-          padding: const EdgeInsets.only(right: 4),
+          padding: const EdgeInsetsDirectional.only(end: 4),
           child: ChoiceChip(
             label: Text(label, style: TextStyle(fontSize: 12)),
             selected: isActive,
@@ -488,16 +487,10 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
       children: [
         SizedBox(
           width: 90,
-          child: TextField(
+          child: PosTextField(
             controller: _minCtrl,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              hintText: l10n.filterMin,
-              isDense: true,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              border: OutlineInputBorder(borderRadius: AppRadius.borderSm),
-            ),
-            style: const TextStyle(fontSize: 12),
+            hint: l10n.filterMin,
             onSubmitted: (val) {
               final v = double.tryParse(val);
               _update(widget.filters.copyWith(minAmount: () => v));
@@ -510,16 +503,10 @@ class _ReportFilterPanelState extends ConsumerState<ReportFilterPanel> {
         ),
         SizedBox(
           width: 90,
-          child: TextField(
+          child: PosTextField(
             controller: _maxCtrl,
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              hintText: l10n.filterMax,
-              isDense: true,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              border: OutlineInputBorder(borderRadius: AppRadius.borderSm),
-            ),
-            style: const TextStyle(fontSize: 12),
+            hint: l10n.filterMax,
             onSubmitted: (val) {
               final v = double.tryParse(val);
               _update(widget.filters.copyWith(maxAmount: () => v));

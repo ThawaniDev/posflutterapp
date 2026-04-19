@@ -45,7 +45,7 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
     final l10n = AppLocalizations.of(context)!;
 
     return PosListPage(
-      title: '${widget.staffName} - ${l10n.staffCommissions}',
+      title: l10n.staffCommissionTitle(widget.staffName, l10n.staffCommissions),
       showSearch: false,
       actions: [
         PosButton.icon(
@@ -83,7 +83,7 @@ class _CommissionSummaryPageState extends ConsumerState<CommissionSummaryPage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: Chip(
-              label: Text('${_dateFormat.format(_dateRange!.start)} – ${_dateFormat.format(_dateRange!.end)}'),
+              label: Text(l10n.staffDateRangeLabel(_dateFormat.format(_dateRange!.start), _dateFormat.format(_dateRange!.end))),
               onDeleted: () {
                 setState(() => _dateRange = null);
                 _load();

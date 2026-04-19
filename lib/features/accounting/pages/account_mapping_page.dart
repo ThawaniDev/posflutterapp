@@ -229,10 +229,10 @@ class _AccountMappingPageState extends ConsumerState<AccountMappingPage> {
   void _deleteMapping(String id) async {
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Delete Mapping',
-      message: 'Are you sure you want to remove this mapping?',
-      confirmLabel: 'Delete',
-      cancelLabel: 'Cancel',
+      title: l10n.acctDeleteMapping,
+      message: l10n.acctDeleteMappingConfirm,
+      confirmLabel: l10n.commonDelete,
+      cancelLabel: l10n.commonCancel,
       isDanger: true,
     );
     if (confirmed == true) {

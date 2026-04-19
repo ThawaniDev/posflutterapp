@@ -58,9 +58,9 @@ class ShiftReportCard extends StatelessWidget {
                 spacing: isMobile ? 12 : 20,
                 runSpacing: 8,
                 children: [
-                  _StatItem(icon: Icons.receipt_rounded, label: 'TXN', value: report.totalTransactions.toString()),
+                  _StatItem(icon: Icons.receipt_rounded, label: l10n.cgTxnAbbr, value: report.totalTransactions.toString()),
                   _StatItem(icon: Icons.attach_money_rounded, label: l10n.reportsRevenue, value: report.totalRevenue.toStringAsFixed(0)),
-                  _StatItem(icon: Icons.speed_rounded, label: 'IPM', value: report.itemsPerMinute.toStringAsFixed(1)),
+                  _StatItem(icon: Icons.speed_rounded, label: l10n.cgIpmAbbr, value: report.itemsPerMinute.toStringAsFixed(1)),
                   _StatItem(icon: Icons.block_rounded, label: l10n.posVoids, value: report.voidCount.toString()),
                   if (report.anomalyCount > 0)
                     _StatItem(
@@ -103,6 +103,7 @@ class _RiskLevelChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     Color color;
     switch (level) {
       case 'critical':
@@ -144,6 +145,7 @@ class _StatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final c = color ?? theme.colorScheme.onSurfaceVariant;
     return Row(

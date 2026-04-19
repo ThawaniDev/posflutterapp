@@ -16,7 +16,7 @@ class ProductionScheduleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return PosCard(
       elevation: 0,
       borderRadius: AppRadius.borderMd,
@@ -52,12 +52,12 @@ class ProductionScheduleCard extends StatelessWidget {
               AppSpacing.gapH8,
               Row(
                 children: [
-                  _metric('Planned', '${schedule.plannedBatches} batches'),
+                  _metric(context, 'Planned', '${schedule.plannedBatches} batches'),
                   AppSpacing.gapW16,
-                  _metric('Yield', '${schedule.plannedYield}'),
+                  _metric(context, 'Yield', '${schedule.plannedYield}'),
                   if (schedule.actualBatches != null) ...[
                     AppSpacing.gapW16,
-                    _metric('Actual', '${schedule.actualBatches} / ${schedule.actualYield ?? "—"}'),
+                    _metric(context, 'Actual', '${schedule.actualBatches} / ${schedule.actualYield ?? "—"}'),
                   ],
                 ],
               ),
@@ -65,7 +65,7 @@ class ProductionScheduleCard extends StatelessWidget {
                 AppSpacing.gapH4,
                 Text(
                   schedule.notes!,
-                  style: AppTypography.caption.copyWith(color: AppColors.textSecondary),
+                  style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -77,11 +77,12 @@ class ProductionScheduleCard extends StatelessWidget {
     );
   }
 
-  Widget _metric(String label, String value) {
+  Widget _metric(BuildContext context, String label, String value) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: AppTypography.caption.copyWith(color: AppColors.textSecondary)),
+        Text(label, style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight)),
         Text(value, style: AppTypography.bodySmall.copyWith(fontWeight: FontWeight.w600)),
       ],
     );

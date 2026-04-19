@@ -72,13 +72,13 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
                 Expanded(
                   child: PosSearchableDropdown<String>(
                     items: [
-                      PosDropdownItem(value: 'role.created', label: 'Role Created'),
-                      PosDropdownItem(value: 'role.updated', label: 'Role Updated'),
-                      PosDropdownItem(value: 'role.deleted', label: 'Role Deleted'),
-                      PosDropdownItem(value: 'user.created', label: 'User Created'),
-                      PosDropdownItem(value: 'user.updated', label: 'User Updated'),
-                      PosDropdownItem(value: 'user.deactivated', label: 'User Deactivated'),
-                      PosDropdownItem(value: 'user.activated', label: 'User Activated'),
+                      PosDropdownItem(value: 'role.created', label: l10n.adminActionRoleCreated),
+                      PosDropdownItem(value: 'role.updated', label: l10n.adminActionRoleUpdated),
+                      PosDropdownItem(value: 'role.deleted', label: l10n.adminActionRoleDeleted),
+                      PosDropdownItem(value: 'user.created', label: l10n.adminActionUserCreated),
+                      PosDropdownItem(value: 'user.updated', label: l10n.adminActionUserUpdated),
+                      PosDropdownItem(value: 'user.deactivated', label: l10n.adminActionUserDeactivated),
+                      PosDropdownItem(value: 'user.activated', label: l10n.adminActionUserActivated),
                     ],
                     selectedValue: _actionFilter,
                     onChanged: (val) {
@@ -88,7 +88,7 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
                       });
                       _loadLogs();
                     },
-                    hint: 'All Actions',
+                    hint: l10n.adminAllActions,
                     showSearch: false,
                     clearable: true,
                   ),
@@ -108,7 +108,7 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
                       });
                       _loadLogs();
                     },
-                    hint: 'All Entities',
+                    hint: l10n.adminAllEntities,
                     showSearch: false,
                     clearable: true,
                   ),
@@ -127,7 +127,7 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
                     ),
                     Expanded(
                       child: logs.isEmpty
-                          ? const Center(child: Text('No activity logs found'))
+                          ? Center(child: Text(l10n.adminNoActivityLogs))
                           : ListView.separated(
                               padding: AppSpacing.paddingAll16,
                               itemCount: logs.length,
@@ -174,7 +174,7 @@ class _AdminActivityLogPageState extends ConsumerState<AdminActivityLogPage> {
                                   : null,
                               icon: const Icon(Icons.chevron_left),
                             ),
-                            Text('Page $page of $lastPage'),
+                            Text(l10n.adminPageOfLast(page.toString(), lastPage.toString())),
                             IconButton(
                               onPressed: page < lastPage
                                   ? () {

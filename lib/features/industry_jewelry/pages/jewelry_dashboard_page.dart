@@ -61,7 +61,7 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> {
             tabs: [
               PosTabItem(label: l10n.jewelryMetalRates),
               PosTabItem(label: l10n.jewelryProductDetails),
-              PosTabItem(label: 'Buybacks'),
+              PosTabItem(label: l10n.jewelryBuybacks),
             ],
           ),
           Expanded(
@@ -70,7 +70,7 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> {
                     index: _currentTab,
                     children: [
                       state.metalRates.isEmpty
-                          ? const PosEmptyState(title: 'No metal rates set', icon: Icons.monetization_on)
+                          ? PosEmptyState(title: l10n.jewelryNoMetalRates, icon: Icons.monetization_on)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.metalRates.length,
@@ -90,7 +90,7 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> {
                               },
                             ),
                       state.productDetails.isEmpty
-                          ? const PosEmptyState(title: 'No product details', icon: Icons.diamond)
+                          ? PosEmptyState(title: l10n.jewelryNoProductDetails, icon: Icons.diamond)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.productDetails.length,
@@ -110,7 +110,7 @@ class _JewelryDashboardPageState extends ConsumerState<JewelryDashboardPage> {
                               },
                             ),
                       state.buybacks.isEmpty
-                          ? const PosEmptyState(title: 'No buyback transactions', icon: Icons.swap_horiz)
+                          ? PosEmptyState(title: l10n.jewelryNoBuybacks, icon: Icons.swap_horiz)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.buybacks.length,

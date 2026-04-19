@@ -29,10 +29,11 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
 
   Future<void> _handleDelete(Role role) async {
     final l10n = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).languageCode;
     final confirmed = await showPosConfirmDialog(
       context,
       title: l10n.delete,
-      message: '${l10n.deleteConfirmation} "${role.displayName}"?',
+      message: l10n.staffDeleteRoleConfirm(l10n.deleteConfirmation, role.localizedName(locale)),
       confirmLabel: l10n.delete,
       cancelLabel: l10n.cancel,
       isDanger: true,
@@ -42,7 +43,7 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
       try {
         await ref.read(rolesProvider.notifier).deleteRole(role.id);
         if (mounted) {
-          showPosSuccessSnackbar(context, '${role.displayName} ${l10n.deleted}');
+          showPosSuccessSnackbar(context, '${role.localizedName(locale)} ${l10n.deleted}');
         }
       } catch (e) {
         if (mounted) {
@@ -82,7 +83,7 @@ class _RolesListPageState extends ConsumerState<RolesListPage> {
 
   Widget _buildBody(RolesState state, bool isDark, AppLocalizations l10n) {
     if (state is RolesLoading || state is RolesInitial) {
-      return const Center(child: CircularProgressIndicator());
+      return const PosLoading();
     }
 
     if (state is RolesError) {
@@ -214,7 +215,7 @@ class _RoleCard extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            role.displayName,
+                            role.localizedName(Localizations.localeOf(context).languageCode),
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -234,7 +235,7 @@ class _RoleCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      role.description ?? role.name,
+                      role.localizedDescription(Localizations.localeOf(context).languageCode) ?? role.name,
                       style: Theme.of(
                         context,
                       ).textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight),

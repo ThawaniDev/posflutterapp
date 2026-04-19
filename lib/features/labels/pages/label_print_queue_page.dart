@@ -96,6 +96,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 PosSearchableDropdown<String>(
+                  hint: l10n.selectTemplate,
                   label: l10n.labelTemplate,
                   items: templates.map((t) => PosDropdownItem(value: t.id, label: t.name)).toList(),
                   selectedValue: _selectedTemplateId,
@@ -168,7 +169,10 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                     children: [
                       Text(l10n.labelQueue, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600)),
                       const Spacer(),
-                      PosBadge(label: '${_queueItems.length} ${l10n.labelItems}', variant: PosBadgeVariant.primary),
+                      PosBadge(
+                        label: l10n.labelsItemsWithCount(_queueItems.length.toString(), l10n.labelItems),
+                        variant: PosBadgeVariant.primary,
+                      ),
                       if (_queueItems.isNotEmpty)
                         IconButton(
                           icon: const Icon(Icons.delete_sweep_rounded, size: 20),
@@ -278,23 +282,19 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                 Row(
                   children: [
                     Expanded(
-                      child: OutlinedButton.icon(
-                        icon: const Icon(Icons.preview_rounded, size: 18),
-                        label: Text(l10n.labelPreview),
+                      child: PosButton(
+                        icon: Icons.preview_rounded,
+                        label: l10n.labelPreview,
+                        variant: PosButtonVariant.outline,
                         onPressed: () => _showMobilePreviewSheet(context, l10n, isDark),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.sm),
                     Expanded(
-                      child: FilledButton.icon(
-                        icon: _isPrinting
-                            ? const SizedBox(
-                                width: 16,
-                                height: 16,
-                                child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                              )
-                            : const Icon(Icons.print_rounded, size: 18),
-                        label: Text(l10n.labelPrint),
+                      child: PosButton(
+                        icon: Icons.print_rounded,
+                        label: l10n.labelPrint,
+                        isLoading: _isPrinting,
                         onPressed: _queueItems.isNotEmpty && !_isPrinting ? _handlePrint : null,
                       ),
                     ),
@@ -403,6 +403,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                         children: [
                           Expanded(
                             child: PosSearchableDropdown<String>(
+                              hint: l10n.selectTemplate,
                               label: l10n.labelTemplate,
                               items: templates.map((t) => PosDropdownItem(value: t.id, label: t.name)).toList(),
                               selectedValue: _selectedTemplateId,
@@ -544,7 +545,7 @@ class _LabelPrintQueuePageState extends ConsumerState<LabelPrintQueuePage> {
                                         child: const Icon(Icons.inventory_2_rounded, size: 18, color: AppColors.primary),
                                       ),
                                       title: Text(item.productName, style: const TextStyle(fontWeight: FontWeight.w600)),
-                                      subtitle: Text('SKU: ${item.sku}'),
+                                      subtitle: Text(l10n.labelsSkuLine(item.sku)),
                                       trailing: Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [

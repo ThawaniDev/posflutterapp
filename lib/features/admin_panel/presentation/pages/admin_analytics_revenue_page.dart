@@ -44,7 +44,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
   showSearch: false,
   actions: [
   PosButton.icon(
-    icon: Icons.download, onPressed: () => ref.read(analyticsExportProvider.notifier).exportRevenue(), tooltip: 'Export Revenue',
+    icon: Icons.download, onPressed: () => ref.read(analyticsExportProvider.notifier).exportRevenue(), tooltip: l10n.adminExportRevenue,
   ),
 ],
   child: Column(
@@ -71,10 +71,10 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                         desktopCols: 4,
                         mobileCols: 2,
                         cards: [
-                          PosKpiCard(label: 'MRR', value: '\u0081${mrr.toStringAsFixed(2)}', iconColor: AppColors.success),
-                          PosKpiCard(label: 'ARR', value: '\u0081${arr.toStringAsFixed(2)}', iconColor: AppColors.info),
+                          PosKpiCard(label: l10n.adminMRR, value: '\u0081${mrr.toStringAsFixed(2)}', iconColor: AppColors.success),
+                          PosKpiCard(label: l10n.adminARR, value: '\u0081${arr.toStringAsFixed(2)}', iconColor: AppColors.info),
                           PosKpiCard(label: l10n.failedPayments, value: '$failed', iconColor: AppColors.error),
-                          PosKpiCard(label: 'Upcoming Renewals', value: '$renewals', iconColor: AppColors.warning),
+                          PosKpiCard(label: l10n.adminUpcomingRenewals, value: '$renewals', iconColor: AppColors.warning),
                         ],
                       ),
                       const SizedBox(height: AppSpacing.lg),
@@ -83,8 +83,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                       const Text('Revenue by Plan', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (byPlan.isEmpty)
-                        const PosCard(
-                          child: Padding(padding: EdgeInsets.all(AppSpacing.md), child: Text('No plan data available')),
+                        PosCard(child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.adminNoPlanDataAvailable)),
                         )
                       else
                         ...byPlan.map(
@@ -111,8 +110,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                       Text(l10n.reportsRevenueTrend, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (trend.isEmpty)
-                        const PosCard(
-                          child: Padding(padding: EdgeInsets.all(AppSpacing.md), child: Text('No trend data')),
+                        PosCard(child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.adminNoTrendData)),
                         )
                       else
                         SizedBox(
@@ -151,7 +149,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Error: $msg'),
+                    Text(l10n.genericError(msg)),
                     const SizedBox(height: AppSpacing.sm),
                     PosButton(
                       onPressed: () => ref.read(analyticsRevenueProvider.notifier).load(storeId: _storeId),
@@ -160,7 +158,7 @@ class _AdminAnalyticsRevenuePageState extends ConsumerState<AdminAnalyticsRevenu
                   ],
                 ),
               ),
-              _ => const Center(child: Text('Loading revenue data...')),
+              _ => Center(child: Text(l10n.adminLoadingRevenueData)),
             },
           ),
         ],

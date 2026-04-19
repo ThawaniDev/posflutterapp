@@ -4,6 +4,7 @@ import 'package:wameedpos/core/widgets/responsive_layout.dart';
 import 'package:wameedpos/features/cashier_gamification/models/cashier_performance_snapshot.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class LeaderboardCard extends StatelessWidget {
   final CashierPerformanceSnapshot snapshot;
@@ -14,6 +15,7 @@ class LeaderboardCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final isMobile = context.isPhone;
     final isTop3 = rank <= 3;
@@ -64,9 +66,9 @@ class LeaderboardCard extends StatelessWidget {
               ),
               // Metrics
               if (!isMobile) ...[
-                _MetricChip(label: 'TXN', value: snapshot.totalTransactions.toString(), color: AppColors.info),
+                _MetricChip(label: l10n.cgTxnAbbr, value: snapshot.totalTransactions.toString(), color: AppColors.info),
                 AppSpacing.gapW8,
-                _MetricChip(label: 'IPM', value: snapshot.itemsPerMinute.toStringAsFixed(1), color: AppColors.success),
+                _MetricChip(label: l10n.cgIpmAbbr, value: snapshot.itemsPerMinute.toStringAsFixed(1), color: AppColors.success),
                 AppSpacing.gapW8,
               ],
               _MetricChip(
@@ -120,6 +122,7 @@ class _MetricChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -141,6 +144,7 @@ class _RiskBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final color = score >= 70
         ? AppColors.error
         : score >= 40

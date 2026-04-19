@@ -115,7 +115,7 @@ class _ReceiptTemplatesBrowsePageState extends ConsumerState<ReceiptTemplatesBro
                         PosBadge(label: '${template.paperWidth}mm', variant: PosBadgeVariant.info),
                         if (template.showBilingual == true)
                           PosBadge(label: l10n.receiptTemplateBilingual, variant: PosBadgeVariant.primary),
-                        if (template.zatcaQrPosition != null) PosBadge(label: 'ZATCA QR', variant: PosBadgeVariant.success),
+                        if (template.zatcaQrPosition != null) PosBadge(label: l10n.pcZatcaQr, variant: PosBadgeVariant.success),
                       ],
                     ),
                   ],

@@ -29,7 +29,7 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
     final state = ref.watch(adminUserDetailProvider);
 
     return PosListPage(
-  title: 'Admin Detail',
+  title: l10n.adminAdminDetail,
   showSearch: false,
     child: switch (state) {
         AdminUserDetailLoading() => const Center(child: CircularProgressIndicator()),
@@ -132,8 +132,8 @@ class _AdminAdminUserDetailPageState extends ConsumerState<AdminAdminUserDetailP
                   if (has2fa)
                     ListTile(
                       leading: const Icon(Icons.security, color: AppColors.warning),
-                      title: const Text('Reset 2FA'),
-                      subtitle: const Text('Clear 2FA; admin must re-enroll'),
+                      title: Text(l10n.adminReset2FA),
+                      subtitle: Text(l10n.adminClear2FAHint),
                       onTap: () => _reset2fa(),
                     ),
                 ],

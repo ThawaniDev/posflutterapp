@@ -43,6 +43,7 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(providerPermissionListProvider);
 
     return PosListPage(
@@ -70,7 +71,7 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
                 _applyFilter();
               },
               label: l10n.group,
-              hint: 'All Groups',
+              hint: l10n.commonAllGroups,
               showSearch: false,
               clearable: true,
             ),
@@ -93,7 +94,7 @@ class _State extends ConsumerState<AdminProviderPermissionsPage> {
   Widget _buildList(Map<String, dynamic> resp) {
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No permissions found'));
+    if (items.isEmpty) return Center(child: Text(l10n.adminNoPermissionsFound));
 
     // Group by group field
     final grouped = <String, List<Map<String, dynamic>>>{};

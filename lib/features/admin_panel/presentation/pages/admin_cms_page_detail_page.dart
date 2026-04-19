@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,15 +24,16 @@ class _AdminCmsPageDetailPageState extends ConsumerState<AdminCmsPageDetailPage>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(cmsPageDetailProvider);
 
     return PosListPage(
-  title: 'CMS Page Detail',
+  title: l10n.adminCmsPageDetail,
   showSearch: false,
     child: switch (state) {
         CmsPageDetailInitial() || CmsPageDetailLoading() => const Center(child: CircularProgressIndicator()),
         CmsPageDetailError(:final message) => Center(
-          child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
+          child: Text(AppLocalizations.of(context)!.genericError(message), style: const TextStyle(color: AppColors.error)),
         ),
         CmsPageDetailLoaded(:final page) => SingleChildScrollView(
           padding: const EdgeInsets.all(16),

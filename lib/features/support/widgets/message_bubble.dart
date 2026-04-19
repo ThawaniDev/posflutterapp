@@ -27,7 +27,7 @@ class MessageBubble extends StatelessWidget {
     final dateStr = message.sentAt != null ? DateFormat.MMMd().format(message.sentAt!) : '';
 
     return Align(
-      alignment: isProvider ? Alignment.centerRight : Alignment.centerLeft,
+      alignment: isProvider ? AlignmentDirectional.centerEnd : AlignmentDirectional.centerStart,
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
         constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.72),
@@ -36,7 +36,7 @@ class MessageBubble extends StatelessWidget {
           children: [
             // Sender label
             Padding(
-              padding: const EdgeInsets.only(bottom: 4, left: 4, right: 4),
+              padding: const EdgeInsetsDirectional.only(bottom: 4, start: 4, end: 4),
               child: Text(
                 senderLabel,
                 style: AppTypography.micro.copyWith(color: senderColor, fontWeight: FontWeight.w600),
@@ -47,11 +47,11 @@ class MessageBubble extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               decoration: BoxDecoration(
                 color: bubbleColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(AppRadius.xl),
-                  topRight: const Radius.circular(AppRadius.xl),
-                  bottomLeft: Radius.circular(isProvider ? 16 : 4),
-                  bottomRight: Radius.circular(isProvider ? 4 : 16),
+                borderRadius: BorderRadiusDirectional.only(
+                  topStart: const Radius.circular(AppRadius.xl),
+                  topEnd: const Radius.circular(AppRadius.xl),
+                  bottomStart: Radius.circular(isProvider ? 16 : 4),
+                  bottomEnd: Radius.circular(isProvider ? 4 : 16),
                 ),
               ),
               child: Column(

@@ -116,7 +116,12 @@ class _CustomizationDashboardPageState extends ConsumerState<CustomizationDashbo
               PosTabItem(label: l10n.customizationQuickAccess, icon: Icons.grid_view),
             ],
           ),
-          IndexedStack(index: _currentTab, children: const [PosSettingsWidget(), ReceiptTemplateWidget(), QuickAccessWidget()]),
+          Expanded(
+            child: IndexedStack(
+              index: _currentTab,
+              children: const [PosSettingsWidget(), ReceiptTemplateWidget(), QuickAccessWidget()],
+            ),
+          ),
         ],
       ),
     );

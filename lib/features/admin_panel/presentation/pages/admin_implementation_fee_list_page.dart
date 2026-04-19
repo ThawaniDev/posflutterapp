@@ -17,7 +17,6 @@ class AdminImplementationFeeListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementationFeeListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String _typeFilter = 'all';
@@ -52,16 +51,10 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
     final state = ref.watch(implementationFeeListProvider);
 
     return PosListPage(
-  title: l10n.implementationFees,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.add,
-    onPressed: _showCreateDialog,
-    tooltip: 'Add',
-  ),
-],
-  child: Column(
+      title: l10n.implementationFees,
+      showSearch: false,
+      actions: [PosButton.icon(icon: Icons.add, onPressed: _showCreateDialog, tooltip: l10n.adminAdd)],
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // Type filter
@@ -101,19 +94,19 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
               ImplementationFeeListLoading() => const Center(child: CircularProgressIndicator()),
               ImplementationFeeListLoaded(fees: final items) =>
                 items.isEmpty
-                    ? const Center(child: Text('No implementation fees found'))
+                    ? Center(child: Text(l10n.adminNoImplementationFees))
                     : ListView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                         itemCount: items.length,
                         itemBuilder: (context, index) => _feeCard(items[index]),
                       ),
-              ImplementationFeeListError(message: final msg) => Center(child: Text('Error: $msg')),
+              ImplementationFeeListError(message: final msg) => Center(child: Text(l10n.genericError(msg))),
               _ => const Center(child: CircularProgressIndicator()),
             },
           ),
         ],
       ),
-);
+    );
   }
 
   Widget _typeChip(String label, String value) {
@@ -225,7 +218,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Add Implementation Fee'),
+        title: Text(l10n.adminAddImplementationFee),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -233,14 +226,14 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
               StatefulBuilder(
                 builder: (context, setInnerState) => PosSearchableDropdown<String>(
                   items: [
-                    PosDropdownItem(value: 'setup', label: 'Setup'),
-                    PosDropdownItem(value: 'training', label: 'Training'),
-                    PosDropdownItem(value: 'custom_dev', label: 'Custom Dev'),
+                    PosDropdownItem(value: 'setup', label: l10n.adminFeeTypeSetup),
+                    PosDropdownItem(value: 'training', label: l10n.adminFeeTypeTraining),
+                    PosDropdownItem(value: 'custom_dev', label: l10n.adminFeeTypeCustomDev),
                   ],
                   selectedValue: feeType,
                   onChanged: (v) => setInnerState(() => feeType = v ?? feeType),
-                  label: 'Fee Type',
-                  hint: 'Select fee type',
+                  label: l10n.adminFeeType,
+                  hint: l10n.adminSelectFeeType,
                   showSearch: false,
                   clearable: false,
                 ),
@@ -285,7 +278,7 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Edit Implementation Fee'),
+        title: Text(l10n.adminEditImplementationFee),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -323,10 +316,10 @@ class _AdminImplementationFeeListPageState extends ConsumerState<AdminImplementa
   void _confirmDelete(int id) async {
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Delete Fee',
-      message: 'Are you sure you want to delete this implementation fee?',
-      confirmLabel: 'Delete',
-      cancelLabel: 'Cancel',
+      title: l10n.adminDeleteFee,
+      message: l10n.adminDeleteFeeConfirm,
+      confirmLabel: l10n.commonDelete,
+      cancelLabel: l10n.commonCancel,
       isDanger: true,
     );
     if (confirmed == true) {

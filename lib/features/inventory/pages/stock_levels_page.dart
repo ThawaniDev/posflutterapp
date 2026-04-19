@@ -47,30 +47,24 @@ class _StockLevelsPageState extends ConsumerState<StockLevelsPage> {
           children: [
             Text('${l10n.inventoryProduct}: ${level.productName ?? level.productId}'),
             const SizedBox(height: AppSpacing.md),
-            TextField(
+            PosTextField(
               controller: reorderController,
-              decoration: InputDecoration(labelText: l10n.inventoryReorderPoint, hintText: l10n.stockReorderPointHint),
+              label: l10n.inventoryReorderPoint,
+              hint: l10n.stockReorderPointHint,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
             const SizedBox(height: AppSpacing.sm),
-            TextField(
+            PosTextField(
               controller: maxController,
-              decoration: InputDecoration(labelText: l10n.inventoryMaxStockLevelOptional, hintText: l10n.stockMaxLevelHint),
+              label: l10n.inventoryMaxStockLevelOptional,
+              hint: l10n.stockMaxLevelHint,
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
           ],
         ),
         actions: [
-          PosButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            variant: PosButtonVariant.ghost,
-            label: l10n.commonCancel,
-          ),
-          PosButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            variant: PosButtonVariant.ghost,
-            label: l10n.commonSave,
-          ),
+          PosButton(onPressed: () => Navigator.pop(ctx, false), variant: PosButtonVariant.ghost, label: l10n.commonCancel),
+          PosButton(onPressed: () => Navigator.pop(ctx, true), variant: PosButtonVariant.ghost, label: l10n.commonSave),
         ],
       ),
     );

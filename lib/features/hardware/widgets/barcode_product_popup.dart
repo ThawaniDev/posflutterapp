@@ -253,7 +253,7 @@ class _BarcodeProductContent extends StatelessWidget {
           children: [
             Expanded(
               child: PosButton(
-                label: 'View / Edit',
+                label: l10n.hardwareViewEdit,
                 icon: Icons.edit_rounded,
                 variant: PosButtonVariant.outline,
                 onPressed: () => Navigator.pop(context, BarcodePopupAction.viewDetails),
@@ -262,7 +262,7 @@ class _BarcodeProductContent extends StatelessWidget {
             AppSpacing.gapW12,
             Expanded(
               child: PosButton(
-                label: 'Add to Cart',
+                label: l10n.hardwareAddToCart,
                 icon: Icons.add_shopping_cart_rounded,
                 onPressed: () => Navigator.pop(context, BarcodePopupAction.addToCart),
               ),
@@ -338,7 +338,7 @@ class _BarcodeProductContent extends StatelessWidget {
         AppSpacing.gapH24,
 
         PosButton(
-          label: 'Add New Product',
+          label: l10n.hardwareAddNewProduct,
           icon: Icons.add_rounded,
           isFullWidth: true,
           onPressed: () => Navigator.pop(context, BarcodePopupAction.addNewProduct),

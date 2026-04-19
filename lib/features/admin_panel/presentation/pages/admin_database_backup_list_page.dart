@@ -85,7 +85,7 @@ class _AdminDatabaseBackupListPageState extends ConsumerState<AdminDatabaseBacku
   Widget _buildList(Map<String, dynamic> data) {
     final items = (data['data'] as List<dynamic>?) ?? [];
     if (items.isEmpty) {
-      return const Center(child: Text('No backups found'));
+      return Center(child: Text(l10n.adminNoBackupsFound));
     }
     return RefreshIndicator(
       onRefresh: () async => _loadData(),
@@ -127,9 +127,9 @@ class _AdminDatabaseBackupListPageState extends ConsumerState<AdminDatabaseBacku
     final confirmed = await showPosConfirmDialog(
       context,
       title: l10n.backupCreate,
-      message: 'Start a new manual database backup?',
-      confirmLabel: 'Create',
-      cancelLabel: 'Cancel',
+      message: l10n.adminStartNewBackup,
+      confirmLabel: l10n.commonCreate,
+      cancelLabel: l10n.commonCancel,
     );
     if (confirmed == true) {
       ref.read(databaseBackupActionProvider.notifier).create({'backup_type': 'manual'});

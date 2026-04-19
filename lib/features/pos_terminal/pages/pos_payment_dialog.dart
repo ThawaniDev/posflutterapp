@@ -419,6 +419,7 @@ class _PosPaymentDialogState extends ConsumerState<PosPaymentDialog> {
           Expanded(
             flex: 2,
             child: PosSearchableDropdown<PaymentMethod>(
+              hint: AppLocalizations.of(context)!.selectPaymentMethod,
               items: _availableMethods.map((m) {
                 return PosDropdownItem(value: m, label: m.label);
               }).toList(),

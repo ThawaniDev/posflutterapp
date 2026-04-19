@@ -78,9 +78,9 @@ class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
     final productsState = ref.watch(productsProvider);
     final products = productsState is ProductsLoaded ? productsState.products : <Product>[];
     return PosFormPage(
-      title: 'New Freshness Log',
+      title: l10n.floristNewFreshnessLog,
       bottomBar: PosButton(
-        label: 'Log Freshness',
+        label: l10n.floristLogFreshness,
         onPressed: _saving ? null : _handleSave,
         isLoading: _saving,
         isFullWidth: true,
@@ -91,6 +91,7 @@ class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosSearchableDropdown<String>(
+              hint: l10n.selectProduct,
               label: l10n.wameedAIProduct,
               items: products.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
               selectedValue: _selectedProductId,
@@ -103,7 +104,7 @@ class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
               child: AbsorbPointer(
                 child: PosTextField(
                   controller: TextEditingController(text: '${_receivedDate.day}/${_receivedDate.month}/${_receivedDate.year}'),
-                  label: 'Received Date',
+                  label: l10n.floristReceivedDate,
                   suffixIcon: Icons.calendar_today,
                   readOnly: true,
                 ),
@@ -115,7 +116,7 @@ class _FreshnessLogFormPageState extends ConsumerState<FreshnessLogFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _expectedVaseLifeCtrl,
-                    label: 'Vase Life (days)',
+                    label: l10n.floristVaseLifeDays,
                     hint: '0',
                     keyboardType: TextInputType.number,
                   ),

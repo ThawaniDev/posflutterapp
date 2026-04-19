@@ -37,6 +37,7 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(failedPaymentsProvider);
 
     return PosListPage(
@@ -70,7 +71,7 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
                         itemCount: items.length,
                         itemBuilder: (context, index) => _failedPaymentCard(items[index]),
                       ),
-              BillingInvoiceListError(message: final msg) => Center(child: Text('Error: $msg')),
+              BillingInvoiceListError(message: final msg) => Center(child: Text(l10n.genericError(msg))),
               _ => const Center(child: CircularProgressIndicator()),
             },
           ),
@@ -141,7 +142,7 @@ class _AdminFailedPaymentsPageState extends ConsumerState<AdminFailedPaymentsPag
               child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white),
                 icon: const Icon(Icons.replay, size: 18),
-                label: const Text('Retry Payment'),
+                label: Text(l10n.adminRetryPayment),
                 onPressed: () => _retryPayment(invoice['id']),
               ),
             ),

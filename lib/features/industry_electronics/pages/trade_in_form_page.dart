@@ -76,7 +76,7 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
     return PosFormPage(
       title: l10n.electronicsNewTradeIn,
       bottomBar: PosButton(
-          label: 'Record Trade-In',
+          label: l10n.electronicsRecordTradeIn,
           onPressed: _saving ? null : _handleSave,
           isLoading: _saving,
           isFullWidth: true,
@@ -88,21 +88,22 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
           children: [
             PosTextField(
               controller: _deviceDescCtrl,
-              label: 'Device Description',
-              hint: 'e.g. Samsung Galaxy S24 Ultra',
+              label: l10n.electronicsDeviceDescription,
+              hint: l10n.electronicsDeviceHintTradeIn,
               maxLines: 2,
             ),
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _imeiCtrl,
-              label: 'IMEI (optional)',
-              hint: '15-digit IMEI number',
+              label: l10n.electronicsImeiOptional,
+              hint: l10n.electronicsImeiHint,
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
+              hint: l10n.selectGrade,
               label: l10n.electronicsConditionGrade,
-              items: ['A', 'B', 'C', 'D'].map((g) => PosDropdownItem(value: g, label: 'Grade $g')).toList(),
+              items: ['A', 'B', 'C', 'D'].map((g) => PosDropdownItem(value: g, label: l10n.electronicsGradeLetter(g.toString()))).toList(),
               selectedValue: _conditionGradeCtrl.text.isEmpty ? null : _conditionGradeCtrl.text,
               onChanged: (v) => setState(() => _conditionGradeCtrl.text = v ?? ''),
               showSearch: false,
@@ -111,14 +112,15 @@ class _TradeInFormPageState extends ConsumerState<TradeInFormPage> {
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _assessedValueCtrl,
-              label: 'Assessed Value (\u0081)',
+              label: l10n.electronicsAssessedValue,
               hint: '0.000',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
+              hint: l10n.selectStaffMember,
               label: l10n.staffMember,
-              items: staffList.map((s) => PosDropdownItem(value: s.id, label: '${s.firstName} ${s.lastName}')).toList(),
+              items: staffList.map((s) => PosDropdownItem(value: s.id, label: l10n.electronicsStaffFullName(s.firstName, s.lastName))).toList(),
               selectedValue: _selectedStaffUserId,
               onChanged: (v) => setState(() => _selectedStaffUserId = v),
               showSearch: true,

@@ -6,6 +6,7 @@ import '../../../core/widgets/pos_status_badge.dart';
 import '../models/device_imei_record.dart';
 import '../enums/device_imei_status.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class ImeiRecordCard extends StatelessWidget {
   final DeviceImeiRecord record;
@@ -15,6 +16,7 @@ class ImeiRecordCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PosCard(
@@ -40,11 +42,15 @@ class ImeiRecordCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(record.imei, style: AppTypography.titleSmall),
-                    if (record.serialNumber != null) Text('S/N: ${record.serialNumber}', style: AppTypography.caption),
+                    if (record.serialNumber != null)
+                      Text(l10n.electronicsSnWithValue(record.serialNumber!), style: AppTypography.caption),
                     AppSpacing.gapH4,
                     Row(
                       children: [
-                        PosStatusBadge(label: 'Grade: ${record.conditionGrade}', variant: PosStatusBadgeVariant.info),
+                        PosStatusBadge(
+                          label: l10n.electronicsGradeWithValue(record.conditionGrade?.value ?? ''),
+                          variant: PosStatusBadgeVariant.info,
+                        ),
                         AppSpacing.gapW8,
                         if (record.status != null) _statusBadge(record.status!),
                       ],

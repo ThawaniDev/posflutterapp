@@ -14,6 +14,7 @@ class JewelryDetailCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return PosCard(
       elevation: 0,
       borderRadius: AppRadius.borderMd,
@@ -47,7 +48,9 @@ class JewelryDetailCard extends StatelessWidget {
                         ),
                         Text(
                           'Gross: ${detail.grossWeightG}g • Net: ${detail.netWeightG}g',
-                          style: AppTypography.caption.copyWith(color: AppColors.textSecondary),
+                          style: AppTypography.caption.copyWith(
+                            color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                          ),
                         ),
                       ],
                     ),

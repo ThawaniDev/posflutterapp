@@ -22,12 +22,14 @@ class MenuSyncStatusCard extends StatelessWidget {
     final itemsFailed = syncLog['items_failed'] as int? ?? 0;
     final createdAt = syncLog['created_at'] as String?;
     final errorMessage = syncLog['error_message'] as String?;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
 
-    final (statusColor, statusIcon) = switch (status) {
-      'success' => (AppColors.success, Icons.check_circle),
-      'partial' => (AppColors.warning, Icons.warning_amber),
-      'failed' => (AppColors.error, Icons.error_outline),
-      _ => (AppColors.textSecondary, Icons.help_outline),
+    final (statusColor, statusIcon, statusVariant) = switch (status) {
+      'success' => (AppColors.success, Icons.check_circle, PosStatusBadgeVariant.success),
+      'partial' => (AppColors.warning, Icons.warning_amber, PosStatusBadgeVariant.warning),
+      'failed' => (AppColors.error, Icons.error_outline, PosStatusBadgeVariant.error),
+      _ => (mutedColor, Icons.help_outline, PosStatusBadgeVariant.neutral),
     };
 
     return PosCard(
@@ -52,24 +54,11 @@ class MenuSyncStatusCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(platform?.label ?? platformSlug, style: const TextStyle(fontWeight: FontWeight.w600)),
-                      Text(
-                        '${l10n.deliveryTriggeredBy} $triggeredBy',
-                        style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
-                      ),
+                      Text('${l10n.deliveryTriggeredBy} $triggeredBy', style: TextStyle(fontSize: 11, color: mutedColor)),
                     ],
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: statusColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(AppRadius.full),
-                  ),
-                  child: Text(
-                    status.toUpperCase(),
-                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: statusColor),
-                  ),
-                ),
+                PosStatusBadge(label: status.toUpperCase(), variant: statusVariant),
               ],
             ),
             AppSpacing.gapH12,
@@ -85,8 +74,7 @@ class MenuSyncStatusCard extends StatelessWidget {
                   _MetricChip(label: l10n.deliveryDuration, value: '${duration}s', color: AppColors.info),
                 ],
                 const Spacer(),
-                if (createdAt != null)
-                  Text(_formatTime(context, createdAt), style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
+                if (createdAt != null) Text(_formatTime(context, createdAt), style: TextStyle(fontSize: 10, color: mutedColor)),
               ],
             ),
             if (errorMessage != null) ...[
@@ -130,6 +118,8 @@ class _MetricChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -139,7 +129,7 @@ class _MetricChip extends StatelessWidget {
           decoration: BoxDecoration(color: color, shape: BoxShape.circle),
         ),
         AppSpacing.gapW4,
-        Text('$label: ', style: TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+        Text('$label: ', style: TextStyle(fontSize: 11, color: mutedColor)),
         Text(
           value,
           style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color),

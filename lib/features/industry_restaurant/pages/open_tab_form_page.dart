@@ -73,9 +73,10 @@ class _OpenTabFormPageState extends ConsumerState<OpenTabFormPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PosTextField(controller: _customerNameCtrl, label: l10n.deliveryCustomerName, hint: 'Tab owner name'),
+            PosTextField(controller: _customerNameCtrl, label: l10n.deliveryCustomerName, hint: l10n.restaurantTabOwnerHint),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
+              hint: l10n.selectOrder,
               label: l10n.wameedAIOrder,
               items: orders.map((o) => PosDropdownItem(value: o.id, label: o.orderNumber)).toList(),
               selectedValue: _selectedOrderId,
@@ -84,6 +85,7 @@ class _OpenTabFormPageState extends ConsumerState<OpenTabFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
+              hint: l10n.selectTable,
               label: l10n.tableOptional,
               items: tables.map((t) => PosDropdownItem(value: t.id, label: t.displayName ?? 'Table ${t.tableNumber}')).toList(),
               selectedValue: _selectedTableId,

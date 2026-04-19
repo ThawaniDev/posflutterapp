@@ -45,6 +45,7 @@ class _AdminFeatureFlagListPageState extends ConsumerState<AdminFeatureFlagListP
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(featureFlagListProvider);
 
     return PosListPage(
@@ -84,7 +85,7 @@ class _AdminFeatureFlagListPageState extends ConsumerState<AdminFeatureFlagListP
                   ),
                   Expanded(
                     child: flags.isEmpty
-                        ? const Center(child: Text('No feature flags configured'))
+                        ? Center(child: Text(l10n.adminNoFeatureFlags))
                         : ListView.builder(
                             itemCount: flags.length,
                             itemBuilder: (context, index) {

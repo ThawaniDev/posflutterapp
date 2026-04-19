@@ -114,7 +114,7 @@ class _FilterChip extends StatelessWidget {
       onSelected: (_) => onSelected(),
       selectedColor: AppColors.primary.withValues(alpha: 0.15),
       labelStyle: TextStyle(
-        color: selected ? AppColors.primary : AppColors.textSecondary,
+        color: selected ? AppColors.primary : AppColors.mutedFor(context),
         fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
       ),
     );
@@ -146,7 +146,7 @@ class _SubscriptionCard extends StatelessWidget {
         title: Text(plan?['name'] ?? 'Unknown Plan', style: const TextStyle(fontWeight: FontWeight.w600)),
         subtitle: Text(
           'Store: ${subscription['store_id']?.toString().substring(0, 8) ?? 'N/A'}',
-          style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
+          style: TextStyle(color: AppColors.mutedFor(context), fontSize: 13),
         ),
         trailing: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),

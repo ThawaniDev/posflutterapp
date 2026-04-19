@@ -45,7 +45,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
   showSearch: false,
   actions: [
   PosButton.icon(
-    icon: Icons.download, onPressed: () => ref.read(analyticsExportProvider.notifier).exportStores(), tooltip: 'Export Stores',
+    icon: Icons.download, onPressed: () => ref.read(analyticsExportProvider.notifier).exportStores(), tooltip: l10n.adminExportStores,
   ),
 ],
   child: Column(
@@ -53,13 +53,13 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           if (exportState is AnalyticsExportSuccess)
             MaterialBanner(
-              content: Text('Export ready: ${exportState.recordCount} records'),
+              content: Text(l10n.adminExportReadyRecords(exportState.recordCount.toString())),
               backgroundColor: AppColors.success.withValues(alpha: 0.08),
               actions: [
                 PosButton(
                   onPressed: () => ref.read(analyticsExportProvider.notifier).exportStores(),
                   variant: PosButtonVariant.ghost,
-                  label: 'Export Again',
+                  label: l10n.adminExportAgain,
                 ),
               ],
             ),
@@ -82,7 +82,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                         desktopCols: 3,
                         mobileCols: 2,
                         cards: [
-                          PosKpiCard(label: 'Total Stores', value: '$total', iconColor: AppColors.info),
+                          PosKpiCard(label: l10n.adminTotalStores, value: '$total', iconColor: AppColors.info),
                           PosKpiCard(label: l10n.active, value: '$active', iconColor: AppColors.success),
                           PosKpiCard(label: l10n.inactive, value: '${total - active}', iconColor: AppColors.textSecondary),
                         ],
@@ -93,8 +93,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                       const Text('Health Summary', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       const SizedBox(height: AppSpacing.sm),
                       if (health.isEmpty)
-                        const PosCard(
-                          child: Padding(padding: EdgeInsets.all(AppSpacing.md), child: Text('No health data today')),
+                        PosCard(child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.adminNoHealthDataToday)),
                         )
                       else
                         ...health.entries.map(
@@ -144,7 +143,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Error: $msg'),
+                    Text(l10n.genericError(msg)),
                     const SizedBox(height: AppSpacing.sm),
                     PosButton(
                       onPressed: () => ref.read(analyticsStoresProvider.notifier).load(storeId: _storeId),
@@ -153,7 +152,7 @@ class _AdminAnalyticsStoresPageState extends ConsumerState<AdminAnalyticsStoresP
                   ],
                 ),
               ),
-              _ => const Center(child: Text('Loading store analytics...')),
+              _ => Center(child: Text(l10n.adminLoadingStoreAnalytics)),
             },
           ),
         ],

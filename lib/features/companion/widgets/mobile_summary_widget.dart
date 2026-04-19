@@ -17,10 +17,11 @@ class MobileSummaryWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final stats = ref.watch(quickStatsProvider);
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
 
     return switch (stats) {
-      QuickStatsInitial() || QuickStatsLoading() => const Center(child: CircularProgressIndicator()),
+      QuickStatsInitial() || QuickStatsLoading() => const PosLoading(),
       QuickStatsError(:final message) => Center(
         child: Text(message, style: TextStyle(color: theme.colorScheme.error)),
       ),
@@ -94,7 +95,7 @@ class MobileSummaryWidget extends ConsumerWidget {
                   icon: Icons.sync,
                   label: l10n.companionLastSync,
                   value: lastSync ?? '-',
-                  iconColor: AppColors.textSecondary,
+                  iconColor: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
                 ),
               ],
             ),

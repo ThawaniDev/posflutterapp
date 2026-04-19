@@ -55,10 +55,11 @@ class _AdminArticleListPageState extends ConsumerState<AdminArticleListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(articleListProvider);
 
     return PosListPage(
-  title: 'Knowledge Base Articles',
+  title: l10n.adminKnowledgeBaseArticles,
   showSearch: false,
   actions: [
   PosButton.icon(
@@ -99,7 +100,7 @@ class _AdminArticleListPageState extends ConsumerState<AdminArticleListPage> {
                       setState(() => _selectedCategory = v);
                       _search();
                     },
-                    hint: 'Category',
+                    hint: l10n.commonCategory,
                     showSearch: false,
                     clearable: true,
                   ),
@@ -141,7 +142,7 @@ class _AdminArticleListPageState extends ConsumerState<AdminArticleListPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(12),
-                            child: Text('Page $currentPage of $lastPage ($total total)'),
+                            child: Text(l10n.adminPageOfTotal(currentPage.toString(), lastPage.toString(), total.toString())),
                           ),
                         ],
                       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/branches/models/store.dart';
@@ -35,12 +36,12 @@ class _BranchSelectorState extends ConsumerState<BranchSelector> {
     final permsState = ref.watch(userPermissionsProvider);
     final activeBranchId = ref.watch(activeBranchIdProvider);
     final activeRole = ref.watch(activeBranchRoleProvider);
-    final isAr = Localizations.localeOf(context).languageCode == 'ar';
+    final locale = Localizations.localeOf(context).languageCode;
 
     // Branch-scoped user: show current branch name + role (no dropdown)
     if (!canSwitch) {
       if (activeRole == null) return const SizedBox.shrink();
-      final roleName = isAr ? (activeRole.displayNameAr ?? activeRole.displayName) : activeRole.displayName;
+      final roleName = locale == 'ar' ? (activeRole.displayNameAr ?? activeRole.displayName) : activeRole.displayName;
       return Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         decoration: BoxDecoration(
@@ -79,10 +80,11 @@ class _BranchSelectorState extends ConsumerState<BranchSelector> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: PosSearchableDropdown<String>(
+        hint: AppLocalizations.of(context)!.selectBranch,
         items: branches.map((store) {
           final roleInfo = permsState.roleForBranch(store.id);
           final roleName = roleInfo != null
-              ? (isAr ? (roleInfo.displayNameAr ?? roleInfo.displayName) : roleInfo.displayName)
+              ? (locale == 'ar' ? (roleInfo.displayNameAr ?? roleInfo.displayName) : roleInfo.displayName)
               : null;
           return PosDropdownItem<String>(
             value: store.id,

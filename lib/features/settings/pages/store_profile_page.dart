@@ -46,15 +46,9 @@ class _StoreProfilePageState extends SettingsSubPageState<StoreProfilePage> {
           title: l10n.settingsProfileCurrency,
           icon: Icons.attach_money,
           children: [
-            TextField(
-              controller: _currencyCodeCtrl,
-              decoration: InputDecoration(labelText: l10n.settingsProfileCurrencyCode, hintText: '\u0081'),
-            ),
+            PosTextField(controller: _currencyCodeCtrl, label: l10n.settingsProfileCurrencyCode, hint: 'SAR'),
             const SizedBox(height: 12),
-            TextField(
-              controller: _currencySymbolCtrl,
-              decoration: InputDecoration(labelText: l10n.settingsProfileCurrencySymbol, hintText: '﷼'),
-            ),
+            PosTextField(controller: _currencySymbolCtrl, label: l10n.settingsProfileCurrencySymbol, hint: '﷼'),
           ],
         ),
 
@@ -73,10 +67,10 @@ class _StoreProfilePageState extends SettingsSubPageState<StoreProfilePage> {
             SettingsDropdownRow<String>(
               label: l10n.settingsProfileThousandSep,
               value: _thousandSeparator,
-              items: const [
-                PosDropdownItem(value: ',', label: ','),
-                PosDropdownItem(value: '.', label: '.'),
-                PosDropdownItem(value: ' ', label: 'Space'),
+              items: [
+                const PosDropdownItem(value: ',', label: ','),
+                const PosDropdownItem(value: '.', label: '.'),
+                PosDropdownItem(value: ' ', label: l10n.settingsSpaceLabel),
               ],
               onChanged: (v) {
                 if (v != null) setState(() => _thousandSeparator = v);
@@ -99,7 +93,7 @@ class _StoreProfilePageState extends SettingsSubPageState<StoreProfilePage> {
         const SizedBox(height: 8),
         SizedBox(
           width: double.infinity,
-          child: FilledButton.icon(onPressed: _save, icon: const Icon(Icons.save, size: 18), label: Text(l10n.save)),
+          child: PosButton(onPressed: _save, icon: Icons.save, label: l10n.save),
         ),
       ],
     );

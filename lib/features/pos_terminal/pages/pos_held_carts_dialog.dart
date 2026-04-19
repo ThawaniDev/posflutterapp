@@ -106,7 +106,7 @@ class _PosHeldCartsDialogState extends ConsumerState<PosHeldCartsDialog> {
 
   Widget _buildBody(HeldCartsState cartsState, bool isDark, Color mutedColor) {
     if (cartsState is HeldCartsLoading) {
-      return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+      return const PosLoading();
     }
 
     if (cartsState is HeldCartsError) {

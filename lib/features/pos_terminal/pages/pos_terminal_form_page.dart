@@ -278,6 +278,7 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
                 ),
                 AppSpacing.gapH16,
                 PosSearchableDropdown<String>(
+                  hint: AppLocalizations.of(context)!.selectPlatform,
                   label: AppLocalizations.of(context)!.termFormPlatformLabel,
                   items: _platforms.map((p) => PosDropdownItem(value: p, label: _platformLabel(p))).toList(),
                   selectedValue: _selectedPlatform,
@@ -388,6 +389,7 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
               subtitle: AppLocalizations.of(context)!.termFormAcquirerSectionSub,
               children: [
                 PosSearchableDropdown<String>(
+                  hint: AppLocalizations.of(context)!.selectMethod,
                   label: AppLocalizations.of(context)!.termFormAcquirerSourceLabel,
                   items: _acquirerSources.map((s) => PosDropdownItem(value: s, label: _acquirerSourceLabel(s))).toList(),
                   selectedValue: _selectedAcquirerSource,
@@ -424,6 +426,7 @@ class _PosTerminalFormPageState extends ConsumerState<PosTerminalFormPage> {
               subtitle: AppLocalizations.of(context)!.termFormSettlementSectionSub,
               children: [
                 PosSearchableDropdown<String>(
+                  hint: AppLocalizations.of(context)!.selectCycle,
                   label: AppLocalizations.of(context)!.termFormSettlementCycleLabel,
                   items: _settlementCycles.map((c) => PosDropdownItem(value: c, label: c)).toList(),
                   selectedValue: _selectedSettlementCycle,

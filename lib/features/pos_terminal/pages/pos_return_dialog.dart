@@ -213,6 +213,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
                     AppSpacing.gapW12,
                     Expanded(
                       child: PosSearchableDropdown<PaymentMethod>(
+                        hint: AppLocalizations.of(context)!.selectPaymentMethod,
                         items: [PaymentMethod.cash, PaymentMethod.card, PaymentMethod.storeCredit].map((m) {
                           return PosDropdownItem(value: m, label: m.label);
                         }).toList(),

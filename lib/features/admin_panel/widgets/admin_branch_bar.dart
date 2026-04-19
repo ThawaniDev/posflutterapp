@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/providers/branch_context_provider.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// A lightweight branch selector bar for admin pages.
 ///
@@ -20,6 +21,7 @@ class AdminBranchBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final canSwitch = ref.watch(canSwitchBranchProvider);
     final branches = ref.watch(accessibleBranchIdsProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -57,7 +59,7 @@ class AdminBranchBar extends ConsumerWidget {
                 onChanged: (val) => onBranchChanged(val),
                 showSearch: true,
                 clearable: true,
-                hint: 'All Branches',
+                hint: l10n.commonAllBranches,
               ),
             )
           else

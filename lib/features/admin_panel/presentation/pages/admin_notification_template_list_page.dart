@@ -64,6 +64,7 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(notificationTemplateListProvider);
 
     return PosListPage(
@@ -100,14 +101,14 @@ class _AdminNotificationTemplateListPageState extends ConsumerState<AdminNotific
                       PosDropdownItem(value: 'email', label: l10n.email),
                       PosDropdownItem(value: 'sms', label: l10n.notifPrefSms),
                       PosDropdownItem(value: 'in_app', label: l10n.notificationsInApp),
-                      PosDropdownItem(value: 'whatsapp', label: 'WhatsApp'),
+                      PosDropdownItem(value: 'whatsapp', label: l10n.adminWhatsApp),
                     ],
                     selectedValue: _selectedChannel,
                     onChanged: (v) {
                       setState(() => _selectedChannel = v);
                       _search();
                     },
-                    hint: 'Channel',
+                    hint: l10n.commonChannel,
                     showSearch: false,
                     clearable: true,
                   ),

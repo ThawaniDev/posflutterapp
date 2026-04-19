@@ -122,7 +122,17 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
             PopupMenuItem(value: 'manual_credit', child: Text(l10n.debitsTypeManualCredit)),
           ],
         ),
-        PosButton(label: l10n.add, icon: Icons.add, onPressed: () => context.push(Routes.debitsCreate)),
+        PosButton(
+          label: l10n.add,
+          icon: Icons.add,
+          onPressed: () async {
+            final result = await context.push<String>(Routes.debitsCreate);
+            if (!mounted) return;
+            if (result == 'created') {
+              showPosSuccessSnackbar(context, l10n.debitsCreatedSuccess);
+            }
+          },
+        ),
       ],
       child: Column(
         children: [
@@ -167,6 +177,9 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
     final error = state is DebitsError ? state.message : null;
     final debits = state is DebitsLoaded ? state.debits : <Debit>[];
     final loaded = state is DebitsLoaded ? state : null;
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final showRemainingBalance = screenWidth >= 1280;
+    final showDate = screenWidth >= 1100;
 
     return PosDataTable<Debit>(
       columns: [
@@ -175,8 +188,8 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
         PosTableColumn(title: l10n.debitsType),
         PosTableColumn(title: l10n.commonStatus),
         PosTableColumn(title: l10n.debitsAmount, numeric: true),
-        PosTableColumn(title: l10n.debitsRemainingBalance, numeric: true),
-        PosTableColumn(title: l10n.commonDate),
+        PosTableColumn(title: l10n.debitsRemainingBalance, numeric: true, visible: showRemainingBalance),
+        PosTableColumn(title: l10n.commonDate, visible: showDate),
       ],
       items: debits,
       isLoading: isLoading,
@@ -197,7 +210,13 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
           label: l10n.edit,
           icon: Icons.edit_outlined,
           isVisible: (d) => d.canEdit,
-          onTap: (d) => context.push('${Routes.debits}/${d.id}/edit'),
+          onTap: (d) async {
+            final result = await context.push<String>('${Routes.debits}/${d.id}/edit');
+            if (!mounted) return;
+            if (result == 'updated') {
+              showPosSuccessSnackbar(context, l10n.debitsUpdatedSuccess);
+            }
+          },
         ),
         PosTableRowAction<Debit>(
           label: l10n.debitsAllocate,
@@ -221,29 +240,33 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
         ),
       ],
       cellBuilder: (debit, colIndex, col) {
-        switch (colIndex) {
-          case 0:
-            return Text(debit.referenceNumber ?? '-', style: const TextStyle(fontWeight: FontWeight.w600));
-          case 1:
-            return Text(debit.customer?.name ?? '-');
-          case 2:
-            return Text(_typeLabel(DebitType.fromValue(debit.debitType), l10n));
-          case 3:
-            return PosBadge(
-              label: _statusLabel(DebitStatus.fromValue(debit.status), l10n),
-              variant: _statusVariant(DebitStatus.fromValue(debit.status)),
-            );
-          case 4:
-            return Text(debit.amount.toStringAsFixed(2), style: const TextStyle(fontWeight: FontWeight.w600));
-          case 5:
-            return Text(debit.remainingBalance.toStringAsFixed(2));
-          case 6:
-            return Text(
-              debit.createdAt != null ? '${debit.createdAt!.day}/${debit.createdAt!.month}/${debit.createdAt!.year}' : '-',
-            );
-          default:
-            return const SizedBox.shrink();
+        if (col.title == l10n.debitsReferenceNumber) {
+          return Text(debit.referenceNumber ?? '-', style: const TextStyle(fontWeight: FontWeight.w600));
         }
+        if (col.title == l10n.debitsCustomer) {
+          return Text(debit.customer?.name ?? '-');
+        }
+        if (col.title == l10n.debitsType) {
+          return Text(_typeLabel(DebitType.fromValue(debit.debitType), l10n));
+        }
+        if (col.title == l10n.commonStatus) {
+          return PosBadge(
+            label: _statusLabel(DebitStatus.fromValue(debit.status), l10n),
+            variant: _statusVariant(DebitStatus.fromValue(debit.status)),
+          );
+        }
+        if (col.title == l10n.debitsAmount) {
+          return Text(debit.amount.toStringAsFixed(2), style: const TextStyle(fontWeight: FontWeight.w600));
+        }
+        if (col.title == l10n.debitsRemainingBalance) {
+          return Text(debit.remainingBalance.toStringAsFixed(2));
+        }
+        if (col.title == l10n.commonDate) {
+          return Text(
+            debit.createdAt != null ? '${debit.createdAt!.day}/${debit.createdAt!.month}/${debit.createdAt!.year}' : '-',
+          );
+        }
+        return const SizedBox.shrink();
       },
       currentPage: loaded?.currentPage,
       totalPages: loaded?.lastPage,
@@ -276,6 +299,7 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   PosSearchableDropdown<String>(
+                    hint: l10n.selectOrder,
                     label: l10n.debitsOrderId,
                     items: orders.map((o) => PosDropdownItem(value: o.id, label: o.orderNumber)).toList(),
                     selectedValue: selectedOrderId,
@@ -300,16 +324,8 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
               ),
             ),
             actions: [
-              PosButton(
-                onPressed: () => Navigator.pop(ctx, false),
-                variant: PosButtonVariant.ghost,
-                label: l10n.cancel,
-              ),
-              PosButton(
-                onPressed: () => Navigator.pop(ctx, true),
-                variant: PosButtonVariant.ghost,
-                label: l10n.debitsAllocate,
-              ),
+              PosButton(onPressed: () => Navigator.pop(ctx, false), variant: PosButtonVariant.ghost, label: l10n.cancel),
+              PosButton(onPressed: () => Navigator.pop(ctx, true), variant: PosButtonVariant.ghost, label: l10n.debitsAllocate),
             ],
           );
         },
@@ -363,16 +379,8 @@ class _DebitListPageState extends ConsumerState<DebitListPage> {
           ],
         ),
         actions: [
-          PosButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            variant: PosButtonVariant.ghost,
-            label: l10n.cancel,
-          ),
-          PosButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            variant: PosButtonVariant.ghost,
-            label: l10n.debitsReverse,
-          ),
+          PosButton(onPressed: () => Navigator.pop(ctx, false), variant: PosButtonVariant.ghost, label: l10n.cancel),
+          PosButton(onPressed: () => Navigator.pop(ctx, true), variant: PosButtonVariant.ghost, label: l10n.debitsReverse),
         ],
       ),
     );

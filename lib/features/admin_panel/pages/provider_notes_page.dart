@@ -44,6 +44,7 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(providerNotesProvider);
     final theme = Theme.of(context);
     final isLoading = state is ProviderNotesLoading;
@@ -59,7 +60,7 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
       onRetry: () => ref.read(providerNotesProvider.notifier).load(widget.organizationId),
       isEmpty: isEmpty,
       emptyTitle: 'No notes yet',
-      emptySubtitle: 'Add a note above to get started',
+      emptySubtitle: l10n.adminAddNoteToStart,
       emptyIcon: Icons.note_outlined,
       child: Column(
         children: [
@@ -76,8 +77,8 @@ class _ProviderNotesPageState extends ConsumerState<ProviderNotesPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _noteController,
-                    label: 'Add Note',
-                    hint: 'Type your note here...',
+                    label: l10n.adminAddNote,
+                    hint: l10n.adminTypeNoteHint,
                     maxLines: 2,
                   ),
                 ),

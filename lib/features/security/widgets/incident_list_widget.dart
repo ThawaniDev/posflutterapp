@@ -30,6 +30,7 @@ class IncidentListWidget extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final isResolved = incident.isResolved;
     final severityColor = _severityColor(incident.severity);
+    final mutedColor = AppColors.mutedFor(context);
 
     return PosCard(
       margin: const EdgeInsets.only(bottom: 12),
@@ -58,43 +59,28 @@ class IncidentListWidget extends StatelessWidget {
                   ),
                 ),
                 AppSpacing.gapW4,
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: (isResolved ? AppColors.success : AppColors.warning).withValues(alpha: 0.12),
-                    borderRadius: AppRadius.borderXs,
-                  ),
-                  child: Text(
-                    isResolved ? l10n.securityResolved : l10n.securityUnresolved,
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
-                      color: isResolved ? AppColors.success : AppColors.warning,
-                    ),
-                  ),
+                PosStatusBadge(
+                  label: isResolved ? l10n.securityResolved : l10n.securityUnresolved,
+                  variant: isResolved ? PosStatusBadgeVariant.success : PosStatusBadgeVariant.warning,
                 ),
               ],
             ),
             AppSpacing.gapH4,
-            Text('${l10n.securityType}: ${incident.type}', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
-            if (incident.description != null)
-              Text(incident.description!, style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+            Text('${l10n.securityType}: ${incident.type}', style: TextStyle(fontSize: 12, color: mutedColor)),
+            if (incident.description != null) Text(incident.description!, style: TextStyle(fontSize: 13, color: mutedColor)),
             AppSpacing.gapH4,
             if (incident.ipAddress != null)
-              Text('${l10n.securityIP}: ${incident.ipAddress}', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+              Text('${l10n.securityIP}: ${incident.ipAddress}', style: TextStyle(fontSize: 12, color: mutedColor)),
             if (incident.createdAt != null)
               Text(
                 '${incident.createdAt!.day}/${incident.createdAt!.month}/${incident.createdAt!.year} ${incident.createdAt!.hour}:${incident.createdAt!.minute.toString().padLeft(2, '0')}',
-                style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
+                style: TextStyle(fontSize: 11, color: mutedColor),
               ),
             if (isResolved && incident.resolutionNotes != null) ...[
               AppSpacing.gapH8,
               Container(
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: AppColors.success.withValues(alpha: 0.06),
-                  borderRadius: AppRadius.borderXs,
-                ),
+                decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.06), borderRadius: AppRadius.borderXs),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -108,10 +94,12 @@ class IncidentListWidget extends StatelessWidget {
             if (!isResolved) ...[
               AppSpacing.gapH8,
               Align(
-                alignment: Alignment.centerRight,
-                child: TextButton.icon(
-                  icon: const Icon(Icons.check_circle_outline, size: 16),
-                  label: Text(l10n.securityResolve),
+                alignment: AlignmentDirectional.centerEnd,
+                child: PosButton(
+                  icon: Icons.check_circle_outline,
+                  label: l10n.securityResolve,
+                  variant: PosButtonVariant.ghost,
+                  size: PosButtonSize.sm,
                   onPressed: isActionLoading ? null : () => _showResolveDialog(context, incident.id),
                 ),
               ),
@@ -130,11 +118,7 @@ class IncidentListWidget extends StatelessWidget {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l10n.securityResolveIncident),
-        content: TextField(
-          controller: notesCtrl,
-          decoration: InputDecoration(labelText: l10n.securityResolutionNotes, border: const OutlineInputBorder()),
-          maxLines: 3,
-        ),
+        content: PosTextField(controller: notesCtrl, label: l10n.securityResolutionNotes, maxLines: 3),
         actions: [
           PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.notifScheduleCancel),
           PosButton(
@@ -142,7 +126,7 @@ class IncidentListWidget extends StatelessWidget {
               onResolve?.call(incidentId, notesCtrl.text);
               Navigator.pop(ctx);
             },
-            variant: PosButtonVariant.soft,
+            variant: PosButtonVariant.primary,
             label: l10n.securityResolve,
           ),
         ],
@@ -155,8 +139,8 @@ class IncidentListWidget extends StatelessWidget {
       'critical' => AppColors.error,
       'high' => AppColors.warning,
       'medium' => AppColors.info,
-      'low' => AppColors.textSecondary,
-      _ => AppColors.textSecondary,
+      'low' => AppColors.textMutedLight,
+      _ => AppColors.textMutedLight,
     };
   }
 }

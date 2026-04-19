@@ -27,17 +27,22 @@ class _ActiveStaffWidgetState extends ConsumerState<ActiveStaffWidget> {
   Widget build(BuildContext context) {
     final state = ref.watch(activeStaffProvider);
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
 
     return switch (state) {
-      ActiveStaffInitial() || ActiveStaffLoading() => const Center(child: CircularProgressIndicator()),
+      ActiveStaffInitial() || ActiveStaffLoading() => const PosLoading(),
       ActiveStaffError(:final message) => Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(message, style: TextStyle(color: theme.colorScheme.error)),
             AppSpacing.gapH8,
-            PosButton(onPressed: () => ref.read(activeStaffProvider.notifier).load(), variant: PosButtonVariant.ghost, label: l10n.companionRetry),
+            PosButton(
+              onPressed: () => ref.read(activeStaffProvider.notifier).load(),
+              variant: PosButtonVariant.ghost,
+              label: l10n.companionRetry,
+            ),
           ],
         ),
       ),
@@ -47,7 +52,7 @@ class _ActiveStaffWidgetState extends ConsumerState<ActiveStaffWidget> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.people_outline, size: 48, color: AppColors.textSecondary),
+                    Icon(Icons.people_outline, size: 48, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                     AppSpacing.gapH8,
                     Text(l10n.companionNoActiveStaff, style: theme.textTheme.titleMedium),
                   ],
@@ -85,6 +90,7 @@ class _StaffCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final l10n = AppLocalizations.of(context)!;
     final role = member['role'] as String? ?? '';
     final clockedInAt = member['clocked_in_at'] as String?;
@@ -103,11 +109,15 @@ class _StaffCard extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (role.isNotEmpty) Text(role, style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
+            if (role.isNotEmpty)
+              Text(
+                role,
+                style: theme.textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+              ),
             if (clockedInAt != null)
               Text(
                 '${l10n.companionClockedIn}: $clockedInAt',
-                style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textSecondary),
+                style: theme.textTheme.bodySmall?.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
               ),
           ],
         ),

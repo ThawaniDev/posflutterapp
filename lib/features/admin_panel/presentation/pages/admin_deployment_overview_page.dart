@@ -42,6 +42,7 @@ class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOve
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(deploymentOverviewProvider);
 
     return PosListPage(
@@ -62,7 +63,7 @@ class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOve
                 child: Text(m, style: const TextStyle(color: AppColors.error)),
               ),
               DeploymentOverviewLoaded(data: final d) => _buildOverview(d),
-              _ => const Center(child: Text('Load overview')),
+              _ => Center(child: Text(l10n.adminLoadOverview)),
             },
           ),
         ],
@@ -73,7 +74,7 @@ class _AdminDeploymentOverviewPageState extends ConsumerState<AdminDeploymentOve
   Widget _buildOverview(Map<String, dynamic> data) {
     final platforms = (data['data'] as List?) ?? [];
     if (platforms.isEmpty) {
-      return const Center(child: Text('No platform data'));
+      return Center(child: Text(l10n.adminNoPlatformData));
     }
     return ListView.builder(
       padding: const EdgeInsets.all(AppSpacing.md),

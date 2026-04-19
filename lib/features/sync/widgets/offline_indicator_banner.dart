@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/sync/providers/sync_providers.dart';
 import 'package:wameedpos/features/sync/services/connectivity_service.dart';
 import 'package:wameedpos/features/sync/services/sync_engine.dart';
@@ -63,11 +64,7 @@ class OfflineIndicatorBanner extends ConsumerWidget {
                 ),
               if (engineStatus == SyncEngineStatus.syncing) ...[
                 AppSpacing.gapW8,
-                const SizedBox(
-                  width: 14,
-                  height: 14,
-                  child: CircularProgressIndicator(strokeWidth: 2, valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
-                ),
+                const SizedBox(width: 14, height: 14, child: PosLoading(size: 14)),
               ],
             ],
           ),

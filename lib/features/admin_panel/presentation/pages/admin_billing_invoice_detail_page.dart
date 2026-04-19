@@ -36,6 +36,7 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(billingInvoiceDetailProvider);
 
     return PosListPage(
@@ -110,7 +111,7 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
                   child: ElevatedButton.icon(
                     onPressed: () => ref.read(billingInvoiceActionProvider.notifier).markPaid(widget.invoiceId),
                     icon: const Icon(Icons.check_circle),
-                    label: const Text('Mark as Paid'),
+                    label: Text(l10n.adminMarkAsPaid),
                     style: ElevatedButton.styleFrom(backgroundColor: AppColors.success, foregroundColor: Colors.white),
                   ),
                 ),
@@ -134,7 +135,7 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
                   child: ElevatedButton.icon(
                     onPressed: () => ref.read(billingInvoiceActionProvider.notifier).retryPayment(widget.invoiceId),
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Retry Payment'),
+                    label: Text(l10n.adminRetryPayment),
                     style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white),
                   ),
                 ),
@@ -154,7 +155,7 @@ class _AdminBillingInvoiceDetailPageState extends ConsumerState<AdminBillingInvo
             ],
           ),
         ),
-        BillingInvoiceDetailError(message: final msg) => Center(child: Text('Error: $msg')),
+        BillingInvoiceDetailError(message: final msg) => Center(child: Text(l10n.genericError(msg))),
         _ => Center(child: Text(l10n.loading)),
       },
 );

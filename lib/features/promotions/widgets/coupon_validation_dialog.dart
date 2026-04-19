@@ -59,7 +59,7 @@ class _CouponValidationDialogState extends ConsumerState<_CouponValidationDialog
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(
+            PosTextField(
               controller: _codeController,
               autofocus: true,
               textCapitalization: TextCapitalization.characters,
@@ -75,7 +75,7 @@ class _CouponValidationDialogState extends ConsumerState<_CouponValidationDialog
             // Validation result
             switch (state) {
               CouponValidationInitial() => const SizedBox.shrink(),
-              CouponValidationLoading() => const Padding(padding: EdgeInsets.all(12), child: CircularProgressIndicator()),
+              CouponValidationLoading() => const Padding(padding: EdgeInsets.all(12), child: PosLoading()),
               CouponValidationValid(:final promotionName, :final discountAmount, :final type) => Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(

@@ -109,12 +109,14 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
     final l10n = AppLocalizations.of(context)!;
 
     return PosFormPage(
-      title: roleState is RoleDetailLoaded ? roleState.role.displayName : l10n.staffRoleDetails,
+      title: roleState is RoleDetailLoaded
+          ? roleState.role.localizedName(Localizations.localeOf(context).languageCode)
+          : l10n.staffRoleDetails,
       actions: [
         if (!isPredefined && !_isEditing)
           PosButton.icon(
             icon: Icons.edit,
-            tooltip: 'Edit role',
+            tooltip: l10n.staffEditRole,
             onPressed: () => setState(() => _isEditing = true),
             variant: PosButtonVariant.ghost,
           ),
@@ -145,7 +147,7 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
 
   Widget _buildBody(RoleDetailState roleState, PermissionsState permState, bool isDark, AppLocalizations l10n) {
     if (roleState is RoleDetailLoading || roleState is RoleDetailInitial) {
-      return const Center(child: CircularProgressIndicator());
+      return const PosLoading();
     }
 
     if (roleState is RoleDetailError) {
@@ -172,85 +174,84 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
 
     return Form(
       key: _formKey,
-      child: ListView(
+      child: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
-        children: [
-          // ─── Role Info Section ──────────────────────────────
-          _SectionHeader(title: l10n.staffRoleInfo),
-          const SizedBox(height: AppSpacing.sm),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ─── Role Info Section ──────────────────────────────
+            _SectionHeader(title: l10n.staffRoleInfo),
+            const SizedBox(height: AppSpacing.sm),
 
-          if (isPredefined)
-            Container(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              margin: const EdgeInsets.only(bottom: AppSpacing.md),
-              decoration: BoxDecoration(
-                color: AppColors.info.withValues(alpha: 0.08),
-                borderRadius: AppRadius.borderMd,
-                border: Border.all(color: AppColors.info.withValues(alpha: 0.3)),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.info_outline, color: AppColors.info, size: 20),
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    child: Text(
-                      'This is a system-defined role. Its name cannot be changed, '
-                      'but you can customize its permissions.',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.info),
+            if (isPredefined)
+              Container(
+                padding: const EdgeInsets.all(AppSpacing.md),
+                margin: const EdgeInsets.only(bottom: AppSpacing.md),
+                decoration: BoxDecoration(
+                  color: AppColors.info.withValues(alpha: 0.08),
+                  borderRadius: AppRadius.borderMd,
+                  border: Border.all(color: AppColors.info.withValues(alpha: 0.3)),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.info_outline, color: AppColors.info, size: 20),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: Text(
+                        l10n.staffPredefinedRoleNote,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.info),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+              ),
+
+            // Display Name
+            TextFormField(
+              controller: _displayNameController,
+              enabled: _isEditing && !isPredefined,
+              decoration: InputDecoration(labelText: l10n.staffDisplayName, hintText: l10n.staffDisplayNameHint),
+              validator: (v) => (v == null || v.trim().isEmpty) ? l10n.staffRequired : null,
+              onChanged: (_) => _markChanged(),
+            ),
+            const SizedBox(height: AppSpacing.md),
+
+            // System Name (read-only)
+            TextFormField(
+              controller: _nameController,
+              enabled: false,
+              decoration: InputDecoration(labelText: l10n.staffSystemName, helperText: l10n.staffSystemNameNoChange),
+            ),
+            const SizedBox(height: AppSpacing.md),
+
+            // Description
+            TextFormField(
+              controller: _descriptionController,
+              enabled: _isEditing,
+              decoration: InputDecoration(labelText: l10n.description, hintText: l10n.staffRoleDescHint),
+              maxLines: 2,
+              onChanged: (_) => _markChanged(),
+            ),
+            const SizedBox(height: AppSpacing.xl),
+
+            // ─── Permissions Section ────────────────────────────
+            _SectionHeader(
+              title: l10n.staffPermissions,
+              trailing: Text(
+                l10n.staffCountSelected(_selectedPermissionIds.length),
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600),
               ),
             ),
+            const SizedBox(height: AppSpacing.sm),
 
-          // Display Name
-          TextFormField(
-            controller: _displayNameController,
-            enabled: _isEditing && !isPredefined,
-            decoration: InputDecoration(labelText: l10n.staffDisplayName, hintText: l10n.staffDisplayNameHint),
-            validator: (v) => (v == null || v.trim().isEmpty) ? l10n.staffRequired : null,
-            onChanged: (_) => _markChanged(),
-          ),
-          const SizedBox(height: AppSpacing.md),
-
-          // System Name (read-only)
-          TextFormField(
-            controller: _nameController,
-            enabled: false,
-            decoration: InputDecoration(labelText: l10n.staffSystemName, helperText: l10n.staffSystemNameNoChange),
-          ),
-          const SizedBox(height: AppSpacing.md),
-
-          // Description
-          TextFormField(
-            controller: _descriptionController,
-            enabled: _isEditing,
-            decoration: InputDecoration(labelText: l10n.description, hintText: l10n.staffRoleDescHint),
-            maxLines: 2,
-            onChanged: (_) => _markChanged(),
-          ),
-          const SizedBox(height: AppSpacing.xl),
-
-          // ─── Permissions Section ────────────────────────────
-          _SectionHeader(
-            title: l10n.staffPermissions,
-            trailing: Text(
-              '${_selectedPermissionIds.length} selected',
-              style: Theme.of(context).textTheme.labelMedium?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600),
-            ),
-          ),
-          const SizedBox(height: AppSpacing.sm),
-
-          if (permState is PermissionsLoading)
-            const Padding(
-              padding: EdgeInsets.all(AppSpacing.xl),
-              child: Center(child: CircularProgressIndicator()),
-            )
-          else if (permState is PermissionsLoaded)
-            ..._buildPermissionModules(permState.grouped)
-          else if (permState is PermissionsError)
-            Text('Failed to load permissions: ${permState.message}', style: TextStyle(color: AppColors.error)),
-        ],
+            if (permState is PermissionsLoading)
+              const Padding(padding: EdgeInsets.all(AppSpacing.xl), child: PosLoading())
+            else if (permState is PermissionsLoaded)
+              ..._buildPermissionModules(permState.grouped)
+            else if (permState is PermissionsError)
+              Text(l10n.staffFailedLoadPermissions(permState.message), style: TextStyle(color: AppColors.error)),
+          ],
+        ),
       ),
     );
   }
@@ -276,7 +277,7 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
           ),
           title: Text(_formatModule(module), style: Theme.of(context).textTheme.titleSmall),
           subtitle: Text(
-            '${moduleSelected.length}/${permissions.length} active',
+            '${moduleSelected.length}/${permissions.length} ${l10n.staffActive}',
             style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.textMutedLight),
           ),
           trailing: _isEditing
@@ -313,14 +314,17 @@ class _RoleDetailPageState extends ConsumerState<RoleDetailPage> {
                     }
                   : null,
               activeColor: AppColors.primary,
-              title: Text(perm.displayName, style: Theme.of(context).textTheme.bodyMedium),
+              title: Text(
+                perm.localizedName(Localizations.localeOf(context).languageCode),
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
               subtitle: perm.requiresPin == true
                   ? Row(
                       children: [
                         Icon(Icons.pin, size: 14, color: AppColors.warning),
                         const SizedBox(width: 4),
                         Text(
-                          'Requires PIN override',
+                          l10n.staffRequiresPinOverride,
                           style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.warning),
                         ),
                       ],

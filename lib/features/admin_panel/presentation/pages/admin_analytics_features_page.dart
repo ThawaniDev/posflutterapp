@@ -40,7 +40,7 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
     final state = ref.watch(analyticsFeaturesProvider);
 
     return PosListPage(
-  title: 'Feature Adoption',
+  title: l10n.adminFeatureAdoption,
   showSearch: false,
     child: Column(
         children: [
@@ -56,8 +56,7 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
                     const Text('Feature Adoption', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                     const SizedBox(height: AppSpacing.sm),
                     if (features.isEmpty)
-                      const PosCard(
-                        child: Padding(padding: EdgeInsets.all(AppSpacing.md), child: Text('No feature data available')),
+                      PosCard(child: Padding(padding: const EdgeInsets.all(AppSpacing.md), child: Text(l10n.adminNoFeatureDataAvailable)),
                       )
                     else
                       ...features.map((f) {
@@ -125,7 +124,7 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Error: $msg'),
+                    Text(l10n.genericError(msg)),
                     const SizedBox(height: AppSpacing.sm),
                     PosButton(
                       onPressed: () => ref.read(analyticsFeaturesProvider.notifier).load(storeId: _storeId),
@@ -134,7 +133,7 @@ class _AdminAnalyticsFeaturesPageState extends ConsumerState<AdminAnalyticsFeatu
                   ],
                 ),
               ),
-              _ => const Center(child: Text('Loading feature data...')),
+              _ => Center(child: Text(l10n.adminLoadingFeatureData)),
             },
           ),
         ],

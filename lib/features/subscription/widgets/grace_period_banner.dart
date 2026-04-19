@@ -37,16 +37,16 @@ class GracePeriodBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  isExpired ? 'Subscription Expired' : 'Grace Period Active',
+                  isExpired ? l10n.subSubscriptionExpired : l10n.subGracePeriodActive,
                   style: TextStyle(fontWeight: FontWeight.bold, color: textColor, fontSize: 14),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   isExpired
-                      ? 'Your subscription has expired. Renew now to restore access.'
+                      ? l10n.subExpiredRenewMessage
                       : daysLeft > 0
-                      ? '$daysLeft day${daysLeft == 1 ? '' : 's'} remaining in grace period. Renew to avoid losing access.'
-                      : 'Grace period ends today. Renew immediately.',
+                      ? l10n.subGraceDaysRemaining(daysLeft)
+                      : l10n.subGraceEndsToday,
                   style: TextStyle(color: textColor.withValues(alpha: 0.85), fontSize: 12),
                 ),
               ],
@@ -54,10 +54,7 @@ class GracePeriodBanner extends StatelessWidget {
           ),
           if (onRenewPressed != null) ...[
             AppSpacing.horizontalSm,
-            PosButton(
-              onPressed: onRenewPressed,
-              label: l10n.subscriptionRenewNow,
-            ),
+            PosButton(onPressed: onRenewPressed, label: l10n.subscriptionRenewNow),
           ],
         ],
       ),

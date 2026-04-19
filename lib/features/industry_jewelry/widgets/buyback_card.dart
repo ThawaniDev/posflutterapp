@@ -15,6 +15,7 @@ class BuybackCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return PosCard(
       elevation: 0,
       borderRadius: AppRadius.borderMd,
@@ -45,7 +46,7 @@ class BuybackCard extends StatelessWidget {
                     ),
                     Text(
                       '${buyback.weightG}g @ ${buyback.ratePerGram.toStringAsFixed(2)}/g',
-                      style: AppTypography.caption.copyWith(color: AppColors.textSecondary),
+                      style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                     ),
                     PosStatusBadge(label: buyback.paymentMethod.value.replaceAll('_', ' '), variant: PosStatusBadgeVariant.info),
                   ],

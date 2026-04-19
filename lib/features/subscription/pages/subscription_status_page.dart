@@ -7,6 +7,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_providers.dart';
 import 'package:wameedpos/features/subscription/providers/subscription_state.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/subscription/services/feature_gate_service.dart';
 import 'package:wameedpos/features/subscription/widgets/grace_period_banner.dart';
 import 'package:wameedpos/features/subscription/widgets/subscription_badge.dart';
 import 'package:wameedpos/features/subscription/widgets/usage_progress.dart';
@@ -21,7 +22,6 @@ class SubscriptionStatusPage extends ConsumerStatefulWidget {
 }
 
 class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   @override
   void initState() {
@@ -50,15 +50,17 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
     });
 
     return PosListPage(
-  title: l10n.subscriptionMySubscription,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.receipt_long, onPressed: () => context.go(Routes.billingHistory), tooltip: l10n.subscriptionBillingHistory,
-  ),
-],
-  child: _buildBody(subState, usageState),
-);
+      title: l10n.subscriptionMySubscription,
+      showSearch: false,
+      actions: [
+        PosButton.icon(
+          icon: Icons.receipt_long,
+          onPressed: () => context.go(Routes.billingHistory),
+          tooltip: l10n.subscriptionBillingHistory,
+        ),
+      ],
+      child: _buildBody(subState, usageState),
+    );
   }
 
   Widget _buildBody(SubscriptionState subState, UsageState usageState) {
@@ -85,7 +87,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.card_membership, size: 64, color: AppColors.textSecondary),
+          Icon(Icons.card_membership, size: 64, color: AppColors.mutedFor(context)),
           AppSpacing.verticalLg,
           Text(l10n.subscriptionNoActiveSubscription, style: Theme.of(context).textTheme.titleLarge),
           AppSpacing.verticalSm,
@@ -155,13 +157,13 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
                     ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold, color: AppColors.primary),
                   ),
                   AppSpacing.verticalSm,
-                  Text('Billing: ${sub.billingCycle?.name ?? 'monthly'}'),
+                  Text(l10n.subBillingLabel(sub.billingCycle?.name ?? l10n.subBillingCycleMonthly)),
                   if (sub.currentPeriodStart != null && sub.currentPeriodEnd != null)
-                    Text('Period: ${_formatDate(sub.currentPeriodStart!)} — ${_formatDate(sub.currentPeriodEnd!)}'),
+                    Text(l10n.subPeriodLabel(_formatDate(sub.currentPeriodStart!), _formatDate(sub.currentPeriodEnd!))),
                   if (sub.trialEndsAt != null)
-                    Text('Trial ends: ${_formatDate(sub.trialEndsAt!)}', style: TextStyle(color: AppColors.warning)),
+                    Text(l10n.subTrialEnds(_formatDate(sub.trialEndsAt!)), style: TextStyle(color: AppColors.warning)),
                   if (sub.gracePeriodEndsAt != null && isGracePeriod)
-                    Text('Grace period ends: ${_formatDate(sub.gracePeriodEndsAt!)}', style: TextStyle(color: AppColors.error)),
+                    Text(l10n.subGracePeriodEnds(_formatDate(sub.gracePeriodEndsAt!)), style: TextStyle(color: AppColors.error)),
                 ],
               ),
             ),
@@ -184,6 +186,9 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
           ],
 
           AppSpacing.verticalLg,
+
+          // SoftPOS free tier progress
+          _buildSoftPosProgress(),
 
           // Actions
           Text(l10n.actions, style: Theme.of(context).textTheme.titleMedium),
@@ -223,13 +228,84 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
               label: l10n.subscriptionResumeSubscription,
             )
           else
-            OutlinedButton.icon(
+            PosButton(
               onPressed: _confirmCancel,
-              icon: Icon(Icons.cancel, color: AppColors.error),
-              label: Text(l10n.subscriptionCancelSubscription, style: TextStyle(color: AppColors.error)),
-              style: OutlinedButton.styleFrom(side: BorderSide(color: AppColors.error)),
+              icon: Icons.cancel,
+              label: l10n.subscriptionCancelSubscription,
+              variant: PosButtonVariant.danger,
             ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSoftPosProgress() {
+    final featureGate = ref.read(featureGateServiceProvider);
+    final softPosInfo = featureGate.softPosInfo;
+
+    // Don't show if SoftPOS data isn't available or not eligible
+    if (softPosInfo == null || softPosInfo['is_eligible'] != true) {
+      return const SizedBox.shrink();
+    }
+
+    final isFree = softPosInfo['is_free'] as bool? ?? false;
+    final currentCount = (softPosInfo['current_count'] as num?)?.toInt() ?? 0;
+    final threshold = (softPosInfo['threshold'] as num?)?.toInt() ?? 0;
+    final remaining = (softPosInfo['remaining'] as num?)?.toInt() ?? 0;
+    final percentage = (softPosInfo['percentage'] as num?)?.toDouble() ?? 0.0;
+    final savingsAmount = (softPosInfo['savings_amount'] as num?)?.toDouble() ?? 0.0;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: PosCard(
+        child: Padding(
+          padding: AppSpacing.paddingAllMd,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    isFree ? Icons.check_circle : Icons.phone_android,
+                    color: isFree ? AppColors.success : AppColors.primary,
+                    size: 24,
+                  ),
+                  AppSpacing.horizontalSm,
+                  Text(
+                    l10n.softPosFreeTier,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              AppSpacing.verticalSm,
+              if (isFree) ...[
+                Text(
+                  l10n.softPosFreeActive,
+                  style: TextStyle(color: AppColors.success, fontWeight: FontWeight.w600),
+                ),
+                if (savingsAmount > 0)
+                  Text(l10n.softPosSaving(savingsAmount.toStringAsFixed(0)), style: TextStyle(color: AppColors.success)),
+              ] else ...[
+                Text(l10n.softPosReachThreshold(threshold)),
+                AppSpacing.verticalSm,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: LinearProgressIndicator(
+                    value: (percentage / 100).clamp(0.0, 1.0),
+                    minHeight: 10,
+                    backgroundColor: AppColors.mutedFor(context).withValues(alpha: 0.2),
+                    valueColor: AlwaysStoppedAnimation<Color>(percentage >= 80 ? AppColors.success : AppColors.primary),
+                  ),
+                ),
+                AppSpacing.verticalXs,
+                Text(
+                  '$currentCount / $threshold ${l10n.softPosTransactions} ($remaining ${l10n.softPosRemaining})',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context)),
+                ),
+              ],
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -246,11 +322,7 @@ class _SubscriptionStatusPageState extends ConsumerState<SubscriptionStatusPage>
           children: [
             Text(l10n.subscriptionCancelConfirmMessage),
             AppSpacing.verticalMd,
-            TextField(
-              controller: reasonController,
-              decoration: InputDecoration(labelText: l10n.subscriptionCancelReasonLabel, border: OutlineInputBorder()),
-              maxLines: 2,
-            ),
+            PosTextField(controller: reasonController, label: l10n.subscriptionCancelReasonLabel, maxLines: 2),
           ],
         ),
         actions: [

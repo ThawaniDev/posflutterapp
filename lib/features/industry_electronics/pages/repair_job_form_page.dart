@@ -7,6 +7,7 @@ import '../providers/electronics_providers.dart';
 import 'package:wameedpos/features/staff/models/staff_user.dart';
 import 'package:wameedpos/features/staff/providers/staff_providers.dart';
 import 'package:wameedpos/features/staff/providers/staff_state.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class RepairJobFormPage extends ConsumerStatefulWidget {
   final RepairJob? job;
@@ -85,6 +86,7 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final staffState = ref.watch(staffListProvider);
     final staffList = staffState is StaffListLoaded ? staffState.staff : <StaffUser>[];
     return PosFormPage(
@@ -102,23 +104,24 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
           children: [
             PosTextField(
               controller: _deviceDescCtrl,
-              label: 'Device Description',
-              hint: 'e.g. iPhone 15 Pro Max 256GB',
+              label: l10n.electronicsDeviceDescription,
+              hint: l10n.electronicsDeviceHintRepair,
               maxLines: 2,
             ),
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _imeiCtrl,
-              label: 'IMEI (optional)',
-              hint: '15-digit IMEI number',
+              label: l10n.electronicsImeiOptional,
+              hint: l10n.electronicsImeiHint,
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _issueDescCtrl, label: 'Issue Description', hint: 'Describe the issue...', maxLines: 3),
+            PosTextField(controller: _issueDescCtrl, label: l10n.electronicsIssueDescription, hint: l10n.electronicsIssueHint, maxLines: 3),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
-              label: 'Assigned Technician',
-              items: staffList.map((s) => PosDropdownItem(value: s.id, label: '${s.firstName} ${s.lastName}')).toList(),
+              hint: l10n.selectTechnician,
+              label: l10n.electronicsAssignedTech,
+              items: staffList.map((s) => PosDropdownItem(value: s.id, label: l10n.electronicsStaffFullName(s.firstName, s.lastName))).toList(),
               selectedValue: _selectedStaffUserId,
               onChanged: (v) => setState(() => _selectedStaffUserId = v),
               showSearch: true,
@@ -129,7 +132,7 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _estimatedCostCtrl,
-                    label: 'Est. Cost (\u0081)',
+                    label: l10n.electronicsEstCost,
                     hint: '0.000',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
@@ -138,7 +141,7 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _finalCostCtrl,
-                    label: 'Final Cost (\u0081)',
+                    label: l10n.electronicsFinalCost,
                     hint: '0.000',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
@@ -147,9 +150,9 @@ class _RepairJobFormPageState extends ConsumerState<RepairJobFormPage> {
             ),
             if (_isEditing) ...[
               SizedBox(height: AppSpacing.md),
-              PosTextField(controller: _diagnosisNotesCtrl, label: 'Diagnosis Notes', hint: 'Diagnosis findings...', maxLines: 3),
+              PosTextField(controller: _diagnosisNotesCtrl, label: l10n.electronicsDiagnosisNotes, hint: l10n.electronicsDiagnosisHint, maxLines: 3),
               SizedBox(height: AppSpacing.md),
-              PosTextField(controller: _repairNotesCtrl, label: 'Repair Notes', hint: 'Repair details...', maxLines: 3),
+              PosTextField(controller: _repairNotesCtrl, label: l10n.electronicsRepairNotes, hint: l10n.electronicsRepairHint, maxLines: 3),
             ],
           ],
         ),

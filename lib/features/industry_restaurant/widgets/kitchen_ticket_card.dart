@@ -18,6 +18,7 @@ class KitchenTicketCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return PosCard(
       elevation: 0,
       borderRadius: AppRadius.borderMd,
@@ -42,16 +43,25 @@ class KitchenTicketCard extends StatelessWidget {
                   ),
                   AppSpacing.gapW8,
                   Expanded(
-                    child: Text('#${ticket.ticketNumber}', style: AppTypography.titleSmall.copyWith(fontWeight: FontWeight.w600)),
+                    child: Text(
+                      l10n.restaurantTicketNumberSign(ticket.ticketNumber.toString()),
+                      style: AppTypography.titleSmall.copyWith(fontWeight: FontWeight.w600),
+                    ),
                   ),
                   _buildStatusBadge(context),
                 ],
               ),
               AppSpacing.gapH8,
               if (ticket.station != null)
-                Text('Station: ${ticket.station}', style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary)),
+                Text(
+                  l10n.restaurantStation(ticket.station ?? ''),
+                  style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                ),
               if (ticket.courseNumber != null)
-                Text('Course ${ticket.courseNumber}', style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary)),
+                Text(
+                  l10n.restaurantCourse(ticket.courseNumber.toString()),
+                  style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                ),
               if (ticket.fireAt != null) ...[
                 AppSpacing.gapH4,
                 Row(
@@ -81,14 +91,14 @@ class KitchenTicketCard extends StatelessWidget {
       KitchenTicketStatus.inProgress => PosStatusBadge(label: l10n.statusInProgress, variant: PosStatusBadgeVariant.warning),
       KitchenTicketStatus.preparing => PosStatusBadge(label: l10n.ordersPreparing, variant: PosStatusBadgeVariant.warning),
       KitchenTicketStatus.ready => PosStatusBadge(label: l10n.ordersReady, variant: PosStatusBadgeVariant.success),
-      KitchenTicketStatus.served => PosStatusBadge(label: 'Served', variant: PosStatusBadgeVariant.info),
+      KitchenTicketStatus.served => PosStatusBadge(label: l10n.restaurantServed, variant: PosStatusBadgeVariant.info),
       KitchenTicketStatus.cancelled => PosStatusBadge(label: l10n.ordersCancelled, variant: PosStatusBadgeVariant.error),
     };
   }
 
   Color get _statusColor {
     return switch (ticket.status ?? KitchenTicketStatus.pending) {
-      KitchenTicketStatus.pending => AppColors.textSecondary,
+      KitchenTicketStatus.pending => AppColors.textMutedLight,
       KitchenTicketStatus.inProgress => AppColors.warning,
       KitchenTicketStatus.preparing => AppColors.warning,
       KitchenTicketStatus.ready => AppColors.success,
@@ -103,16 +113,12 @@ class KitchenTicketCard extends StatelessWidget {
 
     return SizedBox(
       width: double.infinity,
-      child: OutlinedButton.icon(
+      child: PosButton(
         onPressed: () => onStatusChange?.call(next),
-        icon: Icon(_nextStatusIcon, size: 16),
-        label: Text(_nextStatusLabel),
-        style: OutlinedButton.styleFrom(
-          foregroundColor: _nextStatusColor,
-          side: BorderSide(color: _nextStatusColor),
-          padding: const EdgeInsets.symmetric(vertical: 6),
-          textStyle: AppTypography.labelSmall,
-        ),
+        variant: PosButtonVariant.outline,
+        icon: _nextStatusIcon,
+        label: _nextStatusLabel,
+        size: PosButtonSize.sm,
       ),
     );
   }
@@ -143,15 +149,6 @@ class KitchenTicketCard extends StatelessWidget {
       KitchenTicketStatus.ready => 'Mark Ready',
       KitchenTicketStatus.served => 'Mark Served',
       _ => '',
-    };
-  }
-
-  Color get _nextStatusColor {
-    return switch (_nextStatus) {
-      KitchenTicketStatus.preparing => AppColors.warning,
-      KitchenTicketStatus.ready => AppColors.success,
-      KitchenTicketStatus.served => AppColors.info,
-      _ => AppColors.textSecondary,
     };
   }
 

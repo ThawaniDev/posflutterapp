@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_typography.dart';
@@ -65,7 +66,7 @@ class PosAppBar extends StatelessWidget implements PreferredSizeWidget {
     // Build the action buttons list
     final actionsList = <Widget>[
       ...?actions,
-      if (showSearch) IconButton(onPressed: onSearchTap, icon: const Icon(Icons.search_rounded), tooltip: 'Search'),
+      if (showSearch) IconButton(onPressed: onSearchTap, icon: const Icon(Icons.search_rounded), tooltip: AppLocalizations.of(context)!.search),
       if (showNotification) _NotificationBell(count: notificationCount, onTap: onNotificationTap),
       if (avatarUrl != null || avatarInitial != null)
         Padding(
@@ -113,7 +114,7 @@ class _NotificationBell extends StatelessWidget {
         label: Text(count > 99 ? '99+' : '$count', style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700)),
         child: const Icon(Icons.notifications_outlined),
       ),
-      tooltip: 'Notifications',
+      tooltip: AppLocalizations.of(context)!.notifications,
     );
   }
 }

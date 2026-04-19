@@ -106,7 +106,7 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
                     PosDropdownItem(value: 'push', label: l10n.notificationsPush),
                     PosDropdownItem(value: 'email', label: l10n.email),
                     PosDropdownItem(value: 'sms', label: l10n.notifPrefSms),
-                    PosDropdownItem(value: 'whatsapp', label: 'WhatsApp'),
+                    PosDropdownItem(value: 'whatsapp', label: l10n.adminChannelWhatsApp),
                     PosDropdownItem(value: 'in_app', label: l10n.notificationsInApp),
                   ],
                   selectedValue: _channelFilter,
@@ -114,7 +114,7 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
                     setState(() => _channelFilter = v);
                     _applyFilters();
                   },
-                  hint: 'Channel',
+                  hint: l10n.adminChannel,
                   showSearch: false,
                   clearable: true,
                 );
@@ -130,7 +130,7 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
                     setState(() => _statusFilter = v);
                     _applyFilters();
                   },
-                  hint: 'Status',
+                  hint: l10n.adminStatus,
                   showSearch: false,
                   clearable: true,
                 );
@@ -155,7 +155,7 @@ class _AdminNotificationLogListPageState extends ConsumerState<AdminNotification
   Widget _buildList(Map<String, dynamic> data) {
     final items = (data['data']?['data'] as List?) ?? [];
     if (items.isEmpty) {
-      return const Center(child: Text('No notification logs found'));
+      return Center(child: Text(l10n.adminNoNotificationLogs));
     }
     return ListView.builder(
       itemCount: items.length,

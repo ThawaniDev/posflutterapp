@@ -20,7 +20,6 @@ class PlanSelectionPage extends ConsumerStatefulWidget {
 }
 
 class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   bool _isAnnual = false;
 
@@ -48,22 +47,24 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
     });
 
     return PosListPage(
-  title: l10n.subscriptionChooseYourPlan,
-  showSearch: false,
-  actions: [
-  TextButton.icon(
-            onPressed: () => context.go(Routes.planComparison),
-            icon: const Icon(Icons.compare_arrows, size: 18),
-            label: Text(l10n.subscriptionCompare),
-          ),
-],
-  child: _buildBody(plansState, subscriptionState),
-);
+      title: l10n.subscriptionChooseYourPlan,
+      showSearch: false,
+      actions: [
+        PosButton(
+          onPressed: () => context.go(Routes.planComparison),
+          icon: Icons.compare_arrows,
+          label: l10n.subscriptionCompare,
+          variant: PosButtonVariant.outline,
+          size: PosButtonSize.sm,
+        ),
+      ],
+      child: _buildBody(plansState, subscriptionState),
+    );
   }
 
   Widget _buildBody(PlansState plansState, SubscriptionState subState) {
     if (plansState is PlansLoading || subState is SubscriptionLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return const PosLoading();
     }
 
     if (plansState is PlansError) {
@@ -105,7 +106,8 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
               AppSpacing.horizontalSm,
               Switch(value: _isAnnual, activeColor: AppColors.primary, onChanged: (v) => setState(() => _isAnnual = v)),
               AppSpacing.horizontalSm,
-              Text(l10n.subscriptionAnnual,
+              Text(
+                l10n.subscriptionAnnual,
                 style: TextStyle(
                   fontWeight: _isAnnual ? FontWeight.bold : FontWeight.normal,
                   color: _isAnnual ? AppColors.primary : null,
@@ -113,13 +115,11 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
               ),
               if (_isAnnual)
                 Container(
-                  margin: const EdgeInsets.only(left: 8),
+                  margin: const EdgeInsetsDirectional.only(start: 8),
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: AppColors.success.withValues(alpha: 0.15),
-                    borderRadius: AppRadius.borderLg,
-                  ),
-                  child: Text(l10n.subscriptionSavePercent,
+                  decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.15), borderRadius: AppRadius.borderLg),
+                  child: Text(
+                    l10n.subscriptionSavePercent,
                     style: TextStyle(fontSize: 12, color: AppColors.success, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -143,21 +143,18 @@ class _PlanSelectionPageState extends ConsumerState<PlanSelectionPage> {
   }
 
   void _onPlanSelected(SubscriptionPlan plan) async {
-    final billingCycle = _isAnnual ? 'yearly' : 'monthly';
+    final billingCycle = _isAnnual ? l10n.subBillingCycleYearly : l10n.subBillingCycleMonthly;
     final price = _isAnnual ? (plan.annualPrice ?? plan.monthlyPrice * 12) : plan.monthlyPrice;
 
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Subscribe to ${plan.name}?',
-      message:
-          'You will be subscribed to ${plan.name} on a $billingCycle basis.\n\n'
-          'Price: $price SAR/$billingCycle\n\n'
-          'You will be redirected to complete the payment.',
-      confirmLabel: 'Proceed to Payment',
-      cancelLabel: 'Cancel',
+      title: l10n.subSubscribeToPlan(plan.name),
+      message: l10n.subConfirmSubscriptionMessage(plan.name, billingCycle, price.toStringAsFixed(2), 'SAR'),
+      confirmLabel: l10n.subProceedToPayment,
+      cancelLabel: l10n.commonCancel,
     );
     if (confirmed == true) {
-      context.go(
+      context.push(
         Routes.providerPaymentCheckout,
         extra: {
           'purpose': 'subscription',

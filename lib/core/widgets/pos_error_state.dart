@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
 import '../theme/app_spacing.dart';
@@ -34,7 +35,11 @@ class PosErrorState extends StatelessWidget {
             ),
             if (onRetry != null) ...[
               AppSpacing.gapH24,
-              OutlinedButton.icon(onPressed: onRetry, icon: const Icon(Icons.refresh), label: const Text('Retry')),
+              OutlinedButton.icon(
+                onPressed: onRetry,
+                icon: const Icon(Icons.refresh),
+                label: Text(AppLocalizations.of(context)!.commonRetry),
+              ),
             ],
           ],
         ),

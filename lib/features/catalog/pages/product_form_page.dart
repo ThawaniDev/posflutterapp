@@ -290,28 +290,30 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
             PosTabs(
               selectedIndex: _currentTab,
               onChanged: (i) => setState(() => _currentTab = i),
+              isScrollable: true,
               tabs: [
-                PosTabItem(label: 'Basic Info', icon: Icons.info_outline),
-                PosTabItem(label: 'Pricing', icon: Icons.attach_money),
-                PosTabItem(label: 'Variants', icon: Icons.style_outlined),
-                PosTabItem(label: 'Modifiers', icon: Icons.tune),
-                PosTabItem(label: 'Barcodes', icon: Icons.qr_code),
+                PosTabItem(label: l10n.catalogTabBasicInfo, icon: Icons.info_outline),
+                PosTabItem(label: l10n.catalogTabPricing, icon: Icons.attach_money),
+                PosTabItem(label: l10n.catalogTabVariants, icon: Icons.style_outlined),
+                PosTabItem(label: l10n.catalogTabModifiers, icon: Icons.tune),
+                PosTabItem(label: l10n.catalogTabBarcodes, icon: Icons.qr_code),
                 PosTabItem(label: l10n.supplierTitle, icon: Icons.local_shipping_outlined),
                 PosTabItem(label: l10n.branchesMedia, icon: Icons.image_outlined),
               ],
             ),
-            IndexedStack(
-              index: _currentTab,
-              children: [
-                _buildBasicTab(categoriesState),
-                _buildPricingTab(),
-                _buildVariantsTab(),
-                _buildModifiersTab(),
-                _buildBarcodesTab(),
-                _buildSuppliersTab(suppliersState),
-                _buildMediaTab(),
-              ],
-            ),
+            // Render only the active tab. IndexedStack cannot be used inside
+            // a SingleChildScrollView (the parent PosFormPage child) because
+            // Stack needs bounded vertical constraints.
+            switch (_currentTab) {
+              0 => _buildBasicTab(categoriesState),
+              1 => _buildPricingTab(),
+              2 => _buildVariantsTab(),
+              3 => _buildModifiersTab(),
+              4 => _buildBarcodesTab(),
+              5 => _buildSuppliersTab(suppliersState),
+              6 => _buildMediaTab(),
+              _ => const SizedBox.shrink(),
+            },
           ],
         ),
       ),
@@ -325,123 +327,131 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
   Widget _buildBasicTab(CategoriesState categoriesState) {
     final categories = categoriesState is CategoriesLoaded ? categoriesState.categories : <Category>[];
 
-    return ListView(
+    return Padding(
       padding: const EdgeInsets.all(AppSpacing.lg),
-      children: [
-        _sectionHeader('Product Identity'),
-        PosTextField(controller: _nameController, label: 'Product Name *', hint: 'Enter product name'),
-        const SizedBox(height: AppSpacing.md),
-        PosTextField(
-          controller: _nameArController,
-          label: 'Product Name (Arabic)',
-          hint: 'أدخل اسم المنتج',
-          textDirection: TextDirection.rtl,
-        ),
-        const SizedBox(height: AppSpacing.md),
-        PosTextField(controller: _descriptionController, label: l10n.description, hint: 'Enter product description', maxLines: 3),
-        const SizedBox(height: AppSpacing.lg),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _sectionHeader('Product Identity'),
+          PosTextField(controller: _nameController, label: l10n.catalogProductNameRequired, hint: l10n.catalogProductNameHint),
+          const SizedBox(height: AppSpacing.md),
+          PosTextField(
+            controller: _nameArController,
+            label: l10n.catalogProductNameArabic,
+            hint: 'أدخل اسم المنتج',
+            textDirection: TextDirection.rtl,
+          ),
+          const SizedBox(height: AppSpacing.md),
+          PosTextField(
+            controller: _descriptionController,
+            label: l10n.description,
+            hint: l10n.catalogProductDescHint,
+            maxLines: 3,
+          ),
+          const SizedBox(height: AppSpacing.lg),
 
-        _sectionHeader('Classification'),
-        // Category dropdown
-        PosSearchableDropdown<String>(
-          selectedValue: _selectedCategoryId,
-          items: categories.map((c) => PosDropdownItem(value: c.id, label: c.name)).toList(),
-          onChanged: (value) => setState(() => _selectedCategoryId = value),
-          label: l10n.category,
-          hint: 'Select category',
-          clearable: true,
-        ),
-        const SizedBox(height: AppSpacing.md),
+          _sectionHeader('Classification'),
+          // Category dropdown
+          PosSearchableDropdown<String>(
+            selectedValue: _selectedCategoryId,
+            items: categories.map((c) => PosDropdownItem(value: c.id, label: c.name)).toList(),
+            onChanged: (value) => setState(() => _selectedCategoryId = value),
+            label: l10n.category,
+            hint: l10n.catalogSelectCategory,
+            clearable: true,
+          ),
+          const SizedBox(height: AppSpacing.md),
 
-        // Unit type
-        PosSearchableDropdown<ProductUnit>(
-          selectedValue: _selectedUnit,
-          items: ProductUnit.values.map((u) => PosDropdownItem(value: u, label: u.value)).toList(),
-          onChanged: (value) => setState(() => _selectedUnit = value),
-          label: 'Unit Type',
-          hint: 'Select unit',
-          showSearch: false,
-        ),
-        const SizedBox(height: AppSpacing.lg),
+          // Unit type
+          PosSearchableDropdown<ProductUnit>(
+            selectedValue: _selectedUnit,
+            items: ProductUnit.values.map((u) => PosDropdownItem(value: u, label: u.value)).toList(),
+            onChanged: (value) => setState(() => _selectedUnit = value),
+            label: l10n.catalogUnitType,
+            hint: l10n.catalogSelectUnit,
+            showSearch: false,
+          ),
+          const SizedBox(height: AppSpacing.lg),
 
-        _sectionHeader('Identifiers'),
-        PosTextField(controller: _skuController, label: 'SKU', hint: 'Stock Keeping Unit'),
-        const SizedBox(height: AppSpacing.md),
-        PosTextField(
-          controller: _barcodeController,
-          label: 'Primary Barcode',
-          hint: 'Enter or scan barcode',
-          suffixIcon: Icons.qr_code_scanner,
-        ),
-        const SizedBox(height: AppSpacing.lg),
+          _sectionHeader('Identifiers'),
+          PosTextField(controller: _skuController, label: l10n.catalogSku, hint: l10n.catalogSkuHint),
+          const SizedBox(height: AppSpacing.md),
+          PosTextField(
+            controller: _barcodeController,
+            label: l10n.catalogPrimaryBarcode,
+            hint: l10n.catalogBarcodeHint,
+            suffixIcon: Icons.qr_code_scanner,
+          ),
+          const SizedBox(height: AppSpacing.lg),
 
-        _sectionHeader('Ordering'),
-        Row(
-          children: [
-            Expanded(
-              child: PosTextField(
-                controller: _minOrderQtyController,
-                label: 'Min Order Qty',
-                hint: '1',
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          _sectionHeader('Ordering'),
+          Row(
+            children: [
+              Expanded(
+                child: PosTextField(
+                  controller: _minOrderQtyController,
+                  label: l10n.catalogMinOrderQty,
+                  hint: '1',
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                ),
               ),
-            ),
-            const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: PosTextField(
-                controller: _maxOrderQtyController,
-                label: 'Max Order Qty',
-                hint: 'Unlimited',
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: PosTextField(
+                  controller: _maxOrderQtyController,
+                  label: l10n.catalogMaxOrderQty,
+                  hint: l10n.catalogUnlimited,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                ),
               ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.lg),
+
+          _sectionHeader('Properties'),
+          // Active toggle
+          SwitchListTile(
+            title: Text(l10n.active),
+            subtitle: Text(l10n.catalogProductVisibleInPos),
+            value: _isActive,
+            onChanged: (value) => setState(() => _isActive = value),
+            activeColor: AppColors.primary,
+            contentPadding: EdgeInsets.zero,
+          ),
+
+          // Weighable toggle
+          SwitchListTile(
+            title: Text(l10n.catalogWeighable),
+            subtitle: Text(l10n.catalogSoldByWeight),
+            value: _isWeighable,
+            onChanged: (value) => setState(() => _isWeighable = value),
+            activeColor: AppColors.primary,
+            contentPadding: EdgeInsets.zero,
+          ),
+          if (_isWeighable) ...[
+            const SizedBox(height: AppSpacing.sm),
+            PosTextField(
+              controller: _tareWeightController,
+              label: l10n.catalogTareWeight,
+              hint: 'e.g. 0.05',
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
             ),
           ],
-        ),
-        const SizedBox(height: AppSpacing.lg),
 
-        _sectionHeader('Properties'),
-        // Active toggle
-        SwitchListTile(
-          title: Text(l10n.active),
-          subtitle: Text(l10n.catalogProductVisibleInPos),
-          value: _isActive,
-          onChanged: (value) => setState(() => _isActive = value),
-          activeColor: AppColors.primary,
-          contentPadding: EdgeInsets.zero,
-        ),
-
-        // Weighable toggle
-        SwitchListTile(
-          title: Text(l10n.catalogWeighable),
-          subtitle: const Text('Sold by weight (use scale at POS)'),
-          value: _isWeighable,
-          onChanged: (value) => setState(() => _isWeighable = value),
-          activeColor: AppColors.primary,
-          contentPadding: EdgeInsets.zero,
-        ),
-        if (_isWeighable) ...[
-          const SizedBox(height: AppSpacing.sm),
-          PosTextField(
-            controller: _tareWeightController,
-            label: 'Tare Weight (kg)',
-            hint: 'e.g. 0.05',
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
+          // Age restricted
+          SwitchListTile(
+            title: Text(l10n.catalogAgeRestricted),
+            subtitle: Text(l10n.catalogAgeRestriction),
+            value: _ageRestricted,
+            onChanged: (value) => setState(() => _ageRestricted = value),
+            activeColor: AppColors.primary,
+            contentPadding: EdgeInsets.zero,
           ),
         ],
-
-        // Age restricted
-        SwitchListTile(
-          title: Text(l10n.catalogAgeRestricted),
-          subtitle: const Text('Requires age verification at POS'),
-          value: _ageRestricted,
-          onChanged: (value) => setState(() => _ageRestricted = value),
-          activeColor: AppColors.primary,
-          contentPadding: EdgeInsets.zero,
-        ),
-      ],
+      ),
     );
   }
 
@@ -450,136 +460,139 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
   // ═══════════════════════════════════════════════════════════════
 
   Widget _buildPricingTab() {
-    return ListView(
+    return Padding(
       padding: const EdgeInsets.all(AppSpacing.lg),
-      children: [
-        _sectionHeader('Base Pricing'),
-        Row(
-          children: [
-            Expanded(
-              child: PosTextField(
-                controller: _sellPriceController,
-                label: 'Sell Price (\u0081) *',
-                hint: 'e.g. 5.50',
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _sectionHeader('Base Pricing'),
+          Row(
+            children: [
+              Expanded(
+                child: PosTextField(
+                  controller: _sellPriceController,
+                  label: l10n.catalogSellPriceRequired,
+                  hint: 'e.g. 5.50',
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
+                ),
               ),
-            ),
-            const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: PosTextField(
-                controller: _costPriceController,
-                label: 'Cost Price (\u0081)',
-                hint: 'e.g. 3.20',
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: PosTextField(
+                  controller: _costPriceController,
+                  label: l10n.catalogCostPrice,
+                  hint: 'e.g. 3.20',
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
+                ),
               ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+          PosTextField(
+            controller: _taxRateController,
+            label: l10n.settingsTaxRate,
+            hint: 'e.g. 15',
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
+          ),
+          const SizedBox(height: AppSpacing.md),
+
+          // Margin hint
+          if (_sellPriceController.text.isNotEmpty && _costPriceController.text.isNotEmpty) ...[
+            Builder(
+              builder: (context) {
+                final sell = double.tryParse(_sellPriceController.text) ?? 0;
+                final cost = double.tryParse(_costPriceController.text) ?? 0;
+                final margin = sell > 0 ? ((sell - cost) / sell * 100) : 0;
+                return PosCard(
+                  color: AppColors.info.withValues(alpha: 0.05),
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    child: Row(
+                      children: [
+                        Icon(Icons.info_outline, color: AppColors.info, size: 20),
+                        const SizedBox(width: AppSpacing.sm),
+                        Text(
+                          'Margin: ${margin.toStringAsFixed(1)}%',
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.info),
+                        ),
+                        const SizedBox(width: AppSpacing.lg),
+                        Text(
+                          'Profit: ${(sell - cost).toStringAsFixed(2)} \u0081',
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.info),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
           ],
-        ),
-        const SizedBox(height: AppSpacing.md),
-        PosTextField(
-          controller: _taxRateController,
-          label: l10n.settingsTaxRate,
-          hint: 'e.g. 15',
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
-        ),
-        const SizedBox(height: AppSpacing.md),
 
-        // Margin hint
-        if (_sellPriceController.text.isNotEmpty && _costPriceController.text.isNotEmpty) ...[
-          Builder(
-            builder: (context) {
-              final sell = double.tryParse(_sellPriceController.text) ?? 0;
-              final cost = double.tryParse(_costPriceController.text) ?? 0;
-              final margin = sell > 0 ? ((sell - cost) / sell * 100) : 0;
-              return PosCard(
-                color: AppColors.info.withValues(alpha: 0.05),
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.md),
-                  child: Row(
-                    children: [
-                      Icon(Icons.info_outline, color: AppColors.info, size: 20),
-                      const SizedBox(width: AppSpacing.sm),
-                      Text(
-                        'Margin: ${margin.toStringAsFixed(1)}%',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.info),
-                      ),
-                      const SizedBox(width: AppSpacing.lg),
-                      Text(
-                        'Profit: ${(sell - cost).toStringAsFixed(2)} \u0081',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.info),
-                      ),
-                    ],
+          const SizedBox(height: AppSpacing.xl),
+          _sectionHeader('Offer / Promotion'),
+          PosTextField(
+            controller: _offerPriceController,
+            label: l10n.catalogOfferPrice,
+            hint: l10n.catalogOfferPriceHint,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Row(
+            children: [
+              Expanded(
+                child: PosTextField(
+                  controller: _offerStartController,
+                  label: l10n.catalogOfferStart,
+                  hint: l10n.catalogDatePlaceholder,
+                  readOnly: true,
+                  suffixIcon: Icons.calendar_today,
+                  onTap: () => _pickDate(_offerStartController, _offerStart, (d) => setState(() => _offerStart = d)),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: PosTextField(
+                  controller: _offerEndController,
+                  label: l10n.catalogOfferEnd,
+                  hint: l10n.catalogDatePlaceholder,
+                  readOnly: true,
+                  suffixIcon: Icons.calendar_today,
+                  onTap: () => _pickDate(_offerEndController, _offerEnd, (d) => setState(() => _offerEnd = d)),
+                ),
+              ),
+            ],
+          ),
+
+          // Store-specific prices
+          if (_isEditing && _storePricesLoaded) ...[
+            const SizedBox(height: AppSpacing.xl),
+            _sectionHeader('Store-Specific Prices'),
+            if (_storePrices.isEmpty)
+              _emptyState('No store-specific price overrides.', Icons.store_outlined)
+            else
+              ..._storePrices.map(
+                (sp) => PosCard(
+                  margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+                  child: ListTile(
+                    leading: const Icon(Icons.store, size: 20),
+                    title: Text(l10n.catalogStoreWithId(sp.storeId)),
+                    subtitle: Text('${sp.sellPrice.toStringAsFixed(2)} \u0081'),
+                    trailing: sp.validFrom != null
+                        ? Text(
+                            '${_formatDate(sp.validFrom!)} – ${sp.validTo != null ? _formatDate(sp.validTo!) : '∞'}',
+                            style: Theme.of(context).textTheme.labelSmall,
+                          )
+                        : null,
                   ),
                 ),
-              );
-            },
-          ),
-        ],
-
-        const SizedBox(height: AppSpacing.xl),
-        _sectionHeader('Offer / Promotion'),
-        PosTextField(
-          controller: _offerPriceController,
-          label: 'Offer Price (\u0081)',
-          hint: 'Leave empty for no offer',
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
-        ),
-        const SizedBox(height: AppSpacing.md),
-        Row(
-          children: [
-            Expanded(
-              child: PosTextField(
-                controller: _offerStartController,
-                label: 'Offer Start',
-                hint: 'YYYY-MM-DD',
-                readOnly: true,
-                suffixIcon: Icons.calendar_today,
-                onTap: () => _pickDate(_offerStartController, _offerStart, (d) => setState(() => _offerStart = d)),
               ),
-            ),
-            const SizedBox(width: AppSpacing.md),
-            Expanded(
-              child: PosTextField(
-                controller: _offerEndController,
-                label: 'Offer End',
-                hint: 'YYYY-MM-DD',
-                readOnly: true,
-                suffixIcon: Icons.calendar_today,
-                onTap: () => _pickDate(_offerEndController, _offerEnd, (d) => setState(() => _offerEnd = d)),
-              ),
-            ),
           ],
-        ),
-
-        // Store-specific prices
-        if (_isEditing && _storePricesLoaded) ...[
-          const SizedBox(height: AppSpacing.xl),
-          _sectionHeader('Store-Specific Prices'),
-          if (_storePrices.isEmpty)
-            _emptyState('No store-specific price overrides.', Icons.store_outlined)
-          else
-            ..._storePrices.map(
-              (sp) => PosCard(
-                margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-                child: ListTile(
-                  leading: const Icon(Icons.store, size: 20),
-                  title: Text('Store: ${sp.storeId}'),
-                  subtitle: Text('${sp.sellPrice.toStringAsFixed(2)} \u0081'),
-                  trailing: sp.validFrom != null
-                      ? Text(
-                          '${_formatDate(sp.validFrom!)} – ${sp.validTo != null ? _formatDate(sp.validTo!) : '∞'}',
-                          style: Theme.of(context).textTheme.labelSmall,
-                        )
-                      : null,
-                ),
-              ),
-            ),
         ],
-      ],
+      ),
     );
   }
 
@@ -593,66 +606,69 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
     }
 
     if (!_variantsLoaded) {
-      return const Center(child: CircularProgressIndicator());
+      return const PosLoading();
     }
 
-    return ListView(
+    return Padding(
       padding: const EdgeInsets.all(AppSpacing.lg),
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _sectionHeader('Product Variants'),
-            PosButton(
-              label: l10n.catalogAddVariant,
-              icon: Icons.add,
-              size: PosButtonSize.sm,
-              variant: PosButtonVariant.outline,
-              onPressed: () => _showVariantDialog(),
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        if (_variants.isEmpty)
-          _emptyState('No variants. Add sizes, colours, etc.', Icons.style_outlined)
-        else
-          ..._variants.map(
-            (v) => PosCard(
-              margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-              child: ListTile(
-                title: Text(v.variantValue, style: const TextStyle(fontWeight: FontWeight.w600)),
-                subtitle: Text(
-                  [
-                    if (v.sku != null) 'SKU: ${v.sku}',
-                    if (v.barcode != null) 'Barcode: ${v.barcode}',
-                    if (v.priceAdjustment != null)
-                      'Price adj: ${v.priceAdjustment! >= 0 ? '+' : ''}${v.priceAdjustment!.toStringAsFixed(2)}',
-                  ].join(' · '),
-                ),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: v.isActive == true
-                            ? AppColors.success.withValues(alpha: 0.1)
-                            : AppColors.error.withValues(alpha: 0.1),
-                        borderRadius: AppRadius.borderXs,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _sectionHeader('Product Variants'),
+              PosButton(
+                label: l10n.catalogAddVariant,
+                icon: Icons.add,
+                size: PosButtonSize.sm,
+                variant: PosButtonVariant.outline,
+                onPressed: () => _showVariantDialog(),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          if (_variants.isEmpty)
+            _emptyState('No variants. Add sizes, colours, etc.', Icons.style_outlined)
+          else
+            ..._variants.map(
+              (v) => PosCard(
+                margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+                child: ListTile(
+                  title: Text(v.variantValue, style: const TextStyle(fontWeight: FontWeight.w600)),
+                  subtitle: Text(
+                    [
+                      if (v.sku != null) 'SKU: ${v.sku}',
+                      if (v.barcode != null) 'Barcode: ${v.barcode}',
+                      if (v.priceAdjustment != null)
+                        'Price adj: ${v.priceAdjustment! >= 0 ? '+' : ''}${v.priceAdjustment!.toStringAsFixed(2)}',
+                    ].join(' · '),
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: v.isActive == true
+                              ? AppColors.success.withValues(alpha: 0.1)
+                              : AppColors.error.withValues(alpha: 0.1),
+                          borderRadius: AppRadius.borderXs,
+                        ),
+                        child: Text(
+                          v.isActive == true ? l10n.active : l10n.inactive,
+                          style: Theme.of(
+                            context,
+                          ).textTheme.labelSmall?.copyWith(color: v.isActive == true ? AppColors.success : AppColors.error),
+                        ),
                       ),
-                      child: Text(
-                        v.isActive == true ? l10n.active : l10n.inactive,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.labelSmall?.copyWith(color: v.isActive == true ? AppColors.success : AppColors.error),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -670,13 +686,17 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              PosTextField(controller: valueController, label: 'Variant Value *', hint: 'e.g. Large, Red, 500ml'),
+              PosTextField(
+                controller: valueController,
+                label: l10n.catalogVariantValueRequired,
+                hint: l10n.catalogVariantValueHint,
+              ),
               const SizedBox(height: AppSpacing.md),
-              PosTextField(controller: skuController, label: 'SKU', hint: 'Optional variant SKU'),
+              PosTextField(controller: skuController, label: l10n.catalogSku, hint: l10n.catalogVariantSkuHint),
               const SizedBox(height: AppSpacing.md),
               PosTextField(
                 controller: priceAdjController,
-                label: 'Price Adjustment',
+                label: l10n.catalogPriceAdjustment,
                 hint: 'e.g. +2.00 or -1.50',
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.\-]'))],
@@ -710,105 +730,108 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
     }
 
     if (!_modifiersLoaded) {
-      return const Center(child: CircularProgressIndicator());
+      return const PosLoading();
     }
 
-    return ListView(
+    return Padding(
       padding: const EdgeInsets.all(AppSpacing.lg),
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _sectionHeader('Modifier Groups'),
-            PosButton(
-              label: 'Add Group',
-              icon: Icons.add,
-              size: PosButtonSize.sm,
-              variant: PosButtonVariant.outline,
-              onPressed: () => _showModifierGroupDialog(),
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        if (_modifierGroups.isEmpty)
-          _emptyState('No modifier groups. Add extras, toppings, etc.', Icons.tune)
-        else
-          ..._modifierGroups.map((group) {
-            final options = _modifierOptions.where((o) => o.modifierGroupId == group.id).toList();
-            return PosCard(
-              margin: const EdgeInsets.only(bottom: AppSpacing.md),
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.md),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                group.name,
-                                style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-                              ),
-                              Text(
-                                [
-                                  if (group.isRequired == true) 'Required',
-                                  if (group.minSelect != null) 'Min: ${group.minSelect}',
-                                  if (group.maxSelect != null) 'Max: ${group.maxSelect}',
-                                ].join(' · '),
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
-                              ),
-                            ],
-                          ),
-                        ),
-                        if (group.isRequired == true)
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: AppColors.warning.withValues(alpha: 0.1),
-                              borderRadius: AppRadius.borderXs,
-                            ),
-                            child: Text(
-                              l10n.staffRequired,
-                              style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.warning),
-                            ),
-                          ),
-                      ],
-                    ),
-                    if (options.isNotEmpty) ...[
-                      const Divider(height: AppSpacing.lg),
-                      ...options.map(
-                        (opt) => Padding(
-                          padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-                          child: Row(
-                            children: [
-                              Icon(
-                                opt.isDefault == true ? Icons.radio_button_checked : Icons.radio_button_off,
-                                size: 16,
-                                color: opt.isDefault == true ? AppColors.primary : AppColors.textMutedLight,
-                              ),
-                              const SizedBox(width: AppSpacing.sm),
-                              Expanded(child: Text(opt.name)),
-                              if (opt.priceAdjustment != null && opt.priceAdjustment != 0)
-                                Text(
-                                  '${opt.priceAdjustment! >= 0 ? '+' : ''}${opt.priceAdjustment!.toStringAsFixed(2)} \u0081',
-                                  style: Theme.of(
-                                    context,
-                                  ).textTheme.labelSmall?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600),
-                                ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _sectionHeader('Modifier Groups'),
+              PosButton(
+                label: l10n.catalogAddGroup,
+                icon: Icons.add,
+                size: PosButtonSize.sm,
+                variant: PosButtonVariant.outline,
+                onPressed: () => _showModifierGroupDialog(),
               ),
-            );
-          }),
-      ],
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          if (_modifierGroups.isEmpty)
+            _emptyState('No modifier groups. Add extras, toppings, etc.', Icons.tune)
+          else
+            ..._modifierGroups.map((group) {
+              final options = _modifierOptions.where((o) => o.modifierGroupId == group.id).toList();
+              return PosCard(
+                margin: const EdgeInsets.only(bottom: AppSpacing.md),
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  group.name,
+                                  style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+                                ),
+                                Text(
+                                  [
+                                    if (group.isRequired == true) 'Required',
+                                    if (group.minSelect != null) 'Min: ${group.minSelect}',
+                                    if (group.maxSelect != null) 'Max: ${group.maxSelect}',
+                                  ].join(' · '),
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textMutedLight),
+                                ),
+                              ],
+                            ),
+                          ),
+                          if (group.isRequired == true)
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              decoration: BoxDecoration(
+                                color: AppColors.warning.withValues(alpha: 0.1),
+                                borderRadius: AppRadius.borderXs,
+                              ),
+                              child: Text(
+                                l10n.staffRequired,
+                                style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.warning),
+                              ),
+                            ),
+                        ],
+                      ),
+                      if (options.isNotEmpty) ...[
+                        const Divider(height: AppSpacing.lg),
+                        ...options.map(
+                          (opt) => Padding(
+                            padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  opt.isDefault == true ? Icons.radio_button_checked : Icons.radio_button_off,
+                                  size: 16,
+                                  color: opt.isDefault == true ? AppColors.primary : AppColors.textMutedLight,
+                                ),
+                                const SizedBox(width: AppSpacing.sm),
+                                Expanded(child: Text(opt.name)),
+                                if (opt.priceAdjustment != null && opt.priceAdjustment != 0)
+                                  Text(
+                                    '${opt.priceAdjustment! >= 0 ? '+' : ''}${opt.priceAdjustment!.toStringAsFixed(2)} \u0081',
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.labelSmall?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              );
+            }),
+        ],
+      ),
     );
   }
 
@@ -828,7 +851,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                PosTextField(controller: nameController, label: 'Group Name *', hint: 'e.g. Size, Extras, Toppings'),
+                PosTextField(controller: nameController, label: l10n.catalogGroupNameRequired, hint: l10n.catalogGroupNameHint),
                 const SizedBox(height: AppSpacing.md),
                 SwitchListTile(
                   title: Text(l10n.staffRequired),
@@ -842,7 +865,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
                     Expanded(
                       child: PosTextField(
                         controller: minController,
-                        label: 'Min Select',
+                        label: l10n.catalogMinSelect,
                         hint: '0',
                         keyboardType: TextInputType.number,
                         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -852,8 +875,8 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
                     Expanded(
                       child: PosTextField(
                         controller: maxController,
-                        label: 'Max Select',
-                        hint: 'Unlimited',
+                        label: l10n.catalogMaxSelect,
+                        hint: l10n.catalogUnlimited,
                         keyboardType: TextInputType.number,
                         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       ),
@@ -889,83 +912,86 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
     }
 
     if (!_barcodesLoaded) {
-      return const Center(child: CircularProgressIndicator());
+      return const PosLoading();
     }
 
-    return ListView(
+    return Padding(
       padding: const EdgeInsets.all(AppSpacing.lg),
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _sectionHeader('Product Barcodes'),
-            Row(
-              children: [
-                PosButton(
-                  label: l10n.generate,
-                  icon: Icons.auto_awesome,
-                  size: PosButtonSize.sm,
-                  variant: PosButtonVariant.soft,
-                  onPressed: _generateBarcode,
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                PosButton(
-                  label: 'Add Barcode',
-                  icon: Icons.add,
-                  size: PosButtonSize.sm,
-                  variant: PosButtonVariant.outline,
-                  onPressed: () => _showBarcodeDialog(),
-                ),
-              ],
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.sm),
-
-        // Primary barcode from product
-        if (_barcodeController.text.isNotEmpty)
-          PosCard(
-            margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-            child: ListTile(
-              leading: const Icon(Icons.qr_code, size: 20),
-              title: Text(_barcodeController.text, style: const TextStyle(fontFamily: 'monospace')),
-              trailing: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.1),
-                  borderRadius: AppRadius.borderXs,
-                ),
-                child: Text(l10n.staffPrimary, style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.primary)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _sectionHeader('Product Barcodes'),
+              Row(
+                children: [
+                  PosButton(
+                    label: l10n.generate,
+                    icon: Icons.auto_awesome,
+                    size: PosButtonSize.sm,
+                    variant: PosButtonVariant.soft,
+                    onPressed: _generateBarcode,
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  PosButton(
+                    label: l10n.catalogAddBarcode,
+                    icon: Icons.add,
+                    size: PosButtonSize.sm,
+                    variant: PosButtonVariant.outline,
+                    onPressed: () => _showBarcodeDialog(),
+                  ),
+                ],
               ),
-            ),
+            ],
           ),
+          const SizedBox(height: AppSpacing.sm),
 
-        if (_barcodes.isEmpty && _barcodeController.text.isEmpty)
-          _emptyState('No barcodes assigned to this product.', Icons.qr_code)
-        else
-          ..._barcodes.map(
-            (b) => PosCard(
+          // Primary barcode from product
+          if (_barcodeController.text.isNotEmpty)
+            PosCard(
               margin: const EdgeInsets.only(bottom: AppSpacing.sm),
               child: ListTile(
-                leading: const Icon(Icons.qr_code_2, size: 20),
-                title: Text(b.barcode, style: const TextStyle(fontFamily: 'monospace')),
-                trailing: b.isPrimary == true
-                    ? Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.withValues(alpha: 0.1),
-                          borderRadius: AppRadius.borderXs,
-                        ),
-                        child: Text(
-                          l10n.staffPrimary,
-                          style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.primary),
-                        ),
-                      )
-                    : null,
+                leading: const Icon(Icons.qr_code, size: 20),
+                title: Text(_barcodeController.text, style: const TextStyle(fontFamily: 'monospace')),
+                trailing: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.borderXs),
+                  child: Text(
+                    l10n.staffPrimary,
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.primary),
+                  ),
+                ),
               ),
             ),
-          ),
-      ],
+
+          if (_barcodes.isEmpty && _barcodeController.text.isEmpty)
+            _emptyState('No barcodes assigned to this product.', Icons.qr_code)
+          else
+            ..._barcodes.map(
+              (b) => PosCard(
+                margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+                child: ListTile(
+                  leading: const Icon(Icons.qr_code_2, size: 20),
+                  title: Text(b.barcode, style: const TextStyle(fontFamily: 'monospace')),
+                  trailing: b.isPrimary == true
+                      ? Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withValues(alpha: 0.1),
+                            borderRadius: AppRadius.borderXs,
+                          ),
+                          child: Text(
+                            l10n.staffPrimary,
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(color: AppColors.primary),
+                          ),
+                        )
+                      : null,
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 
@@ -989,13 +1015,13 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
     await showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Add Barcode'),
+        title: Text(l10n.catalogAddBarcode),
         content: SizedBox(
           width: 400,
           child: PosTextField(
             controller: barcodeController,
-            label: 'Barcode *',
-            hint: 'Enter or scan barcode',
+            label: l10n.catalogBarcodeRequired,
+            hint: l10n.catalogBarcodeHint,
             suffixIcon: Icons.qr_code_scanner,
           ),
         ),
@@ -1026,50 +1052,53 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
     final allSuppliers = suppliersState is SuppliersLoaded ? suppliersState.suppliers : <Supplier>[];
 
     if (!_suppliersLoaded) {
-      return const Center(child: CircularProgressIndicator());
+      return const PosLoading();
     }
 
-    return ListView(
+    return Padding(
       padding: const EdgeInsets.all(AppSpacing.lg),
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _sectionHeader('Linked Suppliers'),
-            PosButton(
-              label: 'Link Supplier',
-              icon: Icons.add,
-              size: PosButtonSize.sm,
-              variant: PosButtonVariant.outline,
-              onPressed: () => _showLinkSupplierDialog(allSuppliers),
-            ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        if (_productSuppliers.isEmpty)
-          _emptyState('No suppliers linked. Add suppliers for procurement.', Icons.local_shipping_outlined)
-        else
-          ..._productSuppliers.map((ps) {
-            final supplier = allSuppliers.where((s) => s.id == ps.supplierId).firstOrNull;
-            return PosCard(
-              margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-              child: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: AppColors.primary10,
-                  child: Icon(Icons.business, size: 18, color: AppColors.primary),
-                ),
-                title: Text(supplier?.name ?? ps.supplierId, style: const TextStyle(fontWeight: FontWeight.w600)),
-                subtitle: Text(
-                  [
-                    if (ps.supplierSku != null) 'Supplier SKU: ${ps.supplierSku}',
-                    if (ps.costPrice != null) 'Cost: ${ps.costPrice!.toStringAsFixed(2)} \u0081',
-                    if (ps.leadTimeDays != null) 'Lead time: ${ps.leadTimeDays} days',
-                  ].join(' · '),
-                ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _sectionHeader('Linked Suppliers'),
+              PosButton(
+                label: l10n.catalogLinkSupplier,
+                icon: Icons.add,
+                size: PosButtonSize.sm,
+                variant: PosButtonVariant.outline,
+                onPressed: () => _showLinkSupplierDialog(allSuppliers),
               ),
-            );
-          }),
-      ],
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          if (_productSuppliers.isEmpty)
+            _emptyState('No suppliers linked. Add suppliers for procurement.', Icons.local_shipping_outlined)
+          else
+            ..._productSuppliers.map((ps) {
+              final supplier = allSuppliers.where((s) => s.id == ps.supplierId).firstOrNull;
+              return PosCard(
+                margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: AppColors.primary10,
+                    child: Icon(Icons.business, size: 18, color: AppColors.primary),
+                  ),
+                  title: Text(supplier?.name ?? ps.supplierId, style: const TextStyle(fontWeight: FontWeight.w600)),
+                  subtitle: Text(
+                    [
+                      if (ps.supplierSku != null) 'Supplier SKU: ${ps.supplierSku}',
+                      if (ps.costPrice != null) 'Cost: ${ps.costPrice!.toStringAsFixed(2)} \u0081',
+                      if (ps.leadTimeDays != null) 'Lead time: ${ps.leadTimeDays} days',
+                    ].join(' · '),
+                  ),
+                ),
+              );
+            }),
+        ],
+      ),
     );
   }
 
@@ -1092,7 +1121,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          title: const Text('Link Supplier'),
+          title: Text(l10n.catalogLinkSupplier),
           content: SizedBox(
             width: 400,
             child: Column(
@@ -1102,19 +1131,19 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
                   selectedValue: selectedSupplierId,
                   items: available.map((s) => PosDropdownItem(value: s.id, label: s.name)).toList(),
                   onChanged: (v) => setDialogState(() => selectedSupplierId = v),
-                  label: 'Supplier *',
-                  hint: 'Select supplier',
+                  label: l10n.catalogSupplierRequired,
+                  hint: l10n.catalogSelectSupplier,
                 ),
                 const SizedBox(height: AppSpacing.md),
-                PosTextField(controller: supplierSkuController, label: 'Supplier SKU', hint: "Supplier's product code"),
+                PosTextField(controller: supplierSkuController, label: l10n.catalogSupplierSku, hint: "Supplier's product code"),
                 const SizedBox(height: AppSpacing.md),
                 Row(
                   children: [
                     Expanded(
                       child: PosTextField(
                         controller: costController,
-                        label: 'Cost Price (\u0081)',
-                        hint: 'Cost from this supplier',
+                        label: l10n.catalogCostPrice,
+                        hint: l10n.catalogSupplierCostHint,
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[\d.]'))],
                       ),
@@ -1123,7 +1152,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
                     Expanded(
                       child: PosTextField(
                         controller: leadTimeController,
-                        label: 'Lead Time (days)',
+                        label: l10n.catalogLeadTimeDays,
                         hint: 'e.g. 7',
                         keyboardType: TextInputType.number,
                         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -1142,7 +1171,7 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
                 Navigator.pop(ctx);
               },
               variant: PosButtonVariant.soft,
-              label: 'Link',
+              label: l10n.catalogLink,
             ),
           ],
         ),
@@ -1155,62 +1184,65 @@ class _ProductFormPageState extends ConsumerState<ProductFormPage> {
   // ═══════════════════════════════════════════════════════════════
 
   Widget _buildMediaTab() {
-    return ListView(
+    return Padding(
       padding: const EdgeInsets.all(AppSpacing.lg),
-      children: [
-        _sectionHeader('Product Image'),
-        PosTextField(
-          controller: _imageUrlController,
-          label: 'Image URL',
-          hint: 'https://example.com/image.jpg',
-          keyboardType: TextInputType.url,
-        ),
-        const SizedBox(height: AppSpacing.lg),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _sectionHeader('Product Image'),
+          PosTextField(
+            controller: _imageUrlController,
+            label: l10n.catalogImageUrl,
+            hint: 'https://example.com/image.jpg',
+            keyboardType: TextInputType.url,
+          ),
+          const SizedBox(height: AppSpacing.lg),
 
-        // Preview
-        if (_imageUrlController.text.isNotEmpty)
-          ClipRRect(
-            borderRadius: AppRadius.borderLg,
-            child: Image.network(
-              _imageUrlController.text,
-              height: 200,
-              fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => Container(
+          // Preview
+          if (_imageUrlController.text.isNotEmpty)
+            ClipRRect(
+              borderRadius: AppRadius.borderLg,
+              child: Image.network(
+                _imageUrlController.text,
                 height: 200,
-                decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.broken_image, size: 48, color: AppColors.error),
-                      const SizedBox(height: AppSpacing.sm),
-                      Text('Could not load image', style: TextStyle(color: AppColors.error)),
-                    ],
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => Container(
+                  height: 200,
+                  decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.broken_image, size: 48, color: AppColors.error),
+                        const SizedBox(height: AppSpacing.sm),
+                        Text(l10n.catalogImageLoadFailed, style: TextStyle(color: AppColors.error)),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          )
-        else
-          Container(
-            height: 200,
-            decoration: BoxDecoration(
-              color: AppColors.primary10,
-              borderRadius: AppRadius.borderLg,
-              border: Border.all(color: AppColors.borderLight, style: BorderStyle.solid),
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.add_photo_alternate_outlined, size: 48, color: AppColors.primary),
-                  const SizedBox(height: AppSpacing.sm),
-                  Text('Paste an image URL above', style: Theme.of(context).textTheme.bodyMedium),
-                ],
+            )
+          else
+            Container(
+              height: 200,
+              decoration: BoxDecoration(
+                color: AppColors.primary10,
+                borderRadius: AppRadius.borderLg,
+                border: Border.all(color: AppColors.borderLight, style: BorderStyle.solid),
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.add_photo_alternate_outlined, size: 48, color: AppColors.primary),
+                    const SizedBox(height: AppSpacing.sm),
+                    Text(l10n.catalogImagePasteHint, style: Theme.of(context).textTheme.bodyMedium),
+                  ],
+                ),
               ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 

@@ -6,6 +6,7 @@ import '../../../core/widgets/pos_status_badge.dart';
 import '../models/drug_schedule.dart';
 import '../enums/drug_schedule_type.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class DrugScheduleCard extends StatelessWidget {
   final DrugSchedule drug;
@@ -15,6 +16,8 @@ class DrugScheduleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return PosCard(
       elevation: 0,
       borderRadius: AppRadius.borderMd,
@@ -44,22 +47,35 @@ class DrugScheduleCard extends StatelessWidget {
                     Row(
                       children: [
                         if (drug.dosageForm != null)
-                          Text(drug.dosageForm!, style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary)),
+                          Text(
+                            drug.dosageForm!,
+                            style: AppTypography.bodySmall.copyWith(
+                              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                            ),
+                          ),
                         if (drug.strength != null) ...[
                           AppSpacing.gapW4,
-                          Text('• ${drug.strength}', style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary)),
+                          Text(
+                            '• ${drug.strength}',
+                            style: AppTypography.bodySmall.copyWith(
+                              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                            ),
+                          ),
                         ],
                       ],
                     ),
                     if (drug.manufacturer != null)
-                      Text(drug.manufacturer!, style: AppTypography.caption.copyWith(color: AppColors.textSecondary)),
+                      Text(
+                        drug.manufacturer!,
+                        style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      ),
                   ],
                 ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  _buildTypeBadge(),
+                  _buildTypeBadge(l10n),
                   if (drug.requiresPrescription == true) ...[
                     AppSpacing.gapH4,
                     const Icon(Icons.assignment, size: 14, color: AppColors.warning),
@@ -73,11 +89,11 @@ class DrugScheduleCard extends StatelessWidget {
     );
   }
 
-  PosStatusBadge _buildTypeBadge() {
+  PosStatusBadge _buildTypeBadge(AppLocalizations l10n) {
     return switch (drug.scheduleType) {
-      DrugScheduleType.otc => PosStatusBadge(label: 'OTC', variant: PosStatusBadgeVariant.success),
-      DrugScheduleType.prescriptionOnly => PosStatusBadge(label: 'Rx Only', variant: PosStatusBadgeVariant.warning),
-      DrugScheduleType.controlled => PosStatusBadge(label: 'Controlled', variant: PosStatusBadgeVariant.error),
+      DrugScheduleType.otc => PosStatusBadge(label: l10n.pharmacyOtc, variant: PosStatusBadgeVariant.success),
+      DrugScheduleType.prescriptionOnly => PosStatusBadge(label: l10n.pharmacyRxOnly, variant: PosStatusBadgeVariant.warning),
+      DrugScheduleType.controlled => PosStatusBadge(label: l10n.pharmacyControlled, variant: PosStatusBadgeVariant.error),
     };
   }
 

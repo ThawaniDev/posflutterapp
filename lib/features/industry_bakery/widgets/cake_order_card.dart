@@ -6,6 +6,7 @@ import '../../../core/widgets/pos_status_badge.dart';
 import '../models/custom_cake_order.dart';
 import '../enums/custom_cake_order_status.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class CakeOrderCard extends StatelessWidget {
   final CustomCakeOrder order;
@@ -16,6 +17,7 @@ class CakeOrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PosCard(
@@ -49,9 +51,9 @@ class CakeOrderCard extends StatelessWidget {
               AppSpacing.gapH4,
               Row(
                 children: [
-                  const Icon(Icons.calendar_today, size: 16, color: AppColors.textSecondary),
+                  Icon(Icons.calendar_today, size: 16, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                   AppSpacing.gapW4,
-                  Text('Delivery: ${order.deliveryDate}', style: AppTypography.bodySmall),
+                  Text(l10n.bakeryDeliveryDateWithValue(order.deliveryDate.toString()), style: AppTypography.bodySmall),
                   const Spacer(),
                   Text(
                     '${order.price.toStringAsFixed(2)} \u0081',

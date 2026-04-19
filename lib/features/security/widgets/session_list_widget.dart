@@ -35,11 +35,12 @@ class SessionListWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Align(
-              alignment: Alignment.centerRight,
-              child: TextButton.icon(
-                icon: const Icon(Icons.close_fullscreen, size: 16),
-                label: Text(l10n.securityEndAllSessions),
-                style: TextButton.styleFrom(foregroundColor: AppColors.error),
+              alignment: AlignmentDirectional.centerEnd,
+              child: PosButton(
+                icon: Icons.close_fullscreen,
+                label: l10n.securityEndAllSessions,
+                variant: PosButtonVariant.danger,
+                size: PosButtonSize.sm,
                 onPressed: isActionLoading ? null : onEndAllSessions,
               ),
             ),
@@ -63,7 +64,8 @@ class SessionListWidget extends StatelessWidget {
   Widget _buildSessionCard(BuildContext context, SecuritySession session) {
     final l10n = AppLocalizations.of(context)!;
     final isActive = session.isActive;
-    final statusColor = isActive ? AppColors.success : AppColors.textSecondary;
+    final mutedColor = AppColors.mutedFor(context);
+    final statusColor = isActive ? AppColors.success : mutedColor;
     final statusLabel = isActive ? l10n.securityActive : l10n.securityEnded;
 
     return PosCard(
@@ -80,13 +82,9 @@ class SessionListWidget extends StatelessWidget {
                 Expanded(
                   child: Text(session.ipAddress ?? l10n.securityNA, style: const TextStyle(fontWeight: FontWeight.w600)),
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.12), borderRadius: AppRadius.borderXs),
-                  child: Text(
-                    statusLabel,
-                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: statusColor),
-                  ),
+                PosStatusBadge(
+                  label: statusLabel,
+                  variant: isActive ? PosStatusBadgeVariant.success : PosStatusBadgeVariant.neutral,
                 ),
               ],
             ),
@@ -94,39 +92,40 @@ class SessionListWidget extends StatelessWidget {
             if (session.userAgent != null)
               Text(
                 session.userAgent!,
-                style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                style: TextStyle(fontSize: 12, color: mutedColor),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             AppSpacing.gapH4,
             Row(
               children: [
-                Icon(Icons.access_time, size: 14, color: AppColors.textSecondary),
+                Icon(Icons.access_time, size: 14, color: mutedColor),
                 AppSpacing.gapW4,
                 Text(
                   session.startedAt != null ? '${l10n.securityStarted}: ${_formatDateTime(session.startedAt!)}' : '',
-                  style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                  style: TextStyle(fontSize: 12, color: mutedColor),
                 ),
               ],
             ),
             if (session.lastActivityAt != null)
               Text(
                 '${l10n.securityLastActivity}: ${_formatDateTime(session.lastActivityAt!)}',
-                style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                style: TextStyle(fontSize: 12, color: mutedColor),
               ),
             if (session.endedAt != null)
               Text(
                 '${l10n.securityEnded}: ${_formatDateTime(session.endedAt!)}',
-                style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                style: TextStyle(fontSize: 12, color: mutedColor),
               ),
             if (isActive) ...[
               AppSpacing.gapH8,
               Align(
-                alignment: Alignment.centerRight,
-                child: TextButton.icon(
-                  icon: const Icon(Icons.stop_circle_outlined, size: 16),
-                  label: Text(l10n.securityEndSession),
-                  style: TextButton.styleFrom(foregroundColor: AppColors.error),
+                alignment: AlignmentDirectional.centerEnd,
+                child: PosButton(
+                  icon: Icons.stop_circle_outlined,
+                  label: l10n.securityEndSession,
+                  variant: PosButtonVariant.danger,
+                  size: PosButtonSize.sm,
                   onPressed: isActionLoading ? null : () => onEndSession?.call(session.id),
                 ),
               ),

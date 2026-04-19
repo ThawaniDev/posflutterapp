@@ -35,13 +35,14 @@ class _AdminPlanListPageState extends ConsumerState<AdminPlanListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(planListProvider);
     final isLoading = state is PlanListLoading;
     final hasError = state is PlanListError;
     final isEmpty = state is PlanListLoaded && state.plans.isEmpty;
 
     return PosListPage(
-      title: 'Subscription Plans',
+      title: l10n.adminSubscriptionPlans,
       showSearch: false,
       isLoading: isLoading,
       hasError: hasError,
@@ -85,7 +86,9 @@ class _PlanCard extends StatelessWidget {
     return PosCard(
       margin: const EdgeInsets.only(bottom: 12),
       borderRadius: AppRadius.borderLg,
-      border: Border.fromBorderSide(isHighlighted ? const BorderSide(color: AppColors.primary, width: 2) : BorderSide(color: AppColors.borderLight)),
+      border: Border.fromBorderSide(
+        isHighlighted ? const BorderSide(color: AppColors.primary, width: 2) : BorderSide(color: AppColors.borderLight),
+      ),
       child: Padding(
         padding: AppSpacing.paddingAll16,
         child: Column(
@@ -99,10 +102,7 @@ class _PlanCard extends StatelessWidget {
                 if (isHighlighted)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary.withValues(alpha: 0.1),
-                      borderRadius: AppRadius.borderLg,
-                    ),
+                    decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: AppRadius.borderLg),
                     child: const Text(
                       'Highlighted',
                       style: TextStyle(color: AppColors.primary, fontSize: 12, fontWeight: FontWeight.w600),
@@ -135,13 +135,13 @@ class _PlanCard extends StatelessWidget {
                 ),
                 if (plan['annual_price'] != null) ...[
                   AppSpacing.gapW16,
-                  Text('\u0081${plan['annual_price']}/yr', style: TextStyle(fontSize: 14, color: AppColors.textSecondary)),
+                  Text('${plan['annual_price']}/yr', style: TextStyle(fontSize: 14, color: AppColors.mutedFor(context))),
                 ],
               ],
             ),
             if (plan['trial_days'] != null && plan['trial_days'] > 0) ...[
               AppSpacing.gapH4,
-              Text('${plan['trial_days']} day trial', style: TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+              Text('${plan['trial_days']} day trial', style: TextStyle(fontSize: 13, color: AppColors.mutedFor(context))),
             ],
           ],
         ),

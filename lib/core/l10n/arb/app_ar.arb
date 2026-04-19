@@ -1,6 +1,6 @@
 {
   "@@locale": "ar",
-  "appTitle": "ثواني نقاط البيع",
+  "appTitle": "وميض نقاط البيع",
   "login": "تسجيل الدخول",
   "logout": "تسجيل الخروج",
   "email": "البريد الإلكتروني",
@@ -3033,9 +3033,118 @@
   "debitsAllocatedAt": "تاريخ التخصيص",
   "debitsCreatedAt": "تاريخ الإنشاء",
   "debitsOrderNumber": "رقم الطلب",
+
+  "sidebarReceivables": "المستحقات",
+  "receivablesTitle": "المستحقات",
+  "receivablesCreate": "إنشاء مستحق",
+  "receivablesEdit": "تعديل مستحق",
+  "receivablesDetail": "تفاصيل المستحق",
+  "receivablesNoReceivables": "لا توجد مستحقات",
+  "receivablesNoReceivablesSubtitle": "ستظهر المستحقات هنا بمجرد إنشائها.",
+  "receivablesSearchHint": "بحث بالمرجع، العميل، الوصف...",
+  "receivablesFilterByStatus": "تصفية حسب الحالة",
+  "receivablesFilterByType": "تصفية حسب النوع",
+  "receivablesAll": "الكل",
+  "receivablesReferenceNumber": "رقم المرجع",
+  "receivablesCustomer": "العميل",
+  "receivablesType": "النوع",
+  "receivablesSource": "المصدر",
+  "receivablesAmount": "المبلغ",
+  "receivablesRemainingBalance": "الرصيد المتبقي",
+  "receivablesDueDate": "تاريخ الاستحقاق",
+  "receivablesDescription": "الوصف",
+  "receivablesDescriptionAr": "الوصف (عربي)",
+  "receivablesSelectCustomer": "اختر العميل",
+  "receivablesSelectType": "اختر النوع",
+  "receivablesSelectSource": "اختر المصدر",
+  "receivablesStatusPending": "معلق",
+  "receivablesStatusPartiallyPaid": "مدفوع جزئياً",
+  "receivablesStatusFullyPaid": "مدفوع بالكامل",
+  "receivablesStatusReversed": "ملغي",
+  "receivablesStatusOverdue": "متأخر",
+  "receivablesTypeCreditSale": "بيع آجل",
+  "receivablesTypeLoan": "قرض",
+  "receivablesTypeInventoryAdjustment": "تعديل مخزون",
+  "receivablesTypeManual": "يدوي",
+  "receivablesSourcePosTerminal": "نقطة البيع",
+  "receivablesSourceInvoice": "فاتورة",
+  "receivablesSourceReturn": "مرتجع",
+  "receivablesSourceManual": "يدوي",
+  "receivablesSourceInventorySystem": "نظام المخزون",
+  "receivablesRecordPayment": "تسجيل دفعة",
+  "receivablesPaymentAmount": "مبلغ الدفعة",
+  "receivablesPaymentMethod": "طريقة الدفع",
+  "receivablesAddNote": "إضافة ملاحظة",
+  "receivablesNoteHint": "أدخل ملاحظة...",
+  "receivablesViewLogs": "عرض السجل",
+  "receivablesLogs": "سجل النشاط",
+  "receivablesNoLogs": "لا يوجد نشاط بعد",
+  "receivablesPayments": "الدفعات",
+  "receivablesNoPayments": "لا توجد دفعات بعد",
+  "receivablesReverse": "إلغاء",
+  "receivablesReverseReceivable": "إلغاء المستحق",
+  "receivablesReverseReason": "سبب الإلغاء",
+  "receivablesReverseConfirm": "هل أنت متأكد من إلغاء هذا المستحق؟",
+  "receivablesDeleteConfirm": "هل أنت متأكد من حذف هذا المستحق؟",
+  "receivablesCreatedSuccess": "تم إنشاء المستحق بنجاح",
+  "receivablesUpdatedSuccess": "تم تحديث المستحق بنجاح",
+  "receivablesDeletedSuccess": "تم حذف المستحق بنجاح",
+  "receivablesPaymentSuccess": "تم تسجيل الدفعة بنجاح",
+  "receivablesNoteAddedSuccess": "تمت إضافة الملاحظة بنجاح",
+  "receivablesReversedSuccess": "تم إلغاء المستحق بنجاح",
+  "receivablesSummaryTitle": "ملخص المستحقات",
+  "receivablesSummaryTotal": "إجمالي المستحقات",
+  "receivablesSummaryPending": "معلق",
+  "receivablesSummaryPartially": "مدفوع جزئياً",
+  "receivablesSummaryFully": "مدفوع بالكامل",
+  "receivablesSummaryReversed": "ملغي",
+  "receivablesSummaryOverdue": "متأخر",
+  "receivablesSummaryPaid": "إجمالي المدفوع",
+  "receivablesSummaryOutstanding": "المتبقي",
+  "receivablesCreatedBy": "أنشأ بواسطة",
+  "receivablesSettledBy": "تمت التسوية بواسطة",
+  "receivablesSettledAt": "تاريخ التسوية",
+  "receivablesCreatedAt": "تاريخ الإنشاء",
+  "receivablesOrderNumber": "رقم الطلب",
+
   "searchDropdownHint": "بحث...",
   "noResultsFound": "لا توجد نتائج",
   "selectOption": "اختر...",
+  "selectProduct": "اختر المنتج",
+  "selectCustomer": "اختر العميل",
+  "selectCategory": "اختر الفئة",
+  "selectType": "اختر النوع",
+  "selectStatus": "اختر الحالة",
+  "selectBranch": "اختر الفرع",
+  "selectStaffMember": "اختر الموظف",
+  "selectTemplate": "اختر القالب",
+  "selectPaymentMethod": "اختر طريقة الدفع",
+  "selectReason": "اختر السبب",
+  "selectGrade": "اختر الدرجة",
+  "selectFormat": "اختر التنسيق",
+  "selectPriority": "اختر الأولوية",
+  "selectChannel": "اختر القناة",
+  "selectDay": "اختر اليوم",
+  "selectFrequency": "اختر التكرار",
+  "selectCountry": "اختر الدولة",
+  "selectDeviceType": "اختر نوع الجهاز",
+  "selectBaudRate": "اختر معدل البود",
+  "selectOrder": "اختر الطلب",
+  "selectTable": "اختر الطاولة",
+  "selectPlatform": "اختر المنصة",
+  "selectRegister": "اختر السجل",
+  "selectRole": "اختر الدور",
+  "selectStore": "اختر المتجر",
+  "selectCycle": "اختر الدورة",
+  "selectMetalType": "اختر نوع المعدن",
+  "selectChargesType": "اختر نوع الرسوم",
+  "selectTechnician": "اختر الفني",
+  "selectScheduleType": "اختر نوع الجدول",
+  "selectEmploymentType": "اختر نوع التوظيف",
+  "selectSalaryType": "اختر نوع الراتب",
+  "selectBusinessType": "اختر نوع العمل",
+  "selectMethod": "اختر الطريقة",
+  "allTypes": "جميع الأنواع",
   "createNew": "إنشاء جديد",
   "genericError": "خطأ: {message}",
   "genericErrorSaving": "خطأ في الحفظ: {message}",
@@ -3395,6 +3504,27 @@
   "wameedAINewChat": "محادثة جديدة",
   "wameedAIAssistant": "مساعد وميض الذكي",
   "wameedAIWelcomeSubtitle": "اسأل أي شيء عن عملك — المبيعات والمخزون والعملاء والمزيد.",
+  "wameedAIMenu": "القائمة",
+  "wameedAIPhotos": "الصور",
+  "wameedAIFiles": "الملفات",
+  "wameedAIBrowseCapabilities": "استعرض جميع إمكانيات الذكاء الاصطناعي",
+  "wameedAITodaySummary": "ملخص اليوم",
+  "wameedAITodaySummarySubtitle": "الإيرادات وأفضل المنتجات والاتجاهات",
+  "wameedAISmartReorderSubtitle": "قائمة شراء مقترحة بالذكاء الاصطناعي",
+  "wameedAICustomerSegmentsSubtitle": "تجميع العملاء حسب السلوك",
+  "wameedAIInvoiceOCRSubtitle": "امسح فواتير الموردين إلى نظامك",
+  "wameedAISuggTodaySalesTitle": "ملخص مبيعات اليوم",
+  "wameedAISuggTodaySalesSubtitle": "عرض الإيرادات وأفضل المنتجات والاتجاهات",
+  "wameedAISuggTodaySalesPrompt": "اعرض ملخص مبيعات اليوم مع أفضل المنتجات والاتجاهات",
+  "wameedAISuggReorderTitle": "اقترح إعادة طلب",
+  "wameedAISuggReorderSubtitle": "للمنتجات قليلة المخزون وسريعة الحركة",
+  "wameedAISuggReorderPrompt": "اقترح قائمة إعادة طلب للمنتجات التي على وشك النفاد أو سريعة البيع",
+  "wameedAISuggSlowMoversTitle": "ابحث عن المنتجات بطيئة الحركة",
+  "wameedAISuggSlowMoversSubtitle": "المنتجات التي لا تباع جيدًا",
+  "wameedAISuggSlowMoversPrompt": "اعرض أبطأ المنتجات حركة في مخزوني هذا الشهر",
+  "wameedAISuggSegmentsTitle": "شرائح العملاء",
+  "wameedAISuggSegmentsSubtitle": "تجميع العملاء حسب السلوك",
+  "wameedAISuggSegmentsPrompt": "حلل عملائي وقسمهم إلى شرائح مفيدة",
   "wameedAIRecentChats": "المحادثات الأخيرة",
   "wameedAINoChats": "لا توجد محادثات بعد",
   "wameedAINoChatsSubtitle": "اضغط \"محادثة جديدة\" لبدء محادثة مع وميض الذكي",
@@ -4643,5 +4773,1464 @@
   },
   "reportLegendRevenue": "الإيرادات",
   "reportLegendCost": "التكلفة",
-  "reportLegendNetProfit": "صافي الربح"
+  "reportLegendNetProfit": "صافي الربح",
+  "navHome": "الرئيسية",
+  "navPos": "نقطة البيع",
+  "navOrders": "الطلبات",
+  "navCatalog": "الكتالوج",
+  "navMore": "المزيد",
+  "tableActionsHeader": "إجراءات",
+  "tableActionsTooltip": "إجراءات",
+  "tableRowsLabel": "الصفوف: ",
+  "tablePreviousPage": "الصفحة السابقة",
+  "tableNextPage": "الصفحة التالية",
+  "tableShowingRange": "عرض {start}-{end} من {total}",
+  "@tableShowingRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "accessDenied": "الوصول مرفوض",
+  "accessDeniedMessage": "ليس لديك إذن لعرض هذه الصفحة.\nاتصل بالمسؤول لطلب الوصول.",
+  "catalogTabBasicInfo": "المعلومات الأساسية",
+  "catalogTabPricing": "التسعير",
+  "catalogTabVariants": "المتغيرات",
+  "catalogTabModifiers": "المعدلات",
+  "catalogTabBarcodes": "الباركود",
+  "catalogProductNameRequired": "اسم المنتج *",
+  "catalogProductNameHint": "أدخل اسم المنتج",
+  "catalogProductNameArabic": "اسم المنتج (عربي)",
+  "catalogProductDescHint": "أدخل وصف المنتج",
+  "catalogSelectCategory": "اختر الفئة",
+  "catalogUnitType": "نوع الوحدة",
+  "catalogSelectUnit": "اختر الوحدة",
+  "catalogSku": "SKU",
+  "catalogSkuHint": "وحدة حفظ المخزون",
+  "catalogPrimaryBarcode": "الباركود الأساسي",
+  "catalogBarcodeHint": "أدخل أو امسح الباركود",
+  "catalogMinOrderQty": "الحد الأدنى للطلب",
+  "catalogMaxOrderQty": "الحد الأقصى للطلب",
+  "catalogUnlimited": "غير محدود",
+  "catalogSoldByWeight": "يُباع بالوزن (استخدم الميزان)",
+  "catalogTareWeight": "الوزن الصافي (كجم)",
+  "catalogAgeRestriction": "يتطلب التحقق من العمر",
+  "catalogSellPriceRequired": "سعر البيع () *",
+  "catalogCostPrice": "سعر التكلفة ()",
+  "catalogOfferPrice": "سعر العرض ()",
+  "catalogOfferPriceHint": "اتركه فارغًا لعدم وجود عرض",
+  "catalogOfferStart": "بداية العرض",
+  "catalogOfferEnd": "نهاية العرض",
+  "catalogDatePlaceholder": "YYYY-MM-DD",
+  "catalogVariantValueRequired": "قيمة المتغير *",
+  "catalogVariantValueHint": "مثال: كبير، أحمر، 500مل",
+  "catalogVariantSkuHint": "SKU المتغير (اختياري)",
+  "catalogPriceAdjustment": "تعديل السعر",
+  "catalogAddGroup": "إضافة مجموعة",
+  "catalogGroupNameRequired": "اسم المجموعة *",
+  "catalogGroupNameHint": "مثال: الحجم، الإضافات",
+  "catalogMinSelect": "الحد الأدنى للاختيار",
+  "catalogMaxSelect": "الحد الأقصى للاختيار",
+  "catalogAddBarcode": "إضافة باركود",
+  "catalogBarcodeRequired": "الباركود *",
+  "catalogLinkSupplier": "ربط المورد",
+  "catalogSupplierRequired": "المورد *",
+  "catalogSelectSupplier": "اختر المورد",
+  "catalogSupplierSku": "SKU المورد",
+  "catalogSupplierCostHint": "التكلفة من هذا المورد",
+  "catalogLeadTimeDays": "المهلة الزمنية (أيام)",
+  "catalogLink": "ربط",
+  "catalogStoreWithId": "المتجر: {id}",
+  "@catalogStoreWithId": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "catalogImageUrl": "رابط الصورة",
+  "catalogImageLoadFailed": "تعذّر تحميل الصورة",
+  "catalogImagePasteHint": "الصق رابط الصورة أعلاه",
+  "catalogDeleteProductTitle": "حذف المنتج",
+  "catalogAddProduct": "إضافة منتج",
+  "catalogSearchProductsShort": "ابحث عن المنتجات...",
+  "catalogSearchProductsFull": "ابحث عن المنتجات بالاسم أو SKU أو الباركود...",
+  "catalogClearSelection": "مسح التحديد",
+  "catalogAllCategories": "كل الفئات",
+  "catalogAllProducts": "كل المنتجات",
+  "catalogCategoryNameRequired": "اسم الفئة *",
+  "catalogCategoryNameHint": "أدخل اسم الفئة",
+  "catalogArabicName": "الاسم بالعربية",
+  "catalogArabicDescription": "الوصف بالعربية",
+  "catalogCategoryDescHint": "وصف موجز لهذه الفئة",
+  "catalogParentCategory": "الفئة الأم",
+  "catalogNoneRootLevel": "لا شيء (مستوى جذري)",
+  "catalogSortOrder": "ترتيب الفرز",
+  "catalogDeleteCategoryTitle": "حذف الفئة",
+  "catalogNewCategory": "فئة جديدة",
+  "catalogEditCategory": "تعديل الفئة",
+  "catalogCreateFirstCategory": "إنشاء أول فئة",
+  "bakeryCakeOrders": "طلبات الكيك",
+  "bakeryNoRecipes": "لا توجد وصفات بعد",
+  "bakeryNoSchedules": "لا توجد جداول إنتاج",
+  "bakeryNoCakeOrders": "لا توجد طلبات كيك",
+  "bakeryCakeDescription": "وصف الكيك",
+  "bakeryFlavor": "النكهة",
+  "bakeryFlavorHint": "مثال: شوكولاتة",
+  "bakeryDecorationNotes": "ملاحظات التزيين",
+  "bakeryDecorationHint": "طلبات تزيين خاصة...",
+  "bakeryDeliveryDate": "تاريخ التسليم",
+  "bakeryDeliveryTime": "وقت التسليم",
+  "bakeryPriceSar": "السعر ()",
+  "bakeryDepositPaid": "العربون المدفوع",
+  "bakeryRecipeId": "معرف الوصفة",
+  "bakerySelectRecipe": "اختر الوصفة",
+  "bakeryAdditionalNotes": "ملاحظات إضافية...",
+  "bakeryRecipeNameHint": "أدخل اسم الوصفة",
+  "bakeryNumberOfUnits": "عدد الوحدات",
+  "bakeryTemperature": "درجة الحرارة",
+  "bakeryInstructionsHint": "تعليمات الخبز التفصيلية...",
+  "bakeryDeliveryDateWithValue": "التسليم: {date}",
+  "@bakeryDeliveryDateWithValue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bakeryPrepTimeMin": "التحضير: {minutes}د",
+  "@bakeryPrepTimeMin": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "bakeryBakeTimeMin": "الخبز: {minutes}د",
+  "@bakeryBakeTimeMin": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "bakeryYieldUnits": "الإنتاج: {units} وحدة",
+  "@bakeryYieldUnits": {
+    "placeholders": {
+      "units": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsNoImei": "لا توجد سجلات IMEI",
+  "electronicsNoRepair": "لا توجد وظائف إصلاح",
+  "electronicsNoTradeIn": "لا توجد سجلات استبدال",
+  "electronicsImei": "IMEI",
+  "electronicsImeiHint": "رقم IMEI من 15 رقمًا",
+  "electronicsImei2Optional": "IMEI 2 (اختياري)",
+  "electronicsDualSimImei": "IMEI الشريحة المزدوجة",
+  "electronicsSerialOptional": "الرقم التسلسلي (اختياري)",
+  "electronicsSerialHint": "الرقم التسلسلي للجهاز",
+  "electronicsGradeValue": "الدرجة {value}",
+  "@electronicsGradeValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsPurchasePrice": "سعر الشراء ()",
+  "electronicsMfgWarrantyEnd": "نهاية ضمان المصنع",
+  "electronicsStoreWarrantyEnd": "نهاية ضمان المتجر",
+  "electronicsDeviceDescription": "وصف الجهاز",
+  "electronicsDeviceHintRepair": "مثال: iPhone 15 Pro Max 256GB",
+  "electronicsImeiOptional": "IMEI (اختياري)",
+  "electronicsIssueDescription": "وصف المشكلة",
+  "electronicsIssueHint": "صف المشكلة...",
+  "electronicsAssignedTech": "الفني المعين",
+  "electronicsStaffFullName": "{first} {last}",
+  "@electronicsStaffFullName": {
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsEstCost": "التكلفة المتوقعة ()",
+  "electronicsFinalCost": "التكلفة النهائية ()",
+  "electronicsDiagnosisNotes": "ملاحظات التشخيص",
+  "electronicsDiagnosisHint": "نتائج التشخيص...",
+  "electronicsRepairNotes": "ملاحظات الإصلاح",
+  "electronicsRepairHint": "تفاصيل الإصلاح...",
+  "electronicsRecordTradeIn": "تسجيل استبدال",
+  "electronicsDeviceHintTradeIn": "مثال: Samsung Galaxy S24 Ultra",
+  "electronicsGradeLetter": "الدرجة {grade}",
+  "@electronicsGradeLetter": {
+    "placeholders": {
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsAssessedValue": "القيمة المقدرة ()",
+  "electronicsSnWithValue": "الرقم التسلسلي: {serial}",
+  "@electronicsSnWithValue": {
+    "placeholders": {
+      "serial": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsGradeWithValue": "الدرجة: {grade}",
+  "@electronicsGradeWithValue": {
+    "placeholders": {
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsImeiWithValue": "IMEI: {imei}",
+  "@electronicsImeiWithValue": {
+    "placeholders": {
+      "imei": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsEstCostWithValue": "المتوقع: {amount} ",
+  "@electronicsEstCostWithValue": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "floristBouquetHint": "مثال: باقة ورد كلاسيكية",
+  "floristOccasionHint": "مثال: زفاف، عيد ميلاد، ذكرى سنوية",
+  "floristTotalPrice": "السعر الإجمالي ()",
+  "floristIsTemplate": "قالب",
+  "floristTemplateSubtitle": "قالب ترتيب قابل لإعادة الاستخدام للاشتراكات",
+  "floristFreshness": "النضارة",
+  "floristNoArrangements": "لا توجد ترتيبات",
+  "floristNoFreshnessLogs": "لا توجد سجلات نضارة",
+  "floristNoSubscriptions": "لا توجد اشتراكات",
+  "floristNewFreshnessLog": "سجل نضارة جديد",
+  "floristLogFreshness": "تسجيل النضارة",
+  "floristReceivedDate": "تاريخ الاستلام",
+  "floristVaseLifeDays": "عمر المزهرية (أيام)",
+  "floristArrangementOptional": "قالب الترتيب (اختياري)",
+  "floristSelectTemplate": "اختر قالب ترتيب",
+  "floristDeliveryAddress": "عنوان التسليم",
+  "floristDeliveryAddressHint": "عنوان التسليم الكامل",
+  "floristPricePerDelivery": "السعر لكل توصيل ()",
+  "floristNextDeliveryDate": "تاريخ التسليم التالي",
+  "floristFlowerTypesCount": "{count} أنواع زهور",
+  "@floristFlowerTypesCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "floristProductWithId": "المنتج: {id}",
+  "@floristProductWithId": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "floristQtyReceivedOn": "الكمية: {qty} · الاستلام: {date}",
+  "@floristQtyReceivedOn": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "jewelryRecordBuyback": "تسجيل إعادة الشراء",
+  "jewelryKaratHint": "مثال: 24K، 22K، 18K",
+  "jewelryDetailsHint": "تفاصيل إضافية...",
+  "jewelryBuybacks": "إعادة الشراء",
+  "jewelryNoMetalRates": "لا توجد أسعار معدن محددة",
+  "jewelryNoProductDetails": "لا توجد تفاصيل منتج",
+  "jewelryNoBuybacks": "لا توجد معاملات إعادة شراء",
+  "jewelrySaveRate": "حفظ السعر",
+  "jewelryKaratOptional": "القيراط (اختياري)",
+  "jewelrySellRatePerGram": "سعر البيع/جم ()",
+  "jewelryBuybackRatePerGram": "سعر إعادة الشراء/جم",
+  "jewelryEffectiveDate": "تاريخ السريان",
+  "jewelryGrossWeightG": "الوزن الإجمالي (جم)",
+  "jewelryNetWeightG": "الوزن الصافي (جم)",
+  "jewelryMakingChargesType": "نوع رسوم التصنيع",
+  "jewelryMakingChargesValue": "قيمة رسوم التصنيع",
+  "jewelryStoneDetails": "تفاصيل الحجر",
+  "jewelryStoneTypeOptional": "نوع الحجر (اختياري)",
+  "jewelryStoneTypeHint": "مثال: ألماس، ياقوت، زمرد",
+  "jewelryWeightCarat": "الوزن (قيراط)",
+  "jewelryCount": "العدد",
+  "jewelryCertificateOptional": "رقم الشهادة (اختياري)",
+  "jewelryCertificateHint": "GIA، IGI، إلخ.",
+  "jewelryEffectiveWithValue": "ساري: {date}",
+  "@jewelryEffectiveWithValue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "pharmacyDrugNameHint": "مثال: باراسيتامول",
+  "pharmacyFormHint": "مثال: حبة، شراب",
+  "pharmacyStrength": "التركيز",
+  "pharmacyManufacturer": "الشركة المصنعة",
+  "pharmacyManufacturerHint": "مصنع الدواء",
+  "pharmacyPrescriptionRequired": "يجب إبراز وصفة طبية صالحة للشراء",
+  "pharmacyNoPrescriptions": "لا توجد وصفات طبية",
+  "pharmacyNoDrugSchedules": "لا توجد جداول أدوية",
+  "pharmacyPrescriptionNumber": "رقم الوصفة الطبية",
+  "pharmacyPrescriptionNumberHint": "مثال: RX-001234",
+  "pharmacyFullNameHint": "الاسم الكامل",
+  "pharmacyPatientIdOptional": "رقم المريض (اختياري)",
+  "pharmacyPatientIdHint": "الهوية الوطنية أو معرف النظام",
+  "pharmacyDoctorInfo": "معلومات الطبيب",
+  "pharmacyDoctorHint": "د. ...",
+  "pharmacyLicenseNo": "رقم الترخيص",
+  "pharmacyLicenseHint": "الترخيص الطبي",
+  "pharmacyInsurance": "التأمين",
+  "pharmacyInsuranceProvider": "مزود التأمين (اختياري)",
+  "pharmacyInsuranceHint": "مثال: DHAMAN",
+  "pharmacyClaimAmount": "مبلغ المطالبة ()",
+  "pharmacyOtc": "بدون وصفة",
+  "pharmacyRxOnly": "بوصفة فقط",
+  "pharmacyControlled": "خاضع للرقابة",
+  "pharmacyInsured": "مؤمن عليه",
+  "restaurantTabOwnerHint": "اسم صاحب الطاولة",
+  "restaurantPhoneHint": "+968 XXXX XXXX",
+  "restaurantTimeHint": "HH:MM",
+  "restaurantSpecialRequestsHint": "طلبات خاصة، حساسية...",
+  "restaurantKitchen": "المطبخ",
+  "restaurantNoTables": "لم يتم تكوين الطاولات",
+  "restaurantNoTickets": "لا توجد طلبات مطبخ",
+  "restaurantNoReservations": "لا توجد حجوزات",
+  "restaurantNoOpenTabs": "لا توجد طاولات مفتوحة",
+  "restaurantTableNumberHint": "مثال: T1، A-01",
+  "restaurantTableLocationHint": "مثال: طاولة النافذة، الفناء 1",
+  "restaurantTableSectionHint": "مثال: داخلي، خارجي، VIP",
+  "restaurantTableAvailable": "الطاولة متاحة للجلوس",
+  "restaurantTicketNumberSign": "#{number}",
+  "@restaurantTicketNumberSign": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantStation": "المحطة: {station}",
+  "@restaurantStation": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantCourse": "الطبق {number}",
+  "@restaurantCourse": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantServed": "تم التقديم",
+  "restaurantCloseTab": "إغلاق الطاولة",
+  "restaurantDurationMin": "{minutes} د",
+  "@restaurantDurationMin": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantSeated": "جالس",
+  "restaurantNoShow": "لم يحضر",
+  "adminAdd": "إضافة",
+  "adminNoImplementationFees": "لم يتم العثور على رسوم تنفيذ",
+  "adminStoreWithName": "المتجر: {name}",
+  "@adminStoreWithName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adminNotesWithValue": "ملاحظات: {notes}",
+  "@adminNotesWithValue": {
+    "placeholders": {
+      "notes": {
+        "type": "String"
+      }
+    }
+  },
+  "adminAddImplementationFee": "إضافة رسوم تنفيذ",
+  "adminEditImplementationFee": "تعديل رسوم التنفيذ",
+  "adminFeeTypeSetup": "إعداد",
+  "adminFeeTypeTraining": "تدريب",
+  "adminFeeTypeCustomDev": "تطوير مخصص",
+  "adminFeeType": "نوع الرسوم",
+  "adminSelectFeeType": "اختر نوع الرسوم",
+  "adminDeleteFee": "حذف الرسوم",
+  "adminDeleteFeeConfirm": "هل أنت متأكد من حذف رسوم التنفيذ هذه؟",
+  "adminStoreDetails": "تفاصيل المتجر",
+  "adminMetrics": "المقاييس",
+  "adminLoadMetrics": "تحميل المقاييس",
+  "adminAddOverride": "إضافة تجاوز",
+  "adminNoLimitOverrides": "لم يتم تعيين تجاوزات للحد",
+  "adminValueWithValue": "القيمة: {value}",
+  "@adminValueWithValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "adminReasonWithValue": "السبب: {reason}",
+  "@adminReasonWithValue": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "adminExpiresWithValue": "ينتهي: {expiresAt}",
+  "@adminExpiresWithValue": {
+    "placeholders": {
+      "expiresAt": {
+        "type": "String"
+      }
+    }
+  },
+  "adminSuspendStore": "تعليق المتجر",
+  "adminSuspensionReasonHint": "أدخل سبب التعليق",
+  "adminAddLimitOverride": "إضافة تجاوز الحد",
+  "adminLimitKey": "مفتاح الحد",
+  "adminOverrideValue": "قيمة التجاوز",
+  "adminOverrideValueHint": "أدخل القيمة",
+  "adminOverrideReasonHint": "لماذا يلزم هذا التجاوز؟",
+  "adminSetOverride": "تعيين التجاوز",
+  "adminNoHardwareSales": "لم يتم العثور على مبيعات أجهزة",
+  "adminSnWithValue": "الرقم التسلسلي: {serial}",
+  "@adminSnWithValue": {
+    "placeholders": {
+      "serial": {
+        "type": "String"
+      }
+    }
+  },
+  "adminSoldWithValue": "بيع في: {date}",
+  "@adminSoldWithValue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "adminRecordHardwareSale": "تسجيل بيع أجهزة",
+  "adminItemTypeScanner": "ماسح",
+  "adminItemType": "نوع العنصر",
+  "adminSelectItemType": "اختر نوع العنصر",
+  "adminEditHardwareSale": "تعديل بيع الأجهزة",
+  "adminDeleteSale": "حذف البيع",
+  "adminDeleteSaleConfirm": "هل أنت متأكد من حذف هذا البيع؟",
+  "adminSelectFiltersPayments": "اختر الفلاتر لتحميل المدفوعات",
+  "adminPaymentCash": "نقدي",
+  "adminPaymentCardMada": "بطاقة مدى",
+  "adminPaymentCardVisa": "بطاقة فيزا",
+  "adminPaymentCardMaster": "بطاقة ماستركارد",
+  "adminPaymentStoreCredit": "رصيد المتجر",
+  "adminPaymentGiftCard": "بطاقة هدية",
+  "adminPaymentMobile": "دفع عبر الجوال",
+  "adminMethod": "الطريقة",
+  "adminAllMethods": "كل الطرق",
+  "adminSarAmount": ". {amount}",
+  "@adminSarAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "adminPaymentGateways": "بوابات الدفع",
+  "adminWebhookWithValue": "Webhook: {url}",
+  "@adminWebhookWithValue": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "adminAddGateway": "إضافة بوابة",
+  "adminSelectEnvironment": "اختر البيئة",
+  "adminEditGateway": "تعديل البوابة",
+  "adminDeleteGateway": "حذف البوابة",
+  "adminDeleteGatewayConfirm": "هل أنت متأكد من حذف هذه البوابة؟",
+  "adminActionRoleCreated": "تم إنشاء دور",
+  "adminActionRoleUpdated": "تم تحديث الدور",
+  "adminActionRoleDeleted": "تم حذف الدور",
+  "adminActionUserCreated": "تم إنشاء مستخدم",
+  "adminActionUserUpdated": "تم تحديث المستخدم",
+  "adminActionUserDeactivated": "تم تعطيل المستخدم",
+  "adminActionUserActivated": "تم تنشيط المستخدم",
+  "adminAllActions": "كل الإجراءات",
+  "adminAllEntities": "كل الكيانات",
+  "adminNoActivityLogs": "لم يتم العثور على سجلات نشاط",
+  "adminPageOfLast": "صفحة {page} من {lastPage}",
+  "@adminPageOfLast": {
+    "placeholders": {
+      "page": {
+        "type": "String"
+      },
+      "lastPage": {
+        "type": "String"
+      }
+    }
+  },
+  "adminExpenseSupplies": "اللوازم",
+  "adminExpenseFood": "طعام",
+  "adminExpenseTransport": "نقل",
+  "adminExpenseUtility": "مرافق",
+  "adminAllCategories": "كل الفئات",
+  "adminLoadingExpenses": "جارٍ تحميل المصاريف...",
+  "adminNoExpensesFound": "لم يتم العثور على مصاريف",
+  "adminExportSubscriptions": "تصدير الاشتراكات",
+  "adminConversionRate": "معدل التحويل",
+  "adminChurnPeriod": "معدل الاضطراب (الفترة)",
+  "adminAvgSubAge": "متوسط عمر الاشتراك",
+  "adminStatusBreakdown": "تفصيل الحالة",
+  "adminLifecycleTrend": "اتجاه دورة الحياة",
+  "adminNoTrendData": "لا توجد بيانات اتجاه",
+  "adminLoadingSubAnalytics": "جارٍ تحميل تحليلات الاشتراك...",
+  "adminExportStores": "تصدير المتاجر",
+  "adminExportReadyRecords": "التصدير جاهز: {count} سجل",
+  "@adminExportReadyRecords": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "adminExportAgain": "تصدير مرة أخرى",
+  "adminTotalStores": "إجمالي المتاجر",
+  "adminHealthSummary": "ملخص الحالة",
+  "adminNoHealthDataToday": "لا توجد بيانات صحة اليوم",
+  "adminTopStores": "أفضل المتاجر",
+  "adminLoadingStoreAnalytics": "جارٍ تحميل تحليلات المتجر...",
+  "adminExportRevenue": "تصدير الإيرادات",
+  "adminMRR": "MRR",
+  "adminARR": "ARR",
+  "adminUpcomingRenewals": "التجديدات القادمة",
+  "adminRevenueByPlan": "الإيرادات حسب الخطة",
+  "adminNoPlanDataAvailable": "لا توجد بيانات خطة متاحة",
+  "adminLoadingRevenueData": "جارٍ تحميل بيانات الإيرادات...",
+  "adminLogLevelDebug": "تصحيح",
+  "adminLogLevelInfo": "معلومات",
+  "adminLogLevelWarning": "تحذير",
+  "adminLevel": "المستوى",
+  "adminEventTypeConfig": "تغيير التكوين",
+  "adminEventTypeCron": "مهمة كرون",
+  "adminType": "النوع",
+  "adminNoPlatformEvents": "لم يتم العثور على أحداث المنصة",
+  "adminConfidenceWithPct": "الثقة: {pct}%",
+  "@adminConfidenceWithPct": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "adminWinnerWithValue": "الفائز: {winner}",
+  "@adminWinnerWithValue": {
+    "placeholders": {
+      "winner": {
+        "type": "String"
+      }
+    }
+  },
+  "adminVariantResults": "نتائج المتغيرات",
+  "adminNoResultsYet": "لا توجد نتائج بعد",
+  "adminControl": "التحكم",
+  "adminImpressions": "الانطباعات",
+  "adminConversions": "التحويلات",
+  "adminRate": "المعدل",
+  "adminStoreManagement": "إدارة المتاجر",
+  "adminCreateStore": "إنشاء متجر",
+  "adminPageOfLastState": "صفحة {current} من {last}",
+  "@adminPageOfLastState": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "adminOrganizationName": "اسم المنظمة",
+  "adminOrgNameHint": "أدخل اسم المنظمة",
+  "adminStoreNameHint": "أدخل اسم المتجر",
+  "adminProviderOpenAI": "OpenAI",
+  "adminProviderAnthropic": "Anthropic",
+  "adminProviderGoogle": "Google",
+  "adminHintGpt4o": "GPT-4o",
+  "adminDeleteModelQuote": "حذف النموذج \"{name}\"؟",
+  "@adminDeleteModelQuote": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adminStoreHealth": "صحة المتجر",
+  "adminHealthScore": "نقاط الصحة",
+  "adminServices": "الخدمات",
+  "adminNoStoreHealthData": "لا توجد بيانات صحة المتجر",
+  "adminConfigs": "التكوينات",
+  "adminMappings": "التعيينات",
+  "adminExports": "الصادرات",
+  "adminNoAccountingConfigs": "لا توجد تكوينات محاسبية",
+  "adminNoExports": "لا توجد صادرات",
+  "adminNoAutoExportConfigs": "لا توجد تكوينات تصدير تلقائي",
+  "adminSystemRole": "دور النظام",
+  "adminPermissionsWithCount": "الأذونات ({count})",
+  "@adminPermissionsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "adminDeleteRole": "حذف الدور",
+  "adminDeleteRoleConfirm": "هل أنت متأكد من حذف هذا الدور؟ لا يمكن التراجع.",
+  "adminStatusWarning": "تحذير",
+  "adminStatusCritical": "حرج",
+  "adminStatusUnknown": "غير معروف",
+  "adminAllStatuses": "كل الحالات",
+  "adminNoHealthChecks": "لا توجد فحوصات صحية",
+  "adminPlatformAnnouncements": "إعلانات المنصة",
+  "adminPageOfLastTotal": "صفحة {current} من {last} (الإجمالي {total})",
+  "@adminPageOfLastTotal": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "adminFeatureAdoption": "اعتماد الميزة",
+  "adminNoFeatureDataAvailable": "لا توجد بيانات ميزة متاحة",
+  "adminTrend": "الاتجاه",
+  "adminLoadingFeatureData": "جارٍ تحميل بيانات الميزات...",
+  "adminPageOfLastSlash": "{current} / {last}",
+  "@adminPageOfLastSlash": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "adminChannelWhatsApp": "WhatsApp",
+  "adminChannel": "القناة",
+  "adminStatus": "الحالة",
+  "adminNoNotificationLogs": "لم يتم العثور على سجلات إشعارات",
+  "adminDatabase": "قاعدة البيانات",
+  "adminNoDatabaseBackups": "لا توجد نسخ احتياطية لقاعدة البيانات",
+  "adminNoProviderBackups": "لا توجد نسخ احتياطية للمزود",
+  "adminNoThawaniOrders": "لا توجد طلبات ثواني",
+  "adminNoStoreConfigs": "لا توجد تكوينات متجر",
+  "adminLoadingRefunds": "جارٍ تحميل المبالغ المستردة...",
+  "adminNoRefundsFound": "لم يتم العثور على مبالغ مستردة",
+  "adminDeploymentReleases": "إصدارات النشر",
+  "adminPlatform": "المنصة",
+  "adminLoadReleases": "تحميل الإصدارات",
+  "adminNoReleasesFound": "لم يتم العثور على إصدارات",
+  "adminNoBackupsFound": "لم يتم العثور على نسخ احتياطية",
+  "adminStartNewBackup": "هل تريد بدء نسخ احتياطي يدوي جديد؟",
+  "adminPageTypeLegal": "قانوني",
+  "adminPageTypeMarketing": "تسويق",
+  "adminNoPagesFound": "لم يتم العثور على صفحات",
+  "adminMonitored": "مُراقَب",
+  "adminWithErrors": "مع أخطاء",
+  "adminTotalErrorsToday": "إجمالي الأخطاء اليوم",
+  "adminNoSyncData": "لا توجد بيانات مزامنة",
+  "adminLoadingSystemHealth": "جارٍ تحميل صحة النظام...",
+  "adminAdminDetail": "تفاصيل المسؤول",
+  "adminAccountInfo": "معلومات الحساب",
+  "adminNoRolesAssigned": "لا توجد أدوار مخصصة",
+  "adminReset2FA": "إعادة تعيين 2FA",
+  "adminClear2FAHint": "مسح 2FA؛ يجب إعادة تسجيل المسؤول",
+  "adminRegistrationQueue": "قائمة انتظار التسجيل",
+  "adminContactEmailLine": "{contact} • {email}",
+  "@adminContactEmailLine": {
+    "placeholders": {
+      "contact": {
+        "type": "String"
+      },
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "adminRejectRegistration": "رفض التسجيل",
+  "adminRejectReasonHint": "اشرح سبب رفض التسجيل",
+  "subSubscribedSuccessfully": "تم الاشتراك بنجاح!",
+  "subPlanChangedSuccessfully": "تم تغيير الخطة بنجاح!",
+  "subCancelled": "تم إلغاء الاشتراك.",
+  "subResumed": "تم استئناف الاشتراك!",
+  "subAddNamedAddon": "إضافة {name}؟",
+  "@subAddNamedAddon": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subRemoveNamedAddon": "إزالة {name}؟",
+  "@subRemoveNamedAddon": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subRemoveConfirm": "هل أنت متأكد من إزالة {name} من اشتراكك؟",
+  "@subRemoveConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subActionAdd": "إضافة",
+  "subActionRemove": "إزالة",
+  "subActionKeep": "احتفظ",
+  "subSubscribeToPlan": "الاشتراك في {name}؟",
+  "@subSubscribeToPlan": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subActionSubscribe": "اشتراك",
+  "subProceedToPayment": "المتابعة إلى الدفع",
+  "subPageOfLast": "صفحة {current} من {last}",
+  "@subPageOfLast": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "subFeatureLocked": "الميزة مقفلة",
+  "subFeatureLockedBody": "تتطلب هذه الميزة خطة أعلى. قم بالترقية لفتح {name} والمزيد.",
+  "@subFeatureLockedBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subCurrentColon": "الحالي: ",
+  "subRequiredColon": "مطلوب: ",
+  "subAvailablePlans": "الخطط المتاحة",
+  "subNotNow": "ليس الآن",
+  "subNoFeaturesListed": "لا توجد ميزات مدرجة لهذه الخطة.",
+  "subBadgeTrial": "تجربة",
+  "subBadgeGracePeriod": "فترة السماح",
+  "subBadgePastDue": "متأخر",
+  "subDueDate": "الاستحقاق: {date}",
+  "@subDueDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subPerMonth": "/شهر",
+  "subPerYear": "/سنة",
+  "subPerYearShort": "/سنة",
+  "subPerMonthShort": "/شهر",
+  "subFreeTrialDays": "تجربة مجانية لمدة {days} يوم",
+  "@subFreeTrialDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "subGracePeriodActive": "فترة السماح نشطة",
+  "subSubscriptionExpired": "انتهى الاشتراك",
+  "subExpiredRenewMessage": "انتهى اشتراكك. جدد الآن لاستعادة الوصول.",
+  "subGraceDaysRemaining": "متبقي {days} يوم في فترة السماح. جدد لتجنب فقدان الوصول.",
+  "@subGraceDaysRemaining": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "subGraceEndsToday": "فترة السماح تنتهي اليوم. جدد فوراً.",
+  "subInvoice": "فاتورة",
+  "subCreated": "تاريخ الإنشاء",
+  "subDueDateLabel": "تاريخ الاستحقاق",
+  "subPaidOn": "تاريخ الدفع",
+  "subSubtotal": "المجموع الفرعي",
+  "subVat15": "ضريبة القيمة المضافة (15%)",
+  "subTotal": "الإجمالي",
+  "subDownloadPdfInvoice": "تحميل فاتورة PDF",
+  "subDownloading": "جارٍ التحميل...",
+  "subQty": "الكمية",
+  "subUnit": "الوحدة",
+  "subDueColon": "الاستحقاق: {date}",
+  "@subDueColon": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subPaidColon": "الدفع: {date}",
+  "@subPaidColon": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subFilterAll": "الكل",
+  "subFilterPaid": "مدفوع",
+  "subFilterPending": "معلق",
+  "subFilterOverdue": "متأخر",
+  "subFilterCancelled": "ملغى",
+  "subRenewsOn": "يتجدد: {date}",
+  "@subRenewsOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subUsageUnlimited": "∞ / {current}",
+  "@subUsageUnlimited": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      }
+    }
+  },
+  "subUsageCounted": "{max} / {current}",
+  "@subUsageCounted": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "subLimitProducts": "المنتجات",
+  "subLimitStaffMembers": "أعضاء الفريق",
+  "subLimitCashierTerminals": "أجهزة الكاشير",
+  "subLimitBranches": "الفروع",
+  "subLimitTransactionsPerMonth": "المعاملات الشهرية",
+  "subLimitStorageMb": "التخزين (MB)",
+  "subLimitPdfReportsPerMonth": "تقارير PDF / الشهر",
+  "staffRoleOrType": "الدور / النوع",
+  "staffContact": "جهة اتصال",
+  "staffEditRole": "تعديل الدور",
+  "staffFailedLoadPermissions": "فشل في تحميل الأذونات: {message}",
+  "@staffFailedLoadPermissions": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "staffNoPermission": "لا يوجد إذن",
+  "staffRequiresPinOverride": "يتطلب تجاوز PIN",
+  "staffNoActionPermission": "ليس لديك إذن لهذا الإجراء",
+  "staffAttInLabel": "دخول: {time}",
+  "@staffAttInLabel": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "staffAttOutLabel": "خروج: {time}",
+  "@staffAttOutLabel": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "staffAttBreakLabel": "استراحة: {min} دقيقة",
+  "@staffAttBreakLabel": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "staffAttOTLabel": "إضافي: {min} دقيقة",
+  "@staffAttOTLabel": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "staffMemberRequired": "{label} *",
+  "@staffMemberRequired": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "staffFullNameLabel": "{first} {last}",
+  "@staffFullNameLabel": {
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "staffShiftLabel": "{name} ({start} - {end})",
+  "@staffShiftLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "staffClockedIn": "تم تسجيل الدخول",
+  "staffClockedOut": "تم تسجيل الخروج",
+  "staffDateRangeLabel": "{start} – {end}",
+  "@staffDateRangeLabel": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "staffCommissionTitle": "{name} - {label}",
+  "@staffCommissionTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "staffDeleteStaffConfirm": "{prompt} {first} {last}؟",
+  "@staffDeleteStaffConfirm": {
+    "placeholders": {
+      "prompt": {
+        "type": "String"
+      },
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "staffDeleteRoleConfirm": "{prompt} \"{name}\"؟",
+  "@staffDeleteRoleConfirm": {
+    "placeholders": {
+      "prompt": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pcZatcaQr": "رمز ZATCA QR",
+  "pcBold": "عريض",
+  "pcGridLayout": "تخطيط الشبكة",
+  "pcGridDims": "{rows} صفوف × {cols} أعمدة",
+  "@pcGridDims": {
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      },
+      "cols": {
+        "type": "String"
+      }
+    }
+  },
+  "pcButtonsWithCount": "الأزرار ({count})",
+  "@pcButtonsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "pcNoQuickButtons": "لم يتم تكوين أزرار الوصول السريع",
+  "pcReceiptLogo": "الشعار",
+  "pcHeaderLine1": "سطر الرأس 1",
+  "pcHeaderLine2": "سطر الرأس 2",
+  "pcFooter": "التذييل",
+  "pcShowVatNumber": "عرض رقم ضريبة القيمة المضافة",
+  "pcShowLoyaltyPoints": "عرض نقاط الولاء",
+  "pcCloneCategorySuccess": "تم استنساخ الفئة بنجاح",
+  "pcCloneProductSuccess": "تم استنساخ المنتج بنجاح",
+  "pcCloneAllSuccess": "تم استنساخ جميع المنتجات المحددة مسبقاً بنجاح",
+  "pcCloneAllProducts": "استنساخ جميع المنتجات",
+  "pcCloneAll": "استنساخ الكل",
+  "pcCloneCategory": "استنساخ الفئة",
+  "pcCloneCategoryConfirm": "استنساخ \"{name}\" وجميع منتجاتها إلى متجرك؟",
+  "@pcCloneCategoryConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pcClone": "استنساخ",
+  "pcBusinessTypeColon": "نوع العمل:",
+  "pcNoPredefinedCategories": "لم يتم العثور على فئات محددة مسبقاً",
+  "pcCloneToMyStore": "استنساخ إلى متجري",
+  "pcCloneProduct": "استنساخ المنتج",
+  "pcNoPredefinedProducts": "لم يتم العثور على منتجات محددة مسبقاً",
+  "pcSkuLine": "SKU: {sku}",
+  "@pcSkuLine": {
+    "placeholders": {
+      "sku": {
+        "type": "String"
+      }
+    }
+  },
+  "pcPageOfLast": "صفحة {current} من {last}",
+  "@pcPageOfLast": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "acctExportTypesOptional": "أنواع التصدير (اختياري)",
+  "acctDeleteMapping": "حذف التعيين",
+  "acctDeleteMappingConfirm": "هل أنت متأكد من إزالة هذا التعيين؟",
+  "acctEnableAutoExport": "تفعيل التصدير التلقائي",
+  "acctExportTypes": "أنواع التصدير",
+  "acctScheduleInfo": "معلومات الجدول",
+  "acctNoRunsScheduled": "لا توجد تشغيلات مجدولة بعد",
+  "acctSelectProvider": "اختر المزود",
+  "acctConnectProvider": "اتصال {name}",
+  "@acctConnectProvider": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "acctDisconnectProvider": "قطع اتصال المزود",
+  "acctDisconnect": "قطع الاتصال",
+  "acctDateRangeArrow": "{start} → {end}",
+  "@acctDateRangeArrow": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "acctEntriesWithCount": "{count} إدخالات",
+  "@acctEntriesWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniPushToThawani": "إرسال إلى ثواني",
+  "thawaniPullFromThawani": "سحب من ثواني",
+  "thawaniNoCategoryMappings": "لا توجد تعيينات فئات بعد",
+  "thawaniViewLogs": "عرض السجلات",
+  "thawaniPushPullCatsProds": "إرسال/سحب المنتجات والفئات",
+  "thawaniCategoriesMapped": "تم تعيين {count} فئة",
+  "@thawaniCategoriesMapped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniOpsToday": "{count} عملية اليوم",
+  "@thawaniOpsToday": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniCategorySync": "مزامنة الفئة",
+  "thawaniProductSync": "مزامنة المنتج",
+  "thawaniSyncQueue": "قائمة انتظار المزامنة",
+  "thawaniProcessQueueNow": "معالجة القائمة الآن",
+  "thawaniNoSyncLogs": "لم يتم العثور على سجلات مزامنة",
+  "thawaniNotSet": "غير محدد",
+  "thawaniLabel": "ثواني",
+  "thawaniUnmapped": "غير معين",
+  "thawaniPendingSync": "في انتظار المزامنة",
+  "thawaniSyncsToday": "المزامنات اليوم",
+  "thawaniFailedSyncsTodayCount": "{count} مزامنة فاشلة اليوم",
+  "@thawaniFailedSyncsTodayCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "thawaniThawaniLine": "ثواني: {id}",
+  "@thawaniThawaniLine": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniCategoryNum": "فئة رقم {id}",
+  "@thawaniCategoryNum": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "genericProcessing": "قيد المعالجة",
+  "genericEntityType": "نوع الكيان",
+  "genericPaginationInfo": "صفحة {current} من {total} ({count} إجمالاً)",
+  "@genericPaginationInfo": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" },
+      "count": { "type": "int" }
+    }
+  },
+  "labelsPrintedBy": "طبع بواسطة",
+  "labelsAddElement": "إضافة عنصر",
+  "labelsProductName": "اسم المنتج",
+  "labelsBarcodeCode128": "Code 128",
+  "labelsBarcodeEan13": "EAN-13",
+  "labelsBarcodeUpca": "UPC-A",
+  "labelsBarcodeCode39": "Code 39",
+  "labelsBarcodeItf": "ITF",
+  "labelsSkuLine": "SKU: {sku}",
+  "@labelsSkuLine": {
+    "placeholders": {
+      "sku": {
+        "type": "String"
+      }
+    }
+  },
+  "labelsItemsWithCount": "{count} {items}",
+  "@labelsItemsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "items": {
+        "type": "String"
+      }
+    }
+  },
+  "labelsTotalProductsLine": "{label}: {count}",
+  "@labelsTotalProductsLine": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "cgBasket": "السلة",
+  "cgUpsell": "بيع إضافي",
+  "cgItemsPerMin": "عناصر/دقيقة",
+  "cgTotalTxn": "إجمالي المعاملات",
+  "cgUpsellRate": "معدل البيع الإضافي",
+  "cgZeroVoidRate": "معدل عدم الإلغاء",
+  "cgConsistency": "الاتساق",
+  "cgEarlyBird": "المبكر",
+  "cgRisk": "مخاطر",
+  "cgReview": "مراجعة",
+  "cgReviewed": "تمت المراجعة",
+  "cgTxnAbbr": "TXN",
+  "cgIpmAbbr": "IPM",
+  "onboardingStoreSettings": "إعدادات المتجر",
+  "onboardingVatHint": "ضريبة القيمة المضافة",
+  "onboardingOptionalHint": "اختياري",
+  "onboardingCustomHeaderHint": "نص رأس مخصص",
+  "onboardingThankYouHint": "شكراً لتسوقك!",
+  "onboardingSkipSetup": "تخطي الإعداد",
+  "onboardingTaxIncludedNote": "عند التفعيل، تُعرض أسعار المنتجات شاملة الضريبة.",
+  "onboardingAllSet": "أنت جاهز!",
+  "hardwareSkuLine": "SKU: {sku}",
+  "@hardwareSkuLine": {
+    "placeholders": {
+      "sku": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareViewEdit": "عرض / تعديل",
+  "hardwareAddToCart": "أضف إلى السلة",
+  "hardwareAddNewProduct": "إضافة منتج جديد",
+  "hardwareNoEvents": "لم يتم تسجيل أحداث",
+  "hardwareConfiguredCount": "تم تكوين {count}",
+  "@hardwareConfiguredCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareConnectedCount": "{count} متصل",
+  "@hardwareConnectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareOfflineCount": "{count} غير متصل",
+  "@hardwareOfflineCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareScan": "مسح",
+  "hardwareNoCertified": "لم يتم العثور على أجهزة معتمدة",
+  "hardwareCertified": "معتمد",
+  "auLoadingHistory": "جارٍ تحميل السجل...",
+  "auNoUpdateHistory": "لا يوجد سجل تحديث",
+  "auHealthCheckFailed": "فشل فحص الصحة بعد التحديث",
+  "auTapToCheck": "انقر للتحقق من التحديثات",
+  "auLoadingChangelog": "جارٍ تحميل سجل التغييرات...",
+  "auNoReleasesFound": "لم يتم العثور على إصدارات",
+  "zatcaTotalInvoices": "إجمالي الفواتير",
+  "zatcaSimulation": "محاكاة",
+  "zatcaOtp": "OTP زاتكا",
+  "zatcaTotalVat": "إجمالي ضريبة القيمة المضافة",
+  "zatcaStandardInvoices": "الفواتير القياسية",
+  "zatcaSimplifiedInvoices": "الفواتير المبسطة",
+  "promoNoFound": "لم يتم العثور على عروض",
+  "promoFilter": "تصفية العروض",
+  "promoDeleteConfirm": "حذف \"{name}\"؟ لا يمكن التراجع عن هذا الإجراء.",
+  "@promoDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "promoEdit": "تعديل العرض",
+  "promoTypeRequired": "النوع *",
+  "promoTypeLine": "النوع: {type}",
+  "@promoTypeLine": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "branchesType": "النوع",
+  "branchesBranchLabel": "فرع",
+  "branchesTimezoneHint": "Asia/Muscat",
+  "branchesCountryHint": "OM",
+  "branchesStaffColumn": "الموظفون",
+  "backupStorageNotLoaded": "لم يتم تحميل معلومات التخزين",
+  "backupScheduleNotLoaded": "لم يتم تحميل الجدول",
+  "backupAutoSettings": "إعدادات النسخ الاحتياطي التلقائي",
+  "backupNoLoaded": "لم يتم تحميل نسخ احتياطية",
+  "securityNoAuditLogs": "لم يتم العثور على سجلات تدقيق.",
+  "marketplaceContinue": "متابعة",
+  "settingsSpaceLabel": "مسافة",
+  "payments50Halalas": "50 هللة",
+  "payments25Halalas": "25 هللة",
+  "payments10Halalas": "10 هللات",
+  "payments5Halalas": "5 هللات",
+  "accessProtanopia": "عمى الأحمر",
+  "accessDeuteranopia": "عمى الأخضر",
+  "accessTritanopia": "عمى الأزرق",
+  "commonAll": "الكل",
+  "commonAllBranches": "جميع الفروع",
+  "commonAllQueues": "جميع قوائم الانتظار",
+  "commonAllGroups": "جميع المجموعات",
+  "commonSeverity": "الخطورة",
+  "commonCategory": "الفئة",
+  "commonChannel": "القناة",
+  "commonAction": "الإجراء",
+  "adminPageOf": "صفحة {current} من {last}",
+  "@adminPageOf": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "adminPageOfTotal": "صفحة {current} من {last} ({total} الإجمالي)",
+  "@adminPageOfTotal": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "adminTeamMember": "عضو الفريق",
+  "admin2FA": "المصادقة الثنائية",
+  "adminTeam": "فريق الإدارة",
+  "adminAddTeamMember": "إضافة عضو فريق",
+  "adminSubscriptionsOverview": "نظرة عامة على الاشتراكات",
+  "adminSubscriptionPlans": "خطط الاشتراك",
+  "adminAddNoteToStart": "أضف ملاحظة أعلاه للبدء",
+  "adminAddNote": "إضافة ملاحظة",
+  "adminTypeNoteHint": "اكتب ملاحظتك هنا...",
+  "adminMarkAsPaid": "وضع علامة كمدفوع",
+  "adminRetryPayment": "إعادة المحاولة",
+  "adminInvestigating": "قيد التحقيق",
+  "adminNoSecurityAlerts": "لم يتم العثور على تنبيهات أمنية",
+  "adminNoSecurityAlertsShort": "لا توجد تنبيهات أمنية",
+  "adminWhatsApp": "واتساب",
+  "adminNoFailedPayments": "لا توجد مدفوعات فاشلة",
+  "adminLoadingGiftCards": "جارٍ تحميل بطاقات الهدايا...",
+  "adminNoGiftCards": "لم يتم العثور على بطاقات هدايا",
+  "adminLoadingFinancial": "جارٍ تحميل البيانات المالية...",
+  "adminNoMarketplaceStores": "لم يتم العثور على متاجر السوق",
+  "adminLoginAttempts": "محاولات تسجيل الدخول",
+  "adminIpManagement": "إدارة IP",
+  "adminNoActivityLogged": "لم يتم تسجيل نشاط",
+  "adminFailedJobs24h": "الوظائف الفاشلة (24س)",
+  "adminSections": "الأقسام",
+  "adminCmsPageDetail": "تفاصيل صفحة CMS",
+  "adminContentEn": "المحتوى (EN)",
+  "adminContentAr": "المحتوى (AR)",
+  "adminKeyMetrics": "المقاييس الرئيسية",
+  "adminLoadingAnalytics": "جارٍ تحميل التحليلات...",
+  "adminNoVariantsYet": "لم يتم إضافة متغيرات بعد",
+  "adminViewResults": "عرض النتائج",
+  "adminNoSettlements": "لم يتم العثور على تسويات",
+  "adminNoTickets": "لم يتم العثور على تذاكر",
+  "adminNoCannedResponses": "لم يتم العثور على ردود جاهزة",
+  "adminPaymentInformation": "معلومات الدفع",
+  "adminRevenueByStatus": "الإيرادات حسب الحالة",
+  "adminNoFeatureFlags": "لم يتم تكوين علامات الميزات",
+  "adminNoFailedJobs": "لا توجد وظائف فاشلة",
+  "adminInviteAdmin": "دعوة مسؤول",
+  "adminNoAdminUsers": "لم يتم العثور على مسؤولين",
+  "adminLoadingCashSessions": "جارٍ تحميل جلسات النقد...",
+  "adminSyncOperations": "عمليات المزامنة",
+  "adminNoPermissionsFound": "لم يتم العثور على أذونات",
+  "adminNoAbTests": "لم يتم العثور على اختبارات A/B",
+  "adminActivityLogs": "سجلات النشاط",
+  "adminLoadOverview": "تحميل نظرة عامة",
+  "adminNoPlatformData": "لا توجد بيانات منصة",
+  "adminNoActiveRelease": "لا يوجد إصدار نشط",
+  "adminPaymentRetryRules": "قواعد إعادة محاولة الدفع",
+  "adminRetryConfiguration": "تكوين إعادة المحاولة",
+  "adminSaveRules": "حفظ القواعد",
+  "adminCreateManualInvoice": "إنشاء فاتورة يدوية",
+  "adminSearchInvoices": "بحث عن الفواتير",
+  "adminKnowledgeBaseArticles": "مقالات قاعدة المعرفة",
+  "adminGenerateTempPassword": "إنشاء كلمة مرور مؤقتة",
+  "adminForcePasswordChange": "فرض تغيير كلمة المرور",
+  "adminForcePasswordChangeDesc": "طلب من المستخدم تغيير كلمة المرور عند تسجيل الدخول التالي",
+  "adminNoRoleTemplates": "لا توجد قوالب أدوار",
+  "adminNoDailySales": "لا توجد بيانات مبيعات يومية",
+  "adminNoProductSales": "لا توجد بيانات مبيعات المنتجات",
+  "adminNoUsersFound": "لم يتم العثور على مستخدمين",
+  "adminSearchUsers": "بحث عن المستخدمين",
+  "adminNoAbTestsLinked": "لا توجد اختبارات A/B مرتبطة بهذه العلامة",
+  "staffPredefinedRoleNote": "هذا دور معرّف مسبقاً. لا يمكن تغيير اسمه، ولكن يمكنك تخصيص أذوناته.",
+  "staffCountSelected": "{count} محدد",
+  "@staffCountSelected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "staffPermissionsActiveCount": "{active}/{total} نشط",
+  "@staffPermissionsActiveCount": {
+    "placeholders": {
+      "active": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  }
 }

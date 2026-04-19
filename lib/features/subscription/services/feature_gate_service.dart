@@ -15,6 +15,7 @@ final featureGateServiceProvider = Provider<FeatureGateService>((ref) {
 ///
 /// - Checks if a feature is enabled based on the current subscription tier.
 /// - Checks if a resource is within quota (plan limits).
+/// - Caches softPOS threshold info and feature-route mapping.
 /// - Falls back to local cache when offline.
 class FeatureGateService {
   final SubscriptionApiService _apiService;
@@ -24,6 +25,18 @@ class FeatureGateService {
 
   /// In-memory limits cache: limitKey → {limit, current}
   Map<String, Map<String, dynamic>> _limitsCache = {};
+
+  /// SoftPOS info cache
+  Map<String, dynamic>? _softPosInfo;
+
+  /// Feature-to-route mapping cache
+  Map<String, List<String>>? _featureRouteMapping;
+
+  /// Plan details
+  Map<String, dynamic>? _planDetails;
+
+  /// Subscription status
+  Map<String, dynamic>? _subscriptionStatus;
 
   /// When the cache was last synced
   DateTime? _lastSyncedAt;
@@ -113,7 +126,32 @@ class FeatureGateService {
 
       _featureCache = features.map((k, v) => MapEntry(k, v as bool? ?? false));
       _limitsCache = limits.map((k, v) => MapEntry(k, Map<String, dynamic>.from(v as Map)));
+
+      // Cache softPOS info
+      if (data.containsKey('softpos')) {
+        _softPosInfo = Map<String, dynamic>.from(data['softpos'] as Map? ?? {});
+      }
+
+      // Cache feature-route mapping
+      if (data.containsKey('feature_route_mapping')) {
+        final mapping = data['feature_route_mapping'] as Map<String, dynamic>? ?? {};
+        _featureRouteMapping = mapping.map((k, v) => MapEntry(k, (v as List).cast<String>()));
+      }
+
+      // Cache plan details
+      if (data.containsKey('plan')) {
+        _planDetails = Map<String, dynamic>.from(data['plan'] as Map? ?? {});
+      }
+
+      // Cache subscription status
+      if (data.containsKey('subscription')) {
+        _subscriptionStatus = Map<String, dynamic>.from(data['subscription'] as Map? ?? {});
+      }
+
       _lastSyncedAt = DateTime.now();
+
+      // Include synced_at in data before persisting
+      data['synced_at'] = _lastSyncedAt!.toIso8601String();
 
       await _saveToLocalStorage(data);
 
@@ -145,6 +183,21 @@ class FeatureGateService {
 
       _featureCache = features.map((k, v) => MapEntry(k, v as bool? ?? false));
       _limitsCache = limits.map((k, v) => MapEntry(k, Map<String, dynamic>.from(v as Map)));
+
+      if (data.containsKey('softpos')) {
+        _softPosInfo = Map<String, dynamic>.from(data['softpos'] as Map? ?? {});
+      }
+      if (data.containsKey('feature_route_mapping')) {
+        final mapping = data['feature_route_mapping'] as Map<String, dynamic>? ?? {};
+        _featureRouteMapping = mapping.map((k, v) => MapEntry(k, (v as List).cast<String>()));
+      }
+      if (data.containsKey('plan')) {
+        _planDetails = Map<String, dynamic>.from(data['plan'] as Map? ?? {});
+      }
+      if (data.containsKey('subscription')) {
+        _subscriptionStatus = Map<String, dynamic>.from(data['subscription'] as Map? ?? {});
+      }
+
       if (syncedAt != null) {
         _lastSyncedAt = DateTime.tryParse(syncedAt);
       }
@@ -181,6 +234,30 @@ class FeatureGateService {
 
   /// All cached limits.
   Map<String, Map<String, dynamic>> get limits => Map.unmodifiable(_limitsCache);
+
+  /// SoftPOS threshold info (null if not loaded).
+  Map<String, dynamic>? get softPosInfo => _softPosInfo;
+
+  /// Feature-to-route mapping (null if not loaded).
+  Map<String, List<String>>? get featureRouteMapping => _featureRouteMapping;
+
+  /// Cached plan details.
+  Map<String, dynamic>? get planDetails => _planDetails;
+
+  /// Cached subscription status.
+  Map<String, dynamic>? get subscriptionStatus => _subscriptionStatus;
+
+  /// Whether the subscription has an active status.
+  bool get hasActiveSubscription {
+    final status = _subscriptionStatus?['status'] as String?;
+    return status == 'active' || status == 'trial' || status == 'grace';
+  }
+
+  /// Whether the SoftPOS free tier is active.
+  bool get isSoftPosFree => _softPosInfo?['is_free'] as bool? ?? false;
+
+  /// SoftPOS threshold progress percentage (0.0 - 100.0).
+  double get softPosProgress => (_softPosInfo?['percentage'] as num?)?.toDouble() ?? 0.0;
 
   /// Last sync timestamp.
   DateTime? get lastSyncedAt => _lastSyncedAt;

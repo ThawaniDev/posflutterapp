@@ -302,7 +302,7 @@ class _DetailRow extends StatelessWidget {
                       showPosSuccessSnackbar(context, 'Copied to clipboard');
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 4),
+                      padding: const EdgeInsetsDirectional.only(start: 4),
                       child: Icon(Icons.copy, size: 14, color: theme.colorScheme.onSurfaceVariant),
                     ),
                   ),

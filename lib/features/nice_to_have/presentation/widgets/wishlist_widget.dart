@@ -18,7 +18,7 @@ class WishlistWidget extends ConsumerWidget {
       WishlistInitial() => Center(child: Text(l10n.enterACustomerIdToViewWishlist)),
       WishlistLoading() => const Center(child: CircularProgressIndicator()),
       WishlistError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
+        child: Text(l10n.genericError(message), style: const TextStyle(color: AppColors.error)),
       ),
       WishlistLoaded(:final items) =>
         items.isEmpty

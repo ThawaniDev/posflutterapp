@@ -100,7 +100,7 @@ class _DiscountCard extends StatelessWidget {
         title: Text(code, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
         subtitle: Text(
           type == 'percentage' ? '$value% off' : '\u0081$value off',
-          style: TextStyle(color: AppColors.textSecondary),
+          style: TextStyle(color: AppColors.mutedFor(context)),
         ),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -110,7 +110,7 @@ class _DiscountCard extends StatelessWidget {
               Text('${discount['times_used'] ?? 0}/${discount['max_uses']} used', style: const TextStyle(fontSize: 12)),
             Text(
               'Valid to: ${discount['valid_to']?.toString().substring(0, 10) ?? 'N/A'}',
-              style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
+              style: TextStyle(fontSize: 11, color: AppColors.mutedFor(context)),
             ),
           ],
         ),

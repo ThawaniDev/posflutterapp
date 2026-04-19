@@ -97,9 +97,9 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
                 );
                 final levelDropdown = PosSearchableDropdown<String>(
                   items: [
-                    PosDropdownItem(value: 'debug', label: 'Debug'),
-                    PosDropdownItem(value: 'info', label: 'Info'),
-                    PosDropdownItem(value: 'warning', label: 'Warning'),
+                    PosDropdownItem(value: 'debug', label: l10n.adminLogLevelDebug),
+                    PosDropdownItem(value: 'info', label: l10n.adminLogLevelInfo),
+                    PosDropdownItem(value: 'warning', label: l10n.adminLogLevelWarning),
                     PosDropdownItem(value: 'error', label: l10n.uiError),
                     PosDropdownItem(value: 'critical', label: l10n.supportPriorityCritical),
                   ],
@@ -108,15 +108,15 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
                     setState(() => _levelFilter = v);
                     _applyFilters();
                   },
-                  hint: 'Level',
+                  hint: l10n.adminLevel,
                   showSearch: false,
                   clearable: true,
                 );
                 final typeDropdown = PosSearchableDropdown<String>(
                   items: [
                     PosDropdownItem(value: 'deployment', label: l10n.adminDeployment),
-                    PosDropdownItem(value: 'config_change', label: 'Config Change'),
-                    PosDropdownItem(value: 'cron_job', label: 'Cron Job'),
+                    PosDropdownItem(value: 'config_change', label: l10n.adminEventTypeConfig),
+                    PosDropdownItem(value: 'cron_job', label: l10n.adminEventTypeCron),
                     PosDropdownItem(value: 'maintenance', label: l10n.maintenance),
                     PosDropdownItem(value: 'error', label: l10n.uiError),
                   ],
@@ -125,7 +125,7 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
                     setState(() => _eventTypeFilter = v);
                     _applyFilters();
                   },
-                  hint: 'Type',
+                  hint: l10n.adminType,
                   showSearch: false,
                   clearable: true,
                 );
@@ -150,7 +150,7 @@ class _AdminPlatformEventListPageState extends ConsumerState<AdminPlatformEventL
   Widget _buildList(Map<String, dynamic> data) {
     final items = (data['data']?['data'] as List?) ?? [];
     if (items.isEmpty) {
-      return const Center(child: Text('No platform events found'));
+      return Center(child: Text(l10n.adminNoPlatformEvents));
     }
     return ListView.builder(
       itemCount: items.length,

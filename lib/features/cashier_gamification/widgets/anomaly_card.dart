@@ -56,7 +56,7 @@ class AnomalyCard extends StatelessWidget {
               children: [
                 _InfoTag(label: l10n.posCashier, value: anomaly.cashier?.name ?? '—'),
                 _InfoTag(label: l10n.txColDate, value: anomaly.detectedDate),
-                _InfoTag(label: 'Risk', value: anomaly.riskScore.toStringAsFixed(0)),
+                _InfoTag(label: l10n.cgRisk, value: anomaly.riskScore.toStringAsFixed(0)),
                 if (anomaly.metricName != null)
                   _InfoTag(label: anomaly.metricName!, value: anomaly.metricValue.toStringAsFixed(2)),
               ],
@@ -68,7 +68,7 @@ class AnomalyCard extends StatelessWidget {
                 child: TextButton.icon(
                   onPressed: onReview,
                   icon: const Icon(Icons.rate_review_rounded, size: 16),
-                  label: const Text('Review'),
+                  label: Text(l10n.cgReview),
                   style: TextButton.styleFrom(foregroundColor: AppColors.primary),
                 ),
               ),
@@ -133,6 +133,7 @@ class _SeverityChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     Color color;
     switch (severity) {
       case 'critical':
@@ -165,6 +166,7 @@ class _InfoTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return Row(
       mainAxisSize: MainAxisSize.min,

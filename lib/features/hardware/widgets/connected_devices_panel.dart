@@ -117,20 +117,31 @@ class _SummaryBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final disconnected = totalConfigured - totalConnected;
     return Row(
       children: [
         _SummaryChip(
           icon: Icons.devices,
-          label: '$totalConfigured Configured',
-          color: isDark ? AppColors.textSecondary : AppColors.textPrimaryLight,
+          label: l10n.hardwareConfiguredCount(totalConfigured.toString()),
+          color: isDark ? AppColors.textMutedDark : AppColors.textPrimaryLight,
           isDark: isDark,
         ),
         AppSpacing.gapW12,
-        _SummaryChip(icon: Icons.check_circle, label: '$totalConnected Connected', color: AppColors.success, isDark: isDark),
+        _SummaryChip(
+          icon: Icons.check_circle,
+          label: l10n.hardwareConnectedCount(totalConnected.toString()),
+          color: AppColors.success,
+          isDark: isDark,
+        ),
         if (disconnected > 0) ...[
           AppSpacing.gapW12,
-          _SummaryChip(icon: Icons.error_outline, label: '$disconnected Offline', color: AppColors.error, isDark: isDark),
+          _SummaryChip(
+            icon: Icons.error_outline,
+            label: l10n.hardwareOfflineCount(disconnected.toString()),
+            color: AppColors.error,
+            isDark: isDark,
+          ),
         ],
       ],
     );
@@ -181,16 +192,16 @@ class _EmptyState extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Icon(Icons.devices_other, size: 48, color: isDark ? AppColors.textSecondary : Colors.grey.shade400),
+              Icon(Icons.devices_other, size: 48, color: isDark ? AppColors.textMutedDark : Colors.grey.shade400),
               AppSpacing.gapH12,
               Text(
                 'No active devices',
-                style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textSecondary : Colors.grey.shade600),
+                style: AppTypography.bodyMedium.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade600),
               ),
               AppSpacing.gapH4,
               Text(
                 'Configure devices above to see their connection status',
-                style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textSecondary : Colors.grey.shade500),
+                style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade500),
               ),
             ],
           ),
@@ -309,7 +320,9 @@ class _DeviceRow extends StatelessWidget {
     final hasError = device.status?.errorMessage != null && device.status!.errorMessage!.isNotEmpty;
     final name = device.config.deviceName ?? _deviceLabel(device.config.deviceType);
 
-    final statusColor = isConnected ? AppColors.success : (hasError ? AppColors.error : AppColors.textSecondary);
+    final statusColor = isConnected
+        ? AppColors.success
+        : (hasError ? AppColors.error : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight));
     final statusText = isConnected ? 'Connected' : (hasError ? 'Error' : 'Offline');
     final statusIcon = isConnected ? Icons.circle : (hasError ? Icons.warning_amber_rounded : Icons.circle_outlined);
 
@@ -320,7 +333,7 @@ class _DeviceRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(_deviceIcon(device.config.deviceType), size: 22, color: isDark ? AppColors.textSecondary : Colors.grey.shade600),
+          Icon(_deviceIcon(device.config.deviceType), size: 22, color: isDark ? AppColors.textMutedDark : Colors.grey.shade600),
           AppSpacing.gapW8,
           Expanded(
             child: Column(
@@ -337,7 +350,7 @@ class _DeviceRow extends StatelessWidget {
                 if (device.status?.lastActivity != null && !hasError)
                   Text(
                     _formatLastActivity(device.status!.lastActivity!),
-                    style: AppTypography.micro.copyWith(color: isDark ? AppColors.textSecondary : Colors.grey.shade500),
+                    style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade500),
                   ),
               ],
             ),
@@ -389,16 +402,17 @@ class _NetworkScanSection extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.radar, size: 20, color: isDark ? AppColors.textSecondary : Colors.grey.shade700),
+                Icon(Icons.radar, size: 20, color: isDark ? AppColors.textMutedDark : Colors.grey.shade700),
                 AppSpacing.gapW8,
                 Expanded(child: Text(l10n.networkDiscovery, style: AppTypography.titleSmall)),
                 switch (scanState) {
-                  NetworkScanIdle() || NetworkScanComplete() || NetworkScanError() => TextButton.icon(
+                  NetworkScanIdle() || NetworkScanComplete() || NetworkScanError() => PosButton(
                     onPressed: () => ref.read(networkScanProvider.notifier).scan(),
-                    icon: const Icon(Icons.search, size: 18),
-                    label: const Text('Scan'),
+                    variant: PosButtonVariant.ghost,
+                    icon: Icons.search,
+                    label: l10n.hardwareScan,
                   ),
-                  NetworkScanRunning() => const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)),
+                  NetworkScanRunning() => const SizedBox(width: 20, height: 20, child: PosLoading(size: 20)),
                 },
               ],
             ),
@@ -408,7 +422,7 @@ class _NetworkScanSection extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
                   'Scan your local network to discover printers and displays',
-                  style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textSecondary : Colors.grey.shade600),
+                  style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade600),
                 ),
               ),
 
@@ -424,7 +438,7 @@ class _NetworkScanSection extends StatelessWidget {
                     AppSpacing.gapH8,
                     Text(
                       'Scanning... $scanned/$total addresses',
-                      style: AppTypography.micro.copyWith(color: isDark ? AppColors.textSecondary : Colors.grey.shade600),
+                      style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade600),
                     ),
                   ],
                 ),
@@ -435,7 +449,7 @@ class _NetworkScanSection extends StatelessWidget {
                 child: devices.isEmpty
                     ? Text(
                         'No devices found on the network',
-                        style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textSecondary : Colors.grey.shade600),
+                        style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade600),
                       )
                     : Column(
                         children: devices.map((d) => _DetectedDeviceRow(device: d, isDark: isDark)).toList(),
@@ -477,7 +491,7 @@ class _DetectedDeviceRow extends StatelessWidget {
                   Text(
                     '${device.address}${device.port != null ? ':${device.port}' : ''}',
                     style: AppTypography.micro.copyWith(
-                      color: isDark ? AppColors.textSecondary : Colors.grey.shade500,
+                      color: isDark ? AppColors.textMutedDark : Colors.grey.shade500,
                       fontFamily: 'monospace',
                     ),
                   ),
@@ -536,7 +550,7 @@ class _KeyboardWedgeScannerCard extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             child: Row(
               children: [
-                Icon(Icons.keyboard, size: 22, color: isDark ? AppColors.textSecondary : Colors.grey.shade600),
+                Icon(Icons.keyboard, size: 22, color: isDark ? AppColors.textMutedDark : Colors.grey.shade600),
                 AppSpacing.gapW8,
                 Expanded(
                   child: Column(
@@ -550,7 +564,7 @@ class _KeyboardWedgeScannerCard extends ConsumerWidget {
                         isListening
                             ? 'Listening for keyboard-wedge barcode input'
                             : 'Not active — scanner will start when the app is ready',
-                        style: AppTypography.micro.copyWith(color: isDark ? AppColors.textSecondary : Colors.grey.shade500),
+                        style: AppTypography.micro.copyWith(color: isDark ? AppColors.textMutedDark : Colors.grey.shade500),
                       ),
                     ],
                   ),
@@ -561,13 +575,13 @@ class _KeyboardWedgeScannerCard extends ConsumerWidget {
                     Icon(
                       isListening ? Icons.circle : Icons.circle_outlined,
                       size: isListening ? 8 : 12,
-                      color: isListening ? AppColors.success : AppColors.textSecondary,
+                      color: isListening ? AppColors.success : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                     ),
                     AppSpacing.gapW4,
                     Text(
                       isListening ? 'Listening' : 'Inactive',
                       style: AppTypography.micro.copyWith(
-                        color: isListening ? AppColors.success : AppColors.textSecondary,
+                        color: isListening ? AppColors.success : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                         fontWeight: FontWeight.w600,
                       ),
                     ),

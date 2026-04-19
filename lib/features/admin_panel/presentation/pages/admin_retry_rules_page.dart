@@ -46,6 +46,7 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(retryRulesProvider);
 
     // Populate fields on first load
@@ -57,7 +58,7 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
     }
 
     return PosListPage(
-      title: 'Payment Retry Rules',
+      title: l10n.adminPaymentRetryRules,
       showSearch: false,
       child: Column(
         children: [
@@ -131,7 +132,7 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
 
                             SizedBox(
                               width: double.infinity,
-                              child: PosButton(onPressed: _saveRules, label: 'Save Rules'),
+                              child: PosButton(onPressed: _saveRules, label: l10n.adminSaveRules),
                             ),
                           ],
                         ),
@@ -177,7 +178,7 @@ class _AdminRetryRulesPageState extends ConsumerState<AdminRetryRulesPage> {
                   ],
                 ),
               ),
-              RetryRulesError(message: final msg) => Center(child: Text('Error: $msg')),
+              RetryRulesError(message: final msg) => Center(child: Text(l10n.genericError(msg))),
               _ => const Center(child: CircularProgressIndicator()),
             },
           ),

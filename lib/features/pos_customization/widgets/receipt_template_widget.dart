@@ -32,36 +32,36 @@ class ReceiptTemplateWidget extends ConsumerWidget {
         child: PosCard(
           child: Column(
             children: [
-              ListTile(leading: const Icon(Icons.image), title: const Text('Logo'), subtitle: Text(s.logoUrl ?? 'Not set')),
+              ListTile(leading: const Icon(Icons.image), title: Text(l10n.pcReceiptLogo), subtitle: Text(s.logoUrl ?? 'Not set')),
               const Divider(height: 1),
               ListTile(
                 leading: const Icon(Icons.title),
-                title: const Text('Header Line 1'),
+                title: Text(l10n.pcHeaderLine1),
                 subtitle: Text(s.headerLine1 ?? 'Not set'),
               ),
               const Divider(height: 1),
               ListTile(
                 leading: const Icon(Icons.title),
-                title: const Text('Header Line 2'),
+                title: Text(l10n.pcHeaderLine2),
                 subtitle: Text(s.headerLine2 ?? 'Not set'),
               ),
               const Divider(height: 1),
               ListTile(
                 leading: const Icon(Icons.article),
-                title: const Text('Footer'),
+                title: Text(l10n.pcFooter),
                 subtitle: Text(s.footerText ?? 'Not set'),
               ),
               const Divider(height: 1),
               SwitchListTile(
                 secondary: const Icon(Icons.receipt),
-                title: const Text('Show VAT Number'),
+                title: Text(l10n.pcShowVatNumber),
                 value: s.showVatNumber,
                 onChanged: (v) => ref.read(receiptTemplateProvider.notifier).update({'show_vat_number': v}),
               ),
               const Divider(height: 1),
               SwitchListTile(
                 secondary: const Icon(Icons.loyalty),
-                title: const Text('Show Loyalty Points'),
+                title: Text(l10n.pcShowLoyaltyPoints),
                 value: s.showLoyaltyPoints,
                 onChanged: (v) => ref.read(receiptTemplateProvider.notifier).update({'show_loyalty_points': v}),
               ),

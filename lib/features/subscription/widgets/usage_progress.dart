@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 
@@ -13,6 +14,7 @@ class UsageProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isUnlimited = limit == null;
     final progress = (percentage / 100).clamp(0.0, 1.0);
     final isWarning = percentage >= 80;
@@ -26,15 +28,18 @@ class UsageProgress extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(_formatLabel(label), style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),
               Text(
-                isUnlimited ? '$current / ∞' : '$current / $limit',
+                _formatLabel(label, l10n),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),
+              ),
+              Text(
+                isUnlimited ? l10n.subUsageUnlimited(current) : l10n.subUsageCounted(current, limit!),
                 style: TextStyle(
                   color: isDanger
                       ? AppColors.error
                       : isWarning
                       ? AppColors.warning
-                      : AppColors.textSecondary,
+                      : AppColors.mutedFor(context),
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -61,7 +66,16 @@ class UsageProgress extends StatelessWidget {
     );
   }
 
-  String _formatLabel(String key) {
-    return key.replaceAll('_', ' ').split(' ').map((w) => w.isNotEmpty ? '${w[0].toUpperCase()}${w.substring(1)}' : w).join(' ');
+  String _formatLabel(String key, AppLocalizations l10n) {
+    return switch (key) {
+      'products' => l10n.subLimitProducts,
+      'staff_members' => l10n.subLimitStaffMembers,
+      'cashier_terminals' => l10n.subLimitCashierTerminals,
+      'branches' => l10n.subLimitBranches,
+      'transactions_per_month' => l10n.subLimitTransactionsPerMonth,
+      'storage_mb' => l10n.subLimitStorageMb,
+      'pdf_reports_per_month' => l10n.subLimitPdfReportsPerMonth,
+      _ => key.replaceAll('_', ' ').split(' ').map((w) => w.isNotEmpty ? '${w[0].toUpperCase()}${w.substring(1)}' : w).join(' '),
+    };
   }
 }

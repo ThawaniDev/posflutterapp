@@ -58,6 +58,7 @@ class _AdminTeamListPageState extends ConsumerState<AdminTeamListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(adminTeamListProvider);
     final theme = Theme.of(context);
     final isLoading = state is AdminTeamListInitial || state is AdminTeamListLoading;
@@ -65,7 +66,7 @@ class _AdminTeamListPageState extends ConsumerState<AdminTeamListPage> {
     final isEmpty = state is AdminTeamListLoaded && state.users.isEmpty;
 
     return PosListPage(
-      title: 'Admin Team',
+      title: l10n.adminTeam,
       searchController: _searchController,
       onSearchChanged: (_) => _loadTeam(),
       isLoading: isLoading,
@@ -76,7 +77,7 @@ class _AdminTeamListPageState extends ConsumerState<AdminTeamListPage> {
       emptyTitle: 'No team members found',
       emptyIcon: Icons.people_outline,
       actions: [
-        PosButton(label: 'Add Team Member', icon: Icons.person_add, onPressed: () => context.push(Routes.adminTeamUserCreate)),
+        PosButton(label: l10n.adminAddTeamMember, icon: Icons.person_add, onPressed: () => context.push(Routes.adminTeamUserCreate)),
       ],
       filters: [
         SizedBox(
@@ -91,7 +92,7 @@ class _AdminTeamListPageState extends ConsumerState<AdminTeamListPage> {
               setState(() => _activeFilter = val);
               _loadTeam();
             },
-            hint: 'Status',
+            hint: l10n.commonStatus,
             showSearch: false,
             clearable: true,
           ),
@@ -163,7 +164,7 @@ class _AdminTeamListPageState extends ConsumerState<AdminTeamListPage> {
                                   : null,
                               icon: const Icon(Icons.chevron_left),
                             ),
-                            Text('Page $page of $lastPage'),
+                            Text(l10n.adminPageOf(page.toString(), lastPage.toString())),
                             IconButton(
                               onPressed: page < lastPage
                                   ? () {

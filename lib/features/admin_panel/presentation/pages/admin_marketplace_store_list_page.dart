@@ -55,6 +55,7 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(marketplaceStoreListProvider);
 
     return PosListPage(
@@ -100,7 +101,7 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
                       _applyFilters();
                     },
                     label: l10n.status,
-                    hint: 'All',
+                    hint: l10n.commonAll,
                     showSearch: false,
                     clearable: true,
                   ),
@@ -126,7 +127,7 @@ class _AdminMarketplaceStoreListPageState extends ConsumerState<AdminMarketplace
   Widget _buildList(Map<String, dynamic> data) {
     final stores = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
     if (stores.isEmpty) {
-      return const Center(child: Text('No marketplace stores found'));
+      return Center(child: Text(l10n.adminNoMarketplaceStores));
     }
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),

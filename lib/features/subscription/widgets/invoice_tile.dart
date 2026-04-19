@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/features/subscription/models/invoice.dart';
@@ -12,6 +13,7 @@ class InvoiceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final statusName = invoice.status?.name ?? 'unknown';
     return PosCard(
       child: ListTile(
@@ -26,10 +28,10 @@ class InvoiceTile extends StatelessWidget {
           children: [
             AppSpacing.verticalXs,
             if (invoice.dueDate != null)
-              Text('Due: ${_formatDate(invoice.dueDate!)}', style: Theme.of(context).textTheme.bodySmall),
+              Text(l10n.subDueColon(_formatDate(invoice.dueDate!)), style: Theme.of(context).textTheme.bodySmall),
             if (invoice.paidAt != null)
               Text(
-                'Paid: ${_formatDate(invoice.paidAt!)}',
+                l10n.subPaidColon(_formatDate(invoice.paidAt!)),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.success),
               ),
           ],
@@ -42,10 +44,7 @@ class InvoiceTile extends StatelessWidget {
             AppSpacing.verticalXs,
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              decoration: BoxDecoration(
-                color: _statusColor(statusName).withOpacity(0.15),
-                borderRadius: AppRadius.borderLg,
-              ),
+              decoration: BoxDecoration(color: _statusColor(statusName).withOpacity(0.15), borderRadius: AppRadius.borderLg),
               child: Text(
                 statusName,
                 style: TextStyle(fontSize: 11, color: _statusColor(statusName), fontWeight: FontWeight.w600),
@@ -62,7 +61,7 @@ class InvoiceTile extends StatelessWidget {
       'paid' => AppColors.success,
       'pending' => AppColors.warning,
       'overdue' => AppColors.error,
-      'cancelled' || 'voided' => AppColors.textSecondary,
+      'cancelled' || 'voided' => AppColors.textMutedLight,
       _ => AppColors.info,
     };
   }

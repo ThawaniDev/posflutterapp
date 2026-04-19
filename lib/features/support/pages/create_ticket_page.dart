@@ -71,6 +71,7 @@ class _CreateTicketPageState extends ConsumerState<CreateTicketPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   PosSearchableDropdown<String>(
+                    hint: l10n.selectCategory,
                     label: l10n.supportCategory,
                     items: [
                       PosDropdownItem(value: 'general', label: l10n.supportCategoryGeneral),
@@ -86,6 +87,7 @@ class _CreateTicketPageState extends ConsumerState<CreateTicketPage> {
                   ),
                   AppSpacing.gapH16,
                   PosSearchableDropdown<String>(
+                    hint: l10n.selectPriority,
                     label: l10n.supportPriority,
                     items: [
                       PosDropdownItem(value: 'low', label: l10n.supportPriorityLow),

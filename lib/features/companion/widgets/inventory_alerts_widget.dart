@@ -30,14 +30,18 @@ class _InventoryAlertsWidgetState extends ConsumerState<InventoryAlertsWidget> {
     final l10n = AppLocalizations.of(context)!;
 
     return switch (state) {
-      InventoryAlertsInitial() || InventoryAlertsLoading() => const Center(child: CircularProgressIndicator()),
+      InventoryAlertsInitial() || InventoryAlertsLoading() => const PosLoading(),
       InventoryAlertsError(:final message) => Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(message, style: TextStyle(color: theme.colorScheme.error)),
             AppSpacing.gapH8,
-            PosButton(onPressed: () => ref.read(inventoryAlertsProvider.notifier).load(), variant: PosButtonVariant.ghost, label: l10n.companionRetry),
+            PosButton(
+              onPressed: () => ref.read(inventoryAlertsProvider.notifier).load(),
+              variant: PosButtonVariant.ghost,
+              label: l10n.companionRetry,
+            ),
           ],
         ),
       ),

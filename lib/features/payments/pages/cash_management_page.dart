@@ -161,51 +161,58 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                         Row(
                           children: [
                             Expanded(
-                              child: OutlinedButton.icon(
+                              child: PosButton(
                                 onPressed: () => _showCashInOutDialog(context, 'cash_in', activeSession.id),
-                                icon: const Icon(Icons.add, size: 18),
-                                label: Text(AppLocalizations.of(context)!.cashMgmtCashIn),
+                                icon: Icons.add,
+                                variant: PosButtonVariant.outline,
+                                label: AppLocalizations.of(context)!.cashMgmtCashIn,
+                                isFullWidth: true,
                               ),
                             ),
                             AppSpacing.gapW8,
                             Expanded(
-                              child: OutlinedButton.icon(
+                              child: PosButton(
                                 onPressed: () => _showCashInOutDialog(context, 'cash_out', activeSession.id),
-                                icon: const Icon(Icons.remove, size: 18),
-                                label: Text(AppLocalizations.of(context)!.cashMgmtCashOut),
+                                icon: Icons.remove,
+                                variant: PosButtonVariant.outline,
+                                label: AppLocalizations.of(context)!.cashMgmtCashOut,
+                                isFullWidth: true,
                               ),
                             ),
                           ],
                         ),
                         AppSpacing.gapH8,
-                        FilledButton.icon(
+                        PosButton(
                           onPressed: () => _showCloseSessionDialog(context, activeSession.id),
-                          icon: const Icon(Icons.lock, size: 18),
-                          label: Text(AppLocalizations.of(context)!.cashMgmtCloseSession),
-                          style: FilledButton.styleFrom(backgroundColor: AppColors.warning),
+                          icon: Icons.lock,
+                          variant: PosButtonVariant.danger,
+                          label: AppLocalizations.of(context)!.cashMgmtCloseSession,
+                          isFullWidth: true,
                         ),
                       ],
                     )
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        OutlinedButton.icon(
+                        PosButton(
                           onPressed: () => _showCashInOutDialog(context, 'cash_in', activeSession.id),
-                          icon: const Icon(Icons.add, size: 18),
-                          label: Text(AppLocalizations.of(context)!.cashMgmtCashIn),
+                          icon: Icons.add,
+                          variant: PosButtonVariant.outline,
+                          label: AppLocalizations.of(context)!.cashMgmtCashIn,
                         ),
                         AppSpacing.gapW8,
-                        OutlinedButton.icon(
+                        PosButton(
                           onPressed: () => _showCashInOutDialog(context, 'cash_out', activeSession.id),
-                          icon: const Icon(Icons.remove, size: 18),
-                          label: Text(AppLocalizations.of(context)!.cashMgmtCashOut),
+                          icon: Icons.remove,
+                          variant: PosButtonVariant.outline,
+                          label: AppLocalizations.of(context)!.cashMgmtCashOut,
                         ),
                         AppSpacing.gapW8,
-                        FilledButton.icon(
+                        PosButton(
                           onPressed: () => _showCloseSessionDialog(context, activeSession.id),
-                          icon: const Icon(Icons.lock, size: 18),
-                          label: Text(AppLocalizations.of(context)!.cashMgmtCloseSession),
-                          style: FilledButton.styleFrom(backgroundColor: AppColors.warning),
+                          icon: Icons.lock,
+                          variant: PosButtonVariant.danger,
+                          label: AppLocalizations.of(context)!.cashMgmtCloseSession,
                         ),
                       ],
                     ),
@@ -231,10 +238,10 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
               style: theme.textTheme.bodySmall?.copyWith(color: theme.hintColor),
             ),
             AppSpacing.gapH16,
-            FilledButton.icon(
+            PosButton(
               onPressed: () => _showOpenSessionDialog(context),
-              icon: const Icon(Icons.lock_open, size: 18),
-              label: Text(AppLocalizations.of(context)!.cashMgmtOpenCashSession),
+              icon: Icons.lock_open,
+              label: AppLocalizations.of(context)!.cashMgmtOpenCashSession,
             ),
           ],
         ),
@@ -270,18 +277,9 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                     AppSpacing.gapW8,
                     SizedBox(
                       width: context.isPhone ? 60 : 80,
-                      child: TextField(
+                      child: PosTextField(
                         keyboardType: TextInputType.number,
                         textAlign: TextAlign.center,
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: context.isPhone ? 6 : 8,
-                            horizontal: context.isPhone ? 4 : 8,
-                          ),
-                        ),
-                        style: theme.textTheme.bodySmall,
                         onChanged: (v) {
                           setState(() {
                             dc.count = int.tryParse(v) ?? 0;
@@ -323,7 +321,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
 
   Widget _buildSessionHistory(CashSessionsState state) {
     return switch (state) {
-      CashSessionsInitial() || CashSessionsLoading() => const Center(child: CircularProgressIndicator()),
+      CashSessionsInitial() || CashSessionsLoading() => const PosLoading(),
       CashSessionsError(:final message) => PosCard(
         color: AppColors.error.withValues(alpha: 0.08),
         child: Padding(
@@ -413,13 +411,10 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(AppLocalizations.of(ctx)!.cashMgmtOpenCashSession),
-        content: TextField(
+        content: PosTextField(
           controller: _openingFloatController,
           keyboardType: const TextInputType.numberWithOptions(decimal: true),
-          decoration: InputDecoration(
-            labelText: AppLocalizations.of(ctx)!.cashMgmtOpeningFloatSar,
-            border: const OutlineInputBorder(),
-          ),
+          label: AppLocalizations.of(ctx)!.cashMgmtOpeningFloatSar,
           autofocus: true,
         ),
         actions: [
@@ -459,14 +454,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
               '${AppLocalizations.of(ctx)!.cashMgmtCountedCash}: ${totalCount.toStringAsFixed(2)} ${AppLocalizations.of(ctx)!.sarCurrency}',
             ),
             AppSpacing.gapH12,
-            TextField(
-              controller: _closeNotesController,
-              maxLines: 3,
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(ctx)!.cashMgmtNotesOptional,
-                border: const OutlineInputBorder(),
-              ),
-            ),
+            PosTextField(controller: _closeNotesController, maxLines: 3, label: AppLocalizations.of(ctx)!.cashMgmtNotesOptional),
           ],
         ),
         actions: [
@@ -506,17 +494,15 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
+              PosTextField(
                 controller: amountController,
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                decoration: InputDecoration(
-                  labelText: AppLocalizations.of(ctx)!.cashMgmtAmountSar,
-                  border: const OutlineInputBorder(),
-                ),
+                label: AppLocalizations.of(ctx)!.cashMgmtAmountSar,
                 autofocus: true,
               ),
               AppSpacing.gapH12,
               PosSearchableDropdown<String>(
+                hint: AppLocalizations.of(ctx)!.selectReason,
                 items:
                     (type == 'cash_out'
                             ? ['petty_cash', 'supplier_payment', 'bank_deposit', 'other']
@@ -530,13 +516,7 @@ class _CashManagementPageState extends ConsumerState<CashManagementPage> {
                 clearable: false,
               ),
               AppSpacing.gapH12,
-              TextField(
-                controller: notesController,
-                decoration: InputDecoration(
-                  labelText: AppLocalizations.of(ctx)!.cashMgmtNotesOptional,
-                  border: const OutlineInputBorder(),
-                ),
-              ),
+              PosTextField(controller: notesController, label: AppLocalizations.of(ctx)!.cashMgmtNotesOptional),
             ],
           ),
         ),

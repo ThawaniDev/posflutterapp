@@ -68,7 +68,7 @@ class _AdminRoleDetailPageState extends ConsumerState<AdminRoleDetailPage> {
                     Expanded(child: Text(role['name'] as String? ?? '', style: theme.textTheme.headlineSmall)),
                     if (isSystem)
                       Chip(
-                        label: const Text('System Role'),
+                        label: Text(l10n.adminSystemRole),
                         backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                         labelStyle: TextStyle(color: AppColors.primary),
                       ),
@@ -78,7 +78,7 @@ class _AdminRoleDetailPageState extends ConsumerState<AdminRoleDetailPage> {
                   AppSpacing.gapH4,
                   Text(
                     role['slug'] as String,
-                    style: theme.textTheme.bodySmall?.copyWith(color: AppColors.textSecondary, fontFamily: 'monospace'),
+                    style: theme.textTheme.bodySmall?.copyWith(color: AppColors.mutedFor(context), fontFamily: 'monospace'),
                   ),
                 ],
                 if (role['description'] != null) ...[AppSpacing.gapH8, Text(role['description'] as String)],
@@ -117,7 +117,7 @@ class _AdminRoleDetailPageState extends ConsumerState<AdminRoleDetailPage> {
             children: [
               Expanded(
                 child: PosButton(
-                  label: 'Delete Role',
+                  label: l10n.adminDeleteRole,
                   variant: PosButtonVariant.danger,
                   onPressed: () => _confirmDelete(role['id'] as String),
                 ),
@@ -132,10 +132,10 @@ class _AdminRoleDetailPageState extends ConsumerState<AdminRoleDetailPage> {
   void _confirmDelete(String roleId) async {
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Delete Role',
-      message: 'Are you sure you want to delete this role? This cannot be undone.',
-      confirmLabel: 'Delete',
-      cancelLabel: 'Cancel',
+      title: l10n.adminDeleteRole,
+      message: l10n.adminDeleteRoleConfirm,
+      confirmLabel: l10n.commonDelete,
+      cancelLabel: l10n.commonCancel,
       isDanger: true,
     );
     if (confirmed == true) {

@@ -18,7 +18,7 @@ class ShortcutsWidget extends ConsumerWidget {
 
     return switch (state) {
       ShortcutsInitial() => Center(child: Text(l10n.accessibilityShortcuts)),
-      ShortcutsLoading() => const Center(child: CircularProgressIndicator()),
+      ShortcutsLoading() => const PosLoading(),
       ShortcutsError(:final message) => Center(
         child: Text(message, style: TextStyle(color: theme.colorScheme.error)),
       ),

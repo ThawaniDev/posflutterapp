@@ -92,8 +92,8 @@ class _CashierHistoryPageState extends ConsumerState<CashierHistoryPage> {
                               _Stat(label: l10n.gamificationRevenue, value: snap.totalRevenue.toStringAsFixed(0)),
                               _Stat(label: l10n.gamificationItemsPerMinute, value: snap.itemsPerMinute.toStringAsFixed(1)),
                               _Stat(label: l10n.posVoids, value: snap.voidCount.toString()),
-                              _Stat(label: 'Basket', value: snap.avgBasketSize.toStringAsFixed(1)),
-                              _Stat(label: 'Upsell', value: '${(snap.upsellRate * 100).toStringAsFixed(0)}%'),
+                              _Stat(label: l10n.cgBasket, value: snap.avgBasketSize.toStringAsFixed(1)),
+                              _Stat(label: l10n.cgUpsell, value: '${(snap.upsellRate * 100).toStringAsFixed(0)}%'),
                             ],
                           ),
                           if (snap.anomalyFlags.isNotEmpty) ...[
@@ -129,6 +129,7 @@ class _Stat extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [

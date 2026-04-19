@@ -5,6 +5,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/pos_status_badge.dart';
 import '../models/prescription.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class PrescriptionCard extends StatelessWidget {
   final Prescription prescription;
@@ -14,6 +15,7 @@ class PrescriptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PosCard(
@@ -33,10 +35,7 @@ class PrescriptionCard extends StatelessWidget {
                   Container(
                     width: 40,
                     height: 40,
-                    decoration: BoxDecoration(
-                      color: AppColors.success.withValues(alpha: 0.1),
-                      borderRadius: AppRadius.borderSm,
-                    ),
+                    decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.1), borderRadius: AppRadius.borderSm),
                     child: const Icon(Icons.receipt_long, color: AppColors.success, size: 22),
                   ),
                   AppSpacing.gapW12,
@@ -50,13 +49,17 @@ class PrescriptionCard extends StatelessWidget {
                     ),
                   ),
                   if (prescription.insuranceProvider != null)
-                    const PosStatusBadge(label: 'Insured', variant: PosStatusBadgeVariant.success, icon: Icons.verified_outlined),
+                    PosStatusBadge(
+                      label: l10n.pharmacyInsured,
+                      variant: PosStatusBadgeVariant.success,
+                      icon: Icons.verified_outlined,
+                    ),
                 ],
               ),
               AppSpacing.gapH8,
               Row(
                 children: [
-                  const Icon(Icons.local_hospital, size: 14, color: AppColors.textSecondary),
+                  Icon(Icons.local_hospital, size: 14, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                   AppSpacing.gapW4,
                   Expanded(
                     child: Text(

@@ -256,7 +256,7 @@ class _LabelTemplateDetailPageState extends ConsumerState<LabelTemplateDetailPag
                   Text('${f['x'] ?? 0}%, ${f['y'] ?? 0}%', style: AppTypography.micro),
                   Text('${f['w'] ?? 0}%×${f['h'] ?? 0}%', style: AppTypography.micro),
                   PosBadge(label: f['font_size']?.toString() ?? 'medium', variant: PosBadgeVariant.neutral),
-                  if (f['is_bold'] == true) const PosBadge(label: 'Bold', variant: PosBadgeVariant.info),
+                  if (f['is_bold'] == true) PosBadge(label: l10n.pcBold, variant: PosBadgeVariant.info),
                 ],
               ),
             );

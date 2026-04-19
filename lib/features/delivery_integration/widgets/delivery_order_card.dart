@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
-import 'package:wameedpos/core/widgets/pos_status_badge.dart';
 import 'package:wameedpos/features/delivery_integration/enums/delivery_order_status.dart';
 import 'package:wameedpos/features/delivery_integration/enums/delivery_config_platform.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
@@ -26,6 +25,8 @@ class DeliveryOrderCard extends StatelessWidget {
     final totalAmount = (order['total_amount'] != null ? double.tryParse(order['total_amount'].toString()) : null);
     final itemsCount = order['items_count'] as int?;
     final createdAt = order['created_at'] as String?;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final mutedColor = isDark ? AppColors.textMutedDark : AppColors.textMutedLight;
 
     return PosCard(
       elevation: 0,
@@ -71,22 +72,19 @@ class DeliveryOrderCard extends StatelessWidget {
                 Row(
                   children: [
                     if (customerName != null) ...[
-                      Icon(Icons.person_outline, size: 14, color: AppColors.textSecondary),
+                      Icon(Icons.person_outline, size: 14, color: mutedColor),
                       AppSpacing.gapW4,
                       Expanded(
                         child: Text(
                           customerName,
-                          style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                          style: TextStyle(fontSize: 12, color: mutedColor),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
                     if (itemsCount != null) ...[
                       AppSpacing.gapW12,
-                      Text(
-                        l10n.deliveryItemsCountValue(itemsCount),
-                        style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
-                      ),
+                      Text(l10n.deliveryItemsCountValue(itemsCount), style: TextStyle(fontSize: 12, color: mutedColor)),
                     ],
                     if (totalAmount != null) ...[
                       const Spacer(),
@@ -105,7 +103,7 @@ class DeliveryOrderCard extends StatelessWidget {
               // Timestamp
               if (createdAt != null) ...[
                 AppSpacing.gapH8,
-                Text(_formatTime(context, createdAt), style: TextStyle(fontSize: 10, color: AppColors.textSecondary)),
+                Text(_formatTime(context, createdAt), style: TextStyle(fontSize: 10, color: mutedColor)),
               ],
             ],
           ),
@@ -122,25 +120,22 @@ class DeliveryOrderCard extends StatelessWidget {
       children: transitions.map((next) {
         final isPrimary =
             next == transitions.first && next != DeliveryOrderStatus.rejected && next != DeliveryOrderStatus.cancelled;
+        final isDestructive = next == DeliveryOrderStatus.rejected || next == DeliveryOrderStatus.cancelled;
         return Expanded(
           child: Padding(
-            padding: EdgeInsets.only(left: next == transitions.first ? 0 : 8),
-            child: isPrimary
-                ? FilledButton.icon(
-                    onPressed: () => onStatusAction?.call(next.value),
-                    icon: Icon(next.icon, size: 16),
-                    label: Text(next.label, style: const TextStyle(fontSize: 12)),
-                    style: FilledButton.styleFrom(backgroundColor: next.color, padding: const EdgeInsets.symmetric(vertical: 8)),
-                  )
-                : OutlinedButton.icon(
-                    onPressed: () => onStatusAction?.call(next.value),
-                    icon: Icon(next.icon, size: 16, color: next.color),
-                    label: Text(next.label, style: TextStyle(fontSize: 12, color: next.color)),
-                    style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: next.color),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                    ),
-                  ),
+            padding: EdgeInsetsDirectional.only(start: next == transitions.first ? 0 : 8),
+            child: PosButton(
+              onPressed: () => onStatusAction?.call(next.value),
+              icon: next.icon,
+              label: next.label,
+              size: PosButtonSize.sm,
+              isFullWidth: true,
+              variant: isPrimary
+                  ? PosButtonVariant.primary
+                  : isDestructive
+                  ? PosButtonVariant.danger
+                  : PosButtonVariant.outline,
+            ),
           ),
         );
       }).toList(),

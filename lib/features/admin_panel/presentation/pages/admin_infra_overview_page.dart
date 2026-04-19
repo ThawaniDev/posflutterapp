@@ -40,6 +40,7 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(infraOverviewProvider);
 
     return PosListPage(
@@ -56,7 +57,7 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
+                    Text(l10n.genericError(msg), style: const TextStyle(color: AppColors.error)),
                     const SizedBox(height: AppSpacing.md),
                     PosButton(
                       onPressed: () => ref.read(infraOverviewProvider.notifier).load(storeId: _storeId),
@@ -96,7 +97,7 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
               cards: [
                 PosKpiCard(
                   icon: Icons.error_outline,
-                  label: 'Failed Jobs (24h)',
+                  label: l10n.adminFailedJobs24h,
                   value: '${failedJobs['last_24h'] ?? 0}',
                   iconColor: (failedJobs['last_24h'] ?? 0) > 0 ? AppColors.error : AppColors.success,
                 ),
@@ -174,7 +175,7 @@ class _State extends ConsumerState<AdminInfraOverviewPage> {
               child: switch (state) {
                 InfraListLoading() => const Center(child: CircularProgressIndicator()),
                 InfraListLoaded(data: final resp) => _buildMetrics(resp, scrollController),
-                InfraListError(message: final msg) => Center(child: Text('Error: $msg')),
+                InfraListError(message: final msg) => Center(child: Text(l10n.genericError(msg))),
                 _ => Center(child: Text(l10n.loading)),
               },
             ),
@@ -216,6 +217,7 @@ class _NavTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return PosCard(
       margin: const EdgeInsets.only(bottom: AppSpacing.xs),
       borderRadius: BorderRadius.circular(10,),

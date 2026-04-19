@@ -21,6 +21,15 @@ class Permission {
     this.updatedAt,
   });
 
+  /// Returns the localized display name based on the given locale.
+  /// Falls back to English [displayName] if Arabic is not available.
+  String localizedName(String locale) {
+    if (locale == 'ar' && displayNameAr != null && displayNameAr!.isNotEmpty) {
+      return displayNameAr!;
+    }
+    return displayName;
+  }
+
   factory Permission.fromJson(Map<String, dynamic> json) {
     return Permission(
       id: (json['id'] as num).toInt(),

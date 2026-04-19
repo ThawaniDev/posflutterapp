@@ -45,6 +45,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(providerRoleTemplateListProvider);
 
     return PosListPage(
@@ -76,7 +77,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateListPage> {
   Widget _buildList(Map<String, dynamic> resp) {
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No role templates'));
+    if (items.isEmpty) return Center(child: Text(l10n.adminNoRoleTemplates));
 
     return RefreshIndicator(
       onRefresh: () async => _loadData(),

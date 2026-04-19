@@ -36,6 +36,7 @@ class DeviceConfigCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return PosCard(
       borderRadius: AppRadius.borderMd,
       child: Padding(
@@ -79,10 +80,15 @@ class DeviceConfigCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
-                      color: AppColors.textSecondary.withValues(alpha: 0.1),
+                      color: (isDark ? AppColors.textMutedDark : AppColors.textMutedLight).withValues(alpha: 0.1),
                       borderRadius: AppRadius.borderSm,
                     ),
-                    child: Text(l10n.inactive, style: theme.textTheme.labelSmall?.copyWith(color: AppColors.textSecondary)),
+                    child: Text(
+                      l10n.inactive,
+                      style: theme.textTheme.labelSmall?.copyWith(
+                        color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                      ),
+                    ),
                   ),
               ],
             ),
@@ -91,16 +97,18 @@ class DeviceConfigCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 if (onTest != null)
-                  TextButton.icon(
+                  PosButton(
                     onPressed: onTest,
-                    icon: const Icon(Icons.play_circle_outline, size: 18),
-                    label: Text(l10n.testConnection),
+                    variant: PosButtonVariant.ghost,
+                    icon: Icons.play_circle_outline,
+                    label: l10n.testConnection,
                   ),
                 if (onRemove != null)
-                  TextButton.icon(
+                  PosButton(
                     onPressed: onRemove,
-                    icon: Icon(Icons.delete_outline, size: 18, color: theme.colorScheme.error),
-                    label: Text(l10n.remove, style: TextStyle(color: theme.colorScheme.error)),
+                    variant: PosButtonVariant.danger,
+                    icon: Icons.delete_outline,
+                    label: l10n.remove,
                   ),
               ],
             ),

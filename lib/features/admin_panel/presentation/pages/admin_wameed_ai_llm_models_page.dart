@@ -212,9 +212,9 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
               children: [
                 PosSearchableDropdown<String>(
                   items: [
-                    PosDropdownItem(value: 'openai', label: 'OpenAI'),
-                    PosDropdownItem(value: 'anthropic', label: 'Anthropic'),
-                    PosDropdownItem(value: 'google', label: 'Google'),
+                    PosDropdownItem(value: 'openai', label: l10n.adminProviderOpenAI),
+                    PosDropdownItem(value: 'anthropic', label: l10n.adminProviderAnthropic),
+                    PosDropdownItem(value: 'google', label: l10n.adminProviderGoogle),
                   ],
                   selectedValue: null,
                   onChanged: (v) => formData['provider'] = v,
@@ -225,7 +225,7 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
                 const SizedBox(height: AppSpacing.sm),
                 PosTextField(label: l10n.modelId, hint: 'gpt-4o', onChanged: (v) => formData['model_id'] = v),
                 const SizedBox(height: AppSpacing.sm),
-                PosTextField(label: l10n.displayName, hint: 'GPT-4o', onChanged: (v) => formData['display_name'] = v),
+                PosTextField(label: l10n.displayName, hint: l10n.adminHintGpt4o, onChanged: (v) => formData['display_name'] = v),
                 const SizedBox(height: AppSpacing.sm),
                 PosTextField(label: l10n.description, hint: l10n.optional, onChanged: (v) => formData['description'] = v),
                 const SizedBox(height: AppSpacing.sm),
@@ -332,7 +332,7 @@ class _State extends ConsumerState<AdminWameedAILlmModelsPage> {
     final confirmed = await showPosConfirmDialog(
       context,
       title: l10n.confirmDelete,
-      message: '${l10n.deleteModelConfirm} "$name"?',
+      message: l10n.adminDeleteModelQuote(name),
       confirmLabel: l10n.delete,
       cancelLabel: l10n.cancel,
       isDanger: true,

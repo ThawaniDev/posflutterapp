@@ -84,7 +84,7 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
     final confirmed = await showPosConfirmDialog(
       context,
       title: l10n.staffDeleteTitle,
-      message: '${l10n.staffDeleteConfirm} ${staff.firstName} ${staff.lastName}?',
+      message: l10n.staffDeleteStaffConfirm(l10n.staffDeleteConfirm, staff.firstName, staff.lastName),
       confirmLabel: l10n.delete,
       cancelLabel: l10n.cancel,
       isDanger: true,
@@ -150,6 +150,7 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
         SizedBox(
           width: 180,
           child: PosSearchableDropdown<String?>(
+            hint: l10n.commonAllBranches,
             items: storeOptions,
             selectedValue: _selectedStoreId,
             onChanged: (v) {
@@ -163,6 +164,7 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
         SizedBox(
           width: 160,
           child: PosSearchableDropdown<String?>(
+            hint: l10n.allStatuses,
             items: statusOptions,
             selectedValue: _statusFilter,
             onChanged: (v) {
@@ -176,6 +178,7 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
         SizedBox(
           width: 160,
           child: PosSearchableDropdown<String?>(
+            hint: l10n.allTypes,
             items: typeOptions,
             selectedValue: _employmentTypeFilter,
             onChanged: (v) {
@@ -211,10 +214,10 @@ class _StaffListPageState extends ConsumerState<StaffListPage> {
         onRowTap: (s) => context.push('${Routes.staffMembers}/${s.id}'),
         columns: [
           PosTableColumn(title: l10n.staffMembers),
-          PosTableColumn(title: 'Role / Type'),
+          PosTableColumn(title: l10n.staffRoleOrType),
           PosTableColumn(title: l10n.allStatus),
-          PosTableColumn(title: 'Contact'),
-          PosTableColumn(title: 'Hire Date'),
+          PosTableColumn(title: l10n.staffContact),
+          PosTableColumn(title: l10n.staffHireDate),
         ],
         cellBuilder: (s, colIndex, col) {
           switch (colIndex) {

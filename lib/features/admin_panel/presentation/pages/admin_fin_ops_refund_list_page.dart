@@ -81,7 +81,7 @@ class _State extends ConsumerState<AdminFinOpsRefundListPage> {
                 _applyFilter();
               },
               label: l10n.status,
-              hint: 'All Statuses',
+              hint: l10n.adminAllStatuses,
               showSearch: false,
               clearable: true,
             ),
@@ -93,7 +93,7 @@ class _State extends ConsumerState<AdminFinOpsRefundListPage> {
               FinOpsListError(message: final msg) => Center(
                 child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
               ),
-              _ => const Center(child: Text('Loading refunds...')),
+              _ => Center(child: Text(l10n.adminLoadingRefunds)),
             },
           ),
         ],
@@ -104,7 +104,7 @@ class _State extends ConsumerState<AdminFinOpsRefundListPage> {
   Widget _buildList(Map<String, dynamic> resp) {
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No refunds found'));
+    if (items.isEmpty) return Center(child: Text(l10n.adminNoRefundsFound));
 
     return RefreshIndicator(
       onRefresh: () async => _applyFilter(),

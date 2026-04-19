@@ -147,7 +147,7 @@ class _FeatureGateDialog extends ConsumerWidget {
               children: [
                 Text('Feature Locked', style: AppTypography.titleMedium),
                 AppSpacing.gapH4,
-                Text(featureName, style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary)),
+                Text(featureName, style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
               ],
             ),
           ),
@@ -173,7 +173,7 @@ class _FeatureGateDialog extends ConsumerWidget {
                   if (currentPlanName != null)
                     Row(
                       children: [
-                        Text('Current: ', style: AppTypography.labelSmall.copyWith(color: AppColors.textSecondary)),
+                        Text('Current: ', style: AppTypography.labelSmall.copyWith(color: AppColors.textMutedLight)),
                         Text(currentPlanName!, style: AppTypography.labelSmall.copyWith(fontWeight: FontWeight.w700)),
                       ],
                     ),
@@ -181,7 +181,7 @@ class _FeatureGateDialog extends ConsumerWidget {
                     AppSpacing.gapH4,
                     Row(
                       children: [
-                        Text('Required: ', style: AppTypography.labelSmall.copyWith(color: AppColors.textSecondary)),
+                        Text('Required: ', style: AppTypography.labelSmall.copyWith(color: AppColors.textMutedLight)),
                         Text(
                           requiredPlanName!,
                           style: AppTypography.labelSmall.copyWith(fontWeight: FontWeight.w700, color: AppColors.primary),
@@ -208,7 +208,7 @@ class _FeatureGateDialog extends ConsumerWidget {
                         Icon(
                           plan.isHighlighted ? Icons.star : Icons.circle,
                           size: 12,
-                          color: plan.isHighlighted ? AppColors.primary : AppColors.textSecondary,
+                          color: plan.isHighlighted ? AppColors.primary : AppColors.textMutedLight,
                         ),
                         AppSpacing.gapW8,
                         Expanded(child: Text(plan.name, style: AppTypography.bodySmall)),
@@ -224,18 +224,14 @@ class _FeatureGateDialog extends ConsumerWidget {
         ],
       ),
       actions: [
+        PosButton(onPressed: () => Navigator.pop(context, false), variant: PosButtonVariant.ghost, label: l10n.subNotNow),
         PosButton(
-          onPressed: () => Navigator.pop(context, false),
-          variant: PosButtonVariant.ghost,
-          label: 'Not Now',
-        ),
-        FilledButton.icon(
           onPressed: () {
             Navigator.pop(context, true);
             onUpgrade?.call();
           },
-          icon: const Icon(Icons.upgrade, size: 18),
-          label: Text(l10n.subscriptionUpgrade),
+          icon: Icons.upgrade,
+          label: l10n.subscriptionUpgrade,
         ),
       ],
     );
@@ -277,7 +273,7 @@ class _LimitReachedDialog extends StatelessWidget {
               children: [
                 Text(l10n.subscriptionLimitReached, style: AppTypography.titleMedium),
                 AppSpacing.gapH4,
-                Text(resourceName, style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary)),
+                Text(resourceName, style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight)),
               ],
             ),
           ),
@@ -324,23 +320,19 @@ class _LimitReachedDialog extends StatelessWidget {
           AppSpacing.gapH12,
           Text(
             'Upgrade your plan to increase your $resourceName limit.',
-            style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary),
+            style: AppTypography.bodySmall.copyWith(color: AppColors.textMutedLight),
           ),
         ],
       ),
       actions: [
+        PosButton(onPressed: () => Navigator.pop(context, false), variant: PosButtonVariant.ghost, label: 'Not Now'),
         PosButton(
-          onPressed: () => Navigator.pop(context, false),
-          variant: PosButtonVariant.ghost,
-          label: 'Not Now',
-        ),
-        FilledButton.icon(
           onPressed: () {
             Navigator.pop(context, true);
             onUpgrade?.call();
           },
-          icon: const Icon(Icons.upgrade, size: 18),
-          label: Text(l10n.subscriptionUpgrade),
+          icon: Icons.upgrade,
+          label: l10n.subscriptionUpgrade,
         ),
       ],
     );

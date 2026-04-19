@@ -60,7 +60,7 @@ class ComplianceStatusCard extends StatelessWidget {
               ),
               Expanded(
                 child: _StatTile(
-                  label: 'Total Invoices',
+                  label: l10n.zatcaTotalInvoices,
                   value: '${data.totalInvoices}',
                   color: AppColors.info,
                 ),
@@ -129,6 +129,7 @@ class _StatTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

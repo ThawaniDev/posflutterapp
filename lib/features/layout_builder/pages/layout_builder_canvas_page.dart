@@ -687,9 +687,10 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l10n.layoutCreateVersion),
-        content: TextField(
+        content: PosTextField(
           controller: _versionLabelController,
-          decoration: InputDecoration(labelText: l10n.layoutVersionLabel, hintText: l10n.layoutVersionLabelHint),
+          label: l10n.layoutVersionLabel,
+          hint: l10n.layoutVersionLabelHint,
         ),
         actions: [
           PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.layoutCancel),
@@ -712,10 +713,7 @@ class _LayoutBuilderCanvasPageState extends ConsumerState<LayoutBuilderCanvasPag
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l10n.layoutClone),
-        content: TextField(
-          controller: nameController,
-          decoration: InputDecoration(labelText: l10n.layoutCloneName, hintText: l10n.layoutCloneNameHint),
-        ),
+        content: PosTextField(controller: nameController, label: l10n.layoutCloneName, hint: l10n.layoutCloneNameHint),
         actions: [
           PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.layoutCancel),
           PosButton(

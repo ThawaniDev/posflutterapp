@@ -70,7 +70,7 @@ class _ElectronicsDashboardPageState extends ConsumerState<ElectronicsDashboardP
                     index: _currentTab,
                     children: [
                       state.imeiRecords.isEmpty
-                          ? const PosEmptyState(title: 'No IMEI records', icon: Icons.phone_android)
+                          ? PosEmptyState(title: l10n.electronicsNoImei, icon: Icons.phone_android)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.imeiRecords.length,
@@ -90,7 +90,7 @@ class _ElectronicsDashboardPageState extends ConsumerState<ElectronicsDashboardP
                               },
                             ),
                       state.repairJobs.isEmpty
-                          ? const PosEmptyState(title: 'No repair jobs', icon: Icons.build)
+                          ? PosEmptyState(title: l10n.electronicsNoRepair, icon: Icons.build)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.repairJobs.length,
@@ -110,7 +110,7 @@ class _ElectronicsDashboardPageState extends ConsumerState<ElectronicsDashboardP
                               },
                             ),
                       state.tradeIns.isEmpty
-                          ? const PosEmptyState(title: 'No trade-in records', icon: Icons.swap_horiz)
+                          ? PosEmptyState(title: l10n.electronicsNoTradeIn, icon: Icons.swap_horiz)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.tradeIns.length,

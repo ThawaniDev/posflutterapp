@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_spacing.dart';
 import '../theme/app_typography.dart';
@@ -385,14 +386,15 @@ class PosBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final navItems =
         items ??
-        const [
-          BottomNavigationBarItem(icon: Icon(Icons.dashboard_rounded), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.point_of_sale_rounded), label: 'POS'),
-          BottomNavigationBarItem(icon: Icon(Icons.receipt_long_rounded), label: 'Orders'),
-          BottomNavigationBarItem(icon: Icon(Icons.inventory_2_rounded), label: 'Catalog'),
-          BottomNavigationBarItem(icon: Icon(Icons.more_horiz_rounded), label: 'More'),
+        [
+          BottomNavigationBarItem(icon: const Icon(Icons.dashboard_rounded), label: l10n.navHome),
+          BottomNavigationBarItem(icon: const Icon(Icons.point_of_sale_rounded), label: l10n.navPos),
+          BottomNavigationBarItem(icon: const Icon(Icons.receipt_long_rounded), label: l10n.navOrders),
+          BottomNavigationBarItem(icon: const Icon(Icons.inventory_2_rounded), label: l10n.navCatalog),
+          BottomNavigationBarItem(icon: const Icon(Icons.more_horiz_rounded), label: l10n.navMore),
         ];
 
     return NavigationBar(

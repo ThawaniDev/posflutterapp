@@ -46,6 +46,7 @@ class _AdminMarketplaceSettlementListPageState extends ConsumerState<AdminMarket
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final listState = ref.watch(marketplaceSettlementListProvider);
     final summaryState = ref.watch(marketplaceSettlementSummaryProvider);
 
@@ -137,7 +138,7 @@ class _AdminMarketplaceSettlementListPageState extends ConsumerState<AdminMarket
   Widget _buildList(Map<String, dynamic> data) {
     final settlements = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
     if (settlements.isEmpty) {
-      return const Center(child: Text('No settlements found'));
+      return Center(child: Text(l10n.adminNoSettlements));
     }
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),

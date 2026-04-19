@@ -238,10 +238,7 @@ class _AttendanceCard extends StatelessWidget {
                 if (isOpen)
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: AppColors.warning.withValues(alpha: 0.15),
-                      borderRadius: AppRadius.borderLg,
-                    ),
+                    decoration: BoxDecoration(color: AppColors.warning.withValues(alpha: 0.15), borderRadius: AppRadius.borderLg),
                     child: Text(
                       l10n.active,
                       style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: AppColors.warning),
@@ -252,17 +249,21 @@ class _AttendanceCard extends StatelessWidget {
             AppSpacing.gapH8,
             Row(
               children: [
-                _InfoChip(icon: Icons.login, label: 'In: ${timeFormat.format(record.clockInAt)}'),
+                _InfoChip(icon: Icons.login, label: l10n.staffAttInLabel(timeFormat.format(record.clockInAt))),
                 AppSpacing.gapW12,
                 if (record.clockOutAt != null)
-                  _InfoChip(icon: Icons.logout, label: 'Out: ${timeFormat.format(record.clockOutAt!)}'),
+                  _InfoChip(icon: Icons.logout, label: l10n.staffAttOutLabel(timeFormat.format(record.clockOutAt!))),
                 if (record.breakMinutes != null && record.breakMinutes! > 0) ...[
                   AppSpacing.gapW12,
-                  _InfoChip(icon: Icons.coffee, label: 'Break: ${record.breakMinutes}m'),
+                  _InfoChip(icon: Icons.coffee, label: l10n.staffAttBreakLabel(record.breakMinutes.toString())),
                 ],
                 if (record.overtimeMinutes != null && record.overtimeMinutes! > 0) ...[
                   AppSpacing.gapW12,
-                  _InfoChip(icon: Icons.more_time, label: 'OT: ${record.overtimeMinutes}m', color: AppColors.error),
+                  _InfoChip(
+                    icon: Icons.more_time,
+                    label: l10n.staffAttOTLabel(record.overtimeMinutes.toString()),
+                    color: AppColors.error,
+                  ),
                 ],
               ],
             ),
@@ -372,8 +373,11 @@ class _ClockDialogState extends ConsumerState<_ClockDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             PosSearchableDropdown<StaffUser>(
-              label: '${l10n.staffMember} *',
-              items: staffList.map((s) => PosDropdownItem(value: s, label: '${s.firstName} ${s.lastName}')).toList(),
+              hint: l10n.selectStaffMember,
+              label: l10n.staffMemberRequired(l10n.staffMember),
+              items: staffList
+                  .map((s) => PosDropdownItem(value: s, label: l10n.staffFullNameLabel(s.firstName, s.lastName)))
+                  .toList(),
               selectedValue: _selectedStaff,
               onChanged: (v) => setState(() => _selectedStaff = v),
               showSearch: true,
@@ -388,11 +392,7 @@ class _ClockDialogState extends ConsumerState<_ClockDialog> {
               onSelectionChanged: (v) => setState(() => _isClockIn = v.first),
             ),
             AppSpacing.gapH16,
-            TextField(
-              controller: _notesController,
-              decoration: InputDecoration(labelText: l10n.staffNotesOptional, border: OutlineInputBorder()),
-              maxLines: 2,
-            ),
+            PosTextField(controller: _notesController, label: l10n.staffNotesOptional, maxLines: 2),
           ],
         ),
       ),

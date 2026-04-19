@@ -210,6 +210,7 @@ class _ShiftCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final (statusColor, statusLabel) = _statusInfo(shift.status);
@@ -261,10 +262,7 @@ class _ShiftCard extends StatelessWidget {
                       const Spacer(),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: statusColor.withValues(alpha: 0.15),
-                          borderRadius: AppRadius.borderLg,
-                        ),
+                        decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.15), borderRadius: AppRadius.borderLg),
                         child: Text(
                           statusLabel,
                           style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: statusColor),
@@ -292,7 +290,7 @@ class _ShiftCard extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.delete_outline, color: colorScheme.error),
               onPressed: onDelete,
-              tooltip: 'Delete shift',
+              tooltip: l10n.staffDeleteShift,
             ),
           ],
         ),
@@ -306,7 +304,7 @@ class _ShiftCard extends StatelessWidget {
       ShiftScheduleStatus.completed => (AppColors.success, 'Completed'),
       ShiftScheduleStatus.missed => (AppColors.error, 'Missed'),
       ShiftScheduleStatus.swapped => (AppColors.warning, 'Swapped'),
-      null => (AppColors.textSecondary, 'Unknown'),
+      null => (AppColors.textMutedLight, 'Unknown'),
     };
   }
 }
@@ -355,17 +353,21 @@ class _CreateShiftDialogState extends ConsumerState<_CreateShiftDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             PosSearchableDropdown<StaffUser>(
-              label: '${l10n.staffMember} *',
-              items: staffList.map((s) => PosDropdownItem(value: s, label: '${s.firstName} ${s.lastName}')).toList(),
+              hint: l10n.selectStaffMember,
+              label: l10n.staffMemberRequired(l10n.staffMember),
+              items: staffList
+                  .map((s) => PosDropdownItem(value: s, label: l10n.staffFullNameLabel(s.firstName, s.lastName)))
+                  .toList(),
               selectedValue: _selectedStaff,
               onChanged: (v) => setState(() => _selectedStaff = v),
               showSearch: true,
             ),
             AppSpacing.gapH16,
             PosSearchableDropdown<ShiftTemplate>(
-              label: '${l10n.staffShiftTemplate} *',
+              hint: l10n.selectTemplate,
+              label: l10n.staffMemberRequired(l10n.staffShiftTemplate),
               items: widget.templates
-                  .map((t) => PosDropdownItem(value: t, label: '${t.name} (${t.startTime} - ${t.endTime})'))
+                  .map((t) => PosDropdownItem(value: t, label: l10n.staffShiftLabel(t.name, t.startTime, t.endTime)))
                   .toList(),
               selectedValue: _selectedTemplate,
               onChanged: (v) => setState(() => _selectedTemplate = v),

@@ -113,16 +113,16 @@ final highContrastThemeProvider = Provider<ThemeData?>((ref) {
       focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Color(0xFF000000), width: 3)),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        foregroundColor: const Color(0xFFFFFFFF),
-        backgroundColor: const Color(0xFF000000),
-        side: const BorderSide(color: Color(0xFF000000), width: 2),
+      style: ButtonStyle(
+        foregroundColor: const WidgetStatePropertyAll(Color(0xFFFFFFFF)),
+        backgroundColor: const WidgetStatePropertyAll(Color(0xFF000000)),
+        side: const WidgetStatePropertyAll(BorderSide(color: Color(0xFF000000), width: 2)),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(
-        foregroundColor: const Color(0xFF000000),
-        side: const BorderSide(color: Color(0xFF000000), width: 2),
+      style: const ButtonStyle(
+        foregroundColor: WidgetStatePropertyAll(Color(0xFF000000)),
+        side: WidgetStatePropertyAll(BorderSide(color: Color(0xFF000000), width: 2)),
       ),
     ),
     switchTheme: SwitchThemeData(

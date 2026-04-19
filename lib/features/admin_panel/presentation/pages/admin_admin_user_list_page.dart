@@ -46,16 +46,17 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(adminUserListProvider);
 
     return PosListPage(
-  title: 'Admin Team',
+  title: l10n.adminTeam,
   showSearch: false,
   actions: [
   PosButton.icon(
     icon: Icons.person_add, onPressed: () {
               // Navigate to invite page
-            }, tooltip: 'Invite Admin',
+            }, tooltip: l10n.adminInviteAdmin,
   ),
 ],
   child: Column(
@@ -104,7 +105,7 @@ class _AdminAdminUserListPageState extends ConsumerState<AdminAdminUserListPage>
       ),
       AdminUserListLoaded(:final admins) =>
         admins.isEmpty
-            ? const Center(child: Text('No admin users found'))
+            ? Center(child: Text(l10n.adminNoAdminUsers))
             : ListView.builder(
                 itemCount: admins.length,
                 padding: AppSpacing.paddingAll8,

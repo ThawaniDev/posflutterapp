@@ -116,7 +116,6 @@ class _DebitFormPageState extends ConsumerState<DebitFormPage> {
     if (_selectedCustomerId == null || _selectedType == null || _selectedSource == null) return;
 
     setState(() => _isSaving = true);
-    final l10n = AppLocalizations.of(context)!;
 
     try {
       if (_isEdit) {
@@ -128,8 +127,7 @@ class _DebitFormPageState extends ConsumerState<DebitFormPage> {
         };
         await ref.read(debitsProvider.notifier).updateDebit(widget.debitId!, data);
         if (mounted) {
-          showPosSuccessSnackbar(context, l10n.debitsUpdatedSuccess);
-          context.pop();
+          context.pop('updated');
         }
       } else {
         await ref
@@ -145,8 +143,7 @@ class _DebitFormPageState extends ConsumerState<DebitFormPage> {
               referenceNumber: _referenceController.text.isNotEmpty ? _referenceController.text : null,
             );
         if (mounted) {
-          showPosSuccessSnackbar(context, l10n.debitsCreatedSuccess);
-          context.pop();
+          context.pop('created');
         }
       }
     } catch (e) {

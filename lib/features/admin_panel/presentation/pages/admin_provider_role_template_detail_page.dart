@@ -36,7 +36,7 @@ class _State extends ConsumerState<AdminProviderRoleTemplateDetailPage> {
         ProviderRoleTemplateDetailLoading() => const Center(child: CircularProgressIndicator()),
         ProviderRoleTemplateDetailLoaded(data: final data) => _buildDetail(data),
         ProviderRoleTemplateDetailError(message: final msg) => Center(
-          child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
+          child: Text(l10n.genericError(msg), style: const TextStyle(color: AppColors.error)),
         ),
         _ => Center(child: Text(l10n.loading)),
       },

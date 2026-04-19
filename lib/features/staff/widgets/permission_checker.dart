@@ -4,6 +4,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/features/staff/providers/roles_providers.dart';
 import 'package:wameedpos/features/staff/widgets/pin_override_dialog.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 /// A widget that conditionally renders its [child] based on whether
 /// the current user has the required [permission].
@@ -30,6 +31,7 @@ class PermissionGate extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final hasPermission = ref.watch(hasPermissionProvider(permission));
 
     if (hasPermission) return child;
@@ -73,12 +75,13 @@ class ProtectedAction extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final hasPermission = ref.watch(hasPermissionProvider(permission));
     final pinRequiredAsync = ref.watch(pinRequiredProvider(permission));
 
     if (!hasPermission) {
       return Tooltip(
-        message: 'You do not have permission for this action',
+        message: l10n.staffNoActionPermission,
         child: IgnorePointer(child: Opacity(opacity: 0.4, child: child)),
       );
     }
@@ -115,12 +118,13 @@ class PermissionBadge extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
     final hasPermission = ref.watch(hasPermissionProvider(permission));
     final pinRequiredAsync = ref.watch(pinRequiredProvider(permission));
 
     if (!hasPermission) {
       return Tooltip(
-        message: 'No permission',
+        message: l10n.staffNoPermission,
         child: Icon(Icons.lock, size: 16, color: AppColors.error),
       );
     }
@@ -129,7 +133,7 @@ class PermissionBadge extends ConsumerWidget {
 
     if (requiresPin) {
       return Tooltip(
-        message: 'Requires PIN override',
+        message: l10n.staffRequiresPinOverride,
         child: Icon(Icons.pin, size: 16, color: AppColors.warning),
       );
     }

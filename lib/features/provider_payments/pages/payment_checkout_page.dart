@@ -3,12 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:wameedpos/core/router/route_names.dart';
-import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/provider_payments/providers/provider_payment_providers.dart';
 import 'package:wameedpos/features/provider_payments/providers/provider_payment_state.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
-import 'package:wameedpos/core/theme/app_spacing.dart';
 
 /// Initiates a payment and shows a WebView to complete PayTabs checkout.
 class PaymentCheckoutPage extends ConsumerStatefulWidget {
@@ -123,7 +121,7 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [CircularProgressIndicator(), SizedBox(height: 16), Text(l10n.providerPaymentInitiating)],
+          children: [PosLoading(), SizedBox(height: 16), Text(l10n.providerPaymentInitiating)],
         ),
       );
     }
@@ -142,12 +140,12 @@ class _PaymentCheckoutPageState extends ConsumerState<PaymentCheckoutPage> {
       return Stack(
         children: [
           WebViewWidget(controller: _webController!),
-          if (_webViewLoading) const Center(child: CircularProgressIndicator()),
+          if (_webViewLoading) const PosLoading(),
         ],
       );
     }
 
-    return const Center(child: CircularProgressIndicator());
+    return const PosLoading();
   }
 
   void _showCancelConfirmation(BuildContext context) async {

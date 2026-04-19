@@ -61,7 +61,7 @@ class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> {
             tabs: [
               PosTabItem(label: l10n.bakeryRecipes),
               PosTabItem(label: l10n.production),
-              PosTabItem(label: 'Cake Orders'),
+              PosTabItem(label: l10n.bakeryCakeOrders),
             ],
           ),
           Expanded(
@@ -70,7 +70,7 @@ class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> {
                     index: _currentTab,
                     children: [
                       state.recipes.isEmpty
-                          ? const PosEmptyState(title: 'No recipes yet', icon: Icons.bakery_dining)
+                          ? PosEmptyState(title: l10n.bakeryNoRecipes, icon: Icons.bakery_dining)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.recipes.length,
@@ -90,7 +90,7 @@ class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> {
                               },
                             ),
                       state.productionSchedules.isEmpty
-                          ? const PosEmptyState(title: 'No production schedules', icon: Icons.schedule)
+                          ? PosEmptyState(title: l10n.bakeryNoSchedules, icon: Icons.schedule)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.productionSchedules.length,
@@ -110,7 +110,7 @@ class _BakeryDashboardPageState extends ConsumerState<BakeryDashboardPage> {
                               },
                             ),
                       state.cakeOrders.isEmpty
-                          ? const PosEmptyState(title: 'No cake orders', icon: Icons.cake)
+                          ? PosEmptyState(title: l10n.bakeryNoCakeOrders, icon: Icons.cake)
                           : ListView.builder(
                               padding: const EdgeInsets.all(12),
                               itemCount: state.cakeOrders.length,

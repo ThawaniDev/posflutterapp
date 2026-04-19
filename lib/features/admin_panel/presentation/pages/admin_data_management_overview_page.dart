@@ -38,6 +38,7 @@ class _AdminDataManagementOverviewPageState extends ConsumerState<AdminDataManag
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(dataManagementOverviewProvider);
 
     return PosListPage(
@@ -86,7 +87,7 @@ class _AdminDataManagementOverviewPageState extends ConsumerState<AdminDataManag
             stats: overview['database_backups'] as Map<String, dynamic>? ?? {},
           ),
           const SizedBox(height: AppSpacing.md),
-          _StatCard(title: 'Sync Operations', icon: Icons.sync, stats: overview['sync'] as Map<String, dynamic>? ?? {}),
+          _StatCard(title: l10n.adminSyncOperations, icon: Icons.sync, stats: overview['sync'] as Map<String, dynamic>? ?? {}),
         ],
       ),
     );
@@ -102,6 +103,7 @@ class _StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return PosCard(
       elevation: 2,
       child: Padding(

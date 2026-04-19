@@ -6,6 +6,7 @@ import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
+import 'package:wameedpos/features/pos_terminal/pages/pos_open_shift_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_providers.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_state.dart';
 import 'package:wameedpos/features/security/enums/session_status.dart';
@@ -39,48 +40,13 @@ class _PosSessionsPageState extends ConsumerState<PosSessionsPage> {
   // ──────────────────────────────────────────────────────────
 
   Future<void> _handleOpenSession() async {
-    final openingCashController = TextEditingController(text: '0.000');
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(AppLocalizations.of(ctx)!.sessionsOpenPosSession, style: AppTypography.headlineSmall),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              AppLocalizations.of(ctx)!.sessionsOpenSessionDescription,
-              style: AppTypography.bodyMedium.copyWith(color: AppColors.textSecondaryLight),
-            ),
-            AppSpacing.gapH16,
-            PosTextField(
-              controller: openingCashController,
-              label: AppLocalizations.of(ctx)!.sessionsOpeningCash,
-              hint: '0.000',
-              prefixIcon: Icons.attach_money_rounded,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              autofocus: true,
-            ),
-          ],
-        ),
-        actions: [
-          PosButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            variant: PosButtonVariant.ghost,
-            label: AppLocalizations.of(ctx)!.posCancel,
-          ),
-          PosButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            variant: PosButtonVariant.ghost,
-            label: AppLocalizations.of(ctx)!.sessionsOpenSession,
-          ),
-        ],
-      ),
-    );
-
-    if (confirmed == true && mounted) {
-      final amount = double.tryParse(openingCashController.text) ?? 0.0;
-      await ref.read(posSessionsProvider.notifier).openSession({'opening_cash': amount});
-      if (mounted) showPosSuccessSnackbar(context, AppLocalizations.of(context)!.sessionsSessionOpened);
+    // Use the proper PosOpenShiftDialog which collects opening cash AND
+    // requires register selection (register_id is NOT NULL on the server).
+    await showDialog<void>(context: context, barrierDismissible: false, builder: (_) => const PosOpenShiftDialog());
+    // Refresh the sessions list after the dialog closes (whether or not
+    // a session was actually opened).
+    if (mounted) {
+      await ref.read(posSessionsProvider.notifier).load();
     }
   }
 

@@ -55,6 +55,7 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(cannedResponseListProvider);
 
     return PosListPage(
@@ -129,7 +130,7 @@ class _AdminCannedResponseListPageState extends ConsumerState<AdminCannedRespons
   Widget _buildList(Map<String, dynamic> data) {
     final responses = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
     if (responses.isEmpty) {
-      return const Center(child: Text('No canned responses found'));
+      return Center(child: Text(l10n.adminNoCannedResponses));
     }
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),

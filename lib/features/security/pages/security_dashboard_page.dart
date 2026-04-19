@@ -230,7 +230,7 @@ class _SecurityDashboardPageState extends ConsumerState<SecurityDashboardPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('${a.attemptType.value} • ${a.ipAddress ?? l10n.securityNA}'),
-              if (a.userAgent != null) Text(a.userAgent!, style: TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+              if (a.userAgent != null) Text(a.userAgent!, style: TextStyle(fontSize: 11, color: AppColors.mutedFor(context))),
               if (a.failureReason != null) Text(a.failureReason!, style: TextStyle(fontSize: 11, color: AppColors.error)),
             ],
           ),

@@ -56,9 +56,9 @@ class _State extends ConsumerState<AdminInfraHealthPage> {
             child: PosSearchableDropdown<String>(
               items: [
                 PosDropdownItem(value: 'ok', label: l10n.commonOk),
-                PosDropdownItem(value: 'warning', label: 'WARNING'),
-                PosDropdownItem(value: 'critical', label: 'CRITICAL'),
-                PosDropdownItem(value: 'unknown', label: 'UNKNOWN'),
+                PosDropdownItem(value: 'warning', label: l10n.adminStatusWarning),
+                PosDropdownItem(value: 'critical', label: l10n.adminStatusCritical),
+                PosDropdownItem(value: 'unknown', label: l10n.adminStatusUnknown),
               ],
               selectedValue: _statusFilter,
               onChanged: (v) {
@@ -66,7 +66,7 @@ class _State extends ConsumerState<AdminInfraHealthPage> {
                 _applyFilter();
               },
               label: l10n.status,
-              hint: 'All Statuses',
+              hint: l10n.adminAllStatuses,
               showSearch: false,
               clearable: true,
             ),
@@ -89,7 +89,7 @@ class _State extends ConsumerState<AdminInfraHealthPage> {
   Widget _buildList(Map<String, dynamic> resp) {
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No health checks'));
+    if (items.isEmpty) return Center(child: Text(l10n.adminNoHealthChecks));
 
     return RefreshIndicator(
       onRefresh: () async => _applyFilter(),

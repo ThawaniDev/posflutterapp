@@ -73,7 +73,7 @@ class ArrangementCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('${arrangement.itemsJson.length} flower types', style: AppTypography.bodySmall),
+                  Text(l10n.floristFlowerTypesCount(arrangement.itemsJson.length.toString()), style: AppTypography.bodySmall),
                   Text(
                     '${arrangement.totalPrice.toStringAsFixed(2)} \u0081',
                     style: AppTypography.priceSmall.copyWith(color: AppColors.primary),

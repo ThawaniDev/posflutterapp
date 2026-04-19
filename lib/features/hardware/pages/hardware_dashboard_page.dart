@@ -90,7 +90,7 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
 
   Widget _buildConfigList(HardwareConfigListState state) {
     return switch (state) {
-      HardwareConfigListInitial() || HardwareConfigListLoading() => const Center(child: CircularProgressIndicator()),
+      HardwareConfigListInitial() || HardwareConfigListLoading() => const PosLoading(),
       HardwareConfigListLoaded(:final configs) =>
         configs.isEmpty
             ? PosCard(
@@ -141,7 +141,7 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
           ),
           DeviceTestRunning() => Row(
             children: [
-              const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)),
+              const SizedBox(width: 20, height: 20, child: PosLoading(size: 20)),
               const SizedBox(width: 8),
               Text(AppLocalizations.of(context)!.hardwareTestingDevice),
             ],
@@ -169,7 +169,7 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
 
   Widget _buildSupportedModels(SupportedModelsState state) {
     return switch (state) {
-      SupportedModelsInitial() || SupportedModelsLoading() => const Center(child: CircularProgressIndicator()),
+      SupportedModelsInitial() || SupportedModelsLoading() => const PosLoading(),
       SupportedModelsLoaded(:final models) => CertifiedHardwareList(models: models),
       SupportedModelsError(:final message) => _errorCard(message),
     };
@@ -177,7 +177,7 @@ class _HardwareDashboardPageState extends ConsumerState<HardwareDashboardPage> {
 
   Widget _buildEventLogs(EventLogListState state) {
     return switch (state) {
-      EventLogListInitial() || EventLogListLoading() => const Center(child: CircularProgressIndicator()),
+      EventLogListInitial() || EventLogListLoading() => const PosLoading(),
       EventLogListLoaded(:final logs) => EventLogList(logs: logs),
       EventLogListError(:final message) => _errorCard(message),
     };

@@ -83,7 +83,7 @@ abstract class SettingsSubPageState<T extends SettingsSubPage> extends ConsumerS
         if (_saving)
           const Padding(
             padding: EdgeInsetsDirectional.only(end: 16),
-            child: Center(child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))),
+            child: Center(child: PosLoading(size: 20)),
           ),
       ],
       child: hasError

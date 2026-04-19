@@ -181,10 +181,18 @@ class _PosSearchableDropdownState<T> extends State<PosSearchableDropdown<T>> {
 
   @override
   void dispose() {
-    _removeOverlay();
+    // Safely detach overlay without triggering setState (widget is going away).
+    if (_overlayEntry != null) {
+      if (_overlayEntry!.mounted) {
+        _overlayEntry!.remove();
+      }
+      _overlayEntry!.dispose();
+      _overlayEntry = null;
+    }
+    _isOpen = false;
+    _debounceTimer?.cancel();
     _searchController.dispose();
     _searchFocusNode.dispose();
-    _debounceTimer?.cancel();
     super.dispose();
   }
 
@@ -351,8 +359,12 @@ class _PosSearchableDropdownState<T> extends State<PosSearchableDropdown<T>> {
   }
 
   void _removeOverlay() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
+    if (_overlayEntry != null) {
+      if (_overlayEntry!.mounted) {
+        _overlayEntry!.remove();
+      }
+      _overlayEntry = null;
+    }
     _isOpen = false;
     _debounceTimer?.cancel();
     if (mounted) setState(() {});

@@ -72,7 +72,7 @@ class VatReportCard extends StatelessWidget {
           AppSpacing.gapH20,
           // Breakdown
           _InvoiceBreakdownRow(
-            label: 'Standard Invoices',
+            label: l10n.zatcaStandardInvoices,
             icon: Icons.description_outlined,
             color: AppColors.info,
             count: (data.standardInvoices['count'] as num?)?.toInt() ?? 0,
@@ -81,7 +81,7 @@ class VatReportCard extends StatelessWidget {
           ),
           AppSpacing.gapH12,
           _InvoiceBreakdownRow(
-            label: 'Simplified Invoices',
+            label: l10n.zatcaSimplifiedInvoices,
             icon: Icons.receipt_outlined,
             color: AppColors.success,
             count: (data.simplifiedInvoices['count'] as num?)?.toInt() ?? 0,
@@ -113,6 +113,7 @@ class _InvoiceBreakdownRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return Row(
       children: [

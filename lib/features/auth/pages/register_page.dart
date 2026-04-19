@@ -167,6 +167,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
 
                     // Country Selector
                     PosSearchableDropdown<String>(
+                      hint: l10n.selectCountry,
                       label: l10n.authCountry,
                       items: [
                         PosDropdownItem(value: 'OM', label: l10n.authCountryOman),

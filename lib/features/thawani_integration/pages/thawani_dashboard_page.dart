@@ -68,7 +68,12 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> {
               PosTabItem(label: AppLocalizations.of(context)!.thawaniOrders),
             ],
           ),
-          IndexedStack(index: _currentTab, children: [_buildOverview(statsState), _buildSettings(actionState), _buildOrders()]),
+          Expanded(
+            child: IndexedStack(
+              index: _currentTab,
+              children: [_buildOverview(statsState), _buildSettings(actionState), _buildOrders()],
+            ),
+          ),
         ],
       ),
     );
@@ -101,9 +106,11 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> {
               elevation: 0,
               color: isConnected ? AppColors.success.withValues(alpha: 0.1) : AppColors.warning.withValues(alpha: 0.1),
               borderRadius: AppRadius.borderMd,
-              border: Border.fromBorderSide(BorderSide(
+              border: Border.fromBorderSide(
+                BorderSide(
                   color: isConnected ? AppColors.success.withValues(alpha: 0.3) : AppColors.warning.withValues(alpha: 0.3),
-                )),
+                ),
+              ),
               child: Padding(
                 padding: AppSpacing.paddingAll16,
                 child: Row(
@@ -141,52 +148,49 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> {
               ),
             ),
             AppSpacing.gapH16,
-            // Stats grid - row 1
-            Row(
+            // KPI grid
+            PosStatsGrid(
               children: [
-                _statCard(AppLocalizations.of(context)!.thawaniTotalOrders, '$totalOrders', Icons.receipt, AppColors.info),
-                AppSpacing.gapW12,
-                _statCard(
-                  AppLocalizations.of(context)!.thawaniProducts,
-                  '$totalProductsMapped',
-                  Icons.inventory,
-                  AppColors.purple,
+                PosKpiCard(label: l10n.thawaniTotalOrders, value: '$totalOrders', icon: Icons.receipt, iconColor: AppColors.info),
+                PosKpiCard(
+                  label: l10n.thawaniProducts,
+                  value: '$totalProductsMapped',
+                  icon: Icons.inventory,
+                  iconColor: AppColors.purple,
                 ),
-              ],
-            ),
-            AppSpacing.gapH12,
-            // Stats grid - row 2
-            Row(
-              children: [
-                _statCard('Categories', '$totalCategoriesMapped', Icons.category, AppColors.success),
-                AppSpacing.gapW12,
-                _statCard(AppLocalizations.of(context)!.thawaniPendingOrders, '$pendingOrders', Icons.pending, AppColors.warning),
-              ],
-            ),
-            AppSpacing.gapH12,
-            // Stats grid - row 3 (sync stats)
-            Row(
-              children: [
-                _statCard('Pending Sync', '$pendingSyncItems', Icons.sync, AppColors.info),
-                AppSpacing.gapW12,
-                _statCard('Syncs Today', '$syncLogsToday', Icons.today, AppColors.purple),
+                PosKpiCard(
+                  label: l10n.categories,
+                  value: '$totalCategoriesMapped',
+                  icon: Icons.category,
+                  iconColor: AppColors.success,
+                ),
+                PosKpiCard(
+                  label: l10n.thawaniPendingOrders,
+                  value: '$pendingOrders',
+                  icon: Icons.pending,
+                  iconColor: AppColors.warning,
+                ),
+                PosKpiCard(
+                  label: l10n.thawaniPendingSync,
+                  value: '$pendingSyncItems',
+                  icon: Icons.sync,
+                  iconColor: AppColors.info,
+                ),
+                PosKpiCard(
+                  label: l10n.thawaniSyncsToday,
+                  value: '$syncLogsToday',
+                  icon: Icons.today,
+                  iconColor: AppColors.purple,
+                ),
               ],
             ),
             if (failedSyncsToday > 0) ...[
               AppSpacing.gapH12,
-              PosCard(
-                elevation: 0,
-                color: AppColors.error.withValues(alpha: 0.1),
-                borderRadius: AppRadius.borderMd,
-                border: Border.fromBorderSide(BorderSide(color: AppColors.error.withValues(alpha: 0.3))),
-                child: ListTile(
-                  leading: Icon(Icons.warning_amber, color: AppColors.error),
-                  title: Text(
-                    '$failedSyncsToday failed syncs today',
-                    style: TextStyle(color: AppColors.error, fontWeight: FontWeight.w600),
-                  ),
-                  trailing: PosButton(onPressed: () => context.push(Routes.thawaniSyncLogs), variant: PosButtonVariant.ghost, label: 'View Logs'),
-                ),
+              PosInfoBanner(
+                variant: PosInfoBannerVariant.error,
+                message: l10n.thawaniFailedSyncsTodayCount(failedSyncsToday),
+                actionLabel: l10n.thawaniViewLogs,
+                action: () => context.push(Routes.thawaniSyncLogs),
               ),
             ],
             AppSpacing.gapH24,
@@ -199,52 +203,27 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> {
             _actionTile(
               icon: Icons.sync,
               title: l10n.syncManagement,
-              subtitle: 'Push/pull products & categories',
+              subtitle: l10n.thawaniPushPullCatsProds,
               color: AppColors.info,
               onTap: () => context.push(Routes.thawaniSync),
             ),
             _actionTile(
               icon: Icons.category,
               title: l10n.categoryMappings,
-              subtitle: '$totalCategoriesMapped categories mapped',
+              subtitle: l10n.thawaniCategoriesMapped(totalCategoriesMapped.toString()),
               color: AppColors.purple,
               onTap: () => context.push(Routes.thawaniCategoryMappings),
             ),
             _actionTile(
               icon: Icons.history,
               title: l10n.syncLogs,
-              subtitle: '$syncLogsToday operations today',
+              subtitle: l10n.thawaniOpsToday(syncLogsToday.toString()),
               color: AppColors.success,
               onTap: () => context.push(Routes.thawaniSyncLogs),
             ),
           ],
         ),
     };
-  }
-
-  Widget _statCard(String label, String value, IconData icon, Color color) {
-    return Expanded(
-      child: PosCard(
-        elevation: 0,
-        borderRadius: AppRadius.borderMd,
-        border: Border.fromBorderSide(BorderSide(color: Theme.of(context).dividerColor)),
-        child: Padding(
-          padding: AppSpacing.paddingAll16,
-          child: Column(
-            children: [
-              Icon(icon, color: color, size: 28),
-              AppSpacing.gapH8,
-              Text(
-                value,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: color),
-              ),
-              AppSpacing.gapH4,
-              Text(label, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   Widget _buildSettings(ThawaniActionState actionState) {
@@ -258,42 +237,59 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> {
         onRetry: () => ref.read(thawaniConfigProvider.notifier).load(),
       ),
       ThawaniConfigLoaded(:final config) => ListView(
-        padding: const EdgeInsets.all(16),
+        padding: AppSpacing.paddingAll16,
         children: [
-          SwitchListTile(
-            title: Text(AppLocalizations.of(context)!.thawaniAutoSyncProducts),
-            subtitle: Text(AppLocalizations.of(context)!.thawaniAutoSyncProductsDesc),
-            value: config?['auto_sync_products'] == true,
-            onChanged: isLoading ? null : (v) => ref.read(thawaniActionProvider.notifier).saveConfig({'auto_sync_products': v}),
-          ),
-          const Divider(),
-          SwitchListTile(
-            title: Text(AppLocalizations.of(context)!.thawaniAutoSyncInventory),
-            subtitle: Text(AppLocalizations.of(context)!.thawaniAutoSyncInventoryDesc),
-            value: config?['auto_sync_inventory'] == true,
-            onChanged: isLoading ? null : (v) => ref.read(thawaniActionProvider.notifier).saveConfig({'auto_sync_inventory': v}),
-          ),
-          const Divider(),
-          SwitchListTile(
-            title: Text(AppLocalizations.of(context)!.thawaniAutoAcceptOrders),
-            subtitle: Text(AppLocalizations.of(context)!.thawaniAutoAcceptOrdersDesc),
-            value: config?['auto_accept_orders'] == true,
-            onChanged: isLoading ? null : (v) => ref.read(thawaniActionProvider.notifier).saveConfig({'auto_accept_orders': v}),
-          ),
-          const Divider(),
-          ListTile(
-            title: Text(AppLocalizations.of(context)!.thawaniCommissionRate),
-            subtitle: Text('${config?['commission_rate'] ?? 'Not set'}%'),
-            trailing: const Icon(Icons.chevron_right),
-          ),
-          const SizedBox(height: 24),
-          if (config?['is_connected'] == true)
-            OutlinedButton.icon(
-              onPressed: isLoading ? null : () => ref.read(thawaniActionProvider.notifier).disconnect(),
-              icon: Icon(Icons.link_off, color: AppColors.error),
-              label: Text(AppLocalizations.of(context)!.thawaniDisconnect, style: TextStyle(color: AppColors.error)),
-              style: OutlinedButton.styleFrom(side: BorderSide(color: AppColors.error)),
+          PosFormCard(
+            title: l10n.thawaniSettings,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                PosToggle(
+                  value: config?['auto_sync_products'] == true,
+                  onChanged: isLoading
+                      ? (_) {}
+                      : (v) => ref.read(thawaniActionProvider.notifier).saveConfig({'auto_sync_products': v}),
+                  label: l10n.thawaniAutoSyncProducts,
+                  subtitle: l10n.thawaniAutoSyncProductsDesc,
+                ),
+                AppSpacing.gapH12,
+                PosToggle(
+                  value: config?['auto_sync_inventory'] == true,
+                  onChanged: isLoading
+                      ? (_) {}
+                      : (v) => ref.read(thawaniActionProvider.notifier).saveConfig({'auto_sync_inventory': v}),
+                  label: l10n.thawaniAutoSyncInventory,
+                  subtitle: l10n.thawaniAutoSyncInventoryDesc,
+                ),
+                AppSpacing.gapH12,
+                PosToggle(
+                  value: config?['auto_accept_orders'] == true,
+                  onChanged: isLoading
+                      ? (_) {}
+                      : (v) => ref.read(thawaniActionProvider.notifier).saveConfig({'auto_accept_orders': v}),
+                  label: l10n.thawaniAutoAcceptOrders,
+                  subtitle: l10n.thawaniAutoAcceptOrdersDesc,
+                ),
+                AppSpacing.gapH12,
+                Row(
+                  children: [
+                    Expanded(child: Text(l10n.thawaniCommissionRate)),
+                    Text('${config?['commission_rate'] ?? l10n.thawaniNotSet}%'),
+                  ],
+                ),
+              ],
             ),
+          ),
+          if (config?['is_connected'] == true) ...[
+            AppSpacing.gapH16,
+            PosButton(
+              label: l10n.thawaniDisconnect,
+              icon: Icons.link_off,
+              variant: PosButtonVariant.danger,
+              isFullWidth: true,
+              onPressed: isLoading ? null : () => ref.read(thawaniActionProvider.notifier).disconnect(),
+            ),
+          ],
         ],
       ),
     };
@@ -310,6 +306,7 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> {
     required Color color,
     required VoidCallback onTap,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return PosCard(
       elevation: 0,
       margin: const EdgeInsets.only(bottom: 8),
@@ -321,8 +318,11 @@ class _ThawaniDashboardPageState extends ConsumerState<ThawaniDashboardPage> {
           child: Icon(icon, color: color, size: 20),
         ),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
-        subtitle: Text(subtitle, style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
-        trailing: Icon(Icons.chevron_right, color: AppColors.textSecondary),
+        subtitle: Text(
+          subtitle,
+          style: TextStyle(fontSize: 12, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+        ),
+        trailing: Icon(Icons.chevron_right, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
         onTap: onTap,
       ),
     );

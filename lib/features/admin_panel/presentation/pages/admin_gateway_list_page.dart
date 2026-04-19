@@ -41,13 +41,13 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
     final state = ref.watch(gatewayListProvider);
 
     return PosListPage(
-  title: 'Payment Gateways',
+  title: l10n.adminPaymentGateways,
   showSearch: false,
   actions: [
   PosButton.icon(
     icon: Icons.add,
     onPressed: _showCreateDialog,
-    tooltip: 'Add',
+    tooltip: l10n.adminAdd,
   ),
 ],
   child: Column(
@@ -80,7 +80,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
                           return _gatewayCard(gw);
                         },
                       ),
-              GatewayListError(message: final msg) => Center(child: Text('Error: $msg')),
+              GatewayListError(message: final msg) => Center(child: Text(l10n.genericError(msg))),
               _ => const Center(child: CircularProgressIndicator()),
             },
           ),
@@ -203,7 +203,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Add Gateway'),
+        title: Text(l10n.adminAddGateway),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -227,7 +227,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
                   selectedValue: env,
                   onChanged: (v) => setInnerState(() => env = v ?? env),
                   label: l10n.hwEnvironment,
-                  hint: 'Select environment',
+                  hint: l10n.adminSelectEnvironment,
                   showSearch: false,
                   clearable: false,
                 ),
@@ -263,7 +263,7 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Edit Gateway'),
+        title: Text(l10n.adminEditGateway),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -301,10 +301,10 @@ class _AdminGatewayListPageState extends ConsumerState<AdminGatewayListPage> {
   void _confirmDelete(int id) async {
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Delete Gateway',
-      message: 'Are you sure you want to delete this gateway?',
-      confirmLabel: 'Delete',
-      cancelLabel: 'Cancel',
+      title: l10n.adminDeleteGateway,
+      message: l10n.adminDeleteGatewayConfirm,
+      confirmLabel: l10n.commonDelete,
+      cancelLabel: l10n.commonCancel,
       isDanger: true,
     );
     if (confirmed == true) {

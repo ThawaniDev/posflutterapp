@@ -64,6 +64,7 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(billingInvoiceListProvider);
 
     return PosListPage(
@@ -73,7 +74,7 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
   PosButton.icon(
     icon: Icons.add, onPressed: () {
               // Navigate to create invoice
-            }, tooltip: 'Create Manual Invoice',
+            }, tooltip: l10n.adminCreateManualInvoice,
   ),
 ],
   child: Column(
@@ -171,8 +172,8 @@ class _AdminBillingInvoiceListPageState extends ConsumerState<AdminBillingInvoic
                           );
                         },
                       ),
-              BillingInvoiceListError(message: final msg) => Center(child: Text('Error: $msg')),
-              _ => const Center(child: Text('Search for invoices')),
+              BillingInvoiceListError(message: final msg) => Center(child: Text(l10n.genericError(msg))),
+              _ => Center(child: Text(l10n.adminSearchInvoices)),
             },
           ),
         ],

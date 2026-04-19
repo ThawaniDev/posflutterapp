@@ -57,7 +57,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
       context: context,
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
-          title: Text(isEditing ? 'Edit Category' : 'New Category'),
+          title: Text(isEditing ? l10n.catalogEditCategory : l10n.catalogNewCategory),
           content: SizedBox(
             width: 480,
             child: SingleChildScrollView(
@@ -65,11 +65,15 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  PosTextField(controller: nameController, label: 'Category Name *', hint: 'Enter category name'),
+                  PosTextField(
+                    controller: nameController,
+                    label: l10n.catalogCategoryNameRequired,
+                    hint: l10n.catalogCategoryNameHint,
+                  ),
                   const SizedBox(height: AppSpacing.md),
                   PosTextField(
                     controller: nameArController,
-                    label: 'Arabic Name',
+                    label: l10n.catalogArabicName,
                     hint: 'أدخل اسم الفئة',
                     textDirection: TextDirection.rtl,
                   ),
@@ -77,13 +81,13 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
                   PosTextField(
                     controller: descController,
                     label: l10n.description,
-                    hint: 'Brief description of this category',
+                    hint: l10n.catalogCategoryDescHint,
                     maxLines: 2,
                   ),
                   const SizedBox(height: AppSpacing.md),
                   PosTextField(
                     controller: descArController,
-                    label: 'Arabic Description',
+                    label: l10n.catalogArabicDescription,
                     hint: 'وصف مختصر للفئة',
                     textDirection: TextDirection.rtl,
                     maxLines: 2,
@@ -97,8 +101,8 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
                         .map((c) => PosDropdownItem(value: c.id, label: _buildCategoryPath(c, allCategories)))
                         .toList(),
                     onChanged: (v) => setDialogState(() => selectedParentId = v),
-                    label: 'Parent Category',
-                    hint: 'None (root level)',
+                    label: l10n.catalogParentCategory,
+                    hint: l10n.catalogNoneRootLevel,
                     clearable: true,
                   ),
                   const SizedBox(height: AppSpacing.md),
@@ -106,7 +110,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
                   // Sort order
                   PosTextField(
                     controller: sortOrderController,
-                    label: 'Sort Order',
+                    label: l10n.catalogSortOrder,
                     hint: '0',
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -178,12 +182,12 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
 
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Delete Category',
+      title: l10n.catalogDeleteCategoryTitle,
       message:
           'Are you sure you want to delete "${localizedName(context, name: category.name, nameAr: category.nameAr)}"?'
           '${childCount > 0 ? '\nThis category has $childCount subcategories that will also be removed.' : ''}',
-      confirmLabel: 'Delete',
-      cancelLabel: 'Cancel',
+      confirmLabel: l10n.commonDelete,
+      cancelLabel: l10n.commonCancel,
       isDanger: true,
     );
 
@@ -265,7 +269,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
           onPressed: () => ref.read(categoriesProvider.notifier).load(),
           variant: PosButtonVariant.ghost,
         ),
-        PosButton(label: 'New Category', icon: Icons.add, onPressed: () => _showCategoryDialog()),
+        PosButton(label: l10n.catalogNewCategory, icon: Icons.add, onPressed: () => _showCategoryDialog()),
       ],
       child: _buildBody(categoriesState),
     );
@@ -273,7 +277,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
 
   Widget _buildBody(CategoriesState state) {
     if (state is CategoriesLoading || state is CategoriesInitial) {
-      return const Center(child: CircularProgressIndicator());
+      return const PosLoading();
     }
 
     if (state is CategoriesError) {
@@ -310,7 +314,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
               ),
               const SizedBox(height: AppSpacing.lg),
-              PosButton(label: 'Create First Category', icon: Icons.add, onPressed: () => _showCategoryDialog()),
+              PosButton(label: l10n.catalogCreateFirstCategory, icon: Icons.add, onPressed: () => _showCategoryDialog()),
             ],
           ),
         );

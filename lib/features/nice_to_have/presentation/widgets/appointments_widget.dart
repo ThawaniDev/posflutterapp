@@ -17,7 +17,7 @@ class AppointmentsWidget extends ConsumerWidget {
     return switch (state) {
       AppointmentInitial() || AppointmentLoading() => const Center(child: CircularProgressIndicator()),
       AppointmentError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
+        child: Text(l10n.genericError(message), style: const TextStyle(color: AppColors.error)),
       ),
       AppointmentLoaded(:final appointments) =>
         appointments.isEmpty

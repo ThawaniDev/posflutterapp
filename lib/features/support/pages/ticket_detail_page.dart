@@ -77,20 +77,20 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
     });
 
     return PosListPage(
-  title: l10n.supportTicketDetail,
-  showSearch: false,
-  actions: [
-  if (detailState is TicketDetailLoaded && detailState.ticket.status != TicketStatus.closed)
-            PosButton(
-              label: l10n.supportCloseTicket,
-              variant: PosButtonVariant.outline,
-              size: PosButtonSize.sm,
-              icon: Icons.check_circle_outline_rounded,
-              onPressed: actionState is TicketActionLoading ? null : () => _confirmCloseTicket(l10n),
-            ),
-  AppSpacing.gapW8,
-],
-  child: switch (detailState) {
+      title: l10n.supportTicketDetail,
+      showSearch: false,
+      actions: [
+        if (detailState is TicketDetailLoaded && detailState.ticket.status != TicketStatus.closed)
+          PosButton(
+            label: l10n.supportCloseTicket,
+            variant: PosButtonVariant.outline,
+            size: PosButtonSize.sm,
+            icon: Icons.check_circle_outline_rounded,
+            onPressed: actionState is TicketActionLoading ? null : () => _confirmCloseTicket(l10n),
+          ),
+        AppSpacing.gapW8,
+      ],
+      child: switch (detailState) {
         TicketDetailInitial() || TicketDetailLoading() => Center(child: PosLoadingSkeleton.list()),
         TicketDetailError(:final message) => PosErrorState(
           message: message,
@@ -124,7 +124,7 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
           ],
         ),
       },
-);
+    );
   }
 
   void _confirmCloseTicket(AppLocalizations l10n) async {
@@ -261,12 +261,9 @@ class _TicketDetailPageState extends ConsumerState<TicketDetailPage> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(
-            child: TextField(
+            child: PosTextField(
               controller: _messageController,
-              decoration: InputDecoration(
-                hintText: l10n.supportTypeMessage,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-              ),
+              hint: l10n.supportTypeMessage,
               maxLines: 4,
               minLines: 1,
               textInputAction: TextInputAction.newline,

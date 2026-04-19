@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
@@ -15,7 +16,7 @@ class GamificationWidget extends ConsumerWidget {
     return switch (state) {
       GamificationInitial() || GamificationLoading() => const Center(child: CircularProgressIndicator()),
       GamificationError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
+        child: Text(AppLocalizations.of(context)!.genericError(message), style: const TextStyle(color: AppColors.error)),
       ),
       GamificationLoaded(:final challenges, :final badges, :final tiers) => SingleChildScrollView(
         padding: AppSpacing.paddingAll16,

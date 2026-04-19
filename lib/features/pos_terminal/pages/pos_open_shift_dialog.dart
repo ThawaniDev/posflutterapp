@@ -147,7 +147,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
               ),
               AppSpacing.gapH8,
               Align(
-                alignment: Alignment.centerRight,
+                alignment: AlignmentDirectional.centerEnd,
                 child: PosButton(
                   onPressed: () => _amountController.text = '0.00',
                   variant: PosButtonVariant.ghost,
@@ -236,6 +236,7 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
           );
         }
         return PosSearchableDropdown<String>(
+          hint: AppLocalizations.of(context)!.selectRegister,
           label: AppLocalizations.of(context)!.posSelectRegister,
           items: registers.map((t) {
             return PosDropdownItem<String>(value: t.id, label: t.name);

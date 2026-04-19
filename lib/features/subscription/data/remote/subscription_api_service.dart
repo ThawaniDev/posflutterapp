@@ -169,6 +169,11 @@ class SubscriptionApiService {
     return list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
   }
 
+  /// Remove (deactivate) an add-on from the current store.
+  Future<void> removeAddOn(String addOnId) async {
+    await _dio.delete(ApiEndpoints.subscriptionRemoveAddOn(addOnId));
+  }
+
   // ─── Plan Add-Ons (public) ─────────────────────────────────────
 
   /// List available plan add-ons (public, no auth needed).

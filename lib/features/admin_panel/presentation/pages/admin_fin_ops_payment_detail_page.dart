@@ -35,7 +35,7 @@ class _State extends ConsumerState<AdminFinOpsPaymentDetailPage> {
         FinOpsDetailLoading() => const Center(child: CircularProgressIndicator()),
         FinOpsDetailLoaded(data: final resp) => _buildDetail(resp),
         FinOpsDetailError(message: final msg) => Center(
-          child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
+          child: Text(l10n.genericError(msg), style: const TextStyle(color: AppColors.error)),
         ),
         _ => Center(child: Text(l10n.loading)),
       },

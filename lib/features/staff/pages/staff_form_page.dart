@@ -234,7 +234,8 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
             _buildSectionTitle(context, l10n.staffEmploymentDetails, Icons.work_outline, isDark),
             AppSpacing.gapH12,
             PosSearchableDropdown<EmploymentType>(
-              label: '${l10n.staffEmploymentType} *',
+              hint: l10n.selectEmploymentType,
+              label: l10n.staffMemberRequired(l10n.staffEmploymentType),
               items: EmploymentType.values
                   .map((e) => PosDropdownItem(value: e, label: e.value.replaceAll('_', ' ').toUpperCase()))
                   .toList(),
@@ -246,7 +247,8 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
             ),
             AppSpacing.gapH16,
             PosSearchableDropdown<SalaryType>(
-              label: '${l10n.staffSalaryType} *',
+              hint: l10n.selectSalaryType,
+              label: l10n.staffMemberRequired(l10n.staffSalaryType),
               items: SalaryType.values
                   .map((e) => PosDropdownItem(value: e, label: e.value.replaceAll('_', ' ').toUpperCase()))
                   .toList(),
@@ -272,7 +274,8 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
               AppSpacing.gapH16,
             ],
             PosSearchableDropdown<StaffStatus>(
-              label: '${l10n.staffStatus} *',
+              hint: l10n.selectStatus,
+              label: l10n.staffMemberRequired(l10n.staffStatus),
               items: StaffStatus.values
                   .map((e) => PosDropdownItem(value: e, label: e.value.replaceAll('_', ' ').toUpperCase()))
                   .toList(),
@@ -361,13 +364,13 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
             AppSpacing.gapH32,
 
             // Submit button
-            FilledButton.icon(
+            PosButton(
               onPressed: isSaving ? null : _submit,
-              style: FilledButton.styleFrom(backgroundColor: AppColors.primary, minimumSize: const Size(double.infinity, 48)),
-              icon: isSaving
-                  ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                  : Icon(_isEditing ? Icons.save : Icons.person_add),
-              label: Text(_isEditing ? l10n.staffSaveChanges : l10n.staffCreateMember),
+              isLoading: isSaving,
+              icon: _isEditing ? Icons.save : Icons.person_add,
+              label: _isEditing ? l10n.staffSaveChanges : l10n.staffCreateMember,
+              isFullWidth: true,
+              size: PosButtonSize.lg,
             ),
           ],
         ),
@@ -396,7 +399,8 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
     final stores = branchState is BranchListLoaded ? branchState.branches : <Store>[];
 
     return PosSearchableDropdown<String>(
-      label: '${l10n.staffSelectStore} *',
+      hint: l10n.selectStore,
+      label: l10n.staffMemberRequired(l10n.staffSelectStore),
       items: stores.map((s) => PosDropdownItem<String>(value: s.id, label: s.name)).toList(),
       selectedValue: _selectedStoreId,
       onChanged: (v) {
@@ -444,7 +448,8 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
         if (_createUserAccount) ...[
           AppSpacing.gapH12,
           PosSearchableDropdown<UserRole>(
-            label: '${l10n.staffUserRole} *',
+            hint: l10n.selectRole,
+            label: l10n.staffMemberRequired(l10n.staffUserRole),
             items: UserRole.values.map((r) => PosDropdownItem(value: r, label: r.label)).toList(),
             selectedValue: _userRole,
             onChanged: (v) {
@@ -513,9 +518,9 @@ class _StaffFormPageState extends ConsumerState<StaffFormPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l10n.staffChangePin),
-        content: TextField(
+        content: PosTextField(
           controller: pinController,
-          decoration: InputDecoration(labelText: l10n.staffNewPin, border: const OutlineInputBorder()),
+          label: l10n.staffNewPin,
           keyboardType: TextInputType.number,
           obscureText: true,
           maxLength: 6,

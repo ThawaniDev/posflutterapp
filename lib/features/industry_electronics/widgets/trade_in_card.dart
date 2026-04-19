@@ -4,6 +4,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../models/trade_in_record.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class TradeInCard extends StatelessWidget {
   final TradeInRecord record;
@@ -13,6 +14,8 @@ class TradeInCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return PosCard(
       elevation: 0,
       borderRadius: AppRadius.borderMd,
@@ -44,10 +47,13 @@ class TradeInCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     if (record.imei != null)
-                      Text('IMEI: ${record.imei}', style: AppTypography.caption.copyWith(color: AppColors.textSecondary)),
+                      Text(
+                        l10n.electronicsImeiWithValue(record.imei ?? ''),
+                        style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                      ),
                     Text(
                       'Grade: ${record.conditionGrade}',
-                      style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary),
+                      style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                     ),
                   ],
                 ),

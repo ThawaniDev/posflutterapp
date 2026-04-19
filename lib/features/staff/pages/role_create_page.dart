@@ -150,10 +150,7 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
             const SizedBox(height: AppSpacing.sm),
 
             if (permState is PermissionsLoading)
-              const Padding(
-                padding: EdgeInsets.all(AppSpacing.xl),
-                child: Center(child: CircularProgressIndicator()),
-              )
+              const Padding(padding: EdgeInsets.all(AppSpacing.xl), child: PosLoading())
             else if (permState is PermissionsLoaded)
               ..._buildPermissionModules(permState.grouped)
             else if (permState is PermissionsError)
@@ -216,7 +213,10 @@ class _RoleCreatePageState extends ConsumerState<RoleCreatePage> {
                 });
               },
               activeColor: AppColors.primary,
-              title: Text(perm.displayName, style: Theme.of(context).textTheme.bodyMedium),
+              title: Text(
+                perm.localizedName(Localizations.localeOf(context).languageCode),
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
               subtitle: perm.requiresPin == true
                   ? Row(
                       children: [

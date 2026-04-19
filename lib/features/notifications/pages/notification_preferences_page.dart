@@ -83,16 +83,16 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
     });
 
     return PosListPage(
-  title: l10n.notificationsPreferences,
-  showSearch: false,
-  actions: [
-  if (_hasChanges)
-            Padding(
-              padding: const EdgeInsets.only(right: AppSpacing.sm),
-              child: PosButton.pill(label: l10n.notificationsSave, onPressed: _save, isSelected: true),
-            ),
-],
-  child: switch (state) {
+      title: l10n.notificationsPreferences,
+      showSearch: false,
+      actions: [
+        if (_hasChanges)
+          Padding(
+            padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
+            child: PosButton.pill(label: l10n.notificationsSave, onPressed: _save, isSelected: true),
+          ),
+      ],
+      child: switch (state) {
         NotificationPreferencesInitial() || NotificationPreferencesLoading() => const Center(child: PosLoading()),
         NotificationPreferencesError(:final message) => PosErrorState(
           message: message,
@@ -100,7 +100,7 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
         ),
         NotificationPreferencesLoaded() => _buildPreferences(isDark),
       },
-);
+    );
   }
 
   Widget _buildPreferences(bool isDark) {
@@ -272,15 +272,16 @@ class _NotificationPreferencesPageState extends ConsumerState<NotificationPrefer
                 AppSpacing.gapH8,
                 Align(
                   alignment: AlignmentDirectional.centerStart,
-                  child: TextButton.icon(
+                  child: PosButton(
                     onPressed: () => setState(() {
                       _quietStart = null;
                       _quietEnd = null;
                       _hasChanges = true;
                     }),
-                    icon: const Icon(Icons.clear_rounded, size: 18),
-                    label: Text(l10n.notificationsClearQuietHours),
-                    style: TextButton.styleFrom(foregroundColor: AppColors.error),
+                    icon: Icons.clear_rounded,
+                    label: l10n.notificationsClearQuietHours,
+                    variant: PosButtonVariant.ghost,
+                    size: PosButtonSize.sm,
                   ),
                 ),
               ],

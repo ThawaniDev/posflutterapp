@@ -177,6 +177,19 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       }
     });
 
+    // Auto-scroll only when a new message arrives or sending toggles —
+    // NOT on every rebuild (which would steal control while the user scrolls).
+    ref.listen<AIChatState>(aiActiveChatProvider, (prev, next) {
+      final prevCount = (prev is AIChatLoaded) ? prev.chat.messages.length : 0;
+      final nextCount = (next is AIChatLoaded) ? next.chat.messages.length : 0;
+      final prevSending = (prev is AIChatLoaded) ? prev.isSending : false;
+      final nextSending = (next is AIChatLoaded) ? next.isSending : false;
+      final chatChanged = (prev is AIChatLoaded ? prev.chat.id : null) != (next is AIChatLoaded ? next.chat.id : null);
+      if (nextCount > prevCount || nextSending != prevSending || chatChanged) {
+        _scrollToBottom();
+      }
+    });
+
     if (isMobile) {
       return _buildMobile(theme);
     }
@@ -188,10 +201,6 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   Widget _buildMobile(ThemeData theme) {
     final chatState = ref.watch(aiActiveChatProvider);
     final isNewChat = chatState is! AIChatLoaded || chatState.chat.messages.isEmpty;
-
-    if (chatState is AIChatLoaded && chatState.chat.messages.isNotEmpty) {
-      _scrollToBottom();
-    }
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -246,8 +255,11 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
       child: Row(
         children: [
           Builder(
-            builder: (ctx) =>
-                IconButton(icon: const Icon(Icons.menu), onPressed: () => Scaffold.of(ctx).openDrawer(), tooltip: 'Menu'),
+            builder: (ctx) => IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () => Scaffold.of(ctx).openDrawer(),
+              tooltip: AppLocalizations.of(context)!.wameedAIMenu,
+            ),
           ),
           const Spacer(),
           IconButton(
@@ -265,10 +277,6 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   Widget _buildDesktop(ThemeData theme) {
     final chatState = ref.watch(aiActiveChatProvider);
     final isNewChat = chatState is! AIChatLoaded || chatState.chat.messages.isEmpty;
-
-    if (chatState is AIChatLoaded && chatState.chat.messages.isNotEmpty) {
-      _scrollToBottom();
-    }
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -421,7 +429,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
             controller: _searchController,
             onChanged: (v) => setState(() => _sidebarSearch = v.trim().toLowerCase()),
             decoration: InputDecoration(
-              hintText: 'Search',
+              hintText: AppLocalizations.of(context)!.wameedAISearch,
               prefixIcon: Icon(Icons.search, size: 18, color: theme.hintColor),
               isDense: true,
               filled: true,
@@ -508,8 +516,39 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   // ─── Empty / message views ─────────────────────────────────────
 
   Widget _buildEmptyCenter(ThemeData theme) {
-    // Mirror ChatGPT — clean centered area; logo is implied via top bar.
-    return const SizedBox.shrink();
+    final l10n = AppLocalizations.of(context)!;
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset('assets/images/wameedlogowhite.png', width: 80, height: 80),
+            const SizedBox(height: 20),
+            Text(
+              l10n.wameedAI,
+              style: theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 6),
+            Text(
+              l10n.wameedAITagline,
+              style: theme.textTheme.titleSmall?.copyWith(color: AppColors.primary, fontWeight: FontWeight.w600),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 12),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 480),
+              child: Text(
+                l10n.wameedAIWelcomeSubtitle,
+                style: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor, height: 1.5),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildMessageList(AIChatLoaded chatState, ThemeData theme) {
@@ -557,7 +596,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     final suggestions = _quickSuggestions(context);
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 4, 12, 8),
+      padding: const EdgeInsets.fromLTRB(12, 4, 12, 4),
       child: SizedBox(
         height: 80,
         child: ListView.separated(
@@ -601,26 +640,27 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
   }
 
   List<_Suggestion> _quickSuggestions(BuildContext ctx) {
-    return const [
+    final l10n = AppLocalizations.of(ctx)!;
+    return [
       _Suggestion(
-        title: "Today's sales summary",
-        subtitle: 'Show revenue, top items, and trends',
-        fullPrompt: "Show today's sales summary with top products and trends",
+        title: l10n.wameedAISuggTodaySalesTitle,
+        subtitle: l10n.wameedAISuggTodaySalesSubtitle,
+        fullPrompt: l10n.wameedAISuggTodaySalesPrompt,
       ),
       _Suggestion(
-        title: 'Suggest reorder',
-        subtitle: 'For low-stock and fast-moving items',
-        fullPrompt: 'Suggest a reorder list for items that are running low or selling fast',
+        title: l10n.wameedAISuggReorderTitle,
+        subtitle: l10n.wameedAISuggReorderSubtitle,
+        fullPrompt: l10n.wameedAISuggReorderPrompt,
       ),
       _Suggestion(
-        title: 'Find slow movers',
-        subtitle: 'Items that are not selling well',
-        fullPrompt: 'List the slowest-moving products in my inventory this month',
+        title: l10n.wameedAISuggSlowMoversTitle,
+        subtitle: l10n.wameedAISuggSlowMoversSubtitle,
+        fullPrompt: l10n.wameedAISuggSlowMoversPrompt,
       ),
       _Suggestion(
-        title: 'Customer segments',
-        subtitle: 'Group customers by behavior',
-        fullPrompt: 'Analyze my customers and group them into useful segments',
+        title: l10n.wameedAISuggSegmentsTitle,
+        subtitle: l10n.wameedAISuggSegmentsSubtitle,
+        fullPrompt: l10n.wameedAISuggSegmentsPrompt,
       ),
     ];
   }
@@ -670,7 +710,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
     final hasText = _controller.text.trim().isNotEmpty;
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(12, 4, 12, keyboardVisible ? 8 : (isMobile ? bottomPad + 8 : 16)),
+      padding: EdgeInsets.fromLTRB(12, 8, 12, keyboardVisible ? 8 : (isMobile ? 8 : 16)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -686,21 +726,28 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
           Expanded(
             child: Container(
               constraints: const BoxConstraints(maxHeight: 120, minHeight: 48),
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(color: theme.cardColor, borderRadius: BorderRadius.circular(28)),
-              child: TextField(
-                controller: _controller,
-                focusNode: _focusNode,
-                maxLines: null,
-                textInputAction: isMobile ? TextInputAction.send : TextInputAction.newline,
-                onChanged: (_) => setState(() {}),
-                onSubmitted: isMobile ? (_) => _sendMessage() : null,
-                decoration: InputDecoration(
-                  hintText: isMobile ? l10n.wameedAIChatHint : l10n.wameedAIChatHintDesktop,
-                  border: InputBorder.none,
-                  isCollapsed: true,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 14),
-                  hintStyle: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
+              // padding: const EdgeInsets.symmetric(horizontal: 0),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(28)),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(28),
+                child: TextField(
+                  controller: _controller,
+                  focusNode: _focusNode,
+                  maxLines: null,
+
+                  textInputAction: isMobile ? TextInputAction.newline : TextInputAction.newline,
+                  onChanged: (_) => setState(() {}),
+                  onSubmitted: isMobile ? (_) => _sendMessage() : null,
+                  onTapOutside: (_) => _focusNode.unfocus(),
+
+                  decoration: InputDecoration(
+                    hintText: isMobile ? l10n.wameedAIChatHint : l10n.wameedAIChatHintDesktop,
+                    border: InputBorder.none,
+                    isCollapsed: true,
+                    // contentPadding: const EdgeInsets.symmetric(vertical: 5),
+                    hintStyle: theme.textTheme.bodyMedium?.copyWith(color: theme.hintColor),
+                    focusedBorder: InputBorder.none,
+                  ),
                 ),
               ),
             ),
@@ -755,7 +802,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                     Expanded(
                       child: _AttachmentTile(
                         icon: Icons.photo_camera_outlined,
-                        label: 'Camera',
+                        label: l10n.wameedAICamera,
                         onTap: () {
                           Navigator.pop(ctx);
                           _pickImage(source: ImageSource.camera);
@@ -766,7 +813,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                     Expanded(
                       child: _AttachmentTile(
                         icon: Icons.image_outlined,
-                        label: 'Photos',
+                        label: l10n.wameedAIPhotos,
                         onTap: () {
                           Navigator.pop(ctx);
                           _pickImage(source: ImageSource.gallery);
@@ -777,7 +824,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                     Expanded(
                       child: _AttachmentTile(
                         icon: Icons.attach_file_outlined,
-                        label: 'Files',
+                        label: l10n.wameedAIFiles,
                         onTap: () {
                           Navigator.pop(ctx);
                           _pickImage(source: ImageSource.gallery);
@@ -793,7 +840,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                 _ActionRow(
                   icon: Icons.auto_awesome,
                   title: l10n.wameedAIFeatures,
-                  subtitle: 'Browse all AI capabilities',
+                  subtitle: l10n.wameedAIBrowseCapabilities,
                   onTap: () {
                     Navigator.pop(ctx);
                     _showFeaturesSheet();
@@ -801,8 +848,8 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                 ),
                 _ActionRow(
                   icon: Icons.summarize_outlined,
-                  title: "Today's summary",
-                  subtitle: 'Revenue, top items, and trends',
+                  title: l10n.wameedAITodaySummary,
+                  subtitle: l10n.wameedAITodaySummarySubtitle,
                   onTap: () {
                     Navigator.pop(ctx);
                     context.push(Routes.wameedAIDailySummary);
@@ -810,8 +857,8 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                 ),
                 _ActionRow(
                   icon: Icons.shopping_cart_outlined,
-                  title: 'Smart reorder',
-                  subtitle: 'AI-suggested purchase list',
+                  title: l10n.wameedAISmartReorder,
+                  subtitle: l10n.wameedAISmartReorderSubtitle,
                   onTap: () {
                     Navigator.pop(ctx);
                     context.push(Routes.wameedAISmartReorder);
@@ -819,8 +866,8 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                 ),
                 _ActionRow(
                   icon: Icons.groups_outlined,
-                  title: 'Customer segments',
-                  subtitle: 'Group customers by behavior',
+                  title: l10n.wameedAICustomerSegments,
+                  subtitle: l10n.wameedAICustomerSegmentsSubtitle,
                   onTap: () {
                     Navigator.pop(ctx);
                     context.push(Routes.wameedAICustomerSegments);
@@ -829,7 +876,7 @@ class _AIChatPageState extends ConsumerState<AIChatPage> {
                 _ActionRow(
                   icon: Icons.receipt_long_outlined,
                   title: l10n.wameedAIInvoiceOCR,
-                  subtitle: 'Scan supplier invoices into your system',
+                  subtitle: l10n.wameedAIInvoiceOCRSubtitle,
                   trailing: Icon(Icons.chevron_right, color: theme.hintColor),
                   onTap: () {
                     Navigator.pop(ctx);

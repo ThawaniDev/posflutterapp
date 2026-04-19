@@ -5,6 +5,7 @@ import '../../../core/theme/app_typography.dart';
 import '../enums/metal_type.dart';
 import '../models/daily_metal_rate.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class MetalRateCard extends StatelessWidget {
   final DailyMetalRate rate;
@@ -14,6 +15,7 @@ class MetalRateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PosCard(
@@ -52,7 +54,7 @@ class MetalRateCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('${rate.metalType.value.toUpperCase()} ${rate.karat ?? ''}', style: AppTypography.titleSmall),
-                    Text('Effective: ${rate.effectiveDate}', style: AppTypography.caption),
+                    Text(l10n.jewelryEffectiveWithValue(rate.effectiveDate.toString()), style: AppTypography.caption),
                   ],
                 ),
               ),

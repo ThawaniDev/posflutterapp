@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/l10n/app_localizations.dart';
+import 'package:wameedpos/core/theme/app_spacing.dart';
+import 'package:wameedpos/core/widgets/widgets.dart';
 import 'package:wameedpos/features/settings/models/store_settings.dart';
 import 'package:wameedpos/features/settings/pages/settings_sub_page.dart';
 import 'package:wameedpos/features/settings/widgets/settings_widgets.dart';
@@ -42,22 +44,23 @@ class _TaxSettingsPageState extends SettingsSubPageState<TaxSettingsPage> {
           title: l10n.settingsTaxConfig,
           icon: Icons.receipt_long,
           children: [
-            TextField(
-              controller: _taxLabelCtrl,
-              decoration: InputDecoration(labelText: l10n.settingsTaxLabel),
-              onSubmitted: (_) => _save(),
-            ),
-            const SizedBox(height: 12),
-            TextField(
+            PosTextField(controller: _taxLabelCtrl, label: l10n.settingsTaxLabel, onSubmitted: (_) => _save()),
+            AppSpacing.gapH12,
+            PosTextField(
               controller: _taxRateCtrl,
-              decoration: InputDecoration(labelText: l10n.settingsTaxRate, suffixText: '%'),
+              label: l10n.settingsTaxRate,
+              suffix: const Padding(
+                padding: EdgeInsetsDirectional.only(end: 12),
+                child: Center(widthFactor: 1, child: Text('%')),
+              ),
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
               onSubmitted: (_) => _save(),
             ),
-            const SizedBox(height: 12),
-            TextField(
+            AppSpacing.gapH12,
+            PosTextField(
               controller: _taxNumberCtrl,
-              decoration: InputDecoration(labelText: l10n.settingsTaxNumber, hintText: l10n.settingsTaxNumberHint),
+              label: l10n.settingsTaxNumber,
+              hint: l10n.settingsTaxNumberHint,
               onSubmitted: (_) => _save(),
             ),
             SettingsToggleRow(
@@ -74,7 +77,7 @@ class _TaxSettingsPageState extends SettingsSubPageState<TaxSettingsPage> {
         const SizedBox(height: 8),
         SizedBox(
           width: double.infinity,
-          child: FilledButton.icon(onPressed: _save, icon: const Icon(Icons.save, size: 18), label: Text(l10n.save)),
+          child: PosButton(onPressed: _save, icon: Icons.save, label: l10n.save),
         ),
       ],
     );

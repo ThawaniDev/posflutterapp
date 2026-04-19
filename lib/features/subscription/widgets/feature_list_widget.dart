@@ -18,7 +18,7 @@ class FeatureListWidget extends StatelessWidget {
     final limits = plan.limits ?? [];
 
     if (features.isEmpty && limits.isEmpty) {
-      return const Text('No features listed for this plan.');
+      return Text(l10n.subNoFeaturesListed);
     }
 
     return Column(

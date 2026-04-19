@@ -11,12 +11,11 @@ class PreferencesWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(preferencesProvider);
     final theme = Theme.of(context);
 
     return switch (state) {
-      PreferencesInitial() || PreferencesLoading() => const Center(child: CircularProgressIndicator()),
+      PreferencesInitial() || PreferencesLoading() => const PosLoading(),
       PreferencesError(:final message) => Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -58,7 +57,10 @@ class PreferencesWidget extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(l10n.companionAppPreferences, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+          Text(
+            l10n.companionAppPreferences,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          ),
           AppSpacing.gapH16,
           PosCard(
             child: Column(

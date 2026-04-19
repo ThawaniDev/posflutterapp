@@ -28,7 +28,7 @@ class QuickActionsWidget extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return switch (state) {
-      QuickActionsInitial() || QuickActionsLoading() => const Center(child: CircularProgressIndicator()),
+      QuickActionsInitial() || QuickActionsLoading() => const PosLoading(),
       QuickActionsError(:final message) => Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,

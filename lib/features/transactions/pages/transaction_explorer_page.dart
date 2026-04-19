@@ -97,11 +97,7 @@ class _TransactionExplorerPageState extends ConsumerState<TransactionExplorerPag
 
   Future<void> _pickDateRange() async {
     final now = DateTime.now();
-    final picked = await showPosDateRangePicker(
-      context,
-      firstDate: DateTime(now.year - 2),
-      lastDate: now,
-    );
+    final picked = await showPosDateRangePicker(context, firstDate: DateTime(now.year - 2), lastDate: now);
     if (picked != null) {
       ref.read(transactionExplorerProvider.notifier).setDateRange(picked.start, picked.end);
       ref.read(transactionStatsProvider.notifier).load(dateFrom: picked.start, dateTo: picked.end);
@@ -152,7 +148,7 @@ class _TransactionExplorerPageState extends ConsumerState<TransactionExplorerPag
             // ─── Stats Cards ─────────────────────────────
             if (_showAnalytics) ...[
               if (statsState is TransactionStatsLoading)
-                const SizedBox(height: 80, child: Center(child: CircularProgressIndicator()))
+                const SizedBox(height: 80, child: PosLoading())
               else if (statsState is TransactionStatsLoaded)
                 TransactionStatsCards(stats: statsState),
               AppSpacing.gapH16,
@@ -228,15 +224,12 @@ class _TransactionExplorerPageState extends ConsumerState<TransactionExplorerPag
           ),
           SizedBox(
             width: isMobile ? double.infinity : 160,
-            child: OutlinedButton.icon(
+            child: PosButton(
               onPressed: _pickDateRange,
-              icon: const Icon(Icons.calendar_today, size: 16),
-              label: Text(l10n.txDateRange, style: AppTypography.bodySmall),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.primary,
-                side: const BorderSide(color: AppColors.primary),
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-              ),
+              icon: Icons.calendar_today,
+              variant: PosButtonVariant.outlinePrimary,
+              label: l10n.txDateRange,
+              isFullWidth: true,
             ),
           ),
           TextButton.icon(
@@ -314,7 +307,7 @@ class _TransactionExplorerPageState extends ConsumerState<TransactionExplorerPag
 
   Widget _buildMobileList(TransactionExplorerState state, AppLocalizations l10n) {
     if (state is TransactionExplorerLoading || state is TransactionExplorerInitial) {
-      return const SizedBox(height: 200, child: Center(child: CircularProgressIndicator()));
+      return const SizedBox(height: 200, child: PosLoading());
     }
     if (state is TransactionExplorerError) {
       return SizedBox(
@@ -325,7 +318,11 @@ class _TransactionExplorerPageState extends ConsumerState<TransactionExplorerPag
             children: [
               Text(state.message, style: const TextStyle(color: AppColors.error)),
               AppSpacing.gapH8,
-              PosButton(onPressed: () => ref.read(transactionExplorerProvider.notifier).load(), variant: PosButtonVariant.ghost, label: l10n.commonRetry),
+              PosButton(
+                onPressed: () => ref.read(transactionExplorerProvider.notifier).load(),
+                variant: PosButtonVariant.ghost,
+                label: l10n.commonRetry,
+              ),
             ],
           ),
         ),

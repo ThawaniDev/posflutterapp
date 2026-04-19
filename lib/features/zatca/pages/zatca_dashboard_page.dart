@@ -11,8 +11,6 @@ import '../widgets/compliance_status_card.dart';
 import '../widgets/enrollment_wizard.dart';
 import '../widgets/invoice_list_widget.dart';
 import '../widgets/vat_report_card.dart';
-import 'package:wameedpos/core/widgets/widgets.dart';
-import 'package:wameedpos/core/theme/app_spacing.dart';
 
 class ZatcaDashboardPage extends ConsumerStatefulWidget {
   const ZatcaDashboardPage({super.key});
@@ -107,7 +105,7 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
 
   Widget _buildSummarySection(ZatcaComplianceSummaryState state, ZatcaEnrollmentState enrollState, ThemeData theme) {
     return switch (state) {
-      ZatcaComplianceSummaryInitial() || ZatcaComplianceSummaryLoading() => const Center(child: CircularProgressIndicator()),
+      ZatcaComplianceSummaryInitial() || ZatcaComplianceSummaryLoading() => const PosLoading(),
       ZatcaComplianceSummaryLoaded(certificate: null) => EnrollmentWizard(
         onEnroll: (otp, env) async {
           await ref.read(zatcaEnrollmentProvider.notifier).enroll(otp: otp, environment: env);
@@ -126,7 +124,7 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
 
   Widget _buildVatSection(ZatcaVatReportState state, ThemeData theme) {
     return switch (state) {
-      ZatcaVatReportInitial() || ZatcaVatReportLoading() => const Center(child: CircularProgressIndicator()),
+      ZatcaVatReportInitial() || ZatcaVatReportLoading() => const PosLoading(),
       ZatcaVatReportLoaded() => VatReportCard(data: state),
       ZatcaVatReportError(:final message) => _ErrorCard(
         message: message,
@@ -145,16 +143,19 @@ class _ZatcaDashboardPageState extends ConsumerState<ZatcaDashboardPage> {
         Text(l10n.zatcaRecentInvoices, style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
         AppSpacing.gapH12,
         switch (state) {
-          ZatcaInvoiceListInitial() || ZatcaInvoiceListLoading() => const Center(child: CircularProgressIndicator()),
+          ZatcaInvoiceListInitial() || ZatcaInvoiceListLoading() => const PosLoading(),
           ZatcaInvoiceListLoaded(:final invoices, :final total) => Column(
             children: [
               InvoiceListWidget(invoices: invoices),
               if (total > invoices.length)
                 Padding(
                   padding: AppSpacing.paddingAll12,
-                  child: PosButton(onPressed: () {
+                  child: PosButton(
+                    onPressed: () {
                       // Navigate to full invoice list
-                    }, variant: PosButtonVariant.ghost, label: l10n.zatcaViewAll(total),
+                    },
+                    variant: PosButtonVariant.ghost,
+                    label: l10n.zatcaViewAll(total),
                   ),
                 ),
             ],
@@ -190,20 +191,18 @@ class _ErrorCard extends StatelessWidget {
     final theme = Theme.of(context);
     return Container(
       padding: AppSpacing.paddingAll20,
-      decoration: BoxDecoration(
-        color: AppColors.error.withValues(alpha: 0.05),
-        borderRadius: AppRadius.borderMd,
-      ),
+      decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.05), borderRadius: AppRadius.borderMd),
       child: Column(
         children: [
           Icon(Icons.error_outline, color: theme.colorScheme.error, size: 32),
           AppSpacing.gapH8,
           Text(message, style: theme.textTheme.bodyMedium),
           AppSpacing.gapH12,
-          OutlinedButton.icon(
+          PosButton(
             onPressed: onRetry,
-            icon: const Icon(Icons.refresh),
-            label: Text(AppLocalizations.of(context)!.commonRetry),
+            variant: PosButtonVariant.outline,
+            icon: Icons.refresh,
+            label: AppLocalizations.of(context)!.commonRetry,
           ),
         ],
       ),

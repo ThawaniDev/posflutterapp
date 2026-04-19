@@ -17,6 +17,7 @@ class ReservationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return PosCard(
       elevation: 0,
       borderRadius: AppRadius.borderMd,
@@ -46,7 +47,12 @@ class ReservationCard extends StatelessWidget {
                       children: [
                         Text(reservation.customerName, style: AppTypography.titleSmall.copyWith(fontWeight: FontWeight.w600)),
                         if (reservation.customerPhone != null)
-                          Text(reservation.customerPhone!, style: AppTypography.caption.copyWith(color: AppColors.textSecondary)),
+                          Text(
+                            reservation.customerPhone!,
+                            style: AppTypography.caption.copyWith(
+                              color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight,
+                            ),
+                          ),
                       ],
                     ),
                   ),
@@ -56,22 +62,25 @@ class ReservationCard extends StatelessWidget {
               AppSpacing.gapH8,
               Row(
                 children: [
-                  _infoChip(Icons.calendar_today, _formatDate(reservation.reservationDate)),
+                  _infoChip(context, Icons.calendar_today, _formatDate(reservation.reservationDate)),
                   AppSpacing.gapW8,
-                  _infoChip(Icons.access_time, reservation.reservationTime),
+                  _infoChip(context, Icons.access_time, reservation.reservationTime),
                   AppSpacing.gapW8,
-                  _infoChip(Icons.group, '${reservation.partySize}'),
+                  _infoChip(context, Icons.group, '${reservation.partySize}'),
                 ],
               ),
               if (reservation.durationMinutes != null) ...[
                 AppSpacing.gapH4,
-                Text('${reservation.durationMinutes} min', style: AppTypography.caption.copyWith(color: AppColors.textSecondary)),
+                Text(
+                  l10n.restaurantDurationMin(reservation.durationMinutes.toString()),
+                  style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
+                ),
               ],
               if (reservation.notes != null && reservation.notes!.isNotEmpty) ...[
                 AppSpacing.gapH4,
                 Text(
                   reservation.notes!,
-                  style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondary),
+                  style: AppTypography.bodySmall.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -83,13 +92,14 @@ class ReservationCard extends StatelessWidget {
     );
   }
 
-  Widget _infoChip(IconData icon, String text) {
+  Widget _infoChip(BuildContext context, IconData icon, String text) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 12, color: AppColors.textSecondary),
+        Icon(icon, size: 12, color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
         const SizedBox(width: 3),
-        Text(text, style: AppTypography.caption.copyWith(color: AppColors.textSecondary)),
+        Text(text, style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight)),
       ],
     );
   }
@@ -99,10 +109,10 @@ class ReservationCard extends StatelessWidget {
     final status = reservation.status ?? TableReservationStatus.confirmed;
     return switch (status) {
       TableReservationStatus.confirmed => PosStatusBadge(label: l10n.ordersConfirmed, variant: PosStatusBadgeVariant.info),
-      TableReservationStatus.seated => PosStatusBadge(label: 'Seated', variant: PosStatusBadgeVariant.success),
+      TableReservationStatus.seated => PosStatusBadge(label: l10n.restaurantSeated, variant: PosStatusBadgeVariant.success),
       TableReservationStatus.completed => PosStatusBadge(label: l10n.ordersCompleted, variant: PosStatusBadgeVariant.neutral),
       TableReservationStatus.cancelled => PosStatusBadge(label: l10n.ordersCancelled, variant: PosStatusBadgeVariant.error),
-      TableReservationStatus.noShow => PosStatusBadge(label: 'No Show', variant: PosStatusBadgeVariant.warning),
+      TableReservationStatus.noShow => PosStatusBadge(label: l10n.restaurantNoShow, variant: PosStatusBadgeVariant.warning),
     };
   }
 

@@ -2,12 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wameedpos/features/subscription/data/remote/subscription_api_service.dart';
 import 'package:wameedpos/features/subscription/services/feature_gate_service.dart';
 
 /// Provider for SubscriptionSyncService.
 final subscriptionSyncServiceProvider = Provider<SubscriptionSyncService>((ref) {
-  return SubscriptionSyncService(ref.watch(subscriptionApiServiceProvider), ref.watch(featureGateServiceProvider));
+  return SubscriptionSyncService(ref.watch(featureGateServiceProvider));
 });
 
 /// Service that periodically syncs subscription entitlements from the API.
@@ -15,7 +14,6 @@ final subscriptionSyncServiceProvider = Provider<SubscriptionSyncService>((ref) 
 /// Runs on a heartbeat interval and updates the [FeatureGateService] cache.
 /// The POS relies on this to stay current with plan changes without manual refresh.
 class SubscriptionSyncService {
-  final SubscriptionApiService _apiService;
   final FeatureGateService _featureGateService;
 
   Timer? _heartbeatTimer;
@@ -27,7 +25,7 @@ class SubscriptionSyncService {
   /// Cached entitlement data from last sync
   Map<String, dynamic>? _lastEntitlementData;
 
-  SubscriptionSyncService(this._apiService, this._featureGateService);
+  SubscriptionSyncService(this._featureGateService);
 
   /// Start periodic sync.
   void startSync() {
@@ -50,16 +48,24 @@ class SubscriptionSyncService {
     _isSyncing = true;
 
     try {
-      final data = await _apiService.syncEntitlements();
-      _lastEntitlementData = data;
+      // FeatureGateService.syncEntitlements() calls the API, parses all data
+      // (features, limits, softPOS, plan, subscription, route mapping),
+      // and saves to SharedPreferences.
+      await _featureGateService.syncEntitlements();
 
-      final features = data['features'] as Map<String, dynamic>? ?? {};
-      final limits = data['limits'] as Map<String, dynamic>? ?? {};
-
-      _featureGateService.updateCache(
-        features: features.map((k, v) => MapEntry(k, v as bool? ?? false)),
-        limits: limits.map((k, v) => MapEntry(k, Map<String, dynamic>.from(v as Map))),
-      );
+      // Keep local cache for convenience getters
+      final sub = _featureGateService.subscriptionStatus ?? {};
+      _lastEntitlementData = {
+        'status': sub['status'],
+        'has_subscription': _featureGateService.hasActiveSubscription,
+        'plan_code': _featureGateService.planDetails?['code'],
+        'plan_name': _featureGateService.planDetails?['name'],
+        'plan_name_ar': _featureGateService.planDetails?['name_ar'],
+        'expires_at': sub['expires_at'],
+        'trial_ends_at': sub['trial_ends_at'],
+        'grace_period_ends_at': sub['grace_period_ends_at'],
+        'billing_cycle': sub['billing_cycle'],
+      };
 
       debugPrint('[SubscriptionSyncService] Sync completed successfully');
     } catch (e) {

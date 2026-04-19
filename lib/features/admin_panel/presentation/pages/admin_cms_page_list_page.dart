@@ -87,8 +87,8 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
                 Expanded(
                   child: PosSearchableDropdown<String>(
                     items: [
-                      PosDropdownItem(value: 'legal', label: 'Legal'),
-                      PosDropdownItem(value: 'marketing', label: 'Marketing'),
+                      PosDropdownItem(value: 'legal', label: l10n.adminPageTypeLegal),
+                      PosDropdownItem(value: 'marketing', label: l10n.adminPageTypeMarketing),
                       PosDropdownItem(value: 'general', label: l10n.settingsGeneral),
                     ],
                     selectedValue: _selectedType,
@@ -96,7 +96,7 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
                       setState(() => _selectedType = v);
                       _search();
                     },
-                    hint: 'Type',
+                    hint: l10n.adminType,
                     showSearch: false,
                     clearable: true,
                   ),
@@ -112,7 +112,7 @@ class _AdminCmsPageListPageState extends ConsumerState<AdminCmsPageListPage> {
               ),
               CmsPageListLoaded(:final pages, :final total) =>
                 pages.isEmpty
-                    ? const Center(child: Text('No pages found'))
+                    ? Center(child: Text(l10n.adminNoPagesFound))
                     : ListView.builder(
                         itemCount: pages.length,
                         padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -40,6 +40,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(revenueDashboardProvider);
     final isLoading = state is RevenueDashboardLoading;
     final hasError = state is RevenueDashboardError;
@@ -74,7 +75,7 @@ class _AdminRevenueDashboardPageState extends ConsumerState<AdminRevenueDashboar
                           icon: Icons.check_circle,
                         ),
                         PosKpiCard(
-                          label: 'Upcoming Renewals',
+                          label: l10n.adminUpcomingRenewals,
                           value: '${loaded.upcomingRenewals}',
                           iconColor: AppColors.warning,
                           icon: Icons.hourglass_empty,

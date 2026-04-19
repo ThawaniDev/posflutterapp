@@ -18,8 +18,8 @@ class UpdateStatusWidget extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return switch (state) {
-      UpdateCheckInitial() => const Center(child: Text('Tap to check for updates')),
-      UpdateCheckLoading() => const Center(child: CircularProgressIndicator()),
+      UpdateCheckInitial() => Center(child: Text(l10n.auTapToCheck)),
+      UpdateCheckLoading() => const PosLoading(),
       UpdateCheckError(:final message) => Center(
         child: Text(message, style: TextStyle(color: theme.colorScheme.error)),
       ),
@@ -56,10 +56,11 @@ class UpdateStatusWidget extends ConsumerWidget {
                 AppSpacing.gapH16,
                 SizedBox(
                   width: double.infinity,
-                  child: FilledButton.icon(
+                  child: PosButton(
                     onPressed: () => _openStore(s.storeUrl ?? s.downloadUrl),
-                    icon: const Icon(Icons.download),
-                    label: Text(s.isForceUpdate ? 'Update Now (Required)' : 'Update Now'),
+                    icon: Icons.download,
+                    label: s.isForceUpdate ? 'Update Now (Required)' : 'Update Now',
+                    isFullWidth: true,
                   ),
                 ),
               ],

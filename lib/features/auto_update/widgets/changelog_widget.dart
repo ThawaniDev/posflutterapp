@@ -16,14 +16,14 @@ class ChangelogWidget extends ConsumerWidget {
     final theme = Theme.of(context);
 
     return switch (state) {
-      ChangelogInitial() => const Center(child: Text('Loading changelog...')),
-      ChangelogLoading() => const Center(child: CircularProgressIndicator()),
+      ChangelogInitial() => Center(child: Text(l10n.auLoadingChangelog)),
+      ChangelogLoading() => const PosLoading(),
       ChangelogError(:final message) => Center(
         child: Text(message, style: TextStyle(color: theme.colorScheme.error)),
       ),
       ChangelogLoaded(:final releases) =>
         releases.isEmpty
-            ? const Center(child: Text('No releases found'))
+            ? Center(child: Text(l10n.auNoReleasesFound))
             : ListView.separated(
                 padding: AppSpacing.paddingAll16,
                 itemCount: releases.length,

@@ -15,9 +15,10 @@ class QuickStatsWidget extends ConsumerWidget {
     final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(quickStatsProvider);
     final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return switch (state) {
-      QuickStatsInitial() || QuickStatsLoading() => const Center(child: CircularProgressIndicator()),
+      QuickStatsInitial() || QuickStatsLoading() => const PosLoading(),
       QuickStatsError(:final message) => Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -62,7 +63,7 @@ class QuickStatsWidget extends ConsumerWidget {
                   icon: Icons.inventory_2,
                   label: l10n.reportsLowStock,
                   value: '$lowStockItems',
-                  color: lowStockItems > 0 ? AppColors.error : AppColors.textSecondary,
+                  color: lowStockItems > 0 ? AppColors.error : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                 ),
               ]),
             ],

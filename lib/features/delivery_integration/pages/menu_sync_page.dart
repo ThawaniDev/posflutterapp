@@ -29,14 +29,10 @@ class MenuSyncPage extends ConsumerWidget {
     final configsState = ref.watch(deliveryConfigsProvider);
 
     return PosListPage(
-  title: l10n.deliveryMenuSync,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.refresh, onPressed: () => ref.invalidate(_syncLogsProvider),
-  ),
-],
-  child: ListView(
+      title: l10n.deliveryMenuSync,
+      showSearch: false,
+      actions: [PosButton.icon(icon: Icons.refresh, onPressed: () => ref.invalidate(_syncLogsProvider))],
+      child: ListView(
         padding: AppSpacing.paddingAll16,
         children: [
           // Sync trigger section
@@ -78,7 +74,7 @@ class MenuSyncPage extends ConsumerWidget {
           ),
         ],
       ),
-);
+    );
   }
 }
 
@@ -152,16 +148,12 @@ class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
             ],
 
             // Sync button
-            SizedBox(
-              width: double.infinity,
-              child: FilledButton.icon(
-                onPressed: isLoading || enabledPlatforms.isEmpty ? null : () => widget.onSync(_selectedPlatform),
-                icon: isLoading
-                    ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                    : const Icon(Icons.sync),
-                label: Text(isLoading ? l10n.deliverySyncing : l10n.deliverySyncNow),
-                style: FilledButton.styleFrom(backgroundColor: AppColors.info, padding: AppSpacing.paddingV12),
-              ),
+            PosButton(
+              label: isLoading ? l10n.deliverySyncing : l10n.deliverySyncNow,
+              icon: Icons.sync,
+              isLoading: isLoading,
+              isFullWidth: true,
+              onPressed: isLoading || enabledPlatforms.isEmpty ? null : () => widget.onSync(_selectedPlatform),
             ),
 
             // Result message
@@ -169,10 +161,7 @@ class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
               AppSpacing.gapH12,
               Container(
                 padding: AppSpacing.paddingAll12,
-                decoration: BoxDecoration(
-                  color: AppColors.success.withValues(alpha: 0.1),
-                  borderRadius: AppRadius.borderMd,
-                ),
+                decoration: BoxDecoration(color: AppColors.success.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
                 child: Row(
                   children: [
                     Icon(Icons.check_circle, color: AppColors.success, size: 18),
@@ -191,10 +180,7 @@ class _SyncTriggerSectionState extends State<_SyncTriggerSection> {
               AppSpacing.gapH12,
               Container(
                 padding: AppSpacing.paddingAll12,
-                decoration: BoxDecoration(
-                  color: AppColors.error.withValues(alpha: 0.1),
-                  borderRadius: AppRadius.borderMd,
-                ),
+                decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
                 child: Row(
                   children: [
                     Icon(Icons.error_outline, color: AppColors.error, size: 18),

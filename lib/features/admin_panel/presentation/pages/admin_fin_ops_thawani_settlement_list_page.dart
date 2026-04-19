@@ -59,7 +59,7 @@ class _State extends ConsumerState<AdminFinOpsThawaniSettlementListPage> {
             tabs: [
               PosTabItem(label: l10n.thawaniSettlements),
               PosTabItem(label: l10n.orders),
-              PosTabItem(label: 'Configs'),
+              PosTabItem(label: l10n.adminConfigs),
             ],
           ),
           AdminStatsKpiSection(
@@ -93,7 +93,7 @@ class _SettlementsTab extends ConsumerWidget {
       FinOpsListLoading() => const Center(child: CircularProgressIndicator()),
       FinOpsListLoaded(data: final resp) => _buildList(context, resp),
       FinOpsListError(message: final msg) => Center(
-        child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
+        child: Text(l10n.genericError(msg), style: const TextStyle(color: AppColors.error)),
       ),
       _ => Center(child: Text(l10n.loading)),
     };
@@ -159,18 +159,19 @@ class _OrdersTab extends ConsumerWidget {
     final state = ref.watch(finOpsThawaniOrdersProvider);
     return switch (state) {
       FinOpsListLoading() => const Center(child: CircularProgressIndicator()),
-      FinOpsListLoaded(data: final resp) => _buildList(resp),
+      FinOpsListLoaded(data: final resp) => _buildList(context, resp),
       FinOpsListError(message: final msg) => Center(
-        child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
+        child: Text(l10n.genericError(msg), style: const TextStyle(color: AppColors.error)),
       ),
       _ => Center(child: Text(l10n.loading)),
     };
   }
 
-  Widget _buildList(Map<String, dynamic> resp) {
+  Widget _buildList(BuildContext context, Map<String, dynamic> resp) {
+    final l10n = AppLocalizations.of(context)!;
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No Thawani orders'));
+    if (items.isEmpty) return Center(child: Text(l10n.adminNoThawaniOrders));
     return ListView.separated(
       padding: const EdgeInsets.all(AppSpacing.sm),
       itemCount: items.length,
@@ -208,18 +209,19 @@ class _StoreConfigsTab extends ConsumerWidget {
     final state = ref.watch(finOpsThawaniStoreConfigsProvider);
     return switch (state) {
       FinOpsListLoading() => const Center(child: CircularProgressIndicator()),
-      FinOpsListLoaded(data: final resp) => _buildList(resp),
+      FinOpsListLoaded(data: final resp) => _buildList(context, resp),
       FinOpsListError(message: final msg) => Center(
-        child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
+        child: Text(l10n.genericError(msg), style: const TextStyle(color: AppColors.error)),
       ),
       _ => Center(child: Text(l10n.loading)),
     };
   }
 
-  Widget _buildList(Map<String, dynamic> resp) {
+  Widget _buildList(BuildContext context, Map<String, dynamic> resp) {
+    final l10n = AppLocalizations.of(context)!;
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No store configs'));
+    if (items.isEmpty) return Center(child: Text(l10n.adminNoStoreConfigs));
     return ListView.separated(
       padding: const EdgeInsets.all(AppSpacing.sm),
       itemCount: items.length,

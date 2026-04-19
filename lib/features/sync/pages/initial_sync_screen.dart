@@ -17,7 +17,6 @@ class InitialSyncScreen extends ConsumerStatefulWidget {
 }
 
 class _InitialSyncScreenState extends ConsumerState<InitialSyncScreen> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   _SyncPhase _phase = _SyncPhase.connecting;
   String _statusMessage = 'Connecting to server...';
@@ -165,7 +164,7 @@ class _InitialSyncScreenState extends ConsumerState<InitialSyncScreen> {
                       children: [
                         PosButton(onPressed: widget.onComplete, variant: PosButtonVariant.outline, label: l10n.skipOffline),
                         AppSpacing.gapW12,
-                        FilledButton.icon(
+                        PosButton(
                           onPressed: () {
                             setState(() {
                               _phase = _SyncPhase.connecting;
@@ -173,8 +172,8 @@ class _InitialSyncScreenState extends ConsumerState<InitialSyncScreen> {
                             });
                             _startInitialSync();
                           },
-                          icon: const Icon(Icons.refresh, size: 18),
-                          label: Text(l10n.retry),
+                          icon: Icons.refresh,
+                          label: l10n.retry,
                         ),
                       ],
                     ),

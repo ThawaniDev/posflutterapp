@@ -37,6 +37,7 @@ class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDash
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(analyticsDashboardProvider);
 
     return PosListPage(
@@ -83,7 +84,7 @@ class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDash
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Error: $msg'),
+                    Text(l10n.genericError(msg)),
                     const SizedBox(height: AppSpacing.sm),
                     PosButton(
                       onPressed: () => ref.read(analyticsDashboardProvider.notifier).load(storeId: _storeId),
@@ -92,7 +93,7 @@ class _AdminAnalyticsDashboardPageState extends ConsumerState<AdminAnalyticsDash
                   ],
                 ),
               ),
-              _ => const Center(child: Text('Loading analytics...')),
+              _ => Center(child: Text(l10n.adminLoadingAnalytics)),
             },
           ),
         ],

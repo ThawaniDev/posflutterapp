@@ -17,7 +17,6 @@ class AdminHealthDashboardPage extends ConsumerStatefulWidget {
 }
 
 class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
 
@@ -70,14 +69,10 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
     final storeState = ref.watch(storeHealthListProvider);
 
     return PosListPage(
-  title: l10n.analyticsSystemHealth,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.refresh, onPressed: _loadData,
-  ),
-],
-  child: Column(
+      title: l10n.analyticsSystemHealth,
+      showSearch: false,
+      actions: [PosButton.icon(icon: Icons.refresh, onPressed: _loadData)],
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           Expanded(
@@ -103,7 +98,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
                   const SizedBox(height: 12),
                   switch (storeState) {
                     StoreHealthListInitial() || StoreHealthListLoading() => const Center(child: CircularProgressIndicator()),
-                    StoreHealthListLoaded(data: final data) => _buildStoreHealth(data),
+                    StoreHealthListLoaded(data: final data) => _buildStoreHealth(context, data),
                     StoreHealthListError(message: final msg) => Text(msg, style: const TextStyle(color: AppColors.error)),
                   },
                 ],
@@ -112,7 +107,7 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
           ),
         ],
       ),
-);
+    );
   }
 
   Widget _buildDashboard(Map<String, dynamic> data) {
@@ -209,10 +204,11 @@ class _AdminHealthDashboardPageState extends ConsumerState<AdminHealthDashboardP
     );
   }
 
-  Widget _buildStoreHealth(Map<String, dynamic> data) {
+  Widget _buildStoreHealth(BuildContext context, Map<String, dynamic> data) {
+    final l10n = AppLocalizations.of(context)!;
     final items = (data['data']?['data'] as List?) ?? [];
     if (items.isEmpty) {
-      return const Padding(padding: EdgeInsets.all(16), child: Text('No store health data available'));
+      return Padding(padding: const EdgeInsets.all(16), child: Text(l10n.adminNoStoreHealthData));
     }
     return Column(
       children: items.take(10).map((item) {

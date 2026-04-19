@@ -19,7 +19,6 @@ class BillingHistoryPage extends ConsumerStatefulWidget {
 }
 
 class _BillingHistoryPageState extends ConsumerState<BillingHistoryPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _statusFilter;
   int _currentPage = 1;
@@ -37,9 +36,9 @@ class _BillingHistoryPageState extends ConsumerState<BillingHistoryPage> {
     final invoicesState = ref.watch(invoicesProvider);
 
     return PosListPage(
-  title: l10n.subscriptionBillingHistory,
-  showSearch: false,
-    child: Column(
+      title: l10n.subscriptionBillingHistory,
+      showSearch: false,
+      child: Column(
         children: [
           // Status filter chips
           SingleChildScrollView(
@@ -47,22 +46,22 @@ class _BillingHistoryPageState extends ConsumerState<BillingHistoryPage> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Row(
               children: [
-                _buildFilterChip('All', null),
+                _buildFilterChip(l10n.subFilterAll, null),
                 const SizedBox(width: 8),
-                _buildFilterChip('Paid', 'paid'),
+                _buildFilterChip(l10n.subFilterPaid, 'paid'),
                 const SizedBox(width: 8),
-                _buildFilterChip('Pending', 'pending'),
+                _buildFilterChip(l10n.subFilterPending, 'pending'),
                 const SizedBox(width: 8),
-                _buildFilterChip('Overdue', 'overdue'),
+                _buildFilterChip(l10n.subFilterOverdue, 'overdue'),
                 const SizedBox(width: 8),
-                _buildFilterChip('Cancelled', 'cancelled'),
+                _buildFilterChip(l10n.subFilterCancelled, 'cancelled'),
               ],
             ),
           ),
           Expanded(child: _buildBody(invoicesState)),
         ],
       ),
-);
+    );
   }
 
   Widget _buildFilterChip(String label, String? value) {
@@ -140,7 +139,7 @@ class _BillingHistoryPageState extends ConsumerState<BillingHistoryPage> {
                           }
                         : null,
                   ),
-                  Text('Page $_currentPage of ${state.lastPage}'),
+                  Text(l10n.subPageOfLast(_currentPage.toString(), state.lastPage.toString())),
                   IconButton(
                     icon: const Icon(Icons.chevron_right),
                     onPressed: _currentPage < state.lastPage

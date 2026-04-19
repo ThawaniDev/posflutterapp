@@ -59,6 +59,7 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(providerUserListProvider);
 
     return PosListPage(
@@ -171,7 +172,7 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
       ),
       ProviderUserListLoaded(:final users, :final total) =>
         users.isEmpty
-            ? const Center(child: Text('No users found'))
+            ? Center(child: Text(l10n.adminNoUsersFound))
             : Column(
                 children: [
                   Padding(
@@ -187,7 +188,7 @@ class _AdminProviderUserListPageState extends ConsumerState<AdminProviderUserLis
                   ),
                 ],
               ),
-      _ => const Center(child: Text('Search for users')),
+      _ => Center(child: Text(l10n.adminSearchUsers)),
     };
   }
 

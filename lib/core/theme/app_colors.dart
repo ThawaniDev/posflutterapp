@@ -53,6 +53,10 @@ class AppColors {
   static const Color textMutedLight = Color(0xFF64748B); // slate-500
   static const Color textMutedDark = Color(0xFF94A3B8); // slate-400
 
+  /// Returns the appropriate muted text color for the current theme brightness.
+  /// Use for secondary/helper text that should adapt to dark mode automatically.
+  static Color mutedFor(BuildContext context) => Theme.of(context).brightness == Brightness.dark ? textMutedDark : textMutedLight;
+
   static const Color textDisabledLight = Color(0xFF94A3B8); // slate-400
   static const Color textDisabledDark = Color(0xFF64748B); // slate-500
 

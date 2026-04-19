@@ -64,7 +64,7 @@ class _AdminRoleListPageState extends ConsumerState<AdminRoleListPage> {
               child: ListTile(
                 leading: Icon(
                   isSystem ? Icons.admin_panel_settings : Icons.security,
-                  color: isSystem ? AppColors.primary : AppColors.textSecondary,
+                  color: isSystem ? AppColors.primary : AppColors.mutedFor(context),
                 ),
                 title: Text(role['name'] as String? ?? ''),
                 subtitle: Text(role['description'] as String? ?? role['slug'] as String? ?? ''),

@@ -119,7 +119,7 @@ class _InstallmentWebViewPageState extends ConsumerState<InstallmentWebViewPage>
       actions: [
         if (_isLoading)
           const Padding(
-            padding: EdgeInsets.only(right: 16),
+            padding: EdgeInsetsDirectional.only(end: 16),
             child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2)),
           ),
       ],
@@ -139,7 +139,7 @@ class _InstallmentWebViewPageState extends ConsumerState<InstallmentWebViewPage>
           : Stack(
               children: [
                 WebViewWidget(controller: _controller),
-                if (_isLoading) const Center(child: CircularProgressIndicator()),
+                if (_isLoading) const PosLoading(),
               ],
             ),
     );

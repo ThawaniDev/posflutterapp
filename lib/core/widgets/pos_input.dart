@@ -14,11 +14,15 @@ class PosTextField extends StatelessWidget {
   const PosTextField({
     super.key,
     this.controller,
+    this.initialValue,
     this.focusNode,
     this.label,
     this.hint,
     this.helperText,
     this.errorText,
+    this.validator,
+    this.autovalidateMode,
+    this.decoration,
     this.prefixIcon,
     this.suffixIcon,
     this.suffix,
@@ -41,11 +45,15 @@ class PosTextField extends StatelessWidget {
   });
 
   final TextEditingController? controller;
+  final String? initialValue;
   final FocusNode? focusNode;
   final String? label;
   final String? hint;
   final String? helperText;
   final String? errorText;
+  final FormFieldValidator<String>? validator;
+  final AutovalidateMode? autovalidateMode;
+  final InputDecoration? decoration;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final Widget? suffix;
@@ -76,8 +84,9 @@ class PosTextField extends StatelessWidget {
           Text(label!, style: Theme.of(context).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w600)),
           AppSpacing.gapH4,
         ],
-        TextField(
+        TextFormField(
           controller: controller,
+          initialValue: controller == null ? initialValue : null,
           focusNode: focusNode,
           obscureText: obscureText,
           enabled: enabled,
@@ -89,18 +98,20 @@ class PosTextField extends StatelessWidget {
           textInputAction: textInputAction,
           inputFormatters: inputFormatters,
           onChanged: onChanged,
-          onSubmitted: onSubmitted,
+          onFieldSubmitted: onSubmitted,
           onTap: onTap,
           autofocus: autofocus,
           textCapitalization: textCapitalization,
           textAlign: textAlign,
           textDirection: textDirection,
-          decoration: InputDecoration(
-            hintText: hint,
-            errorText: errorText,
-            helperText: helperText,
-            prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
-            suffixIcon: suffix ?? (suffixIcon != null ? Icon(suffixIcon) : null),
+          validator: validator,
+          autovalidateMode: autovalidateMode,
+          decoration: (decoration ?? const InputDecoration()).copyWith(
+            hintText: decoration?.hintText ?? hint,
+            errorText: decoration?.errorText ?? errorText,
+            helperText: decoration?.helperText ?? helperText,
+            prefixIcon: decoration?.prefixIcon ?? (prefixIcon != null ? Icon(prefixIcon) : null),
+            suffixIcon: decoration?.suffixIcon ?? suffix ?? (suffixIcon != null ? Icon(suffixIcon) : null),
           ),
         ),
       ],

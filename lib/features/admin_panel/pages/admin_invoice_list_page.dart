@@ -114,7 +114,7 @@ class _FilterChip extends StatelessWidget {
       onSelected: (_) => onSelected(),
       selectedColor: AppColors.primary.withValues(alpha: 0.15),
       labelStyle: TextStyle(
-        color: selected ? AppColors.primary : AppColors.textSecondary,
+        color: selected ? AppColors.primary : AppColors.mutedFor(context),
         fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
       ),
     );
@@ -146,7 +146,7 @@ class _InvoiceCard extends StatelessWidget {
         title: Text(invoice['invoice_number'] ?? 'N/A', style: const TextStyle(fontWeight: FontWeight.w600)),
         subtitle: Text(
           'Due: ${invoice['due_date']?.toString().substring(0, 10) ?? 'N/A'}',
-          style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
+          style: TextStyle(color: AppColors.mutedFor(context), fontSize: 13),
         ),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -155,10 +155,7 @@ class _InvoiceCard extends StatelessWidget {
             Text('\u0081${invoice['total'] ?? 0}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-              decoration: BoxDecoration(
-                color: _statusColor(status).withValues(alpha: 0.1),
-                borderRadius: AppRadius.borderMd,
-              ),
+              decoration: BoxDecoration(color: _statusColor(status).withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
               child: Text(
                 status.toUpperCase(),
                 style: TextStyle(color: _statusColor(status), fontSize: 10, fontWeight: FontWeight.bold),

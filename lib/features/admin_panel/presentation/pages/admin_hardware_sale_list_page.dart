@@ -17,7 +17,6 @@ class AdminHardwareSaleListPage extends ConsumerStatefulWidget {
 }
 
 class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   final _searchCtrl = TextEditingController();
   String? _storeId;
@@ -58,16 +57,10 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
     final state = ref.watch(hardwareSaleListProvider);
 
     return PosListPage(
-  title: l10n.hardwareSales,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.add,
-    onPressed: _showCreateDialog,
-    tooltip: 'Add',
-  ),
-],
-  child: Column(
+      title: l10n.hardwareSales,
+      showSearch: false,
+      actions: [PosButton.icon(icon: Icons.add, onPressed: _showCreateDialog, tooltip: l10n.adminAdd)],
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           // Search
@@ -118,19 +111,19 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
               HardwareSaleListLoading() => const Center(child: CircularProgressIndicator()),
               HardwareSaleListLoaded(sales: final items) =>
                 items.isEmpty
-                    ? const Center(child: Text('No hardware sales found'))
+                    ? Center(child: Text(l10n.adminNoHardwareSales))
                     : ListView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
                         itemCount: items.length,
                         itemBuilder: (context, index) => _saleCard(items[index]),
                       ),
-              HardwareSaleListError(message: final msg) => Center(child: Text('Error: $msg')),
+              HardwareSaleListError(message: final msg) => Center(child: Text(l10n.genericError(msg))),
               _ => const Center(child: CircularProgressIndicator()),
             },
           ),
         ],
       ),
-);
+    );
   }
 
   Widget _filterChip(String label, String value) {
@@ -216,7 +209,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Record Hardware Sale'),
+        title: Text(l10n.adminRecordHardwareSale),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -226,13 +219,13 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
                   items: [
                     PosDropdownItem(value: 'terminal', label: l10n.terminal),
                     PosDropdownItem(value: 'printer', label: l10n.hardwarePrinter),
-                    PosDropdownItem(value: 'scanner', label: 'Scanner'),
+                    PosDropdownItem(value: 'scanner', label: l10n.adminItemTypeScanner),
                     PosDropdownItem(value: 'other', label: l10n.acquirerOther),
                   ],
                   selectedValue: itemType,
                   onChanged: (v) => setInnerState(() => itemType = v ?? itemType),
-                  label: 'Item Type',
-                  hint: 'Select item type',
+                  label: l10n.adminItemType,
+                  hint: l10n.adminSelectItemType,
                   showSearch: false,
                   clearable: false,
                 ),
@@ -287,7 +280,7 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Edit Hardware Sale'),
+        title: Text(l10n.adminEditHardwareSale),
         content: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -330,10 +323,10 @@ class _AdminHardwareSaleListPageState extends ConsumerState<AdminHardwareSaleLis
   void _confirmDelete(int id) async {
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Delete Sale',
-      message: 'Are you sure you want to delete this hardware sale?',
-      confirmLabel: 'Delete',
-      cancelLabel: 'Cancel',
+      title: l10n.adminDeleteSale,
+      message: l10n.adminDeleteSaleConfirm,
+      confirmLabel: l10n.commonDelete,
+      cancelLabel: l10n.commonCancel,
       isDanger: true,
     );
     if (confirmed == true) {

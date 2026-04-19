@@ -26,6 +26,7 @@ class _AdminABTestDetailPageState extends ConsumerState<AdminABTestDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(abTestDetailProvider);
 
     return PosListPage(
@@ -64,7 +65,7 @@ class _AdminABTestDetailPageState extends ConsumerState<AdminABTestDetailPage> {
               Text('Variants (${variants.length})', style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 8),
               if (variants.isEmpty)
-                const Text('No variants added yet')
+                Text(l10n.adminNoVariantsYet)
               else
                 ...variants.map(
                   (v) => PosCard(
@@ -91,7 +92,7 @@ class _AdminABTestDetailPageState extends ConsumerState<AdminABTestDetailPage> {
                       label: Text(l10n.stop),
                       style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
                     ),
-                  ElevatedButton.icon(onPressed: () {}, icon: const Icon(Icons.bar_chart), label: const Text('View Results')),
+                  ElevatedButton.icon(onPressed: () {}, icon: const Icon(Icons.bar_chart), label: Text(l10n.adminViewResults)),
                 ],
               ),
             ],

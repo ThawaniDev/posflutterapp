@@ -130,6 +130,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosSearchableDropdown<String>(
+              hint: l10n.selectProduct,
               label: l10n.wameedAIProduct,
               items: products.map((p) => PosDropdownItem(value: p.id, label: p.name)).toList(),
               selectedValue: _selectedProductId,
@@ -137,20 +138,21 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
               showSearch: true,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _imeiCtrl, label: 'IMEI', hint: '15-digit IMEI number', keyboardType: TextInputType.number),
+            PosTextField(controller: _imeiCtrl, label: l10n.electronicsImei, hint: l10n.electronicsImeiHint, keyboardType: TextInputType.number),
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _imei2Ctrl,
-              label: 'IMEI 2 (optional)',
-              hint: 'Dual SIM IMEI',
+              label: l10n.electronicsImei2Optional,
+              hint: l10n.electronicsDualSimImei,
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _serialNumberCtrl, label: 'Serial Number (optional)', hint: 'Device serial number'),
+            PosTextField(controller: _serialNumberCtrl, label: l10n.electronicsSerialOptional, hint: l10n.electronicsSerialHint),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<ConditionGrade>(
+              hint: l10n.selectGrade,
               label: l10n.electronicsConditionGrade,
-              items: ConditionGrade.values.map((g) => PosDropdownItem(value: g, label: 'Grade ${g.value}')).toList(),
+              items: ConditionGrade.values.map((g) => PosDropdownItem(value: g, label: l10n.electronicsGradeValue(g.value))).toList(),
               selectedValue: _conditionGrade,
               onChanged: (v) => setState(() => _conditionGrade = v),
               showSearch: false,
@@ -159,13 +161,14 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _purchasePriceCtrl,
-              label: 'Purchase Price (\u0081)',
+              label: l10n.electronicsPurchasePrice,
               hint: '0.000',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
             if (_isEditing) ...[
               SizedBox(height: AppSpacing.md),
               PosSearchableDropdown<DeviceImeiStatus>(
+                hint: l10n.selectStatus,
                 label: l10n.status,
                 items: DeviceImeiStatus.values.map((s) => PosDropdownItem(value: s, label: s.value)).toList(),
                 selectedValue: _status,
@@ -180,7 +183,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
               child: AbsorbPointer(
                 child: PosTextField(
                   controller: TextEditingController(text: _formatDate(_warrantyEndDate)),
-                  label: 'Manufacturer Warranty End',
+                  label: l10n.electronicsMfgWarrantyEnd,
                   suffixIcon: Icons.calendar_today,
                   readOnly: true,
                 ),
@@ -192,7 +195,7 @@ class _ImeiRecordFormPageState extends ConsumerState<ImeiRecordFormPage> {
               child: AbsorbPointer(
                 child: PosTextField(
                   controller: TextEditingController(text: _formatDate(_storeWarrantyEndDate)),
-                  label: 'Store Warranty End',
+                  label: l10n.electronicsStoreWarrantyEnd,
                   suffixIcon: Icons.calendar_today,
                   readOnly: true,
                 ),

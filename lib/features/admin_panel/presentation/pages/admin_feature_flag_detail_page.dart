@@ -26,6 +26,7 @@ class _AdminFeatureFlagDetailPageState extends ConsumerState<AdminFeatureFlagDet
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(featureFlagDetailProvider);
 
     return PosListPage(
@@ -63,7 +64,7 @@ class _AdminFeatureFlagDetailPageState extends ConsumerState<AdminFeatureFlagDet
               Text('Linked A/B Tests (${abTests.length})', style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 8),
               if (abTests.isEmpty)
-                const Text('No A/B tests linked to this flag')
+                Text(l10n.adminNoAbTestsLinked)
               else
                 ...abTests.map(
                   (test) => PosCard(

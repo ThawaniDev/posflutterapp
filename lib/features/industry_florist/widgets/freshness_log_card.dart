@@ -37,8 +37,8 @@ class FreshnessLogCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Product: ${log.productId}', style: AppTypography.titleSmall),
-                    Text('Qty: ${log.quantity} · Received: ${log.receivedDate}', style: AppTypography.caption),
+                    Text(l10n.floristProductWithId(log.productId), style: AppTypography.titleSmall),
+                    Text(l10n.floristQtyReceivedOn(log.quantity.toString(), log.receivedDate.toString()), style: AppTypography.caption),
                   ],
                 ),
               ),

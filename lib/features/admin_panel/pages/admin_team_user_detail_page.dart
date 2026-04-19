@@ -25,12 +25,13 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(adminTeamUserDetailProvider);
     final theme = Theme.of(context);
     final isLoading = state is AdminTeamUserDetailInitial || state is AdminTeamUserDetailLoading;
 
     return PosFormPage(
-      title: 'Team Member',
+      title: l10n.adminTeamMember,
       isLoading: isLoading,
       child: switch (state) {
         AdminTeamUserDetailError(message: final msg) => Center(
@@ -76,7 +77,7 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
                       Text(user['name'] as String? ?? '', style: theme.textTheme.titleLarge),
                       Text(
                         user['email'] as String? ?? '',
-                        style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
+                        style: theme.textTheme.bodyMedium?.copyWith(color: AppColors.mutedFor(context)),
                       ),
                       AppSpacing.gapH4,
                       Row(
@@ -132,8 +133,8 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
         Text('Roles (${roles.length})', style: theme.textTheme.titleMedium),
         AppSpacing.gapH8,
         if (roles.isEmpty)
-          const PosCard(
-            child: Padding(padding: EdgeInsets.all(16), child: Text('No roles assigned')),
+          PosCard(
+            child: Padding(padding: const EdgeInsets.all(16), child: Text(l10n.adminNoRolesAssigned)),
           )
         else
           ...roles.map((r) {
@@ -180,7 +181,7 @@ class _AdminTeamUserDetailPageState extends ConsumerState<AdminTeamUserDetailPag
         children: [
           Expanded(
             flex: 2,
-            child: Text(label, style: TextStyle(color: AppColors.textSecondary)),
+            child: Text(label, style: TextStyle(color: AppColors.mutedFor(context))),
           ),
           Expanded(flex: 3, child: Text(value)),
         ],

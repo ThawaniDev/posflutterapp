@@ -84,13 +84,14 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
     final staffList = staffState is StaffListLoaded ? staffState.staff : <StaffUser>[];
     return PosFormPage(
       title: l10n.jewelryNewBuyback,
-      bottomBar: PosButton(label: 'Record Buyback', onPressed: _saving ? null : _handleSave, isLoading: _saving, isFullWidth: true),
+      bottomBar: PosButton(label: l10n.jewelryRecordBuyback, onPressed: _saving ? null : _handleSave, isLoading: _saving, isFullWidth: true),
       child: Form(
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             PosSearchableDropdown<MetalType>(
+              hint: l10n.selectMetalType,
               label: l10n.jewelryMetalType,
               items: MetalType.values
                   .map((m) => PosDropdownItem(value: m, label: m.value[0].toUpperCase() + m.value.substring(1)))
@@ -103,7 +104,7 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
               clearable: false,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _karatCtrl, label: l10n.jewelryKarat, hint: 'e.g. 24K, 22K, 18K'),
+            PosTextField(controller: _karatCtrl, label: l10n.jewelryKarat, hint: l10n.jewelryKaratHint),
             SizedBox(height: AppSpacing.md),
             Row(
               children: [
@@ -120,7 +121,7 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _ratePerGramCtrl,
-                    label: 'Rate/g (\u0081)',
+                    label: l10n.jewelryRatePerGram,
                     hint: '0.000',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     onChanged: (_) => setState(() {}),
@@ -138,6 +139,7 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<BuybackPaymentMethod>(
+              hint: l10n.selectPaymentMethod,
               label: l10n.paymentMethod,
               items: BuybackPaymentMethod.values.map((m) => PosDropdownItem(value: m, label: m.value)).toList(),
               selectedValue: _paymentMethod,
@@ -149,14 +151,15 @@ class _BuybackFormPageState extends ConsumerState<BuybackFormPage> {
             ),
             SizedBox(height: AppSpacing.md),
             PosSearchableDropdown<String>(
+              hint: l10n.selectStaffMember,
               label: l10n.staffMember,
-              items: staffList.map((s) => PosDropdownItem(value: s.id, label: '${s.firstName} ${s.lastName}')).toList(),
+              items: staffList.map((s) => PosDropdownItem(value: s.id, label: l10n.electronicsStaffFullName(s.firstName, s.lastName))).toList(),
               selectedValue: _selectedStaffUserId,
               onChanged: (v) => setState(() => _selectedStaffUserId = v),
               showSearch: true,
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _notesCtrl, label: l10n.notesOptional, hint: 'Additional details...', maxLines: 3),
+            PosTextField(controller: _notesCtrl, label: l10n.notesOptional, hint: l10n.jewelryDetailsHint, maxLines: 3),
           ],
         ),
       ),

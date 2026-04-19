@@ -325,6 +325,7 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> {
             PosTabs(
               selectedIndex: _currentTab,
               onChanged: (i) => setState(() => _currentTab = i),
+              isScrollable: true,
               tabs: [
                 PosTabItem(label: l10n.branchesBasicInfo),
                 PosTabItem(label: l10n.branchesLocation),
@@ -335,17 +336,17 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> {
               ],
             ),
             AppSpacing.gapH16,
-            IndexedStack(
-              index: _currentTab,
-              children: [
-                _basicInfoTab(l10n),
-                _locationTab(l10n),
-                _contactTab(l10n),
-                _operationalTab(l10n),
-                _legalTab(l10n),
-                _socialTab(l10n),
-              ],
-            ),
+            // IndexedStack cannot be used inside PosFormPage's SingleChildScrollView
+            // because its children would receive unbounded vertical constraints.
+            switch (_currentTab) {
+              0 => _basicInfoTab(l10n),
+              1 => _locationTab(l10n),
+              2 => _contactTab(l10n),
+              3 => _operationalTab(l10n),
+              4 => _legalTab(l10n),
+              5 => _socialTab(l10n),
+              _ => const SizedBox.shrink(),
+            },
           ],
         ),
       ),
@@ -363,7 +364,7 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> {
           _field(l10n.branchesDescription, _descriptionCtrl, maxLines: 3),
           _field(l10n.branchesDescriptionAr, _descriptionArCtrl, maxLines: 3),
           _dropdown(l10n.branchesBusinessType),
-          _field(l10n.branchesTimezone, _timezoneCtrl, hint: 'Asia/Muscat'),
+          _field(l10n.branchesTimezone, _timezoneCtrl, hint: l10n.branchesTimezoneHint),
           _field(l10n.branchesCurrency, _currencyCtrl, hint: '\u0081'),
           _field(l10n.branchesLocale, _localeCtrl, hint: 'ar'),
           AppSpacing.gapH16,
@@ -389,7 +390,7 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> {
           _field(l10n.branchesCity, _cityCtrl),
           _field(l10n.branchesRegion, _regionCtrl),
           _field(l10n.branchesPostalCode, _postalCodeCtrl),
-          _field(l10n.branchesCountry, _countryCtrl, hint: 'OM'),
+          _field(l10n.branchesCountry, _countryCtrl, hint: l10n.branchesCountryHint),
           _field(l10n.branchesGoogleMapsUrl, _googleMapsUrlCtrl, keyboard: TextInputType.url),
           _field(l10n.branchesLatitude, _latitudeCtrl, keyboard: const TextInputType.numberWithOptions(decimal: true)),
           _field(l10n.branchesLongitude, _longitudeCtrl, keyboard: const TextInputType.numberWithOptions(decimal: true)),
@@ -573,6 +574,7 @@ class _BranchFormPageState extends ConsumerState<BranchFormPage> {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.md),
       child: PosSearchableDropdown<BusinessType>(
+        hint: AppLocalizations.of(context)!.selectBusinessType,
         label: label,
         items: BusinessType.values.map((t) => PosDropdownItem(value: t, label: t.value)).toList(),
         selectedValue: _businessType,

@@ -74,7 +74,7 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
     });
 
     return PosListPage(
-      title: 'Registration Queue',
+      title: l10n.adminRegistrationQueue,
       searchController: _searchController,
       onSearchChanged: (_) {},
       isLoading: state is RegistrationListLoading || actionState is AdminActionLoading,
@@ -294,11 +294,11 @@ class _RegistrationQueuePageState extends ConsumerState<RegistrationQueuePage> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: const Text('Reject Registration'),
+        title: Text(l10n.adminRejectRegistration),
         content: PosTextField(
           controller: reasonCtrl,
           label: l10n.deliveryRejectionReason,
-          hint: 'Explain why this registration is rejected',
+          hint: l10n.adminRejectReasonHint,
           maxLines: 3,
         ),
         actions: [

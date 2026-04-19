@@ -79,8 +79,8 @@ class BranchDetailPage extends ConsumerWidget {
           context,
           title: l10n.branchesDeleteBranch,
           message: l10n.branchesDeleteConfirm,
-          confirmLabel: 'Delete',
-          cancelLabel: 'Cancel',
+          confirmLabel: l10n.commonDelete,
+          cancelLabel: l10n.commonCancel,
           isDanger: true,
         );
         if (confirmed == true && context.mounted) {
@@ -221,11 +221,11 @@ class BranchDetailPage extends ConsumerWidget {
         children: [
           CircleAvatar(
             radius: 32,
-            backgroundColor: branch.isActive ? AppColors.primary10 : AppColors.textSecondary.withValues(alpha: 0.12),
+            backgroundColor: branch.isActive ? AppColors.primary10 : AppColors.mutedFor(context).withValues(alpha: 0.12),
             child: Icon(
               branch.isWarehouse ? Icons.warehouse : (branch.isMainBranch ? Icons.store : Icons.storefront),
               size: 32,
-              color: branch.isActive ? AppColors.primary : AppColors.textSecondary,
+              color: branch.isActive ? AppColors.primary : AppColors.mutedFor(context),
             ),
           ),
           AppSpacing.gapH12,
@@ -341,18 +341,20 @@ class BranchDetailPage extends ConsumerWidget {
   }
 
   Widget _flagRow(String label, bool value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Row(
-        children: [
-          Icon(
-            value ? Icons.check_circle : Icons.cancel,
-            size: 16,
-            color: value ? AppColors.success : AppColors.textSecondary.withValues(alpha: 0.4),
-          ),
-          const SizedBox(width: 8),
-          Text(label, style: const TextStyle(fontSize: 13)),
-        ],
+    return Builder(
+      builder: (context) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2),
+        child: Row(
+          children: [
+            Icon(
+              value ? Icons.check_circle : Icons.cancel,
+              size: 16,
+              color: value ? AppColors.success : AppColors.mutedFor(context).withValues(alpha: 0.4),
+            ),
+            const SizedBox(width: 8),
+            Text(label, style: const TextStyle(fontSize: 13)),
+          ],
+        ),
       ),
     );
   }

@@ -3124,6 +3124,80 @@
   "debitsAllocatedAt": "বরাদ্দকৃত At",
   "debitsCreatedAt": "তৈরি হয়েছে At",
   "debitsOrderNumber": "অর্ডার #",
+
+  "sidebarReceivables": "প্রাপ্য",
+  "receivablesTitle": "প্রাপ্য",
+  "receivablesCreate": "প্রাপ্য তৈরি করুন",
+  "receivablesEdit": "প্রাপ্য সম্পাদনা",
+  "receivablesDetail": "প্রাপ্য বিবরণ",
+  "receivablesNoReceivables": "কোনো প্রাপ্য নেই",
+  "receivablesNoReceivablesSubtitle": "তৈরি হলে প্রাপ্য এখানে দেখাবে।",
+  "receivablesSearchHint": "রেফারেন্স, গ্রাহক, বিবরণ দিয়ে খুঁজুন...",
+  "receivablesFilterByStatus": "স্ট্যাটাস দিয়ে ফিল্টার",
+  "receivablesFilterByType": "ধরন দিয়ে ফিল্টার",
+  "receivablesAll": "সব",
+  "receivablesReferenceNumber": "রেফারেন্স #",
+  "receivablesCustomer": "গ্রাহক",
+  "receivablesType": "ধরন",
+  "receivablesSource": "উৎস",
+  "receivablesAmount": "পরিমাণ",
+  "receivablesRemainingBalance": "অবশিষ্ট ব্যালেন্স",
+  "receivablesDueDate": "নির্ধারিত তারিখ",
+  "receivablesDescription": "বিবরণ",
+  "receivablesDescriptionAr": "বিবরণ (আরবি)",
+  "receivablesSelectCustomer": "গ্রাহক নির্বাচন করুন",
+  "receivablesSelectType": "ধরন নির্বাচন করুন",
+  "receivablesSelectSource": "উৎস নির্বাচন করুন",
+  "receivablesStatusPending": "মুলতুবি",
+  "receivablesStatusPartiallyPaid": "আংশিক পরিশোধিত",
+  "receivablesStatusFullyPaid": "সম্পূর্ণ পরিশোধিত",
+  "receivablesStatusReversed": "বাতিল",
+  "receivablesStatusOverdue": "মেয়াদোত্তীর্ণ",
+  "receivablesTypeCreditSale": "বাকি বিক্রয়",
+  "receivablesTypeLoan": "ঋণ",
+  "receivablesTypeInventoryAdjustment": "ইনভেন্টরি সমন্বয়",
+  "receivablesTypeManual": "ম্যানুয়াল",
+  "receivablesSourcePosTerminal": "POS টার্মিনাল",
+  "receivablesSourceInvoice": "ইনভয়েস",
+  "receivablesSourceReturn": "রিটার্ন",
+  "receivablesSourceManual": "ম্যানুয়াল",
+  "receivablesSourceInventorySystem": "ইনভেন্টরি সিস্টেম",
+  "receivablesRecordPayment": "পেমেন্ট রেকর্ড",
+  "receivablesPaymentAmount": "পেমেন্টের পরিমাণ",
+  "receivablesPaymentMethod": "পেমেন্ট পদ্ধতি",
+  "receivablesAddNote": "নোট যোগ করুন",
+  "receivablesNoteHint": "নোট লিখুন...",
+  "receivablesViewLogs": "লগ দেখুন",
+  "receivablesLogs": "কার্যকলাপ লগ",
+  "receivablesNoLogs": "এখনো কোনো কার্যকলাপ নেই",
+  "receivablesPayments": "পেমেন্ট",
+  "receivablesNoPayments": "এখনো কোনো পেমেন্ট নেই",
+  "receivablesReverse": "বাতিল",
+  "receivablesReverseReceivable": "প্রাপ্য বাতিল",
+  "receivablesReverseReason": "বাতিলের কারণ",
+  "receivablesReverseConfirm": "আপনি কি নিশ্চিত যে এই প্রাপ্যটি বাতিল করতে চান?",
+  "receivablesDeleteConfirm": "আপনি কি নিশ্চিত যে এই প্রাপ্যটি মুছতে চান?",
+  "receivablesCreatedSuccess": "প্রাপ্য সফলভাবে তৈরি হয়েছে",
+  "receivablesUpdatedSuccess": "প্রাপ্য সফলভাবে আপডেট হয়েছে",
+  "receivablesDeletedSuccess": "প্রাপ্য সফলভাবে মুছে ফেলা হয়েছে",
+  "receivablesPaymentSuccess": "পেমেন্ট সফলভাবে রেকর্ড হয়েছে",
+  "receivablesNoteAddedSuccess": "নোট সফলভাবে যোগ হয়েছে",
+  "receivablesReversedSuccess": "প্রাপ্য সফলভাবে বাতিল হয়েছে",
+  "receivablesSummaryTitle": "প্রাপ্য সারসংক্ষেপ",
+  "receivablesSummaryTotal": "মোট প্রাপ্য",
+  "receivablesSummaryPending": "মুলতুবি",
+  "receivablesSummaryPartially": "আংশিক পরিশোধিত",
+  "receivablesSummaryFully": "সম্পূর্ণ পরিশোধিত",
+  "receivablesSummaryReversed": "বাতিল",
+  "receivablesSummaryOverdue": "মেয়াদোত্তীর্ণ",
+  "receivablesSummaryPaid": "মোট পরিশোধিত",
+  "receivablesSummaryOutstanding": "বকেয়া",
+  "receivablesCreatedBy": "তৈরি করেছেন",
+  "receivablesSettledBy": "নিষ্পত্তি করেছেন",
+  "receivablesSettledAt": "নিষ্পত্তির তারিখ",
+  "receivablesCreatedAt": "তৈরির তারিখ",
+  "receivablesOrderNumber": "অর্ডার #",
+
   "searchDropdownHint": "অনুসন্ধান...",
   "noResultsFound": "কোনো ফলাফল পাওয়া যায়নি",
   "selectOption": "নির্বাচন করুন...",
@@ -4874,5 +4948,1315 @@
   },
   "reportLegendRevenue": "রাজস্ব",
   "reportLegendCost": "খরচ",
-  "reportLegendNetProfit": "নিট মুনাফা"
+  "reportLegendNetProfit": "নিট মুনাফা",
+  "navHome": "হোম",
+  "navPos": "পিওএস",
+  "navOrders": "অর্ডার",
+  "navCatalog": "ক্যাটালগ",
+  "navMore": "আরও",
+  "tableActionsHeader": "অ্যাকশন",
+  "tableActionsTooltip": "অ্যাকশন",
+  "tableRowsLabel": "সারি: ",
+  "tablePreviousPage": "পূর্ববর্তী পৃষ্ঠা",
+  "tableNextPage": "পরবর্তী পৃষ্ঠা",
+  "tableShowingRange": "দেখানো হচ্ছে {start}-{end} / {total}",
+  "@tableShowingRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "accessDenied": "অ্যাক্সেস অস্বীকৃত",
+  "accessDeniedMessage": "এই পৃষ্ঠাটি দেখার অনুমতি আপনার নেই।\nঅ্যাক্সেসের জন্য আপনার প্রশাসকের সাথে যোগাযোগ করুন।",
+  "catalogTabBasicInfo": "মূল তথ্য",
+  "catalogTabPricing": "মূল্য নির্ধারণ",
+  "catalogTabVariants": "ভ্যারিয়েন্ট",
+  "catalogTabModifiers": "মডিফায়ার",
+  "catalogTabBarcodes": "বারকোড",
+  "catalogProductNameRequired": "পণ্যের নাম *",
+  "catalogProductNameHint": "পণ্যের নাম লিখুন",
+  "catalogProductNameArabic": "পণ্যের নাম (আরবি)",
+  "catalogProductDescHint": "পণ্যের বিবরণ লিখুন",
+  "catalogSelectCategory": "ক্যাটাগরি নির্বাচন করুন",
+  "catalogUnitType": "ইউনিটের ধরন",
+  "catalogSelectUnit": "ইউনিট নির্বাচন করুন",
+  "catalogSku": "SKU",
+  "catalogSkuHint": "স্টক কিপিং ইউনিট",
+  "catalogPrimaryBarcode": "প্রাথমিক বারকোড",
+  "catalogBarcodeHint": "বারকোড লিখুন বা স্ক্যান করুন",
+  "catalogMinOrderQty": "সর্বনিম্ন অর্ডার পরিমাণ",
+  "catalogMaxOrderQty": "সর্বোচ্চ অর্ডার পরিমাণ",
+  "catalogUnlimited": "সীমাহীন",
+  "catalogSoldByWeight": "ওজন অনুসারে বিক্রি (POS-এ স্কেল ব্যবহার করুন)",
+  "catalogTareWeight": "ট্যায়ার ওজন (কেজি)",
+  "catalogAgeRestriction": "POS-এ বয়স যাচাই প্রয়োজন",
+  "catalogSellPriceRequired": "বিক্রয় মূল্য () *",
+  "catalogCostPrice": "খরচ মূল্য ()",
+  "catalogOfferPrice": "অফার মূল্য ()",
+  "catalogOfferPriceHint": "অফার না থাকলে ফাঁকা রাখুন",
+  "catalogOfferStart": "অফার শুরু",
+  "catalogOfferEnd": "অফার শেষ",
+  "catalogDatePlaceholder": "YYYY-MM-DD",
+  "catalogVariantValueRequired": "ভ্যারিয়েন্ট মান *",
+  "catalogVariantValueHint": "যেমন: বড়, লাল, ৫০০মিলি",
+  "catalogVariantSkuHint": "ঐচ্ছিক ভ্যারিয়েন্ট SKU",
+  "catalogPriceAdjustment": "মূল্য সমন্বয়",
+  "catalogAddGroup": "গ্রুপ যোগ করুন",
+  "catalogGroupNameRequired": "গ্রুপের নাম *",
+  "catalogGroupNameHint": "যেমন: সাইজ, অতিরিক্ত",
+  "catalogMinSelect": "সর্বনিম্ন নির্বাচন",
+  "catalogMaxSelect": "সর্বোচ্চ নির্বাচন",
+  "catalogAddBarcode": "বারকোড যোগ করুন",
+  "catalogBarcodeRequired": "বারকোড *",
+  "catalogLinkSupplier": "সরবরাহকারী লিঙ্ক করুন",
+  "catalogSupplierRequired": "সরবরাহকারী *",
+  "catalogSelectSupplier": "সরবরাহকারী নির্বাচন করুন",
+  "catalogSupplierSku": "সরবরাহকারী SKU",
+  "catalogSupplierCostHint": "এই সরবরাহকারী থেকে খরচ",
+  "catalogLeadTimeDays": "লিড টাইম (দিন)",
+  "catalogLink": "লিঙ্ক",
+  "catalogStoreWithId": "দোকান: {id}",
+  "@catalogStoreWithId": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "catalogImageUrl": "ছবির URL",
+  "catalogImageLoadFailed": "ছবি লোড করা যায়নি",
+  "catalogImagePasteHint": "উপরে ছবির URL পেস্ট করুন",
+  "catalogDeleteProductTitle": "পণ্য মুছুন",
+  "catalogAddProduct": "পণ্য যোগ করুন",
+  "catalogSearchProductsShort": "পণ্য খুঁজুন...",
+  "catalogSearchProductsFull": "নাম, SKU বা বারকোড দিয়ে পণ্য খুঁজুন...",
+  "catalogClearSelection": "নির্বাচন পরিষ্কার করুন",
+  "catalogAllCategories": "সব ক্যাটাগরি",
+  "catalogAllProducts": "সব পণ্য",
+  "catalogCategoryNameRequired": "ক্যাটাগরির নাম *",
+  "catalogCategoryNameHint": "ক্যাটাগরির নাম লিখুন",
+  "catalogArabicName": "আরবি নাম",
+  "catalogArabicDescription": "আরবি বিবরণ",
+  "catalogCategoryDescHint": "এই ক্যাটাগরির সংক্ষিপ্ত বিবরণ",
+  "catalogParentCategory": "মূল ক্যাটাগরি",
+  "catalogNoneRootLevel": "কিছু নয় (রুট লেভেল)",
+  "catalogSortOrder": "সাজানোর ক্রম",
+  "catalogDeleteCategoryTitle": "ক্যাটাগরি মুছুন",
+  "catalogNewCategory": "নতুন ক্যাটাগরি",
+  "catalogEditCategory": "ক্যাটাগরি সম্পাদনা করুন",
+  "catalogCreateFirstCategory": "প্রথম ক্যাটাগরি তৈরি করুন",
+  "bakeryCakeOrders": "কেক অর্ডার",
+  "bakeryNoRecipes": "কোনো রেসিপি নেই",
+  "bakeryNoSchedules": "কোনো প্রোডাকশন সময়সূচী নেই",
+  "bakeryNoCakeOrders": "কোনো কেক অর্ডার নেই",
+  "bakeryCakeDescription": "কেকের বিবরণ",
+  "bakeryFlavor": "ফ্লেভার",
+  "bakeryFlavorHint": "যেমন: চকোলেট",
+  "bakeryDecorationNotes": "সাজসজ্জার নোট",
+  "bakeryDecorationHint": "বিশেষ সাজসজ্জার অনুরোধ...",
+  "bakeryDeliveryDate": "ডেলিভারির তারিখ",
+  "bakeryDeliveryTime": "ডেলিভারির সময়",
+  "bakeryPriceSar": "মূল্য ()",
+  "bakeryDepositPaid": "জমা প্রদত্ত",
+  "bakeryRecipeId": "রেসিপি আইডি",
+  "bakerySelectRecipe": "রেসিপি নির্বাচন করুন",
+  "bakeryAdditionalNotes": "অতিরিক্ত নোট...",
+  "bakeryRecipeNameHint": "রেসিপির নাম লিখুন",
+  "bakeryNumberOfUnits": "ইউনিটের সংখ্যা",
+  "bakeryTemperature": "তাপমাত্রা",
+  "bakeryInstructionsHint": "বিস্তারিত বেকিং নির্দেশনা...",
+  "bakeryDeliveryDateWithValue": "ডেলিভারি: {date}",
+  "@bakeryDeliveryDateWithValue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bakeryPrepTimeMin": "প্রস্তুতি: {minutes}মি",
+  "@bakeryPrepTimeMin": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "bakeryBakeTimeMin": "বেকিং: {minutes}মি",
+  "@bakeryBakeTimeMin": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "bakeryYieldUnits": "ফলন: {units} ইউনিট",
+  "@bakeryYieldUnits": {
+    "placeholders": {
+      "units": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsNoImei": "কোনো IMEI রেকর্ড নেই",
+  "electronicsNoRepair": "কোনো মেরামতের কাজ নেই",
+  "electronicsNoTradeIn": "কোনো ট্রেড-ইন রেকর্ড নেই",
+  "electronicsImei": "IMEI",
+  "electronicsImeiHint": "১৫-সংখ্যার IMEI নম্বর",
+  "electronicsImei2Optional": "IMEI 2 (ঐচ্ছিক)",
+  "electronicsDualSimImei": "ডুয়াল সিম IMEI",
+  "electronicsSerialOptional": "সিরিয়াল নম্বর (ঐচ্ছিক)",
+  "electronicsSerialHint": "ডিভাইসের সিরিয়াল নম্বর",
+  "electronicsGradeValue": "গ্রেড {value}",
+  "@electronicsGradeValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsPurchasePrice": "ক্রয় মূল্য ()",
+  "electronicsMfgWarrantyEnd": "প্রস্তুতকারকের ওয়ারেন্টি শেষ",
+  "electronicsStoreWarrantyEnd": "দোকানের ওয়ারেন্টি শেষ",
+  "electronicsDeviceDescription": "ডিভাইসের বিবরণ",
+  "electronicsDeviceHintRepair": "যেমন: iPhone 15 Pro Max 256GB",
+  "electronicsImeiOptional": "IMEI (ঐচ্ছিক)",
+  "electronicsIssueDescription": "সমস্যার বিবরণ",
+  "electronicsIssueHint": "সমস্যাটি বর্ণনা করুন...",
+  "electronicsAssignedTech": "নিযুক্ত টেকনিশিয়ান",
+  "electronicsStaffFullName": "{first} {last}",
+  "@electronicsStaffFullName": {
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsEstCost": "আনুমানিক খরচ ()",
+  "electronicsFinalCost": "চূড়ান্ত খরচ ()",
+  "electronicsDiagnosisNotes": "রোগনির্ণয়ের নোট",
+  "electronicsDiagnosisHint": "রোগনির্ণয়ের ফলাফল...",
+  "electronicsRepairNotes": "মেরামতের নোট",
+  "electronicsRepairHint": "মেরামতের বিবরণ...",
+  "electronicsRecordTradeIn": "ট্রেড-ইন রেকর্ড করুন",
+  "electronicsDeviceHintTradeIn": "যেমন: Samsung Galaxy S24 Ultra",
+  "electronicsGradeLetter": "গ্রেড {grade}",
+  "@electronicsGradeLetter": {
+    "placeholders": {
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsAssessedValue": "নিরূপিত মূল্য ()",
+  "electronicsSnWithValue": "S/N: {serial}",
+  "@electronicsSnWithValue": {
+    "placeholders": {
+      "serial": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsGradeWithValue": "গ্রেড: {grade}",
+  "@electronicsGradeWithValue": {
+    "placeholders": {
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsImeiWithValue": "IMEI: {imei}",
+  "@electronicsImeiWithValue": {
+    "placeholders": {
+      "imei": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsEstCostWithValue": "আনুমানিক: {amount} ",
+  "@electronicsEstCostWithValue": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "floristBouquetHint": "যেমন: ক্লাসিক গোলাপ তোড়া",
+  "floristOccasionHint": "যেমন: বিয়ে, জন্মদিন, বার্ষিকী",
+  "floristTotalPrice": "মোট মূল্য ()",
+  "floristIsTemplate": "টেমপ্লেট",
+  "floristTemplateSubtitle": "সাবস্ক্রিপশনের জন্য পুনর্ব্যবহারযোগ্য টেমপ্লেট",
+  "floristFreshness": "তাজাত্ব",
+  "floristNoArrangements": "কোনো সাজসজ্জা নেই",
+  "floristNoFreshnessLogs": "কোনো তাজাত্ব লগ নেই",
+  "floristNoSubscriptions": "কোনো সাবস্ক্রিপশন নেই",
+  "floristNewFreshnessLog": "নতুন তাজাত্ব লগ",
+  "floristLogFreshness": "তাজাত্ব লগ করুন",
+  "floristReceivedDate": "গ্রহণের তারিখ",
+  "floristVaseLifeDays": "ভাসের আয়ু (দিন)",
+  "floristArrangementOptional": "সাজসজ্জার টেমপ্লেট (ঐচ্ছিক)",
+  "floristSelectTemplate": "টেমপ্লেট নির্বাচন করুন",
+  "floristDeliveryAddress": "ডেলিভারি ঠিকানা",
+  "floristDeliveryAddressHint": "সম্পূর্ণ ডেলিভারি ঠিকানা",
+  "floristPricePerDelivery": "প্রতি ডেলিভারির মূল্য ()",
+  "floristNextDeliveryDate": "পরবর্তী ডেলিভারির তারিখ",
+  "floristFlowerTypesCount": "{count}টি ফুলের ধরন",
+  "@floristFlowerTypesCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "floristProductWithId": "পণ্য: {id}",
+  "@floristProductWithId": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "floristQtyReceivedOn": "পরিমাণ: {qty} · গৃহীত: {date}",
+  "@floristQtyReceivedOn": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "jewelryRecordBuyback": "বাইব্যাক রেকর্ড করুন",
+  "jewelryKaratHint": "যেমন: 24K, 22K, 18K",
+  "jewelryDetailsHint": "অতিরিক্ত বিবরণ...",
+  "jewelryBuybacks": "বাইব্যাক",
+  "jewelryNoMetalRates": "কোনো ধাতুর হার সেট নেই",
+  "jewelryNoProductDetails": "কোনো পণ্যের বিবরণ নেই",
+  "jewelryNoBuybacks": "কোনো বাইব্যাক লেনদেন নেই",
+  "jewelrySaveRate": "হার সংরক্ষণ",
+  "jewelryKaratOptional": "ক্যারাট (ঐচ্ছিক)",
+  "jewelrySellRatePerGram": "বিক্রয় হার/গ্রাম ()",
+  "jewelryBuybackRatePerGram": "বাইব্যাক হার/গ্রাম",
+  "jewelryEffectiveDate": "কার্যকর তারিখ",
+  "jewelryGrossWeightG": "মোট ওজন (গ্রাম)",
+  "jewelryNetWeightG": "নেট ওজন (গ্রাম)",
+  "jewelryMakingChargesType": "মেকিং চার্জের ধরন",
+  "jewelryMakingChargesValue": "মেকিং চার্জের মূল্য",
+  "jewelryStoneDetails": "পাথরের বিবরণ",
+  "jewelryStoneTypeOptional": "পাথরের ধরন (ঐচ্ছিক)",
+  "jewelryStoneTypeHint": "যেমন: হীরা, রুবি, পান্না",
+  "jewelryWeightCarat": "ওজন (ক্যারাট)",
+  "jewelryCount": "সংখ্যা",
+  "jewelryCertificateOptional": "সার্টিফিকেট নম্বর (ঐচ্ছিক)",
+  "jewelryCertificateHint": "GIA, IGI, ইত্যাদি",
+  "jewelryEffectiveWithValue": "কার্যকর: {date}",
+  "@jewelryEffectiveWithValue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "pharmacyDrugNameHint": "যেমন: প্যারাসিটামল",
+  "pharmacyFormHint": "যেমন: ট্যাবলেট, সিরাপ",
+  "pharmacyStrength": "শক্তি",
+  "pharmacyManufacturer": "প্রস্তুতকারক",
+  "pharmacyManufacturerHint": "ওষুধ প্রস্তুতকারক",
+  "pharmacyPrescriptionRequired": "ক্রয়ের জন্য বৈধ প্রেসক্রিপশন দেখাতে হবে",
+  "pharmacyNoPrescriptions": "কোনো প্রেসক্রিপশন নেই",
+  "pharmacyNoDrugSchedules": "কোনো ওষুধের সময়সূচী নেই",
+  "pharmacyPrescriptionNumber": "প্রেসক্রিপশন নম্বর",
+  "pharmacyPrescriptionNumberHint": "যেমন: RX-001234",
+  "pharmacyFullNameHint": "পূর্ণ নাম",
+  "pharmacyPatientIdOptional": "রোগীর আইডি (ঐচ্ছিক)",
+  "pharmacyPatientIdHint": "জাতীয় আইডি বা সিস্টেম আইডি",
+  "pharmacyDoctorInfo": "ডাক্তারের তথ্য",
+  "pharmacyDoctorHint": "ডা. ...",
+  "pharmacyLicenseNo": "লাইসেন্স নং",
+  "pharmacyLicenseHint": "মেডিকেল লাইসেন্স",
+  "pharmacyInsurance": "বীমা",
+  "pharmacyInsuranceProvider": "বীমা প্রদানকারী (ঐচ্ছিক)",
+  "pharmacyInsuranceHint": "যেমন: DHAMAN",
+  "pharmacyClaimAmount": "দাবির পরিমাণ ()",
+  "pharmacyOtc": "OTC",
+  "pharmacyRxOnly": "শুধু Rx",
+  "pharmacyControlled": "নিয়ন্ত্রিত",
+  "pharmacyInsured": "বীমাকৃত",
+  "restaurantTabOwnerHint": "ট্যাব মালিকের নাম",
+  "restaurantPhoneHint": "+968 XXXX XXXX",
+  "restaurantTimeHint": "HH:MM",
+  "restaurantSpecialRequestsHint": "বিশেষ অনুরোধ, অ্যালার্জি...",
+  "restaurantKitchen": "রান্নাঘর",
+  "restaurantNoTables": "কোনো টেবিল কনফিগার করা নেই",
+  "restaurantNoTickets": "কোনো কিচেন টিকিট নেই",
+  "restaurantNoReservations": "কোনো রিজার্ভেশন নেই",
+  "restaurantNoOpenTabs": "কোনো ওপেন ট্যাব নেই",
+  "restaurantTableNumberHint": "যেমন: T1, A-01",
+  "restaurantTableLocationHint": "যেমন: জানালার টেবিল, প্যাটিও ১",
+  "restaurantTableSectionHint": "যেমন: ইনডোর, আউটডোর, VIP",
+  "restaurantTableAvailable": "টেবিলটি বসার জন্য উপলব্ধ",
+  "restaurantTicketNumberSign": "#{number}",
+  "@restaurantTicketNumberSign": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantStation": "স্টেশন: {station}",
+  "@restaurantStation": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantCourse": "কোর্স {number}",
+  "@restaurantCourse": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantServed": "পরিবেশিত",
+  "restaurantCloseTab": "ট্যাব বন্ধ করুন",
+  "restaurantDurationMin": "{minutes} মি",
+  "@restaurantDurationMin": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantSeated": "বসানো হয়েছে",
+  "restaurantNoShow": "অনুপস্থিত",
+  "adminAdd": "যোগ করুন",
+  "adminNoImplementationFees": "কোনো ইমপ্লিমেন্টেশন ফি পাওয়া যায়নি",
+  "adminStoreWithName": "দোকান: {name}",
+  "@adminStoreWithName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adminNotesWithValue": "নোট: {notes}",
+  "@adminNotesWithValue": {
+    "placeholders": {
+      "notes": {
+        "type": "String"
+      }
+    }
+  },
+  "adminAddImplementationFee": "ইমপ্লিমেন্টেশন ফি যোগ করুন",
+  "adminEditImplementationFee": "ইমপ্লিমেন্টেশন ফি সম্পাদনা",
+  "adminFeeTypeSetup": "সেটআপ",
+  "adminFeeTypeTraining": "প্রশিক্ষণ",
+  "adminFeeTypeCustomDev": "কাস্টম ডেভ",
+  "adminFeeType": "ফি টাইপ",
+  "adminSelectFeeType": "ফি টাইপ নির্বাচন করুন",
+  "adminDeleteFee": "ফি মুছুন",
+  "adminDeleteFeeConfirm": "আপনি কি এই ইমপ্লিমেন্টেশন ফি মুছতে চান?",
+  "adminStoreDetails": "দোকানের বিবরণ",
+  "adminMetrics": "মেট্রিক্স",
+  "adminLoadMetrics": "মেট্রিক্স লোড",
+  "adminAddOverride": "ওভাররাইড যোগ করুন",
+  "adminNoLimitOverrides": "কোনো লিমিট ওভাররাইড সেট নেই",
+  "adminValueWithValue": "মান: {value}",
+  "@adminValueWithValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "adminReasonWithValue": "কারণ: {reason}",
+  "@adminReasonWithValue": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "adminExpiresWithValue": "মেয়াদ শেষ: {expiresAt}",
+  "@adminExpiresWithValue": {
+    "placeholders": {
+      "expiresAt": {
+        "type": "String"
+      }
+    }
+  },
+  "adminSuspendStore": "দোকান স্থগিত করুন",
+  "adminSuspensionReasonHint": "স্থগিতের কারণ লিখুন",
+  "adminAddLimitOverride": "লিমিট ওভাররাইড যোগ করুন",
+  "adminLimitKey": "লিমিট কী",
+  "adminOverrideValue": "ওভাররাইড মান",
+  "adminOverrideValueHint": "মান লিখুন",
+  "adminOverrideReasonHint": "এই ওভাররাইড কেন প্রয়োজন?",
+  "adminSetOverride": "ওভাররাইড সেট করুন",
+  "adminNoHardwareSales": "কোনো হার্ডওয়্যার বিক্রয় পাওয়া যায়নি",
+  "adminSnWithValue": "S/N: {serial}",
+  "@adminSnWithValue": {
+    "placeholders": {
+      "serial": {
+        "type": "String"
+      }
+    }
+  },
+  "adminSoldWithValue": "বিক্রয়: {date}",
+  "@adminSoldWithValue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "adminRecordHardwareSale": "হার্ডওয়্যার বিক্রয় রেকর্ড",
+  "adminItemTypeScanner": "স্ক্যানার",
+  "adminItemType": "আইটেম টাইপ",
+  "adminSelectItemType": "আইটেম টাইপ নির্বাচন করুন",
+  "adminEditHardwareSale": "হার্ডওয়্যার বিক্রয় সম্পাদনা",
+  "adminDeleteSale": "বিক্রয় মুছুন",
+  "adminDeleteSaleConfirm": "আপনি কি এই হার্ডওয়্যার বিক্রয় মুছতে চান?",
+  "adminSelectFiltersPayments": "পেমেন্ট লোড করতে ফিল্টার নির্বাচন করুন",
+  "adminPaymentCash": "নগদ",
+  "adminPaymentCardMada": "CARD MADA",
+  "adminPaymentCardVisa": "CARD VISA",
+  "adminPaymentCardMaster": "CARD MASTERCARD",
+  "adminPaymentStoreCredit": "STORE CREDIT",
+  "adminPaymentGiftCard": "GIFT CARD",
+  "adminPaymentMobile": "MOBILE PAYMENT",
+  "adminMethod": "পদ্ধতি",
+  "adminAllMethods": "সব পদ্ধতি",
+  "adminSarAmount": ". {amount}",
+  "@adminSarAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "adminPaymentGateways": "পেমেন্ট গেটওয়ে",
+  "adminWebhookWithValue": "Webhook: {url}",
+  "@adminWebhookWithValue": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "adminAddGateway": "গেটওয়ে যোগ করুন",
+  "adminSelectEnvironment": "পরিবেশ নির্বাচন করুন",
+  "adminEditGateway": "গেটওয়ে সম্পাদনা",
+  "adminDeleteGateway": "গেটওয়ে মুছুন",
+  "adminDeleteGatewayConfirm": "আপনি কি এই গেটওয়ে মুছতে চান?",
+  "adminActionRoleCreated": "রোল তৈরি",
+  "adminActionRoleUpdated": "রোল আপডেট",
+  "adminActionRoleDeleted": "রোল মুছে ফেলা হয়েছে",
+  "adminActionUserCreated": "ব্যবহারকারী তৈরি",
+  "adminActionUserUpdated": "ব্যবহারকারী আপডেট",
+  "adminActionUserDeactivated": "ব্যবহারকারী নিষ্ক্রিয়",
+  "adminActionUserActivated": "ব্যবহারকারী সক্রিয়",
+  "adminAllActions": "সব অ্যাকশন",
+  "adminAllEntities": "সব এন্টিটি",
+  "adminNoActivityLogs": "কোনো অ্যাক্টিভিটি লগ পাওয়া যায়নি",
+  "adminPageOfLast": "পেজ {page} এর মধ্যে {lastPage}",
+  "@adminPageOfLast": {
+    "placeholders": {
+      "page": {
+        "type": "String"
+      },
+      "lastPage": {
+        "type": "String"
+      }
+    }
+  },
+  "adminExpenseSupplies": "সরবরাহ",
+  "adminExpenseFood": "খাদ্য",
+  "adminExpenseTransport": "পরিবহন",
+  "adminExpenseUtility": "ইউটিলিটি",
+  "adminAllCategories": "সব ক্যাটাগরি",
+  "adminLoadingExpenses": "খরচ লোড হচ্ছে...",
+  "adminNoExpensesFound": "কোনো খরচ পাওয়া যায়নি",
+  "adminExportSubscriptions": "সাবস্ক্রিপশন এক্সপোর্ট",
+  "adminConversionRate": "কনভার্সন রেট",
+  "adminChurnPeriod": "চার্ন (পিরিয়ড)",
+  "adminAvgSubAge": "গড় সাব বয়স",
+  "adminStatusBreakdown": "স্ট্যাটাস ব্রেকডাউন",
+  "adminLifecycleTrend": "লাইফসাইকল ট্রেন্ড",
+  "adminNoTrendData": "কোনো ট্রেন্ড ডেটা নেই",
+  "adminLoadingSubAnalytics": "সাবস্ক্রিপশন অ্যানালিটিক্স লোড হচ্ছে...",
+  "adminExportStores": "দোকান এক্সপোর্ট",
+  "adminExportReadyRecords": "এক্সপোর্ট প্রস্তুত: {count} রেকর্ড",
+  "@adminExportReadyRecords": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "adminExportAgain": "পুনরায় এক্সপোর্ট",
+  "adminTotalStores": "মোট দোকান",
+  "adminHealthSummary": "স্বাস্থ্যের সারাংশ",
+  "adminNoHealthDataToday": "আজ কোনো স্বাস্থ্যের ডেটা নেই",
+  "adminTopStores": "শীর্ষ দোকান",
+  "adminLoadingStoreAnalytics": "দোকানের অ্যানালিটিক্স লোড হচ্ছে...",
+  "adminExportRevenue": "আয় এক্সপোর্ট",
+  "adminMRR": "MRR",
+  "adminARR": "ARR",
+  "adminUpcomingRenewals": "আসন্ন রিনিউয়াল",
+  "adminRevenueByPlan": "প্ল্যান অনুযায়ী আয়",
+  "adminNoPlanDataAvailable": "কোনো প্ল্যান ডেটা নেই",
+  "adminLoadingRevenueData": "আয়ের ডেটা লোড হচ্ছে...",
+  "adminLogLevelDebug": "ডিবাগ",
+  "adminLogLevelInfo": "তথ্য",
+  "adminLogLevelWarning": "সতর্কতা",
+  "adminLevel": "স্তর",
+  "adminEventTypeConfig": "কনফিগ পরিবর্তন",
+  "adminEventTypeCron": "ক্রন জব",
+  "adminType": "ধরন",
+  "adminNoPlatformEvents": "কোনো প্ল্যাটফর্ম ইভেন্ট পাওয়া যায়নি",
+  "adminConfidenceWithPct": "আত্মবিশ্বাস: {pct}%",
+  "@adminConfidenceWithPct": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "adminWinnerWithValue": "বিজয়ী: {winner}",
+  "@adminWinnerWithValue": {
+    "placeholders": {
+      "winner": {
+        "type": "String"
+      }
+    }
+  },
+  "adminVariantResults": "ভ্যারিয়েন্ট ফলাফল",
+  "adminNoResultsYet": "এখনো কোনো ফলাফল নেই",
+  "adminControl": "কন্ট্রোল",
+  "adminImpressions": "ইমপ্রেশন",
+  "adminConversions": "কনভার্সন",
+  "adminRate": "হার",
+  "adminStoreManagement": "দোকান ব্যবস্থাপনা",
+  "adminCreateStore": "দোকান তৈরি করুন",
+  "adminPageOfLastState": "পেজ {current} এর {last}",
+  "@adminPageOfLastState": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "adminOrganizationName": "সংস্থার নাম",
+  "adminOrgNameHint": "সংস্থার নাম লিখুন",
+  "adminStoreNameHint": "দোকানের নাম লিখুন",
+  "adminProviderOpenAI": "OpenAI",
+  "adminProviderAnthropic": "Anthropic",
+  "adminProviderGoogle": "Google",
+  "adminHintGpt4o": "GPT-4o",
+  "adminDeleteModelQuote": "মডেল \"{name}\" মুছবেন?",
+  "@adminDeleteModelQuote": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adminStoreHealth": "দোকানের স্বাস্থ্য",
+  "adminHealthScore": "স্বাস্থ্য স্কোর",
+  "adminServices": "সেবা",
+  "adminNoStoreHealthData": "কোনো দোকান স্বাস্থ্যের ডেটা নেই",
+  "adminConfigs": "কনফিগ",
+  "adminMappings": "ম্যাপিং",
+  "adminExports": "এক্সপোর্ট",
+  "adminNoAccountingConfigs": "কোনো হিসাব কনফিগ নেই",
+  "adminNoExports": "কোনো এক্সপোর্ট নেই",
+  "adminNoAutoExportConfigs": "কোনো অটো-এক্সপোর্ট কনফিগ নেই",
+  "adminSystemRole": "সিস্টেম রোল",
+  "adminPermissionsWithCount": "অনুমতি ({count})",
+  "@adminPermissionsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "adminDeleteRole": "রোল মুছুন",
+  "adminDeleteRoleConfirm": "আপনি কি এই রোল মুছতে চান? এটি ফেরানো যাবে না।",
+  "adminStatusWarning": "সতর্কতা",
+  "adminStatusCritical": "সংকটপূর্ণ",
+  "adminStatusUnknown": "অজানা",
+  "adminAllStatuses": "সব স্ট্যাটাস",
+  "adminNoHealthChecks": "কোনো স্বাস্থ্য চেক নেই",
+  "adminPlatformAnnouncements": "প্ল্যাটফর্ম ঘোষণা",
+  "adminPageOfLastTotal": "পেজ {current} এর {last} ({total} মোট)",
+  "@adminPageOfLastTotal": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "adminFeatureAdoption": "ফিচার গ্রহণ",
+  "adminNoFeatureDataAvailable": "কোনো ফিচার ডেটা নেই",
+  "adminTrend": "ট্রেন্ড",
+  "adminLoadingFeatureData": "ফিচার ডেটা লোড হচ্ছে...",
+  "adminPageOfLastSlash": "{current} / {last}",
+  "@adminPageOfLastSlash": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "adminChannelWhatsApp": "WhatsApp",
+  "adminChannel": "চ্যানেল",
+  "adminStatus": "স্ট্যাটাস",
+  "adminNoNotificationLogs": "কোনো নোটিফিকেশন লগ পাওয়া যায়নি",
+  "adminDatabase": "ডাটাবেস",
+  "adminNoDatabaseBackups": "কোনো ডাটাবেস ব্যাকআপ নেই",
+  "adminNoProviderBackups": "কোনো প্রোভাইডার ব্যাকআপ নেই",
+  "adminNoThawaniOrders": "কোনো থাওয়ানি অর্ডার নেই",
+  "adminNoStoreConfigs": "কোনো দোকান কনফিগ নেই",
+  "adminLoadingRefunds": "রিফান্ড লোড হচ্ছে...",
+  "adminNoRefundsFound": "কোনো রিফান্ড পাওয়া যায়নি",
+  "adminDeploymentReleases": "ডিপ্লয়মেন্ট রিলিজ",
+  "adminPlatform": "প্ল্যাটফর্ম",
+  "adminLoadReleases": "রিলিজ লোড করুন",
+  "adminNoReleasesFound": "কোনো রিলিজ পাওয়া যায়নি",
+  "adminNoBackupsFound": "কোনো ব্যাকআপ পাওয়া যায়নি",
+  "adminStartNewBackup": "একটি নতুন ম্যানুয়াল ব্যাকআপ শুরু করবেন?",
+  "adminPageTypeLegal": "আইনগত",
+  "adminPageTypeMarketing": "বিপণন",
+  "adminNoPagesFound": "কোনো পেজ পাওয়া যায়নি",
+  "adminMonitored": "মনিটরড",
+  "adminWithErrors": "ত্রুটি সহ",
+  "adminTotalErrorsToday": "আজ মোট ত্রুটি",
+  "adminNoSyncData": "কোনো সিঙ্ক ডেটা নেই",
+  "adminLoadingSystemHealth": "সিস্টেম স্বাস্থ্য লোড হচ্ছে...",
+  "adminAdminDetail": "অ্যাডমিন বিবরণ",
+  "adminAccountInfo": "অ্যাকাউন্ট তথ্য",
+  "adminNoRolesAssigned": "কোনো রোল বরাদ্দ নেই",
+  "adminReset2FA": "2FA রিসেট",
+  "adminClear2FAHint": "2FA সাফ করুন; অ্যাডমিনকে পুনরায় নিবন্ধন করতে হবে",
+  "adminRegistrationQueue": "রেজিস্ট্রেশন কিউ",
+  "adminContactEmailLine": "{contact} • {email}",
+  "@adminContactEmailLine": {
+    "placeholders": {
+      "contact": {
+        "type": "String"
+      },
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "adminRejectRegistration": "রেজিস্ট্রেশন প্রত্যাখ্যান",
+  "adminRejectReasonHint": "কেন এই রেজিস্ট্রেশন প্রত্যাখ্যাত ব্যাখ্যা করুন",
+  "subSubscribedSuccessfully": "সফলভাবে সাবস্ক্রাইব হয়েছে!",
+  "subPlanChangedSuccessfully": "প্ল্যান সফলভাবে পরিবর্তন হয়েছে!",
+  "subCancelled": "সাবস্ক্রিপশন বাতিল।",
+  "subResumed": "সাবস্ক্রিপশন পুনরায় শুরু!",
+  "subAddNamedAddon": "{name} যোগ করবেন?",
+  "@subAddNamedAddon": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subRemoveNamedAddon": "{name} সরাবেন?",
+  "@subRemoveNamedAddon": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subRemoveConfirm": "আপনি কি আপনার সাবস্ক্রিপশন থেকে {name} সরাতে চান?",
+  "@subRemoveConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subActionAdd": "যোগ করুন",
+  "subActionRemove": "সরান",
+  "subActionKeep": "রাখুন",
+  "subSubscribeToPlan": "{name} এ সাবস্ক্রাইব?",
+  "@subSubscribeToPlan": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subActionSubscribe": "সাবস্ক্রাইব",
+  "subProceedToPayment": "পেমেন্টে এগিয়ে যান",
+  "subPageOfLast": "পেজ {current} এর {last}",
+  "@subPageOfLast": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "subFeatureLocked": "ফিচার লক",
+  "subFeatureLockedBody": "এই ফিচারের জন্য উচ্চতর প্ল্যান প্রয়োজন। {name} এবং আরও আনলক করতে আপগ্রেড করুন।",
+  "@subFeatureLockedBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subCurrentColon": "বর্তমান: ",
+  "subRequiredColon": "প্রয়োজনীয়: ",
+  "subAvailablePlans": "উপলব্ধ প্ল্যান",
+  "subNotNow": "এখন নয়",
+  "subNoFeaturesListed": "এই প্ল্যানের জন্য কোনো ফিচার তালিকাবদ্ধ নেই।",
+  "subBadgeTrial": "ট্রায়াল",
+  "subBadgeGracePeriod": "গ্রেস পিরিয়ড",
+  "subBadgePastDue": "বকেয়া",
+  "subDueDate": "মেয়াদ: {date}",
+  "@subDueDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "staffRoleOrType": "রোল / ধরন",
+  "staffContact": "যোগাযোগ",
+  "staffEditRole": "রোল সম্পাদনা",
+  "staffFailedLoadPermissions": "অনুমতি লোড করতে ব্যর্থ: {message}",
+  "@staffFailedLoadPermissions": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "staffNoPermission": "কোনো অনুমতি নেই",
+  "staffRequiresPinOverride": "PIN ওভাররাইড প্রয়োজন",
+  "staffNoActionPermission": "এই কাজের জন্য আপনার অনুমতি নেই",
+  "staffAttInLabel": "প্রবেশ: {time}",
+  "@staffAttInLabel": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "staffAttOutLabel": "প্রস্থান: {time}",
+  "@staffAttOutLabel": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "staffAttBreakLabel": "বিরতি: {min}মি",
+  "@staffAttBreakLabel": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "staffAttOTLabel": "ওটি: {min}মি",
+  "@staffAttOTLabel": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "staffMemberRequired": "{label} *",
+  "@staffMemberRequired": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "staffFullNameLabel": "{first} {last}",
+  "@staffFullNameLabel": {
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "staffShiftLabel": "{name} ({start} - {end})",
+  "@staffShiftLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "staffClockedIn": "ক্লক ইন",
+  "staffClockedOut": "ক্লক আউট",
+  "staffDateRangeLabel": "{start} – {end}",
+  "@staffDateRangeLabel": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "staffCommissionTitle": "{name} - {label}",
+  "@staffCommissionTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "staffDeleteStaffConfirm": "{prompt} {first} {last}?",
+  "@staffDeleteStaffConfirm": {
+    "placeholders": {
+      "prompt": {
+        "type": "String"
+      },
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "staffDeleteRoleConfirm": "{prompt} \"{name}\"?",
+  "@staffDeleteRoleConfirm": {
+    "placeholders": {
+      "prompt": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pcZatcaQr": "ZATCA QR",
+  "pcBold": "বোল্ড",
+  "pcGridLayout": "গ্রিড লেআউট",
+  "pcGridDims": "{rows} সারি × {cols} কলাম",
+  "@pcGridDims": {
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      },
+      "cols": {
+        "type": "String"
+      }
+    }
+  },
+  "pcButtonsWithCount": "বাটন ({count})",
+  "@pcButtonsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "pcNoQuickButtons": "কোনো দ্রুত অ্যাক্সেস বাটন কনফিগার নেই",
+  "pcReceiptLogo": "লোগো",
+  "pcHeaderLine1": "হেডার লাইন ১",
+  "pcHeaderLine2": "হেডার লাইন ২",
+  "pcFooter": "ফুটার",
+  "pcShowVatNumber": "ভ্যাট নম্বর দেখান",
+  "pcShowLoyaltyPoints": "লয়্যালটি পয়েন্ট দেখান",
+  "pcCloneCategorySuccess": "ক্যাটাগরি সফলভাবে কপি হয়েছে",
+  "pcCloneProductSuccess": "পণ্য সফলভাবে কপি হয়েছে",
+  "pcCloneAllSuccess": "সমস্ত পূর্বনির্ধারিত পণ্য সফলভাবে কপি হয়েছে",
+  "pcCloneAllProducts": "সব পণ্য কপি করুন",
+  "pcCloneAll": "সব কপি",
+  "pcCloneCategory": "ক্যাটাগরি কপি",
+  "pcCloneCategoryConfirm": "\"{name}\" এবং তার সমস্ত পণ্য আপনার দোকানে কপি করবেন?",
+  "@pcCloneCategoryConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pcClone": "কপি",
+  "pcBusinessTypeColon": "ব্যবসার ধরন:",
+  "pcNoPredefinedCategories": "কোনো পূর্বনির্ধারিত ক্যাটাগরি পাওয়া যায়নি",
+  "pcCloneToMyStore": "আমার দোকানে কপি",
+  "pcCloneProduct": "পণ্য কপি",
+  "pcNoPredefinedProducts": "কোনো পূর্বনির্ধারিত পণ্য পাওয়া যায়নি",
+  "pcSkuLine": "SKU: {sku}",
+  "@pcSkuLine": {
+    "placeholders": {
+      "sku": {
+        "type": "String"
+      }
+    }
+  },
+  "pcPageOfLast": "পেজ {current} এর {last}",
+  "@pcPageOfLast": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "acctExportTypesOptional": "এক্সপোর্ট ধরন (ঐচ্ছিক)",
+  "acctDeleteMapping": "ম্যাপিং মুছুন",
+  "acctDeleteMappingConfirm": "আপনি কি এই ম্যাপিং সরাতে চান?",
+  "acctEnableAutoExport": "অটো-এক্সপোর্ট সক্ষম করুন",
+  "acctExportTypes": "এক্সপোর্ট ধরন",
+  "acctScheduleInfo": "সময়সূচী তথ্য",
+  "acctNoRunsScheduled": "এখনো কোনো রান নির্ধারিত নয়",
+  "acctSelectProvider": "প্রোভাইডার নির্বাচন",
+  "acctConnectProvider": "{name} এ সংযোগ",
+  "@acctConnectProvider": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "acctDisconnectProvider": "প্রোভাইডার বিচ্ছিন্ন",
+  "acctDisconnect": "বিচ্ছিন্ন",
+  "acctDateRangeArrow": "{start} → {end}",
+  "@acctDateRangeArrow": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "acctEntriesWithCount": "{count} এন্ট্রি",
+  "@acctEntriesWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniPushToThawani": "থাওয়ানি তে পুশ",
+  "thawaniPullFromThawani": "থাওয়ানি থেকে পুল",
+  "thawaniNoCategoryMappings": "এখনো কোনো ক্যাটাগরি ম্যাপিং নেই",
+  "thawaniViewLogs": "লগ দেখুন",
+  "thawaniPushPullCatsProds": "পণ্য ও ক্যাটাগরি পুশ/পুল",
+  "thawaniCategoriesMapped": "{count} ক্যাটাগরি ম্যাপ হয়েছে",
+  "@thawaniCategoriesMapped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniOpsToday": "আজ {count} অপারেশন",
+  "@thawaniOpsToday": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniCategorySync": "ক্যাটাগরি সিঙ্ক",
+  "thawaniProductSync": "পণ্য সিঙ্ক",
+  "thawaniSyncQueue": "সিঙ্ক কিউ",
+  "thawaniProcessQueueNow": "এখনই কিউ প্রসেস",
+  "thawaniNoSyncLogs": "কোনো সিঙ্ক লগ পাওয়া যায়নি",
+  "labelsPrintedBy": "মুদ্রিত",
+  "labelsAddElement": "উপাদান যোগ করুন",
+  "labelsProductName": "পণ্যের নাম",
+  "labelsBarcodeCode128": "Code 128",
+  "labelsBarcodeEan13": "EAN-13",
+  "labelsBarcodeUpca": "UPC-A",
+  "labelsBarcodeCode39": "Code 39",
+  "labelsBarcodeItf": "ITF",
+  "labelsSkuLine": "SKU: {sku}",
+  "@labelsSkuLine": {
+    "placeholders": {
+      "sku": {
+        "type": "String"
+      }
+    }
+  },
+  "labelsItemsWithCount": "{count} {items}",
+  "@labelsItemsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "items": {
+        "type": "String"
+      }
+    }
+  },
+  "labelsTotalProductsLine": "{label}: {count}",
+  "@labelsTotalProductsLine": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "cgBasket": "ঝুড়ি",
+  "cgUpsell": "আপসেল",
+  "cgItemsPerMin": "আইটেম/মিনিট",
+  "cgTotalTxn": "মোট TXN",
+  "cgUpsellRate": "আপসেল রেট",
+  "cgZeroVoidRate": "শূন্য ভয়েড রেট",
+  "cgConsistency": "ধারাবাহিকতা",
+  "cgEarlyBird": "আর্লি বার্ড",
+  "cgRisk": "ঝুঁকি",
+  "cgReview": "পর্যালোচনা",
+  "cgReviewed": "পর্যালোচিত",
+  "cgTxnAbbr": "TXN",
+  "cgIpmAbbr": "IPM",
+  "onboardingStoreSettings": "দোকান সেটিংস",
+  "onboardingVatHint": "ভ্যাট",
+  "onboardingOptionalHint": "ঐচ্ছিক",
+  "onboardingCustomHeaderHint": "কাস্টম হেডার টেক্সট",
+  "onboardingThankYouHint": "কেনাকাটার জন্য ধন্যবাদ!",
+  "onboardingSkipSetup": "সেটআপ এড়িয়ে যান",
+  "onboardingTaxIncludedNote": "সক্ষম হলে, পণ্যের দাম ট্যাক্স সহ দেখানো হয়।",
+  "onboardingAllSet": "আপনি প্রস্তুত!",
+  "hardwareSkuLine": "SKU: {sku}",
+  "@hardwareSkuLine": {
+    "placeholders": {
+      "sku": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareViewEdit": "দেখুন / সম্পাদনা",
+  "hardwareAddToCart": "কার্টে যোগ করুন",
+  "hardwareAddNewProduct": "নতুন পণ্য যোগ",
+  "hardwareNoEvents": "কোনো ইভেন্ট রেকর্ড নেই",
+  "hardwareConfiguredCount": "{count} কনফিগার",
+  "@hardwareConfiguredCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareConnectedCount": "{count} সংযুক্ত",
+  "@hardwareConnectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareOfflineCount": "{count} অফলাইন",
+  "@hardwareOfflineCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareScan": "স্ক্যান",
+  "hardwareNoCertified": "কোনো প্রত্যয়িত হার্ডওয়্যার পাওয়া যায়নি",
+  "hardwareCertified": "প্রত্যয়িত",
+  "auLoadingHistory": "ইতিহাস লোড হচ্ছে...",
+  "auNoUpdateHistory": "কোনো আপডেট ইতিহাস নেই",
+  "auHealthCheckFailed": "আপডেট-পরবর্তী স্বাস্থ্য চেক ব্যর্থ",
+  "auTapToCheck": "আপডেট পরীক্ষা করতে ট্যাপ করুন",
+  "auLoadingChangelog": "চেঞ্জলগ লোড হচ্ছে...",
+  "auNoReleasesFound": "কোনো রিলিজ পাওয়া যায়নি",
+  "zatcaTotalInvoices": "মোট ইনভয়েস",
+  "zatcaSimulation": "সিমুলেশন",
+  "zatcaOtp": "ZATCA OTP",
+  "zatcaTotalVat": "মোট ভ্যাট",
+  "zatcaStandardInvoices": "স্ট্যান্ডার্ড ইনভয়েস",
+  "zatcaSimplifiedInvoices": "সরলীকৃত ইনভয়েস",
+  "promoNoFound": "কোনো প্রোমোশন পাওয়া যায়নি",
+  "promoFilter": "প্রোমোশন ফিল্টার",
+  "promoDeleteConfirm": "\"{name}\" মুছবেন? এই কাজ ফেরানো যাবে না।",
+  "@promoDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "promoEdit": "প্রোমোশন সম্পাদনা",
+  "promoTypeRequired": "ধরন *",
+  "promoTypeLine": "ধরন: {type}",
+  "@promoTypeLine": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "branchesType": "ধরন",
+  "branchesBranchLabel": "শাখা",
+  "branchesTimezoneHint": "Asia/Muscat",
+  "branchesCountryHint": "OM",
+  "branchesStaffColumn": "কর্মী",
+  "backupStorageNotLoaded": "স্টোরেজ তথ্য লোড হয়নি",
+  "backupScheduleNotLoaded": "সময়সূচী লোড হয়নি",
+  "backupAutoSettings": "অটো-ব্যাকআপ সেটিংস",
+  "backupNoLoaded": "কোনো ব্যাকআপ লোড হয়নি",
+  "securityNoAuditLogs": "কোনো অডিট লগ পাওয়া যায়নি।",
+  "marketplaceContinue": "চালিয়ে যান",
+  "settingsSpaceLabel": "স্পেস",
+  "payments50Halalas": "50 হালালা",
+  "payments25Halalas": "25 হালালা",
+  "payments10Halalas": "10 হালালা",
+  "payments5Halalas": "5 হালালা",
+  "accessProtanopia": "প্রোটানোপিয়া",
+  "accessDeuteranopia": "ডিউটারানোপিয়া",
+  "accessTritanopia": "ট্রাইটানোপিয়া",
+  "commonAll": "সব",
+  "commonAllBranches": "সব শাখা",
+  "commonAllQueues": "সব কিউ",
+  "commonAllGroups": "সব গ্রুপ",
+  "commonSeverity": "তীব্রতা",
+  "commonCategory": "বিভাগ",
+  "commonChannel": "চ্যানেল",
+  "commonAction": "অ্যাকশন",
+  "adminPageOf": "পৃষ্ঠা {current} এর {last}",
+  "@adminPageOf": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "adminPageOfTotal": "পৃষ্ঠা {current} এর {last} ({total} মোট)",
+  "@adminPageOfTotal": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "adminTeamMember": "টিম সদস্য",
+  "admin2FA": "2FA",
+  "adminTeam": "অ্যাডমিন টিম",
+  "adminAddTeamMember": "টিম সদস্য যোগ",
+  "adminSubscriptionsOverview": "সাবস্ক্রিপশন ওভারভিউ",
+  "adminSubscriptionPlans": "সাবস্ক্রিপশন প্ল্যান",
+  "adminAddNoteToStart": "শুরু করতে উপরে একটি নোট যোগ করুন",
+  "adminAddNote": "নোট যোগ",
+  "adminTypeNoteHint": "আপনার নোট এখানে টাইপ করুন...",
+  "adminMarkAsPaid": "পরিশোধিত হিসাবে চিহ্নিত",
+  "adminRetryPayment": "পেমেন্ট পুনরায় চেষ্টা",
+  "adminInvestigating": "তদন্ত চলছে",
+  "adminNoSecurityAlerts": "কোনো নিরাপত্তা সতর্কতা পাওয়া যায়নি",
+  "adminNoSecurityAlertsShort": "কোনো নিরাপত্তা সতর্কতা নেই",
+  "adminWhatsApp": "হোয়াটসঅ্যাপ",
+  "adminNoFailedPayments": "কোনো ব্যর্থ পেমেন্ট নেই",
+  "adminLoadingGiftCards": "গিফট কার্ড লোড হচ্ছে...",
+  "adminNoGiftCards": "কোনো গিফট কার্ড পাওয়া যায়নি",
+  "adminLoadingFinancial": "আর্থিক ডেটা লোড হচ্ছে...",
+  "adminNoMarketplaceStores": "কোনো মার্কেটপ্লেস স্টোর পাওয়া যায়নি",
+  "adminLoginAttempts": "লগইন চেষ্টা",
+  "adminIpManagement": "IP ব্যবস্থাপনা",
+  "adminNoActivityLogged": "কোনো কার্যকলাপ লগ নেই",
+  "adminFailedJobs24h": "ব্যর্থ কাজ (24h)",
+  "adminSections": "বিভাগ",
+  "adminCmsPageDetail": "CMS পৃষ্ঠা বিবরণ",
+  "adminContentEn": "বিষয়বস্তু (EN)",
+  "adminContentAr": "বিষয়বস্তু (AR)",
+  "adminKeyMetrics": "মূল মেট্রিক্স",
+  "adminLoadingAnalytics": "অ্যানালিটিক্স লোড হচ্ছে...",
+  "adminNoVariantsYet": "এখনো কোনো ভ্যারিয়েন্ট যোগ করা হয়নি",
+  "adminViewResults": "ফলাফল দেখুন",
+  "adminNoSettlements": "কোনো নিষ্পত্তি পাওয়া যায়নি",
+  "adminNoTickets": "কোনো টিকিট পাওয়া যায়নি",
+  "adminNoCannedResponses": "কোনো ক্যানড রেসপন্স পাওয়া যায়নি",
+  "adminPaymentInformation": "পেমেন্ট তথ্য",
+  "adminRevenueByStatus": "স্ট্যাটাস অনুসারে রাজস্ব",
+  "adminNoFeatureFlags": "কোনো ফিচার ফ্ল্যাগ কনফিগার করা নেই",
+  "adminNoFailedJobs": "কোনো ব্যর্থ কাজ নেই",
+  "adminInviteAdmin": "অ্যাডমিন আমন্ত্রণ",
+  "adminNoAdminUsers": "কোনো অ্যাডমিন ব্যবহারকারী পাওয়া যায়নি",
+  "adminLoadingCashSessions": "ক্যাশ সেশন লোড হচ্ছে...",
+  "adminSyncOperations": "সিঙ্ক অপারেশন",
+  "adminNoPermissionsFound": "কোনো অনুমতি পাওয়া যায়নি",
+  "adminNoAbTests": "কোনো A/B টেস্ট পাওয়া যায়নি",
+  "adminActivityLogs": "কার্যকলাপ লগ",
+  "adminLoadOverview": "ওভারভিউ লোড",
+  "adminNoPlatformData": "কোনো প্ল্যাটফর্ম ডেটা নেই",
+  "adminNoActiveRelease": "কোনো সক্রিয় রিলিজ নেই",
+  "adminPaymentRetryRules": "পেমেন্ট পুনঃচেষ্টা নিয়ম",
+  "adminRetryConfiguration": "পুনঃচেষ্টা কনফিগারেশন",
+  "adminSaveRules": "নিয়ম সংরক্ষণ",
+  "adminCreateManualInvoice": "ম্যানুয়াল ইনভয়েস তৈরি",
+  "adminSearchInvoices": "ইনভয়েস অনুসন্ধান",
+  "adminKnowledgeBaseArticles": "নলেজ বেস নিবন্ধ",
+  "adminGenerateTempPassword": "অস্থায়ী পাসওয়ার্ড তৈরি",
+  "adminForcePasswordChange": "পাসওয়ার্ড পরিবর্তন জোর",
+  "adminForcePasswordChangeDesc": "পরবর্তী লগইনে ব্যবহারকারীকে পাসওয়ার্ড পরিবর্তন করতে হবে",
+  "adminNoRoleTemplates": "কোনো রোল টেমপ্লেট নেই",
+  "adminNoDailySales": "কোনো দৈনিক বিক্রয় ডেটা নেই",
+  "adminNoProductSales": "কোনো পণ্য বিক্রয় ডেটা নেই",
+  "adminNoUsersFound": "কোনো ব্যবহারকারী পাওয়া যায়নি",
+  "adminSearchUsers": "ব্যবহারকারী অনুসন্ধান",
+  "adminNoAbTestsLinked": "এই ফ্ল্যাগের সাথে কোনো A/B টেস্ট সংযুক্ত নেই"
 }

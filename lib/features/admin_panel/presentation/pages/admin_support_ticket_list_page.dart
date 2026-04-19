@@ -85,6 +85,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(ticketListProvider);
 
     return PosListPage(
@@ -206,7 +207,7 @@ class _AdminSupportTicketListPageState extends ConsumerState<AdminSupportTicketL
   Widget _buildList(Map<String, dynamic> data) {
     final tickets = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
     if (tickets.isEmpty) {
-      return const Center(child: Text('No tickets found'));
+      return Center(child: Text(l10n.adminNoTickets));
     }
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),

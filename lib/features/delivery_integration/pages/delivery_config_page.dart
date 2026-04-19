@@ -28,6 +28,8 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
   final _apiKeyController = TextEditingController();
   final _apiSecretController = TextEditingController();
   final _merchantIdController = TextEditingController();
+  late final TextEditingController _menuIntervalController;
+  late final TextEditingController _maxOrdersController;
   bool _isSaving = false;
 
   bool get _isEditing => widget.configId != null;
@@ -35,6 +37,8 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
   @override
   void initState() {
     super.initState();
+    _menuIntervalController = TextEditingController(text: '$_menuSyncIntervalHours');
+    _maxOrdersController = TextEditingController(text: '$_maxDailyOrders');
     Future.microtask(() {
       ref.read(deliveryPlatformsProvider.notifier).load();
       if (_isEditing) _loadExistingConfig();
@@ -53,6 +57,8 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
           _syncMenuOnProductChange = config['sync_menu_on_product_change'] == true;
           _menuSyncIntervalHours = config['menu_sync_interval_hours'] as int? ?? 24;
           _maxDailyOrders = config['max_daily_orders'] as int? ?? 0;
+          _menuIntervalController.text = '$_menuSyncIntervalHours';
+          _maxOrdersController.text = '$_maxDailyOrders';
           final credentials = config['credentials'] as Map<String, dynamic>? ?? {};
           _apiKeyController.text = credentials['api_key'] as String? ?? '';
           _apiSecretController.text = credentials['api_secret'] as String? ?? '';
@@ -67,6 +73,8 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
     _apiKeyController.dispose();
     _apiSecretController.dispose();
     _merchantIdController.dispose();
+    _menuIntervalController.dispose();
+    _maxOrdersController.dispose();
     super.dispose();
   }
 
@@ -74,137 +82,120 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return PosListPage(
-  title: _isEditing ? l10n.deliveryEditPlatform : l10n.deliveryAddPlatform,
-  showSearch: false,
-  actions: [
-  if (_isEditing)
-            IconButton(
-              icon: const Icon(Icons.wifi_tethering),
-              tooltip: l10n.deliveryTestConnection,
-              onPressed: () => ref.read(deliveryConnectionTestProvider.notifier).test(widget.configId!),
-            ),
-],
-  child: Form(
+    return PosFormPage(
+      title: _isEditing ? l10n.deliveryEditPlatform : l10n.deliveryAddPlatform,
+      actions: [
+        if (_isEditing)
+          PosButton.icon(
+            icon: Icons.wifi_tethering,
+            tooltip: l10n.deliveryTestConnection,
+            variant: PosButtonVariant.ghost,
+            onPressed: () => ref.read(deliveryConnectionTestProvider.notifier).test(widget.configId!),
+          ),
+      ],
+      bottomBar: PosButton(
+        label: _isSaving ? l10n.deliverySaving : l10n.deliverySave,
+        icon: Icons.save,
+        isLoading: _isSaving,
+        isFullWidth: true,
+        onPressed: _isSaving ? null : _save,
+      ),
+      child: Form(
         key: _formKey,
-        child: ListView(
-          padding: AppSpacing.paddingAll16,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Connection test banner
-            if (_isEditing) _buildConnectionTestBanner(),
+            if (_isEditing) ...[_buildConnectionTestBanner(), AppSpacing.gapH16],
 
             // Platform selection
-            Text(l10n.deliverySelectPlatform, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
-            AppSpacing.gapH12,
-            _buildPlatformSelector(),
-            AppSpacing.gapH24,
+            PosFormCard(title: l10n.deliverySelectPlatform, child: _buildPlatformSelector()),
+            AppSpacing.gapH16,
 
             // Credentials
-            Text(l10n.deliveryCredentials, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
-            AppSpacing.gapH12,
-            TextFormField(
-              controller: _apiKeyController,
-              decoration: InputDecoration(
-                labelText: l10n.deliveryApiKey,
-                border: const OutlineInputBorder(),
-                prefixIcon: const Icon(Icons.key),
-              ),
-              validator: (v) => v == null || v.isEmpty ? l10n.deliveryFieldRequired : null,
-            ),
-            AppSpacing.gapH12,
-            TextFormField(
-              controller: _apiSecretController,
-              decoration: InputDecoration(
-                labelText: l10n.deliveryApiSecret,
-                border: const OutlineInputBorder(),
-                prefixIcon: const Icon(Icons.lock_outline),
-              ),
-              obscureText: true,
-            ),
-            AppSpacing.gapH12,
-            TextFormField(
-              controller: _merchantIdController,
-              decoration: InputDecoration(
-                labelText: l10n.deliveryMerchantId,
-                border: const OutlineInputBorder(),
-                prefixIcon: const Icon(Icons.store),
+            PosFormCard(
+              title: l10n.deliveryCredentials,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  PosTextField(controller: _apiKeyController, label: l10n.deliveryApiKey, prefixIcon: Icons.key),
+                  AppSpacing.gapH12,
+                  PosTextField(
+                    controller: _apiSecretController,
+                    label: l10n.deliveryApiSecret,
+                    prefixIcon: Icons.lock_outline,
+                    obscureText: true,
+                  ),
+                  AppSpacing.gapH12,
+                  PosTextField(controller: _merchantIdController, label: l10n.deliveryMerchantId, prefixIcon: Icons.store),
+                ],
               ),
             ),
-            AppSpacing.gapH24,
+            AppSpacing.gapH16,
 
             // Settings
-            Text(l10n.deliverySettings, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
-            AppSpacing.gapH12,
-            SwitchListTile(
-              title: Text(l10n.deliveryEnabled),
-              subtitle: Text(l10n.deliveryEnabledDesc),
-              value: _isEnabled,
-              onChanged: (v) => setState(() => _isEnabled = v),
-            ),
-            SwitchListTile(
-              title: Text(l10n.deliveryAutoAccept),
-              subtitle: Text(l10n.deliveryAutoAcceptDesc),
-              value: _autoAccept,
-              onChanged: (v) => setState(() => _autoAccept = v),
-            ),
-            SwitchListTile(
-              title: Text(l10n.deliverySyncOnChange),
-              subtitle: Text(l10n.deliverySyncOnChangeDesc),
-              value: _syncMenuOnProductChange,
-              onChanged: (v) => setState(() => _syncMenuOnProductChange = v),
-            ),
-            AppSpacing.gapH12,
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    initialValue: '$_menuSyncIntervalHours',
-                    decoration: InputDecoration(
-                      labelText: l10n.deliverySyncInterval,
-                      border: const OutlineInputBorder(),
-                      suffixText: l10n.deliveryHours,
-                    ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (v) => _menuSyncIntervalHours = int.tryParse(v) ?? 24,
+            PosFormCard(
+              title: l10n.deliverySettings,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  PosToggle(
+                    value: _isEnabled,
+                    onChanged: (v) => setState(() => _isEnabled = v),
+                    label: l10n.deliveryEnabled,
+                    subtitle: l10n.deliveryEnabledDesc,
                   ),
-                ),
-                AppSpacing.gapW12,
-                Expanded(
-                  child: TextFormField(
-                    initialValue: '$_maxDailyOrders',
-                    decoration: InputDecoration(
-                      labelText: l10n.deliveryMaxDailyOrders,
-                      border: const OutlineInputBorder(),
-                      helperText: l10n.deliveryUnlimitedHint,
-                    ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (v) => _maxDailyOrders = int.tryParse(v) ?? 0,
+                  AppSpacing.gapH12,
+                  PosToggle(
+                    value: _autoAccept,
+                    onChanged: (v) => setState(() => _autoAccept = v),
+                    label: l10n.deliveryAutoAccept,
+                    subtitle: l10n.deliveryAutoAcceptDesc,
                   ),
-                ),
-              ],
-            ),
-            AppSpacing.gapH32,
-
-            // Submit
-            FilledButton.icon(
-              onPressed: _isSaving ? null : _save,
-              icon: _isSaving
-                  ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
-                  : const Icon(Icons.save),
-              label: Text(_isSaving ? l10n.deliverySaving : l10n.deliverySave),
-              style: FilledButton.styleFrom(padding: AppSpacing.paddingV16),
+                  AppSpacing.gapH12,
+                  PosToggle(
+                    value: _syncMenuOnProductChange,
+                    onChanged: (v) => setState(() => _syncMenuOnProductChange = v),
+                    label: l10n.deliverySyncOnChange,
+                    subtitle: l10n.deliverySyncOnChangeDesc,
+                  ),
+                  AppSpacing.gapH16,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: PosTextField(
+                          controller: _menuIntervalController,
+                          label: l10n.deliverySyncInterval,
+                          suffix: Padding(padding: const EdgeInsetsDirectional.only(end: 12), child: Text(l10n.deliveryHours)),
+                          keyboardType: TextInputType.number,
+                          onChanged: (v) => _menuSyncIntervalHours = int.tryParse(v) ?? 24,
+                        ),
+                      ),
+                      AppSpacing.gapW12,
+                      Expanded(
+                        child: PosTextField(
+                          controller: _maxOrdersController,
+                          label: l10n.deliveryMaxDailyOrders,
+                          helperText: l10n.deliveryUnlimitedHint,
+                          keyboardType: TextInputType.number,
+                          onChanged: (v) => _maxDailyOrders = int.tryParse(v) ?? 0,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),
       ),
-);
+    );
   }
 
   Widget _buildPlatformSelector() {
     final platformsState = ref.watch(deliveryPlatformsProvider);
 
     return switch (platformsState) {
-      DeliveryPlatformsLoading() || DeliveryPlatformsInitial() => const Center(child: CircularProgressIndicator()),
+      DeliveryPlatformsLoading() || DeliveryPlatformsInitial() => const PosLoading(),
       DeliveryPlatformsError(:final message) => Text(message, style: TextStyle(color: AppColors.error)),
       DeliveryPlatformsLoaded(:final platforms) => Wrap(
         spacing: 8,
@@ -240,10 +231,7 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
       DeliveryConnectionTestLoading() => Container(
         margin: const EdgeInsets.only(bottom: 16),
         padding: AppSpacing.paddingAll12,
-        decoration: BoxDecoration(
-          color: AppColors.info.withValues(alpha: 0.1),
-          borderRadius: AppRadius.borderMd,
-        ),
+        decoration: BoxDecoration(color: AppColors.info.withValues(alpha: 0.1), borderRadius: AppRadius.borderMd),
         child: Row(
           children: [
             const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
@@ -293,7 +281,10 @@ class _DeliveryConfigPageState extends ConsumerState<DeliveryConfigPage> {
 
   Future<void> _save() async {
     final l10n = AppLocalizations.of(context)!;
-    if (!_formKey.currentState!.validate()) return;
+    if (_apiKeyController.text.trim().isEmpty) {
+      showPosWarningSnackbar(context, l10n.deliveryFieldRequired);
+      return;
+    }
     if (_selectedPlatformSlug == null && !_isEditing) {
       showPosWarningSnackbar(context, l10n.deliverySelectPlatform);
       return;

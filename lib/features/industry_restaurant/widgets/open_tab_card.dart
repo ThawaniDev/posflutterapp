@@ -5,6 +5,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/widgets/pos_status_badge.dart';
 import '../models/open_tab.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 
 class OpenTabCard extends StatelessWidget {
   final OpenTab tab;
@@ -15,7 +16,9 @@ class OpenTabCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final isOpen = tab.closedAt == null;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PosCard(
       elevation: 0,
@@ -31,13 +34,15 @@ class OpenTabCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: (isOpen ? AppColors.success : AppColors.textSecondary).withValues(alpha: 0.1),
+                  color: (isOpen ? AppColors.success : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight)).withValues(
+                    alpha: 0.1,
+                  ),
                   borderRadius: BorderRadius.circular(AppRadius.sm),
                 ),
                 child: Icon(
                   isOpen ? Icons.tab : Icons.tab_unselected,
                   size: 20,
-                  color: isOpen ? AppColors.success : AppColors.textSecondary,
+                  color: isOpen ? AppColors.success : (isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                 ),
               ),
               AppSpacing.gapW12,
@@ -49,12 +54,12 @@ class OpenTabCard extends StatelessWidget {
                     if (tab.openedAt != null)
                       Text(
                         'Opened: ${_formatDateTime(tab.openedAt!)}',
-                        style: AppTypography.caption.copyWith(color: AppColors.textSecondary),
+                        style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                       ),
                     if (tab.closedAt != null)
                       Text(
                         'Closed: ${_formatDateTime(tab.closedAt!)}',
-                        style: AppTypography.caption.copyWith(color: AppColors.textSecondary),
+                        style: AppTypography.caption.copyWith(color: isDark ? AppColors.textMutedDark : AppColors.textMutedLight),
                       ),
                   ],
                 ),
@@ -70,7 +75,7 @@ class OpenTabCard extends StatelessWidget {
                     AppSpacing.gapH4,
                     GestureDetector(
                       onTap: onClose,
-                      child: Text('Close Tab', style: AppTypography.labelSmall.copyWith(color: AppColors.error)),
+                      child: Text(l10n.restaurantCloseTab, style: AppTypography.labelSmall.copyWith(color: AppColors.error)),
                     ),
                   ],
                 ],

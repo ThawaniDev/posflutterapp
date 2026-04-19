@@ -3124,6 +3124,80 @@
   "debitsAllocatedAt": "مختص شدہ At",
   "debitsCreatedAt": "بنایا گیا At",
   "debitsOrderNumber": "آرڈر #",
+
+  "sidebarReceivables": "وصولیات",
+  "receivablesTitle": "وصولیات",
+  "receivablesCreate": "وصولی بنائیں",
+  "receivablesEdit": "وصولی میں ترمیم",
+  "receivablesDetail": "وصولی کی تفصیلات",
+  "receivablesNoReceivables": "کوئی وصولیات نہیں",
+  "receivablesNoReceivablesSubtitle": "بنانے کے بعد وصولیات یہاں ظاہر ہوں گی۔",
+  "receivablesSearchHint": "حوالہ، گاہک، تفصیل سے تلاش...",
+  "receivablesFilterByStatus": "حالت سے فلٹر",
+  "receivablesFilterByType": "قسم سے فلٹر",
+  "receivablesAll": "سب",
+  "receivablesReferenceNumber": "حوالہ نمبر",
+  "receivablesCustomer": "گاہک",
+  "receivablesType": "قسم",
+  "receivablesSource": "ذریعہ",
+  "receivablesAmount": "رقم",
+  "receivablesRemainingBalance": "بقایا رقم",
+  "receivablesDueDate": "واجب الادا تاریخ",
+  "receivablesDescription": "تفصیل",
+  "receivablesDescriptionAr": "تفصیل (عربی)",
+  "receivablesSelectCustomer": "گاہک منتخب کریں",
+  "receivablesSelectType": "قسم منتخب کریں",
+  "receivablesSelectSource": "ذریعہ منتخب کریں",
+  "receivablesStatusPending": "زیر التوا",
+  "receivablesStatusPartiallyPaid": "جزوی ادائیگی",
+  "receivablesStatusFullyPaid": "مکمل ادائیگی",
+  "receivablesStatusReversed": "منسوخ",
+  "receivablesStatusOverdue": "واجب الادا",
+  "receivablesTypeCreditSale": "ادھار فروخت",
+  "receivablesTypeLoan": "قرض",
+  "receivablesTypeInventoryAdjustment": "انوینٹری ایڈجسٹمنٹ",
+  "receivablesTypeManual": "دستی",
+  "receivablesSourcePosTerminal": "POS ٹرمینل",
+  "receivablesSourceInvoice": "انوائس",
+  "receivablesSourceReturn": "واپسی",
+  "receivablesSourceManual": "دستی",
+  "receivablesSourceInventorySystem": "انوینٹری سسٹم",
+  "receivablesRecordPayment": "ادائیگی ریکارڈ",
+  "receivablesPaymentAmount": "ادائیگی کی رقم",
+  "receivablesPaymentMethod": "ادائیگی کا طریقہ",
+  "receivablesAddNote": "نوٹ شامل کریں",
+  "receivablesNoteHint": "نوٹ درج کریں...",
+  "receivablesViewLogs": "لاگ دیکھیں",
+  "receivablesLogs": "سرگرمی لاگ",
+  "receivablesNoLogs": "ابھی تک کوئی سرگرمی نہیں",
+  "receivablesPayments": "ادائیگیاں",
+  "receivablesNoPayments": "ابھی تک کوئی ادائیگی نہیں",
+  "receivablesReverse": "منسوخ",
+  "receivablesReverseReceivable": "وصولی منسوخ",
+  "receivablesReverseReason": "منسوخی کی وجہ",
+  "receivablesReverseConfirm": "کیا آپ واقعی اس وصولی کو منسوخ کرنا چاہتے ہیں؟",
+  "receivablesDeleteConfirm": "کیا آپ واقعی اس وصولی کو حذف کرنا چاہتے ہیں؟",
+  "receivablesCreatedSuccess": "وصولی کامیابی سے بنائی گئی",
+  "receivablesUpdatedSuccess": "وصولی کامیابی سے اپ ڈیٹ ہوئی",
+  "receivablesDeletedSuccess": "وصولی کامیابی سے حذف ہوئی",
+  "receivablesPaymentSuccess": "ادائیگی کامیابی سے ریکارڈ ہوئی",
+  "receivablesNoteAddedSuccess": "نوٹ کامیابی سے شامل ہوا",
+  "receivablesReversedSuccess": "وصولی کامیابی سے منسوخ ہوئی",
+  "receivablesSummaryTitle": "وصولیات کا خلاصہ",
+  "receivablesSummaryTotal": "کل وصولیات",
+  "receivablesSummaryPending": "زیر التوا",
+  "receivablesSummaryPartially": "جزوی ادائیگی",
+  "receivablesSummaryFully": "مکمل ادائیگی",
+  "receivablesSummaryReversed": "منسوخ",
+  "receivablesSummaryOverdue": "واجب الادا",
+  "receivablesSummaryPaid": "کل ادائیگی",
+  "receivablesSummaryOutstanding": "بقایا",
+  "receivablesCreatedBy": "بنایا",
+  "receivablesSettledBy": "تصفیہ کیا",
+  "receivablesSettledAt": "تصفیہ تاریخ",
+  "receivablesCreatedAt": "بنانے کی تاریخ",
+  "receivablesOrderNumber": "آرڈر #",
+
   "searchDropdownHint": "تلاش...",
   "noResultsFound": "کوئی نتائج نہیں ملے",
   "selectOption": "منتخب کریں...",
@@ -4874,5 +4948,1315 @@
   },
   "reportLegendRevenue": "آمدنی",
   "reportLegendCost": "لاگت",
-  "reportLegendNetProfit": "خالص منافع"
+  "reportLegendNetProfit": "خالص منافع",
+  "navHome": "ہوم",
+  "navPos": "پی او ایس",
+  "navOrders": "آرڈرز",
+  "navCatalog": "کیٹلاگ",
+  "navMore": "مزید",
+  "tableActionsHeader": "اعمال",
+  "tableActionsTooltip": "اعمال",
+  "tableRowsLabel": "قطاریں: ",
+  "tablePreviousPage": "پچھلا صفحہ",
+  "tableNextPage": "اگلا صفحہ",
+  "tableShowingRange": "دکھا رہا ہے {start}-{end} از {total}",
+  "@tableShowingRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "accessDenied": "رسائی نامنظور",
+  "accessDeniedMessage": "آپ کو یہ صفحہ دیکھنے کی اجازت نہیں ہے۔\nرسائی کے لیے اپنے ایڈمنسٹریٹر سے رابطہ کریں۔",
+  "catalogTabBasicInfo": "بنیادی معلومات",
+  "catalogTabPricing": "قیمت",
+  "catalogTabVariants": "ویرینٹس",
+  "catalogTabModifiers": "موڈیفائرز",
+  "catalogTabBarcodes": "بارکوڈز",
+  "catalogProductNameRequired": "پروڈکٹ کا نام *",
+  "catalogProductNameHint": "پروڈکٹ کا نام درج کریں",
+  "catalogProductNameArabic": "پروڈکٹ کا نام (عربی)",
+  "catalogProductDescHint": "پروڈکٹ کی تفصیل درج کریں",
+  "catalogSelectCategory": "زمرہ منتخب کریں",
+  "catalogUnitType": "یونٹ کی قسم",
+  "catalogSelectUnit": "یونٹ منتخب کریں",
+  "catalogSku": "SKU",
+  "catalogSkuHint": "اسٹاک کیپنگ یونٹ",
+  "catalogPrimaryBarcode": "پرائمری بارکوڈ",
+  "catalogBarcodeHint": "بارکوڈ درج کریں یا اسکین کریں",
+  "catalogMinOrderQty": "کم از کم آرڈر مقدار",
+  "catalogMaxOrderQty": "زیادہ سے زیادہ آرڈر مقدار",
+  "catalogUnlimited": "لامحدود",
+  "catalogSoldByWeight": "وزن کے حساب سے فروخت (POS پر اسکیل)",
+  "catalogTareWeight": "ٹیئر وزن (کلوگرام)",
+  "catalogAgeRestriction": "POS پر عمر کی تصدیق درکار ہے",
+  "catalogSellPriceRequired": "فروخت قیمت () *",
+  "catalogCostPrice": "لاگت قیمت ()",
+  "catalogOfferPrice": "آفر قیمت ()",
+  "catalogOfferPriceHint": "آفر نہ ہونے پر خالی چھوڑیں",
+  "catalogOfferStart": "آفر شروع",
+  "catalogOfferEnd": "آفر ختم",
+  "catalogDatePlaceholder": "YYYY-MM-DD",
+  "catalogVariantValueRequired": "ویرینٹ قدر *",
+  "catalogVariantValueHint": "مثلاً: بڑا، سرخ، 500ml",
+  "catalogVariantSkuHint": "اختیاری ویرینٹ SKU",
+  "catalogPriceAdjustment": "قیمت ایڈجسٹمنٹ",
+  "catalogAddGroup": "گروپ شامل کریں",
+  "catalogGroupNameRequired": "گروپ کا نام *",
+  "catalogGroupNameHint": "مثلاً: سائز، اضافی",
+  "catalogMinSelect": "کم از کم انتخاب",
+  "catalogMaxSelect": "زیادہ سے زیادہ انتخاب",
+  "catalogAddBarcode": "بارکوڈ شامل کریں",
+  "catalogBarcodeRequired": "بارکوڈ *",
+  "catalogLinkSupplier": "سپلائر لنک کریں",
+  "catalogSupplierRequired": "سپلائر *",
+  "catalogSelectSupplier": "سپلائر منتخب کریں",
+  "catalogSupplierSku": "سپلائر SKU",
+  "catalogSupplierCostHint": "اس سپلائر سے لاگت",
+  "catalogLeadTimeDays": "لیڈ ٹائم (دن)",
+  "catalogLink": "لنک",
+  "catalogStoreWithId": "اسٹور: {id}",
+  "@catalogStoreWithId": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "catalogImageUrl": "تصویر کا URL",
+  "catalogImageLoadFailed": "تصویر لوڈ نہیں ہو سکی",
+  "catalogImagePasteHint": "اوپر تصویر کا URL پیسٹ کریں",
+  "catalogDeleteProductTitle": "پروڈکٹ حذف کریں",
+  "catalogAddProduct": "پروڈکٹ شامل کریں",
+  "catalogSearchProductsShort": "پروڈکٹس تلاش کریں...",
+  "catalogSearchProductsFull": "نام، SKU یا بارکوڈ سے پروڈکٹس تلاش کریں...",
+  "catalogClearSelection": "انتخاب صاف کریں",
+  "catalogAllCategories": "تمام زمرے",
+  "catalogAllProducts": "تمام پروڈکٹس",
+  "catalogCategoryNameRequired": "زمرہ کا نام *",
+  "catalogCategoryNameHint": "زمرہ کا نام درج کریں",
+  "catalogArabicName": "عربی نام",
+  "catalogArabicDescription": "عربی تفصیل",
+  "catalogCategoryDescHint": "اس زمرے کی مختصر تفصیل",
+  "catalogParentCategory": "پیرنٹ زمرہ",
+  "catalogNoneRootLevel": "کچھ نہیں (روٹ لیول)",
+  "catalogSortOrder": "ترتیب",
+  "catalogDeleteCategoryTitle": "زمرہ حذف کریں",
+  "catalogNewCategory": "نیا زمرہ",
+  "catalogEditCategory": "زمرہ میں ترمیم",
+  "catalogCreateFirstCategory": "پہلا زمرہ بنائیں",
+  "bakeryCakeOrders": "کیک آرڈرز",
+  "bakeryNoRecipes": "ابھی کوئی ترکیب نہیں",
+  "bakeryNoSchedules": "کوئی پروڈکشن شیڈول نہیں",
+  "bakeryNoCakeOrders": "کوئی کیک آرڈر نہیں",
+  "bakeryCakeDescription": "کیک کی تفصیل",
+  "bakeryFlavor": "ذائقہ",
+  "bakeryFlavorHint": "مثلاً: چاکلیٹ",
+  "bakeryDecorationNotes": "ڈیکوریشن نوٹس",
+  "bakeryDecorationHint": "خصوصی ڈیکوریشن کی درخواست...",
+  "bakeryDeliveryDate": "ڈیلیوری کی تاریخ",
+  "bakeryDeliveryTime": "ڈیلیوری کا وقت",
+  "bakeryPriceSar": "قیمت ()",
+  "bakeryDepositPaid": "ڈیپازٹ ادا",
+  "bakeryRecipeId": "ترکیب ID",
+  "bakerySelectRecipe": "ترکیب منتخب کریں",
+  "bakeryAdditionalNotes": "اضافی نوٹس...",
+  "bakeryRecipeNameHint": "ترکیب کا نام درج کریں",
+  "bakeryNumberOfUnits": "یونٹس کی تعداد",
+  "bakeryTemperature": "درجہ حرارت",
+  "bakeryInstructionsHint": "تفصیلی بیکنگ ہدایات...",
+  "bakeryDeliveryDateWithValue": "ڈیلیوری: {date}",
+  "@bakeryDeliveryDateWithValue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bakeryPrepTimeMin": "تیاری: {minutes}منٹ",
+  "@bakeryPrepTimeMin": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "bakeryBakeTimeMin": "بیکنگ: {minutes}منٹ",
+  "@bakeryBakeTimeMin": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "bakeryYieldUnits": "پیداوار: {units} یونٹ",
+  "@bakeryYieldUnits": {
+    "placeholders": {
+      "units": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsNoImei": "کوئی IMEI ریکارڈ نہیں",
+  "electronicsNoRepair": "کوئی مرمت کا کام نہیں",
+  "electronicsNoTradeIn": "کوئی ٹریڈ ان ریکارڈ نہیں",
+  "electronicsImei": "IMEI",
+  "electronicsImeiHint": "15 ہندسوں کا IMEI نمبر",
+  "electronicsImei2Optional": "IMEI 2 (اختیاری)",
+  "electronicsDualSimImei": "ڈوئل سم IMEI",
+  "electronicsSerialOptional": "سیریل نمبر (اختیاری)",
+  "electronicsSerialHint": "ڈیوائس سیریل نمبر",
+  "electronicsGradeValue": "گریڈ {value}",
+  "@electronicsGradeValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsPurchasePrice": "خریداری قیمت ()",
+  "electronicsMfgWarrantyEnd": "مینوفیکچرر وارنٹی اختتام",
+  "electronicsStoreWarrantyEnd": "اسٹور وارنٹی اختتام",
+  "electronicsDeviceDescription": "ڈیوائس کی تفصیل",
+  "electronicsDeviceHintRepair": "مثلاً: iPhone 15 Pro Max 256GB",
+  "electronicsImeiOptional": "IMEI (اختیاری)",
+  "electronicsIssueDescription": "مسئلے کی تفصیل",
+  "electronicsIssueHint": "مسئلہ بیان کریں...",
+  "electronicsAssignedTech": "تفویض شدہ ٹیکنیشن",
+  "electronicsStaffFullName": "{first} {last}",
+  "@electronicsStaffFullName": {
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsEstCost": "متوقع لاگت ()",
+  "electronicsFinalCost": "حتمی لاگت ()",
+  "electronicsDiagnosisNotes": "تشخیصی نوٹس",
+  "electronicsDiagnosisHint": "تشخیصی نتائج...",
+  "electronicsRepairNotes": "مرمت نوٹس",
+  "electronicsRepairHint": "مرمت کی تفصیلات...",
+  "electronicsRecordTradeIn": "ٹریڈ ان ریکارڈ کریں",
+  "electronicsDeviceHintTradeIn": "مثلاً: Samsung Galaxy S24 Ultra",
+  "electronicsGradeLetter": "گریڈ {grade}",
+  "@electronicsGradeLetter": {
+    "placeholders": {
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsAssessedValue": "تخمینہ شدہ قیمت ()",
+  "electronicsSnWithValue": "S/N: {serial}",
+  "@electronicsSnWithValue": {
+    "placeholders": {
+      "serial": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsGradeWithValue": "گریڈ: {grade}",
+  "@electronicsGradeWithValue": {
+    "placeholders": {
+      "grade": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsImeiWithValue": "IMEI: {imei}",
+  "@electronicsImeiWithValue": {
+    "placeholders": {
+      "imei": {
+        "type": "String"
+      }
+    }
+  },
+  "electronicsEstCostWithValue": "متوقع: {amount} ",
+  "@electronicsEstCostWithValue": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "floristBouquetHint": "مثلاً: کلاسک گلاب بوکے",
+  "floristOccasionHint": "مثلاً: شادی، سالگرہ، اینیورسری",
+  "floristTotalPrice": "کل قیمت ()",
+  "floristIsTemplate": "ٹیمپلیٹ ہے",
+  "floristTemplateSubtitle": "سبسکرپشن کے لیے دوبارہ استعمال کے قابل ٹیمپلیٹ",
+  "floristFreshness": "تازگی",
+  "floristNoArrangements": "کوئی ترتیب نہیں",
+  "floristNoFreshnessLogs": "تازگی کا کوئی لاگ نہیں",
+  "floristNoSubscriptions": "کوئی سبسکرپشن نہیں",
+  "floristNewFreshnessLog": "نئی تازگی لاگ",
+  "floristLogFreshness": "تازگی لاگ کریں",
+  "floristReceivedDate": "موصولی تاریخ",
+  "floristVaseLifeDays": "گلدان کی عمر (دن)",
+  "floristArrangementOptional": "ترتیب ٹیمپلیٹ (اختیاری)",
+  "floristSelectTemplate": "ٹیمپلیٹ منتخب کریں",
+  "floristDeliveryAddress": "ڈیلیوری کا پتہ",
+  "floristDeliveryAddressHint": "مکمل ڈیلیوری پتہ",
+  "floristPricePerDelivery": "فی ڈیلیوری قیمت ()",
+  "floristNextDeliveryDate": "اگلی ڈیلیوری تاریخ",
+  "floristFlowerTypesCount": "{count} پھولوں کی اقسام",
+  "@floristFlowerTypesCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "floristProductWithId": "پروڈکٹ: {id}",
+  "@floristProductWithId": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+  "floristQtyReceivedOn": "مقدار: {qty} · موصولی: {date}",
+  "@floristQtyReceivedOn": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "jewelryRecordBuyback": "بائی بیک ریکارڈ کریں",
+  "jewelryKaratHint": "مثلاً: 24K, 22K, 18K",
+  "jewelryDetailsHint": "اضافی تفصیلات...",
+  "jewelryBuybacks": "بائی بیکس",
+  "jewelryNoMetalRates": "کوئی دھات کی شرح مقرر نہیں",
+  "jewelryNoProductDetails": "کوئی پروڈکٹ تفصیل نہیں",
+  "jewelryNoBuybacks": "کوئی بائی بیک لین دین نہیں",
+  "jewelrySaveRate": "ریٹ محفوظ کریں",
+  "jewelryKaratOptional": "قیراط (اختیاری)",
+  "jewelrySellRatePerGram": "فروخت ریٹ/گرام ()",
+  "jewelryBuybackRatePerGram": "بائی بیک ریٹ/گرام",
+  "jewelryEffectiveDate": "مؤثر تاریخ",
+  "jewelryGrossWeightG": "مجموعی وزن (گرام)",
+  "jewelryNetWeightG": "خالص وزن (گرام)",
+  "jewelryMakingChargesType": "میکنگ چارجز کی قسم",
+  "jewelryMakingChargesValue": "میکنگ چارجز کی قیمت",
+  "jewelryStoneDetails": "پتھر کی تفصیلات",
+  "jewelryStoneTypeOptional": "پتھر کی قسم (اختیاری)",
+  "jewelryStoneTypeHint": "مثلاً: ہیرا، یاقوت، زمرد",
+  "jewelryWeightCarat": "وزن (قیراط)",
+  "jewelryCount": "تعداد",
+  "jewelryCertificateOptional": "سرٹیفکیٹ نمبر (اختیاری)",
+  "jewelryCertificateHint": "GIA, IGI، وغیرہ",
+  "jewelryEffectiveWithValue": "مؤثر: {date}",
+  "@jewelryEffectiveWithValue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "pharmacyDrugNameHint": "مثلاً: پیراسٹامول",
+  "pharmacyFormHint": "مثلاً: گولی، شربت",
+  "pharmacyStrength": "طاقت",
+  "pharmacyManufacturer": "مینوفیکچرر",
+  "pharmacyManufacturerHint": "دوا مینوفیکچرر",
+  "pharmacyPrescriptionRequired": "خریداری کے لیے درست نسخہ پیش کرنا لازمی",
+  "pharmacyNoPrescriptions": "کوئی نسخہ نہیں",
+  "pharmacyNoDrugSchedules": "کوئی ڈرگ شیڈول نہیں",
+  "pharmacyPrescriptionNumber": "نسخہ نمبر",
+  "pharmacyPrescriptionNumberHint": "مثلاً: RX-001234",
+  "pharmacyFullNameHint": "پورا نام",
+  "pharmacyPatientIdOptional": "مریض ID (اختیاری)",
+  "pharmacyPatientIdHint": "قومی ID یا سسٹم ID",
+  "pharmacyDoctorInfo": "ڈاکٹر کی معلومات",
+  "pharmacyDoctorHint": "ڈاکٹر ...",
+  "pharmacyLicenseNo": "لائسنس نمبر",
+  "pharmacyLicenseHint": "میڈیکل لائسنس",
+  "pharmacyInsurance": "انشورنس",
+  "pharmacyInsuranceProvider": "انشورنس فراہم کنندہ (اختیاری)",
+  "pharmacyInsuranceHint": "مثلاً: DHAMAN",
+  "pharmacyClaimAmount": "دعویٰ رقم ()",
+  "pharmacyOtc": "OTC",
+  "pharmacyRxOnly": "صرف نسخہ",
+  "pharmacyControlled": "کنٹرولڈ",
+  "pharmacyInsured": "بیمہ یافتہ",
+  "restaurantTabOwnerHint": "ٹیب مالک کا نام",
+  "restaurantPhoneHint": "+968 XXXX XXXX",
+  "restaurantTimeHint": "HH:MM",
+  "restaurantSpecialRequestsHint": "خصوصی درخواستیں، الرجی...",
+  "restaurantKitchen": "کچن",
+  "restaurantNoTables": "کوئی ٹیبل کنفیگر نہیں",
+  "restaurantNoTickets": "کوئی کچن ٹکٹ نہیں",
+  "restaurantNoReservations": "کوئی ریزرویشن نہیں",
+  "restaurantNoOpenTabs": "کوئی اوپن ٹیب نہیں",
+  "restaurantTableNumberHint": "مثلاً: T1, A-01",
+  "restaurantTableLocationHint": "مثلاً: کھڑکی کی میز، پیٹیو 1",
+  "restaurantTableSectionHint": "مثلاً: انڈور، آؤٹڈور، VIP",
+  "restaurantTableAvailable": "میز بیٹھنے کے لیے دستیاب ہے",
+  "restaurantTicketNumberSign": "#{number}",
+  "@restaurantTicketNumberSign": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantStation": "اسٹیشن: {station}",
+  "@restaurantStation": {
+    "placeholders": {
+      "station": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantCourse": "کورس {number}",
+  "@restaurantCourse": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantServed": "پیش کیا گیا",
+  "restaurantCloseTab": "ٹیب بند کریں",
+  "restaurantDurationMin": "{minutes} منٹ",
+  "@restaurantDurationMin": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "restaurantSeated": "بیٹھا ہوا",
+  "restaurantNoShow": "غیر حاضر",
+  "adminAdd": "شامل کریں",
+  "adminNoImplementationFees": "کوئی نفاذ فیس نہیں ملی",
+  "adminStoreWithName": "اسٹور: {name}",
+  "@adminStoreWithName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adminNotesWithValue": "نوٹس: {notes}",
+  "@adminNotesWithValue": {
+    "placeholders": {
+      "notes": {
+        "type": "String"
+      }
+    }
+  },
+  "adminAddImplementationFee": "نفاذ فیس شامل کریں",
+  "adminEditImplementationFee": "نفاذ فیس میں ترمیم",
+  "adminFeeTypeSetup": "سیٹ اپ",
+  "adminFeeTypeTraining": "ٹریننگ",
+  "adminFeeTypeCustomDev": "حسب ضرورت ڈیو",
+  "adminFeeType": "فیس کی قسم",
+  "adminSelectFeeType": "فیس کی قسم منتخب کریں",
+  "adminDeleteFee": "فیس حذف کریں",
+  "adminDeleteFeeConfirm": "کیا آپ واقعی اس نفاذ فیس کو حذف کرنا چاہتے ہیں؟",
+  "adminStoreDetails": "اسٹور کی تفصیلات",
+  "adminMetrics": "میٹرکس",
+  "adminLoadMetrics": "میٹرکس لوڈ کریں",
+  "adminAddOverride": "اوور رائڈ شامل کریں",
+  "adminNoLimitOverrides": "کوئی حد اوور رائڈ مقرر نہیں",
+  "adminValueWithValue": "قدر: {value}",
+  "@adminValueWithValue": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "adminReasonWithValue": "وجہ: {reason}",
+  "@adminReasonWithValue": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "adminExpiresWithValue": "ختم: {expiresAt}",
+  "@adminExpiresWithValue": {
+    "placeholders": {
+      "expiresAt": {
+        "type": "String"
+      }
+    }
+  },
+  "adminSuspendStore": "اسٹور معطل کریں",
+  "adminSuspensionReasonHint": "معطلی کی وجہ درج کریں",
+  "adminAddLimitOverride": "حد اوور رائڈ شامل کریں",
+  "adminLimitKey": "حد کی کلید",
+  "adminOverrideValue": "اوور رائڈ قدر",
+  "adminOverrideValueHint": "قدر درج کریں",
+  "adminOverrideReasonHint": "یہ اوور رائڈ کیوں درکار ہے؟",
+  "adminSetOverride": "اوور رائڈ سیٹ کریں",
+  "adminNoHardwareSales": "کوئی ہارڈویئر سیل نہیں ملی",
+  "adminSnWithValue": "S/N: {serial}",
+  "@adminSnWithValue": {
+    "placeholders": {
+      "serial": {
+        "type": "String"
+      }
+    }
+  },
+  "adminSoldWithValue": "فروخت: {date}",
+  "@adminSoldWithValue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "adminRecordHardwareSale": "ہارڈویئر سیل ریکارڈ کریں",
+  "adminItemTypeScanner": "اسکینر",
+  "adminItemType": "آئٹم کی قسم",
+  "adminSelectItemType": "آئٹم کی قسم منتخب کریں",
+  "adminEditHardwareSale": "ہارڈویئر سیل میں ترمیم",
+  "adminDeleteSale": "سیل حذف کریں",
+  "adminDeleteSaleConfirm": "کیا آپ واقعی اس ہارڈویئر سیل کو حذف کرنا چاہتے ہیں؟",
+  "adminSelectFiltersPayments": "ادائیگیاں لوڈ کرنے کے لیے فلٹرز منتخب کریں",
+  "adminPaymentCash": "کیش",
+  "adminPaymentCardMada": "CARD MADA",
+  "adminPaymentCardVisa": "CARD VISA",
+  "adminPaymentCardMaster": "CARD MASTERCARD",
+  "adminPaymentStoreCredit": "STORE CREDIT",
+  "adminPaymentGiftCard": "GIFT CARD",
+  "adminPaymentMobile": "MOBILE PAYMENT",
+  "adminMethod": "طریقہ",
+  "adminAllMethods": "تمام طریقے",
+  "adminSarAmount": ". {amount}",
+  "@adminSarAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "adminPaymentGateways": "ادائیگی گیٹ ویز",
+  "adminWebhookWithValue": "Webhook: {url}",
+  "@adminWebhookWithValue": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "adminAddGateway": "گیٹ وے شامل کریں",
+  "adminSelectEnvironment": "ماحول منتخب کریں",
+  "adminEditGateway": "گیٹ وے میں ترمیم",
+  "adminDeleteGateway": "گیٹ وے حذف کریں",
+  "adminDeleteGatewayConfirm": "کیا آپ واقعی اس گیٹ وے کو حذف کرنا چاہتے ہیں؟",
+  "adminActionRoleCreated": "رول بنایا گیا",
+  "adminActionRoleUpdated": "رول اپ ڈیٹ",
+  "adminActionRoleDeleted": "رول حذف",
+  "adminActionUserCreated": "صارف بنایا گیا",
+  "adminActionUserUpdated": "صارف اپ ڈیٹ",
+  "adminActionUserDeactivated": "صارف غیر فعال",
+  "adminActionUserActivated": "صارف فعال",
+  "adminAllActions": "تمام اقدامات",
+  "adminAllEntities": "تمام انٹیٹیز",
+  "adminNoActivityLogs": "کوئی سرگرمی لاگ نہیں ملا",
+  "adminPageOfLast": "صفحہ {page} از {lastPage}",
+  "@adminPageOfLast": {
+    "placeholders": {
+      "page": {
+        "type": "String"
+      },
+      "lastPage": {
+        "type": "String"
+      }
+    }
+  },
+  "adminExpenseSupplies": "سامان",
+  "adminExpenseFood": "کھانا",
+  "adminExpenseTransport": "نقل و حمل",
+  "adminExpenseUtility": "یوٹیلیٹی",
+  "adminAllCategories": "تمام زمرے",
+  "adminLoadingExpenses": "اخراجات لوڈ ہو رہے ہیں...",
+  "adminNoExpensesFound": "کوئی اخراجات نہیں ملے",
+  "adminExportSubscriptions": "سبسکرپشنز ایکسپورٹ کریں",
+  "adminConversionRate": "کنورژن ریٹ",
+  "adminChurnPeriod": "چرن (مدت)",
+  "adminAvgSubAge": "اوسط سب عمر",
+  "adminStatusBreakdown": "حیثیت تفصیل",
+  "adminLifecycleTrend": "لائف سائیکل رجحان",
+  "adminNoTrendData": "کوئی رجحان ڈیٹا نہیں",
+  "adminLoadingSubAnalytics": "سبسکرپشن اینالیٹکس لوڈ ہو رہا ہے...",
+  "adminExportStores": "اسٹورز ایکسپورٹ کریں",
+  "adminExportReadyRecords": "ایکسپورٹ تیار: {count} ریکارڈز",
+  "@adminExportReadyRecords": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "adminExportAgain": "دوبارہ ایکسپورٹ کریں",
+  "adminTotalStores": "کل اسٹورز",
+  "adminHealthSummary": "صحت کا خلاصہ",
+  "adminNoHealthDataToday": "آج کوئی صحت ڈیٹا نہیں",
+  "adminTopStores": "ٹاپ اسٹورز",
+  "adminLoadingStoreAnalytics": "اسٹور اینالیٹکس لوڈ ہو رہا ہے...",
+  "adminExportRevenue": "ریونیو ایکسپورٹ کریں",
+  "adminMRR": "MRR",
+  "adminARR": "ARR",
+  "adminUpcomingRenewals": "آنے والی تجدیدات",
+  "adminRevenueByPlan": "پلان کے حساب سے ریونیو",
+  "adminNoPlanDataAvailable": "کوئی پلان ڈیٹا دستیاب نہیں",
+  "adminLoadingRevenueData": "ریونیو ڈیٹا لوڈ ہو رہا ہے...",
+  "adminLogLevelDebug": "ڈیبگ",
+  "adminLogLevelInfo": "معلومات",
+  "adminLogLevelWarning": "انتباہ",
+  "adminLevel": "سطح",
+  "adminEventTypeConfig": "کنفیگ تبدیلی",
+  "adminEventTypeCron": "کرون جاب",
+  "adminType": "قسم",
+  "adminNoPlatformEvents": "کوئی پلیٹ فارم ایونٹ نہیں ملا",
+  "adminConfidenceWithPct": "اعتماد: {pct}%",
+  "@adminConfidenceWithPct": {
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      }
+    }
+  },
+  "adminWinnerWithValue": "فاتح: {winner}",
+  "@adminWinnerWithValue": {
+    "placeholders": {
+      "winner": {
+        "type": "String"
+      }
+    }
+  },
+  "adminVariantResults": "ویرینٹ نتائج",
+  "adminNoResultsYet": "ابھی کوئی نتائج نہیں",
+  "adminControl": "کنٹرول",
+  "adminImpressions": "امپریشنز",
+  "adminConversions": "کنورژنز",
+  "adminRate": "شرح",
+  "adminStoreManagement": "اسٹور مینجمنٹ",
+  "adminCreateStore": "اسٹور بنائیں",
+  "adminPageOfLastState": "صفحہ {current} از {last}",
+  "@adminPageOfLastState": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "adminOrganizationName": "تنظیم کا نام",
+  "adminOrgNameHint": "تنظیم کا نام درج کریں",
+  "adminStoreNameHint": "اسٹور کا نام درج کریں",
+  "adminProviderOpenAI": "OpenAI",
+  "adminProviderAnthropic": "Anthropic",
+  "adminProviderGoogle": "Google",
+  "adminHintGpt4o": "GPT-4o",
+  "adminDeleteModelQuote": "ماڈل \"{name}\" حذف کریں؟",
+  "@adminDeleteModelQuote": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "adminStoreHealth": "اسٹور صحت",
+  "adminHealthScore": "صحت اسکور",
+  "adminServices": "خدمات",
+  "adminNoStoreHealthData": "کوئی اسٹور صحت ڈیٹا دستیاب نہیں",
+  "adminConfigs": "کنفگز",
+  "adminMappings": "میپنگز",
+  "adminExports": "ایکسپورٹس",
+  "adminNoAccountingConfigs": "کوئی اکاؤنٹنگ کنفگ نہیں",
+  "adminNoExports": "کوئی ایکسپورٹ نہیں",
+  "adminNoAutoExportConfigs": "کوئی آٹو ایکسپورٹ کنفگ نہیں",
+  "adminSystemRole": "سسٹم رول",
+  "adminPermissionsWithCount": "اجازتیں ({count})",
+  "@adminPermissionsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "adminDeleteRole": "رول حذف کریں",
+  "adminDeleteRoleConfirm": "کیا آپ واقعی یہ رول حذف کرنا چاہتے ہیں؟ یہ واپس نہیں کیا جا سکتا۔",
+  "adminStatusWarning": "انتباہ",
+  "adminStatusCritical": "نازک",
+  "adminStatusUnknown": "نامعلوم",
+  "adminAllStatuses": "تمام حیثیتیں",
+  "adminNoHealthChecks": "کوئی صحت چیک نہیں",
+  "adminPlatformAnnouncements": "پلیٹ فارم اعلانات",
+  "adminPageOfLastTotal": "صفحہ {current} از {last} (کل {total})",
+  "@adminPageOfLastTotal": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "adminFeatureAdoption": "فیچر اپنانا",
+  "adminNoFeatureDataAvailable": "کوئی فیچر ڈیٹا دستیاب نہیں",
+  "adminTrend": "رجحان",
+  "adminLoadingFeatureData": "فیچر ڈیٹا لوڈ ہو رہا ہے...",
+  "adminPageOfLastSlash": "{current} / {last}",
+  "@adminPageOfLastSlash": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "adminChannelWhatsApp": "WhatsApp",
+  "adminChannel": "چینل",
+  "adminStatus": "حیثیت",
+  "adminNoNotificationLogs": "کوئی نوٹیفکیشن لاگ نہیں ملا",
+  "adminDatabase": "ڈیٹابیس",
+  "adminNoDatabaseBackups": "کوئی ڈیٹابیس بیک اپ نہیں",
+  "adminNoProviderBackups": "کوئی پرووائڈر بیک اپ نہیں",
+  "adminNoThawaniOrders": "کوئی ثوانی آرڈر نہیں",
+  "adminNoStoreConfigs": "کوئی اسٹور کنفگ نہیں",
+  "adminLoadingRefunds": "ریفنڈز لوڈ ہو رہے ہیں...",
+  "adminNoRefundsFound": "کوئی ریفنڈ نہیں ملا",
+  "adminDeploymentReleases": "ڈپلائمنٹ ریلیز",
+  "adminPlatform": "پلیٹ فارم",
+  "adminLoadReleases": "ریلیز لوڈ کریں",
+  "adminNoReleasesFound": "کوئی ریلیز نہیں ملی",
+  "adminNoBackupsFound": "کوئی بیک اپ نہیں ملا",
+  "adminStartNewBackup": "نیا دستی ڈیٹابیس بیک اپ شروع کریں؟",
+  "adminPageTypeLegal": "قانونی",
+  "adminPageTypeMarketing": "مارکیٹنگ",
+  "adminNoPagesFound": "کوئی پیج نہیں ملا",
+  "adminMonitored": "نگرانی شدہ",
+  "adminWithErrors": "خرابیوں کے ساتھ",
+  "adminTotalErrorsToday": "آج کل خرابیاں",
+  "adminNoSyncData": "کوئی سنک ڈیٹا نہیں",
+  "adminLoadingSystemHealth": "سسٹم صحت لوڈ ہو رہی ہے...",
+  "adminAdminDetail": "ایڈمن تفصیل",
+  "adminAccountInfo": "اکاؤنٹ معلومات",
+  "adminNoRolesAssigned": "کوئی رولز تفویض نہیں",
+  "adminReset2FA": "2FA ری سیٹ کریں",
+  "adminClear2FAHint": "2FA صاف کریں؛ ایڈمن کو دوبارہ اندراج کرانا ہوگا",
+  "adminRegistrationQueue": "رجسٹریشن قطار",
+  "adminContactEmailLine": "{contact} • {email}",
+  "@adminContactEmailLine": {
+    "placeholders": {
+      "contact": {
+        "type": "String"
+      },
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "adminRejectRegistration": "رجسٹریشن مسترد کریں",
+  "adminRejectReasonHint": "وضاحت کریں کہ یہ رجسٹریشن کیوں مسترد کی گئی",
+  "subSubscribedSuccessfully": "کامیابی سے سبسکرائب ہوا!",
+  "subPlanChangedSuccessfully": "پلان کامیابی سے تبدیل ہوا!",
+  "subCancelled": "سبسکرپشن منسوخ۔",
+  "subResumed": "سبسکرپشن دوبارہ شروع!",
+  "subAddNamedAddon": "{name} شامل کریں؟",
+  "@subAddNamedAddon": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subRemoveNamedAddon": "{name} ہٹائیں؟",
+  "@subRemoveNamedAddon": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subRemoveConfirm": "کیا آپ واقعی اپنے سبسکرپشن سے {name} ہٹانا چاہتے ہیں؟",
+  "@subRemoveConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subActionAdd": "شامل کریں",
+  "subActionRemove": "ہٹائیں",
+  "subActionKeep": "رکھیں",
+  "subSubscribeToPlan": "{name} سبسکرائب کریں؟",
+  "@subSubscribeToPlan": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subActionSubscribe": "سبسکرائب",
+  "subProceedToPayment": "ادائیگی پر جائیں",
+  "subPageOfLast": "صفحہ {current} از {last}",
+  "@subPageOfLast": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "subFeatureLocked": "فیچر مقفل",
+  "subFeatureLockedBody": "اس فیچر کے لیے اعلیٰ پلان چاہیے۔ {name} اور مزید کو غیر مقفل کرنے کے لیے اپ گریڈ کریں۔",
+  "@subFeatureLockedBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "subCurrentColon": "موجودہ: ",
+  "subRequiredColon": "درکار: ",
+  "subAvailablePlans": "دستیاب پلان",
+  "subNotNow": "ابھی نہیں",
+  "subNoFeaturesListed": "اس پلان کے لیے کوئی فیچرز درج نہیں۔",
+  "subBadgeTrial": "آزمائشی",
+  "subBadgeGracePeriod": "گریس پیریڈ",
+  "subBadgePastDue": "باقی",
+  "subDueDate": "میعاد: {date}",
+  "@subDueDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "staffRoleOrType": "رول / قسم",
+  "staffContact": "رابطہ",
+  "staffEditRole": "رول میں ترمیم",
+  "staffFailedLoadPermissions": "اجازتیں لوڈ کرنے میں ناکام: {message}",
+  "@staffFailedLoadPermissions": {
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "staffNoPermission": "کوئی اجازت نہیں",
+  "staffRequiresPinOverride": "PIN اوور رائیڈ درکار",
+  "staffNoActionPermission": "آپ کو اس عمل کی اجازت نہیں",
+  "staffAttInLabel": "داخلہ: {time}",
+  "@staffAttInLabel": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "staffAttOutLabel": "خروج: {time}",
+  "@staffAttOutLabel": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "staffAttBreakLabel": "وقفہ: {min}منٹ",
+  "@staffAttBreakLabel": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "staffAttOTLabel": "اوور ٹائم: {min}منٹ",
+  "@staffAttOTLabel": {
+    "placeholders": {
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "staffMemberRequired": "{label} *",
+  "@staffMemberRequired": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "staffFullNameLabel": "{first} {last}",
+  "@staffFullNameLabel": {
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "staffShiftLabel": "{name} ({start} - {end})",
+  "@staffShiftLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "staffClockedIn": "ان کلاک",
+  "staffClockedOut": "آؤٹ کلاک",
+  "staffDateRangeLabel": "{start} – {end}",
+  "@staffDateRangeLabel": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "staffCommissionTitle": "{name} - {label}",
+  "@staffCommissionTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "staffDeleteStaffConfirm": "{prompt} {first} {last}؟",
+  "@staffDeleteStaffConfirm": {
+    "placeholders": {
+      "prompt": {
+        "type": "String"
+      },
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "staffDeleteRoleConfirm": "{prompt} \"{name}\"؟",
+  "@staffDeleteRoleConfirm": {
+    "placeholders": {
+      "prompt": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pcZatcaQr": "ZATCA QR",
+  "pcBold": "بولڈ",
+  "pcGridLayout": "گرڈ لے آؤٹ",
+  "pcGridDims": "{rows} قطاریں × {cols} کالم",
+  "@pcGridDims": {
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      },
+      "cols": {
+        "type": "String"
+      }
+    }
+  },
+  "pcButtonsWithCount": "بٹن ({count})",
+  "@pcButtonsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "pcNoQuickButtons": "کوئی فوری رسائی بٹن کنفیگر نہیں",
+  "pcReceiptLogo": "لوگو",
+  "pcHeaderLine1": "ہیڈر لائن 1",
+  "pcHeaderLine2": "ہیڈر لائن 2",
+  "pcFooter": "فوٹر",
+  "pcShowVatNumber": "VAT نمبر دکھائیں",
+  "pcShowLoyaltyPoints": "لائلٹی پوائنٹس دکھائیں",
+  "pcCloneCategorySuccess": "زمرہ کامیابی سے کاپی ہوا",
+  "pcCloneProductSuccess": "پروڈکٹ کامیابی سے کاپی ہوا",
+  "pcCloneAllSuccess": "تمام پہلے سے طے شدہ پروڈکٹس کامیابی سے کاپی ہوئیں",
+  "pcCloneAllProducts": "تمام پروڈکٹس کاپی کریں",
+  "pcCloneAll": "سب کاپی",
+  "pcCloneCategory": "زمرہ کاپی",
+  "pcCloneCategoryConfirm": "\"{name}\" اور اس کی تمام پروڈکٹس اپنے اسٹور میں کاپی کریں؟",
+  "@pcCloneCategoryConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "pcClone": "کاپی",
+  "pcBusinessTypeColon": "کاروبار کی قسم:",
+  "pcNoPredefinedCategories": "کوئی پہلے سے طے شدہ زمرے نہیں ملے",
+  "pcCloneToMyStore": "میرے اسٹور میں کاپی",
+  "pcCloneProduct": "پروڈکٹ کاپی",
+  "pcNoPredefinedProducts": "کوئی پہلے سے طے شدہ پروڈکٹس نہیں ملیں",
+  "pcSkuLine": "SKU: {sku}",
+  "@pcSkuLine": {
+    "placeholders": {
+      "sku": {
+        "type": "String"
+      }
+    }
+  },
+  "pcPageOfLast": "صفحہ {current} از {last}",
+  "@pcPageOfLast": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "acctExportTypesOptional": "ایکسپورٹ اقسام (اختیاری)",
+  "acctDeleteMapping": "میپنگ حذف کریں",
+  "acctDeleteMappingConfirm": "کیا آپ واقعی یہ میپنگ ہٹانا چاہتے ہیں؟",
+  "acctEnableAutoExport": "آٹو ایکسپورٹ فعال کریں",
+  "acctExportTypes": "ایکسپورٹ اقسام",
+  "acctScheduleInfo": "شیڈول معلومات",
+  "acctNoRunsScheduled": "ابھی کوئی رن شیڈول نہیں",
+  "acctSelectProvider": "پرووائڈر منتخب کریں",
+  "acctConnectProvider": "{name} سے منسلک کریں",
+  "@acctConnectProvider": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "acctDisconnectProvider": "پرووائڈر منقطع",
+  "acctDisconnect": "منقطع",
+  "acctDateRangeArrow": "{start} → {end}",
+  "@acctDateRangeArrow": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "acctEntriesWithCount": "{count} اندراجات",
+  "@acctEntriesWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniPushToThawani": "ثوانی میں پش کریں",
+  "thawaniPullFromThawani": "ثوانی سے پل کریں",
+  "thawaniNoCategoryMappings": "ابھی کوئی زمرہ میپنگ نہیں",
+  "thawaniViewLogs": "لاگز دیکھیں",
+  "thawaniPushPullCatsProds": "پروڈکٹس اور زمرے پش/پل",
+  "thawaniCategoriesMapped": "{count} زمرے میپ شدہ",
+  "@thawaniCategoriesMapped": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniOpsToday": "آج {count} عملیات",
+  "@thawaniOpsToday": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "thawaniCategorySync": "زمرہ سنک",
+  "thawaniProductSync": "پروڈکٹ سنک",
+  "thawaniSyncQueue": "سنک قطار",
+  "thawaniProcessQueueNow": "قطار ابھی پروسیس کریں",
+  "thawaniNoSyncLogs": "کوئی سنک لاگ نہیں ملا",
+  "labelsPrintedBy": "طباعت بذریعہ",
+  "labelsAddElement": "عنصر شامل کریں",
+  "labelsProductName": "پروڈکٹ کا نام",
+  "labelsBarcodeCode128": "Code 128",
+  "labelsBarcodeEan13": "EAN-13",
+  "labelsBarcodeUpca": "UPC-A",
+  "labelsBarcodeCode39": "Code 39",
+  "labelsBarcodeItf": "ITF",
+  "labelsSkuLine": "SKU: {sku}",
+  "@labelsSkuLine": {
+    "placeholders": {
+      "sku": {
+        "type": "String"
+      }
+    }
+  },
+  "labelsItemsWithCount": "{count} {items}",
+  "@labelsItemsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      },
+      "items": {
+        "type": "String"
+      }
+    }
+  },
+  "labelsTotalProductsLine": "{label}: {count}",
+  "@labelsTotalProductsLine": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "cgBasket": "ٹوکری",
+  "cgUpsell": "اپ سیل",
+  "cgItemsPerMin": "آئٹمز/منٹ",
+  "cgTotalTxn": "کل TXN",
+  "cgUpsellRate": "اپ سیل ریٹ",
+  "cgZeroVoidRate": "زیرو وائڈ ریٹ",
+  "cgConsistency": "مستقل مزاجی",
+  "cgEarlyBird": "ارلی برڈ",
+  "cgRisk": "خطرہ",
+  "cgReview": "جائزہ",
+  "cgReviewed": "جائزہ لیا گیا",
+  "cgTxnAbbr": "TXN",
+  "cgIpmAbbr": "IPM",
+  "onboardingStoreSettings": "اسٹور کی ترتیبات",
+  "onboardingVatHint": "VAT",
+  "onboardingOptionalHint": "اختیاری",
+  "onboardingCustomHeaderHint": "حسب ضرورت ہیڈر ٹیکسٹ",
+  "onboardingThankYouHint": "خریداری کا شکریہ!",
+  "onboardingSkipSetup": "سیٹ اپ چھوڑیں",
+  "onboardingTaxIncludedNote": "جب فعال ہو تو پروڈکٹ کی قیمتیں ٹیکس سمیت دکھائی جاتی ہیں۔",
+  "onboardingAllSet": "آپ تیار ہیں!",
+  "hardwareSkuLine": "SKU: {sku}",
+  "@hardwareSkuLine": {
+    "placeholders": {
+      "sku": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareViewEdit": "دیکھیں / ترمیم",
+  "hardwareAddToCart": "کارٹ میں شامل کریں",
+  "hardwareAddNewProduct": "نیا پروڈکٹ شامل کریں",
+  "hardwareNoEvents": "کوئی ایونٹ ریکارڈ نہیں",
+  "hardwareConfiguredCount": "{count} کنفیگر",
+  "@hardwareConfiguredCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareConnectedCount": "{count} منسلک",
+  "@hardwareConnectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareOfflineCount": "{count} آف لائن",
+  "@hardwareOfflineCount": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "hardwareScan": "اسکین",
+  "hardwareNoCertified": "کوئی تصدیق شدہ ہارڈویئر نہیں ملا",
+  "hardwareCertified": "تصدیق شدہ",
+  "auLoadingHistory": "تاریخ لوڈ ہو رہی ہے...",
+  "auNoUpdateHistory": "کوئی اپ ڈیٹ تاریخ نہیں",
+  "auHealthCheckFailed": "اپ ڈیٹ کے بعد صحت چیک ناکام",
+  "auTapToCheck": "اپ ڈیٹس چیک کرنے کے لیے ٹیپ کریں",
+  "auLoadingChangelog": "چینج لاگ لوڈ ہو رہی ہے...",
+  "auNoReleasesFound": "کوئی ریلیز نہیں ملی",
+  "zatcaTotalInvoices": "کل انوائسز",
+  "zatcaSimulation": "سمیولیشن",
+  "zatcaOtp": "ZATCA OTP",
+  "zatcaTotalVat": "کل VAT",
+  "zatcaStandardInvoices": "اسٹینڈرڈ انوائسز",
+  "zatcaSimplifiedInvoices": "سادہ انوائسز",
+  "promoNoFound": "کوئی پروموشن نہیں ملی",
+  "promoFilter": "پروموشنز فلٹر",
+  "promoDeleteConfirm": "\"{name}\" حذف کریں؟ یہ عمل واپس نہیں کیا جا سکتا۔",
+  "@promoDeleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "promoEdit": "پروموشن میں ترمیم",
+  "promoTypeRequired": "قسم *",
+  "promoTypeLine": "قسم: {type}",
+  "@promoTypeLine": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      }
+    }
+  },
+  "branchesType": "قسم",
+  "branchesBranchLabel": "برانچ",
+  "branchesTimezoneHint": "Asia/Muscat",
+  "branchesCountryHint": "OM",
+  "branchesStaffColumn": "عملہ",
+  "backupStorageNotLoaded": "اسٹوریج معلومات لوڈ نہیں ہوئی",
+  "backupScheduleNotLoaded": "شیڈول لوڈ نہیں ہوا",
+  "backupAutoSettings": "خودکار بیک اپ کی ترتیبات",
+  "backupNoLoaded": "کوئی بیک اپ لوڈ نہیں ہوا",
+  "securityNoAuditLogs": "کوئی آڈٹ لاگ نہیں ملی۔",
+  "marketplaceContinue": "جاری رکھیں",
+  "settingsSpaceLabel": "اسپیس",
+  "payments50Halalas": "50 ہللہ",
+  "payments25Halalas": "25 ہللہ",
+  "payments10Halalas": "10 ہللہ",
+  "payments5Halalas": "5 ہللہ",
+  "accessProtanopia": "پروٹانوپیا",
+  "accessDeuteranopia": "ڈیوٹرانوپیا",
+  "accessTritanopia": "ٹرائیٹانوپیا",
+  "commonAll": "تمام",
+  "commonAllBranches": "تمام برانچز",
+  "commonAllQueues": "تمام قطاریں",
+  "commonAllGroups": "تمام گروپس",
+  "commonSeverity": "شدت",
+  "commonCategory": "زمرہ",
+  "commonChannel": "چینل",
+  "commonAction": "ایکشن",
+  "adminPageOf": "صفحہ {current} از {last}",
+  "@adminPageOf": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "adminPageOfTotal": "صفحہ {current} از {last} ({total} کل)",
+  "@adminPageOfTotal": {
+    "placeholders": {
+      "current": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      },
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "adminTeamMember": "ٹیم رکن",
+  "admin2FA": "2FA",
+  "adminTeam": "ایڈمن ٹیم",
+  "adminAddTeamMember": "ٹیم رکن شامل کریں",
+  "adminSubscriptionsOverview": "سبسکرپشنز جائزہ",
+  "adminSubscriptionPlans": "سبسکرپشن پلانز",
+  "adminAddNoteToStart": "شروع کرنے کے لیے اوپر نوٹ شامل کریں",
+  "adminAddNote": "نوٹ شامل کریں",
+  "adminTypeNoteHint": "اپنا نوٹ یہاں ٹائپ کریں...",
+  "adminMarkAsPaid": "ادا شدہ نشان زد",
+  "adminRetryPayment": "ادائیگی دوبارہ",
+  "adminInvestigating": "تحقیقات جاری",
+  "adminNoSecurityAlerts": "کوئی سیکیورٹی الرٹ نہیں ملا",
+  "adminNoSecurityAlertsShort": "کوئی سیکیورٹی الرٹ نہیں",
+  "adminWhatsApp": "واٹس ایپ",
+  "adminNoFailedPayments": "کوئی ناکام ادائیگیاں نہیں",
+  "adminLoadingGiftCards": "گفٹ کارڈز لوڈ ہو رہی ہیں...",
+  "adminNoGiftCards": "کوئی گفٹ کارڈ نہیں ملا",
+  "adminLoadingFinancial": "مالیاتی ڈیٹا لوڈ ہو رہا ہے...",
+  "adminNoMarketplaceStores": "کوئی مارکیٹ پلیس اسٹور نہیں ملا",
+  "adminLoginAttempts": "لاگ ان کوششیں",
+  "adminIpManagement": "IP انتظام",
+  "adminNoActivityLogged": "کوئی سرگرمی لاگ نہیں",
+  "adminFailedJobs24h": "ناکام جابز (24گ)",
+  "adminSections": "سیکشنز",
+  "adminCmsPageDetail": "CMS صفحہ تفصیل",
+  "adminContentEn": "مواد (EN)",
+  "adminContentAr": "مواد (AR)",
+  "adminKeyMetrics": "کلیدی میٹرکس",
+  "adminLoadingAnalytics": "تجزیات لوڈ ہو رہے ہیں...",
+  "adminNoVariantsYet": "ابھی تک کوئی ویریئنٹ شامل نہیں",
+  "adminViewResults": "نتائج دیکھیں",
+  "adminNoSettlements": "کوئی تصفیہ نہیں ملا",
+  "adminNoTickets": "کوئی ٹکٹ نہیں ملا",
+  "adminNoCannedResponses": "کوئی تیار جواب نہیں ملا",
+  "adminPaymentInformation": "ادائیگی کی معلومات",
+  "adminRevenueByStatus": "اسٹیٹس کے لحاظ سے آمدنی",
+  "adminNoFeatureFlags": "کوئی فیچر فلیگ کنفیگر نہیں",
+  "adminNoFailedJobs": "کوئی ناکام جابز نہیں",
+  "adminInviteAdmin": "ایڈمن مدعو کریں",
+  "adminNoAdminUsers": "کوئی ایڈمن صارف نہیں ملا",
+  "adminLoadingCashSessions": "کیش سیشنز لوڈ ہو رہی ہیں...",
+  "adminSyncOperations": "ہم وقت سازی آپریشنز",
+  "adminNoPermissionsFound": "کوئی اجازت نہیں ملی",
+  "adminNoAbTests": "کوئی A/B ٹیسٹ نہیں ملا",
+  "adminActivityLogs": "سرگرمی لاگز",
+  "adminLoadOverview": "جائزہ لوڈ",
+  "adminNoPlatformData": "کوئی پلیٹ فارم ڈیٹا نہیں",
+  "adminNoActiveRelease": "کوئی فعال ریلیز نہیں",
+  "adminPaymentRetryRules": "ادائیگی دوبارہ کوشش قواعد",
+  "adminRetryConfiguration": "دوبارہ کوشش کنفیگریشن",
+  "adminSaveRules": "قواعد محفوظ",
+  "adminCreateManualInvoice": "دستی انوائس بنائیں",
+  "adminSearchInvoices": "انوائسز تلاش",
+  "adminKnowledgeBaseArticles": "نالج بیس آرٹیکلز",
+  "adminGenerateTempPassword": "عارضی پاس ورڈ بنائیں",
+  "adminForcePasswordChange": "پاس ورڈ تبدیلی لازمی",
+  "adminForcePasswordChangeDesc": "اگلی لاگ ان پر صارف سے پاس ورڈ تبدیلی کا مطالبہ",
+  "adminNoRoleTemplates": "کوئی رول ٹیمپلیٹ نہیں",
+  "adminNoDailySales": "کوئی روزانہ فروخت ڈیٹا نہیں",
+  "adminNoProductSales": "کوئی پروڈکٹ فروخت ڈیٹا نہیں",
+  "adminNoUsersFound": "کوئی صارف نہیں ملا",
+  "adminSearchUsers": "صارفین تلاش",
+  "adminNoAbTestsLinked": "اس فلیگ سے کوئی A/B ٹیسٹ منسلک نہیں"
 }

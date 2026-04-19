@@ -11,7 +11,6 @@ class SubscriptionBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final config = _getConfig(context, status);
 
     return Container(
@@ -33,12 +32,12 @@ class SubscriptionBadge extends StatelessWidget {
         textColor: AppColors.successDark,
       ),
       'trial' => _BadgeConfig(
-        label: 'Trial',
+        label: l10n.subBadgeTrial,
         backgroundColor: AppColors.info.withValues(alpha: 0.15),
         textColor: AppColors.infoDark,
       ),
       'grace' => _BadgeConfig(
-        label: 'Grace Period',
+        label: l10n.subBadgeGracePeriod,
         backgroundColor: AppColors.warning.withValues(alpha: 0.15),
         textColor: AppColors.warning,
       ),
@@ -49,18 +48,18 @@ class SubscriptionBadge extends StatelessWidget {
       ),
       'expired' => _BadgeConfig(
         label: l10n.expired,
-        backgroundColor: AppColors.textSecondary.withValues(alpha: 0.15),
-        textColor: AppColors.textSecondary,
+        backgroundColor: AppColors.mutedFor(context).withValues(alpha: 0.15),
+        textColor: AppColors.mutedFor(context),
       ),
       'past_due' => _BadgeConfig(
-        label: 'Past Due',
+        label: l10n.subBadgePastDue,
         backgroundColor: AppColors.error.withValues(alpha: 0.1),
         textColor: AppColors.errorDark,
       ),
       _ => _BadgeConfig(
         label: status,
-        backgroundColor: AppColors.textSecondary.withValues(alpha: 0.15),
-        textColor: AppColors.textSecondary,
+        backgroundColor: AppColors.mutedFor(context).withValues(alpha: 0.15),
+        textColor: AppColors.mutedFor(context),
       ),
     };
   }

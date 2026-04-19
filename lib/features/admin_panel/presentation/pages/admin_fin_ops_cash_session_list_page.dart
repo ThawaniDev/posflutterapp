@@ -47,6 +47,7 @@ class _State extends ConsumerState<AdminFinOpsCashSessionListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(finOpsCashSessionsProvider);
 
     return PosListPage(
@@ -81,7 +82,7 @@ class _State extends ConsumerState<AdminFinOpsCashSessionListPage> {
                 _applyFilter();
               },
               label: l10n.status,
-              hint: 'All Statuses',
+              hint: l10n.allStatuses,
               showSearch: false,
               clearable: true,
             ),
@@ -93,7 +94,7 @@ class _State extends ConsumerState<AdminFinOpsCashSessionListPage> {
               FinOpsListError(message: final msg) => Center(
                 child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
               ),
-              _ => const Center(child: Text('Loading cash sessions...')),
+              _ => Center(child: Text(l10n.adminLoadingCashSessions)),
             },
           ),
         ],

@@ -31,14 +31,12 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
     final state = ref.watch(deliveryOrderDetailProvider);
 
     return PosListPage(
-  title: l10n.deliveryOrderDetail,
-  showSearch: false,
-  actions: [
-  PosButton.icon(
-    icon: Icons.refresh, onPressed: () => ref.read(deliveryOrderDetailProvider.notifier).load(widget.orderId),
-  ),
-],
-  child: switch (state) {
+      title: l10n.deliveryOrderDetail,
+      showSearch: false,
+      actions: [
+        PosButton.icon(icon: Icons.refresh, onPressed: () => ref.read(deliveryOrderDetailProvider.notifier).load(widget.orderId)),
+      ],
+      child: switch (state) {
         DeliveryOrderDetailInitial() || DeliveryOrderDetailLoading() => Center(child: PosLoadingSkeleton.list()),
         DeliveryOrderDetailError(:final message) => PosErrorState(
           message: message,
@@ -46,7 +44,7 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
         ),
         DeliveryOrderDetailLoaded(:final order) => _buildDetail(order, l10n),
       },
-);
+    );
   }
 
   Widget _buildDetail(Map<String, dynamic> order, AppLocalizations l10n) {
@@ -155,23 +153,14 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
             next == transitions.first && next != DeliveryOrderStatus.rejected && next != DeliveryOrderStatus.cancelled;
         return Expanded(
           child: Padding(
-            padding: EdgeInsets.only(left: next == transitions.first ? 0 : 8),
-            child: isPrimary
-                ? FilledButton.icon(
-                    onPressed: () => _updateStatus(next.value),
-                    icon: Icon(next.icon, size: 18),
-                    label: Text(next.label),
-                    style: FilledButton.styleFrom(backgroundColor: next.color, padding: AppSpacing.paddingV12),
-                  )
-                : OutlinedButton.icon(
-                    onPressed: () => _updateStatus(next.value),
-                    icon: Icon(next.icon, size: 18, color: next.color),
-                    label: Text(next.label, style: TextStyle(color: next.color)),
-                    style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: next.color),
-                      padding: AppSpacing.paddingV12,
-                    ),
-                  ),
+            padding: EdgeInsetsDirectional.only(start: next == transitions.first ? 0 : 8),
+            child: PosButton(
+              label: next.label,
+              icon: next.icon,
+              variant: isPrimary ? PosButtonVariant.primary : PosButtonVariant.outline,
+              isFullWidth: true,
+              onPressed: () => _updateStatus(next.value),
+            ),
           ),
         );
       }).toList(),
@@ -201,11 +190,7 @@ class _DeliveryOrderDetailPageState extends ConsumerState<DeliveryOrderDetailPag
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(l10n.deliveryRejectOrder),
-        content: TextField(
-          controller: controller,
-          decoration: InputDecoration(hintText: l10n.deliveryEnterRejectionReason, border: const OutlineInputBorder()),
-          maxLines: 3,
-        ),
+        content: PosTextField(controller: controller, hint: l10n.deliveryEnterRejectionReason, maxLines: 3),
         actions: [
           PosButton(onPressed: () => Navigator.pop(ctx), variant: PosButtonVariant.ghost, label: l10n.deliveryCancel),
           PosButton(

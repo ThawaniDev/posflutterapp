@@ -19,7 +19,6 @@ class AdminFinOpsPaymentListPage extends ConsumerStatefulWidget {
 }
 
 class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
-
   AppLocalizations get l10n => AppLocalizations.of(context)!;
   String? _storeId;
   String? _methodFilter;
@@ -51,9 +50,9 @@ class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
     final state = ref.watch(finOpsPaymentsProvider);
 
     return PosListPage(
-  title: l10n.sidebarPayments,
-  showSearch: false,
-    child: Column(
+      title: l10n.sidebarPayments,
+      showSearch: false,
+      child: Column(
         children: [
           AdminBranchBar(selectedStoreId: _storeId, onBranchChanged: _onBranchChanged),
           AdminStatsKpiSection(
@@ -77,12 +76,12 @@ class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
               FinOpsListError(message: final msg) => Center(
                 child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
               ),
-              _ => const Center(child: Text('Select filters to load payments')),
+              _ => Center(child: Text(l10n.adminSelectFiltersPayments)),
             },
           ),
         ],
       ),
-);
+    );
   }
 
   Widget _buildFilters() {
@@ -93,21 +92,21 @@ class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
           Expanded(
             child: PosSearchableDropdown<String>(
               items: [
-                PosDropdownItem(value: 'cash', label: 'CASH'),
-                PosDropdownItem(value: 'card_mada', label: 'CARD MADA'),
-                PosDropdownItem(value: 'card_visa', label: 'CARD VISA'),
-                PosDropdownItem(value: 'card_mastercard', label: 'CARD MASTERCARD'),
-                PosDropdownItem(value: 'store_credit', label: 'STORE CREDIT'),
-                PosDropdownItem(value: 'gift_card', label: 'GIFT CARD'),
-                PosDropdownItem(value: 'mobile_payment', label: 'MOBILE PAYMENT'),
+                PosDropdownItem(value: 'cash', label: l10n.adminPaymentCash),
+                PosDropdownItem(value: 'card_mada', label: l10n.adminPaymentCardMada),
+                PosDropdownItem(value: 'card_visa', label: l10n.adminPaymentCardVisa),
+                PosDropdownItem(value: 'card_mastercard', label: l10n.adminPaymentCardMaster),
+                PosDropdownItem(value: 'store_credit', label: l10n.adminPaymentStoreCredit),
+                PosDropdownItem(value: 'gift_card', label: l10n.adminPaymentGiftCard),
+                PosDropdownItem(value: 'mobile_payment', label: l10n.adminPaymentMobile),
               ],
               selectedValue: _methodFilter,
               onChanged: (v) {
                 setState(() => _methodFilter = v);
                 _applyFilter();
               },
-              label: 'Method',
-              hint: 'All Methods',
+              label: l10n.adminMethod,
+              hint: l10n.adminAllMethods,
               showSearch: false,
               clearable: true,
             ),
@@ -138,7 +137,7 @@ class _State extends ConsumerState<AdminFinOpsPaymentListPage> {
     final amount = num.tryParse(item['amount']?.toString() ?? '') ?? 0;
 
     return PosCard(
-      borderRadius: BorderRadius.circular(10,),
+      borderRadius: BorderRadius.circular(10),
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: _methodColor(method).withValues(alpha: 0.15),

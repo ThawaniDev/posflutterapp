@@ -60,9 +60,9 @@ class _KnowledgeBasePageState extends ConsumerState<KnowledgeBasePage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return PosListPage(
-  title: l10n.supportKnowledgeBase,
-  showSearch: false,
-    child: Column(
+      title: l10n.supportKnowledgeBase,
+      showSearch: false,
+      child: Column(
         children: [
           // Search bar
           Padding(
@@ -95,7 +95,7 @@ class _KnowledgeBasePageState extends ConsumerState<KnowledgeBasePage> {
                 AppSpacing.gapW8,
                 ...KnowledgeBaseCategory.values.map(
                   (cat) => Padding(
-                    padding: const EdgeInsets.only(right: 6),
+                    padding: const EdgeInsetsDirectional.only(end: 6),
                     child: PosButton.pill(
                       label: _categoryLabel(cat, l10n),
                       isSelected: _selectedCategory == cat,
@@ -165,6 +165,6 @@ class _KnowledgeBasePageState extends ConsumerState<KnowledgeBasePage> {
           ),
         ],
       ),
-);
+    );
   }
 }

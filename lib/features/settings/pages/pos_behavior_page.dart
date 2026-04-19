@@ -267,15 +267,15 @@ class _PosBehaviorPageState extends SettingsSubPageState<PosBehaviorPage> {
             ),
             if (_enableLoyaltyPoints) ...[
               const SizedBox(height: 8),
-              TextField(
+              PosTextField(
                 controller: _loyaltyPointsCtrl,
-                decoration: InputDecoration(labelText: l10n.settingsPosLoyaltyPointsPerCurrency),
+                label: l10n.settingsPosLoyaltyPointsPerCurrency,
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
               ),
               const SizedBox(height: 8),
-              TextField(
+              PosTextField(
                 controller: _loyaltyRedemptionCtrl,
-                decoration: InputDecoration(labelText: l10n.settingsPosLoyaltyRedemptionValue),
+                label: l10n.settingsPosLoyaltyRedemptionValue,
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
               ),
             ],
@@ -294,11 +294,7 @@ class _PosBehaviorPageState extends SettingsSubPageState<PosBehaviorPage> {
             ),
             if (_enableCustomerDisplay) ...[
               const SizedBox(height: 8),
-              TextField(
-                controller: _customerDisplayMessageCtrl,
-                decoration: InputDecoration(labelText: l10n.settingsPosCustomerDisplayMessage),
-                maxLines: 2,
-              ),
+              PosTextField(controller: _customerDisplayMessageCtrl, label: l10n.settingsPosCustomerDisplayMessage, maxLines: 2),
             ],
             const SizedBox(height: 12),
             SettingsDropdownRow<String>(
@@ -319,7 +315,7 @@ class _PosBehaviorPageState extends SettingsSubPageState<PosBehaviorPage> {
         const SizedBox(height: 8),
         SizedBox(
           width: double.infinity,
-          child: FilledButton.icon(onPressed: _save, icon: const Icon(Icons.save, size: 18), label: Text(l10n.save)),
+          child: PosButton(onPressed: _save, icon: Icons.save, label: l10n.save),
         ),
       ],
     );

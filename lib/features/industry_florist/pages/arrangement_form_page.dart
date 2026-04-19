@@ -82,13 +82,13 @@ class _ArrangementFormPageState extends ConsumerState<ArrangementFormPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PosTextField(controller: _nameCtrl, label: l10n.arrangementName, hint: 'e.g. Classic Rose Bouquet'),
+            PosTextField(controller: _nameCtrl, label: l10n.arrangementName, hint: l10n.floristBouquetHint),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _occasionCtrl, label: l10n.occasionOptional, hint: 'e.g. Wedding, Birthday, Anniversary'),
+            PosTextField(controller: _occasionCtrl, label: l10n.occasionOptional, hint: l10n.floristOccasionHint),
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _totalPriceCtrl,
-              label: 'Total Price (\u0081)',
+              label: l10n.floristTotalPrice,
               hint: '0.000',
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
@@ -96,8 +96,8 @@ class _ArrangementFormPageState extends ConsumerState<ArrangementFormPage> {
             PosToggle(
               value: _isTemplate,
               onChanged: (v) => setState(() => _isTemplate = v),
-              label: 'Is Template',
-              subtitle: 'Reusable arrangement template for subscriptions',
+              label: l10n.floristIsTemplate,
+              subtitle: l10n.floristTemplateSubtitle,
             ),
           ],
         ),

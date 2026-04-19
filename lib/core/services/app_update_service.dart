@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -129,7 +130,7 @@ class AppUpdateService {
               _openStore(state.storeUrl ?? state.downloadUrl);
             },
             icon: const Icon(Icons.download),
-            label: const Text('Update'),
+            label: Text(AppLocalizations.of(context)!.commonUpdate),
           ),
         ],
       ),

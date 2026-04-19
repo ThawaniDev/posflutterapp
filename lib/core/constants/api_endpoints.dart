@@ -789,6 +789,17 @@ class ApiEndpoints {
   static String debitCustomerBalance(String customerId) => '/debits/customer/$customerId/balance';
   static String debitCustomerDebits(String customerId) => '/debits/customer/$customerId';
 
+  // Receivables
+  static const String receivables = '/receivables';
+  static const String receivablesSummary = '/receivables/summary';
+  static String receivableById(String id) => '/receivables/$id';
+  static String receivablePayments(String id) => '/receivables/$id/payments';
+  static String receivableNotes(String id) => '/receivables/$id/notes';
+  static String receivableLogs(String id) => '/receivables/$id/logs';
+  static String receivableReverse(String id) => '/receivables/$id/reverse';
+  static String receivableCustomerBalance(String customerId) => '/receivables/customer/$customerId/balance';
+  static String receivableCustomerList(String customerId) => '/receivables/customer/$customerId';
+
   // Installment Providers (Platform Admin)
   static const String adminInstallmentProviders = '/admin/installment-providers';
   static String adminInstallmentProviderById(String id) => '/admin/installment-providers/$id';

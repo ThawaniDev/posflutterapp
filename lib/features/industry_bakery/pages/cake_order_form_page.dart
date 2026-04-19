@@ -107,7 +107,7 @@ class _CakeOrderFormPageState extends ConsumerState<CakeOrderFormPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PosTextField(controller: _descriptionCtrl, label: l10n.description, hint: 'Cake description', maxLines: 3),
+            PosTextField(controller: _descriptionCtrl, label: l10n.description, hint: l10n.bakeryCakeDescription, maxLines: 3),
             SizedBox(height: AppSpacing.md),
             Row(
               children: [
@@ -116,15 +116,15 @@ class _CakeOrderFormPageState extends ConsumerState<CakeOrderFormPage> {
                 ),
                 AppSpacing.gapW12,
                 Expanded(
-                  child: PosTextField(controller: _flavorCtrl, label: 'Flavor', hint: 'e.g. Chocolate'),
+                  child: PosTextField(controller: _flavorCtrl, label: l10n.bakeryFlavor, hint: l10n.bakeryFlavorHint),
                 ),
               ],
             ),
             SizedBox(height: AppSpacing.md),
             PosTextField(
               controller: _decorationCtrl,
-              label: 'Decoration Notes',
-              hint: 'Special decoration requests...',
+              label: l10n.bakeryDecorationNotes,
+              hint: l10n.bakeryDecorationHint,
               maxLines: 3,
             ),
             SizedBox(height: AppSpacing.md),
@@ -133,21 +133,21 @@ class _CakeOrderFormPageState extends ConsumerState<CakeOrderFormPage> {
               child: AbsorbPointer(
                 child: PosTextField(
                   controller: TextEditingController(text: '${_deliveryDate.day}/${_deliveryDate.month}/${_deliveryDate.year}'),
-                  label: 'Delivery Date',
+                  label: l10n.bakeryDeliveryDate,
                   suffixIcon: Icons.calendar_today,
                   readOnly: true,
                 ),
               ),
             ),
             SizedBox(height: AppSpacing.md),
-            PosTextField(controller: _deliveryTimeCtrl, label: 'Delivery Time', hint: 'e.g. 14:00'),
+            PosTextField(controller: _deliveryTimeCtrl, label: l10n.bakeryDeliveryTime, hint: 'e.g. 14:00'),
             SizedBox(height: AppSpacing.md),
             Row(
               children: [
                 Expanded(
                   child: PosTextField(
                     controller: _priceCtrl,
-                    label: 'Price (\u0081)',
+                    label: l10n.bakeryPriceSar,
                     hint: '0.000',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),
@@ -156,7 +156,7 @@ class _CakeOrderFormPageState extends ConsumerState<CakeOrderFormPage> {
                 Expanded(
                   child: PosTextField(
                     controller: _depositCtrl,
-                    label: 'Deposit Paid',
+                    label: l10n.bakeryDepositPaid,
                     hint: '0.000',
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   ),

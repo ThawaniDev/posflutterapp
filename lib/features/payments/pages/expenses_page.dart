@@ -132,18 +132,15 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextField(
+                PosTextField(
                   controller: amountController,
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  decoration: const InputDecoration(
-                    labelText: 'Amount (\u0081)',
-                    border: OutlineInputBorder(),
-                    prefixText: '\u0081 ',
-                  ),
+                  label: 'Amount ()',
                   autofocus: true,
                 ),
                 AppSpacing.gapH16,
                 PosSearchableDropdown<ExpenseCategory>(
+                  hint: l10n.selectCategory,
                   items: ExpenseCategory.values
                       .map((c) => PosDropdownItem(value: c, label: c.value.replaceAll('_', ' '), icon: _categoryIcon(c)))
                       .toList(),
@@ -154,11 +151,7 @@ class _ExpensesPageState extends ConsumerState<ExpensesPage> {
                   clearable: false,
                 ),
                 AppSpacing.gapH16,
-                TextField(
-                  controller: descriptionController,
-                  maxLines: 2,
-                  decoration: InputDecoration(labelText: l10n.descriptionOptional, border: OutlineInputBorder()),
-                ),
+                PosTextField(controller: descriptionController, maxLines: 2, label: l10n.descriptionOptional),
               ],
             ),
           ),

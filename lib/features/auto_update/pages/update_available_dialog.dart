@@ -122,9 +122,9 @@ class UpdateAvailableDialog extends StatelessWidget {
             variant: PosButtonVariant.outline,
             label: l10n.autoUpdateSchedule,
           ),
-        FilledButton.icon(
-          icon: const Icon(Icons.download),
-          label: Text(l10n.autoUpdateInstallNow),
+        PosButton(
+          icon: Icons.download,
+          label: l10n.autoUpdateInstallNow,
           onPressed: () {
             Navigator.of(context).pop();
             onInstallNow();

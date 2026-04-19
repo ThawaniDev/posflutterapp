@@ -48,12 +48,12 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
   Future<void> _handleDelete(Product product) async {
     final confirmed = await showPosConfirmDialog(
       context,
-      title: 'Delete Product',
+      title: l10n.catalogDeleteProductTitle,
       message:
           'Are you sure you want to delete "${localizedName(context, name: product.name, nameAr: product.nameAr)}"?\n'
           'This action will soft-delete the product.',
-      confirmLabel: 'Delete',
-      cancelLabel: 'Cancel',
+      confirmLabel: l10n.commonDelete,
+      cancelLabel: l10n.commonCancel,
       isDanger: true,
     );
 
@@ -139,7 +139,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
           onPressed: () => ref.read(productsProvider.notifier).load(),
           variant: PosButtonVariant.ghost,
         ),
-        PosButton(label: 'Add Product', icon: Icons.add, onPressed: () => context.push(Routes.productsAdd)),
+        PosButton(label: l10n.catalogAddProduct, icon: Icons.add, onPressed: () => context.push(Routes.productsAdd)),
       ],
       child: isMobile
           ? _buildMobileBody(productsState, categories)
@@ -187,7 +187,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
         // Search bar
         MobileToolbar(
           searchController: _searchController,
-          searchHint: 'Search products...',
+          searchHint: l10n.catalogSearchProductsShort,
           onSearch: (value) => ref.read(productsProvider.notifier).search(value),
           onSearchChanged: (value) {
             if (value.isEmpty) ref.read(productsProvider.notifier).search(null);
@@ -227,7 +227,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
 
   Widget _buildCategoryChip(String label, String? id, bool selected) {
     return Padding(
-      padding: const EdgeInsets.only(right: 6),
+      padding: const EdgeInsetsDirectional.only(end: 6),
       child: FilterChip(
         label: Text(label, style: const TextStyle(fontSize: 12)),
         selected: selected,
@@ -264,7 +264,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
     final loaded = state is ProductsLoaded ? state : null;
     final products = loaded?.products ?? <Product>[];
 
-    if (isLoading) return const Center(child: CircularProgressIndicator());
+    if (isLoading) return const PosLoading();
 
     if (error != null) {
       return Center(
@@ -436,7 +436,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
           Expanded(
             child: PosTextField(
               controller: _searchController,
-              hint: 'Search products by name, SKU or barcode...',
+              hint: l10n.catalogSearchProductsFull,
               prefixIcon: Icons.search,
               suffixIcon: Icons.clear,
               onSubmitted: (value) => ref.read(productsProvider.notifier).search(value),
@@ -490,7 +490,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                   const SizedBox(width: AppSpacing.sm),
                   IconButton(
                     icon: const Icon(Icons.close, size: 18),
-                    tooltip: 'Clear selection',
+                    tooltip: l10n.catalogClearSelection,
                     onPressed: () => ref.read(productsProvider.notifier).clearSelection(),
                   ),
                 ],
@@ -527,7 +527,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
                   )
                   .toList(),
               onChanged: (id) => ref.read(productsProvider.notifier).filterByCategory(id),
-              hint: 'All categories',
+              hint: l10n.catalogAllCategories,
               clearable: true,
             ),
           ),
@@ -550,7 +550,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
     final products = loaded?.products ?? <Product>[];
 
     if (isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return const PosLoading();
     }
 
     if (error != null) {
@@ -618,7 +618,7 @@ class _ProductListPageState extends ConsumerState<ProductListPage> {
     return PosDataTable<Product>(
       columns: [
         PosTableColumn(title: l10n.name),
-        PosTableColumn(title: 'SKU'),
+        PosTableColumn(title: l10n.catalogSku),
         PosTableColumn(title: l10n.category),
         PosTableColumn(title: l10n.cost, numeric: true),
         PosTableColumn(title: l10n.wameedAIPrice, numeric: true),
@@ -797,7 +797,7 @@ class _CategorySidebar extends StatelessWidget {
           ),
           // All categories option
           _SidebarItem(
-            label: 'All Products',
+            label: AppLocalizations.of(context)!.catalogAllProducts,
             icon: Icons.inventory_2_outlined,
             isSelected: selectedCategoryId == null,
             onTap: () => onCategorySelected(null),

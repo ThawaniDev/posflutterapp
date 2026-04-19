@@ -45,6 +45,7 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final state = ref.watch(finOpsOverviewProvider);
 
     return PosListPage(
@@ -61,7 +62,7 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
+                    Text(l10n.genericError(msg), style: const TextStyle(color: AppColors.error)),
                     const SizedBox(height: AppSpacing.md),
                     PosButton(
                       onPressed: () => ref.read(finOpsOverviewProvider.notifier).load(storeId: _storeId),
@@ -70,7 +71,7 @@ class _AdminFinOpsOverviewPageState extends ConsumerState<AdminFinOpsOverviewPag
                   ],
                 ),
               ),
-              _ => const Center(child: Text('Loading financial data...')),
+              _ => Center(child: Text(l10n.adminLoadingFinancial)),
             },
           ),
         ],

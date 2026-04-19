@@ -55,9 +55,9 @@ class _State extends ConsumerState<AdminFinOpsAccountingConfigListPage> {
             selectedIndex: _currentTab,
             onChanged: (i) => setState(() => _currentTab = i),
             tabs: [
-              PosTabItem(label: 'Configs'),
-              PosTabItem(label: 'Mappings'),
-              PosTabItem(label: 'Exports'),
+              PosTabItem(label: l10n.adminConfigs),
+              PosTabItem(label: l10n.adminMappings),
+              PosTabItem(label: l10n.adminExports),
               PosTabItem(label: l10n.accountingAutoExport),
             ],
           ),
@@ -77,18 +77,19 @@ class _ConfigsTab extends ConsumerWidget {
     final state = ref.watch(finOpsAccountingConfigsProvider);
     return switch (state) {
       FinOpsListLoading() => const Center(child: CircularProgressIndicator()),
-      FinOpsListLoaded(data: final resp) => _buildConfigList(resp),
+      FinOpsListLoaded(data: final resp) => _buildConfigList(context, resp),
       FinOpsListError(message: final msg) => Center(
-        child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
+        child: Text(l10n.genericError(msg), style: const TextStyle(color: AppColors.error)),
       ),
       _ => Center(child: Text(l10n.loading)),
     };
   }
 
-  Widget _buildConfigList(Map<String, dynamic> resp) {
+  Widget _buildConfigList(BuildContext context, Map<String, dynamic> resp) {
+    final l10n = AppLocalizations.of(context)!;
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No accounting configs'));
+    if (items.isEmpty) return Center(child: Text(l10n.adminNoAccountingConfigs));
     return ListView.separated(
       padding: const EdgeInsets.all(AppSpacing.sm),
       itemCount: items.length,
@@ -165,18 +166,19 @@ class _ExportsTab extends ConsumerWidget {
     final state = ref.watch(finOpsAccountingExportsProvider);
     return switch (state) {
       FinOpsListLoading() => const Center(child: CircularProgressIndicator()),
-      FinOpsListLoaded(data: final resp) => _buildExportList(resp),
+      FinOpsListLoaded(data: final resp) => _buildExportList(context, resp),
       FinOpsListError(message: final msg) => Center(
-        child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
+        child: Text(l10n.genericError(msg), style: const TextStyle(color: AppColors.error)),
       ),
       _ => Center(child: Text(l10n.loading)),
     };
   }
 
-  Widget _buildExportList(Map<String, dynamic> resp) {
+  Widget _buildExportList(BuildContext context, Map<String, dynamic> resp) {
+    final l10n = AppLocalizations.of(context)!;
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No exports'));
+    if (items.isEmpty) return Center(child: Text(l10n.adminNoExports));
     return ListView.separated(
       padding: const EdgeInsets.all(AppSpacing.sm),
       itemCount: items.length,
@@ -228,18 +230,19 @@ class _AutoExportTab extends ConsumerWidget {
     final state = ref.watch(finOpsAutoExportConfigsProvider);
     return switch (state) {
       FinOpsListLoading() => const Center(child: CircularProgressIndicator()),
-      FinOpsListLoaded(data: final resp) => _buildAutoExportList(resp),
+      FinOpsListLoaded(data: final resp) => _buildAutoExportList(context, resp),
       FinOpsListError(message: final msg) => Center(
-        child: Text('Error: $msg', style: const TextStyle(color: AppColors.error)),
+        child: Text(l10n.genericError(msg), style: const TextStyle(color: AppColors.error)),
       ),
       _ => Center(child: Text(l10n.loading)),
     };
   }
 
-  Widget _buildAutoExportList(Map<String, dynamic> resp) {
+  Widget _buildAutoExportList(BuildContext context, Map<String, dynamic> resp) {
+    final l10n = AppLocalizations.of(context)!;
     final data = resp['data'] as Map<String, dynamic>? ?? resp;
     final items = (data['data'] as List?)?.cast<Map<String, dynamic>>() ?? [];
-    if (items.isEmpty) return const Center(child: Text('No auto-export configs'));
+    if (items.isEmpty) return Center(child: Text(l10n.adminNoAutoExportConfigs));
     return ListView.separated(
       padding: const EdgeInsets.all(AppSpacing.sm),
       itemCount: items.length,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wameedpos/core/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
@@ -14,7 +15,7 @@ class CfdConfigWidget extends ConsumerWidget {
     return switch (state) {
       CfdConfigInitial() || CfdConfigLoading() => const Center(child: CircularProgressIndicator()),
       CfdConfigError(:final message) => Center(
-        child: Text('Error: $message', style: const TextStyle(color: AppColors.error)),
+        child: Text(AppLocalizations.of(context)!.genericError(message), style: const TextStyle(color: AppColors.error)),
       ),
       CfdConfigLoaded(:final config) => SingleChildScrollView(
         padding: AppSpacing.paddingAll16,
