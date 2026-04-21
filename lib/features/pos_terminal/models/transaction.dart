@@ -37,6 +37,7 @@ class Transaction {
     this.syncVersion,
     this.items,
     this.payments,
+    this.refundedQuantities,
     this.createdAt,
     this.updatedAt,
     this.deletedAt,
@@ -76,6 +77,11 @@ class Transaction {
       payments: json['payments'] != null
           ? (json['payments'] as List).map((j) => Payment.fromJson(j as Map<String, dynamic>)).toList()
           : null,
+      refundedQuantities: json['refunded_quantities'] is Map
+          ? (json['refunded_quantities'] as Map).map(
+              (k, v) => MapEntry(k.toString(), double.tryParse(v.toString()) ?? 0.0),
+            )
+          : null,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
       deletedAt: json['deleted_at'] != null ? DateTime.parse(json['deleted_at'] as String) : null,
@@ -111,6 +117,9 @@ class Transaction {
   final DateTime? updatedAt;
   final List<TransactionItem>? items;
   final List<Payment>? payments;
+  /// Map of product_id -> already-refunded quantity across prior returns
+  /// against this sale. Populated by the API on transaction detail fetches.
+  final Map<String, double>? refundedQuantities;
   final DateTime? deletedAt;
 
   Map<String, dynamic> toJson() {

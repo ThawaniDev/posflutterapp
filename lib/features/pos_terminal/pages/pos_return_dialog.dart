@@ -97,6 +97,18 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
     }).toList();
   }
 
+  bool get _isFullyRefunded {
+    final tx = _transaction;
+    if (tx?.items == null || tx!.items!.isEmpty) return false;
+    final refunded = tx.refundedQuantities;
+    if (refunded == null || refunded.isEmpty) return false;
+    for (final item in tx.items!) {
+      final r = refunded[item.productId] ?? 0;
+      if (r < item.quantity) return false;
+    }
+    return true;
+  }
+
   double get _refundTotal {
     if (_transaction?.items == null) return 0;
     final txItems = _transaction!.items!;
@@ -198,8 +210,7 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
       // original sale's session, which might be closed). The backend falls
       // back to the original session if none is provided.
       final activeState = ref.read(activeSessionProvider);
-      final currentSessionId =
-          activeState is ActiveSessionLoaded ? activeState.session.id : null;
+      final currentSessionId = activeState is ActiveSessionLoaded ? activeState.session.id : null;
 
       await ref
           .read(saleProvider.notifier)
@@ -289,6 +300,29 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
 
               // Transaction items
               if (_transaction != null && _transaction!.items != null) ...[
+                if (_isFullyRefunded) ...[
+                  Container(
+                    padding: AppSpacing.paddingAll12,
+                    decoration: BoxDecoration(
+                      color: AppColors.error.withValues(alpha: 0.08),
+                      borderRadius: AppRadius.borderMd,
+                      border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.block, color: AppColors.error, size: 18),
+                        AppSpacing.gapW8,
+                        Expanded(
+                          child: Text(
+                            'This transaction has already been fully refunded.',
+                            style: AppTypography.bodySmall.copyWith(color: AppColors.error, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  AppSpacing.gapH12,
+                ],
                 Text(
                   AppLocalizations.of(context)!.posSelectItemsToReturn,
                   style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
@@ -299,13 +333,21 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
                     shrinkWrap: true,
                     itemCount: _transaction!.items!.length,
                     separatorBuilder: (_, __) => Divider(height: 1, color: AppColors.borderFor(context)),
-                    itemBuilder: (context, index) => _ReturnItemRow(
-                      item: _transaction!.items![index],
-                      returnQty: _returnQuantities[index] ?? 0,
-                      onChanged: (qty) => setState(() => _returnQuantities[index] = qty),
-                      isDark: isDark,
-                      mutedColor: mutedColor,
-                    ),
+                    itemBuilder: (context, index) {
+                      final item = _transaction!.items![index];
+                      final alreadyReturned =
+                          _transaction!.refundedQuantities?[item.productId] ?? 0;
+                      final maxReturnable = (item.quantity - alreadyReturned).clamp(0, item.quantity).toDouble();
+                      return _ReturnItemRow(
+                        item: item,
+                        returnQty: _returnQuantities[index] ?? 0,
+                        maxReturnable: maxReturnable,
+                        alreadyReturned: alreadyReturned,
+                        onChanged: (qty) => setState(() => _returnQuantities[index] = qty),
+                        isDark: isDark,
+                        mutedColor: mutedColor,
+                      );
+                    },
                   ),
                 ),
                 AppSpacing.gapH16,
@@ -456,6 +498,8 @@ class _ReturnItemRow extends StatelessWidget {
   const _ReturnItemRow({
     required this.item,
     required this.returnQty,
+    required this.maxReturnable,
+    required this.alreadyReturned,
     required this.onChanged,
     required this.isDark,
     required this.mutedColor,
@@ -463,12 +507,15 @@ class _ReturnItemRow extends StatelessWidget {
 
   final TransactionItem item;
   final double returnQty;
+  final double maxReturnable;
+  final double alreadyReturned;
   final ValueChanged<double> onChanged;
   final bool isDark;
   final Color mutedColor;
 
   @override
   Widget build(BuildContext context) {
+    final fullyReturned = maxReturnable <= 0;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
@@ -483,6 +530,16 @@ class _ReturnItemRow extends StatelessWidget {
                   'Qty: ${item.quantity.toStringAsFixed(0)} × \u0081 ${item.unitPrice.toStringAsFixed(2)}',
                   style: AppTypography.micro.copyWith(color: mutedColor),
                 ),
+                if (alreadyReturned > 0)
+                  Text(
+                    fullyReturned
+                        ? 'Already fully refunded'
+                        : 'Refunded: ${alreadyReturned.toStringAsFixed(0)} · Remaining: ${maxReturnable.toStringAsFixed(0)}',
+                    style: AppTypography.micro.copyWith(
+                      color: fullyReturned ? AppColors.error : AppColors.warning,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
               ],
             ),
           ),
@@ -499,7 +556,7 @@ class _ReturnItemRow extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              _MiniButton(icon: Icons.add, onTap: returnQty < item.quantity ? () => onChanged(returnQty + 1) : null),
+              _MiniButton(icon: Icons.add, onTap: returnQty < maxReturnable ? () => onChanged(returnQty + 1) : null),
             ],
           ),
           // Line refund
