@@ -247,4 +247,50 @@ class PosTerminalApiService {
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return Register.fromJson(apiResponse.data as Map<String, dynamic>);
   }
+
+  // ─── Cash Events (drop / payout / paid-in) ─────────────────
+
+  Future<List<Map<String, dynamic>>> listCashEvents(String sessionId) async {
+    final response = await _dio.get('${ApiEndpoints.posSessions}/$sessionId/cash-events');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return ((apiResponse.data as List?) ?? const [])
+        .map((e) => Map<String, dynamic>.from(e as Map))
+        .toList();
+  }
+
+  Future<Map<String, dynamic>> recordCashEvent(String sessionId, Map<String, dynamic> data) async {
+    final response = await _dio.post('${ApiEndpoints.posSessions}/$sessionId/cash-events', data: data);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Map<String, dynamic>.from(apiResponse.data as Map);
+  }
+
+  // ─── Reports (X / Z) ───────────────────────────────────────
+
+  Future<Map<String, dynamic>> xReport(String sessionId) async {
+    final response = await _dio.get('${ApiEndpoints.posSessions}/$sessionId/x-report');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Map<String, dynamic>.from(apiResponse.data as Map);
+  }
+
+  Future<Map<String, dynamic>> zReport(String sessionId) async {
+    final response = await _dio.get('${ApiEndpoints.posSessions}/$sessionId/z-report');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Map<String, dynamic>.from(apiResponse.data as Map);
+  }
+
+  // ─── Exchange ──────────────────────────────────────────────
+
+  Future<Transaction> exchangeTransaction(Map<String, dynamic> data) async {
+    final response = await _dio.post('${ApiEndpoints.transactions}/exchange', data: data);
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Transaction.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  // ─── Receipt ───────────────────────────────────────────────
+
+  Future<Map<String, dynamic>> getReceipt(String transactionId) async {
+    final response = await _dio.get('${ApiEndpoints.transactions}/$transactionId/receipt');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    return Map<String, dynamic>.from(apiResponse.data as Map);
+  }
 }

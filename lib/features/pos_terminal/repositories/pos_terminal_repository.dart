@@ -74,4 +74,13 @@ class PosTerminalRepository {
   Future<Register> updateTerminal(String id, Map<String, dynamic> data) => _apiService.updateTerminal(id, data);
   Future<void> deleteTerminal(String id) => _apiService.deleteTerminal(id);
   Future<Register> toggleTerminalStatus(String id) => _apiService.toggleTerminalStatus(id);
+
+  // Cash events / Reports / Exchange / Receipt
+  Future<List<Map<String, dynamic>>> listCashEvents(String sessionId) => _apiService.listCashEvents(sessionId);
+  Future<Map<String, dynamic>> recordCashEvent(String sessionId, Map<String, dynamic> data) =>
+      _apiService.recordCashEvent(sessionId, data);
+  Future<Map<String, dynamic>> xReport(String sessionId) => _apiService.xReport(sessionId);
+  Future<Map<String, dynamic>> zReport(String sessionId) => _apiService.zReport(sessionId);
+  Future<Transaction> exchangeTransaction(Map<String, dynamic> data) => _apiService.exchangeTransaction(data);
+  Future<Map<String, dynamic>> getReceipt(String transactionId) => _apiService.getReceipt(transactionId);
 }

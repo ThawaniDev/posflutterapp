@@ -21,6 +21,9 @@ import 'package:wameedpos/features/pos_terminal/pages/pos_payment_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_held_carts_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_return_dialog.dart';
 import 'package:wameedpos/features/pos_terminal/pages/pos_customer_search_dialog.dart';
+import 'package:wameedpos/features/pos_terminal/pages/pos_cash_event_dialog.dart';
+import 'package:wameedpos/features/pos_terminal/pages/pos_shift_report_dialog.dart';
+import 'package:wameedpos/features/pos_terminal/pages/pos_reprint_receipt_dialog.dart';
 
 class PosCashierPage extends ConsumerStatefulWidget {
   const PosCashierPage({super.key});
@@ -367,7 +370,7 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
             .endAllSessions(storeId: authState.user.storeId!)
             .catchError((_) => <String, dynamic>{});
       }
-      ref.read(authProvider.notifier).logout();
+      ref.read(authProvider.notifier).logout(l10n);
     }
   }
 
@@ -483,6 +486,35 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                   _handleVoidLastItem();
                 case 'held_carts':
                   _handleRecallCart();
+                case 'cash_in':
+                  showDialog(
+                    context: context,
+                    builder: (_) => PosCashEventDialog(sessionId: session.id, type: 'cash_in'),
+                  ).then((ok) {
+                    if (ok == true) ref.read(activeSessionProvider.notifier).refreshSession();
+                  });
+                case 'cash_out':
+                  showDialog(
+                    context: context,
+                    builder: (_) => PosCashEventDialog(sessionId: session.id, type: 'cash_out'),
+                  ).then((ok) {
+                    if (ok == true) ref.read(activeSessionProvider.notifier).refreshSession();
+                  });
+                case 'x_report':
+                  showDialog(
+                    context: context,
+                    builder: (_) => PosShiftReportDialog(sessionId: session.id, isZReport: false),
+                  );
+                case 'z_report':
+                  showDialog(
+                    context: context,
+                    builder: (_) => PosShiftReportDialog(sessionId: session.id, isZReport: true),
+                  );
+                case 'reprint':
+                  showDialog(
+                    context: context,
+                    builder: (_) => const PosReprintReceiptDialog(),
+                  );
                 case 'end_shift':
                   showDialog(
                     context: context,
@@ -508,6 +540,53 @@ class _PosCashierPageState extends ConsumerState<PosCashierPage> {
                 child: ListTile(
                   leading: const Icon(Icons.pause_circle_outline, size: 20),
                   title: Text(AppLocalizations.of(context)!.posHeldF9),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              const PopupMenuDivider(),
+              const PopupMenuItem(
+                value: 'cash_in',
+                child: ListTile(
+                  leading: Icon(Icons.add_circle_outline, size: 20, color: AppColors.success),
+                  title: Text('Cash In (Paid-In)'),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'cash_out',
+                child: ListTile(
+                  leading: Icon(Icons.remove_circle_outline, size: 20, color: AppColors.warning),
+                  title: Text('Cash Out (Drop / Payout)'),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              const PopupMenuDivider(),
+              const PopupMenuItem(
+                value: 'x_report',
+                child: ListTile(
+                  leading: Icon(Icons.insights, size: 20),
+                  title: Text('X-Report (Snapshot)'),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'z_report',
+                child: ListTile(
+                  leading: Icon(Icons.assessment, size: 20),
+                  title: Text('Z-Report'),
+                  dense: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'reprint',
+                child: ListTile(
+                  leading: Icon(Icons.receipt_long, size: 20),
+                  title: Text('Reprint Receipt'),
                   dense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
@@ -1253,12 +1332,14 @@ class _CartItemTile extends ConsumerWidget {
         child: const Icon(Icons.delete_outline, color: Colors.white, size: 22),
       ),
       onDismissed: (_) => ref.read(cartProvider.notifier).removeItem(index),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Product info
+      child: GestureDetector(
+        onLongPress: () => _showItemOptions(context, ref),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Product info
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -1310,6 +1391,98 @@ class _CartItemTile extends ConsumerWidget {
             ),
           ],
         ),
+      ),
+      ),
+    );
+  }
+
+  Future<void> _showItemOptions(BuildContext context, WidgetRef ref) async {
+    final l = AppLocalizations.of(context)!;
+    await showModalBottomSheet<void>(
+      context: context,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.discount_outlined),
+              title: Text(l.posDiscount),
+              subtitle: item.discountAmount != null && item.discountAmount! > 0
+                  ? Text('Current: ${item.discountAmount!.toStringAsFixed(2)}')
+                  : null,
+              onTap: () async {
+                Navigator.pop(ctx);
+                final v = await _promptAmount(context, 'Item discount', item.discountAmount ?? 0);
+                if (v != null) ref.read(cartProvider.notifier).setItemDiscount(index, v);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.note_alt_outlined),
+              title: Text(l.posNotes),
+              subtitle: (item.notes?.isNotEmpty ?? false) ? Text(item.notes!) : null,
+              onTap: () async {
+                Navigator.pop(ctx);
+                final v = await _promptText(context, 'Item note', item.notes ?? '');
+                if (v != null) ref.read(cartProvider.notifier).setItemNotes(index, v);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete_outline, color: AppColors.error),
+              title: Text(l.remove, style: const TextStyle(color: AppColors.error)),
+              onTap: () {
+                Navigator.pop(ctx);
+                ref.read(cartProvider.notifier).removeItem(index);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<double?> _promptAmount(BuildContext context, String title, double initial) async {
+    final controller = TextEditingController(text: initial > 0 ? initial.toStringAsFixed(2) : '');
+    return showDialog<double>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(title),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}$'))],
+          decoration: const InputDecoration(prefixIcon: Icon(Icons.attach_money)),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(AppLocalizations.of(context)!.cancel)),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, double.tryParse(controller.text.trim()) ?? 0),
+            child: Text(AppLocalizations.of(context)!.save),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<String?> _promptText(BuildContext context, String title, String initial) async {
+    final controller = TextEditingController(text: initial);
+    return showDialog<String>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(title),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          minLines: 2,
+          maxLines: 4,
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx), child: Text(AppLocalizations.of(context)!.cancel)),
+          FilledButton(
+            onPressed: () => Navigator.pop(ctx, controller.text.trim()),
+            child: Text(AppLocalizations.of(context)!.save),
+          ),
+        ],
       ),
     );
   }
