@@ -111,7 +111,7 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(item.productName ?? item.productId.substring(0, 8), style: AppTypography.bodyMedium),
+                                  Text(item.productName ?? '-', style: AppTypography.bodyMedium),
                                   Text(
                                     '${l10n.inventoryOrdered}: ${item.quantityOrdered.toStringAsFixed(0)}',
                                     style: AppTypography.bodySmall.copyWith(color: AppColors.textSecondaryLight),
@@ -301,7 +301,7 @@ class _PurchaseOrdersPageState extends ConsumerState<PurchaseOrdersPage> {
           case 0:
             return Text(po.referenceNumber ?? po.id.substring(0, 8));
           case 1:
-            return Text(po.supplierName ?? po.supplierId.substring(0, 8));
+            return Text(po.supplierName ?? '-');
           case 2:
             return PosBadge(label: po.status?.value ?? 'draft', variant: _statusVariant(po.status));
           case 3:

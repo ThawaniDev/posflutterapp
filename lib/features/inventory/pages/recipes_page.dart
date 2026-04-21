@@ -109,7 +109,7 @@ class _RecipesPageState extends ConsumerState<RecipesPage> {
       cellBuilder: (recipe, colIndex, col) {
         switch (colIndex) {
           case 0:
-            return Text(recipe.name ?? recipe.productName ?? recipe.productId.substring(0, 8));
+            return Text(recipe.name ?? recipe.productName ?? '-');
           case 1:
             return Text(recipe.yieldQuantity.toStringAsFixed(2));
           case 2:

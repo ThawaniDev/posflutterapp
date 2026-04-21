@@ -166,9 +166,9 @@ class _StockTransfersPageState extends ConsumerState<StockTransfersPage> {
           case 0:
             return Text(t.referenceNumber ?? t.id.substring(0, 8));
           case 1:
-            return Text(t.fromStoreName ?? t.fromStoreId.substring(0, 8));
+            return Text(t.fromStoreName ?? '-');
           case 2:
-            return Text(t.toStoreName ?? t.toStoreId.substring(0, 8));
+            return Text(t.toStoreName ?? '-');
           case 3:
             return PosBadge(label: t.status?.value ?? 'pending', variant: _statusVariant(t.status));
           case 4:

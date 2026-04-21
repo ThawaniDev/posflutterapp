@@ -76,7 +76,7 @@ class _StockMovementsPageState extends ConsumerState<StockMovementsPage> {
           case 1:
             return PosBadge(label: typeLabel, variant: _badgeVariant(typeLabel));
           case 2:
-            return Text(m.productId, overflow: TextOverflow.ellipsis);
+            return Text(m.productName ?? '-', overflow: TextOverflow.ellipsis);
           case 3:
             return Text(m.quantity.toStringAsFixed(2));
           case 4:

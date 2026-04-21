@@ -15,6 +15,7 @@ class StockMovement {
     this.reason,
     this.performedBy,
     this.createdAt,
+    this.productName,
   });
 
   factory StockMovement.fromJson(Map<String, dynamic> json) {
@@ -30,6 +31,7 @@ class StockMovement {
       reason: json['reason'] as String?,
       performedBy: json['performed_by'] as String?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
+      productName: (json['product'] as Map<String, dynamic>?)?['name'] as String?,
     );
   }
   final String id;
@@ -43,6 +45,7 @@ class StockMovement {
   final String? reason;
   final String? performedBy;
   final DateTime? createdAt;
+  final String? productName;
 
   Map<String, dynamic> toJson() {
     return {

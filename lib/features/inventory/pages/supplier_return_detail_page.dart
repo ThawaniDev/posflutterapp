@@ -224,7 +224,7 @@ class _SupplierReturnDetailPageState extends ConsumerState<SupplierReturnDetailP
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      item.productName ?? item.productId,
+                      item.productName ?? '-',
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
                     ),
                     if (item.productSku != null) Text('SKU: ${item.productSku}', style: Theme.of(context).textTheme.bodySmall),

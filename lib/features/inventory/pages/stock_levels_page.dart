@@ -169,7 +169,7 @@ class _StockLevelsPageState extends ConsumerState<StockLevelsPage> {
         final isLow = level.reorderPoint != null && level.quantity <= level.reorderPoint!;
         switch (colIndex) {
           case 0:
-            return Text(level.productName ?? level.productId, overflow: TextOverflow.ellipsis);
+            return Text(level.productName ?? '-', overflow: TextOverflow.ellipsis);
           case 1:
             return Text(level.quantity.toStringAsFixed(2));
           case 2:
