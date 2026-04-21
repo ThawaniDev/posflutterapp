@@ -23,6 +23,7 @@ class PosSession {
     this.zReportPrinted,
     this.createdAt,
     this.updatedAt,
+    this.registerName,
   });
 
   factory PosSession.fromJson(Map<String, dynamic> json) {
@@ -47,6 +48,7 @@ class PosSession {
       zReportPrinted: json['z_report_printed'] as bool?,
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : null,
       updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at'] as String) : null,
+      registerName: json['register_name'] as String?,
     );
   }
   final String id;
@@ -69,6 +71,7 @@ class PosSession {
   final bool? zReportPrinted;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final String? registerName;
 
   Map<String, dynamic> toJson() {
     return {

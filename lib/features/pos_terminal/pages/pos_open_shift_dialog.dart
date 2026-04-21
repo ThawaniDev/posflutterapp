@@ -6,6 +6,7 @@ import 'package:wameedpos/core/theme/app_colors.dart';
 import 'package:wameedpos/core/theme/app_spacing.dart';
 import 'package:wameedpos/core/theme/app_typography.dart';
 import 'package:wameedpos/core/widgets/widgets.dart';
+import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
 import 'package:wameedpos/features/pos_terminal/models/register.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_cashier_providers.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_providers.dart';
@@ -27,7 +28,10 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
   void initState() {
     super.initState();
     // Invalidate so we get a fresh list of active registers
-    Future.microtask(() => ref.invalidate(activeRegistersProvider));
+    Future.microtask(() {
+      ref.invalidate(activeRegistersProvider);
+      ref.invalidate(myOpenSessionsProvider);
+    });
   }
 
   @override
@@ -68,6 +72,25 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final registersAsync = ref.watch(activeRegistersProvider);
+    final openSessionsAsync = ref.watch(myOpenSessionsProvider);
+
+    // If the cashier already has one (or more) shifts open on other registers,
+    // refuse to present the open-shift form and instead surface the existing
+    // shifts so they can resume or close them. Mirrors the backend guard in
+    // PosSessionService::open() which throws pos.session_user_has_other_open.
+    final existingOpen = openSessionsAsync.asData?.value ?? const [];
+    if (existingOpen.isNotEmpty) {
+      return Dialog(
+        insetPadding: const EdgeInsets.all(24),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 520),
+          child: Padding(
+            padding: AppSpacing.paddingAll24,
+            child: _buildExistingOpenSessionsBody(existingOpen),
+          ),
+        ),
+      );
+    }
 
     return Dialog(
       insetPadding: const EdgeInsets.all(24),
@@ -199,6 +222,111 @@ class _PosOpenShiftDialogState extends ConsumerState<PosOpenShiftDialog> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildExistingOpenSessionsBody(List<PosSession> sessions) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: AppColors.warning.withValues(alpha: 0.12),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.lock_clock_rounded, color: AppColors.warning, size: 24),
+            ),
+            AppSpacing.gapW16,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Open shift already in progress', style: AppTypography.headlineSmall),
+                  Text(
+                    'You can only be linked to one register at a time. '
+                    'Close or resume your existing shift first.',
+                    style: AppTypography.bodySmall.copyWith(
+                      color: AppColors.mutedFor(context),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.close_rounded)),
+          ],
+        ),
+        AppSpacing.gapH16,
+        ...sessions.map((s) {
+          final registerLabel = s.registerName ?? s.registerId;
+          final openedAt = s.openedAt;
+          return Container(
+            margin: const EdgeInsets.only(bottom: 8),
+            padding: AppSpacing.paddingAll12,
+            decoration: BoxDecoration(
+              color: AppColors.warning.withValues(alpha: 0.06),
+              borderRadius: AppRadius.borderMd,
+              border: Border.all(color: AppColors.warning.withValues(alpha: 0.25)),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.point_of_sale_rounded, color: AppColors.warning, size: 20),
+                AppSpacing.gapW12,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(registerLabel, style: AppTypography.bodyMedium.copyWith(fontWeight: FontWeight.w600)),
+                      if (openedAt != null)
+                        Text(
+                          'Opened ${openedAt.toLocal().toString().split('.').first}',
+                          style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
+                        ),
+                      Text(
+                        'Opening cash: ${s.openingCash.toStringAsFixed(2)}',
+                        style: AppTypography.bodySmall.copyWith(color: AppColors.mutedFor(context)),
+                      ),
+                    ],
+                  ),
+                ),
+                PosButton(
+                  label: 'Resume',
+                  icon: Icons.login_rounded,
+                  onPressed: () {
+                    ref.read(activeSessionProvider.notifier).setSession(s);
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          );
+        }),
+        AppSpacing.gapH16,
+        Row(
+          children: [
+            Expanded(
+              child: PosButton(
+                label: AppLocalizations.of(context)!.posCancel,
+                variant: PosButtonVariant.outline,
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+            AppSpacing.gapW12,
+            Expanded(
+              child: PosButton(
+                label: 'Refresh',
+                icon: Icons.refresh_rounded,
+                variant: PosButtonVariant.outline,
+                onPressed: () => ref.invalidate(myOpenSessionsProvider),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 

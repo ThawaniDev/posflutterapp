@@ -16,7 +16,6 @@ final posTerminalApiServiceProvider = Provider<PosTerminalApiService>((ref) {
 });
 
 class PosTerminalApiService {
-
   PosTerminalApiService(this._dio);
   final Dio _dio;
 
@@ -40,6 +39,17 @@ class PosTerminalApiService {
     final response = await _dio.post(ApiEndpoints.posSessions, data: data);
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
     return PosSession.fromJson(apiResponse.data as Map<String, dynamic>);
+  }
+
+  /// All shifts currently open for the authenticated cashier across any
+  /// register. Backend enforces the same one-open-session-per-user rule when
+  /// a new shift is opened; this call lets the client surface the existing
+  /// shifts up front so the user doesn't even try.
+  Future<List<PosSession>> listMyOpenSessions() async {
+    final response = await _dio.get('${ApiEndpoints.posSessions}/mine/open');
+    final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
+    final list = apiResponse.data as List? ?? const [];
+    return list.map((j) => PosSession.fromJson(j as Map<String, dynamic>)).toList();
   }
 
   Future<PosSession> getSession(String sessionId) async {
@@ -253,9 +263,7 @@ class PosTerminalApiService {
   Future<List<Map<String, dynamic>>> listCashEvents(String sessionId) async {
     final response = await _dio.get('${ApiEndpoints.posSessions}/$sessionId/cash-events');
     final apiResponse = ApiResponse.fromJson(response.data, (data) => data);
-    return ((apiResponse.data as List?) ?? const [])
-        .map((e) => Map<String, dynamic>.from(e as Map))
-        .toList();
+    return ((apiResponse.data as List?) ?? const []).map((e) => Map<String, dynamic>.from(e as Map)).toList();
   }
 
   Future<Map<String, dynamic>> recordCashEvent(String sessionId, Map<String, dynamic> data) async {

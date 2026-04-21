@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wameedpos/features/pos_terminal/models/pos_session.dart';
 import 'package:wameedpos/features/pos_terminal/models/register.dart';
 import 'package:wameedpos/features/pos_terminal/providers/pos_terminal_state.dart';
 import 'package:wameedpos/features/pos_terminal/repositories/pos_terminal_repository.dart';
@@ -187,6 +188,14 @@ String _extractError(DioException e) {
 final activeRegistersProvider = FutureProvider<List<Register>>((ref) async {
   final repo = ref.watch(posTerminalRepositoryProvider);
   return repo.listActiveRegisters();
+});
+
+/// Shifts currently open for the authenticated cashier. Surfaced in the
+/// open-shift dialog to block opening a second register while one is already
+/// live.
+final myOpenSessionsProvider = FutureProvider.autoDispose<List<PosSession>>((ref) async {
+  final repo = ref.watch(posTerminalRepositoryProvider);
+  return repo.listMyOpenSessions();
 });
 
 // ─── Terminals Provider ─────────────────────────────────────────

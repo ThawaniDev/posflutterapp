@@ -13,7 +13,6 @@ final posTerminalRepositoryProvider = Provider<PosTerminalRepository>((ref) {
 });
 
 class PosTerminalRepository {
-
   PosTerminalRepository({required PosTerminalApiService apiService}) : _apiService = apiService;
   final PosTerminalApiService _apiService;
 
@@ -21,6 +20,7 @@ class PosTerminalRepository {
   Future<PaginatedResult<PosSession>> listSessions({int page = 1, int perPage = 20}) =>
       _apiService.listSessions(page: page, perPage: perPage);
   Future<PosSession> openSession(Map<String, dynamic> data) => _apiService.openSession(data);
+  Future<List<PosSession>> listMyOpenSessions() => _apiService.listMyOpenSessions();
   Future<PosSession> getSession(String id) => _apiService.getSession(id);
   Future<PosSession> closeSession(String id, Map<String, dynamic> data) => _apiService.closeSession(id, data);
 
