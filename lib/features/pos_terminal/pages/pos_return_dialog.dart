@@ -28,10 +28,79 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
   bool _isProcessing = false;
   String? _error;
 
+  List<Transaction> _recentTransactions = const [];
+  bool _isLoadingRecent = false;
+  String _recentSearch = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _receiptController.addListener(() {
+      if (_recentSearch != _receiptController.text) {
+        setState(() => _recentSearch = _receiptController.text);
+      }
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadRecent());
+  }
+
   @override
   void dispose() {
     _receiptController.dispose();
     super.dispose();
+  }
+
+  Future<void> _loadRecent() async {
+    setState(() => _isLoadingRecent = true);
+    try {
+      final repo = ref.read(posTerminalRepositoryProvider);
+      final result = await repo.listTransactions(
+        page: 1,
+        perPage: 20,
+        type: 'sale',
+        status: 'completed',
+      );
+      if (!mounted) return;
+      setState(() => _recentTransactions = result.items);
+    } catch (_) {
+      // silent: placeholder shows enter-receipt hint on failure
+    } finally {
+      if (mounted) setState(() => _isLoadingRecent = false);
+    }
+  }
+
+  Future<void> _selectTransaction(Transaction tx) async {
+    setState(() {
+      _isSearching = true;
+      _error = null;
+      _transaction = null;
+      _returnQuantities.clear();
+    });
+    try {
+      final repo = ref.read(posTerminalRepositoryProvider);
+      final full = await repo.getTransaction(tx.id);
+      if (!mounted) return;
+      setState(() {
+        _transaction = full;
+        final txItems = full.items ?? [];
+        for (int i = 0; i < txItems.length; i++) {
+          _returnQuantities[i] = 0;
+        }
+        _receiptController.text = full.transactionNumber;
+      });
+    } catch (e) {
+      if (mounted) setState(() => _error = AppLocalizations.of(context)!.posTransactionLookupFailed(e.toString()));
+    } finally {
+      if (mounted) setState(() => _isSearching = false);
+    }
+  }
+
+  List<Transaction> get _filteredRecent {
+    final q = _recentSearch.trim().toLowerCase();
+    if (q.isEmpty) return _recentTransactions;
+    return _recentTransactions.where((t) {
+      return t.transactionNumber.toLowerCase().contains(q) ||
+          t.totalAmount.toStringAsFixed(2).contains(q);
+    }).toList();
   }
 
   double get _refundTotal {
@@ -91,25 +160,55 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
     try {
       final items = <Map<String, dynamic>>[];
       final txItems = _transaction!.items ?? [];
+      double subtotal = 0;
+      double taxTotal = 0;
+      double discountTotal = 0;
       for (final entry in _returnQuantities.entries) {
         if (entry.value > 0 && entry.key < txItems.length) {
           final item = txItems[entry.key];
+          final qty = entry.value;
+          final unitPrice = item.unitPrice;
+          // Pro-rate the original line's tax/discount/total to the returned qty.
+          final ratio = item.quantity > 0 ? qty / item.quantity : 0;
+          final lineTotal = (item.lineTotal * ratio);
+          final taxAmount = item.taxAmount * ratio;
+          final discountAmount = (item.discountAmount ?? 0) * ratio;
+          subtotal += unitPrice * qty;
+          taxTotal += taxAmount;
+          discountTotal += discountAmount;
           items.add({
             'product_id': item.productId,
-            'quantity': entry.value,
-            'unit_price': item.unitPrice,
+            'barcode': item.barcode,
+            'product_name': item.productName,
+            'product_name_ar': item.productNameAr,
+            'quantity': qty,
+            'unit_price': unitPrice,
+            'cost_price': item.costPrice,
+            'discount_amount': discountAmount,
+            'tax_rate': item.taxRate,
+            'tax_amount': taxAmount,
+            'line_total': lineTotal,
+            'is_return_item': true,
             'reason': AppLocalizations.of(context)!.posCustomerReturn,
           });
         }
       }
 
+      final totalAmount = subtotal - discountTotal + taxTotal;
+
       final payments = [
-        {'method': _refundMethod.value, 'amount': _refundTotal},
+        {'method': _refundMethod.value, 'amount': totalAmount},
       ];
 
-      await ref
-          .read(saleProvider.notifier)
-          .processReturn(returnTransactionId: _transaction!.id, items: items, payments: payments);
+      await ref.read(saleProvider.notifier).processReturn(
+        returnTransactionId: _transaction!.id,
+        items: items,
+        payments: payments,
+        subtotal: subtotal,
+        discountAmount: discountTotal,
+        taxAmount: taxTotal,
+        totalAmount: totalAmount,
+      );
 
       final saleState = ref.read(saleProvider);
       if (saleState is SaleCompleted) {
@@ -243,23 +342,63 @@ class _PosReturnDialogState extends ConsumerState<PosReturnDialog> {
                 ),
               ] else if (!_isSearching && _error == null)
                 Expanded(
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.search_rounded,
-                          size: 48,
-                          color: isDark ? AppColors.textDisabledDark : AppColors.textDisabledLight,
-                        ),
-                        AppSpacing.gapH8,
-                        Text(
-                          AppLocalizations.of(context)!.posEnterReceiptNumberHint,
-                          style: AppTypography.bodySmall.copyWith(color: mutedColor),
-                        ),
-                      ],
-                    ),
-                  ),
+                  child: _isLoadingRecent
+                      ? const Center(child: CircularProgressIndicator())
+                      : _filteredRecent.isEmpty
+                          ? Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.receipt_long_outlined,
+                                    size: 48,
+                                    color: isDark ? AppColors.textDisabledDark : AppColors.textDisabledLight,
+                                  ),
+                                  AppSpacing.gapH8,
+                                  Text(
+                                    AppLocalizations.of(context)!.posEnterReceiptNumberHint,
+                                    style: AppTypography.bodySmall.copyWith(color: mutedColor),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Recent sales',
+                                  style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                                ),
+                                AppSpacing.gapH8,
+                                Expanded(
+                                  child: ListView.separated(
+                                    itemCount: _filteredRecent.length,
+                                    separatorBuilder: (_, __) =>
+                                        Divider(height: 1, color: AppColors.borderFor(context)),
+                                    itemBuilder: (context, index) {
+                                      final tx = _filteredRecent[index];
+                                      final dt = tx.createdAt;
+                                      final timeLabel = dt == null
+                                          ? ''
+                                          : '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')} '
+                                              '${dt.hour.toString().padLeft(2, '0')}:${dt.minute.toString().padLeft(2, '0')}';
+                                      return ListTile(
+                                        dense: true,
+                                        contentPadding: EdgeInsets.zero,
+                                        leading: const Icon(Icons.receipt_long_outlined, size: 20),
+                                        title: Text(tx.transactionNumber, style: AppTypography.labelMedium),
+                                        subtitle: Text(timeLabel, style: AppTypography.micro.copyWith(color: mutedColor)),
+                                        trailing: Text(
+                                          '\u0081 ${tx.totalAmount.toStringAsFixed(2)}',
+                                          style: AppTypography.labelMedium.copyWith(fontWeight: FontWeight.w600),
+                                        ),
+                                        onTap: () => _selectTransaction(tx),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                 ),
 
               if (_error != null) ...[
